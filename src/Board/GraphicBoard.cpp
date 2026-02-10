@@ -357,8 +357,14 @@ void GraphicBoard::unhighlight(){
 void GraphicBoard::saveImage(const std::string& fileName){
     auto image = m_texturePtr->getTexture().copyToImage();
     image.flipVertically();
-    auto result = image.saveToFile(fileName);
-    assert(result);
+    std::cout << "Saving board image: " << fileName << std::endl;
+    auto success = image.saveToFile(fileName);
+    if(success){
+        std::cout << "board image: " << fileName << " saved" << std::endl;
+    }
+    else{
+        std::cout << "Failed to save board image: " << fileName << std::endl;
+    }
 }
 
 void GraphicBoard::clear(){
@@ -476,54 +482,18 @@ void GraphicBoard::addBorder(){
 
     if(!m_leftBorder){
         initLeftBorder();
-        /*
-        float width = 2.f;
-        float height = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
-        m_leftBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-        float x = (float)m_leftEdgeWidth;
-        float y = 0.f;
-        m_leftBorder->setPosition({x,y});
-        m_leftBorder->setFillColor(sf::Color{0,0,0,255});
-        */
     }
 
     if(!m_rightBorder){
         initRightBorder();
-        /*
-        float width = 2.f;
-        float height = m_squares.at(0).at(0).getSize().y*m_squares.at(0).size() + 2*m_borderWidth;
-        m_rightBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-        float x = (float)m_leftEdgeWidth + (float)m_squares.at(0).at(0).getSize().x*(float)m_squares.at(0).size() + m_borderWidth;
-        float y = 0.f;
-        m_rightBorder->setPosition({x,y});
-        m_rightBorder->setFillColor(sf::Color{0,0,0,255});
-        */
     }
 
     if(!m_topBorder){
         initTopBorder();
-        /*
-        float width = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
-        float height = 2.f;
-        m_topBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-        float x = (float)m_leftEdgeWidth;
-        float y = 0.f;
-        m_topBorder->setPosition({x,y});
-        m_topBorder->setFillColor(sf::Color{0,0,0,255});
-        */
     }
 
     if(!m_bottomBorder){
         initBottomBorder();
-        /*
-        float width = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
-        float height = 2.f;
-        m_bottomBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-        float x = (float)m_leftEdgeWidth;
-        float y = (float)m_topEdgeWidth + (float)m_squares.at(0).at(0).getSize().y*(float)m_squares.at(0).size() + m_borderWidth;
-        m_bottomBorder->setPosition({x,y});
-        m_bottomBorder->setFillColor(sf::Color{0,0,0,255});
-        */
     }
 
     resizeTexture();
@@ -561,26 +531,6 @@ void GraphicBoard::addPlayerToMoveToken(){
 
     if(!m_playerToMoveToken){
         initPlayerToMoveToken();
-        /*
-        float radius = 0.2*m_squares.at(0).at(0).getSize().y;
-        std::size_t pointCount = 30;
-        m_playerToMoveToken = std::make_unique<sf::CircleShape>(radius, pointCount);
-        float x = m_leftEdgeWidth;
-        if(m_showBorder){
-            x+= 2*m_borderWidth;
-        }
-        x += m_squares.at(0).at(0).getSize().x*m_squares.size();
-        x += m_rightEdgeWidth/2.f;
-        x -= radius;
-        float y = m_topEdgeWidth;
-        y += m_squares.at(0).at(0).getSize().y/2.f;
-        y -= radius;
-        m_playerToMoveToken->setPosition({x,y});
-
-        m_playerToMoveToken->setFillColor(sf::Color{255,255,255,255});
-        m_playerToMoveToken->setOutlineColor(sf::Color{0,0,0,255});
-        m_playerToMoveToken->setOutlineThickness(-6.f);
-        */
     }
 
     resizeTexture();

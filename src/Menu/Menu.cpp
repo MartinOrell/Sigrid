@@ -23,7 +23,7 @@ Menu::Menu(const GraphicBoardConfigContainer& gConfig, const MainWindowConfigCon
     addHeader("Settings");
     addHeader("Help");
 
-    addItem("save image", 0, sigrid::ActionType::SaveBoardImage({"C:\\Users\\marti\\Home\\Projects\\sigrid\\sigrid\\saveData\\diagrams\\images\\Board.png"}));
+    addItem("save image", 0, sigrid::ActionType::SaveBoardImage({"saveData/diagrams/images/board.png"}));
     addItem("Reset", 1, sigrid::ActionType::Reset{});
     addItem("Clear", 1, sigrid::ActionType::Clear{});
     

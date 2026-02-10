@@ -47,8 +47,6 @@ void addSquareColorsFromFile(std::vector<sf::Color>& colors, std::string filenam
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-
     sigrid::MainWindowConfigContainer wConfig("saveData/windowStartup.txt");
 
     sigrid::MainWindow mainWindow({wConfig.windowWidth, wConfig.windowHeight}, wConfig.windowName);

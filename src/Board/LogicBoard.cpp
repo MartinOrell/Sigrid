@@ -345,16 +345,12 @@ void LogicBoard::save(const std::string& filename){
 
     std::ofstream out(filename);
 
-    std::cerr << "1" << std::endl;
-
     out << "Columns: " << width() << "\n";
     out << "Rows: " << height() << "\n";
     out << "RepeatSquares: 0 1";
-    std::cerr << "3" << std::endl;
     for(int y = m_pieceLayer.size()-1; y >= 0; y--){
         for(int x = 0; x < m_pieceLayer.at(0).size(); x++){
 
-            std::cerr << "[" << x << ", " << y << "]" << std::endl;
             if(m_pieceLayer[y][x] == nullptr){
                 continue;
             }

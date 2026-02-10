@@ -15,7 +15,6 @@ namespace sigrid{
     class LogicBoard{
 
         public:
-            //LogicBoard(const std::string& fen);
             LogicBoard(const std::string& filename);
             LogicBoard(const LogicBoard& board);
             ~LogicBoard();
