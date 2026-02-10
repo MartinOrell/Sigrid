@@ -1,0 +1,35 @@
+Columns: 8
+Rows: 8
+RepeatSquares: 0 1
+Piece: 0 R a1
+Piece: 0 N b1
+Piece: 0 B c1
+Piece: 0 Q d1
+Piece: 0 K e1
+Piece: 0 B f1
+Piece: 0 N g1
+Piece: 0 R h1
+Piece: 0 P a2
+Piece: 0 P b2
+Piece: 0 P c2
+Piece: 0 P d2
+Piece: 0 P e2
+Piece: 0 P f2
+Piece: 0 P g2
+Piece: 0 P h2
+Piece: 1 P a7
+Piece: 1 P b7
+Piece: 1 P c7
+Piece: 1 P d7
+Piece: 1 P e7
+Piece: 1 P f7
+Piece: 1 P g7
+Piece: 1 P h7
+Piece: 1 R a8
+Piece: 1 N b8
+Piece: 1 B c8
+Piece: 1 Q d8
+Piece: 1 K e8
+Piece: 1 B f8
+Piece: 1 N g8
+Piece: 1 R h8

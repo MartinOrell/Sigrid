@@ -1,0 +1,19 @@
+Width: 1440
+Height: 1080
+Name: Grid Edit Tool
+ArrowColors: res/styles/standard/arrowColors.txt
+PieceColors: res/styles/standard/pieceColors.txt
+PieceImageFiles: res/styles/standard/pieceImageFilenames.txt
+SquareColors: res/styles/standard/squarecolors.txt
+Piece: P
+Piece: N
+Piece: B
+Piece: R
+Piece: Q
+Piece: K
+NumPieceColors: 12
+LogicBoardFilename: saveData/diagrams/logic/board.txt
+GraphicBoardFilename: saveData/diagrams/graphic/board.txt
+PinMenu: OFF
+ToolWindow: OFF
+ColorTools: OFF
