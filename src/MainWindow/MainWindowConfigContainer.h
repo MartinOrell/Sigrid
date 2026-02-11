@@ -12,7 +12,7 @@ namespace sigrid{
         unsigned int windowHeight;
         std::string windowName;
 
-        std::string arrowColorFilename;
+        std::vector<uint32_t> arrowColors;
         std::string pieceColorFilename;
         std::string pieceImageFilesFilename;
         std::string squareColorsFileName;

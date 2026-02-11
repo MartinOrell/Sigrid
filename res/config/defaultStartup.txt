@@ -1,7 +1,18 @@
 Width: 1440
 Height: 1080
 Name: Grid Edit Tool
-ArrowColors: res/styles/standard/arrowColors.txt
+ArrowColor: 0 ff0000
+ArrowColor: 1 0080ff
+ArrowColor: 2 00ff00
+ArrowColor: 3 ffff00
+ArrowColor: 4 ffa500
+ArrowColor: 5 ba55d3
+ArrowColor: 6 ffcccc
+ArrowColor: 7 ffffff
+ArrowColor: 8 000000
+ArrowColor: 9 800000
+ArrowColor: 10 000080
+ArrowColor: 11 008000
 PieceColors: res/styles/standard/pieceColors.txt
 PieceImageFiles: res/styles/standard/pieceImageFilenames.txt
 SquareColors: res/styles/standard/squarecolors.txt

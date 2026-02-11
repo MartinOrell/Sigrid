@@ -6,16 +6,8 @@
 
 using namespace sigrid;
 
-ColorManager::ColorManager(const std::string& filename){
-
-    std::ifstream ifs(filename);
-
-    assert(ifs.is_open());
-
-    while(ifs.peek() != EOF){
-        uint32_t colorHex;
-        ifs >> std::hex >> colorHex >> std::ws;
-        colorHex = colorHex * 0x100 + 0xff;
+ColorManager::ColorManager(const std::vector<uint32_t>& colors){
+    for(const auto& colorHex : colors){
         m_colors.push_back(sf::Color(colorHex));
     }
 }

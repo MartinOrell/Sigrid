@@ -8,7 +8,7 @@ namespace sigrid{
     class ColorManager{
 
         public:
-            ColorManager(const std::string& filename);
+            ColorManager(const std::vector<uint32_t>& colors);
 
             sf::Color getSolidColor(const int colorId) const;
             sf::Color getTransparentColor(const int colorId) const;

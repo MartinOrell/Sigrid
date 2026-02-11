@@ -25,8 +25,13 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs >> std::ws;
             std::getline(ifs, windowName);
         }
-        else if(key == "ArrowColors:"){
-            ifs >> arrowColorFilename;
+        else if(key == "ArrowColor:"){
+            int id;
+            ifs >> id;
+            uint32_t colorHex;
+            ifs >> std::hex >> colorHex >> std::ws;
+            colorHex = colorHex * 0x100 + 0xff;
+            arrowColors.push_back(colorHex);
         }
         else if(key == "PieceColors:"){
             ifs >> pieceColorFilename;

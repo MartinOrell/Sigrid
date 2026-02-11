@@ -65,7 +65,8 @@ int main()
 
     sigrid::MainWindow mainWindow({wConfig.windowWidth, wConfig.windowHeight}, wConfig.windowName);
 
-    sigrid::ColorManager colorManager{wConfig.arrowColorFilename};
+    sigrid::ColorManager colorManager{wConfig.arrowColors};
+    
     sigrid::ToolManager toolManager(&colorManager);
 
     auto toolWindow = std::make_unique<sigrid::ToolWindow>(&toolManager);
