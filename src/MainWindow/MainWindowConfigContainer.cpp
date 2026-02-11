@@ -5,12 +5,12 @@
 
 using namespace sigrid;
 
-MainWindowConfigContainer::MainWindowConfigContainer(const std::string& filename){
+
+bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
     if(!ifs.is_open()){
-        std::cout << "Main Window Config Container: Failed to open config file: " << filename << std::endl;
-        return;
+        return false;
     }
 
     std::string key;
@@ -70,5 +70,6 @@ MainWindowConfigContainer::MainWindowConfigContainer(const std::string& filename
             std::cout << "main: unknown key read from startupfile: " << key << std::endl;
         }
     }
+    return true;
 }
 

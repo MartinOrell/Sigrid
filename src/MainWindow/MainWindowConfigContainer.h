@@ -6,7 +6,7 @@
 namespace sigrid{
     struct MainWindowConfigContainer{
 
-        MainWindowConfigContainer(const std::string& filename);
+        bool load(const std::string& filename);
 
         unsigned int windowWidth;
         unsigned int windowHeight;
