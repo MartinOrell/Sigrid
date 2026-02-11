@@ -8,6 +8,7 @@
 #include "Action/Action.h"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 #include "Tool/Tool.h"
 
@@ -49,8 +50,16 @@ int main()
 {
     sigrid::MainWindowConfigContainer wConfig;
 
-    if(!wConfig.load("saveData/startup.txt")){
-        std::cout << "failed to load startup file, exiting program" << std::endl;
+    std::string setupFilename = "saveData/startup.txt";
+
+    if(!std::filesystem::exists(setupFilename)){
+        std::cout << "Running program with default settings" << std::endl;
+        setupFilename = "res/config/defaultStartup.txt";
+    }
+
+    if(!wConfig.load(setupFilename)){
+        std::cout << "failed to load startup file: \"" << setupFilename
+            << "\", exiting program" << std::endl;
         return -1;
     }
 

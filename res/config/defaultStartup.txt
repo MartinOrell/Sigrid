@@ -15,5 +15,5 @@ NumPieceColors: 12
 LogicBoardFilename: saveData/diagrams/logic/board.txt
 GraphicBoardFilename: saveData/diagrams/graphic/board.txt
 PinMenu: OFF
-ToolWindow: OFF
+ToolWindow: ON
 ColorTools: OFF
