@@ -16,9 +16,9 @@ PieceManager::PieceManager(const std::vector<PieceColor>& pieceColors)
 
 void PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
-    std::map<std::string, Piece> coloredPieces;
+    std::map<PieceIdentifier, Piece> coloredPieces;
     m_pieces.push_back(coloredPieces);
-    std::map<std::string, sf::Texture> pieceColorTextures;
+    std::map<PieceIdentifier, sf::Texture> pieceColorTextures;
     m_pieceTextures.push_back(pieceColorTextures);
 }
 
@@ -26,14 +26,10 @@ void PieceManager::addPieceColor(const PieceColor& newColor){
 void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
 
     for(const auto& piece : pieces){
-        std::string notation = piece.name;
-        if(piece.style == "light"){
-            notation = toupper(notation.at(0));
-        }
-        else{
-            notation = tolower(notation.at(0));
-        }
-        m_pieceImageFilenames.insert({notation, piece.filename});
+        PieceIdentifier id;
+        id.name = piece.name;
+        id.style = piece.style;
+        m_pieceImageFilenames.insert({id, piece.filename});
     }
 }
 
@@ -47,29 +43,25 @@ std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
         return std::nullopt;
     }
 
-    std::string notation = logicPiece.notation();
-
+    PieceIdentifier id;
+    id.name = logicPiece.notation();
     if(m_colors.at(colorId).isLight){
-        for(int i = 0; i < notation.size(); i++){
-            notation.at(i) = toupper(notation.at(i));
-        }
+        id.style = "light";
     }
     else{
-        for(int i = 0; i < notation.size(); i++){
-            notation.at(i) = tolower(notation.at(i));
-        }
+        id.style = "dark";
     }
 
     {
-        auto it = m_pieces.at(colorId).find(notation);
+        auto it = m_pieces.at(colorId).find(id);
 
         if(it != m_pieces.at(colorId).end()){
-            return m_pieces.at(colorId).at(notation);
+            return m_pieces.at(colorId).at(id);
         }
     }
 
     {
-        auto it = m_pieceImageFilenames.find(notation);
+        auto it = m_pieceImageFilenames.find(id);
         if(it == m_pieceImageFilenames.end()){
             return std::nullopt;
         }
@@ -95,10 +87,10 @@ std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
         }
 
         sf::Texture newTexture{newImage};
-        m_pieceTextures.at(colorId).insert(std::pair{notation, newTexture});
+        m_pieceTextures.at(colorId).insert(std::pair{id, newTexture});
 
-        m_pieces.at(colorId).insert({notation, Piece{m_pieceSize, &(m_pieceTextures.at(colorId).at(notation)), colorId, notation}});
+        m_pieces.at(colorId).insert({id, Piece{m_pieceSize, &(m_pieceTextures.at(colorId).at(id)), colorId, id.name}});
     }
 
-    return m_pieces.at(colorId).at(notation);
+    return m_pieces.at(colorId).at(id);
 }
