@@ -6,35 +6,16 @@
 
 using namespace sigrid;
 
-PieceManager::PieceManager(const std::string& pieceColorFilename)
+PieceManager::PieceManager(const std::vector<PieceColor>& pieceColors)
 : m_pieceSize{108,108}{
 
-    std::ifstream ifs(pieceColorFilename);
-
-    assert(ifs.is_open());
-
-    std::string colorName;
-    std::string type; //light or dark
-    uint32_t lightColorModifierHex;
-    uint32_t darkColorModifierHex;
-
-    while(ifs.peek() != EOF){
-        ifs >> colorName >> type >> std::hex >> lightColorModifierHex >> darkColorModifierHex >> std::ws;
-        lightColorModifierHex = lightColorModifierHex * 0x100 + 0xff;
-        darkColorModifierHex = darkColorModifierHex * 0x100 + 0xff;
-        bool isLight = type == "light";
-        addPieceColor(colorName, isLight, sf::Color(lightColorModifierHex), sf::Color(darkColorModifierHex));
+    for(const auto& color: pieceColors){
+        addPieceColor(color);
     }
 }
 
-void PieceManager::addPieceColor(const std::string& name, const bool isLight, const sf::Color& lightModifier, const sf::Color& darkModifier){
-    PieceColor newColor;
-    newColor.isLight = isLight;
-    newColor.lightModifier = lightModifier;
-    newColor.darkModifier = darkModifier;
-    unsigned int id = m_colors.size();
+void PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
-    m_colorIds.insert({name, id});
     std::map<std::string, Piece> coloredPieces;
     m_pieces.push_back(coloredPieces);
     std::map<std::string, sf::Texture> pieceColorTextures;
@@ -95,8 +76,8 @@ std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
 
         sf::Image newImage{it->second};
 
-        sf::Color lightModifier = m_colors.at(colorId).lightModifier;
-        sf::Color darkModifier = m_colors.at(colorId).darkModifier;
+        sf::Color lightModifier = sf::Color(m_colors.at(colorId).lightModifier);
+        sf::Color darkModifier = sf::Color(m_colors.at(colorId).darkModifier);
 
         for(unsigned int x = 0; x < newImage.getSize().x; x++){
             for(unsigned int y = 0; y < newImage.getSize().y; y++){

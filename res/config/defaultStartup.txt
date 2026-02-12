@@ -15,7 +15,18 @@ ArrowColor: 8 000000
 ArrowColor: 9 800000
 ArrowColor: 10 000080
 ArrowColor: 11 008000
-PieceColors: res/styles/standard/pieceColors.txt
+PieceColor: 0 white light ffffff 000000
+PieceColor: 1 black dark ffffff 000000
+PieceColor: 2 red light ff0000 000000
+PieceColor: 3 blue light 0080ff 000000
+PieceColor: 4 yellow light ffff00 000000
+PieceColor: 5 green light 00ff00 000000
+PieceColor: 6 orange light ffa500 000000
+PieceColor: 7 purple light ba55d3 000000
+PieceColor: 8 pink light ffcccc 000000
+PieceColor: 9 darkred dark ffffff 800000
+PieceColor: 10 darkblue dark ffffff 000080
+PieceColor: 11 darkgreen dark ffffff 008000
 PieceImageFiles: res/styles/standard/pieceImageFilenames.txt
 Piece: P
 Piece: N

@@ -41,8 +41,20 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             colorHex = colorHex * 0x100 + 0xff;
             arrowColors.push_back(colorHex);
         }
-        else if(key == "PieceColors:"){
-            ifs >> pieceColorFilename;
+        else if(key == "PieceColor:"){
+            int id;
+            ifs >> id;
+            std::string name;
+            ifs >> name;
+            std::string style;
+            ifs >> style;
+            PieceColor newColor;
+            newColor.isLight = style == "light";
+            ifs >> std::hex >> newColor.lightModifier >> std::ws;
+            newColor.lightModifier = newColor.lightModifier * 0x100 + 0xff;
+            ifs >> std::hex >> newColor.darkModifier >> std::ws;
+            newColor.darkModifier = newColor.darkModifier * 0x100 + 0xff;
+            pieceColors.push_back(newColor);
         }
         else if(key == "PieceImageFiles:"){
             ifs >> pieceImageFilesFilename;

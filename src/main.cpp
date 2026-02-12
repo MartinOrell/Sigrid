@@ -59,7 +59,7 @@ int main()
 
     mainWindow.add(std::move(toolWindow));
 
-    sigrid::PieceManager pieceManager{wConfig.pieceColorFilename};
+    sigrid::PieceManager pieceManager{wConfig.pieceColors};
     pieceManager.loadImageFilenames(wConfig.pieceImageFilesFilename);
 
     auto toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(wConfig, &pieceManager, &toolManager, wConfig.squareColors);
