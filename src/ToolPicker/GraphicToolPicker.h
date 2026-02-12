@@ -18,7 +18,7 @@ namespace sigrid{
     class GraphicToolPicker: public sf::Drawable{
         public:
 
-            GraphicToolPicker(const std::vector<sf::Color> squareColors);
+            GraphicToolPicker(const std::vector<uint32_t>& squareColors);
 
             void createGraphic(const sf::Vector2u& size);
             

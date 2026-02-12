@@ -9,12 +9,12 @@
 
 using namespace sigrid;
 
-GraphicToolPicker::GraphicToolPicker(const std::vector<sf::Color> squareColors)
+GraphicToolPicker::GraphicToolPicker(const std::vector<uint32_t>& squareColors)
 {
     m_backgroundColor = sf::Color{255,255,255,0};
 
     for(int i = 0; i < squareColors.size(); i++){
-        m_squareColors.push_back(squareColors.at(i));
+        m_squareColors.push_back(sf::Color(squareColors.at(i)));
     }
 }
 

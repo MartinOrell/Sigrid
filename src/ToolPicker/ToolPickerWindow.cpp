@@ -7,7 +7,7 @@
 using namespace sigrid;
 
 
-ToolPickerWindow::ToolPickerWindow(const MainWindowConfigContainer& wConfig, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, const std::vector<sf::Color> squareColors)
+ToolPickerWindow::ToolPickerWindow(const MainWindowConfigContainer& wConfig, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, const std::vector<uint32_t>& squareColors)
 : m_pieceManagerPtr{pieceManagerPtr}
 , m_toolManagerPtr{toolManagerPtr}
 , m_numPieceColors{0}

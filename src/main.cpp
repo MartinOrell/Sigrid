@@ -32,20 +32,6 @@ std::string getFenFromFile(std::string filename){
     return out;
 }
 
-void addSquareColorsFromFile(std::vector<sf::Color>& colors, std::string filename){
-    std::ifstream ifs(filename);
-
-    assert(ifs.is_open());
-
-    uint32_t colorHex;
-
-    while(ifs.peek() != EOF){
-
-        ifs >> std::hex >> colorHex >> std::ws;
-        colors.push_back(sf::Color{colorHex});
-    }
-}
-
 int main()
 {
     sigrid::MainWindowConfigContainer wConfig;
@@ -76,10 +62,7 @@ int main()
     sigrid::PieceManager pieceManager{wConfig.pieceColorFilename};
     pieceManager.loadImageFilenames(wConfig.pieceImageFilesFilename);
 
-    std::vector<sf::Color> squareColors;
-    addSquareColorsFromFile(squareColors, wConfig.squareColorsFileName);
-
-    auto toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(wConfig, &pieceManager, &toolManager, squareColors);
+    auto toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(wConfig, &pieceManager, &toolManager, wConfig.squareColors);
     toolPickerWindow->addSelectTool();
     toolPickerWindow->addArrowTool();
     for(auto notation: wConfig.pieceNotations){
@@ -95,7 +78,7 @@ int main()
 
     sigrid::GraphicBoardConfigContainer gConfig(wConfig.graphicBoardFilename);
 
-    auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, gConfig, &pieceManager, squareColors, &colorManager);
+    auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, gConfig, &pieceManager, wConfig.squareColors, &colorManager);
 
     auto board = std::make_unique<sigrid::Board>(std::move(logicBoard), std::move(graphicBoard), &pieceManager);
 

@@ -17,7 +17,7 @@ namespace sigrid{
     class ToolPickerWindow: public sf::Drawable{
         public:
 
-            ToolPickerWindow(const MainWindowConfigContainer& wConfig, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, const std::vector<sf::Color> squareColors);
+            ToolPickerWindow(const MainWindowConfigContainer& wConfig, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, const std::vector<uint32_t>& squareColors);
             
             void createGraphic(const sf::Vector2u& size);
 

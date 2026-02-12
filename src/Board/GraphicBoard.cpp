@@ -9,7 +9,7 @@
 
 using namespace sigrid;
 
-GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const GraphicBoardConfigContainer& config, PieceManager* pieceManagerPtr, const std::vector<sf::Color> squareColors, ColorManager* colorManagerPtr)
+GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const GraphicBoardConfigContainer& config, PieceManager* pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* colorManagerPtr)
 : m_scale{1.f}
 , m_colorManagerPtr{colorManagerPtr}
 , m_backgroundColor{sf::Color{255,255,255,255}}
@@ -32,7 +32,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const GraphicBoardConfi
     }
 
     for(int i = 0; i < squareColors.size(); i++){
-        m_squareColors.push_back(squareColors.at(i));
+        m_squareColors.push_back(sf::Color(squareColors.at(i)));
     }
 
     for(int y = 0; y < logicBoard.height(); y++){
