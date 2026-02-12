@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "../Piece/PieceColor.h"
+#include "../Piece/PieceContainer.h"
 
 namespace sigrid{
     struct MainWindowConfigContainer{
@@ -16,8 +17,7 @@ namespace sigrid{
         std::vector<uint32_t> squareColors;
         std::vector<uint32_t> arrowColors;
         std::vector<PieceColor> pieceColors;
-        std::string pieceImageFilesFilename;
-        std::vector<std::string> pieceNotations;
+        std::vector<PieceContainer> pieces;
 
         int numPieceColors;
 

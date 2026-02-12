@@ -23,17 +23,17 @@ void PieceManager::addPieceColor(const PieceColor& newColor){
 }
 
 
-void PieceManager::loadImageFilenames(const std::string& filename){
-    std::ifstream ifs(filename);
+void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
 
-    assert(ifs.is_open());
-
-    while(ifs.peek() != EOF){
-        std::string notation;
-        std::string filename;
-        ifs >> notation >> filename >> std::ws;
-
-        m_pieceImageFilenames.insert({notation, filename});
+    for(const auto& piece : pieces){
+        std::string notation = piece.name;
+        if(piece.style == "light"){
+            notation = toupper(notation.at(0));
+        }
+        else{
+            notation = tolower(notation.at(0));
+        }
+        m_pieceImageFilenames.insert({notation, piece.filename});
     }
 }
 

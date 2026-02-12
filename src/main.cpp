@@ -60,13 +60,15 @@ int main()
     mainWindow.add(std::move(toolWindow));
 
     sigrid::PieceManager pieceManager{wConfig.pieceColors};
-    pieceManager.loadImageFilenames(wConfig.pieceImageFilesFilename);
+    pieceManager.loadImages(wConfig.pieces);
 
     auto toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(wConfig, &pieceManager, &toolManager, wConfig.squareColors);
     toolPickerWindow->addSelectTool();
     toolPickerWindow->addArrowTool();
-    for(auto notation: wConfig.pieceNotations){
-        toolPickerWindow->addPieceTool(notation);
+    for(const auto& piece: wConfig.pieces){
+        if(piece.style == "light"){
+            toolPickerWindow->addPieceTool(piece.name);
+        }
     }
     toolPickerWindow->addPieceColorTools(wConfig.numPieceColors);
 

@@ -27,13 +27,18 @@ PieceColor: 8 pink light ffcccc 000000
 PieceColor: 9 darkred dark ffffff 800000
 PieceColor: 10 darkblue dark ffffff 000080
 PieceColor: 11 darkgreen dark ffffff 008000
-PieceImageFiles: res/styles/standard/pieceImageFilenames.txt
-Piece: P
-Piece: N
-Piece: B
-Piece: R
-Piece: Q
-Piece: K
+Piece: P light res/pieces/standard/white_pawn.png
+Piece: P dark res/pieces/standard/black_pawn.png
+Piece: R light res/pieces/standard/white_rook.png
+Piece: R dark res/pieces/standard/black_rook.png
+Piece: N light res/pieces/standard/white_knight.png
+Piece: N dark res/pieces/standard/black_knight.png
+Piece: B light res/pieces/standard/white_bishop.png
+Piece: B dark res/pieces/standard/black_bishop.png
+Piece: Q light res/pieces/standard/white_queen.png
+Piece: Q dark res/pieces/standard/black_queen.png
+Piece: K light res/pieces/standard/white_king.png
+Piece: K dark res/pieces/standard/black_king.png
 NumPieceColors: 12
 LogicBoardFilename: saveData/diagrams/logic/board.txt
 GraphicBoardFilename: saveData/diagrams/graphic/board.txt

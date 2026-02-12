@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include "PieceColor.h"
+#include "PieceContainer.h"
 
 namespace sigrid{
 
@@ -14,7 +15,7 @@ namespace sigrid{
         public:
             PieceManager(const std::vector<PieceColor>& pieceColors);
             void addPieceColor(const PieceColor& newColor);
-            void loadImageFilenames(const std::string& filename);
+            void loadImages(const std::vector<PieceContainer>& pieces);
             std::optional<Piece> getPiece(const LogicPiece& logicPiece = LogicPiece{"P", 0});
         private:
             std::map<std::string, std::string> m_pieceImageFilenames;

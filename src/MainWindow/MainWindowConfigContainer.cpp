@@ -56,13 +56,10 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             newColor.darkModifier = newColor.darkModifier * 0x100 + 0xff;
             pieceColors.push_back(newColor);
         }
-        else if(key == "PieceImageFiles:"){
-            ifs >> pieceImageFilesFilename;
-        }
         else if(key == "Piece:"){
-            std::string pieceNotation;
-            ifs >> pieceNotation;
-            pieceNotations.push_back(pieceNotation);
+            PieceContainer piece;
+            ifs >> piece.name >> piece.style >> piece.filename >> std::ws;
+            pieces.push_back(piece);
         }
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;
