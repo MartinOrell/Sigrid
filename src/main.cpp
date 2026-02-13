@@ -76,7 +76,7 @@ int main()
 
     auto workWindow = std::make_unique<sigrid::WorkWindow>();
 
-    auto logicBoard = std::make_unique<sigrid::LogicBoard>(wConfig.logicBoardFilename);
+    auto logicBoard = std::make_unique<sigrid::LogicBoard>(wConfig.boardFilename);
 
     auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, wConfig.boardData, &pieceManager, wConfig.squareColors, &colorManager);
 

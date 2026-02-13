@@ -51,7 +51,7 @@ OutsideLabelBigSize: 60%
 Border: ON
 BorderWidth: 2
 PlayerToMoveToken: OFF
-LogicBoardFilename: saveData/diagrams/logic/board.txt
+BoardFilename: saveData/boards/board.txt
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF

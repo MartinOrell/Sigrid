@@ -64,11 +64,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;
         }
-        else if(key == "LogicBoardFilename:"){
-            ifs >> logicBoardFilename;
-        }
-        else if(key == "GraphicBoardFilename:"){
-            ifs >> graphicBoardFilename;
+        else if(key == "BoardFilename:"){
+            ifs >> boardFilename;
         }
         else if(key == "PinMenu:"){
             std::string s;

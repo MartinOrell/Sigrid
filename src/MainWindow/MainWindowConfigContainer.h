@@ -23,8 +23,7 @@ namespace sigrid{
 
         int numPieceColors;
 
-        std::string logicBoardFilename;
-        std::string graphicBoardFilename;
+        std::string boardFilename;
 
         bool pinMenu;
         bool toolWindow;

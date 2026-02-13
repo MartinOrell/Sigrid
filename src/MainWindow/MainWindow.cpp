@@ -459,7 +459,7 @@ void MainWindow::handleAction(const sigrid::Action action){
 
         std::string imageFilename = std::get<ActionType::SaveBoardImage>(action).imageFileName;
         saveBoardImage(imageFilename);
-        saveLogicBoard("saveData/diagrams/logic/board2.txt");
+        saveLogicBoard("saveData/boards/board.txt");
         return;
     }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){

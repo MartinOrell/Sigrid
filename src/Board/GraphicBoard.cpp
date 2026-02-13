@@ -359,7 +359,7 @@ void GraphicBoard::saveImage(const std::string& fileName){
     image.flipVertically();
     std::cout << "Saving board image: " << fileName << std::endl;
     auto success = image.saveToFile(fileName);
-    if(success){
+    if(success && std::filesystem::exists(fileName)){
         std::cout << "board image: " << fileName << " saved" << std::endl;
     }
     else{
