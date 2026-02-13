@@ -15,10 +15,10 @@ bool MainWindowConfigContainer::load(const std::string& filename){
 
     std::string key;
     while(ifs >> key){
-        if(key == "Width:"){
+        if(key == "WindowWidth:"){
             ifs >> windowWidth;
         }
-        else if(key == "Height:"){
+        else if(key == "WindowHeight:"){
             ifs >> windowHeight;
         }
         else if(key == "Name:"){

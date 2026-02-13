@@ -1,5 +1,5 @@
-Width: 1440
-Height: 1080
+WindowWidth: 1440
+WindowHeight: 1080
 Name: Grid Edit Tool
 SquareColor: 0 ffffff
 SquareColor: 1 d0d0d0
