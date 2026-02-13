@@ -1,4 +1,5 @@
-# Simple Grid Editor
+# Sigrid
+A simple tool to edit chess diagrams
 
 Compile:
 ````
