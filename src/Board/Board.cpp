@@ -207,11 +207,16 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
             else{
                 colorId = 1;
             }
+            s.at(0) = std::toupper(s.at(0));
             LogicPiece logicPiece{s, colorId};
 
             auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
             if(piece_o != std::nullopt){
                 addPiece(piece_o.value(), {x,y});
+            }
+            else{
+                std::cout << "Failed to get piece of character \"" << s
+                << "\" when loading FEN" << std::endl;
             }
             x++;
         }
