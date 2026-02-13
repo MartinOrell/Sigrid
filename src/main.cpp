@@ -78,9 +78,7 @@ int main()
 
     auto logicBoard = std::make_unique<sigrid::LogicBoard>(wConfig.logicBoardFilename);
 
-    sigrid::GraphicBoardConfigContainer gConfig(wConfig.graphicBoardFilename);
-
-    auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, gConfig, &pieceManager, wConfig.squareColors, &colorManager);
+    auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, wConfig.boardData, &pieceManager, wConfig.squareColors, &colorManager);
 
     auto board = std::make_unique<sigrid::Board>(std::move(logicBoard), std::move(graphicBoard), &pieceManager);
 
@@ -89,7 +87,7 @@ int main()
 
     mainWindow.add(std::move(workWindow));
 
-    auto menu = std::make_unique<sigrid::Menu>(gConfig, wConfig);
+    auto menu = std::make_unique<sigrid::Menu>(wConfig.boardData, wConfig);
 
     mainWindow.add(std::move(menu));
 

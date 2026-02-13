@@ -85,6 +85,60 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs >> s;
             colorTools = s == "ON";
         }
+        else if(key == "SquareSize:"){
+            ifs >> boardData.squareSize;
+        }
+        else if(key == "LabelsInside:"){
+            std::string isEnabled;
+            ifs >> isEnabled;
+            boardData.labelsInside = isEnabled == "ON";
+        }
+        else if(key == "LabelsOutside:"){
+            std::string isEnabled;
+            ifs >> isEnabled;
+            boardData.labelsOutside = isEnabled == "ON";
+        }
+        else if(key == "LabelFont:"){
+            ifs >> boardData.labelFont;
+        }
+        else if(key == "InsideLabelSize:"){
+            ifs >> boardData.insideLabelSize;
+            boardData.insideLabelSize = boardData.insideLabelSize / 100.f;
+            ifs.ignore(1);
+        }
+        else if(key == "OutsideLabelSize:"){
+            ifs >> boardData.outsideLabelSize;
+            boardData.outsideLabelSize = boardData.outsideLabelSize / 100.f;
+            ifs.ignore(1);
+        }
+        else if(key == "OutsideLabelSmallSize:"){
+            ifs >> boardData.outsideLabelSmallSize;
+            boardData.outsideLabelSmallSize = boardData.outsideLabelSmallSize / 100.f;
+            ifs.ignore(1);
+        }
+        else if(key == "OutsideLabelBigSize:"){
+            ifs >> boardData.outsideLabelBigSize;
+            boardData.outsideLabelBigSize = boardData.outsideLabelBigSize / 100.f;
+            ifs.ignore(1);
+        }
+        else if(key == "Border:"){
+            std::string isEnabled;
+            ifs >> isEnabled;
+            boardData.border = isEnabled == "ON";
+        }
+        else if(key == "BorderWidth:"){
+            ifs >> boardData.borderWidth;
+        }
+        else if(key == "Border:"){
+            std::string isEnabled;
+            ifs >> isEnabled;
+            boardData.border = isEnabled == "ON";
+        }
+        else if(key == "PlayerToMoveToken:"){
+            std::string isEnabled;
+            ifs >> isEnabled;
+            boardData.playerToMoveToken = isEnabled == "ON";
+        }
         else{
             std::cout << "main: unknown key read from startupfile: " << key << std::endl;
         }

@@ -40,8 +40,18 @@ Piece: Q dark res/pieces/standard/black_queen.png
 Piece: K light res/pieces/standard/white_king.png
 Piece: K dark res/pieces/standard/black_king.png
 NumPieceColors: 12
+SquareSize: 100
+LabelsInside: OFF
+LabelsOutside: ON
+LabelFont: res/fonts/arial.ttf
+InsideLabelSize: 40%
+OutsideLabelSize: 40%
+OutsideLabelSmallSize: 40%
+OutsideLabelBigSize: 60%
+Border: ON
+BorderWidth: 2
+PlayerToMoveToken: OFF
 LogicBoardFilename: saveData/diagrams/logic/board.txt
-GraphicBoardFilename: saveData/diagrams/graphic/board.txt
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF

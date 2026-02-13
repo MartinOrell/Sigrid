@@ -13,7 +13,6 @@ set(SRC_FILES
     src/Board/Board.cpp src/Piece/Piece.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
-    src/Board/GraphicBoardConfigContainer.cpp
     src/Board/Coord.cpp
     src/Piece/LogicPiece.cpp
     src/Piece/GraphicPiece.cpp

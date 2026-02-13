@@ -5,8 +5,6 @@
 namespace sigrid{
     struct GraphicBoardConfigContainer{
 
-        GraphicBoardConfigContainer(const std::string& filename);
-
         int squareSize;
         bool labelsInside;
         bool labelsOutside;
