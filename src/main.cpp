@@ -25,16 +25,6 @@
 #include "Board/LogicBoardContainer.h"
 #include "Piece/LogicPieceContainer.h"
 
-std::string getFenFromFile(std::string filename){
-    std::ifstream ifs(filename);
-
-    assert(ifs.is_open());
-
-    std::string out;
-    ifs >> out;
-    return out;
-}
-
 int main()
 {
     sigrid::MainWindowConfigContainer wConfig;
