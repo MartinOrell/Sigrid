@@ -49,7 +49,7 @@ namespace sigrid{
             void hideColorTools();
             void showTools();
             void hideTools();
-            void saveLogicBoard(const std::string& filename);
+            void saveLogicBoard();
             void saveBoardImage(const std::string& imageFilename);
             void addCoordinates();
             void removeCoordinates();

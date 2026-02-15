@@ -459,7 +459,7 @@ void MainWindow::handleAction(const sigrid::Action action){
 
         std::string imageFilename = std::get<ActionType::SaveBoardImage>(action).imageFileName;
         saveBoardImage(imageFilename);
-        saveLogicBoard("saveData/boards/board.txt");
+        saveLogicBoard();
         return;
     }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
@@ -699,14 +699,14 @@ void MainWindow::hideTools(){
     createGraphic();
 }
 
-void MainWindow::saveLogicBoard(const std::string& filename){
+void MainWindow::saveLogicBoard(){
 
     if(!m_workWindow){
         std::cout << "Unable to save board image, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->saveLogicBoard(filename);
+    m_workWindow->saveLogicBoard();
 
 }
 

@@ -10,7 +10,8 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const std::string& filename){
+LogicBoard::LogicBoard(const std::string& filename)
+: m_filename{filename}{
 
     std::ifstream ifs(filename);
 
@@ -339,11 +340,16 @@ void LogicBoard::clear(){
     }
 }
 
-void LogicBoard::save(const std::string& filename){
+void LogicBoard::save(){
 
-    std::cerr << "Saving " << filename << std::endl;
+    if(m_filename.length() == 0){
+        std::cout << "LogicBoard unable to save, filename is not set" << std::endl;
+        return; 
+    }
 
-    std::ofstream out(filename);
+    std::cout << "Saving " << m_filename << std::endl;
+
+    std::ofstream out(m_filename);
 
     out << "Columns: " << width() << "\n";
     out << "Rows: " << height() << "\n";
@@ -365,5 +371,5 @@ void LogicBoard::save(const std::string& filename){
             out << "Piece: " << colorId << " " << notation << " " << coord;
         }
     }
-    std::cerr << "Saved " << filename << std::endl;
+    std::cerr << "Saved " << m_filename << std::endl;
 }

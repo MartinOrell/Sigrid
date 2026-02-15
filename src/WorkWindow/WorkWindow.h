@@ -37,7 +37,7 @@ namespace sigrid{
 
             void print();
 
-            void saveLogicBoard(const std::string& filename);
+            void saveLogicBoard();
 
             void saveBoardImage(const std::string& imageFileName);
 

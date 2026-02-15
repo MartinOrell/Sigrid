@@ -219,8 +219,8 @@ void WorkWindow::print(){
     m_boardPtr->print();
 }
 
-void WorkWindow::saveLogicBoard(const std::string& filename){
-    m_boardPtr->saveLogic(filename);
+void WorkWindow::saveLogicBoard(){
+    m_boardPtr->saveLogic();
 }
 
 void WorkWindow::saveBoardImage(const std::string& filename){

@@ -69,7 +69,7 @@ namespace sigrid{
 
             void loadFENPiecePlacement(std::string);
 
-            void saveLogic(const std::string& filename);
+            void saveLogic();
             void saveImage(const std::string& filename);
 
             void clear();
