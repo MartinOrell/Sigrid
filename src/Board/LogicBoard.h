@@ -10,12 +10,13 @@
 #include <string>
 
 #include "../Arrow/LogicArrow.h"
+#include "../Piece/LogicPieceContainer.h"
 
 namespace sigrid{
     class LogicBoard{
 
         public:
-            LogicBoard(const std::string& filename);
+            LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<LogicPieceContainer> pieces, const std::string& filename);
             LogicBoard(const LogicBoard& board);
             ~LogicBoard();
             const unsigned int width() const;

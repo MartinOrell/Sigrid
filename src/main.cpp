@@ -22,6 +22,9 @@
 
 #include "MainWindow/MainWindowConfigContainer.h"
 
+#include "Board/LogicBoardContainer.h"
+#include "Piece/LogicPieceContainer.h"
+
 std::string getFenFromFile(std::string filename){
     std::ifstream ifs(filename);
 
@@ -76,7 +79,41 @@ int main()
 
     auto workWindow = std::make_unique<sigrid::WorkWindow>();
 
-    auto logicBoard = std::make_unique<sigrid::LogicBoard>(wConfig.boardFilename);
+    sigrid::LogicBoardContainer boardContainer;
+
+    std::ifstream ifs(wConfig.boardFilename);
+
+    if(!ifs.is_open()){
+        std::cout << "LogicBoard: Failed to open position from file: " << wConfig.boardFilename << std::endl;
+        return -1;
+    }
+
+    std::string key;
+    while(ifs >> key){
+
+        if(key == "Columns:"){
+            ifs >> boardContainer.columns;
+        }
+        else if(key == "Rows:"){
+            ifs >> boardContainer.rows;
+        }
+        else if(key == "RepeatSquares:"){
+            int squareId;
+            ifs >> squareId;
+            boardContainer.repeatedSquareIds.push_back(squareId);
+            ifs >> squareId;
+            boardContainer.repeatedSquareIds.push_back(squareId);
+        }
+        else if(key == "Piece:"){
+            sigrid::LogicPieceContainer pieceContainer;
+            ifs >> pieceContainer.colorId;
+            ifs >> pieceContainer.name;
+            ifs >> pieceContainer.position;
+            boardContainer.logicPieces.push_back(pieceContainer);
+        }
+    }
+
+    auto logicBoard = std::make_unique<sigrid::LogicBoard>(boardContainer.columns, boardContainer.rows, boardContainer.repeatedSquareIds, boardContainer.logicPieces, wConfig.boardFilename);
 
     auto graphicBoard = std::make_unique<sigrid::GraphicBoard>(*logicBoard, wConfig.boardData, &pieceManager, wConfig.squareColors, &colorManager);
 

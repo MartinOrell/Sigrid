@@ -10,80 +10,46 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const std::string& filename)
+LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<LogicPieceContainer> pieces, const std::string& filename)
 : m_filename{filename}{
 
-    std::ifstream ifs(filename);
-
-    if(!ifs.is_open()){
-        std::cout << "LogicBoard: Failed to open position from file: " << filename << std::endl;
+    if(repeatSquares.size() == 0){
+        std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
         return;
     }
-
-    unsigned int columns;
-    unsigned int rows;
-
-    std::string key;
-    while(ifs >> key){
-
-        if(key == "Columns:"){
-            ifs >> columns;
+    for(unsigned int y = 0; y < rows; y++){
+        std::vector<int> squareRow;
+        std::vector<LogicPiece*> pieceRow;
+        for(unsigned int x = 0; x < columns; x++){
+            squareRow.push_back(repeatSquares.at((x+y)%repeatSquares.size()));
+            pieceRow.push_back(nullptr);
         }
-        else if(key == "Rows:"){
-            ifs >> rows;
-        }
-        else if(key == "RepeatSquares:"){
-            int tmp;
-            ifs >> tmp;
-            ifs >> tmp;
-            if(rows < 1){
-                std::cout << "LogicBoard: Rows not set" << std::endl;
-                return;
-            }
-            if(columns < 1){
-                std::cout << "LogicBoard: Columns not set" << std::endl;
-                return;
-            }
-            for(unsigned int y = 0; y < rows; y++){
-                std::vector<int> squareRow;
-                std::vector<LogicPiece*> pieceRow;
-                for(unsigned int x = 0; x < columns; x++){
-                    squareRow.push_back((x+y)%2);
-                    pieceRow.push_back(nullptr);
-                }
-                m_squareLayer.push_back(squareRow);
-                m_pieceLayer.push_back(pieceRow);
-            }
-        }
-        else if(key == "Piece:"){
-            int colorId;
-            ifs >> colorId;
-            std::string notation;
-            ifs >> notation;
+        m_squareLayer.push_back(squareRow);
+        m_pieceLayer.push_back(pieceRow);
+    }
+    
+    for(const auto pieceContainer : pieces){
+        std::string coordName = pieceContainer.position;
+        int x = coordName.at(0) - 'a';
+        int y = rows - (coordName.at(1) - '1') - 1;
 
-            std::string coordName;
-            ifs >> coordName;
-            int x = coordName.at(0) - 'a';
-            int y = rows - (coordName.at(1) - '1') - 1;
-
-            if(y < 0){
-                std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
-                continue;
-            }
-            if(y >= m_pieceLayer.size()){
-                std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
-                continue;
-            }
-            if(x < 0){
-                std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
-                continue;
-            }
-            if(x >= m_pieceLayer.at(y).size()){
-                std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
-                continue;
-            }
-            m_pieceLayer.at(y).at(x) = new LogicPiece(notation, colorId);
+        if(y < 0){
+            std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
+            continue;
         }
+        if(y >= m_pieceLayer.size()){
+            std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
+            continue;
+        }
+        if(x < 0){
+            std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
+            continue;
+        }
+        if(x >= m_pieceLayer.at(y).size()){
+            std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
+            continue;
+        }
+        m_pieceLayer.at(y).at(x) = new LogicPiece(pieceContainer.name, pieceContainer.colorId);
     }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
