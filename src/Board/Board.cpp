@@ -4,12 +4,51 @@
 #include <fstream>
 #include <cctype> //isdigit
 
+#include "LogicBoardContainer.h"
+
 using namespace sigrid;
 
-Board::Board(std::unique_ptr<LogicBoard> logicBoard, std::unique_ptr<GraphicBoard> graphicBoard, PieceManager* pieceManagerPtr)
+Board::Board(std::string boardFilename, const GraphicBoardConfigContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
 : m_pieceManagerPtr(pieceManagerPtr){
-    m_logicBoard = std::move(logicBoard);
-    m_graphicBoard = std::move(graphicBoard);
+
+    LogicBoardContainer boardContainer;
+
+    std::ifstream ifs(boardFilename);
+
+    if(!ifs.is_open()){
+        std::cout << "LogicBoard: Failed to open position from file: " << boardFilename << std::endl;
+        return;
+    }
+
+    std::string key;
+    while(ifs >> key){
+
+        if(key == "Columns:"){
+            ifs >> boardContainer.columns;
+        }
+        else if(key == "Rows:"){
+            ifs >> boardContainer.rows;
+        }
+        else if(key == "RepeatSquares:"){
+            int squareId;
+            ifs >> squareId;
+            boardContainer.repeatedSquareIds.push_back(squareId);
+            ifs >> squareId;
+            boardContainer.repeatedSquareIds.push_back(squareId);
+        }
+        else if(key == "Piece:"){
+            sigrid::LogicPieceContainer pieceContainer;
+            ifs >> pieceContainer.colorId;
+            ifs >> pieceContainer.name;
+            ifs >> pieceContainer.position;
+            boardContainer.logicPieces.push_back(pieceContainer);
+        }
+    }
+
+    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardContainer.columns, boardContainer.rows, boardContainer.repeatedSquareIds, boardContainer.logicPieces, boardFilename);
+
+    m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
+
 }
 
 void Board::setPosition(sf::Vector2f position){

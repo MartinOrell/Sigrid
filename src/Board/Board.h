@@ -19,7 +19,7 @@ namespace sigrid{
     class Board: public sf::Drawable{
         public:            
 
-            Board(std::unique_ptr<LogicBoard> logicBoard, std::unique_ptr<GraphicBoard> graphicBoard, PieceManager* pieceManagerPtr);
+            Board(std::string boardFilename, const GraphicBoardConfigContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr);
 
 
             void setPosition(sf::Vector2f);
