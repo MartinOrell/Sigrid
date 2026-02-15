@@ -113,59 +113,6 @@ LogicBoard::LogicBoard(const LogicBoard& board){
     }
 }
 
-/*
-LogicBoard::LogicBoard(const std::string& fen){
-    int x = 0;
-    int y = 0;
-    std::vector<int> squareRow;
-    std::vector<LogicPiece*> pieceRow;
-    for(int i = 0; i < fen.size(); i++){
-        std::string s = fen.substr(i, 1);
-        if(std::isdigit(s.at(0))){
-            for(int j = 0; j < std::stoi(s); j++){
-                squareRow.push_back((x+y)%2);
-                pieceRow.push_back(nullptr);
-                x++;
-            }
-            x+= std::stoi(s);
-        }
-        else if(s == "/"){
-            x = 0;
-            y++;
-            m_squareLayer.push_back(squareRow);
-            squareRow.clear();
-            m_pieceLayer.push_back(pieceRow);
-            pieceRow.clear();
-        }
-        else{
-            int colorId;
-            if(isupper(s.back())){
-                colorId = 0;
-            }
-            else{
-                colorId = 1;
-            }
-            sigrid::LogicPiece* newPiece = new LogicPiece(s, colorId);
-            squareRow.push_back((x+y)%2);
-            pieceRow.push_back(newPiece);
-            x++;
-        }
-    }
-    m_squareLayer.push_back(squareRow);
-    m_pieceLayer.push_back(pieceRow);
-
-
-    for(int y1 = 0; y1 < m_squareLayer.size(); y1++){
-        std::vector<std::unique_ptr<int>> highlightRow;
-        for(int x1 = 0; x1 < m_squareLayer.at(y1).size(); x1++){
-            std::unique_ptr<int> noHighlight;
-            highlightRow.push_back(std::move(noHighlight));
-        }
-        m_squareHighlight.push_back(std::move(highlightRow));
-    }
-}
-*/
-
 LogicBoard::~LogicBoard(){
     for(int y = 0; y < height(); y++){
         for(int x = 0; x < width(); x++){
