@@ -1,29 +1,8 @@
-#include "MainWindow/MainWindow.h"
-#include "Menu/Menu.h"
-#include "WorkWindow/WorkWindow.h"
-#include "ToolWindow/ToolWindow.h"
 #include <string>
-#include "Piece/PieceManager.h"
-#include "Menu/MenuItem.h"
-#include "Action/Action.h"
-#include <fstream>
 #include <iostream>
 #include <filesystem>
-
-#include "Tool/Tool.h"
-
-#include "ToolPicker/ToolPickerWindow.h"
-
-#include "Tool/ToolManager.h"
-
-#include "Color/ColorManager.h"
-
-#include "Board/LogicBoard.h"
-
+#include "MainWindow/MainWindow.h"
 #include "MainWindow/MainWindowConfigContainer.h"
-
-#include "Board/LogicBoardContainer.h"
-#include "Piece/LogicPieceContainer.h"
 
 int main()
 {
