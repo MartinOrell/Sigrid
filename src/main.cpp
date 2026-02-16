@@ -27,7 +27,7 @@
 
 int main()
 {
-    sigrid::MainWindowConfigContainer wConfig;
+    sigrid::MainWindowConfigContainer config;
 
     std::string setupFilename = "saveData/startup.txt";
 
@@ -36,53 +36,15 @@ int main()
         setupFilename = "res/config/defaultStartup.txt";
     }
 
-    if(!wConfig.load(setupFilename)){
+    if(!config.load(setupFilename)){
         std::cout << "failed to load startup file: \"" << setupFilename
             << "\", exiting program" << std::endl;
         return -1;
     }
 
-    sigrid::MainWindow mainWindow({wConfig.windowWidth, wConfig.windowHeight}, wConfig.windowName);
-
-    sigrid::ColorManager colorManager{wConfig.arrowColors};
-    
-    sigrid::ToolManager toolManager(&colorManager);
-
-    auto toolWindow = std::make_unique<sigrid::ToolWindow>(&toolManager);
-
-    mainWindow.add(std::move(toolWindow));
-
-    sigrid::PieceManager pieceManager{wConfig.pieceColors};
-    pieceManager.loadImages(wConfig.pieces);
-
-    auto toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(wConfig, &pieceManager, &toolManager, wConfig.squareColors);
-    toolPickerWindow->addSelectTool();
-    toolPickerWindow->addArrowTool();
-    for(const auto& piece: wConfig.pieces){
-        if(piece.style == "light"){
-            toolPickerWindow->addPieceTool(piece.name);
-        }
-    }
-    toolPickerWindow->addPieceColorTools(wConfig.numPieceColors);
-
-    mainWindow.add(std::move(toolPickerWindow));
-
-    auto workWindow = std::make_unique<sigrid::WorkWindow>();
-
-    auto board = std::make_unique<sigrid::Board>(wConfig.boardFilename, wConfig.boardData, wConfig.squareColors, &pieceManager, &colorManager);
-
-    workWindow->addBoard(std::move(board));
-
-    mainWindow.add(std::move(workWindow));
-
-    auto menu = std::make_unique<sigrid::Menu>(wConfig.boardData, wConfig);
-
-    mainWindow.add(std::move(menu));
-
-
+    sigrid::MainWindow mainWindow(config);
 
     mainWindow.run();
-
 
     std::cout << "End" << std::endl;
 }

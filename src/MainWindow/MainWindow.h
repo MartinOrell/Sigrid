@@ -11,15 +11,12 @@
 #include "../ToolPicker/ToolPickerWindow.h"
 
 #include "../Tool/Tool.h"
+#include "MainWindowConfigContainer.h"
 
 namespace sigrid{
     class MainWindow{
         public:
-            MainWindow(sf::Vector2u size, std::string windowName);
-            void add(std::unique_ptr<sigrid::Menu> menu);
-            void add(std::unique_ptr<sigrid::WorkWindow> workWindow);
-            void add(std::unique_ptr<sigrid::ToolWindow> toolWindow);
-            void add(std::unique_ptr<sigrid::ToolPickerWindow> toolPickerWindow);
+            MainWindow(const MainWindowConfigContainer& config);
             void run();
         private:
             void createGraphic();
@@ -79,5 +76,9 @@ namespace sigrid{
 
             std::map<sf::Mouse::Button, bool> m_isMouseButtonPressedMap;
             std::map<sf::Mouse::Button, sf::Vector2i> m_mouseButtonPressedPositionMap;
+
+            ColorManager m_colorManager;
+            ToolManager m_toolManager;
+            PieceManager m_pieceManager;
     };
 }

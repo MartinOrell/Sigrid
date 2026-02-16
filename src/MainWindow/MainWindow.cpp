@@ -8,12 +8,15 @@
 using namespace sigrid;
 
 
-MainWindow::MainWindow(sf::Vector2u size, std::string windowName)
-: m_window{sf::VideoMode(size), windowName}
+MainWindow::MainWindow(const MainWindowConfigContainer& config)
+: m_window{sf::VideoMode({config.windowWidth, config.windowHeight}), config.windowName}
 , m_backgroundColor{sf::Color(30,30,30)}
-, m_size{size}
+, m_size{sf::Vector2u{config.windowWidth, config.windowHeight}}
 , m_scale{1.f,1.f}
-, m_piecePickerToBoardGap{10.f}{
+, m_piecePickerToBoardGap{10.f}
+, m_colorManager{config.arrowColors}
+, m_toolManager(&m_colorManager)
+, m_pieceManager{config.pieceColors}{
     m_window.setFramerateLimit(60);
 
     m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Left, false});
@@ -38,23 +41,29 @@ MainWindow::MainWindow(sf::Vector2u size, std::string windowName)
     m_tools.insert({sf::Mouse::Button::Extra1, std::move(tool4)});
     sigrid::Tool tool5{sigrid::ToolSelection::Select};
     m_tools.insert({sf::Mouse::Button::Extra2, std::move(tool5)});
-    
-}
 
-void MainWindow::add(std::unique_ptr<sigrid::Menu> menu){
-    m_menu = std::move(menu);
-}
+    m_toolWindow = std::make_unique<sigrid::ToolWindow>(&m_toolManager);
 
-void MainWindow::add(std::unique_ptr<sigrid::WorkWindow> workWindow){
-    m_workWindow = std::move(workWindow);
-}
+    m_pieceManager.loadImages(config.pieces);
 
-void MainWindow::add(std::unique_ptr<sigrid::ToolWindow> toolWindow){
-    m_toolWindow = std::move(toolWindow);
-}
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config, &m_pieceManager, &m_toolManager, config.squareColors);
+    m_toolPickerWindow->addSelectTool();
+    m_toolPickerWindow->addArrowTool();
+    for(const auto& piece: config.pieces){
+        if(piece.style == "light"){
+            m_toolPickerWindow->addPieceTool(piece.name);
+        }
+    }
 
-void MainWindow::add(std::unique_ptr<sigrid::ToolPickerWindow> toolPickerWindow){
-    m_toolPickerWindow = std::move(toolPickerWindow);
+    m_toolPickerWindow->addPieceColorTools(config.numPieceColors);
+
+    m_workWindow = std::make_unique<sigrid::WorkWindow>();
+
+    auto board = std::make_unique<sigrid::Board>(config.boardFilename, config.boardData, config.squareColors, &m_pieceManager, &m_colorManager);
+
+    m_workWindow->addBoard(std::move(board));
+
+    m_menu = std::make_unique<sigrid::Menu>(config.boardData, config);
 }
 
 void MainWindow::run(){
@@ -236,7 +245,7 @@ void MainWindow::createGraphic(){
     }
 
     if(m_toolPickerWindow && !(m_toolPickerWindow->isHidden())){
-
+        
         unsigned int toolPickerWidth = (unsigned int)(x[toolPickerCoordId.toX]-x[toolPickerCoordId.fromX]);
         assert(toolPickerWidth > 0);
         unsigned int toolPickerHeight = (unsigned int)(y[toolPickerCoordId.toY]-y[toolPickerCoordId.fromY]);
