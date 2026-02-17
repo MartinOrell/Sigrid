@@ -38,12 +38,11 @@ namespace sigrid{
             void print();
             void clear();
 
-            void save();
+            void save(const std::string& filename);
         private:
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
             std::vector<std::vector<LogicPiece*>> m_pieceLayer;
             std::vector<LogicArrow> m_arrows;
-            std::string m_filename;
     };
 }

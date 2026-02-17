@@ -10,8 +10,7 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<LogicPieceContainer> pieces, const std::string& filename)
-: m_filename{filename}{
+LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<LogicPieceContainer> pieces, const std::string& filename){
 
     if(repeatSquares.size() == 0){
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
@@ -253,16 +252,16 @@ void LogicBoard::clear(){
     }
 }
 
-void LogicBoard::save(){
+void LogicBoard::save(const std::string& filename){
 
-    if(m_filename.length() == 0){
+    if(filename.length() == 0){
         std::cout << "LogicBoard unable to save, filename is not set" << std::endl;
         return; 
     }
 
-    std::cout << "Saving " << m_filename << std::endl;
+    std::cout << "Saving " << filename << std::endl;
 
-    std::ofstream out(m_filename);
+    std::ofstream out(filename);
 
     out << "Columns: " << width() << "\n";
     out << "Rows: " << height() << "\n";
@@ -284,5 +283,5 @@ void LogicBoard::save(){
             out << "Piece: " << colorId << " " << notation << " " << coord;
         }
     }
-    std::cerr << "Saved " << m_filename << std::endl;
+    std::cerr << "Saved " << filename << std::endl;
 }

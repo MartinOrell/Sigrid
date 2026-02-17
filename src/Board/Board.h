@@ -105,5 +105,8 @@ namespace sigrid{
 
             std::unique_ptr<Coord> m_selection;
             PieceManager* m_pieceManagerPtr;
+
+            std::string m_filename;
+            std::string m_imageFilename;
     };
 }

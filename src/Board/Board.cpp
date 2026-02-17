@@ -9,7 +9,9 @@
 using namespace sigrid;
 
 Board::Board(std::string boardFilename, const GraphicBoardConfigContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
-: m_pieceManagerPtr(pieceManagerPtr){
+: m_pieceManagerPtr(pieceManagerPtr)
+, m_filename{boardFilename}
+, m_imageFilename{"saveData/diagrams/images/board.png"}{
 
     LogicBoardContainer boardContainer;
 
@@ -263,8 +265,8 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
 }
 
 void Board::save(){
-    m_logicBoard->save();
-    m_graphicBoard->saveImage("saveData/diagrams/images/board.png");
+    m_logicBoard->save(m_filename);
+    m_graphicBoard->saveImage(m_imageFilename);
 }
 
 void Board::clear(){
