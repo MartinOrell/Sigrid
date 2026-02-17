@@ -46,8 +46,7 @@ namespace sigrid{
             void hideColorTools();
             void showTools();
             void hideTools();
-            void saveLogicBoard();
-            void saveBoardImage(const std::string& imageFilename);
+            void saveBoard();
             void addCoordinates();
             void removeCoordinates();
             void moveCoordinatesOutside();

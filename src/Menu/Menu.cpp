@@ -23,7 +23,7 @@ Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow,
     addHeader("Settings");
     addHeader("Help");
 
-    addItem("save image", 0, sigrid::ActionType::SaveBoardImage({"saveData/diagrams/images/board.png"}));
+    addItem("save image", 0, sigrid::ActionType::SaveBoard{});
     addItem("Reset", 1, sigrid::ActionType::Reset{});
     addItem("Clear", 1, sigrid::ActionType::Clear{});
     

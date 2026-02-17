@@ -36,9 +36,7 @@ namespace sigrid{
         struct HideColorTools{};
         struct ShowTools{};
         struct HideTools{};
-        struct SaveBoardImage{
-            std::string imageFileName;
-        };
+        struct SaveBoard{};
 
         struct AddCoordinates{};
         struct RemoveCoordinates{};
@@ -69,7 +67,7 @@ namespace sigrid{
         ActionType::HideColorTools,
         ActionType::ShowTools,
         ActionType::HideTools,
-        ActionType::SaveBoardImage,
+        ActionType::SaveBoard,
         ActionType::AddCoordinates,
         ActionType::RemoveCoordinates,
         ActionType::MoveCoordinatesOutside,

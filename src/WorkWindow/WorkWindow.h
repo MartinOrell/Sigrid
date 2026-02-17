@@ -37,9 +37,7 @@ namespace sigrid{
 
             void print();
 
-            void saveLogicBoard();
-
-            void saveBoardImage(const std::string& imageFileName);
+            void saveBoard();
 
             void addCoordinates();
 

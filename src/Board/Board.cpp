@@ -262,12 +262,9 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
     }
 }
 
-void Board::saveLogic(){
+void Board::save(){
     m_logicBoard->save();
-}
-
-void Board::saveImage(const std::string& filename){
-    m_graphicBoard->saveImage(filename);
+    m_graphicBoard->saveImage("saveData/diagrams/images/board.png");
 }
 
 void Board::clear(){

@@ -464,11 +464,9 @@ void MainWindow::handleAction(const sigrid::Action action){
         hideTools();
         return;
     }
-    else if(std::holds_alternative<ActionType::SaveBoardImage>(action)){
+    else if(std::holds_alternative<ActionType::SaveBoard>(action)){
 
-        std::string imageFilename = std::get<ActionType::SaveBoardImage>(action).imageFileName;
-        saveBoardImage(imageFilename);
-        saveLogicBoard();
+        saveBoard();
         return;
     }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
@@ -708,25 +706,15 @@ void MainWindow::hideTools(){
     createGraphic();
 }
 
-void MainWindow::saveLogicBoard(){
+void MainWindow::saveBoard(){
 
     if(!m_workWindow){
-        std::cout << "Unable to save board image, workwindow does not exist" << std::endl;
+        std::cout << "Unable to save board, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->saveLogicBoard();
+    m_workWindow->saveBoard();
 
-}
-
-void MainWindow::saveBoardImage(const std::string& imageFilename){
-
-    if(!m_workWindow){
-        std::cout << "Unable to save board image, workwindow does not exist" << std::endl;
-        return;
-    }
-
-    m_workWindow->saveBoardImage(imageFilename);
 }
 
 void MainWindow::addCoordinates(){

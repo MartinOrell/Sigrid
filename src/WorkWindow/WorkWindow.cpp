@@ -219,12 +219,8 @@ void WorkWindow::print(){
     m_boardPtr->print();
 }
 
-void WorkWindow::saveLogicBoard(){
-    m_boardPtr->saveLogic();
-}
-
-void WorkWindow::saveBoardImage(const std::string& filename){
-    m_boardPtr->saveImage(filename);
+void WorkWindow::saveBoard(){
+    m_boardPtr->save();
 }
 
 void WorkWindow::addCoordinates(){
