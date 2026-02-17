@@ -265,7 +265,24 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
 }
 
 void Board::save(){
-    m_logicBoard->save(m_filename);
+
+    if(m_filename.length() == 0){
+        std::cout << "Unable to save board, filename is not set" << std::endl;
+        return; 
+    }
+
+    std::cout << "Saving " << m_filename << std::endl;
+
+    std::ofstream out(m_filename);
+
+    out << *m_logicBoard;
+
+    std::cout << "Saved " << m_filename << std::endl;
+
+    if(m_imageFilename.length() == 0){
+        std::cout << "Unable to save board image, filename is not set" << std::endl;
+        return; 
+    }
     m_graphicBoard->saveImage(m_imageFilename);
 }
 

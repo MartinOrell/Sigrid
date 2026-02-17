@@ -252,36 +252,27 @@ void LogicBoard::clear(){
     }
 }
 
-void LogicBoard::save(const std::string& filename){
-
-    if(filename.length() == 0){
-        std::cout << "LogicBoard unable to save, filename is not set" << std::endl;
-        return; 
-    }
-
-    std::cout << "Saving " << filename << std::endl;
-
-    std::ofstream out(filename);
-
-    out << "Columns: " << width() << "\n";
-    out << "Rows: " << height() << "\n";
+std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
+{
+    out << "Columns: " << board.width() << "\n";
+    out << "Rows: " << board.height() << "\n";
     out << "RepeatSquares: 0 1";
-    for(int y = m_pieceLayer.size()-1; y >= 0; y--){
-        for(int x = 0; x < m_pieceLayer.at(0).size(); x++){
+    for(int y = board.m_pieceLayer.size()-1; y >= 0; y--){
+        for(int x = 0; x < board.m_pieceLayer.at(0).size(); x++){
 
-            if(m_pieceLayer[y][x] == nullptr){
+            if(board.m_pieceLayer[y][x] == nullptr){
                 continue;
             }
             std::string coord("");
             coord.push_back('a' + x);
-            coord.push_back('0' - y + width());
-            int colorId = m_pieceLayer[y][x]->colorId();
-            std::string notation = m_pieceLayer[y][x]->notation();
+            coord.push_back('0' - y + board.width());
+            int colorId = board.m_pieceLayer[y][x]->colorId();
+            std::string notation = board.m_pieceLayer[y][x]->notation();
 
             out << "\n";
 
             out << "Piece: " << colorId << " " << notation << " " << coord;
         }
     }
-    std::cerr << "Saved " << filename << std::endl;
+    return out;
 }

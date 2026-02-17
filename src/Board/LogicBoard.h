@@ -38,7 +38,7 @@ namespace sigrid{
             void print();
             void clear();
 
-            void save(const std::string& filename);
+            friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
