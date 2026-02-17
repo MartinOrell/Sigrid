@@ -7,14 +7,14 @@
 using namespace sigrid;
 
 
-ToolPickerWindow::ToolPickerWindow(const MainWindowConfigContainer& wConfig, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, const std::vector<uint32_t>& squareColors)
+ToolPickerWindow::ToolPickerWindow(const bool showColors, const bool showWindow, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr)
 : m_pieceManagerPtr{pieceManagerPtr}
 , m_toolManagerPtr{toolManagerPtr}
 , m_numPieceColors{0}
 , m_colorDisplay{ColorDisplay::Piece}
-, m_showColors{wConfig.colorTools}
+, m_showColors{showColors}
 , m_colorColumns{2}
-, m_show{wConfig.toolWindow}
+, m_show{showWindow}
 , m_backgroundColor{255,255,255,0}
 , m_arrowColorId{-1}
 , m_pieceNotation{"P"}{

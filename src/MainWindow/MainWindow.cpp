@@ -46,7 +46,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     m_pieceManager.loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config, &m_pieceManager, &m_toolManager, config.squareColors);
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.colorTools, config.toolWindow, config.squareColors, &m_pieceManager, &m_toolManager);
     m_toolPickerWindow->addSelectTool();
     m_toolPickerWindow->addArrowTool();
     for(const auto& piece: config.pieces){
@@ -245,7 +245,7 @@ void MainWindow::createGraphic(){
     }
 
     if(m_toolPickerWindow && !(m_toolPickerWindow->isHidden())){
-        
+
         unsigned int toolPickerWidth = (unsigned int)(x[toolPickerCoordId.toX]-x[toolPickerCoordId.fromX]);
         assert(toolPickerWidth > 0);
         unsigned int toolPickerHeight = (unsigned int)(y[toolPickerCoordId.toY]-y[toolPickerCoordId.fromY]);
