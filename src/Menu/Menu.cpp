@@ -7,9 +7,9 @@
 using namespace sigrid;
 
 
-Menu::Menu(const GraphicBoardConfigContainer& gConfig, const MainWindowConfigContainer& wConfig)
-: m_isPinned(wConfig.pinMenu)
-, m_showItems(wConfig.pinMenu)
+Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const GraphicBoardConfigContainer& boardData)
+: m_isPinned(isPinned)
+, m_showItems(showItems)
 , m_showHeaderIndex(-1)
 , m_backgroundColor{255,255,255,0}{
 
@@ -31,11 +31,11 @@ Menu::Menu(const GraphicBoardConfigContainer& gConfig, const MainWindowConfigCon
     addToggleItem("Move Coordinates", 1, "Move Coordinates Outside", sigrid::ActionType::MoveCoordinatesOutside{}, "Move Coordinates Inside", sigrid::ActionType::MoveCoordinatesInside{});
     addToggleItem("Set Coordinate Size", 1, "Set Big Coordinates", sigrid::ActionType::SetBigCoordinates{}, "Set Small Coordinates", sigrid::ActionType::SetSmallCoordinates{});
 
-    if(gConfig.labelsInside){
+    if(boardData.labelsInside){
         toggleItem("Coordinates");
         hideItem("Set Coordinate Size");
     }
-    else if(gConfig.labelsOutside){
+    else if(boardData.labelsOutside){
         toggleItem("Coordinates");
         toggleItem("Move Coordinates");
     }
@@ -44,31 +44,31 @@ Menu::Menu(const GraphicBoardConfigContainer& gConfig, const MainWindowConfigCon
         hideItem("Set Coordinate Size");
     }
     addToggleItem("Toggle Border", 1, "Add Border", sigrid::ActionType::AddBoardBorder{}, "Remove Border", sigrid::ActionType::RemoveBoardBorder{});
-    if(gConfig.border){
+    if(boardData.border){
         toggleItem("Toggle Border");
     }
     
     addToggleItem("Toggle PlayerToMove Token", 1, "Add Player-to-move Token", sigrid::ActionType::AddPlayerToMoveToken{}, "Remove Player-to-move Token", sigrid::ActionType::RemovePlayerToMoveToken{});
-    if(gConfig.playerToMoveToken){
+    if(boardData.playerToMoveToken){
         toggleItem("Toggle PlayerToMove Token");
     }
     
     addToggleItem("Pin Menu", 2, "Pin menu", sigrid::ActionType::PinMenu{}, "Unpin menu", sigrid::ActionType::PinMenu{});
-    if(wConfig.pinMenu){
+    if(isPinned){
         toggleItem("Pin Menu");
     }
     
     addToggleItem("Tool Window", 2, "Show Tool Window", sigrid::ActionType::ShowTools{}, "Hide Tool Window", sigrid::ActionType::HideTools{});
     addToggleItem("Color Tools", 2, "Show Color Tools", sigrid::ActionType::ShowColorTools{}, "Hide Color Tools", sigrid::ActionType::HideColorTools{});
 
-    if(wConfig.toolWindow){
+    if(showToolWindow){
         toggleItem("Tool Window");
     }
     else{
         hideItem("Color Tools");
     }
     
-    if(wConfig.colorTools){
+    if(showColorTools){
         toggleItem("Color Tools");
     }
     

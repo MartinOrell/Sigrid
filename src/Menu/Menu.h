@@ -17,7 +17,7 @@
 namespace sigrid{
     class Menu: public sf::Drawable{
         public:
-            Menu(const GraphicBoardConfigContainer& gConfig, const MainWindowConfigContainer& wConfig);
+            Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const GraphicBoardConfigContainer& boardData);
 
             void createGraphic(const sf::Vector2u& size);
 

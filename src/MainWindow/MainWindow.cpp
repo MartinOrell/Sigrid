@@ -63,7 +63,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     m_workWindow->addBoard(std::move(board));
 
-    m_menu = std::make_unique<sigrid::Menu>(config.boardData, config);
+    m_menu = std::make_unique<sigrid::Menu>(config.pinMenu, config.pinMenu, config.toolWindow, config.colorTools, config.boardData);
 }
 
 void MainWindow::run(){
