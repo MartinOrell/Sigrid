@@ -10,8 +10,7 @@ using namespace sigrid;
 
 Board::Board(std::string boardFilename, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
 : m_pieceManagerPtr(pieceManagerPtr)
-, m_filename{boardFilename}
-, m_imageFilename{"saveData/diagrams/images/board.png"}{
+, m_filename{boardFilename}{
 
     BoardDataContainer boardContainer;
 
@@ -44,6 +43,13 @@ Board::Board(std::string boardFilename, const BoardDesignContainer& graphicData,
             ifs >> pieceContainer.name;
             ifs >> pieceContainer.position;
             boardContainer.logicPieces.push_back(pieceContainer);
+        }
+        else if(key == "ImageFilename:"){
+            ifs >> m_imageFilename;
+        }
+        else{
+            std::cout << "Unknown key: " << key << std::endl;
+            std::cout << "found in file: " << boardFilename << std::endl;
         }
     }
 
@@ -275,15 +281,18 @@ void Board::save(){
 
     std::ofstream out(m_filename);
 
-    out << *m_logicBoard;
+    out << *m_logicBoard;    
 
     std::cout << "Saved " << m_filename << std::endl;
 
-    if(m_imageFilename.length() == 0){
-        std::cout << "Unable to save board image, filename is not set" << std::endl;
-        return; 
+    if(m_imageFilename.length() > 0){
+        out << "\nImageFilename: " << m_imageFilename;
+        m_graphicBoard->saveImage(m_imageFilename);
     }
-    m_graphicBoard->saveImage(m_imageFilename);
+    else{
+        std::cout << "Unable to save board image, filename is not set" << std::endl;
+    }
+    
 }
 
 void Board::clear(){
