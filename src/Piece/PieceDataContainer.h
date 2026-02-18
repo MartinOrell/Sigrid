@@ -3,7 +3,7 @@
 #include <string>
 
 namespace sigrid{
-    struct LogicPieceContainer{
+    struct PieceDataContainer{
 
         int colorId; //0 = white, 1 = black
         std::string name; //example: N

@@ -4,7 +4,7 @@
 #include <vector>
 #include "../Piece/PieceColor.h"
 #include "../Piece/PieceContainer.h"
-#include "../Board/GraphicBoardConfigContainer.h"
+#include "../Board/BoardDesignContainer.h"
 
 namespace sigrid{
     struct MainWindowConfigContainer{
@@ -19,7 +19,7 @@ namespace sigrid{
         std::vector<uint32_t> arrowColors;
         std::vector<PieceColor> pieceColors;
         std::vector<PieceContainer> pieces;
-        GraphicBoardConfigContainer boardData;
+        BoardDesignContainer boardData;
 
         int numPieceColors;
 

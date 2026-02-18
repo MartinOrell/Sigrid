@@ -10,14 +10,14 @@
 #include <SFML/Graphics/Font.hpp>
 #include "../Tool/Tool.h"
 
-#include "../Board/GraphicBoardConfigContainer.h"
+#include "../Board/BoardDesignContainer.h"
 #include "../MainWindow/MainWindowConfigContainer.h"
 
 
 namespace sigrid{
     class Menu: public sf::Drawable{
         public:
-            Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const GraphicBoardConfigContainer& boardData);
+            Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const BoardDesignContainer& boardData);
 
             void createGraphic(const sf::Vector2u& size);
 

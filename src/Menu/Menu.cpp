@@ -7,7 +7,7 @@
 using namespace sigrid;
 
 
-Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const GraphicBoardConfigContainer& boardData)
+Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const BoardDesignContainer& boardData)
 : m_isPinned(isPinned)
 , m_showItems(showItems)
 , m_showHeaderIndex(-1)

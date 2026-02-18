@@ -23,13 +23,13 @@
 
 #include "../Color/ColorManager.h"
 
-#include "GraphicBoardConfigContainer.h"
+#include "BoardDesignContainer.h"
 
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
             
-            GraphicBoard(const LogicBoard& logicBoard, const GraphicBoardConfigContainer& config, PieceManager* pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* colorManagerPtr);
+            GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* colorManagerPtr);
             
 
             sf::Vector2f getSquareSize() const;

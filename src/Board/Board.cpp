@@ -4,16 +4,16 @@
 #include <fstream>
 #include <cctype> //isdigit
 
-#include "LogicBoardContainer.h"
+#include "BoardDataContainer.h"
 
 using namespace sigrid;
 
-Board::Board(std::string boardFilename, const GraphicBoardConfigContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
+Board::Board(std::string boardFilename, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
 : m_pieceManagerPtr(pieceManagerPtr)
 , m_filename{boardFilename}
 , m_imageFilename{"saveData/diagrams/images/board.png"}{
 
-    LogicBoardContainer boardContainer;
+    BoardDataContainer boardContainer;
 
     std::ifstream ifs(boardFilename);
 
@@ -39,7 +39,7 @@ Board::Board(std::string boardFilename, const GraphicBoardConfigContainer& graph
             boardContainer.repeatedSquareIds.push_back(squareId);
         }
         else if(key == "Piece:"){
-            sigrid::LogicPieceContainer pieceContainer;
+            sigrid::PieceDataContainer pieceContainer;
             ifs >> pieceContainer.colorId;
             ifs >> pieceContainer.name;
             ifs >> pieceContainer.position;

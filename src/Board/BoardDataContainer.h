@@ -2,15 +2,15 @@
 
 #include <string>
 #include <vector>
-#include "../Piece/LogicPieceContainer.h"
+#include "../Piece/PieceDataContainer.h"
 
 namespace sigrid{
-    struct LogicBoardContainer{
+    struct BoardDataContainer{
 
         int columns;
         int rows;
         std::vector<int> repeatedSquareIds;
-        std::vector<LogicPieceContainer> logicPieces;
+        std::vector<PieceDataContainer> logicPieces;
         std::string filename;
     };
 }

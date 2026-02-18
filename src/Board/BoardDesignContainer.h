@@ -3,7 +3,7 @@
 #include <string>
 
 namespace sigrid{
-    struct GraphicBoardConfigContainer{
+    struct BoardDesignContainer{
 
         int squareSize;
         bool labelsInside;
