@@ -28,6 +28,10 @@ namespace sigrid{
 
             void setScale(const float scale);
 
+            void setFilename(const std::string& filename);
+
+            void setImageFilename(const std::string& filename);
+
             unsigned int getNumColumns() const;
 
             unsigned int getImageWidth() const;
@@ -45,6 +49,8 @@ namespace sigrid{
             bool isCoordinatesOutside() const;
 
             bool isWithinPlayerToMoveToken(sf::Vector2i point) const;
+
+            bool isImageFilenameSet() const;
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 

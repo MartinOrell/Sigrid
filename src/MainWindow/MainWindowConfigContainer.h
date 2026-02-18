@@ -23,7 +23,9 @@ namespace sigrid{
 
         int numPieceColors;
 
+        std::string resetBoardFilename;
         std::string boardFilename;
+        std::string defaultBoardImageFilename;
 
         bool pinMenu;
         bool toolWindow;

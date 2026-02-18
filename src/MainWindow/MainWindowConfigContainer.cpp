@@ -64,8 +64,14 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;
         }
+        else if(key == "ResetBoardFilename:"){
+            ifs >> resetBoardFilename;
+        }
         else if(key == "BoardFilename:"){
             ifs >> boardFilename;
+        }
+        else if(key == "DefaultBoardImageFilename:"){
+            ifs >> defaultBoardImageFilename;
         }
         else if(key == "PinMenu:"){
             std::string s;
@@ -137,7 +143,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             boardData.playerToMoveToken = isEnabled == "ON";
         }
         else{
-            std::cout << "main: unknown key read from startupfile: " << key << std::endl;
+            std::cout << "Unknown key: \"" << key << "\"" << std::endl;
+            std::cout << "read from startup file: \"" << filename << "\"" << std::endl;
         }
     }
     return true;

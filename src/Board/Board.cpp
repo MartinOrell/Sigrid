@@ -71,6 +71,14 @@ void Board::setScale(const float scale){
     m_graphicBoard->setScale(scale);
 }
 
+void Board::setFilename(const std::string& filename){
+    m_filename = filename;
+}
+
+void Board::setImageFilename(const std::string& filename){
+    m_imageFilename = filename;
+}
+
 unsigned int Board::getNumColumns() const{
     return m_logicBoard->width();
 }
@@ -105,6 +113,10 @@ bool Board::isCoordinatesOutside() const{
 
 bool Board::isWithinPlayerToMoveToken(sf::Vector2i point) const{
     return m_graphicBoard->isWithinPlayerToMoveToken(point);
+}
+
+bool Board::isImageFilenameSet() const{
+    return m_imageFilename.length() > 0;
 }
 
 std::optional<Coord> Board::getSquareCoord(sf::Vector2i point){

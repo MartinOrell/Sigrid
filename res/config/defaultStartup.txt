@@ -51,7 +51,9 @@ OutsideLabelBigSize: 60%
 Border: ON
 BorderWidth: 2
 PlayerToMoveToken: OFF
+ResetBoardFilename: res/config/setupBoards/chess.txt
 BoardFilename: saveData/boards/board.txt
+DefaultBoardImageFilename: saveData/boards/images/board.png
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF
