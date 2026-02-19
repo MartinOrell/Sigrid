@@ -282,7 +282,7 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
     }
 }
 
-void createFolderForFile(const std::string filename){
+bool createFolderForFile(const std::string filename){
     int endPos = filename.find('/',1);
     while(endPos != filename.npos){
         
@@ -295,13 +295,14 @@ void createFolderForFile(const std::string filename){
                 std::cout << "Created folder: " << folder << std::endl;
             }
             else{
-                std::cout << "Failed to create saveFolder" << std::endl;
-                return;
+                std::cout << "Failed to create folder: " << folder << std::endl;
+                return false;
             }
         }
 
         endPos = filename.find('/',endPos+1);
     }
+    return true;
 }
 
 void Board::save(){
@@ -313,7 +314,10 @@ void Board::save(){
 
     std::cout << "Saving " << m_filename << std::endl;
 
-    createFolderForFile(m_filename);
+    if(!createFolderForFile(m_filename)){
+        std::cout << "Saving failed" << std::endl;
+        return;
+    }
 
     std::ofstream out(m_filename);
 
@@ -334,7 +338,9 @@ void Board::save(){
 
     out << "\nImageFilename: " << m_imageFilename;
 
-    createFolderForFile(m_imageFilename);
+    if(!(createFolderForFile(m_imageFilename))){
+        std::cout << "Saving board image failed" << std::endl;
+    }
 
     m_graphicBoard->saveImage(m_imageFilename);
 }
