@@ -282,6 +282,28 @@ void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
     }
 }
 
+void createFolderForFile(const std::string filename){
+    int endPos = filename.find('/',1);
+    while(endPos != filename.npos){
+        
+        std::string folder = filename.substr(0,endPos);
+
+        if(!std::filesystem::exists(folder)){
+            bool createFolderIsSuccessful;
+            createFolderIsSuccessful = std::filesystem::create_directory(folder);
+            if(createFolderIsSuccessful){
+                std::cout << "Created folder: " << folder << std::endl;
+            }
+            else{
+                std::cout << "Failed to create saveFolder" << std::endl;
+                return;
+            }
+        }
+
+        endPos = filename.find('/',endPos+1);
+    }
+}
+
 void Board::save(){
 
     if(m_filename.length() == 0){
@@ -291,20 +313,30 @@ void Board::save(){
 
     std::cout << "Saving " << m_filename << std::endl;
 
+    createFolderForFile(m_filename);
+
     std::ofstream out(m_filename);
+
+    if(!out.is_open()){
+        std::cout << "Failed to open " << m_filename << std::endl;
+        std::cout << "Saving failed" << std::endl;
+        return;
+    }
 
     out << *m_logicBoard;    
 
     std::cout << "Saved " << m_filename << std::endl;
 
-    if(m_imageFilename.length() > 0){
-        out << "\nImageFilename: " << m_imageFilename;
-        m_graphicBoard->saveImage(m_imageFilename);
-    }
-    else{
+    if(m_imageFilename.length() == 0){
         std::cout << "Unable to save board image, filename is not set" << std::endl;
+        return;
     }
-    
+
+    out << "\nImageFilename: " << m_imageFilename;
+
+    createFolderForFile(m_imageFilename);
+
+    m_graphicBoard->saveImage(m_imageFilename);
 }
 
 void Board::clear(){
