@@ -340,6 +340,7 @@ void Board::save(){
 
     if(!(createFolderForFile(m_imageFilename))){
         std::cout << "Saving board image failed" << std::endl;
+        return;
     }
 
     m_graphicBoard->saveImage(m_imageFilename);
