@@ -16,6 +16,8 @@ namespace sigrid{
             void createGraphic(const sf::Vector2u& size);
 
             void addBoard(std::unique_ptr<sigrid::Board> board);
+
+            void loadFen(const std::string& fen);
             
             virtual void setPosition(sf::Vector2f);
 

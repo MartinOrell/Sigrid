@@ -22,6 +22,7 @@ namespace sigrid{
             const unsigned int width() const;
             const unsigned int height() const;
 
+            bool isWithinBoard(const Coord& coord) const;
             bool isEmptySquare(const Coord& coord) const;
             std::optional<LogicPiece*> getPieceAt(const Coord& coord) const;
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;

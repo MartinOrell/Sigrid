@@ -196,6 +196,13 @@ void Board::deselect(){
 
 void Board::addPiece(const Piece& piece, const Coord& coord){
 
+    if(!m_logicBoard->isWithinBoard(coord)){
+        std::cout << "Failed to add Piece at ("
+            << coord.x << ", " << coord.y
+            << "), because it is out of bounds" << std::endl;
+        return;
+    }
+
     auto logicPiecePtr_o = m_logicBoard->getPieceAt(coord);
     if(logicPiecePtr_o == std::nullopt){
         m_logicBoard->addPiece(piece.logic(), coord);
@@ -245,13 +252,19 @@ void Board::removeDragArrow(){
     m_graphicBoard->removeDragArrow();
 }
 
-void Board::loadFENPiecePlacement(std::string fenPiecePlacement){
+void Board::loadFen(const std::string& fen){
 
+    std::cout << "Loading position from FEN: " << fen << std::endl;
+
+    clear();
     int x = 0;
     int y = 0;
-    for(int i = 0; i < fenPiecePlacement.size(); i++){
-        std::string s = fenPiecePlacement.substr(i, 1);
-        if(std::isdigit(s.at(0))){
+    for(int i = 0; i < fen.size(); i++){
+        std::string s = fen.substr(i, 1);
+        if(s == " "){
+            break;
+        }
+        else if(std::isdigit(s.at(0))){
             x+= std::stoi(s);
         }
         else if(s == "/"){

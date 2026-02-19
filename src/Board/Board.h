@@ -73,7 +73,7 @@ namespace sigrid{
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
 
-            void loadFENPiecePlacement(std::string);
+            void loadFen(const std::string& fen);
 
             void save();
 

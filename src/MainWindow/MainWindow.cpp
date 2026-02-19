@@ -4,6 +4,7 @@
 
 #include "../Action/Action.h"
 #include "../Tool/Tool.h"
+#include <SFML/Window/Clipboard.hpp>
 
 using namespace sigrid;
 
@@ -487,6 +488,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         saveBoard();
         return;
     }
+    else if(std::holds_alternative<ActionType::PasteFen>(action)){
+        pasteFen();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
         addCoordinates();
         return;
@@ -733,6 +738,17 @@ void MainWindow::saveBoard(){
 
     m_workWindow->saveBoard();
 
+}
+
+void MainWindow::pasteFen(){
+
+    if(!m_workWindow){
+        std::cout << "Unable to paste FEN string, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    std::string fen = std::string(sf::Clipboard::getString());
+    m_workWindow->loadFen(fen);
 }
 
 void MainWindow::addCoordinates(){

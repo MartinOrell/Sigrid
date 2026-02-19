@@ -37,6 +37,7 @@ namespace sigrid{
         struct ShowTools{};
         struct HideTools{};
         struct SaveBoard{};
+        struct PasteFen{};
 
         struct AddCoordinates{};
         struct RemoveCoordinates{};
@@ -68,6 +69,7 @@ namespace sigrid{
         ActionType::ShowTools,
         ActionType::HideTools,
         ActionType::SaveBoard,
+        ActionType::PasteFen,
         ActionType::AddCoordinates,
         ActionType::RemoveCoordinates,
         ActionType::MoveCoordinatesOutside,

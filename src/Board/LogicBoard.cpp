@@ -96,11 +96,18 @@ const unsigned int LogicBoard::height() const{
     return m_squareLayer.size();
 }
 
-bool LogicBoard::isEmptySquare(const Coord& coord) const{
+bool LogicBoard::isWithinBoard(const Coord& coord) const{
     if(coord.x >= width()){
         return false;
     }
     if(coord.y >= height()){
+        return false;
+    }
+    return true;
+}
+
+bool LogicBoard::isEmptySquare(const Coord& coord) const{
+    if(!isWithinBoard(coord)){
         return false;
     }
     return m_pieceLayer[coord.y][coord.x] == nullptr;

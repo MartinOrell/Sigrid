@@ -52,6 +52,8 @@ Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow,
     if(boardData.playerToMoveToken){
         toggleItem("Toggle PlayerToMove Token");
     }
+
+    addItem("Paste FEN", 1, sigrid::ActionType::PasteFen{});
     
     addToggleItem("Pin Menu", 2, "Pin menu", sigrid::ActionType::PinMenu{}, "Unpin menu", sigrid::ActionType::PinMenu{});
     if(isPinned){

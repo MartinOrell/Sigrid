@@ -38,6 +38,10 @@ void WorkWindow::addBoard(std::unique_ptr<sigrid::Board> board){
     m_boardPtr = std::move(board);
 }
 
+void WorkWindow::loadFen(const std::string& fen){
+    m_boardPtr->loadFen(fen);
+}
+
 void WorkWindow::setPosition(sf::Vector2f position){
     m_position = position;
 }
@@ -207,8 +211,7 @@ void WorkWindow::textEntered(const std::string& text){
 
 void WorkWindow::reset(){
     std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"};
-    m_boardPtr->clear();
-    m_boardPtr->loadFENPiecePlacement(fen);
+    m_boardPtr->loadFen(fen);
 }
 
 void WorkWindow::clear(){
