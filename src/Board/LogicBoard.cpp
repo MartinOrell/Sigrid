@@ -151,6 +151,40 @@ std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
     return colorId;
 }
 
+std::string LogicBoard::getFen() const{
+
+    std::string fen;
+
+    for(int y = 0; y < height(); y++){
+        int i = 0;
+        for(int x = 0; x < width();x++){
+            std::cout << x << " " << y << std::endl;
+            if(m_pieceLayer[y][x] == nullptr){
+                i++;
+            }
+            else{
+                if(i > 0){
+                    fen.append(std::to_string(i));;
+                    i = 0;
+                }
+                std::string s = m_pieceLayer[y][x]->notation();
+                if(m_pieceLayer[y][x]->colorId() == 1){
+                    s.front() = tolower(s.front());
+                }
+                fen.append(s);
+            }
+        }
+        if(i > 0){
+            fen.append(std::to_string(i));
+        }
+        if(y < height()-1){
+            fen.append("/");
+        }
+    }
+
+    return fen;
+}
+
 void LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
     
     if(m_pieceLayer[coord.y][coord.x] == nullptr){

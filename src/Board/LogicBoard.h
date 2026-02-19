@@ -26,6 +26,7 @@ namespace sigrid{
             bool isEmptySquare(const Coord& coord) const;
             std::optional<LogicPiece*> getPieceAt(const Coord& coord) const;
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;
+            std::string getFen() const;
 
             void addPiece(const LogicPiece& piece, const Coord& coord);
             void removePiece(const Coord& coord);

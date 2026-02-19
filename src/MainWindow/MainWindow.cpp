@@ -492,6 +492,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         pasteFen();
         return;
     }
+    else if(std::holds_alternative<ActionType::CopyFen>(action)){
+        copyFen();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
         addCoordinates();
         return;
@@ -749,6 +753,18 @@ void MainWindow::pasteFen(){
 
     std::string fen = std::string(sf::Clipboard::getString());
     m_workWindow->loadFen(fen);
+}
+
+void MainWindow::copyFen(){
+
+    if(!m_workWindow){
+        std::cout << "Unable to copy FEN string, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    std::string fen = m_workWindow->getFen();
+    sf::Clipboard::setString(sf::String(fen));
+    std::cout << "Copied Fen: \"" << fen << "\"" << std::endl;
 }
 
 void MainWindow::addCoordinates(){

@@ -56,6 +56,8 @@ namespace sigrid{
 
             std::optional<Piece> getPiece(const Coord& coord);
 
+            std::string getFen() const;
+
             void select(const Coord& coord);
 
             void keyPressed(sf::Event::KeyPressed);

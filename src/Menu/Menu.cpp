@@ -54,6 +54,7 @@ Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow,
     }
 
     addItem("Paste FEN", 1, sigrid::ActionType::PasteFen{});
+    addItem("Copy FEN", 1, sigrid::ActionType::CopyFen{});
     
     addToggleItem("Pin Menu", 2, "Pin menu", sigrid::ActionType::PinMenu{}, "Unpin menu", sigrid::ActionType::PinMenu{});
     if(isPinned){

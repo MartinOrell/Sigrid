@@ -18,6 +18,8 @@ namespace sigrid{
             void addBoard(std::unique_ptr<sigrid::Board> board);
 
             void loadFen(const std::string& fen);
+
+            std::string getFen() const;
             
             virtual void setPosition(sf::Vector2f);
 

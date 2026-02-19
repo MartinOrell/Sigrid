@@ -131,6 +131,10 @@ std::optional<Piece> Board::getPiece(const Coord& coord){
     return m_pieceManagerPtr->getPiece(*piece_o.value());
 }
 
+std::string Board::getFen() const{
+    return m_logicBoard->getFen();
+}
+
 void Board::select(const Coord& newCoord){
     if(!m_selection){
         m_selection = std::make_unique<Coord>(newCoord);

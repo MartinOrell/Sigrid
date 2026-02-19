@@ -38,6 +38,7 @@ namespace sigrid{
         struct HideTools{};
         struct SaveBoard{};
         struct PasteFen{};
+        struct CopyFen{};
 
         struct AddCoordinates{};
         struct RemoveCoordinates{};
@@ -70,6 +71,7 @@ namespace sigrid{
         ActionType::HideTools,
         ActionType::SaveBoard,
         ActionType::PasteFen,
+        ActionType::CopyFen,
         ActionType::AddCoordinates,
         ActionType::RemoveCoordinates,
         ActionType::MoveCoordinatesOutside,

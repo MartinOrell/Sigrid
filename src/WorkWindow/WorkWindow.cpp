@@ -42,6 +42,10 @@ void WorkWindow::loadFen(const std::string& fen){
     m_boardPtr->loadFen(fen);
 }
 
+std::string WorkWindow::getFen() const{
+    return m_boardPtr->getFen();
+}
+
 void WorkWindow::setPosition(sf::Vector2f position){
     m_position = position;
 }
