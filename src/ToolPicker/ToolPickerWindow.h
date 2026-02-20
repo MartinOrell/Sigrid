@@ -98,12 +98,9 @@ namespace sigrid{
 
             bool m_showColors;
             int m_colorColumns;
-            //Coord m_firstColorPos;
 
             int m_numPieceColors;
             int m_numArrowColors;
-
-            //Coord m_nextToolCoord;
 
             sf::Color m_backgroundColor;
     };
