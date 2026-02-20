@@ -10,13 +10,15 @@ set(SRC_FILES
     src/WorkWindow/WorkWindow.cpp
     src/ToolWindow/ToolWindow.cpp
     src/ToolWindow/ToolItem.cpp
-    src/Board/Board.cpp src/Piece/Piece.cpp
+    src/Board/BoardDataContainer.cpp
+    src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
     src/Board/Coord.cpp
     src/Piece/LogicPiece.cpp
     src/Piece/GraphicPiece.cpp
     src/Piece/PieceIdentifier.cpp
+    src/Piece/Piece.cpp
     src/Piece/PieceManager.cpp
     src/Tool/Tool.cpp
     src/Tool/ToolManager.cpp

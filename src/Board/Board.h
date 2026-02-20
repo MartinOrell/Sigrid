@@ -14,12 +14,13 @@
 #include "../Arrow/LogicArrow.h"
 
 #include "../Arrow/GraphicArrow.h"
+#include "BoardDataContainer.h"
 
 namespace sigrid{
     class Board: public sf::Drawable{
         public:            
 
-            Board(std::string boardFilename, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr);
+            Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr);
 
 
             void setPosition(sf::Vector2f);

@@ -16,7 +16,7 @@ namespace sigrid{
     class LogicBoard{
 
         public:
-            LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces, const std::string& filename);
+            LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces);
             LogicBoard(const LogicBoard& board);
             ~LogicBoard();
             const unsigned int width() const;

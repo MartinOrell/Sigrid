@@ -1,0 +1,57 @@
+#include "BoardDataContainer.h"
+
+#include <fstream>
+#include <iostream>
+
+using namespace sigrid;
+
+
+bool BoardDataContainer::load(const std::string& filename){
+    std::ifstream ifs(filename);
+
+    if(!ifs.is_open()){
+        std::cout << "Failed to open board from file: " << filename;
+        return false;
+    }
+
+    this->filename = filename;
+
+    try{
+        std::string key;
+        while(ifs >> key){
+
+            if(key == "Columns:"){
+                ifs >> columns;
+            }
+            else if(key == "Rows:"){
+                ifs >> rows;
+            }
+            else if(key == "RepeatSquares:"){
+                int squareId;
+                ifs >> squareId;
+                repeatedSquareIds.push_back(squareId);
+                ifs >> squareId;
+                repeatedSquareIds.push_back(squareId);
+            }
+            else if(key == "Piece:"){
+                sigrid::PieceDataContainer pieceContainer;
+                ifs >> pieceContainer.colorId;
+                ifs >> pieceContainer.name;
+                ifs >> pieceContainer.position;
+                logicPieces.push_back(pieceContainer);
+            }
+            else if(key == "ImageFilename:"){
+                ifs >> imageFilename;
+            }
+            else{
+                std::cout << "Unknown key: " << key << std::endl;
+                std::cout << "found in board file: " << filename << std::endl;
+            }
+        }
+    }
+    catch(...){
+        std::cout << "Failed reading board from file: " << filename << std::endl;
+        return false;
+    }
+    return true;
+}

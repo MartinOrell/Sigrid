@@ -70,7 +70,14 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     std::cout << "Creating board: " << boardFilename << std::endl;
 
-    auto board = std::make_unique<sigrid::Board>(boardFilename, config.boardData, config.squareColors, &m_pieceManager, &m_colorManager);
+    BoardDataContainer boardData;
+
+    if(!(boardData.load(boardFilename))){
+        std::cout << "MainWindow failed creating board, loading board data failed" << std::endl;
+        return;
+    }
+
+    auto board = std::make_unique<sigrid::Board>(boardData, config.boardData, config.squareColors, &m_pieceManager, &m_colorManager);
 
     std::cout << "Save location: " << config.boardFilename << std::endl;
 

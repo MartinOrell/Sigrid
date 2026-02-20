@@ -4,56 +4,13 @@
 #include <fstream>
 #include <cctype> //isdigit
 
-#include "BoardDataContainer.h"
-
 using namespace sigrid;
 
-Board::Board(std::string boardFilename, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
+Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
 : m_pieceManagerPtr(pieceManagerPtr)
-, m_filename{boardFilename}{
+, m_filename{boardData.filename}{
 
-    BoardDataContainer boardContainer;
-
-    std::ifstream ifs(boardFilename);
-
-    if(!ifs.is_open()){
-        std::cout << "LogicBoard: Failed to open position from file: " << boardFilename << std::endl;
-        return;
-    }
-
-    std::string key;
-    while(ifs >> key){
-
-        if(key == "Columns:"){
-            ifs >> boardContainer.columns;
-        }
-        else if(key == "Rows:"){
-            ifs >> boardContainer.rows;
-        }
-        else if(key == "RepeatSquares:"){
-            int squareId;
-            ifs >> squareId;
-            boardContainer.repeatedSquareIds.push_back(squareId);
-            ifs >> squareId;
-            boardContainer.repeatedSquareIds.push_back(squareId);
-        }
-        else if(key == "Piece:"){
-            sigrid::PieceDataContainer pieceContainer;
-            ifs >> pieceContainer.colorId;
-            ifs >> pieceContainer.name;
-            ifs >> pieceContainer.position;
-            boardContainer.logicPieces.push_back(pieceContainer);
-        }
-        else if(key == "ImageFilename:"){
-            ifs >> m_imageFilename;
-        }
-        else{
-            std::cout << "Unknown key: " << key << std::endl;
-            std::cout << "found in file: " << boardFilename << std::endl;
-        }
-    }
-
-    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardContainer.columns, boardContainer.rows, boardContainer.repeatedSquareIds, boardContainer.logicPieces, boardFilename);
+    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardData.columns, boardData.rows, boardData.repeatedSquareIds, boardData.logicPieces);
 
     m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
 

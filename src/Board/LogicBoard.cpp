@@ -10,7 +10,7 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces, const std::string& filename){
+LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces){
 
     if(repeatSquares.size() == 0){
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
