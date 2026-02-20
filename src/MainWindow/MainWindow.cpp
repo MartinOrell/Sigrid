@@ -60,20 +60,29 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
 
-    std::string boardFilename;
+    BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){
-        boardFilename = config.boardFilename;
+        
+        if(boardData.load(config.boardFilename)){
+            std:: cout << "Board data: " << config.boardFilename << " loaded" << std::endl;
+        }
+        else if (boardData.load(config.resetBoardFilename)){
+            std::cout << "Failed reading Board data: " << config.boardFilename << std::endl;
+            std::cout << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
+        }
+        else{
+            std::cout << "Main Window failed reading both " << config.boardFilename
+            << " and " << config.resetBoardFilename << "." << std::endl;
+            std::cout << "Main Window failed creating board." << std::endl;
+            return;
+        }
+    }
+    else if (boardData.load(config.resetBoardFilename)){
+        std::cout << "Board data: " << config.resetBoardFilename << " loaded" << std::endl;
     }
     else{
-        boardFilename = config.resetBoardFilename;
-    }
-
-    std::cout << "Creating board: " << boardFilename << std::endl;
-
-    BoardDataContainer boardData;
-
-    if(!(boardData.load(boardFilename))){
-        std::cout << "MainWindow failed creating board, loading board data failed" << std::endl;
+        std::cout << "Main Window failed reading " << config.resetBoardFilename << std::endl;
+        std::cout << "Main Window failed creating board." << std::endl;
         return;
     }
 
