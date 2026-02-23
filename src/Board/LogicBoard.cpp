@@ -16,6 +16,7 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
         return;
     }
+    
     for(unsigned int y = 0; y < rows; y++){
         std::vector<int> squareRow;
         std::vector<LogicPiece*> pieceRow;
@@ -26,29 +27,28 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
         m_squareLayer.push_back(squareRow);
         m_pieceLayer.push_back(pieceRow);
     }
-    
-    for(const auto pieceContainer : pieces){
-        std::string coordName = pieceContainer.position;
-        int x = coordName.at(0) - 'a';
-        int y = rows - (coordName.at(1) - '1') - 1;
 
-        if(y < 0){
-            std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
+    for(const auto pieceContainer : pieces){
+
+        Coord coord{pieceContainer.position,true,false,width(),height()};
+
+        if(coord.y < 0){
+            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing row on board" << std::endl;
             continue;
         }
-        if(y >= m_pieceLayer.size()){
-            std::cout << "Failed to set piece at " << coordName << ", missing row on board" << std::endl;
+        if(coord.y >= height()){
+            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing row on board" << std::endl;
             continue;
         }
-        if(x < 0){
-            std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
+        if(coord.x < 0){
+            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing column on board" << std::endl;
             continue;
         }
-        if(x >= m_pieceLayer.at(y).size()){
-            std::cout << "Failed to set piece at " << coordName << ", missing column on board" << std::endl;
+        if(coord.x >= width()){
+            std::cout << "Failed to set piece at " << coord.getNotation(true,false, width(),height()) << ", missing column on board" << std::endl;
             continue;
         }
-        m_pieceLayer.at(y).at(x) = new LogicPiece(pieceContainer.name, pieceContainer.colorId);
+        m_pieceLayer.at(coord.y).at(coord.x) = new LogicPiece(pieceContainer.name, pieceContainer.colorId);
     }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
@@ -304,15 +304,13 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
             if(board.m_pieceLayer[y][x] == nullptr){
                 continue;
             }
-            std::string coord("");
-            coord.push_back('a' + x);
-            coord.push_back('0' - y + board.width());
+            Coord coord(x,y);
             int colorId = board.m_pieceLayer[y][x]->colorId();
             std::string notation = board.m_pieceLayer[y][x]->notation();
 
             out << "\n";
 
-            out << "Piece: " << colorId << " " << notation << " " << coord;
+            out << "Piece: " << colorId << " " << notation << " " << coord.getNotation(true,false,board.width(),board.height());
         }
     }
     return out;
