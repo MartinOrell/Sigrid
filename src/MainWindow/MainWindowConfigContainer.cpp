@@ -159,7 +159,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             menuData.headerNames.push_back(headerName);
         }
         else if(key == "MenuItem:"){
-            std::cout << "menuItem" << std::endl;
             int itemId;
             MenuItemContainer item;
             ifs >> item.headerId;
@@ -181,7 +180,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             menuData.menuItems.push_back(item);
         }
         else if(key == "MenuToggleItem:"){
-            std::cout << "menuToggleItem" << std::endl;
             int itemId;
             MenuToggleItemContainer item;
             ifs >> item.headerId;

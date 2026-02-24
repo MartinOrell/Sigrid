@@ -16,7 +16,7 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
         return;
     }
-    
+
     for(unsigned int y = 0; y < rows; y++){
         std::vector<int> squareRow;
         std::vector<LogicPiece*> pieceRow;
@@ -158,7 +158,6 @@ std::string LogicBoard::getFen() const{
     for(int y = 0; y < height(); y++){
         int i = 0;
         for(int x = 0; x < width();x++){
-            std::cout << x << " " << y << std::endl;
             if(m_pieceLayer[y][x] == nullptr){
                 i++;
             }
