@@ -98,7 +98,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     m_workWindow->addBoard(std::move(board));
 
-    m_menu = std::make_unique<sigrid::Menu>(config.pinMenu, config.pinMenu, config.toolWindow, config.colorTools, config.boardData);
+    m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);
 }
 
 void MainWindow::run(){
@@ -561,7 +561,7 @@ void MainWindow::pinMenu(){
     }
 
     m_menu->pinMenu();
-    m_menu->toggleItem("Pin Menu");
+    m_menu->toggleItem("PinMenu");
     createGraphic();
 }
 
@@ -686,7 +686,7 @@ void MainWindow::showColorTools(){
 
     m_toolPickerWindow->showColorTools();
     if(m_menu){
-        m_menu->toggleItem("Color Tools");
+        m_menu->toggleItem("ShowColorTools");
         
     }
     
@@ -702,7 +702,7 @@ void MainWindow::hideColorTools(){
 
     m_toolPickerWindow->hideColorTools();
     if(m_menu){
-        m_menu->toggleItem("Color Tools");
+        m_menu->toggleItem("ShowColorTools");
     }
 
     createGraphic();
@@ -722,8 +722,8 @@ void MainWindow::showTools(){
     m_toolPickerWindow->show();
     m_toolWindow->show();
     if(m_menu){
-        m_menu->toggleItem("Tool Window");
-        m_menu->showItem("Color Tools");
+        m_menu->toggleItem("ShowToolWindow");
+        m_menu->showItem("ShowColorTools");
     }
     
     createGraphic();
@@ -742,8 +742,8 @@ void MainWindow::hideTools(){
     m_toolPickerWindow->hide();
     m_toolWindow->hide();
     if(m_menu){
-        m_menu->toggleItem("Tool Window");
-        m_menu->hideItem("Color Tools");
+        m_menu->toggleItem("ShowToolWindow");
+        m_menu->hideItem("ShowColorTools");
     }
     
     createGraphic();
@@ -793,9 +793,9 @@ void MainWindow::addCoordinates(){
 
     if(m_menu){
         m_menu->toggleItem("Coordinates");
-        m_menu->showItem("Move Coordinates");
+        m_menu->showItem("MoveCoordinates");
         if(m_workWindow->isCoordinatesOutside()){
-            m_menu->showItem("Set Coordinate Size");
+            m_menu->showItem("SetCoordinateSize");
         }
     }
 
@@ -812,8 +812,8 @@ void MainWindow::removeCoordinates(){
 
     if(m_menu){
         m_menu->toggleItem("Coordinates");
-        m_menu->hideItem("Move Coordinates");
-        m_menu->hideItem("Set Coordinate Size");
+        m_menu->hideItem("MoveCoordinates");
+        m_menu->hideItem("SetCoordinateSize");
     }
 
     createGraphic();
@@ -828,8 +828,8 @@ void MainWindow::moveCoordinatesOutside(){
     m_workWindow->moveCoordinatesOutside();
 
     if(m_menu){
-        m_menu->toggleItem("Move Coordinates");
-        m_menu->showItem("Set Coordinate Size");
+        m_menu->toggleItem("MoveCoordinates");
+        m_menu->showItem("SetCoordinateSize");
     }
 
     createGraphic();
@@ -845,8 +845,8 @@ void MainWindow::moveCoordinatesInside(){
     m_workWindow->moveCoordinatesInside();
 
     if(m_menu){
-        m_menu->toggleItem("Move Coordinates");
-        m_menu->hideItem("Set Coordinate Size");
+        m_menu->toggleItem("MoveCoordinates");
+        m_menu->hideItem("SetCoordinateSize");
     }
 
     createGraphic();
@@ -862,7 +862,7 @@ void MainWindow::setBigCoordinates(){
     m_workWindow->setBigCoordinates();
 
     if(m_menu){
-        m_menu->toggleItem("Set Coordinate Size");
+        m_menu->toggleItem("SetCoordinateSize");
     }
 
     createGraphic();
@@ -878,7 +878,7 @@ void MainWindow::setSmallCoordinates(){
     m_workWindow->setSmallCoordinates();
 
     if(m_menu){
-        m_menu->toggleItem("Set Coordinate Size");
+        m_menu->toggleItem("SetCoordinateSize");
     }
 
     createGraphic();
@@ -894,7 +894,7 @@ void MainWindow::addBoardBorder(){
     m_workWindow->addBoardBorder();
 
     if(m_menu){
-        m_menu->toggleItem("Toggle Border");
+        m_menu->toggleItem("ToggleBoardBorder");
     }
 
     createGraphic();
@@ -910,7 +910,7 @@ void MainWindow::removeBoardBorder(){
     m_workWindow->removeBoardBorder();
 
     if(m_menu){
-        m_menu->toggleItem("Toggle Border");
+        m_menu->toggleItem("ToggleBoardBorder");
     }
 
     createGraphic();
@@ -919,14 +919,14 @@ void MainWindow::removeBoardBorder(){
 void MainWindow::addPlayerToMoveToken(){
 
     if(!m_workWindow){
-        std::cout << "Unable to add player-to-move token, workWindow does not exist" << std::endl;
+        std::cout << "Unable to add turn token, workWindow does not exist" << std::endl;
         return;
     }
 
     m_workWindow->addPlayerToMoveToken();
 
     if(m_menu){
-        m_menu->toggleItem("Toggle PlayerToMove Token");
+        m_menu->toggleItem("ToggleAddTurnToken");
     }
 
     createGraphic();
@@ -935,14 +935,14 @@ void MainWindow::addPlayerToMoveToken(){
 void MainWindow::removePlayerToMoveToken(){
 
     if(!m_workWindow){
-        std::cout << "Unable to remove player-to-move token, workWindow does not exist" << std::endl;
+        std::cout << "Unable to remove turn token, workWindow does not exist" << std::endl;
         return;
     }
 
     m_workWindow->removePlayerToMoveToken();
 
     if(m_menu){
-        m_menu->toggleItem("Toggle PlayerToMove Token");
+        m_menu->toggleItem("ToggleAddTurnToken");
     }
 
     createGraphic();

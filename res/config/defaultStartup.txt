@@ -57,3 +57,24 @@ DefaultBoardImageFilename: saveData/boards/images/board.png
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF
+MenuFont: res/fonts/calibri.ttf
+MenuTitle: Menu
+MenuHeader: 0 File
+MenuHeader: 1 Edit
+MenuHeader: 2 View
+MenuHeader: 3 Settings
+MenuHeader: 4 Help
+MenuItem: 0 0 Save save
+MenuItem: 1 0 Reset reset
+MenuItem: 1 1 Clear clear
+MenuToggleItem: 1 2 Coordinates "Add Coordinates" addCoordinates "Remove Coordinates" removeCoordinates
+MenuToggleItem: 1 3 MoveCoordinates "Move Coordinates outside" moveCoordinatesOutside "Move Coordinates inside" moveCoordinatesInside
+MenuToggleItem: 1 4 SetCoordinateSize "Set Big Coordinates" setBigCoordinates "Set Small Coordinates" setSmallCoordinates
+MenuToggleItem: 1 5 ToggleBoardBorder "Add Border" addBoardBorder "Remove Border" removeBoardBorder
+MenuToggleItem: 1 6 ToggleAddTurnToken "Add turn token" addTurnToken "Remove turn token" removeTurnToken
+MenuItem: 1 7 "Paste FEN" pasteFen
+MenuItem: 1 8 "Copy FEN" copyFen
+MenuToggleItem: 2 0 PinMenu "Pin Menu" pinMenu "Unpin Menu" unpinMenu
+MenuToggleItem: 2 1 ShowToolWindow "Show Tool Window" showToolWindow "Hide Tool Window" hideToolWindow
+MenuToggleItem: 2 2 ShowColorTools "Show Color Tools" showColorTools "Hide Color Tools" hideColorTools
+MenuItem: 4 0 "Print to console" print

@@ -83,4 +83,6 @@ namespace sigrid{
         ActionType::AddPlayerToMoveToken,
         ActionType::RemovePlayerToMoveToken
     > Action;
+
+    Action getAction(const std::string& s);
 }

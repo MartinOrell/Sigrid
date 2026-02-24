@@ -3,79 +3,77 @@
 #include <iostream>
 
 #include <SFML/Graphics/Sprite.hpp>
+#include "../Action/Action.h"
 
 using namespace sigrid;
 
 
-Menu::Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const BoardDesignContainer& boardData)
-: m_isPinned(isPinned)
-, m_showItems(showItems)
+Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData)
+: m_isPinned(menuData.isPinned)
+, m_showItems(menuData.showItems)
 , m_showHeaderIndex(-1)
 , m_backgroundColor{255,255,255,0}{
 
-    bool loadFont = m_font.openFromFile("res/fonts/calibri.ttf");
+    bool loadFont = m_font.openFromFile(menuData.fontName);
     assert(loadFont);
 
-    addSuperHeader("Menu");
-    addHeader("File");
-    addHeader("Edit");
-    addHeader("View");
-    addHeader("Settings");
-    addHeader("Help");
+    addSuperHeader(menuData.title);
+    for(const auto& headerName : menuData.headerNames){
+        addHeader(headerName);
+    }
 
-    addItem("Save", 0, sigrid::ActionType::SaveBoard{});
-    addItem("Reset", 1, sigrid::ActionType::Reset{});
-    addItem("Clear", 1, sigrid::ActionType::Clear{});
+    for(const auto& menuItem : menuData.menuItems){
+        addItem(menuItem.displayName, menuItem.headerId, getAction(menuItem.actionName));
+    }
+
+    for(const auto& menuItem : menuData.menuToggleItems){
+        addToggleItem(
+            menuItem.keyName,
+            menuItem.headerId,
+            menuItem.displayNameOn,
+            getAction(menuItem.actionNameOn),
+            menuItem.displayNameOff,
+            getAction(menuItem.actionNameOff)
+        );
+    }
     
-    addToggleItem("Coordinates", 1, "Add Coordinates", sigrid::ActionType::AddCoordinates{}, "Remove Coordinates", sigrid::ActionType::RemoveCoordinates{});
-    addToggleItem("Move Coordinates", 1, "Move Coordinates Outside", sigrid::ActionType::MoveCoordinatesOutside{}, "Move Coordinates Inside", sigrid::ActionType::MoveCoordinatesInside{});
-    addToggleItem("Set Coordinate Size", 1, "Set Big Coordinates", sigrid::ActionType::SetBigCoordinates{}, "Set Small Coordinates", sigrid::ActionType::SetSmallCoordinates{});
 
     if(boardData.labelsInside){
         toggleItem("Coordinates");
-        hideItem("Set Coordinate Size");
+        hideItem("SetCoordinateSize");
     }
     else if(boardData.labelsOutside){
         toggleItem("Coordinates");
-        toggleItem("Move Coordinates");
+        toggleItem("MoveCoordinates");
     }
     else{
-        hideItem("Move Coordinates");
-        hideItem("Set Coordinate Size");
+        hideItem("MoveCoordinates");
+        hideItem("SetCoordinateSize");
     }
-    addToggleItem("Toggle Border", 1, "Add Border", sigrid::ActionType::AddBoardBorder{}, "Remove Border", sigrid::ActionType::RemoveBoardBorder{});
+
     if(boardData.border){
-        toggleItem("Toggle Border");
+        toggleItem("ToggleBoardBorder");
     }
     
-    addToggleItem("Toggle PlayerToMove Token", 1, "Add Player-to-move Token", sigrid::ActionType::AddPlayerToMoveToken{}, "Remove Player-to-move Token", sigrid::ActionType::RemovePlayerToMoveToken{});
     if(boardData.playerToMoveToken){
-        toggleItem("Toggle PlayerToMove Token");
-    }
-
-    addItem("Paste FEN", 1, sigrid::ActionType::PasteFen{});
-    addItem("Copy FEN", 1, sigrid::ActionType::CopyFen{});
-    
-    addToggleItem("Pin Menu", 2, "Pin menu", sigrid::ActionType::PinMenu{}, "Unpin menu", sigrid::ActionType::PinMenu{});
-    if(isPinned){
-        toggleItem("Pin Menu");
+        toggleItem("ToggleTurnToken");
     }
     
-    addToggleItem("Tool Window", 2, "Show Tool Window", sigrid::ActionType::ShowTools{}, "Hide Tool Window", sigrid::ActionType::HideTools{});
-    addToggleItem("Color Tools", 2, "Show Color Tools", sigrid::ActionType::ShowColorTools{}, "Hide Color Tools", sigrid::ActionType::HideColorTools{});
-
-    if(showToolWindow){
-        toggleItem("Tool Window");
+    if(menuData.isPinned){
+        toggleItem("PinMenu");
+    }
+    
+    if(menuData.showToolWindow){
+        toggleItem("ShowToolWindow");
     }
     else{
-        hideItem("Color Tools");
+        hideItem("ShowColorTools");
     }
     
-    if(showColorTools){
-        toggleItem("Color Tools");
+    if(menuData.showColorTools){
+        toggleItem("ShowColorTools");
     }
     
-    addItem("Print to console", 4, sigrid::ActionType::Print{});
 }
 
 void Menu::createGraphic(const sf::Vector2u& size){

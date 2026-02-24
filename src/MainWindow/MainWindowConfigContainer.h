@@ -5,6 +5,7 @@
 #include "../Piece/PieceColor.h"
 #include "../Piece/PieceContainer.h"
 #include "../Board/BoardDesignContainer.h"
+#include "../Menu/MenuContainer.h"
 
 namespace sigrid{
     struct MainWindowConfigContainer{
@@ -20,6 +21,7 @@ namespace sigrid{
         std::vector<PieceColor> pieceColors;
         std::vector<PieceContainer> pieces;
         BoardDesignContainer boardData;
+        MenuContainer menuData;
 
         int numPieceColors;
 
@@ -27,7 +29,6 @@ namespace sigrid{
         std::string boardFilename;
         std::string defaultBoardImageFilename;
 
-        bool pinMenu;
         bool toolWindow;
         bool colorTools;
     };

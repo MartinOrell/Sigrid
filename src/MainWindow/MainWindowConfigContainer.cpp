@@ -76,17 +76,20 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "PinMenu:"){
             std::string s;
             ifs >> s;
-            pinMenu = s == "ON";
+            menuData.isPinned = s == "ON";
+            menuData.showItems = s == "ON";
         }
         else if(key == "ToolWindow:"){
             std::string s;
             ifs >> s;
             toolWindow = s == "ON";
+            menuData.showToolWindow = s == "ON";
         }
         else if(key == "ColorTools:"){
             std::string s;
             ifs >> s;
             colorTools = s == "ON";
+            menuData.showColorTools = s == "ON";
         }
         else if(key == "SquareSize:"){
             ifs >> boardData.squareSize;
@@ -141,6 +144,78 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             std::string isEnabled;
             ifs >> isEnabled;
             boardData.playerToMoveToken = isEnabled == "ON";
+        }
+        else if(key == "MenuFont:"){
+            ifs >> menuData.fontName;
+        }
+        else if(key == "MenuTitle:"){
+            ifs >> menuData.title;
+        }
+        else if(key == "MenuHeader:"){
+            int headerId;
+            std::string headerName;
+            ifs >> headerId;
+            ifs >> headerName;
+            menuData.headerNames.push_back(headerName);
+        }
+        else if(key == "MenuItem:"){
+            std::cout << "menuItem" << std::endl;
+            int itemId;
+            MenuItemContainer item;
+            ifs >> item.headerId;
+            ifs >> itemId;
+            ifs >> item.displayName;
+            if(item.displayName.front() == '"'){
+                while(true){    
+                    std::string s;
+                    ifs >> s;
+                    item.displayName.append(" " + s);
+                    if(s.back() == '"'){
+                        break;
+                    }
+                }
+                item.displayName.erase(0,1); //remove '"'
+                item.displayName.pop_back(); //remove '"'
+            }
+            ifs >> item.actionName;
+            menuData.menuItems.push_back(item);
+        }
+        else if(key == "MenuToggleItem:"){
+            std::cout << "menuToggleItem" << std::endl;
+            int itemId;
+            MenuToggleItemContainer item;
+            ifs >> item.headerId;
+            ifs >> itemId;
+            ifs >> item.keyName;
+            ifs >> item.displayNameOn;
+            if(item.displayNameOn.front() == '"'){
+                while(true){    
+                    std::string s;
+                    ifs >> s;
+                    item.displayNameOn.append(" " + s);
+                    if(s.back() == '"'){
+                        break;
+                    }
+                }
+                item.displayNameOn.erase(0,1); //remove '"'
+                item.displayNameOn.pop_back(); //remove '"'
+            }
+            ifs >> item.actionNameOn;
+            ifs >> item.displayNameOff;
+            if(item.displayNameOff.front() == '"'){
+                while(true){    
+                    std::string s;
+                    ifs >> s;
+                    item.displayNameOff.append(" " + s);
+                    if(s.back() == '"'){
+                        break;
+                    }
+                }
+                item.displayNameOff.erase(0,1); //remove '"'
+                item.displayNameOff.pop_back(); //remove '"'
+            }
+            ifs >> item.actionNameOff;
+            menuData.menuToggleItems.push_back(item);
         }
         else{
             std::cout << "Unknown key: \"" << key << "\"" << std::endl;

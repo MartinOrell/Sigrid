@@ -13,11 +13,12 @@
 #include "../Board/BoardDesignContainer.h"
 #include "../MainWindow/MainWindowConfigContainer.h"
 
+#include "MenuContainer.h"
 
 namespace sigrid{
     class Menu: public sf::Drawable{
         public:
-            Menu(const bool isPinned, const bool showItems, const bool showToolWindow, const bool showColorTools, const BoardDesignContainer& boardData);
+            Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -82,8 +83,6 @@ namespace sigrid{
             std::map<std::string, std::unique_ptr<MenuItem>> m_items;
 
             std::vector<std::vector<std::string>> m_itemKeys;
-
-            //std::vector<std::vector<LayoutItem>> m_layoutItems;
 
             std::map<std::string, LayoutItem> m_layoutItems;
 
