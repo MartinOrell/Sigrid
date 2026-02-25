@@ -9,13 +9,13 @@ Coord::Coord(const int x, const int y)
 : x(x)
 , y(y){}
 
-Coord::Coord(const std::string& notation, const bool isLeftToRight, const bool isTopToBottom, const unsigned int numColumns, const unsigned int numRows){
+Coord::Coord(const std::string& notation){
     
     int nx = 0; // character notation where 'a' = 1, 'z' = 26, 'aa' = 27
     int ny = 0;
 
-    int i = 0;
-    for(; i < notation.length(); i++){
+    int i;
+    for(i = 0; i < notation.length(); i++){
         if(std::isdigit(notation.at(i))){
             break;
         }
@@ -33,19 +33,8 @@ Coord::Coord(const std::string& notation, const bool isLeftToRight, const bool i
 
     ny = std::stoi(notation.substr(i));
 
-    if(isLeftToRight){
-        x = nx - 1;
-    }
-    else{
-        x = numColumns - nx + 1;
-    }
-
-    if(isTopToBottom){
-        y = ny - 1;
-    }
-    else{
-        y = numRows - ny;
-    }
+    x = nx - 1;
+    y = ny - 1;
 }
 
 bool Coord::operator<(const Coord& rhs) const{
@@ -81,27 +70,16 @@ bool Coord::operator!=(const Coord& rhs) const{
     return false;
 }
 
-std::string Coord::getNotation(const bool isLeftToRight, const bool isTopToBottom, const unsigned int numColumns, const unsigned int numRows) const{
+std::string Coord::getNotation() const{
 
     std::string notation;
 
-    int i;
-    if(isLeftToRight){
-        i = x;
-    }
-    else{
-        i = numColumns - x-1;
-    }
     int base = 'z' - 'a'+1;
-    for(;i>=0;i = i / base-1){
+    for(int i{x}; i>=0; i = i / base-1){
         notation.insert(0,1,(i%base + 'a'));
     }
 
-    if(isTopToBottom){
-        notation.append(std::to_string(y+1));
-    }
-    else{
-        notation.append(std::to_string(numRows-y));
-    }
+    notation.append(std::to_string(y+1));
+    
     return notation;
 }
