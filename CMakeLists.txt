@@ -14,7 +14,7 @@ set(SRC_FILES
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
-    src/Board/Coord.cpp
+    src/Coord/Coord.cpp
     src/Piece/LogicPiece.cpp
     src/Piece/GraphicPiece.cpp
     src/Piece/PieceIdentifier.cpp

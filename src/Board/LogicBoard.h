@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <optional>
 #include <memory>
-#include "Coord.h"
+#include "../Coord/Coord.h"
 #include <string>
 
 #include "../Arrow/LogicArrow.h"

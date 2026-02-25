@@ -5,7 +5,7 @@
 #include "LogicBoard.h"
 #include "../Piece/LogicPiece.h"
 #include "../Piece/GraphicPiece.h"
-#include "Coord.h"
+#include "../Coord/Coord.h"
 #include "../Piece/PieceManager.h"
 #include "../Tool/Tool.h"
 

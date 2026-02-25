@@ -11,7 +11,7 @@
 #include <map>
 #include <optional>
 #include <memory>
-#include "../Board/Coord.h"
+#include "../Coord/Coord.h"
 
 
 namespace sigrid{
