@@ -186,5 +186,8 @@ namespace sigrid{
 
             bool m_showPlayerToMoveToken;
             std::unique_ptr<sf::CircleShape> m_playerToMoveToken;
+
+            bool m_isLeftToRight;
+            bool m_isTopToBottom;
     };
 }

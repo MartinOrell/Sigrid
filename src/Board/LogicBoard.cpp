@@ -30,22 +30,22 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
 
     for(const auto pieceContainer : pieces){
 
-        Coord coord{pieceContainer.position,true,false,width(),height()};
+        Coord coord{pieceContainer.position,true,true,width(),height()};
 
         if(coord.y < 0){
-            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing row on board" << std::endl;
+            std::cout << "Failed to set piece at " << coord.getNotation(true,true,width(),height()) << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.y >= height()){
-            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing row on board" << std::endl;
+            std::cout << "Failed to set piece at " << coord.getNotation(true,true,width(),height()) << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.x < 0){
-            std::cout << "Failed to set piece at " << coord.getNotation(true,false,width(),height()) << ", missing column on board" << std::endl;
+            std::cout << "Failed to set piece at " << coord.getNotation(true,true,width(),height()) << ", missing column on board" << std::endl;
             continue;
         }
         if(coord.x >= width()){
-            std::cout << "Failed to set piece at " << coord.getNotation(true,false, width(),height()) << ", missing column on board" << std::endl;
+            std::cout << "Failed to set piece at " << coord.getNotation(true,true, width(),height()) << ", missing column on board" << std::endl;
             continue;
         }
         m_pieceLayer.at(coord.y).at(coord.x) = new LogicPiece(pieceContainer.name, pieceContainer.colorId);
@@ -155,7 +155,7 @@ std::string LogicBoard::getFen() const{
 
     std::string fen;
 
-    for(int y = 0; y < height(); y++){
+    for(int y = height()-1; y >= 0; y--){
         int i = 0;
         for(int x = 0; x < width();x++){
             if(m_pieceLayer[y][x] == nullptr){
@@ -176,7 +176,7 @@ std::string LogicBoard::getFen() const{
         if(i > 0){
             fen.append(std::to_string(i));
         }
-        if(y < height()-1){
+        if(y > 0){
             fen.append("/");
         }
     }
@@ -309,7 +309,7 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
 
             out << "\n";
 
-            out << "Piece: " << colorId << " " << notation << " " << coord.getNotation(true,false,board.width(),board.height());
+            out << "Piece: " << colorId << " " << notation << " " << coord.getNotation(true,true,board.width(),board.height());
         }
     }
     return out;

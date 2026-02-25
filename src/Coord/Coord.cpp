@@ -41,7 +41,7 @@ Coord::Coord(const std::string& notation, const bool isLeftToRight, const bool i
     }
 
     if(isTopToBottom){
-        y = ny + 1;
+        y = ny - 1;
     }
     else{
         y = numRows - ny;

@@ -25,7 +25,9 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_outsideLabelBigSizeFactor{config.outsideLabelBigSize}
 , m_showBorder{config.border}
 , m_borderWidth{config.borderWidth}
-, m_showPlayerToMoveToken{config.playerToMoveToken}{
+, m_showPlayerToMoveToken{config.playerToMoveToken}
+, m_isLeftToRight{true}
+, m_isTopToBottom{false}{
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -37,14 +39,24 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 
     for(int y = 0; y < logicBoard.height(); y++){
         std::vector<sf::RectangleShape> row;
-        for(int x = 0; x < logicBoard.height(); x++){
+        for(int x = 0; x < logicBoard.width(); x++){
             sf::RectangleShape square{sf::Vector2f((float)config.squareSize, (float)config.squareSize)};
             sf::Color squareColor = m_squareColors.at((x+y)%m_squareColors.size());
             square.setFillColor(squareColor);
             sf::Vector2f position;
-            position.x = (float)(x*config.squareSize);
+            if(m_isLeftToRight){
+                position.x = (float)(x*config.squareSize);
+            }
+            else{
+                position.x = (float)((logicBoard.width()-x-1)*config.squareSize);
+            }
             position.x += m_leftEdgeWidth;
-            position.y = (float)(y*config.squareSize);
+            if(m_isTopToBottom){
+                position.y = (float)(y*config.squareSize);
+            }
+            else{
+                position.y = (float)((logicBoard.height()-y-1)*config.squareSize);
+            }
             position.y += m_topEdgeWidth;
             square.setPosition(position);
             row.push_back(square);
@@ -184,6 +196,13 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
     }
     if(y >= (float)m_squares.size()){
         return std::nullopt;
+    }
+
+    if(!m_isLeftToRight){
+        x = m_squares.at(0).size()-x;
+    }
+    if(!m_isTopToBottom){
+        y = m_squares.size()-y;
     }
     return std::make_optional<Coord>((int)x,(int)y);
 }
@@ -784,8 +803,9 @@ void GraphicBoard::addOutsideLabels(){
         //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
         position.x = ((float)m_leftEdgeWidth-(float)labelSize/2.f)/2.f;
 
-        position.y = m_squares.at(i).at(0).getPosition().y +
-            m_squares.at(i).at(0).getSize().y/2.f -
+        int j = m_squares.size()-i-1;
+        position.y = m_squares.at(j).at(0).getPosition().y +
+            m_squares.at(j).at(0).getSize().y/2.f -
             (float)labelSize*9.f/14.f;
         
         label.setPosition(position);
@@ -838,7 +858,8 @@ void GraphicBoard::addInsideLabels(){
         position.x = (float)labelSize/16.f;
         position.x += (float)m_leftEdgeWidth;
 
-        position.y = m_squares.at(i).at(0).getPosition().y - (float)labelSize/4.f;
+        int j = m_squares.size()-i-1;
+        position.y = m_squares.at(j).at(0).getPosition().y - (float)labelSize/4.f;
         
         label.setPosition(position);
 

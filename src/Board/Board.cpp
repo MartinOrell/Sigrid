@@ -219,7 +219,7 @@ void Board::loadFen(const std::string& fen){
 
     clear();
     int x = 0;
-    int y = 0;
+    int y = m_logicBoard->width()-1;
     for(int i = 0; i < fen.size(); i++){
         std::string s = fen.substr(i, 1);
         if(s == " "){
@@ -230,7 +230,7 @@ void Board::loadFen(const std::string& fen){
         }
         else if(s == "/"){
             x = 0;
-            y++;
+            y--;
         }
         else{
             int colorId;
