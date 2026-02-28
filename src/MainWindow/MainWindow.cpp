@@ -47,16 +47,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
 
     m_pieceManager.loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.colorTools, config.toolWindow, config.squareColors, &m_pieceManager, &m_toolManager);
-    m_toolPickerWindow->addSelectTool();
-    m_toolPickerWindow->addArrowTool();
-    for(const auto& piece: config.pieces){
-        if(piece.style == "light"){
-            m_toolPickerWindow->addPieceTool(piece.name);
-        }
-    }
-
-    m_toolPickerWindow->addPieceColorTools(config.numPieceColors);
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, config.squareColors, &m_pieceManager, &m_toolManager);
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
 

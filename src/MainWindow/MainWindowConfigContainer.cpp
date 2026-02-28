@@ -82,13 +82,13 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "ToolWindow:"){
             std::string s;
             ifs >> s;
-            toolWindow = s == "ON";
+            toolPickerData.show = s == "ON";
             menuData.showToolWindow = s == "ON";
         }
         else if(key == "ColorTools:"){
             std::string s;
             ifs >> s;
-            colorTools = s == "ON";
+            toolPickerData.showColors = s == "ON";
             menuData.showColorTools = s == "ON";
         }
         else if(key == "SquareSize:"){
@@ -214,6 +214,69 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             }
             ifs >> item.actionNameOff;
             menuData.menuToggleItems.push_back(item);
+        }
+        else if(key == "ToolPickerColumns:"){
+            ifs >> toolPickerData.columns;
+        }
+        else if(key == "ToolPickerRows:"){
+            ifs >> toolPickerData.rows;
+        }
+        else if(key == "ToolPickerMiscBlock:"){
+            std::string coordString;
+            ifs >> coordString;
+            toolPickerData.miscToolBlock.coord = Coord(coordString);
+            ifs >> toolPickerData.miscToolBlock.columns;
+            ifs >> toolPickerData.miscToolBlock.rows;
+        }
+        else if(key == "ToolPickerColorBlock:"){
+            std::string coordString;
+            ifs >> coordString;
+            toolPickerData.colorBlock.coord = Coord(coordString);
+            ifs >> toolPickerData.colorBlock.columns;
+            ifs >> toolPickerData.colorBlock.rows;
+        }
+        else if(key == "ToolPickerPieceBlock:"){
+            int id;
+            ifs >> id;
+            std::string coordString;
+            int columns;
+            int rows;
+            ifs >> coordString;
+            ifs >> columns;
+            ifs >> rows;
+            CoordBlock pieceBlock{Coord{coordString},columns,rows};
+            toolPickerData.pieceBlocks.push_back(pieceBlock);
+        }
+        else if(key == "ToolPickerTool:"){
+            int id;
+            ifs >> id;
+            std::string toolName;
+            ifs >> toolName;
+            toolPickerData.toolNames.push_back(toolName);
+        }
+        else if(key == "ToolPickerColor:"){
+            int positionId;
+            int colorId;
+            ifs >> positionId;
+            ifs >> colorId;
+            toolPickerData.colorToolIds.push_back(colorId);
+        }
+        else if(key == "ToolPickerDefaultPiece:"){
+            ifs >> toolPickerData.defaultPieceNotation;
+        }
+        else if(key == "ToolPickerPiece:"){
+            int id;
+            ifs >> id;
+            std::string notation;
+            ifs >> notation;
+            toolPickerData.pieceNotations.push_back(notation);
+        }
+        else if(key == "ToolPickerSquareColors:"){
+            int positionId;
+            int colorId;
+            ifs >> positionId;
+            ifs >> colorId;
+            toolPickerData.squareColorIds.push_back(colorId);
         }
         else{
             std::cout << "Unknown key: \"" << key << "\"" << std::endl;

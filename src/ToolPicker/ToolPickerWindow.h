@@ -13,11 +13,15 @@
 
 #include "../MainWindow/MainWindowConfigContainer.h"
 
+#include "ToolPickerContainer.h"
+
+#include "../Coord/CoordBlock.h"
+
 namespace sigrid{
     class ToolPickerWindow: public sf::Drawable{
         public:
 
-            ToolPickerWindow(const bool showColors, const bool showWindow, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr);
+            ToolPickerWindow(const ToolPickerContainer& data, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr);
             
             void createGraphic(const sf::Vector2u& size);
 
@@ -26,8 +30,6 @@ namespace sigrid{
             void addArrowTool();
 
             void addPieceTool(std::string notation);
-
-            void addPieceColorTools(const int numColors);
 
             virtual void setPosition(sf::Vector2f);
 
@@ -75,6 +77,9 @@ namespace sigrid{
                 Action action;
             };
 
+            int m_columns;
+            int m_rows;
+
             std::vector<ToolStruct> m_miscTools;
 
             ColorDisplay m_colorDisplay;
@@ -97,11 +102,13 @@ namespace sigrid{
             bool m_show;
 
             bool m_showColors;
-            int m_colorColumns;
-
-            int m_numPieceColors;
-            int m_numArrowColors;
 
             sf::Color m_backgroundColor;
+
+            std::vector<int> m_colorIds;
+
+            CoordBlock m_miscBlock;
+            CoordBlock m_colorBlock;
+            std::vector<CoordBlock> m_pieceBlocks;
     };
 }
