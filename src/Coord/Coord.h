@@ -5,6 +5,7 @@
 namespace sigrid{
 
     struct Coord{
+        Coord();
         Coord(const int x, const int y);
         Coord(const std::string& notation);
 
