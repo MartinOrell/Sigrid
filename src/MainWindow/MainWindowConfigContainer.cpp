@@ -19,6 +19,26 @@ uint32_t readColor(std::istream& is){
     return colorHex;
 }
 
+std::string readString(std::istream& is){
+    std::string s;
+    is >> std::ws >> s;
+    if(s.front() == '"'){
+        s.erase(0,1); //remove front '"'
+        while(is.peek() != EOF){    
+            std::string s2;
+            is >> s2;
+            s.append(" " + s2);
+            if(s2.back() == '"'){
+                s.pop_back(); //remove back '"'
+                break;
+            }
+        }
+    }
+
+    is >> std::ws;
+    return s;
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -35,8 +55,7 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs >> windowHeight;
         }
         else if(key == "Name:"){
-            ifs >> std::ws;
-            std::getline(ifs, windowName);
+            windowName = readString(ifs);
         }
         else if(key == "SquareColor:"){
             int id;
@@ -53,10 +72,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "PieceColor:"){
             int id;
             ifs >> id;
-            std::string name;
-            ifs >> name;
-            std::string style;
-            ifs >> style;
+            std::string name = readString(ifs);
+            std::string style = readString(ifs);
             PieceColor newColor;
             newColor.isLight = style == "light";
             newColor.lightModifier = readColor(ifs);
@@ -65,20 +82,22 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         }
         else if(key == "Piece:"){
             PieceContainer piece;
-            ifs >> piece.name >> piece.style >> piece.filename >> std::ws;
+            piece.name = readString(ifs);
+            piece.style = readString(ifs);
+            piece.filename = readString(ifs);
             pieces.push_back(piece);
         }
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;
         }
         else if(key == "ResetBoardFilename:"){
-            ifs >> resetBoardFilename;
+            resetBoardFilename = readString(ifs);
         }
         else if(key == "BoardFilename:"){
-            ifs >> boardFilename;
+            boardFilename = readString(ifs);
         }
         else if(key == "DefaultBoardImageFilename:"){
-            ifs >> defaultBoardImageFilename;
+            defaultBoardImageFilename = readString(ifs);
         }
         else if(key == "PinMenu:"){
             menuData.isPinned = readToggle(ifs);
@@ -102,7 +121,7 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             boardData.labelsOutside = readToggle(ifs);
         }
         else if(key == "LabelFont:"){
-            ifs >> boardData.labelFont;
+            boardData.labelFont = readString(ifs);
         }
         else if(key == "InsideLabelSize:"){
             ifs >> boardData.insideLabelSize;
@@ -137,16 +156,15 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             boardData.playerToMoveToken = readToggle(ifs);
         }
         else if(key == "MenuFont:"){
-            ifs >> menuData.fontName;
+            menuData.fontName = readString(ifs);
         }
         else if(key == "MenuTitle:"){
-            ifs >> menuData.title;
+            menuData.title = readString(ifs);
         }
         else if(key == "MenuHeader:"){
             int headerId;
-            std::string headerName;
             ifs >> headerId;
-            ifs >> headerName;
+            std::string headerName = readString(ifs);
             menuData.headerNames.push_back(headerName);
         }
         else if(key == "MenuItem:"){
@@ -154,20 +172,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             MenuItemContainer item;
             ifs >> item.headerId;
             ifs >> itemId;
-            ifs >> item.displayName;
-            if(item.displayName.front() == '"'){
-                while(true){    
-                    std::string s;
-                    ifs >> s;
-                    item.displayName.append(" " + s);
-                    if(s.back() == '"'){
-                        break;
-                    }
-                }
-                item.displayName.erase(0,1); //remove '"'
-                item.displayName.pop_back(); //remove '"'
-            }
-            ifs >> item.actionName;
+            item.displayName = readString(ifs);
+            item.actionName = readString(ifs);
             menuData.menuItems.push_back(item);
         }
         else if(key == "MenuToggleItem:"){
@@ -175,35 +181,11 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             MenuToggleItemContainer item;
             ifs >> item.headerId;
             ifs >> itemId;
-            ifs >> item.keyName;
-            ifs >> item.displayNameOn;
-            if(item.displayNameOn.front() == '"'){
-                while(true){    
-                    std::string s;
-                    ifs >> s;
-                    item.displayNameOn.append(" " + s);
-                    if(s.back() == '"'){
-                        break;
-                    }
-                }
-                item.displayNameOn.erase(0,1); //remove '"'
-                item.displayNameOn.pop_back(); //remove '"'
-            }
-            ifs >> item.actionNameOn;
-            ifs >> item.displayNameOff;
-            if(item.displayNameOff.front() == '"'){
-                while(true){    
-                    std::string s;
-                    ifs >> s;
-                    item.displayNameOff.append(" " + s);
-                    if(s.back() == '"'){
-                        break;
-                    }
-                }
-                item.displayNameOff.erase(0,1); //remove '"'
-                item.displayNameOff.pop_back(); //remove '"'
-            }
-            ifs >> item.actionNameOff;
+            item.keyName = readString(ifs);
+            item.displayNameOn = readString(ifs);
+            item.actionNameOn = readString(ifs);
+            item.displayNameOff = readString(ifs);
+            item.actionNameOff = readString(ifs);
             menuData.menuToggleItems.push_back(item);
         }
         else if(key == "ToolPickerColumns:"){
@@ -241,8 +223,7 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "ToolPickerTool:"){
             int id;
             ifs >> id;
-            std::string toolName;
-            ifs >> toolName;
+            std::string toolName = readString(ifs);
             toolPickerData.toolNames.push_back(toolName);
         }
         else if(key == "ToolPickerColor:"){
@@ -253,13 +234,12 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             toolPickerData.colorToolIds.push_back(colorId);
         }
         else if(key == "ToolPickerDefaultPiece:"){
-            ifs >> toolPickerData.defaultPieceNotation;
+            toolPickerData.defaultPieceNotation = readString(ifs);
         }
         else if(key == "ToolPickerPiece:"){
             int id;
             ifs >> id;
-            std::string notation;
-            ifs >> notation;
+            std::string notation = readString(ifs);
             toolPickerData.pieceNotations.push_back(notation);
         }
         else if(key == "ToolPickerSquareColors:"){
