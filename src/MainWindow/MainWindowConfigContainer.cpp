@@ -6,6 +6,19 @@
 using namespace sigrid;
 
 
+bool readToggle(std::istream& is){
+    std::string s;
+    is >> s;
+    return s == "ON";
+}
+
+uint32_t readColor(std::istream& is){
+    uint32_t colorHex;
+    is >> std::hex >> colorHex >> std::ws;
+    colorHex = colorHex * 0x100 + 0xff;
+    return colorHex;
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -28,17 +41,13 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "SquareColor:"){
             int id;
             ifs >> id;
-            uint32_t colorHex;
-            ifs >> std::hex >> colorHex >> std::ws;
-            colorHex = colorHex * 0x100 + 0xff;
+            uint32_t colorHex = readColor(ifs);
             squareColors.push_back(colorHex);
         }
         else if(key == "ArrowColor:"){
             int id;
             ifs >> id;
-            uint32_t colorHex;
-            ifs >> std::hex >> colorHex >> std::ws;
-            colorHex = colorHex * 0x100 + 0xff;
+            uint32_t colorHex = readColor(ifs);
             arrowColors.push_back(colorHex);
         }
         else if(key == "PieceColor:"){
@@ -50,10 +59,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs >> style;
             PieceColor newColor;
             newColor.isLight = style == "light";
-            ifs >> std::hex >> newColor.lightModifier >> std::ws;
-            newColor.lightModifier = newColor.lightModifier * 0x100 + 0xff;
-            ifs >> std::hex >> newColor.darkModifier >> std::ws;
-            newColor.darkModifier = newColor.darkModifier * 0x100 + 0xff;
+            newColor.lightModifier = readColor(ifs);
+            newColor.darkModifier = readColor(ifs);
             pieceColors.push_back(newColor);
         }
         else if(key == "Piece:"){
@@ -74,35 +81,25 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs >> defaultBoardImageFilename;
         }
         else if(key == "PinMenu:"){
-            std::string s;
-            ifs >> s;
-            menuData.isPinned = s == "ON";
-            menuData.showItems = s == "ON";
+            menuData.isPinned = readToggle(ifs);
+            menuData.showItems = menuData.isPinned;
         }
         else if(key == "ToolWindow:"){
-            std::string s;
-            ifs >> s;
-            toolPickerData.show = s == "ON";
-            menuData.showToolWindow = s == "ON";
+            toolPickerData.show = readToggle(ifs);
+            menuData.showToolWindow = toolPickerData.show;
         }
         else if(key == "ColorTools:"){
-            std::string s;
-            ifs >> s;
-            toolPickerData.showColors = s == "ON";
-            menuData.showColorTools = s == "ON";
+            toolPickerData.showColors = readToggle(ifs);
+            menuData.showColorTools = toolPickerData.showColors;
         }
         else if(key == "SquareSize:"){
             ifs >> boardData.squareSize;
         }
         else if(key == "LabelsInside:"){
-            std::string isEnabled;
-            ifs >> isEnabled;
-            boardData.labelsInside = isEnabled == "ON";
+            boardData.labelsInside = readToggle(ifs);
         }
         else if(key == "LabelsOutside:"){
-            std::string isEnabled;
-            ifs >> isEnabled;
-            boardData.labelsOutside = isEnabled == "ON";
+            boardData.labelsOutside = readToggle(ifs);
         }
         else if(key == "LabelFont:"){
             ifs >> boardData.labelFont;
@@ -128,22 +125,16 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             ifs.ignore(1);
         }
         else if(key == "Border:"){
-            std::string isEnabled;
-            ifs >> isEnabled;
-            boardData.border = isEnabled == "ON";
+            boardData.border = readToggle(ifs);
         }
         else if(key == "BorderWidth:"){
             ifs >> boardData.borderWidth;
         }
         else if(key == "Border:"){
-            std::string isEnabled;
-            ifs >> isEnabled;
-            boardData.border = isEnabled == "ON";
+            boardData.border = readToggle(ifs);
         }
         else if(key == "PlayerToMoveToken:"){
-            std::string isEnabled;
-            ifs >> isEnabled;
-            boardData.playerToMoveToken = isEnabled == "ON";
+            boardData.playerToMoveToken = readToggle(ifs);
         }
         else if(key == "MenuFont:"){
             ifs >> menuData.fontName;
