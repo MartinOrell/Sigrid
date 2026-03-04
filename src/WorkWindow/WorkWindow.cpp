@@ -230,6 +230,10 @@ void WorkWindow::saveBoard(){
     m_boardPtr->save();
 }
 
+void WorkWindow::flipBoard(){
+    m_boardPtr->flipBoard();
+}
+
 void WorkWindow::addCoordinates(){
     m_boardPtr->addCoordinates();
 }

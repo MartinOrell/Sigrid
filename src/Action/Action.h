@@ -40,6 +40,7 @@ namespace sigrid{
         struct PasteFen{};
         struct CopyFen{};
 
+        struct FlipBoard{};
         struct AddCoordinates{};
         struct RemoveCoordinates{};
         struct MoveCoordinatesOutside{};
@@ -72,6 +73,7 @@ namespace sigrid{
         ActionType::SaveBoard,
         ActionType::PasteFen,
         ActionType::CopyFen,
+        ActionType::FlipBoard,
         ActionType::AddCoordinates,
         ActionType::RemoveCoordinates,
         ActionType::MoveCoordinatesOutside,

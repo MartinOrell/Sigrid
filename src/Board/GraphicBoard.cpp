@@ -393,6 +393,63 @@ void GraphicBoard::clear(){
     redrawTexture();
 }
 
+void GraphicBoard::flip(){
+    m_isLeftToRight = !m_isLeftToRight;
+    m_isTopToBottom = !m_isTopToBottom;
+
+    int squareWidth = m_squares.at(0).at(0).getSize().x;
+    int squareHeight = m_squares.at(0).at(0).getSize().y;
+    int numColumns = m_squares.at(0).size();
+    int numRows = m_squares.size();
+
+    for(int y = 0; y < m_squares.size(); y++){
+        for(int x = 0; x < m_squares.at(y).size(); x++){
+            sf::Vector2f position;
+            if(m_isLeftToRight){
+                position.x = (float)(x*squareWidth);
+            }
+            else{
+                position.x = (float)((numColumns-x-1)*squareWidth);
+            }
+            position.x += m_leftEdgeWidth;
+            if(m_isTopToBottom){
+                position.y = (float)(y*squareHeight);
+            }
+            else{
+                position.y = (float)((numRows-y-1)*squareHeight);
+            }
+            position.y += m_topEdgeWidth;
+            m_squares.at(y).at(x).setPosition(position);
+        }
+    }
+
+    for(auto& piece : m_pieces){
+        sf::Vector2f position(m_squares.at(piece.first.y).at(piece.first.x).getPosition());
+        piece.second.setPosition(position);
+    }
+
+    for(auto& square : m_squareHighlights){
+        sf::Vector2f position(m_squares.at(square.first.y).at(square.first.x).getPosition());
+        square.second.setPosition(position);
+    }
+
+    for(auto& arrow : m_arrows){
+        sf::Vector2f fromPos(m_squares.at(arrow.first.fromCoord().y).at(arrow.first.fromCoord().x).getPosition());
+        fromPos.x += squareWidth/2;
+        fromPos.y += squareHeight/2;
+        sf::Vector2f toPos(m_squares.at(arrow.first.toCoord().y).at(arrow.first.toCoord().x).getPosition());
+        toPos.x += squareWidth/2;
+        toPos.y += squareHeight/2;
+        arrow.second.set(fromPos,toPos);
+    }
+
+    if(m_showLabels){
+        addCoordinates();
+    }
+
+    redrawTexture();//also called by addCoordinates
+}
+
 void GraphicBoard::addCoordinates(){
 
     if(m_isCoordinateLabelsInside){
@@ -412,6 +469,7 @@ void GraphicBoard::addCoordinates(){
 
 void GraphicBoard::removeCoordinates(){
     
+    m_showLabels = false;
     if(m_isCoordinateLabelsInside){
         m_leftInsideCoordinateLabels.clear();
         m_bottomInsideCoordinateLabels.clear();

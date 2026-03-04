@@ -49,6 +49,9 @@ Action sigrid::getAction(const std::string& s){
     else if(s == "copyFen"){
         return ActionType::CopyFen{};
     }
+    else if(s == "flipBoard"){
+        return ActionType::FlipBoard{};
+    }
     else if(s == "pinMenu"){
         return ActionType::PinMenu{};
     }

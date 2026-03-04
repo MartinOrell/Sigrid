@@ -329,6 +329,10 @@ void Board::print(){
     m_logicBoard->print();
 }
 
+void Board::flipBoard(){
+    m_graphicBoard->flip();
+}
+
 void Board::addCoordinates(){
     m_graphicBoard->addCoordinates();
 }

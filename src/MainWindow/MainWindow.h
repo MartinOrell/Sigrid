@@ -49,6 +49,7 @@ namespace sigrid{
             void saveBoard();
             void pasteFen();
             void copyFen();
+            void flipBoard();
             void addCoordinates();
             void removeCoordinates();
             void moveCoordinatesOutside();

@@ -503,6 +503,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         copyFen();
         return;
     }
+    else if(std::holds_alternative<ActionType::FlipBoard>(action)){
+        flipBoard();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
         addCoordinates();
         return;
@@ -772,6 +776,16 @@ void MainWindow::copyFen(){
     std::string fen = m_workWindow->getFen();
     sf::Clipboard::setString(sf::String(fen));
     std::cout << "Copied Fen: \"" << fen << "\"" << std::endl;
+}
+
+void MainWindow::flipBoard(){
+
+    if(!m_workWindow){
+        std::cout << "Unable to flip board, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->flipBoard();
 }
 
 void MainWindow::addCoordinates(){

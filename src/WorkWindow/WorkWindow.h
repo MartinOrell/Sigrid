@@ -43,6 +43,8 @@ namespace sigrid{
 
             void saveBoard();
 
+            void flipBoard();
+
             void addCoordinates();
 
             void removeCoordinates();

@@ -67,13 +67,14 @@ MenuHeader: 4 Help
 MenuItem: 0 0 Save save
 MenuItem: 1 0 Reset reset
 MenuItem: 1 1 Clear clear
-MenuToggleItem: 1 2 Coordinates "Add Coordinates" addCoordinates "Remove Coordinates" removeCoordinates
-MenuToggleItem: 1 3 MoveCoordinates "Move Coordinates outside" moveCoordinatesOutside "Move Coordinates inside" moveCoordinatesInside
-MenuToggleItem: 1 4 SetCoordinateSize "Set Big Coordinates" setBigCoordinates "Set Small Coordinates" setSmallCoordinates
-MenuToggleItem: 1 5 ToggleBoardBorder "Add Border" addBoardBorder "Remove Border" removeBoardBorder
-MenuToggleItem: 1 6 ToggleAddTurnToken "Add turn token" addTurnToken "Remove turn token" removeTurnToken
-MenuItem: 1 7 "Paste FEN" pasteFen
-MenuItem: 1 8 "Copy FEN" copyFen
+MenuItem: 1 2 "Flip Board" flipBoard
+MenuToggleItem: 1 3 Coordinates "Add Coordinates" addCoordinates "Remove Coordinates" removeCoordinates
+MenuToggleItem: 1 4 MoveCoordinates "Move Coordinates outside" moveCoordinatesOutside "Move Coordinates inside" moveCoordinatesInside
+MenuToggleItem: 1 5 SetCoordinateSize "Set Big Coordinates" setBigCoordinates "Set Small Coordinates" setSmallCoordinates
+MenuToggleItem: 1 6 ToggleBoardBorder "Add Border" addBoardBorder "Remove Border" removeBoardBorder
+MenuToggleItem: 1 7 ToggleAddTurnToken "Add turn token" addTurnToken "Remove turn token" removeTurnToken
+MenuItem: 1 8 "Paste FEN" pasteFen
+MenuItem: 1 9 "Copy FEN" copyFen
 MenuToggleItem: 2 0 PinMenu "Pin Menu" pinMenu "Unpin Menu" unpinMenu
 MenuToggleItem: 2 1 ShowToolWindow "Show Tool Window" showToolWindow "Hide Tool Window" hideToolWindow
 MenuToggleItem: 2 2 ShowColorTools "Show Color Tools" showColorTools "Hide Color Tools" hideColorTools

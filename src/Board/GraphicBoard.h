@@ -79,6 +79,8 @@ namespace sigrid{
 
             void clear();
 
+            void flip();
+
             void addCoordinates();
 
             void removeCoordinates();
@@ -122,7 +124,6 @@ namespace sigrid{
             void redrawTexture();
 
             void setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const unsigned int bottomWidth);
-            
 
             void addOutsideLabels();
             void addInsideLabels();

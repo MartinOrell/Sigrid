@@ -83,6 +83,8 @@ namespace sigrid{
             void clear();
             void print();
 
+            void flipBoard();
+
             void addCoordinates();
 
             void removeCoordinates();
