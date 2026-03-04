@@ -1,6 +1,6 @@
 Columns: 8
 Rows: 8
-RepeatSquares: 0 1
+RepeatSquares: 1 0
 Piece: 0 R a1
 Piece: 0 N b1
 Piece: 0 B c1

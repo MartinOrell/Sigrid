@@ -41,8 +41,10 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
         std::vector<sf::RectangleShape> row;
         for(int x = 0; x < logicBoard.width(); x++){
             sf::RectangleShape square{sf::Vector2f((float)config.squareSize, (float)config.squareSize)};
-            sf::Color squareColor = m_squareColors.at((x+y)%m_squareColors.size());
-            square.setFillColor(squareColor);
+            auto squareColorId_o = logicBoard.getSquareColorAt({x,y});
+            if(squareColorId_o.has_value()){
+                square.setFillColor(m_squareColors.at(squareColorId_o.value()));
+            }
             sf::Vector2f position;
             if(m_isLeftToRight){
                 position.x = (float)(x*config.squareSize);

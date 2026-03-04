@@ -24,6 +24,7 @@ namespace sigrid{
 
             bool isWithinBoard(const Coord& coord) const;
             bool isEmptySquare(const Coord& coord) const;
+            std::optional<int> getSquareColorAt(const Coord& coord) const;
             std::optional<LogicPiece*> getPieceAt(const Coord& coord) const;
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;
             std::string getFen() const;
@@ -42,6 +43,7 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
+            std::vector<int> m_repeatSquareIds;
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
             std::vector<std::vector<LogicPiece*>> m_pieceLayer;

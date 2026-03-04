@@ -10,7 +10,8 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces){
+LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces)
+: m_repeatSquareIds{repeatSquares}{
 
     if(repeatSquares.size() == 0){
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
@@ -111,6 +112,14 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
         return false;
     }
     return m_pieceLayer[coord.y][coord.x] == nullptr;
+}
+
+std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
+    if(!isWithinBoard(coord)){
+        return std::nullopt;
+    }
+
+    return m_squareLayer.at(coord.y).at(coord.x);
 }
 
 std::optional<LogicPiece*> LogicBoard::getPieceAt(const Coord& coord) const{
