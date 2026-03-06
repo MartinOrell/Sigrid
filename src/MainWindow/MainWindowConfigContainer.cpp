@@ -208,7 +208,13 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "Columns:"){
+            if(s == "Visibility:"){
+                std::string visibilityString = readString(is);
+                bool isVisible = visibilityString == "Visible";
+                toolPickerData.show = isVisible;
+                menuData.showToolWindow = isVisible;
+            }
+            else if(s == "Columns:"){
                 is >> toolPickerData.columns;
             }
             else if(s == "Rows:"){
@@ -427,10 +433,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         }
         else if(key == "BoardFilename:"){
             boardFilename = readString(ifs);
-        }
-        else if(key == "ToolWindow:"){
-            toolPickerData.show = readToggle(ifs);
-            menuData.showToolWindow = toolPickerData.show;
         }
         else if(key == "ColorTools:"){
             toolPickerData.showColors = readToggle(ifs);

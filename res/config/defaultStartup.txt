@@ -181,7 +181,6 @@ BoardStyle: [
   DefaultImageFilename: saveData/boards/images/board.png
 ]
 BoardFilename: saveData/boards/board.txt
-ToolWindow: ON
 ColorTools: OFF
 Menu: [
   pin: OFF
@@ -240,6 +239,7 @@ Menu: [
   ]
 ]
 ToolPicker: [
+  Visibility: Visible
   Columns: 2
   Rows: 7
   MiscBlock: a1 2 1
