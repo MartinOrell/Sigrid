@@ -353,14 +353,6 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             size = size/100.f;
                             boardData.insideLabelSize = size;
                             boardData.outsideLabelSize = size;
-                            boardData.outsideLabelSmallSize = size;
-                        }
-                        else if(s2 == "BigSize:"){
-                            float size;
-                            is >> size;
-                            is.ignore(1);// ignore % sign
-                            size = size/100.f;
-                            boardData.outsideLabelBigSize = size;
                         }
                         else if(s2 == "font:"){
                             boardData.labelFont = readString(is);

@@ -21,8 +21,6 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_isCoordinateLabelsInside{config.labelsInside}
 , m_insideLabelSizeFactor{config.insideLabelSize}
 , m_outsideLabelSizeFactor{config.outsideLabelSize}
-, m_outsideLabelSmallSizeFactor{config.outsideLabelSmallSize}
-, m_outsideLabelBigSizeFactor{config.outsideLabelBigSize}
 , m_showBorder{config.border}
 , m_borderWidth{config.borderWidth}
 , m_showPlayerToMoveToken{config.playerToMoveToken}
@@ -517,31 +515,18 @@ void GraphicBoard::moveCoordinatesInside(){
     redrawTexture();
 }
 
-void GraphicBoard::setBigCoordinates(){
-    
-    m_outsideLabelSizeFactor = m_outsideLabelBigSizeFactor;
+void GraphicBoard::setCoordinateSize(const float& size){
 
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().y;
+    m_outsideLabelSizeFactor = size;
 
-    setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
-
-    addOutsideLabels();
-    redrawTexture();
-
-}
-
-void GraphicBoard::setSmallCoordinates(){
-
-    m_outsideLabelSizeFactor = m_outsideLabelSmallSizeFactor;
-
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = size* m_squares.at(0).at(0).getSize().x;
+    unsigned int leftEdgeHeight = size* m_squares.at(0).at(0).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
     addOutsideLabels();
     redrawTexture();
+
 }
 
 void GraphicBoard::addBorder(){

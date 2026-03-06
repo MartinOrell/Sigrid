@@ -45,8 +45,9 @@ namespace sigrid{
         struct RemoveCoordinates{};
         struct MoveCoordinatesOutside{};
         struct MoveCoordinatesInside{};
-        struct SetBigCoordinates{};
-        struct SetSmallCoordinates{};
+        struct SetCoordinateSize{
+            float size;
+        };
         struct AddBoardBorder{};
         struct RemoveBoardBorder{};
         struct AddPlayerToMoveToken{};
@@ -78,8 +79,7 @@ namespace sigrid{
         ActionType::RemoveCoordinates,
         ActionType::MoveCoordinatesOutside,
         ActionType::MoveCoordinatesInside,
-        ActionType::SetBigCoordinates,
-        ActionType::SetSmallCoordinates,
+        ActionType::SetCoordinateSize,
         ActionType::AddBoardBorder,
         ActionType::RemoveBoardBorder,
         ActionType::AddPlayerToMoveToken,

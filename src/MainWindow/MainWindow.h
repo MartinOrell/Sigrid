@@ -54,8 +54,7 @@ namespace sigrid{
             void removeCoordinates();
             void moveCoordinatesOutside();
             void moveCoordinatesInside();
-            void setBigCoordinates();
-            void setSmallCoordinates();
+            void setCoordinateSize(const float& size);
             void addBoardBorder();
             void removeBoardBorder();
             void addPlayerToMoveToken();

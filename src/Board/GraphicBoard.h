@@ -89,9 +89,7 @@ namespace sigrid{
 
             void moveCoordinatesInside();
 
-            void setBigCoordinates();
-
-            void setSmallCoordinates();
+            void setCoordinateSize(const float& size);
 
             void addBorder();
 
@@ -182,8 +180,6 @@ namespace sigrid{
 
             float m_insideLabelSizeFactor;
             float m_outsideLabelSizeFactor;
-            float m_outsideLabelBigSizeFactor;
-            float m_outsideLabelSmallSizeFactor;
 
             bool m_showPlayerToMoveToken;
             std::unique_ptr<sf::CircleShape> m_playerToMoveToken;

@@ -53,9 +53,7 @@ namespace sigrid{
 
             void moveCoordinatesInside();
 
-            void setBigCoordinates();
-
-            void setSmallCoordinates();
+            void setCoordinateSize(const float& size);
 
             void addBoardBorder();
 

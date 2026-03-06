@@ -349,12 +349,8 @@ void Board::moveCoordinatesInside(){
     m_graphicBoard->moveCoordinatesInside();
 }
 
-void Board::setBigCoordinates(){
-    m_graphicBoard->setBigCoordinates();
-}
-
-void Board::setSmallCoordinates(){
-    m_graphicBoard->setSmallCoordinates();
+void Board::setCoordinateSize(const float& size){
+    m_graphicBoard->setCoordinateSize(size);
 }
 
 void Board::addBorder(){

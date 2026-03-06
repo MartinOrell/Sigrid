@@ -523,12 +523,9 @@ void MainWindow::handleAction(const sigrid::Action action){
         moveCoordinatesInside();
         return;
     }
-    else if(std::holds_alternative<ActionType::SetBigCoordinates>(action)){
-        setBigCoordinates();
-        return;
-    }
-    else if(std::holds_alternative<ActionType::SetSmallCoordinates>(action)){
-        setSmallCoordinates();
+    else if(std::holds_alternative<ActionType::SetCoordinateSize>(action)){
+        float size = std::get<ActionType::SetCoordinateSize>(action).size;
+        setCoordinateSize(size);
         return;
     }
     else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
@@ -857,30 +854,14 @@ void MainWindow::moveCoordinatesInside(){
     createGraphic();
 }
 
-void MainWindow::setBigCoordinates(){
+void MainWindow::setCoordinateSize(const float& size){
 
     if(!m_workWindow){
-        std::cout << "Unable to set big coordinates, workWindow does not exist" << std::endl;
+        std::cout << "Unable to set coordinate size, workWindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->setBigCoordinates();
-
-    if(m_menu){
-        m_menu->toggleItem("SetCoordinateSize");
-    }
-
-    createGraphic();
-}
-
-void MainWindow::setSmallCoordinates(){
-
-    if(!m_workWindow){
-        std::cout << "Unable to set big coordinates, workWindow does not exist" << std::endl;
-        return;
-    }
-
-    m_workWindow->setSmallCoordinates();
+    m_workWindow->setCoordinateSize(size);
 
     if(m_menu){
         m_menu->toggleItem("SetCoordinateSize");

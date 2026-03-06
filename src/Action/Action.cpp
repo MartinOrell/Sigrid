@@ -26,10 +26,10 @@ Action sigrid::getAction(const std::string& s){
         return ActionType::MoveCoordinatesInside{};
     }
     else if(s == "setBigCoordinates"){
-        return ActionType::SetBigCoordinates{};
+        return ActionType::SetCoordinateSize{0.6};
     }
     else if(s == "setSmallCoordinates"){
-        return ActionType::SetSmallCoordinates{};
+        return ActionType::SetCoordinateSize{0.4};
     }
     else if(s == "addBoardBorder"){
         return ActionType::AddBoardBorder{};

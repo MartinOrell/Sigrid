@@ -166,7 +166,6 @@ BoardStyle: [
     Visibility: Visible
     Location: Outside
     Size: 40%
-    BigSize: 60%
     font: res/fonts/arial.ttf
   ]
   Border: [

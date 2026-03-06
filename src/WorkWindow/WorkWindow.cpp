@@ -250,12 +250,8 @@ void WorkWindow::moveCoordinatesInside(){
     m_boardPtr->moveCoordinatesInside();
 }
 
-void WorkWindow::setBigCoordinates(){
-    m_boardPtr->setBigCoordinates();    
-}
-
-void WorkWindow::setSmallCoordinates(){
-    m_boardPtr->setSmallCoordinates();
+void WorkWindow::setCoordinateSize(const float& size){
+    m_boardPtr->setCoordinateSize(size);    
 }
 
 void WorkWindow::addBoardBorder(){
