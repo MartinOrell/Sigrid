@@ -38,5 +38,6 @@ namespace sigrid{
             void loadPieceColors(std::istream& is);
             void loadPieces(std::istream& is);
             void loadMenu(std::istream& is);
+            void loadToolPicker(std::istream& is);
     };
 }

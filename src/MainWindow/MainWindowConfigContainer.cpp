@@ -199,6 +199,89 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadToolPicker(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "Columns:"){
+                is >> toolPickerData.columns;
+            }
+            else if(s == "Rows:"){
+                is >> toolPickerData.rows;
+            }
+            else if(s == "MiscBlock:"){
+                std::string coordString;
+                is >> coordString;
+                toolPickerData.miscToolBlock.coord = Coord(coordString);
+                is >> toolPickerData.miscToolBlock.columns;
+                is >> toolPickerData.miscToolBlock.rows;
+            }
+            else if(s == "ColorBlock:"){
+                std::string coordString;
+                is >> coordString;
+                toolPickerData.colorBlock.coord = Coord(coordString);
+                is >> toolPickerData.colorBlock.columns;
+                is >> toolPickerData.colorBlock.rows;
+            }
+            else if(s == "PieceBlocks:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        std::string coordString = s2;
+                        int columns;
+                        int rows;
+                        is >> columns;
+                        is >> rows;
+                        CoordBlock pieceBlock{Coord{coordString},columns,rows};
+                        toolPickerData.pieceBlocks.push_back(pieceBlock);
+                    }
+                }
+            }
+            else if(s == "MiscTools:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        toolPickerData.toolNames.push_back(s2);
+                    }
+                }
+            }
+            else if(s == "Colors:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        int colorId = std::stoi(s2);
+                        toolPickerData.colorToolIds.push_back(colorId);
+                    }
+                }
+            }
+            else if(s == "DefaultPiece:"){
+                toolPickerData.defaultPieceNotation = readString(is);
+            }
+            else if(s == "Pieces:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        toolPickerData.pieceNotations.push_back(s2);
+                    }
+                }
+            }
+            else if(s == "SquareColors:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        int colorId = std::stoi(s2);
+                        toolPickerData.squareColorIds.push_back(colorId);
+                    }
+                }
+            }
+            else{
+                std::cout << "Unknown key: \"" << s << "\"";
+                std::cout << " read in ToolPicker object" << std::endl;
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -294,66 +377,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "Menu:"){
             loadMenu(ifs);
         }
-        else if(key == "ToolPickerColumns:"){
-            ifs >> toolPickerData.columns;
-        }
-        else if(key == "ToolPickerRows:"){
-            ifs >> toolPickerData.rows;
-        }
-        else if(key == "ToolPickerMiscBlock:"){
-            std::string coordString;
-            ifs >> coordString;
-            toolPickerData.miscToolBlock.coord = Coord(coordString);
-            ifs >> toolPickerData.miscToolBlock.columns;
-            ifs >> toolPickerData.miscToolBlock.rows;
-        }
-        else if(key == "ToolPickerColorBlock:"){
-            std::string coordString;
-            ifs >> coordString;
-            toolPickerData.colorBlock.coord = Coord(coordString);
-            ifs >> toolPickerData.colorBlock.columns;
-            ifs >> toolPickerData.colorBlock.rows;
-        }
-        else if(key == "ToolPickerPieceBlock:"){
-            int id;
-            ifs >> id;
-            std::string coordString;
-            int columns;
-            int rows;
-            ifs >> coordString;
-            ifs >> columns;
-            ifs >> rows;
-            CoordBlock pieceBlock{Coord{coordString},columns,rows};
-            toolPickerData.pieceBlocks.push_back(pieceBlock);
-        }
-        else if(key == "ToolPickerTool:"){
-            int id;
-            ifs >> id;
-            std::string toolName = readString(ifs);
-            toolPickerData.toolNames.push_back(toolName);
-        }
-        else if(key == "ToolPickerColor:"){
-            int positionId;
-            int colorId;
-            ifs >> positionId;
-            ifs >> colorId;
-            toolPickerData.colorToolIds.push_back(colorId);
-        }
-        else if(key == "ToolPickerDefaultPiece:"){
-            toolPickerData.defaultPieceNotation = readString(ifs);
-        }
-        else if(key == "ToolPickerPiece:"){
-            int id;
-            ifs >> id;
-            std::string notation = readString(ifs);
-            toolPickerData.pieceNotations.push_back(notation);
-        }
-        else if(key == "ToolPickerSquareColors:"){
-            int positionId;
-            int colorId;
-            ifs >> positionId;
-            ifs >> colorId;
-            toolPickerData.squareColorIds.push_back(colorId);
+        else if(key == "ToolPicker:"){
+            loadToolPicker(ifs);   
         }
         else{
             std::cout << "Unknown key: \"" << key << "\"" << std::endl;

@@ -230,31 +230,44 @@ Menu: [
     ]
   ]
 ]
-ToolPickerColumns: 2
-ToolPickerRows: 7
-ToolPickerMiscBlock: a1 2 1
-ToolPickerColorBlock: a2 2 6
-ToolPickerPieceBlock: 0 a2 1 6
-ToolPickerPieceBlock: 1 b2 1 6
-ToolPickerTool: 0 Select
-ToolPickerTool: 1 Arrow
-ToolPickerColor: 0 0
-ToolPickerColor: 1 1
-ToolPickerColor: 2 2
-ToolPickerColor: 3 3
-ToolPickerColor: 4 4
-ToolPickerColor: 5 5
-ToolPickerColor: 6 6
-ToolPickerColor: 7 7
-ToolPickerColor: 8 8
-ToolPickerColor: 9 9
-ToolPickerColor: 10 10
-ToolPickerColor: 11 11
-ToolPickerDefaultPiece: P
-ToolPickerPiece: 0 P
-ToolPickerPiece: 1 R
-ToolPickerPiece: 2 N
-ToolPickerPiece: 3 B
-ToolPickerPiece: 4 Q
-ToolPickerPiece: 5 K
-ToolPickerSquareColors: 0 1
+ToolPicker: [
+  Columns: 2
+  Rows: 7
+  MiscBlock: a1 2 1
+  ColorBlock: a2 2 6
+  PieceBlocks: [
+    a2 1 6
+    b2 1 6
+  ]
+  MiscTools: [
+    Select
+    Arrow
+  ]
+  Colors: [
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+  ]
+  DefaultPiece: P
+  Pieces: [
+    P
+    R
+    N
+    B
+    Q
+    K
+  ]
+  SquareColors: [
+    0
+    1
+  ]
+]
