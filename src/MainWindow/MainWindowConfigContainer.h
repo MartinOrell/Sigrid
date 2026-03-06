@@ -36,5 +36,6 @@ namespace sigrid{
             void loadSquareColors(std::istream& is);
             void loadArrowColors(std::istream& is);
             void loadPieceColors(std::istream& is);
+            void loadPieces(std::istream& is);
     };
 }

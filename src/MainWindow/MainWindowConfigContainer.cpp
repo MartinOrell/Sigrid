@@ -63,7 +63,7 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
                 is >> windowName;
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"" << std::endl;
+                std::cout << "Unknown key: \"" << s << "\"";
                 std::cout << " read in Window object" << std::endl;
             }
         }
@@ -96,15 +96,12 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
                 PieceColor pieceColor;
-                std::string s2;
-                for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                for(std::string s2 = readString(is); s2 != "]"; s2 = readString(is)){
                     if(s2 == "name:"){
-                        std::string name;
-                        name = readString(is);
+                        std::string name = readString(is);
                     }
                     else if(s2 == "style:"){
-                        std::string style;
-                        style = readString(is);
+                        std::string style = readString(is);
                         pieceColor.isLight = style == "light";
                     }
                     else if(s2 == "lightmodifier:"){
@@ -114,11 +111,38 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
                         pieceColor.darkModifier = readColor(is);
                     }
                     else{
-                        std::cout << "Unknown key: \"" << s2 << "\"" << std::endl;
+                        std::cout << "Unknown key: \"" << s2 << "\"";
                         std::cout << " read in PieceColor object" << std::endl;
                     }
                 }
                 pieceColors.push_back(pieceColor);
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadPieces(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "["){
+                PieceContainer piece;
+                for(std::string s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                    if(s2 == "notation:"){
+                        piece.name = readString(is);
+                    }
+                    else if(s2 == "style:"){
+                        piece.style = readString(is);
+                    }
+                    else if(s2 == "imageFilename:"){
+                        piece.filename = readString(is);
+                    }
+                    else{
+                        std::cout << "Unknown key: \"" << s2 << "\"";
+                        std::cout << " read in Piece object" << std::endl;
+                    }
+                }
+                pieces.push_back(piece);
             }
         }
     }
@@ -145,12 +169,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "PieceColors:"){
             loadPieceColors(ifs);
         }
-        else if(key == "Piece:"){
-            PieceContainer piece;
-            piece.name = readString(ifs);
-            piece.style = readString(ifs);
-            piece.filename = readString(ifs);
-            pieces.push_back(piece);
+        else if(key == "Pieces:"){
+            loadPieces(ifs);
         }
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;

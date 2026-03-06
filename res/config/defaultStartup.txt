@@ -95,18 +95,68 @@ PieceColors: [
     darkmodifier: 008000
   ]
 ]
-Piece: P light res/pieces/standard/white_pawn.png
-Piece: P dark res/pieces/standard/black_pawn.png
-Piece: R light res/pieces/standard/white_rook.png
-Piece: R dark res/pieces/standard/black_rook.png
-Piece: N light res/pieces/standard/white_knight.png
-Piece: N dark res/pieces/standard/black_knight.png
-Piece: B light res/pieces/standard/white_bishop.png
-Piece: B dark res/pieces/standard/black_bishop.png
-Piece: Q light res/pieces/standard/white_queen.png
-Piece: Q dark res/pieces/standard/black_queen.png
-Piece: K light res/pieces/standard/white_king.png
-Piece: K dark res/pieces/standard/black_king.png
+Pieces: [
+  [
+    notation: P
+    style: light
+    imageFilename: res/pieces/standard/white_pawn.png
+  ]
+  [
+    notation: P
+    style: dark
+    imageFilename: res/pieces/standard/black_pawn.png
+  ]
+  [
+    notation: R
+    style: light
+    imageFilename: res/pieces/standard/white_rook.png
+  ]
+  [
+    notation: R
+    style: dark
+    imageFilename: res/pieces/standard/black_rook.png
+  ]
+  [
+    notation: N
+    style: light
+    imageFilename: res/pieces/standard/white_knight.png
+  ]
+  [
+    notation: N
+    style: dark
+    imageFilename: res/pieces/standard/black_knight.png
+  ]
+  [
+    notation: B
+    style: light
+    imageFilename: res/pieces/standard/white_bishop.png
+  ]
+  [
+    notation: B
+    style: dark
+    imageFilename: res/pieces/standard/black_bishop.png
+  ]
+  [
+    notation: Q
+    style: light
+    imageFilename: res/pieces/standard/white_queen.png
+  ]
+  [
+    notation: Q
+    style: dark
+    imageFilename: res/pieces/standard/black_queen.png
+  ]
+  [
+    notation: K
+    style: light
+    imageFilename: res/pieces/standard/white_king.png
+  ]
+  [
+    notation: K
+    style: dark
+    imageFilename: res/pieces/standard/black_king.png
+  ]
+]
 NumPieceColors: 12
 SquareSize: 100
 LabelsInside: OFF
