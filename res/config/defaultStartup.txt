@@ -158,20 +158,29 @@ Pieces: [
   ]
 ]
 NumPieceColors: 12
-SquareSize: 100
-LabelsInside: OFF
-LabelsOutside: ON
-LabelFont: res/fonts/arial.ttf
-InsideLabelSize: 40%
-OutsideLabelSize: 40%
-OutsideLabelSmallSize: 40%
-OutsideLabelBigSize: 60%
-Border: ON
-BorderWidth: 2
-PlayerToMoveToken: OFF
-ResetBoardFilename: res/config/setupBoards/chess.txt
+BoardStyle: [
+  Square: [
+    Width: 100
+    Height: 100
+  ]
+  CoordLabels: [
+    Visibility: Visible
+    Location: Outside
+    Size: 40%
+    BigSize: 60%
+    font: res/fonts/arial.ttf
+  ]
+  Border: [
+    Visibility: Visible
+    Width: 2
+  ]
+  TurnToken: [
+    Visibility: Hidden
+  ]
+  ResetFilename: res/config/setupBoards/chess.txt
+  DefaultImageFilename: saveData/boards/images/board.png
+]
 BoardFilename: saveData/boards/board.txt
-DefaultBoardImageFilename: saveData/boards/images/board.png
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF

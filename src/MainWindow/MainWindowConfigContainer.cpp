@@ -282,6 +282,117 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "Square:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        if(s2 == "Width:"){
+                            is >> boardData.squareSize;
+                        }
+                        else if(s2 == "Height:"){
+                            int height;
+                            is >> height; //Currently not used and assumed to be equal to width
+                        }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in Square object" << std::endl;
+                        }
+                    }
+                }
+            }
+            else if(s == "CoordLabels:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    bool isVisible;
+                    bool isInside;
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        if(s2 == "Visibility:"){
+                            std::string visibilityString = readString(is);
+                            isVisible = visibilityString == "Visible";
+                        }
+                        else if(s2 == "Location:"){
+                            std::string locationString = readString(is);
+                            isInside = locationString == "Inside";
+                        }
+                        else if(s2 == "Size:"){
+                            float size;
+                            is >> size;
+                            is.ignore(1);// ignore % sign
+                            size = size/100.f;
+                            boardData.insideLabelSize = size;
+                            boardData.outsideLabelSize = size;
+                            boardData.outsideLabelSmallSize = size;
+                        }
+                        else if(s2 == "BigSize:"){
+                            float size;
+                            is >> size;
+                            is.ignore(1);// ignore % sign
+                            size = size/100.f;
+                            boardData.outsideLabelBigSize = size;
+                        }
+                        else if(s2 == "font:"){
+                            boardData.labelFont = readString(is);
+                        }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in CoordLabel object" << std::endl;
+                        }
+                    }
+                    boardData.labelsInside = isVisible && isInside;
+                    boardData.labelsOutside = isVisible && !isInside;
+                }
+            }
+            else if(s == "Border:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        if(s2 == "Visibility:"){
+                            std::string visibilityString = readString(is);
+                            boardData.border = visibilityString == "Visible";
+                        }
+                        else if(s2 == "Width:"){
+                            is >> boardData.borderWidth;
+                        }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in Border object" << std::endl;
+                        }
+                    }
+                }
+            }
+            else if(s == "TurnToken:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        if(s2 == "Visibility:"){
+                            std::string visibilityString = readString(is);
+                            boardData.playerToMoveToken = visibilityString == "Visible";
+                        }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in TurnToken object" << std::endl;
+                        }
+                    }
+                }
+            }
+            else if(s == "ResetFilename:"){
+                resetBoardFilename = readString(is);
+            }
+            else if(s == "DefaultImageFilename:"){
+                defaultBoardImageFilename = readString(is);
+            }
+            else{
+                std::cout << "Unknown key: \"" << s << "\"";
+                std::cout << " read in BoardStyle object" << std::endl;
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -309,14 +420,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "NumPieceColors:"){
             ifs >> numPieceColors;
         }
-        else if(key == "ResetBoardFilename:"){
-            resetBoardFilename = readString(ifs);
-        }
         else if(key == "BoardFilename:"){
             boardFilename = readString(ifs);
-        }
-        else if(key == "DefaultBoardImageFilename:"){
-            defaultBoardImageFilename = readString(ifs);
         }
         else if(key == "PinMenu:"){
             menuData.isPinned = readToggle(ifs);
@@ -330,49 +435,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             toolPickerData.showColors = readToggle(ifs);
             menuData.showColorTools = toolPickerData.showColors;
         }
-        else if(key == "SquareSize:"){
-            ifs >> boardData.squareSize;
-        }
-        else if(key == "LabelsInside:"){
-            boardData.labelsInside = readToggle(ifs);
-        }
-        else if(key == "LabelsOutside:"){
-            boardData.labelsOutside = readToggle(ifs);
-        }
-        else if(key == "LabelFont:"){
-            boardData.labelFont = readString(ifs);
-        }
-        else if(key == "InsideLabelSize:"){
-            ifs >> boardData.insideLabelSize;
-            boardData.insideLabelSize = boardData.insideLabelSize / 100.f;
-            ifs.ignore(1);
-        }
-        else if(key == "OutsideLabelSize:"){
-            ifs >> boardData.outsideLabelSize;
-            boardData.outsideLabelSize = boardData.outsideLabelSize / 100.f;
-            ifs.ignore(1);
-        }
-        else if(key == "OutsideLabelSmallSize:"){
-            ifs >> boardData.outsideLabelSmallSize;
-            boardData.outsideLabelSmallSize = boardData.outsideLabelSmallSize / 100.f;
-            ifs.ignore(1);
-        }
-        else if(key == "OutsideLabelBigSize:"){
-            ifs >> boardData.outsideLabelBigSize;
-            boardData.outsideLabelBigSize = boardData.outsideLabelBigSize / 100.f;
-            ifs.ignore(1);
-        }
-        else if(key == "Border:"){
-            boardData.border = readToggle(ifs);
-        }
-        else if(key == "BorderWidth:"){
-            ifs >> boardData.borderWidth;
-        }
-        else if(key == "Border:"){
-            boardData.border = readToggle(ifs);
-        }
-        else if(key == "PlayerToMoveToken:"){
-            boardData.playerToMoveToken = readToggle(ifs);
+        else if(key == "BoardStyle:"){
+            loadBoardStyle(ifs);
         }
         else if(key == "Menu:"){
             loadMenu(ifs);
