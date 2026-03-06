@@ -445,9 +445,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "Pieces:"){
             loadPieces(ifs);
         }
-        else if(key == "NumPieceColors:"){
-            ifs >> numPieceColors;
-        }
         else if(key == "BoardFilename:"){
             boardFilename = readString(ifs);
         }

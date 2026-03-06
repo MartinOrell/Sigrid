@@ -157,7 +157,6 @@ Pieces: [
     imageFilename: res/pieces/standard/black_king.png
   ]
 ]
-NumPieceColors: 12
 BoardStyle: [
   Square: [
     Width: 100

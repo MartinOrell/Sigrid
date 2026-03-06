@@ -25,8 +25,6 @@ namespace sigrid{
         MenuContainer menuData;
         ToolPickerContainer toolPickerData;
 
-        int numPieceColors;
-
         std::string resetBoardFilename;
         std::string boardFilename;
         std::string defaultBoardImageFilename;
