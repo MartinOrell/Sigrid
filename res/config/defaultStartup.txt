@@ -175,28 +175,61 @@ DefaultBoardImageFilename: saveData/boards/images/board.png
 PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF
-MenuFont: res/fonts/calibri.ttf
-MenuTitle: Menu
-MenuHeader: 0 File
-MenuHeader: 1 Edit
-MenuHeader: 2 View
-MenuHeader: 3 Settings
-MenuHeader: 4 Help
-MenuItem: 0 0 Save save
-MenuItem: 1 0 Reset reset
-MenuItem: 1 1 Clear clear
-MenuItem: 1 2 "Flip Board" flipBoard
-MenuToggleItem: 1 3 Coordinates "Add Coordinates" addCoordinates "Remove Coordinates" removeCoordinates
-MenuToggleItem: 1 4 MoveCoordinates "Move Coordinates outside" moveCoordinatesOutside "Move Coordinates inside" moveCoordinatesInside
-MenuToggleItem: 1 5 SetCoordinateSize "Set Big Coordinates" setBigCoordinates "Set Small Coordinates" setSmallCoordinates
-MenuToggleItem: 1 6 ToggleBoardBorder "Add Border" addBoardBorder "Remove Border" removeBoardBorder
-MenuToggleItem: 1 7 ToggleAddTurnToken "Add turn token" addTurnToken "Remove turn token" removeTurnToken
-MenuItem: 1 8 "Paste FEN" pasteFen
-MenuItem: 1 9 "Copy FEN" copyFen
-MenuToggleItem: 2 0 PinMenu "Pin Menu" pinMenu "Unpin Menu" unpinMenu
-MenuToggleItem: 2 1 ShowToolWindow "Show Tool Window" showToolWindow "Hide Tool Window" hideToolWindow
-MenuToggleItem: 2 2 ShowColorTools "Show Color Tools" showColorTools "Hide Color Tools" hideColorTools
-MenuItem: 4 0 "Print to console" print
+Menu: [
+  font: res/fonts/calibri.ttf
+  title: Menu
+  headers: [
+    File [
+      Save save
+    ]
+    Edit [
+      Reset reset
+      Clear clear
+      "Flip Board" flipBoard
+      Coordinates [
+        "Add Coordinates" addCoordinates
+        "Remove Coordinates" removeCoordinates
+      ]
+      MoveCoordinates [
+        "Move Coordinates outside" moveCoordinatesOutside
+        "Move Coordinates inside" moveCoordinatesInside
+      ]
+      SetCoordinateSize [
+        "Set Big Coordinates" setBigCoordinates
+        "Set Small Coordinates" setSmallCoordinates
+      ]
+      ToggleBoardBorder [
+        "Add Border" addBoardBorder
+        "Remove Border" removeBoardBorder
+      ]
+      ToggleAddTurnToken [
+        "Add turn token" addTurnToken
+        "Remove turn token" removeTurnToken
+      ]
+      "Paste FEN" pasteFen
+      "Copy FEN" copyFen
+    ]
+    View [
+      PinMenu [
+        "Pin Menu" pinMenu
+        "Unpin Menu" unpinMenu
+      ]
+      ShowToolWindow [
+        "Show Tool Window" showToolWindow
+        "Hide Tool Window" hideToolWindow
+      ]
+      ShowColorTools [
+        "Show Color Tools" showColorTools
+        "Hide Color Tools" hideColorTools
+      ]
+    ]
+    Settings [
+    ]
+    Help [
+      "Print to console" print
+    ]
+  ]
+]
 ToolPickerColumns: 2
 ToolPickerRows: 7
 ToolPickerMiscBlock: a1 2 1

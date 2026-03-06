@@ -148,6 +148,57 @@ void MainWindowConfigContainer::loadPieces(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadMenu(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "font:"){
+                 menuData.fontName = readString(is);
+            }
+            else if(s == "title:"){
+                menuData.title = readString(is);
+            }
+            else if(s == "headers:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        menuData.headerNames.push_back(s2);
+                        std::string s3 = readString(is);
+                        if(s3 == "["){
+                            for(s3 = readString(is); s3 != "]"; s3 = readString(is)){
+                                std::string s4 = readString(is);
+                                if(s4 != "["){
+                                    MenuItemContainer item;
+                                    item.headerId = menuData.headerNames.size()-1;
+                                    item.displayName = s3;
+                                    item.actionName = s4;
+                                    menuData.menuItems.push_back(item);
+                                }
+                                else{
+                                    for(s4 = readString(is); s4 != "]"; s4 = readString(is)){
+                                        MenuToggleItemContainer item;
+                                        item.headerId = menuData.headerNames.size()-1;
+                                        item.keyName = s3;
+                                        item.displayNameOn = s4;
+                                        item.actionNameOn = readString(is);
+                                        item.displayNameOff = readString(is);
+                                        item.actionNameOff = readString(is);
+                                        menuData.menuToggleItems.push_back(item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                std::cout << "Unknown key: \"" << s << "\"";
+                std::cout << " read in Menu object" << std::endl;
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -240,38 +291,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "PlayerToMoveToken:"){
             boardData.playerToMoveToken = readToggle(ifs);
         }
-        else if(key == "MenuFont:"){
-            menuData.fontName = readString(ifs);
-        }
-        else if(key == "MenuTitle:"){
-            menuData.title = readString(ifs);
-        }
-        else if(key == "MenuHeader:"){
-            int headerId;
-            ifs >> headerId;
-            std::string headerName = readString(ifs);
-            menuData.headerNames.push_back(headerName);
-        }
-        else if(key == "MenuItem:"){
-            int itemId;
-            MenuItemContainer item;
-            ifs >> item.headerId;
-            ifs >> itemId;
-            item.displayName = readString(ifs);
-            item.actionName = readString(ifs);
-            menuData.menuItems.push_back(item);
-        }
-        else if(key == "MenuToggleItem:"){
-            int itemId;
-            MenuToggleItemContainer item;
-            ifs >> item.headerId;
-            ifs >> itemId;
-            item.keyName = readString(ifs);
-            item.displayNameOn = readString(ifs);
-            item.actionNameOn = readString(ifs);
-            item.displayNameOff = readString(ifs);
-            item.actionNameOff = readString(ifs);
-            menuData.menuToggleItems.push_back(item);
+        else if(key == "Menu:"){
+            loadMenu(ifs);
         }
         else if(key == "ToolPickerColumns:"){
             ifs >> toolPickerData.columns;
