@@ -3,8 +3,10 @@ Window: [
   Height: 1080
   Name: Sigrid
 ]
-SquareColor: 0 ffffff
-SquareColor: 1 d0d0d0
+SquareColors: [
+  ffffff
+  d0d0d0
+]
 ArrowColor: 0 ff0000
 ArrowColor: 1 0080ff
 ArrowColor: 2 00ff00

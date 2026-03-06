@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 using namespace sigrid;
 
@@ -15,6 +16,15 @@ bool readToggle(std::istream& is){
 uint32_t readColor(std::istream& is){
     uint32_t colorHex;
     is >> std::hex >> colorHex >> std::ws;
+    colorHex = colorHex * 0x100 + 0xff;
+    return colorHex;
+}
+
+uint32_t getColorHex(const std::string& s){
+    uint32_t colorHex;
+    std::stringstream ss;
+    ss << std::hex << s;
+    ss >> colorHex;
     colorHex = colorHex * 0x100 + 0xff;
     return colorHex;
 }
@@ -60,6 +70,16 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadSquareColors(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            uint32_t colorHex = getColorHex(s);
+            squareColors.push_back(colorHex);
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -72,11 +92,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         if(key == "Window:"){
             loadWindow(ifs);
         }
-        else if(key == "SquareColor:"){
-            int id;
-            ifs >> id;
-            uint32_t colorHex = readColor(ifs);
-            squareColors.push_back(colorHex);
+        else if(key == "SquareColors:"){
+            loadSquareColors(ifs);
         }
         else if(key == "ArrowColor:"){
             int id;
