@@ -152,7 +152,12 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "font:"){
+            if(s == "pin:"){
+                bool isPinned = readToggle(is);
+                menuData.isPinned = isPinned;
+                menuData.showItems = isPinned;
+            }
+            else if(s == "font:"){
                  menuData.fontName = readString(is);
             }
             else if(s == "title:"){
@@ -422,10 +427,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         }
         else if(key == "BoardFilename:"){
             boardFilename = readString(ifs);
-        }
-        else if(key == "PinMenu:"){
-            menuData.isPinned = readToggle(ifs);
-            menuData.showItems = menuData.isPinned;
         }
         else if(key == "ToolWindow:"){
             toolPickerData.show = readToggle(ifs);

@@ -181,10 +181,10 @@ BoardStyle: [
   DefaultImageFilename: saveData/boards/images/board.png
 ]
 BoardFilename: saveData/boards/board.txt
-PinMenu: OFF
 ToolWindow: ON
 ColorTools: OFF
 Menu: [
+  pin: OFF
   font: res/fonts/calibri.ttf
   title: Menu
   headers: [
