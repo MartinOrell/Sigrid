@@ -181,7 +181,6 @@ BoardStyle: [
   DefaultImageFilename: saveData/boards/images/board.png
 ]
 BoardFilename: saveData/boards/board.txt
-ColorTools: OFF
 Menu: [
   pin: OFF
   font: res/fonts/calibri.ttf
@@ -243,7 +242,12 @@ ToolPicker: [
   Columns: 2
   Rows: 7
   MiscBlock: a1 2 1
-  ColorBlock: a2 2 6
+  ColorBlock: [
+    Visibility: Hidden
+    Position: a2
+    Columns: 2
+    Rows: 6
+  ]
   PieceBlocks: [
     a2 1 6
     b2 1 6

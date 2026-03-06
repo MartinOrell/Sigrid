@@ -228,11 +228,28 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 is >> toolPickerData.miscToolBlock.rows;
             }
             else if(s == "ColorBlock:"){
-                std::string coordString;
-                is >> coordString;
-                toolPickerData.colorBlock.coord = Coord(coordString);
-                is >> toolPickerData.colorBlock.columns;
-                is >> toolPickerData.colorBlock.rows;
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+
+                        if(s2 == "Visibility:"){
+                            std::string visibilityString = readString(is);
+                            bool isVisible = visibilityString == "Visible";
+                            toolPickerData.showColors = isVisible;
+                            menuData.showColorTools = isVisible;
+                        }
+                        else if(s2 == "Position:"){
+                            std::string position = readString(is);
+                            toolPickerData.colorBlock.coord = Coord(position);
+                        }
+                        else if(s2 == "Columns:"){
+                            is >> toolPickerData.colorBlock.columns;
+                        }
+                        else if(s2 == "Rows:"){
+                            is >> toolPickerData.colorBlock.rows;
+                        }
+                    }
+                }
             }
             else if(s == "PieceBlocks:"){
                 std::string s2 = readString(is);
@@ -433,10 +450,6 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         }
         else if(key == "BoardFilename:"){
             boardFilename = readString(ifs);
-        }
-        else if(key == "ColorTools:"){
-            toolPickerData.showColors = readToggle(ifs);
-            menuData.showColorTools = toolPickerData.showColors;
         }
         else if(key == "BoardStyle:"){
             loadBoardStyle(ifs);
