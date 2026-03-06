@@ -39,6 +39,27 @@ std::string readString(std::istream& is){
     return s;
 }
 
+void MainWindowConfigContainer::loadWindow(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if (s == "Width:"){
+                is >> windowWidth;
+            }
+            else if(s == "Height:"){
+                is >> windowHeight;
+            }
+            else if(s == "Name:"){
+                is >> windowName;
+            }
+            else{
+                std::cout << "Unknown key: \"" << s << "\"" << std::endl;
+                std::cout << " read in Window object" << std::endl;
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -48,14 +69,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
 
     std::string key;
     while(ifs >> key){
-        if(key == "WindowWidth:"){
-            ifs >> windowWidth;
-        }
-        else if(key == "WindowHeight:"){
-            ifs >> windowHeight;
-        }
-        else if(key == "Name:"){
-            windowName = readString(ifs);
+        if(key == "Window:"){
+            loadWindow(ifs);
         }
         else if(key == "SquareColor:"){
             int id;

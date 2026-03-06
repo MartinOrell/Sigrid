@@ -30,5 +30,8 @@ namespace sigrid{
         std::string resetBoardFilename;
         std::string boardFilename;
         std::string defaultBoardImageFilename;
+
+        private:
+            void loadWindow(std::istream& is);
     };
 }
