@@ -90,6 +90,40 @@ void MainWindowConfigContainer::loadArrowColors(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadPieceColors(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "["){
+                PieceColor pieceColor;
+                std::string s2;
+                for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                    if(s2 == "name:"){
+                        std::string name;
+                        name = readString(is);
+                    }
+                    else if(s2 == "style:"){
+                        std::string style;
+                        style = readString(is);
+                        pieceColor.isLight = style == "light";
+                    }
+                    else if(s2 == "lightmodifier:"){
+                        pieceColor.lightModifier = readColor(is);
+                    }
+                    else if(s2 == "darkmodifier:"){
+                        pieceColor.darkModifier = readColor(is);
+                    }
+                    else{
+                        std::cout << "Unknown key: \"" << s2 << "\"" << std::endl;
+                        std::cout << " read in PieceColor object" << std::endl;
+                    }
+                }
+                pieceColors.push_back(pieceColor);
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -108,16 +142,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "ArrowColors:"){
             loadArrowColors(ifs);
         }
-        else if(key == "PieceColor:"){
-            int id;
-            ifs >> id;
-            std::string name = readString(ifs);
-            std::string style = readString(ifs);
-            PieceColor newColor;
-            newColor.isLight = style == "light";
-            newColor.lightModifier = readColor(ifs);
-            newColor.darkModifier = readColor(ifs);
-            pieceColors.push_back(newColor);
+        else if(key == "PieceColors:"){
+            loadPieceColors(ifs);
         }
         else if(key == "Piece:"){
             PieceContainer piece;

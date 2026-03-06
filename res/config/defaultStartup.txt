@@ -21,18 +21,80 @@ ArrowColors: [
   000080
   008000
 ]
-PieceColor: 0 white light ffffff 000000
-PieceColor: 1 black dark ffffff 000000
-PieceColor: 2 red light ff0000 000000
-PieceColor: 3 blue light 0080ff 000000
-PieceColor: 4 yellow light ffff00 000000
-PieceColor: 5 green light 00ff00 000000
-PieceColor: 6 orange light ffa500 000000
-PieceColor: 7 purple light ba55d3 000000
-PieceColor: 8 pink light ffcccc 000000
-PieceColor: 9 darkred dark ffffff 800000
-PieceColor: 10 darkblue dark ffffff 000080
-PieceColor: 11 darkgreen dark ffffff 008000
+PieceColors: [
+  [
+    name: white
+    style: light
+    lightmodifier: ffffff
+    darkmodifier: 000000
+  ]
+  [
+    name: black
+    style: dark
+    lightmodifier: ffffff
+    darkmodifier: 000000
+  ]
+  [
+    name: red
+    style: light
+    lightmodifier: ff0000
+    darkmodifier: 000000
+  ]
+  [
+    name: blue
+    style: light
+    lightmodifier: 0080ff
+    darkmodifier: 000000
+  ]
+  [
+    name: yellow
+    style: light
+    lightmodifier: ffff00
+    darkmodifier: 000000
+  ]
+  [
+    name: green
+    style: light
+    lightmodifier: 00ff00
+    darkmodifier: 000000
+  ]
+  [
+    name: orange
+    style: light
+    lightmodifier: 00ff00
+    darkmodifier: 000000
+  ]
+  [
+    name: purple
+    style: light
+    lightmodifier: ba55d3
+    darkmodifier: 000000
+  ]
+  [
+    name: pink
+    style: light
+    lightmodifier: ffcccc
+    darkmodifier: 000000
+  ]
+  [
+    name: darkred
+    style: dark
+    lightmodifier: ffffff
+    darkmodifier: 800000
+  ]
+  [
+    name: darkblue
+    style: dark
+    lightmodifier: ffffff
+    darkmodifier: 000080
+  ]
+  [
+    name: darkgreen
+    style: dark
+    lightmodifier: ffffff
+    darkmodifier: 008000
+  ]
+]
 Piece: P light res/pieces/standard/white_pawn.png
 Piece: P dark res/pieces/standard/black_pawn.png
 Piece: R light res/pieces/standard/white_rook.png
