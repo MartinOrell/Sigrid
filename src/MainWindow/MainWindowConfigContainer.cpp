@@ -80,6 +80,16 @@ void MainWindowConfigContainer::loadSquareColors(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadArrowColors(std::istream& is){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            uint32_t colorHex = getColorHex(s);
+            arrowColors.push_back(colorHex);
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -95,11 +105,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "SquareColors:"){
             loadSquareColors(ifs);
         }
-        else if(key == "ArrowColor:"){
-            int id;
-            ifs >> id;
-            uint32_t colorHex = readColor(ifs);
-            arrowColors.push_back(colorHex);
+        else if(key == "ArrowColors:"){
+            loadArrowColors(ifs);
         }
         else if(key == "PieceColor:"){
             int id;

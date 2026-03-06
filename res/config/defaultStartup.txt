@@ -7,18 +7,20 @@ SquareColors: [
   ffffff
   d0d0d0
 ]
-ArrowColor: 0 ff0000
-ArrowColor: 1 0080ff
-ArrowColor: 2 00ff00
-ArrowColor: 3 ffff00
-ArrowColor: 4 ffa500
-ArrowColor: 5 ba55d3
-ArrowColor: 6 ffcccc
-ArrowColor: 7 ffffff
-ArrowColor: 8 000000
-ArrowColor: 9 800000
-ArrowColor: 10 000080
-ArrowColor: 11 008000
+ArrowColors: [
+  ff0000
+  0080ff
+  00ff00
+  ffff00
+  ffa500
+  ba55d3
+  ffcccc
+  ffffff
+  000000
+  800000
+  000080
+  008000
+]
 PieceColor: 0 white light ffffff 000000
 PieceColor: 1 black dark ffffff 000000
 PieceColor: 2 red light ff0000 000000

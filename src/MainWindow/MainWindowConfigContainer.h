@@ -34,5 +34,6 @@ namespace sigrid{
         private:
             void loadWindow(std::istream& is);
             void loadSquareColors(std::istream& is);
+            void loadArrowColors(std::istream& is);
     };
 }
