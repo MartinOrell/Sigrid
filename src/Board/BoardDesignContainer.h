@@ -6,6 +6,8 @@ namespace sigrid{
     struct BoardDesignContainer{
 
         int squareSize;
+        float arrowThickness;
+        float arrowHeadSize;
         bool labelsInside;
         bool labelsOutside;
         std::string labelFont;

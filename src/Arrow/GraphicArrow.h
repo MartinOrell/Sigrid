@@ -13,7 +13,7 @@ namespace sigrid{
     class GraphicArrow: public sf::Drawable{
 
         public:
-            GraphicArrow(sf::Vector2f fromPosition, sf::Vector2f toPosition, sf::Color color);
+            GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize);
             GraphicArrow(const GraphicArrow&);
             GraphicArrow& operator =(const GraphicArrow&);
 
@@ -27,6 +27,9 @@ namespace sigrid{
             //Since Convex shape cannot draw concave shapes, multiple shapes are required
             sf::ConvexShape m_line;
             sf::CircleShape m_head;
+
+            float m_thickness;
+            float m_headSize;
     };
 
 }

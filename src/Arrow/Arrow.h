@@ -11,7 +11,7 @@ namespace sigrid{
     class Arrow: public sf::Drawable{
 
         public:
-            Arrow(const Coord& fromCoord, const Coord& toCoord, const int colorId, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color);
+            Arrow(const Coord& fromCoord, const Coord& toCoord, const int colorId, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize);
             Coord fromCoord() const;
             Coord toCoord() const;
 

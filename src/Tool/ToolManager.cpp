@@ -46,7 +46,7 @@ std::optional<sf::Texture*> ToolManager::getArrowTexturePtr(const int colorId){
 
         
 
-        m_graphicArrowPtr = std::make_unique<GraphicArrow>(arrowFrom, arrowTo, arrowColor);
+        m_graphicArrowPtr = std::make_unique<GraphicArrow>(arrowFrom, arrowTo, arrowColor, 5.f, 15.f);
     }
     else{
         m_graphicArrowPtr->setColor(arrowColor);

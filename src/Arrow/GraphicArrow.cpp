@@ -4,10 +4,9 @@
 
 using namespace sigrid;
 
-GraphicArrow::GraphicArrow(sf::Vector2f fromPosition, sf::Vector2f toPosition, sf::Color color){
-
-    float thickness = 5.f;
-    float headSize = 15.f;
+GraphicArrow::GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize)
+: m_thickness{thickness}
+, m_headSize{headSize}{
 
     m_line.setFillColor(color);
     m_line.setOrigin({0, thickness/2.f});
@@ -68,9 +67,8 @@ GraphicArrow& GraphicArrow::operator =(const GraphicArrow& src){
 }
 
 void GraphicArrow::set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition){
-    float thickness = 5.f;
-    float headSize = 15.f;
-    const unsigned int precision{ (unsigned int)(thickness * 2)};
+
+    const unsigned int precision{ (unsigned int)(m_thickness * 2)};
 
     m_line.setPosition(fromPosition);
 
@@ -81,17 +79,17 @@ void GraphicArrow::set(const sf::Vector2f& fromPosition, const sf::Vector2f& toP
     size_t index{0};
     m_line.setPoint(index, sf::Vector2f(0.f,0.f)); //start of line
     index++;
-    m_line.setPoint(index, sf::Vector2f(1.f+length - headSize * 3.f /2.f, 0.f)); //to head
+    m_line.setPoint(index, sf::Vector2f(1.f+length - m_headSize * 3.f /2.f, 0.f)); //to head
     index++;
-    m_line.setPoint(index, sf::Vector2f(1.f + length - headSize *3.f / 2.f, thickness)); //to head 2
+    m_line.setPoint(index, sf::Vector2f(1.f + length - m_headSize *3.f / 2.f, m_thickness)); //to head 2
     index++;
-    m_line.setPoint(index, sf::Vector2f(0.f, thickness));
+    m_line.setPoint(index, sf::Vector2f(0.f, m_thickness));
 
     //rounded edge
     for(unsigned int i = 1; i < precision - 1; i++){
         float radius = ((float)i / (float) precision * 3.14f);
-        float posX = (-sin(radius)) * thickness / 2.f;
-        float posY = thickness - (1.f - cos(radius)) * thickness / 2.f;
+        float posX = (-sin(radius)) * m_thickness / 2.f;
+        float posY = m_thickness - (1.f - cos(radius)) * m_thickness / 2.f;
         m_line.setPoint(index, {posX,posY});
         index++;
     }
@@ -102,8 +100,8 @@ void GraphicArrow::set(const sf::Vector2f& fromPosition, const sf::Vector2f& toP
     m_head.setRotation(sf::radians(3.14f/2.f + rotation));
     
     sf::Vector2f headPosition;
-    headPosition.x = fromPosition.x + (cos(rotation)) * (length - headSize);
-    headPosition.y = fromPosition.y + (sin(rotation)) * (length - headSize);
+    headPosition.x = fromPosition.x + (cos(rotation)) * (length - m_headSize);
+    headPosition.y = fromPosition.y + (sin(rotation)) * (length - m_headSize);
 
     m_head.setPosition(headPosition);
 }

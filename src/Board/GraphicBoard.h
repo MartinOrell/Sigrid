@@ -186,5 +186,8 @@ namespace sigrid{
 
             bool m_isLeftToRight;
             bool m_isTopToBottom;
+
+            float m_arrowThickness;
+            float m_arrowHeadSize;
     };
 }

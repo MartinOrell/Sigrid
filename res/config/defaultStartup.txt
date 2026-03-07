@@ -280,6 +280,10 @@ BoardStyle: [
     width: 100
     height: 100
   ]
+  Arrow: [
+    thickness: 40
+    headSize: 80
+  ]
   InsideCoordLabels: [
     visibility: Hidden
     size: 40%

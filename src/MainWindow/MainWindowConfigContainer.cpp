@@ -376,6 +376,23 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                     }
                 }
             }
+            else if(s == "Arrow:"){
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+                        if(s2 == "thickness:"){
+                            is >> boardData.arrowThickness;
+                        }
+                        else if(s2 == "headSize:"){
+                            is >> boardData.arrowHeadSize;
+                        }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in Arrow object" << std::endl;
+                        }
+                    }
+                }
+            }
             else if(s == "InsideCoordLabels:"){
                 std::string s2 = readString(is);
                 if(s2 == "["){

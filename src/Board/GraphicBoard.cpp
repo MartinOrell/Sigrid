@@ -25,7 +25,9 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_borderWidth{config.borderWidth}
 , m_showPlayerToMoveToken{config.playerToMoveToken}
 , m_isLeftToRight{true}
-, m_isTopToBottom{false}{
+, m_isTopToBottom{false}
+, m_arrowThickness{config.arrowThickness}
+, m_arrowHeadSize{config.arrowHeadSize}{
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -303,7 +305,7 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
         color = m_colorManagerPtr->getSolidColor(logicArrow.colorId());
     }
 
-    GraphicArrow graphicArrow(fromPosition, toPosition, color);
+    GraphicArrow graphicArrow(fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
     m_texturePtr->draw(graphicArrow);
     auto result = m_arrows.insert({logicArrow, graphicArrow});
 
@@ -326,7 +328,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
 
         sf::Color color = sf::Color::Red;
 
-        m_dragArrowPtr = std::make_unique<Arrow>(fromCoord, toCoord, 0, fromPosition, toPosition, color);
+        m_dragArrowPtr = std::make_unique<Arrow>(fromCoord, toCoord, 0, fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
         m_texturePtr->draw(*m_dragArrowPtr);
         return;
     }
