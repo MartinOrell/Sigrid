@@ -243,7 +243,12 @@ ToolPicker: [
   visibility: Visible
   columns: 2
   rows: 7
-  MiscBlock: a1 2 1
+  MiscBlock: [
+    visibility: Visible
+    position: a1
+    columns: 2
+    rows: 1
+  ]
   ColorBlock: [
     visibility: Hidden
     position: a2

@@ -221,11 +221,27 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 is >> toolPickerData.rows;
             }
             else if(s == "MiscBlock:"){
-                std::string coordString;
-                is >> coordString;
-                toolPickerData.miscToolBlock.coord = Coord(coordString);
-                is >> toolPickerData.miscToolBlock.columns;
-                is >> toolPickerData.miscToolBlock.rows;
+                std::string s2 = readString(is);
+                if(s2 == "["){
+                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
+
+                        if(s2 == "visibility:"){
+                            std::string visibilityString = readString(is);
+                            bool isVisible = visibilityString == "Visible";
+                            //Currently not used
+                        }
+                        else if(s2 == "position:"){
+                            std::string position = readString(is);
+                            toolPickerData.miscToolBlock.coord = Coord(position);
+                        }
+                        else if(s2 == "columns:"){
+                            is >> toolPickerData.miscToolBlock.columns;
+                        }
+                        else if(s2 == "rows:"){
+                            is >> toolPickerData.miscToolBlock.rows;
+                        }
+                    }
+                }
             }
             else if(s == "ColorBlock:"){
                 std::string s2 = readString(is);
