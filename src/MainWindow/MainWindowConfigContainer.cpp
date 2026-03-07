@@ -53,13 +53,13 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            if (s == "Width:"){
+            if (s == "width:"){
                 is >> windowWidth;
             }
-            else if(s == "Height:"){
+            else if(s == "height:"){
                 is >> windowHeight;
             }
-            else if(s == "Name:"){
+            else if(s == "name:"){
                 is >> windowName;
             }
             else{
@@ -104,10 +104,10 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
                         std::string style = readString(is);
                         pieceColor.isLight = style == "light";
                     }
-                    else if(s2 == "lightmodifier:"){
+                    else if(s2 == "lightModifier:"){
                         pieceColor.lightModifier = readColor(is);
                     }
-                    else if(s2 == "darkmodifier:"){
+                    else if(s2 == "darkModifier:"){
                         pieceColor.darkModifier = readColor(is);
                     }
                     else{
@@ -208,16 +208,16 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "Visibility:"){
+            if(s == "visibility:"){
                 std::string visibilityString = readString(is);
                 bool isVisible = visibilityString == "Visible";
                 toolPickerData.show = isVisible;
                 menuData.showToolWindow = isVisible;
             }
-            else if(s == "Columns:"){
+            else if(s == "columns:"){
                 is >> toolPickerData.columns;
             }
-            else if(s == "Rows:"){
+            else if(s == "rows:"){
                 is >> toolPickerData.rows;
             }
             else if(s == "MiscBlock:"){
@@ -232,20 +232,20 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
 
-                        if(s2 == "Visibility:"){
+                        if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
                             bool isVisible = visibilityString == "Visible";
                             toolPickerData.showColors = isVisible;
                             menuData.showColorTools = isVisible;
                         }
-                        else if(s2 == "Position:"){
+                        else if(s2 == "position:"){
                             std::string position = readString(is);
                             toolPickerData.colorBlock.coord = Coord(position);
                         }
-                        else if(s2 == "Columns:"){
+                        else if(s2 == "columns:"){
                             is >> toolPickerData.colorBlock.columns;
                         }
-                        else if(s2 == "Rows:"){
+                        else if(s2 == "rows:"){
                             is >> toolPickerData.colorBlock.rows;
                         }
                     }
@@ -282,7 +282,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                     }
                 }
             }
-            else if(s == "DefaultPiece:"){
+            else if(s == "defaultPiece:"){
                 toolPickerData.defaultPieceNotation = readString(is);
             }
             else if(s == "Pieces:"){
@@ -318,10 +318,10 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "Width:"){
+                        if(s2 == "width:"){
                             is >> boardData.squareSize;
                         }
-                        else if(s2 == "Height:"){
+                        else if(s2 == "height:"){
                             int height;
                             is >> height; //Currently not used and assumed to be equal to width
                         }
@@ -336,11 +336,11 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "Visibility:"){
+                        if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
                             boardData.labelsInside = visibilityString == "Visible";
                         }
-                        else if(s2 == "Size:"){
+                        else if(s2 == "size:"){
                             float size;
                             is >> size;
                             is.ignore(1);// ignore % sign
@@ -361,11 +361,11 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "Visibility:"){
+                        if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
                             boardData.labelsOutside = visibilityString == "Visible";
                         }
-                        else if(s2 == "Size:"){
+                        else if(s2 == "size:"){
                             float size;
                             is >> size;
                             is.ignore(1);// ignore % sign
@@ -387,11 +387,11 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "Visibility:"){
+                        if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
                             boardData.border = visibilityString == "Visible";
                         }
-                        else if(s2 == "Width:"){
+                        else if(s2 == "width:"){
                             is >> boardData.borderWidth;
                         }
                         else{
@@ -405,7 +405,7 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "Visibility:"){
+                        if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
                             boardData.playerToMoveToken = visibilityString == "Visible";
                         }
@@ -416,10 +416,10 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                     }
                 }
             }
-            else if(s == "ResetFilename:"){
+            else if(s == "resetFilename:"){
                 resetBoardFilename = readString(is);
             }
-            else if(s == "DefaultImageFilename:"){
+            else if(s == "defaultImageFilename:"){
                 defaultBoardImageFilename = readString(is);
             }
             else{
@@ -454,7 +454,7 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         else if(key == "Pieces:"){
             loadPieces(ifs);
         }
-        else if(key == "BoardFilename:"){
+        else if(key == "boardFilename:"){
             boardFilename = readString(ifs);
         }
         else if(key == "BoardStyle:"){

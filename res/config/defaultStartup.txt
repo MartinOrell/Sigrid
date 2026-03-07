@@ -1,7 +1,7 @@
 Window: [
-  Width: 1440
-  Height: 1080
-  Name: Sigrid
+  width: 1440
+  height: 1080
+  name: Sigrid
 ]
 SquareColors: [
   ffffff
@@ -25,74 +25,74 @@ PieceColors: [
   [
     name: white
     style: light
-    lightmodifier: ffffff
-    darkmodifier: 000000
+    lightModifier: ffffff
+    darkModifier: 000000
   ]
   [
     name: black
     style: dark
-    lightmodifier: ffffff
-    darkmodifier: 000000
+    lightModifier: ffffff
+    darkModifier: 000000
   ]
   [
     name: red
     style: light
-    lightmodifier: ff0000
-    darkmodifier: 000000
+    lightModifier: ff0000
+    darkModifier: 000000
   ]
   [
     name: blue
     style: light
-    lightmodifier: 0080ff
-    darkmodifier: 000000
+    lightModifier: 0080ff
+    darkModifier: 000000
   ]
   [
     name: yellow
     style: light
-    lightmodifier: ffff00
-    darkmodifier: 000000
+    lightModifier: ffff00
+    darkModifier: 000000
   ]
   [
     name: green
     style: light
-    lightmodifier: 00ff00
-    darkmodifier: 000000
+    lightModifier: 00ff00
+    darkModifier: 000000
   ]
   [
     name: orange
     style: light
-    lightmodifier: 00ff00
-    darkmodifier: 000000
+    lightModifier: 00ff00
+    darkModifier: 000000
   ]
   [
     name: purple
     style: light
-    lightmodifier: ba55d3
-    darkmodifier: 000000
+    lightModifier: ba55d3
+    darkModifier: 000000
   ]
   [
     name: pink
     style: light
-    lightmodifier: ffcccc
-    darkmodifier: 000000
+    lightModifier: ffcccc
+    darkModifier: 000000
   ]
   [
     name: darkred
     style: dark
-    lightmodifier: ffffff
-    darkmodifier: 800000
+    lightModifier: ffffff
+    darkModifier: 800000
   ]
   [
     name: darkblue
     style: dark
-    lightmodifier: ffffff
-    darkmodifier: 000080
+    lightModifier: ffffff
+    darkModifier: 000080
   ]
   [
     name: darkgreen
     style: dark
-    lightmodifier: ffffff
-    darkmodifier: 008000
+    lightModifier: ffffff
+    darkModifier: 008000
   ]
 ]
 Pieces: [
@@ -159,30 +159,30 @@ Pieces: [
 ]
 BoardStyle: [
   Square: [
-    Width: 100
-    Height: 100
+    width: 100
+    height: 100
   ]
   InsideCoordLabels: [
-    Visibility: Hidden
-    Size: 40%
+    visibility: Hidden
+    size: 40%
     font: res/fonts/arial.ttf
   ]
   OutsideCoordLabels: [
-    Visibility: Visible
-    Size: 40%
+    visibility: Visible
+    size: 40%
     font: res/fonts/arial.ttf
   ]
   Border: [
-    Visibility: Visible
-    Width: 2
+    visibility: Visible
+    width: 2
   ]
   TurnToken: [
-    Visibility: Hidden
+    visibility: Hidden
   ]
-  ResetFilename: res/config/setupBoards/chess.txt
-  DefaultImageFilename: saveData/boards/images/board.png
+  resetFilename: res/config/setupBoards/chess.txt
+  defaultImageFilename: saveData/boards/images/board.png
 ]
-BoardFilename: saveData/boards/board.txt
+boardFilename: saveData/boards/board.txt
 Menu: [
   pin: OFF
   font: res/fonts/calibri.ttf
@@ -240,15 +240,15 @@ Menu: [
   ]
 ]
 ToolPicker: [
-  Visibility: Visible
-  Columns: 2
-  Rows: 7
+  visibility: Visible
+  columns: 2
+  rows: 7
   MiscBlock: a1 2 1
   ColorBlock: [
-    Visibility: Hidden
-    Position: a2
-    Columns: 2
-    Rows: 6
+    visibility: Hidden
+    position: a2
+    columns: 2
+    rows: 6
   ]
   PieceBlocks: [
     a2 1 6
@@ -272,7 +272,7 @@ ToolPicker: [
     10
     11
   ]
-  DefaultPiece: P
+  defaultPiece: P
   Pieces: [
     P
     R
