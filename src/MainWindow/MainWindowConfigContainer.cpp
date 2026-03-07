@@ -240,6 +240,10 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                         else if(s2 == "rows:"){
                             is >> toolPickerData.miscToolBlock.rows;
                         }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in MiscBlock object" << std::endl;
+                        }
                     }
                 }
             }
@@ -264,6 +268,10 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                         else if(s2 == "rows:"){
                             is >> toolPickerData.colorBlock.rows;
                         }
+                        else{
+                            std::cout << "Unknown key: \"" << s2 << "\"";
+                            std::cout << " read in ColorBlock object" << std::endl;
+                        }
                     }
                 }
             }
@@ -271,13 +279,33 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        std::string coordString = s2;
-                        int columns;
-                        int rows;
-                        is >> columns;
-                        is >> rows;
-                        CoordBlock pieceBlock{Coord{coordString},columns,rows};
-                        toolPickerData.pieceBlocks.push_back(pieceBlock);
+                        
+                        if(s2 == "["){
+                            CoordBlock pieceBlock;
+                            for(std::string s3 = readString(is); s3 != "]"; s3 = readString(is)){
+
+                                if(s3 == "visibility:"){
+                                    std::string visibilityString = readString(is);
+                                    bool isVisible = visibilityString == "Visible";
+                                    //Currently not used
+                                }
+                                else if(s3 == "position:"){
+                                    std::string position = readString(is);
+                                    pieceBlock.coord = Coord{position};
+                                }
+                                else if(s3 == "columns:"){
+                                    is >> pieceBlock.columns;
+                                }
+                                else if(s3 == "rows:"){
+                                    is >> pieceBlock.rows;
+                                }
+                                else{
+                                    std::cout << "Unknown key: \"" << s3 << "\"";
+                                    std::cout << " read in PieceBlock object" << std::endl;
+                                }
+                            }
+                            toolPickerData.pieceBlocks.push_back(pieceBlock);
+                        }
                     }
                 }
             }

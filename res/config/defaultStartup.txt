@@ -256,8 +256,18 @@ ToolPicker: [
     rows: 6
   ]
   PieceBlocks: [
-    a2 1 6
-    b2 1 6
+    [
+      visibility: Visible
+      position: a2
+      columns: 1
+      rows: 6
+    ]
+    [
+      visibility: Visible
+      position: b2
+      columns: 1
+      rows: 6
+    ]
   ]
   MiscTools: [
     Select
