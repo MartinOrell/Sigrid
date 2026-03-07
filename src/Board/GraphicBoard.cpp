@@ -450,6 +450,7 @@ void GraphicBoard::flip(){
 
 void GraphicBoard::addCoordinates(){
 
+    m_showLabels = true;
     if(m_isCoordinateLabelsInside){
         addInsideLabels();
         redrawTexture();
