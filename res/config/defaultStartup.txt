@@ -178,8 +178,8 @@ Menu: [
         "Move Coordinates inside" moveCoordinatesInside
       ]
       SetCoordinateSize [
-        "Set Big Coordinates" setBigCoordinates
-        "Set Small Coordinates" setSmallCoordinates
+        "Set Big Coordinates" setCoordinateSize(60%)
+        "Set Small Coordinates" setCoordinateSize(40%)
       ]
       ToggleBoardBorder [
         "Add Border" addBoardBorder

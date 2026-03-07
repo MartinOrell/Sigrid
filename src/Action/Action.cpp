@@ -4,73 +4,86 @@
 using namespace sigrid;
 
 Action sigrid::getAction(const std::string& s){
-    if(s == "save"){
+    std::string name;
+    std::string content;
+
+    auto nameEndPos = s.find('(');
+    if(nameEndPos == std::string::npos){
+        name = s;
+    }
+    else{
+        name = s.substr(0,nameEndPos);
+        content = s.substr(nameEndPos+1);
+        content.pop_back(); //remove ')'
+    }
+
+    if(name == "save"){
         return ActionType::SaveBoard{};
     }
-    else if(s == "reset"){
+    else if(name == "reset"){
         return ActionType::Reset{};
     }
-    else if(s == "clear"){
+    else if(name == "clear"){
         return ActionType::Clear{};
     }
-    else if(s == "addCoordinates"){
+    else if(name == "addCoordinates"){
         return ActionType::AddCoordinates{};
     }
-    else if(s == "removeCoordinates"){
+    else if(name == "removeCoordinates"){
         return ActionType::RemoveCoordinates{};
     }
-    else if(s == "moveCoordinatesOutside"){
+    else if(name == "moveCoordinatesOutside"){
         return ActionType::MoveCoordinatesOutside{};
     }
-    else if(s == "moveCoordinatesInside"){
+    else if(name == "moveCoordinatesInside"){
         return ActionType::MoveCoordinatesInside{};
     }
-    else if(s == "setBigCoordinates"){
-        return ActionType::SetCoordinateSize{0.6};
+    else if(name == "setCoordinateSize"){
+        std::string number = content;
+        number.pop_back(); //remove '%'
+        float size = std::stof(number)/100.f;
+        return ActionType::SetCoordinateSize{size};
     }
-    else if(s == "setSmallCoordinates"){
-        return ActionType::SetCoordinateSize{0.4};
-    }
-    else if(s == "addBoardBorder"){
+    else if(name == "addBoardBorder"){
         return ActionType::AddBoardBorder{};
     }
-    else if(s == "removeBoardBorder"){
+    else if(name == "removeBoardBorder"){
         return ActionType::RemoveBoardBorder{};
     }
-    else if(s == "addTurnToken"){
+    else if(name == "addTurnToken"){
         return ActionType::AddPlayerToMoveToken{};
     }
-    else if(s == "removeTurnToken"){
+    else if(name == "removeTurnToken"){
         return ActionType::RemovePlayerToMoveToken{};
     }
-    else if(s == "pasteFen"){
+    else if(name == "pasteFen"){
         return ActionType::PasteFen{};
     }
-    else if(s == "copyFen"){
+    else if(name == "copyFen"){
         return ActionType::CopyFen{};
     }
-    else if(s == "flipBoard"){
+    else if(name == "flipBoard"){
         return ActionType::FlipBoard{};
     }
-    else if(s == "pinMenu"){
+    else if(name == "pinMenu"){
         return ActionType::PinMenu{};
     }
-    else if(s == "unpinMenu"){
+    else if(name == "unpinMenu"){
         return ActionType::PinMenu{};
     }
-    else if(s == "showToolWindow"){
+    else if(name == "showToolWindow"){
         return ActionType::ShowTools{};
     }
-    else if(s == "hideToolWindow"){
+    else if(name == "hideToolWindow"){
         return ActionType::HideTools{};
     }
-    else if(s == "showColorTools"){
+    else if(name == "showColorTools"){
         return ActionType::ShowColorTools{};
     }
-    else if(s == "hideColorTools"){
+    else if(name == "hideColorTools"){
         return ActionType::HideColorTools{};
     }
-    else if(s == "print"){
+    else if(name == "print"){
         return ActionType::Print{};
     }
 
