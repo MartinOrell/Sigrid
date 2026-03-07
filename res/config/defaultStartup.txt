@@ -162,9 +162,13 @@ BoardStyle: [
     Width: 100
     Height: 100
   ]
-  CoordLabels: [
+  InsideCoordLabels: [
+    Visibility: Hidden
+    Size: 40%
+    font: res/fonts/arial.ttf
+  ]
+  OutsideCoordLabels: [
     Visibility: Visible
-    Location: Outside
     Size: 40%
     font: res/fonts/arial.ttf
   ]
