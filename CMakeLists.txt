@@ -29,6 +29,9 @@ set(SRC_FILES
     src/Arrow/GraphicArrow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
+    src/Shape/Circle/Circle.cpp
+    src/Shape/Circle/LogicCircle.cpp
+    src/Shape/Circle/GraphicCircle.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

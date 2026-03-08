@@ -468,6 +468,16 @@ void MainWindow::handleAction(const sigrid::Action action){
         pickArrowColor(colorId);
         return;
     }
+    else if(std::holds_alternative<ActionType::PickCircle>(action)){
+
+        int colorId = std::get<ActionType::PickCircle>(action).colorId;
+        pickCircle(colorId);
+    }
+    else if(std::holds_alternative<ActionType::PickCircleColor>(action)){
+
+        int colorId = std::get<ActionType::PickCircleColor>(action).colorId;
+        pickCircleColor(colorId);
+    }
     else if(std::holds_alternative<ActionType::SetTool>(action)){
         
         ActionType::SetTool a = std::get<ActionType::SetTool>(action);
@@ -658,6 +668,36 @@ void MainWindow::pickArrowColor(const int colorId){
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::DrawArrow);
     m_toolWindow->setAddArrowTool(colorId);
     m_toolPickerWindow->setAddArrowTool(colorId);
+}
+
+void MainWindow::pickCircle(const int colorId){
+    if(!m_toolPickerWindow){
+        std::cout << "Unable to pick circle, toolwindow does not exist" << std::endl;
+        return;
+    }
+    if(!m_toolPickerWindow){
+        std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
+        return;
+    }
+    m_tools.at(sf::Mouse::Button::Left).setCircle(colorId);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
+    m_toolWindow->setAddCircleTool(colorId);
+    m_toolPickerWindow->setCircleColors();
+}
+
+void MainWindow::pickCircleColor(const int colorId){
+    if(!m_toolWindow){
+        std::cout << "Unable to pick circle color, toolWindow does not exist" << std::endl;
+        return;
+    }
+    if(!m_toolPickerWindow){
+        std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
+        return;
+    }
+    m_tools.at(sf::Mouse::Button::Left).setCircle(colorId);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
+    m_toolWindow->setAddCircleTool(colorId);
+    m_toolPickerWindow->setAddCircleTool(colorId);
 }
 
 void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse::Button& button){

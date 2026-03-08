@@ -27,7 +27,8 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}
 , m_arrowThickness{config.arrowThickness}
-, m_arrowHeadSize{config.arrowHeadSize}{
+, m_arrowHeadSize{config.arrowHeadSize}
+, m_circleDiameter{config.circleDiameter}{
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -314,6 +315,39 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
 
 void GraphicBoard::removeArrow(const LogicArrow& arrow){
 
+}
+
+void GraphicBoard::addCircle(const LogicCircle& logicCircle){
+
+    for(auto it = m_circles.begin(); it != m_circles.end(); it++){
+        if(it->first.getPosition() == logicCircle.getPosition()){
+            if(it->first.getColorId() == logicCircle.getColorId()){
+                m_circles.erase(it);
+                redrawTexture();
+                return;
+            }
+            m_circles.erase(it);
+            break;
+        }
+    }
+
+    int x = logicCircle.getPosition().x;
+    int y = logicCircle.getPosition().y;
+    auto position = m_squares.at(y).at(x).getPosition() + m_squares.at(y).at(x).getSize()/2.f;
+    
+    sf::Color color;
+    if(m_colorManagerPtr == nullptr){
+        color = sf::Color::Red;
+    }
+    else{
+        color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
+    }
+
+    GraphicCircle graphicCircle(position, color, m_circleDiameter);
+    m_texturePtr->draw(graphicCircle);
+    auto result = m_circles.insert({logicCircle, graphicCircle});
+
+    assert(result.second);
 }
 
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){
@@ -748,6 +782,10 @@ void GraphicBoard::redrawTexture(){
 
     for(auto& piece : m_pieces){
         m_texturePtr->draw(piece.second);
+    }
+
+    for(auto& circle : m_circles){
+        m_texturePtr->draw(circle.second);
     }
 
     for(auto& arrow : m_arrows){

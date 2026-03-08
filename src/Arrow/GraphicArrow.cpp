@@ -106,7 +106,7 @@ void GraphicArrow::set(const sf::Vector2f& fromPosition, const sf::Vector2f& toP
     m_head.setPosition(headPosition);
 }
 
-void GraphicArrow::setColor(sf::Color color){
+void GraphicArrow::setColor(const sf::Color& color){
     m_line.setFillColor(color);
     m_head.setFillColor(color);
 }

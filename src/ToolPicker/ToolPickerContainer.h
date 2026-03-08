@@ -21,5 +21,7 @@ namespace sigrid{
         std::vector<std::string> toolNames;
         std::vector<int> colorToolIds;
         std::vector<std::string> pieceNotations;
+        int defaultArrowColorId;
+        int defaultCircleColorId;
     };
 }

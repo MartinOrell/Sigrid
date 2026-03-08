@@ -8,6 +8,7 @@ namespace sigrid{
         int squareSize;
         float arrowThickness;
         float arrowHeadSize;
+        float circleDiameter;
         bool labelsInside;
         bool labelsOutside;
         std::string labelFont;

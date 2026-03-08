@@ -4,6 +4,8 @@
 #include <fstream>
 #include <cctype> //isdigit
 
+#include "../Shape/Circle/LogicCircle.h"
+
 using namespace sigrid;
 
 Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
@@ -203,6 +205,12 @@ void Board::addArrow(const int colorId, const Coord& fromCoord, const Coord& toC
     LogicArrow logicArrow{fromCoord, toCoord, colorId};
     m_logicBoard->addArrow(logicArrow);
     m_graphicBoard->addArrow(logicArrow);
+}
+
+void Board::addCircle(const int colorId, const Coord& coord){
+    LogicCircle logicCircle{coord, colorId};
+    m_logicBoard->addCircle(logicCircle);
+    m_graphicBoard->addCircle(logicCircle);
 }
 
 void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

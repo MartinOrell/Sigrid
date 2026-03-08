@@ -17,11 +17,14 @@ ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, const std::v
 , m_show{data.show}
 , m_backgroundColor{255,255,255,0}
 , m_arrowColorId{-1}
+, m_circleColorId{-1}
 , m_colorIds{data.colorToolIds}
 , m_pieceNotation{data.defaultPieceNotation}
 , m_miscBlock{data.miscToolBlock}
 , m_colorBlock{data.colorBlock}
-, m_pieceBlocks{data.pieceBlocks}{
+, m_pieceBlocks{data.pieceBlocks}
+, m_defaultArrowColorId{data.defaultArrowColorId}
+, m_defaultCircleColorId{data.defaultCircleColorId}{
 
     m_boardPtr = std::make_unique<GraphicToolPicker>(squareColors);
 
@@ -33,7 +36,10 @@ ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, const std::v
             addSelectTool();
         }
         else if(toolName == "Arrow"){
-            addArrowTool();
+            addArrowTool(m_defaultArrowColorId);
+        }
+        else if(toolName == "Circle"){
+            addCircleTool(m_defaultCircleColorId);
         }
         else{
             std::cout << "ToolPickerWindow: Unknown tool: " << toolName << std::endl;
@@ -69,15 +75,19 @@ void ToolPickerWindow::addSelectTool(){
     }
 }
 
-void ToolPickerWindow::addArrowTool(){
-    m_arrowColorId = 0;
+void ToolPickerWindow::addArrowTool(const int colorId){
+    m_arrowColorId = colorId;
 }
 
-void ToolPickerWindow::addPieceTool(std::string notation){
+void ToolPickerWindow::addCircleTool(const int colorId){
+    m_circleColorId = colorId;
+}
+
+void ToolPickerWindow::addPieceTool(const std::string& notation){
     m_pieceNotations.push_back(notation);
 }
 
-void ToolPickerWindow::setPosition(sf::Vector2f position){
+void ToolPickerWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
@@ -106,7 +116,7 @@ unsigned int ToolPickerWindow::getNumRows() const{
     return m_rows;
 }
 
-bool ToolPickerWindow::contains(sf::Vector2i point) const{
+bool ToolPickerWindow::contains(const sf::Vector2i& point) const{
     
     if(!m_show){
         return false;
@@ -181,9 +191,27 @@ void ToolPickerWindow::setArrowColors(){
     redrawTexture();
 }
 
+void ToolPickerWindow::setCircleColors(){
+
+    if(!m_showColors){
+        return;
+    }
+
+    m_colorDisplay = ColorDisplay::Circle;
+
+    redrawTexture();
+}
+
 void ToolPickerWindow::setAddArrowTool(const int colorId){
 
     m_arrowColorId = colorId;
+
+    redrawTexture();
+}
+
+void ToolPickerWindow::setAddCircleTool(const int colorId){
+
+    m_circleColorId = colorId;
 
     redrawTexture();
 }
@@ -225,12 +253,20 @@ void ToolPickerWindow::showColorTools(){
 
     m_showColors = true;
 
-    if(m_colorDisplay == ColorDisplay::Piece){
-        setPieceColorTools(m_pieceNotation);
+    switch(m_colorDisplay){
+        case ColorDisplay::Piece:
+            setPieceColorTools(m_pieceNotation);
+            break;
+        case ColorDisplay::Arrow:
+            setArrowColors();
+            break;
+        case ColorDisplay::Circle:
+            setCircleColors();
+            break;
+        default:
+            break;
     }
-    else if(m_colorDisplay == ColorDisplay::Arrow){
-        setArrowColors();
-    }
+    
     redrawTexture();
 }
 
@@ -250,10 +286,17 @@ void ToolPickerWindow::redrawTexture(){
     //Tools
     int x = m_miscBlock.coord.x;
     int y = m_miscBlock.coord.y;
-    for(int i = 0; i < m_miscTools.size(); i++){
+    int i;
+    for(i = 0; i < m_miscTools.size(); i++){
         m_boardPtr->addTool(m_miscTools.at(i).texturePtr, {x,y});
         m_clickActions.insert_or_assign({x,y}, m_miscTools.at(i).action);
-        x++;
+        if((i+1)%m_miscBlock.columns == 0){
+            x = m_miscBlock.coord.x;
+            y++;
+        }
+        else{
+            x++;
+        }
     }
 
     //Arrow tool
@@ -263,61 +306,108 @@ void ToolPickerWindow::redrawTexture(){
             m_boardPtr->addTool(drawArrowTexture_o.value(), {x,y});
             ActionType::PickArrow action{m_arrowColorId};
             m_clickActions.insert_or_assign({x,y}, action);
-            x++;
+            if((i+1)%m_miscBlock.columns == 0){
+                x = m_miscBlock.coord.x;
+                y++;
+            }
+            else{
+                x++;
+            }
+            i++;
         }
     }
     
+    //Circle tool
+    if(m_circleColorId >= 0){
+        auto drawCircleTexture_o = m_toolManagerPtr->getCircleTexturePtr(m_circleColorId);
+        if(drawCircleTexture_o != std::nullopt){
+            m_boardPtr->addTool(drawCircleTexture_o.value(), {x,y});
+            ActionType::PickCircle action{m_circleColorId};
+            m_clickActions.insert_or_assign({x,y}, action);
+            if((i+1)%m_miscBlock.columns == 0){
+                x = m_miscBlock.coord.x;
+                y++;
+            }
+            else{
+                x++;
+            }
+            i++;
+        }
+    }
 
     //Colors
     if(m_showColors){
         x = m_colorBlock.coord.x;
         y = m_colorBlock.coord.y;
 
-        if(m_colorDisplay == ColorDisplay::Arrow){
-            for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
-                auto arrowPtr_o = m_toolManagerPtr->getArrowTexturePtr(colorId);
+        switch(m_colorDisplay){
+            case ColorDisplay::Piece:
+                for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
-                if(arrowPtr_o == std::nullopt){
-                    continue;
+                    LogicPiece logicPiece{m_pieceNotation, colorId};
+                    auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
+
+                    if(piece_o == std::nullopt){
+                        continue;
+                    }
+
+                    m_boardPtr->addTool(piece_o.value().graphic().getTexturePtr(), {x,y});
+
+                    ActionType::PickPieceColor action{piece_o.value()};
+
+                    m_clickActions.insert_or_assign({x,y}, action);
+
+                    if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
+                        x++;
+                    }
+                    else{
+                        x = m_colorBlock.coord.x;
+                        y++;
+                    }
                 }
+                break;
+            case ColorDisplay::Arrow:
+                for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
+                    auto arrowPtr_o = m_toolManagerPtr->getArrowTexturePtr(colorId);
 
-                m_boardPtr->addTool(arrowPtr_o.value(), {x,y});
-                ActionType::PickArrowColor action{colorId};
-                m_clickActions.insert_or_assign({x,y}, action);
+                    if(arrowPtr_o == std::nullopt){
+                        continue;
+                    }
 
-                if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
-                    x++;
+                    m_boardPtr->addTool(arrowPtr_o.value(), {x,y});
+                    ActionType::PickArrowColor action{colorId};
+                    m_clickActions.insert_or_assign({x,y}, action);
+
+                    if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
+                        x++;
+                    }
+                    else{
+                        x = m_colorBlock.coord.x;
+                        y++;
+                    }
                 }
-                else{
-                    x = m_colorBlock.coord.x;
-                    y++;
+                break;
+            case ColorDisplay::Circle:
+                for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
+                    auto circlePtr_o = m_toolManagerPtr->getCircleTexturePtr(colorId);
+
+                    if(circlePtr_o == std::nullopt){
+                        continue;
+                    }
+
+                    m_boardPtr->addTool(circlePtr_o.value(), {x,y});
+                    ActionType::PickCircleColor action{colorId};
+                    m_clickActions.insert_or_assign({x,y}, action);
+
+                    if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
+                        x++;
+                    }
+                    else{
+                        x = m_colorBlock.coord.x;
+                        y++;
+                    }
                 }
-            }
-        }
-        else{ //ColorDisplay::Piece
-            for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
-
-                LogicPiece logicPiece{m_pieceNotation, colorId};
-                auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
-
-                if(piece_o == std::nullopt){
-                    continue;
-                }
-
-                m_boardPtr->addTool(piece_o.value().graphic().getTexturePtr(), {x,y});
-
-                ActionType::PickPieceColor action{piece_o.value()};
-
-                m_clickActions.insert_or_assign({x,y}, action);
-
-                if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
-                    x++;
-                }
-                else{
-                    x = m_colorBlock.coord.x;
-                    y++;
-                }
-            }
+                break;
         }
     }
 

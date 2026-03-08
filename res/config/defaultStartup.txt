@@ -216,29 +216,29 @@ Menu: [
 ToolPicker: [
   visibility: Visible
   columns: 2
-  rows: 7
+  rows: 8
   MiscBlock: [
     visibility: Visible
     position: a1
     columns: 2
-    rows: 1
+    rows: 2
   ]
   ColorBlock: [
     visibility: Hidden
-    position: a2
+    position: a3
     columns: 2
     rows: 6
   ]
   PieceBlocks: [
     [
       visibility: Visible
-      position: a2
+      position: a3
       columns: 1
       rows: 6
     ]
     [
       visibility: Visible
-      position: b2
+      position: b3
       columns: 1
       rows: 6
     ]
@@ -246,6 +246,7 @@ ToolPicker: [
   MiscTools: [
     Select
     Arrow
+    Circle
   ]
   Colors: [
     0
@@ -283,6 +284,11 @@ BoardStyle: [
   Arrow: [
     thickness: 40
     headSize: 80
+    defaultColorId: 0
+  ]
+  Circle: [
+    diameter: 100
+    defaultColorId: 7
   ]
   InsideCoordLabels: [
     visibility: Hidden

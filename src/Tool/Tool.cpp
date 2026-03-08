@@ -4,9 +4,10 @@
 
 using namespace sigrid;
 
-Tool::Tool(const ToolSelection selection)
+Tool::Tool(const ToolSelection& selection)
 : m_selection(selection)
-, m_arrowColorId(0){}
+, m_arrowColorId(-1)
+, m_circleColorId(-1){}
 
 const ToolSelection Tool::selection() const{
     return m_selection;
@@ -20,14 +21,22 @@ const int Tool::arrowColorId() const{
     return m_arrowColorId;
 }
 
+const int Tool::getCircleColorId() const{
+    return m_circleColorId;
+}
+
 void Tool::setPiece(const Piece& piece){
     m_piece = std::make_unique<Piece>(piece);
 }
 
-void Tool::setSelection(const ToolSelection selection){
+void Tool::setSelection(const ToolSelection& selection){
     m_selection = selection;
 }
 
 void Tool::setArrow(const int colorId){
     m_arrowColorId = colorId;
+}
+
+void Tool::setCircle(const int colorId){
+    m_circleColorId = colorId;
 }

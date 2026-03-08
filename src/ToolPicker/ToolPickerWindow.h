@@ -27,11 +27,13 @@ namespace sigrid{
 
             void addSelectTool();
 
-            void addArrowTool();
+            void addArrowTool(const int colorId);
 
-            void addPieceTool(std::string notation);
+            void addCircleTool(const int colorId);
 
-            virtual void setPosition(sf::Vector2f);
+            void addPieceTool(const std::string& notation);
+
+            virtual void setPosition(const sf::Vector2f& position);
 
             bool isHidden() const;
 
@@ -41,7 +43,7 @@ namespace sigrid{
 
             unsigned int getNumRows() const;
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2i& point) const;
 
             Action clicked(const sigrid::Tool& tool, const sf::Vector2i& position);
 
@@ -51,7 +53,11 @@ namespace sigrid{
 
             void setArrowColors();
 
+            void setCircleColors();
+
             void setAddArrowTool(const int colorId);
+
+            void setAddCircleTool(const int colorId);
 
             void hideColorTools();
 
@@ -68,8 +74,10 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             enum ColorDisplay{
+                None,
                 Piece,
-                Arrow
+                Arrow,
+                Circle
             };
 
             struct ToolStruct{
@@ -95,6 +103,7 @@ namespace sigrid{
 
             std::vector<int> m_displayedPieceColorIds;
             int m_arrowColorId;
+            int m_circleColorId;
             std::string m_pieceNotation;
 
             std::vector<std::string> m_pieceNotations;
@@ -110,5 +119,8 @@ namespace sigrid{
             CoordBlock m_miscBlock;
             CoordBlock m_colorBlock;
             std::vector<CoordBlock> m_pieceBlocks;
+
+            int m_defaultArrowColorId;
+            int m_defaultCircleColorId;
     };
 }

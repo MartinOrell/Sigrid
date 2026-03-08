@@ -272,6 +272,21 @@ void LogicBoard::removeArrow(const LogicArrow& arrow){
     }
 }
 
+void LogicBoard::addCircle(const LogicCircle& circle){
+
+    for(auto it = m_circles.begin(); it != m_circles.end(); it++){
+        if(it->getPosition() == circle.getPosition()){
+            if(it->getColorId() == circle.getColorId()){
+                m_circles.erase(it);
+                return;
+            }
+            it->setColor(circle.getColorId());
+            return;
+        }
+    }
+    m_circles.push_back(circle);
+}
+
 void LogicBoard::print(){
     std::cout << "Printing board" << std::endl;
     std::cout << "height = " << height() << std::endl;

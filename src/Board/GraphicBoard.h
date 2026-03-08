@@ -25,6 +25,10 @@
 
 #include "BoardDesignContainer.h"
 
+#include "../Shape/Circle/Circle.h"
+#include "../Shape/Circle/LogicCircle.h"
+#include "../Shape/Circle/GraphicCircle.h"
+
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
@@ -65,6 +69,7 @@ namespace sigrid{
 
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
+            void addCircle(const LogicCircle& circle);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
@@ -157,6 +162,8 @@ namespace sigrid{
 
             std::map<LogicArrow, GraphicArrow> m_arrows;
 
+            std::map<LogicCircle, GraphicCircle> m_circles;
+
             std::unique_ptr<Arrow> m_dragArrowPtr;
 
             std::unique_ptr<sf::RectangleShape> m_selectHighlight;
@@ -189,5 +196,7 @@ namespace sigrid{
 
             float m_arrowThickness;
             float m_arrowHeadSize;
+
+            float m_circleDiameter;
     };
 }

@@ -121,6 +121,18 @@ void ToolWindow::setAddArrowTool(const int colorId){
     redrawTexture();
 }
 
+void ToolWindow::setAddCircleTool(const int colorId){
+    auto texturePtr_o = m_toolManagerPtr->getCircleTexturePtr(colorId);
+
+    if(texturePtr_o == std::nullopt){
+        std::cout << "ToolWindow: Failed to load circle texture" << std::endl;
+        return;
+    }
+
+    m_items.at(0)->setTexture(texturePtr_o.value());
+    redrawTexture();
+}
+
 void ToolWindow::show(){
     m_show = true;
 }

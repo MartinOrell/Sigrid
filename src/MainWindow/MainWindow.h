@@ -41,6 +41,8 @@ namespace sigrid{
             void pickPieceColor(const sigrid::Piece& piece);
             void pickArrow(const int colorId);
             void pickArrowColor(const int colorId);
+            void pickCircle(const int colorId);
+            void pickCircleColor(const int colorId);
             void setTool(const sigrid::ToolSelection& selection, const sf::Mouse::Button& button);
             void showColorTools();
             void hideColorTools();

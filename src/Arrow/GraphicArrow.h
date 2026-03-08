@@ -18,7 +18,7 @@ namespace sigrid{
             GraphicArrow& operator =(const GraphicArrow&);
 
             void set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
-            void setColor(sf::Color color);
+            void setColor(const sf::Color& color);
 
         private:
 

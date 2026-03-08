@@ -155,6 +155,9 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             m_boardPtr->addArrow(tool.arrowColorId(), fromCoord, toCoord);
             return ActionType::None();
+        case ToolSelection::AddCircle:
+            m_boardPtr->addCircle(tool.getCircleColorId(), toCoord);
+            return ActionType::None();
         default:
             return ActionType::None();
     }

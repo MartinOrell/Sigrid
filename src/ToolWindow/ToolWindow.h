@@ -33,6 +33,8 @@ namespace sigrid{
 
             void setAddArrowTool(const int colorId);
 
+            void setAddCircleTool(const int colorId);
+
             void show();
 
             void hide();

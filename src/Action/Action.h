@@ -28,6 +28,12 @@ namespace sigrid{
         struct PickArrowColor{
             int colorId;
         };
+        struct PickCircle{
+            int colorId;
+        };
+        struct PickCircleColor{
+            int colorId;
+        };
         struct SetTool{
             sf::Mouse::Button button;
             ToolSelection selection;
@@ -66,6 +72,8 @@ namespace sigrid{
         ActionType::PickPieceColor,
         ActionType::PickArrow,
         ActionType::PickArrowColor,
+        ActionType::PickCircle,
+        ActionType::PickCircleColor,
         ActionType::SetTool,
         ActionType::ShowColorTools,
         ActionType::HideColorTools,

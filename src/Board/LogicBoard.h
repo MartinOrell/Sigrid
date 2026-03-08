@@ -11,6 +11,7 @@
 
 #include "../Arrow/LogicArrow.h"
 #include "../Piece/PieceDataContainer.h"
+#include "../Shape/Circle/LogicCircle.h"
 
 namespace sigrid{
     class LogicBoard{
@@ -37,6 +38,7 @@ namespace sigrid{
 
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
+            void addCircle(const LogicCircle& circle);
 
             void print();
             void clear();
@@ -48,5 +50,6 @@ namespace sigrid{
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
             std::vector<std::vector<LogicPiece*>> m_pieceLayer;
             std::vector<LogicArrow> m_arrows;
+            std::vector<LogicCircle> m_circles;
     };
 }

@@ -71,6 +71,8 @@ namespace sigrid{
 
             void addArrow(const int colorId, const Coord& fromCoord, const Coord& toCoord);
 
+            void addCircle(const int colorId, const Coord& coord);
+
             void addSquareHighlight(const int colorId, const Coord& coord);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);

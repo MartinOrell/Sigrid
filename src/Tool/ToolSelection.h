@@ -11,7 +11,8 @@ namespace sigrid{
         SquareAdder,
         SquareEraser,
         SquarePicker,
-        DrawArrow
+        DrawArrow,
+        AddCircle
     };
 
 }

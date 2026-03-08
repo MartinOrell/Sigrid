@@ -33,32 +33,67 @@ std::optional<sf::Texture*> ToolManager::getArrowTexturePtr(const int colorId){
     unsigned int squareWidth(70);
     unsigned int squareHeight(70);
 
-    sf::Color arrowColor = m_colorManagerPtr->getSolidColor(colorId);
+    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
 
     if(m_graphicArrowPtr == nullptr){
 
-        sf::Vector2f arrowFrom;
-        arrowFrom.x = (float)squareWidth/2.f;
-        arrowFrom.y = (float)squareHeight*0.9f;
-        sf::Vector2f arrowTo;
-        arrowTo.x = (float)squareWidth/2.f;
-        arrowTo.y = (float)squareHeight*0.1f;
+        sf::Vector2f from;
+        from.x = (float)squareWidth/2.f;
+        from.y = (float)squareHeight*0.9f;
+        sf::Vector2f to;
+        to.x = (float)squareWidth/2.f;
+        to.y = (float)squareHeight*0.1f;
 
-        
-
-        m_graphicArrowPtr = std::make_unique<GraphicArrow>(arrowFrom, arrowTo, arrowColor, 5.f, 15.f);
+        m_graphicArrowPtr = std::make_unique<GraphicArrow>(from, to, color, 5.f, 15.f);
     }
     else{
-        m_graphicArrowPtr->setColor(arrowColor);
+        m_graphicArrowPtr->setColor(color);
     }
 
-    sf::RenderTexture arrowRenderTexture{{squareWidth,squareHeight}};
-    arrowRenderTexture.clear(sf::Color::Transparent);
-    arrowRenderTexture.draw(*m_graphicArrowPtr);
-    arrowRenderTexture.display();
+    sf::RenderTexture renderTexture{{squareWidth,squareHeight}};
+    renderTexture.clear(sf::Color::Transparent);
+    renderTexture.draw(*m_graphicArrowPtr);
+    renderTexture.display();
 
-    sf::Texture arrowTexture = arrowRenderTexture.getTexture();
+    sf::Texture texture = renderTexture.getTexture();
 
-    m_arrowTextures.insert({colorId, arrowTexture});
+    m_arrowTextures.insert({colorId, texture});
     return &(m_arrowTextures.at(colorId));
+}
+
+std::optional<sf::Texture*> ToolManager::getCircleTexturePtr(const int colorId){
+
+    auto it = m_circleTextures.find(colorId);
+
+    if(it != m_circleTextures.end()){
+        return &(m_circleTextures.at(colorId));
+    }
+
+    unsigned int squareWidth(70);
+    unsigned int squareHeight(70);
+
+    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
+
+    if(m_graphicCirclePtr == nullptr){
+
+        sf::Vector2f position;
+        position.x = (float)squareWidth/2.f;
+        position.y = (float)squareHeight/2.f;
+        float diameter = squareWidth*0.4f;
+
+        m_graphicCirclePtr = std::make_unique<GraphicCircle>(position, color, diameter);
+    }
+    else{
+        m_graphicCirclePtr->setColor(color);
+    }
+
+    sf::RenderTexture renderTexture{{squareWidth,squareHeight}};
+    renderTexture.clear(sf::Color::Transparent);
+    renderTexture.draw(*m_graphicCirclePtr);
+    renderTexture.display();
+
+    sf::Texture texture = renderTexture.getTexture();
+
+    m_circleTextures.insert({colorId, texture});
+    return &(m_circleTextures.at(colorId));
 }
