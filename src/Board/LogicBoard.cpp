@@ -320,7 +320,11 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
 {
     out << "Columns: " << board.width() << "\n";
     out << "Rows: " << board.height() << "\n";
-    out << "RepeatSquares: 0 1";
+    out << "RepeatSquares:";
+    for(const auto& id: board.m_repeatSquareIds){
+        out << " " << id;
+    }
+    out << "\n";
     for(int y = board.m_pieceLayer.size()-1; y >= 0; y--){
         for(int x = 0; x < board.m_pieceLayer.at(0).size(); x++){
 
