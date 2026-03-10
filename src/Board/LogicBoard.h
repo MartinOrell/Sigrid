@@ -10,6 +10,7 @@
 #include "../Coord/Coord.h"
 #include <string>
 
+#include "BoardDataContainer.h"
 #include "../Arrow/LogicArrow.h"
 #include "../Piece/PieceDataContainer.h"
 #include "../Shape/Circle/LogicCircle.h"
@@ -18,7 +19,7 @@ namespace sigrid{
     class LogicBoard{
 
         public:
-            LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces);
+            LogicBoard(const BoardDataContainer& data);
             LogicBoard(const LogicBoard& board);
             ~LogicBoard();
             const unsigned int width() const;
@@ -50,7 +51,7 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
-            std::vector<int> m_repeatSquareIds;
+            std::vector<int> m_repeatedSquareIds;
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
             std::map<Coord, LogicPiece> m_pieces;

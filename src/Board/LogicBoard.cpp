@@ -10,23 +10,23 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>& repeatSquares, const std::vector<PieceDataContainer> pieces)
-: m_repeatSquareIds{repeatSquares}{
+LogicBoard::LogicBoard(const BoardDataContainer& data)
+: m_repeatedSquareIds{data.repeatedSquareIds}{
 
-    if(repeatSquares.size() == 0){
+    if(m_repeatedSquareIds.size() == 0){
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
         return;
     }
 
-    for(unsigned int y = 0; y < rows; y++){
+    for(unsigned int y = 0; y < data.rows; y++){
         std::vector<int> squareRow;
-        for(unsigned int x = 0; x < columns; x++){
-            squareRow.push_back(repeatSquares.at((x+y)%repeatSquares.size()));
+        for(unsigned int x = 0; x < data.columns; x++){
+            squareRow.push_back(m_repeatedSquareIds.at((x+y)%m_repeatedSquareIds.size()));
         }
         m_squareLayer.push_back(squareRow);
     }
 
-    for(const auto pieceContainer : pieces){
+    for(const auto pieceContainer : data.logicPieces){
 
         Coord coord{pieceContainer.position};
 
@@ -47,7 +47,7 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
             continue;
         }
         m_pieces.insert({coord, LogicPiece(pieceContainer.name, pieceContainer.colorId)});
-    }
+    }    
 
     for(int y = 0; y < m_squareLayer.size(); y++){
         std::vector<std::unique_ptr<int>> highlightRow;
@@ -346,7 +346,7 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
     out << "Columns: " << board.width() << "\n";
     out << "Rows: " << board.height() << "\n";
     out << "RepeatSquares:";
-    for(const auto& id: board.m_repeatSquareIds){
+    for(const auto& id: board.m_repeatedSquareIds){
         out << " " << id;
     }
     out << "\n";

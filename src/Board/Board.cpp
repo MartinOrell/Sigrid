@@ -12,7 +12,7 @@ Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& gr
 : m_pieceManagerPtr(pieceManagerPtr)
 , m_filename{boardData.filename}{
 
-    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardData.columns, boardData.rows, boardData.repeatedSquareIds, boardData.logicPieces);
+    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardData);
 
     m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
 
