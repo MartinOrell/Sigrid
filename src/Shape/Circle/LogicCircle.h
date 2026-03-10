@@ -6,11 +6,9 @@ namespace sigrid{
     class LogicCircle{
 
         public:
-            LogicCircle(const Coord& coord, const int colorId);
-            Coord getPosition() const;
+            LogicCircle(const int colorId);
             int getColorId() const;
 
-            void setPosition(const Coord& coord);
             void setColor(const int colorId);
 
             bool operator<(const LogicCircle& rhs) const;
@@ -18,7 +16,6 @@ namespace sigrid{
             bool operator!=(const LogicCircle& rhs) const;
 
         private:
-            Coord m_position;
             int m_colorId;
     };
 }

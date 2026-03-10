@@ -25,7 +25,6 @@
 
 #include "BoardDesignContainer.h"
 
-#include "../Shape/Circle/Circle.h"
 #include "../Shape/Circle/LogicCircle.h"
 #include "../Shape/Circle/GraphicCircle.h"
 
@@ -69,7 +68,10 @@ namespace sigrid{
 
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
-            void addCircle(const LogicCircle& circle);
+            void addCircle(const LogicCircle& circle, const Coord& coord);
+            void removeCircle(const Coord& coord);
+
+            void setCircleColorAt(const int colorId, const Coord& coord);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
@@ -162,7 +164,7 @@ namespace sigrid{
 
             std::map<LogicArrow, GraphicArrow> m_arrows;
 
-            std::map<LogicCircle, GraphicCircle> m_circles;
+            std::map<Coord, GraphicCircle> m_circles;
 
             std::unique_ptr<Arrow> m_dragArrowPtr;
 

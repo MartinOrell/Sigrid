@@ -317,37 +317,50 @@ void GraphicBoard::removeArrow(const LogicArrow& arrow){
 
 }
 
-void GraphicBoard::addCircle(const LogicCircle& logicCircle){
+void GraphicBoard::addCircle(const LogicCircle& logicCircle, const Coord& coord){
 
-    for(auto it = m_circles.begin(); it != m_circles.end(); it++){
-        if(it->first.getPosition() == logicCircle.getPosition()){
-            if(it->first.getColorId() == logicCircle.getColorId()){
-                m_circles.erase(it);
-                redrawTexture();
-                return;
-            }
-            m_circles.erase(it);
-            break;
-        }
+    auto it = m_circles.find(coord);
+    if(it != m_circles.end()){
+        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "There is already a circle there" << std::endl;
+        return;
     }
-
-    int x = logicCircle.getPosition().x;
-    int y = logicCircle.getPosition().y;
-    auto position = m_squares.at(y).at(x).getPosition() + m_squares.at(y).at(x).getSize()/2.f;
     
-    sf::Color color;
     if(m_colorManagerPtr == nullptr){
-        color = sf::Color::Red;
+        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "ColorManager does not exist to assign color" << std::endl;
+        return;
     }
-    else{
-        color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
+    
+    sf::Color color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
+
+    auto position = m_squares.at(coord.y).at(coord.x).getPosition()
+        + m_squares.at(coord.y).at(coord.x).getSize()/2.f;
+
+    GraphicCircle newCircle(position, color, m_circleDiameter);
+    m_circles.insert({coord, newCircle});
+    redrawTexture();
+}
+
+
+void GraphicBoard::removeCircle(const Coord& coord){
+    auto it = m_circles.find(coord);
+    assert(it != m_circles.end());
+    m_circles.erase(it);
+    redrawTexture();
+}
+
+void GraphicBoard::setCircleColorAt(const int colorId, const Coord& coord){
+    
+    auto it = m_circles.find(coord);
+    if(it == m_circles.end()){
+        std::cout << "GraphicBoard: Unable to set circle color at " << coord.getNotation() << std::endl;
+        std::cout << "There is no circle there";
+        return;
     }
-
-    GraphicCircle graphicCircle(position, color, m_circleDiameter);
-    m_texturePtr->draw(graphicCircle);
-    auto result = m_circles.insert({logicCircle, graphicCircle});
-
-    assert(result.second);
+    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
+    m_circles.at(coord).setColor(color);
+    redrawTexture();
 }
 
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

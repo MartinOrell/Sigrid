@@ -208,9 +208,29 @@ void Board::addArrow(const int colorId, const Coord& fromCoord, const Coord& toC
 }
 
 void Board::addCircle(const int colorId, const Coord& coord){
-    LogicCircle logicCircle{coord, colorId};
-    m_logicBoard->addCircle(logicCircle);
-    m_graphicBoard->addCircle(logicCircle);
+
+    if(!m_logicBoard->isWithinBoard(coord)){
+        std::cout << "Board: Failed to add Circle at " << coord.getNotation() << std::endl;
+        std::cout << "because it is out of bounds" << std::endl;
+        return;
+    }
+
+    auto logicCircle_o = m_logicBoard->getCircleAt(coord);
+    if(logicCircle_o == std::nullopt){
+        LogicCircle logicCircle(colorId);
+        m_logicBoard->addCircle(logicCircle, coord);
+        m_graphicBoard->addCircle(logicCircle, coord);
+        return;
+    }
+
+    if(logicCircle_o.value().getColorId() != colorId){
+        m_logicBoard->setCircleColorAt(colorId, coord);
+        m_graphicBoard->setCircleColorAt(colorId, coord);
+        return;
+    }
+
+    m_logicBoard->removeCircle(coord);
+    m_graphicBoard->removeCircle(coord);
 }
 
 void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

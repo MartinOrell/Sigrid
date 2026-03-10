@@ -29,7 +29,6 @@ set(SRC_FILES
     src/Arrow/GraphicArrow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
-    src/Shape/Circle/Circle.cpp
     src/Shape/Circle/LogicCircle.cpp
     src/Shape/Circle/GraphicCircle.cpp
 )

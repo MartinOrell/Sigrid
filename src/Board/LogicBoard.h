@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 
 #include "../Piece/LogicPiece.h"
 #include <SFML/System/Vector2.hpp>
@@ -27,6 +28,7 @@ namespace sigrid{
             bool isEmptySquare(const Coord& coord) const;
             std::optional<int> getSquareColorAt(const Coord& coord) const;
             std::optional<LogicPiece*> getPieceAt(const Coord& coord) const;
+            std::optional<LogicCircle> getCircleAt(const Coord& coord) const;
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;
             std::string getFen() const;
 
@@ -38,7 +40,10 @@ namespace sigrid{
 
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
-            void addCircle(const LogicCircle& circle);
+            void addCircle(const LogicCircle& circle, const Coord& coord);
+            void removeCircle(const Coord& coord);
+
+            void setCircleColorAt(const int colorId, const Coord& coord);
 
             void print();
             void clear();
@@ -50,6 +55,6 @@ namespace sigrid{
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
             std::vector<std::vector<LogicPiece*>> m_pieceLayer;
             std::vector<LogicArrow> m_arrows;
-            std::vector<LogicCircle> m_circles;
+            std::map<Coord, LogicCircle> m_circles;
     };
 }

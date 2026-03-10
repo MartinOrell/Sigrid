@@ -142,6 +142,14 @@ std::optional<LogicPiece*> LogicBoard::getPieceAt(const Coord& coord) const{
     return returnPiece;
 }
 
+std::optional<LogicCircle> LogicBoard::getCircleAt(const Coord& coord) const{
+    auto it = m_circles.find(coord);
+    if(it == m_circles.end()){
+        return std::nullopt;
+    }
+    return it->second;
+}
+
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
 
     std::cout << "LogicBoard: getSquareHighlightAt" << std::endl;
@@ -272,19 +280,39 @@ void LogicBoard::removeArrow(const LogicArrow& arrow){
     }
 }
 
-void LogicBoard::addCircle(const LogicCircle& circle){
+void LogicBoard::addCircle(const LogicCircle& circle, const Coord& coord){
 
-    for(auto it = m_circles.begin(); it != m_circles.end(); it++){
-        if(it->getPosition() == circle.getPosition()){
-            if(it->getColorId() == circle.getColorId()){
-                m_circles.erase(it);
-                return;
-            }
-            it->setColor(circle.getColorId());
-            return;
-        }
+    auto it = m_circles.find(coord);
+    if(it != m_circles.end()){
+        std::cout << "Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "There is already a circle there" << std::endl;
+        return;
     }
-    m_circles.push_back(circle);
+
+    m_circles.insert({coord, circle});
+}
+
+void LogicBoard::removeCircle(const Coord& coord){
+    auto it = m_circles.find(coord);
+    if(it == m_circles.end()){
+        std::cout << "Unable to remove circle at " << coord.getNotation() << std::endl;
+        std::cout << "There is no circle there" << std::endl;
+        return;
+    }
+
+    m_circles.erase(coord);
+}
+
+void LogicBoard::setCircleColorAt(const int colorId, const Coord& coord){
+
+    auto it = m_circles.find(coord);
+    if(it == m_circles.end()){
+        std::cout << "Unable to set circle color at " << coord.getNotation() << std::endl;
+        std::cout << "There is no circle there" << std::endl;
+        return;
+    }
+
+    m_circles.at(coord).setColor(colorId);
 }
 
 void LogicBoard::print(){
