@@ -20,13 +20,10 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
 
     for(unsigned int y = 0; y < rows; y++){
         std::vector<int> squareRow;
-        std::vector<LogicPiece*> pieceRow;
         for(unsigned int x = 0; x < columns; x++){
             squareRow.push_back(repeatSquares.at((x+y)%repeatSquares.size()));
-            pieceRow.push_back(nullptr);
         }
         m_squareLayer.push_back(squareRow);
-        m_pieceLayer.push_back(pieceRow);
     }
 
     for(const auto pieceContainer : pieces){
@@ -49,7 +46,7 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
-        m_pieceLayer.at(coord.y).at(coord.x) = new LogicPiece(pieceContainer.name, pieceContainer.colorId);
+        m_piecePtrs.insert({coord, new LogicPiece(pieceContainer.name, pieceContainer.colorId)});
     }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
@@ -62,29 +59,25 @@ LogicBoard::LogicBoard(const int columns, const int rows, const std::vector<int>
     }
 }
 
-LogicBoard::LogicBoard(const LogicBoard& board){
+LogicBoard::LogicBoard(const LogicBoard& board)
+: m_piecePtrs{board.m_piecePtrs}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
         std::vector<int> squareRow;
-        std::vector<LogicPiece*> pieceRow;
         std::vector<std::unique_ptr<int>> highlightRow;
         for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
             squareRow.push_back(board.m_squareLayer.at(y).at(x));
-            pieceRow.push_back(board.m_pieceLayer.at(y).at(x));
             std::unique_ptr<int> noHighlight;
             highlightRow.push_back(std::move(noHighlight));
         }
         m_squareLayer.push_back(squareRow);
-        m_pieceLayer.push_back(pieceRow);
         m_squareHighlight.push_back(std::move(highlightRow));
     }
 }
 
 LogicBoard::~LogicBoard(){
-    for(int y = 0; y < height(); y++){
-        for(int x = 0; x < width(); x++){
-            if(m_pieceLayer[y][x] != nullptr){
-                delete m_pieceLayer[y][x];
-            }
+    for(auto& piece : m_piecePtrs){
+        if(piece.second != nullptr){
+            delete piece.second;
         }
     }
 }
@@ -111,7 +104,7 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
-    return m_pieceLayer[coord.y][coord.x] == nullptr;
+    return m_piecePtrs.at(coord) == nullptr;
 }
 
 std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
@@ -123,19 +116,19 @@ std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
 }
 
 std::optional<LogicPiece*> LogicBoard::getPieceAt(const Coord& coord) const{
-    if(coord.x > m_pieceLayer.at(0).size()){
+    
+    auto it = m_piecePtrs.find(coord);
+    if(it == m_piecePtrs.end()){
         return std::nullopt;
     }
-    if(coord.y > m_pieceLayer.size()){
-        return std::nullopt;
-    }
-    LogicPiece* piece = m_pieceLayer[coord.y][coord.x];
+
+    LogicPiece* piece = m_piecePtrs.at(coord);
     if(piece == nullptr){
         return std::nullopt;
     }
     
-    int colorId = m_pieceLayer[coord.y][coord.x]->colorId();
-    std::string notation = m_pieceLayer[coord.y][coord.x]->notation();
+    int colorId = piece->colorId();
+    std::string notation = piece->notation();
 
     LogicPiece* returnPiece = new LogicPiece(notation, colorId);
 
@@ -175,7 +168,11 @@ std::string LogicBoard::getFen() const{
     for(int y = height()-1; y >= 0; y--){
         int i = 0;
         for(int x = 0; x < width();x++){
-            if(m_pieceLayer[y][x] == nullptr){
+            auto it = m_piecePtrs.find({x,y});
+            if(it == m_piecePtrs.end()){
+                i++;
+            }
+            else if(it->second == nullptr){
                 i++;
             }
             else{
@@ -183,8 +180,8 @@ std::string LogicBoard::getFen() const{
                     fen.append(std::to_string(i));;
                     i = 0;
                 }
-                std::string s = m_pieceLayer[y][x]->notation();
-                if(m_pieceLayer[y][x]->colorId() == 1){
+                std::string s = it->second->notation();
+                if(it->second->colorId() == 1){
                     s.front() = tolower(s.front());
                 }
                 fen.append(s);
@@ -203,40 +200,66 @@ std::string LogicBoard::getFen() const{
 
 void LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
     
-    if(m_pieceLayer[coord.y][coord.x] == nullptr){
+    auto it = m_piecePtrs.find(coord);
+
+    if(it == m_piecePtrs.end()){
         LogicPiece* newPiece = new LogicPiece{piece};
-        m_pieceLayer[coord.y][coord.x] = newPiece;
+        m_piecePtrs.insert({coord, newPiece});
         return;
     }
 
-    if(*m_pieceLayer[coord.y][coord.x] == piece){
-        delete m_pieceLayer[coord.y][coord.x];
-        m_pieceLayer[coord.y][coord.x] = nullptr;
+    if(it->second == nullptr){
+        it->second = new LogicPiece{piece};
         return;
     }
 
-    delete m_pieceLayer[coord.y][coord.x];
+    if(*(it->second) == piece){
+        m_piecePtrs.erase(coord);
+        return;
+    }
+
+    delete it->second;
     LogicPiece* newPiece = new LogicPiece{piece};
-    m_pieceLayer[coord.y][coord.x] = newPiece;
+    it->second = newPiece;
 }
 
 void LogicBoard::removePiece(const Coord& coord){
-    delete m_pieceLayer[coord.y][coord.x];
-    m_pieceLayer[coord.y][coord.x] = nullptr;
+    auto it = m_piecePtrs.find(coord);
+
+    if(it == m_piecePtrs.end()){
+        std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
+        std::cout << "There is no piece there";
+        return;
+    }
+
+    m_piecePtrs.erase(coord);
 }
 
 bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
-    assert(fromCoord.x != toCoord.x || fromCoord.y != toCoord.y);
 
-    if(m_pieceLayer[fromCoord.y][fromCoord.x] == nullptr){
+    if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
+        std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation()
+            << " to " << toCoord.getNotation() << std::endl;
+        std::cout << "both coordinates are the same" << std::endl;
         return false;
     }
 
-    if(m_pieceLayer[toCoord.y][toCoord.x] != nullptr){
-        delete m_pieceLayer[toCoord.y][toCoord.x];
-    } 
-    m_pieceLayer[toCoord.y][toCoord.x] = m_pieceLayer[fromCoord.y][fromCoord.x];
-    m_pieceLayer[fromCoord.y][fromCoord.x] = nullptr;
+    auto itFrom = m_piecePtrs.find(fromCoord);
+
+    if(itFrom == m_piecePtrs.end()){
+        std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation() << std::endl;
+        std::cout << "No piece is standing there" << std::endl;
+        return false;
+    }
+
+    auto itTo = m_piecePtrs.find(toCoord);
+
+    if(itTo != m_piecePtrs.end()){
+        m_piecePtrs.erase(itTo);
+    }
+
+    addPiece(*(itFrom->second), toCoord);
+    removePiece(fromCoord);
     return true;
 }
 
@@ -322,11 +345,12 @@ void LogicBoard::print(){
     
     for(int y = 0; y < height(); y++){
         for(int x = 0; x < width(); x++){
-            if(m_pieceLayer[y][x] == nullptr){
+            auto it = m_piecePtrs.find({x,y});
+            if(it == m_piecePtrs.end()){
                 std::cout << " ";
             }
             else{
-                std::cout << m_pieceLayer[y][x]->notation();
+                std::cout << it->second->notation();
             }
         }
         std::cout << "\n";
@@ -336,9 +360,9 @@ void LogicBoard::print(){
 void LogicBoard::clear(){
     for(int y = 0; y < height(); y++){
         for(int x = 0; x < width(); x++){
-            if(m_pieceLayer[y][x] != nullptr){
-                delete(m_pieceLayer[y][x]);
-                m_pieceLayer[y][x] = nullptr;
+            auto it = m_piecePtrs.find({x,y});
+            if(it != m_piecePtrs.end()){
+                m_piecePtrs.erase(it);
             }
         }
     }
@@ -353,19 +377,16 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
         out << " " << id;
     }
     out << "\n";
-    for(int y = board.m_pieceLayer.size()-1; y >= 0; y--){
-        for(int x = 0; x < board.m_pieceLayer.at(0).size(); x++){
-
-            if(board.m_pieceLayer[y][x] == nullptr){
+    for(int y = board.m_squareLayer.size()-1; y >= 0; y--){
+        for(int x = 0; x < board.m_squareLayer.at(0).size(); x++){
+            auto it = board.m_piecePtrs.find({x,y});
+            if(it == board.m_piecePtrs.end()){
                 continue;
             }
-            Coord coord(x,y);
-            int colorId = board.m_pieceLayer[y][x]->colorId();
-            std::string notation = board.m_pieceLayer[y][x]->notation();
 
             out << "\n";
 
-            out << "Piece: " << colorId << " " << notation << " " << coord.getNotation();
+            out << "Piece: " << it->second->colorId() << " " << it->second->notation() << " " << it->first.getNotation();
         }
     }
     return out;
