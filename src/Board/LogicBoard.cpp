@@ -110,21 +110,13 @@ std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
     return m_squareLayer.at(coord.y).at(coord.x);
 }
 
-std::optional<LogicPiece*> LogicBoard::getPieceAt(const Coord& coord) const{
+std::optional<LogicPiece> LogicBoard::getPieceAt(const Coord& coord) const{
     
     auto it = m_pieces.find(coord);
     if(it == m_pieces.end()){
         return std::nullopt;
     }
-
-    LogicPiece piece = m_pieces.at(coord);
-    
-    int colorId = piece.colorId();
-    std::string notation = piece.notation();
-
-    LogicPiece* returnPiece = new LogicPiece(notation, colorId);
-
-    return returnPiece;
+    return it->second;
 }
 
 std::optional<LogicCircle> LogicBoard::getCircleAt(const Coord& coord) const{

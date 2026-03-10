@@ -67,7 +67,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
             auto piece_o = logicBoard.getPieceAt({x,y});
             if(piece_o != std::nullopt){
 
-                auto newPiece_o = pieceManagerPtr->getPiece(*piece_o.value());
+                auto newPiece_o = pieceManagerPtr->getPiece(piece_o.value());
                 if(newPiece_o != std::nullopt){
                     GraphicPiece newPiece = newPiece_o.value().graphic();
                     newPiece.resize({(float)config.squareSize,(float)config.squareSize});

@@ -87,7 +87,7 @@ std::optional<Piece> Board::getPiece(const Coord& coord){
     if(piece_o == std::nullopt){
         return std::nullopt;
     }
-    return m_pieceManagerPtr->getPiece(*piece_o.value());
+    return m_pieceManagerPtr->getPiece(piece_o.value());
 }
 
 std::string Board::getFen() const{
@@ -109,7 +109,7 @@ void Board::select(const Coord& newCoord){
         return;
     }
 
-    std::optional<sigrid::LogicPiece*> o_piece = m_logicBoard->getPieceAt(oldCoord);
+    std::optional<sigrid::LogicPiece> o_piece = m_logicBoard->getPieceAt(oldCoord);
 
     if(o_piece == std::nullopt){
         m_selection = std::make_unique<Coord>(newCoord);
@@ -166,14 +166,14 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
         return;
     }
 
-    auto logicPiecePtr_o = m_logicBoard->getPieceAt(coord);
-    if(logicPiecePtr_o == std::nullopt){
+    auto logicPiece_o = m_logicBoard->getPieceAt(coord);
+    if(logicPiece_o == std::nullopt){
         m_logicBoard->addPiece(piece.logic(), coord);
         m_graphicBoard->addPiece(piece.graphic(), coord);
         return;
     }
 
-    if(*(logicPiecePtr_o.value()) == piece.logic()){
+    if(logicPiece_o.value() == piece.logic()){
         m_logicBoard->removePiece(coord);
         m_graphicBoard->removePiece(coord);
         return;
