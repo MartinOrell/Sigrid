@@ -75,6 +75,15 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
                     m_pieces.insert({{x,y}, newPiece});
                 }
             }
+
+            auto circle_o = logicBoard.getCircleAt({x,y});
+            if(circle_o != std::nullopt){
+                sf::Vector2f position = square.getPosition()
+                    + square.getSize()/2.f;;
+                sf::Color color = m_colorManagerPtr->getSolidColor(circle_o.value().getColorId());
+                GraphicCircle newCircle{position, color, m_circleDiameter};
+                m_circles.insert({{x,y}, newCircle});
+            }
         }
         m_squares.push_back(row);
     }
@@ -437,6 +446,7 @@ void GraphicBoard::saveImage(const std::string& fileName){
 
 void GraphicBoard::clear(){
     m_pieces.clear();
+    m_circles.clear();
     redrawTexture();
 }
 
@@ -980,6 +990,11 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
                 piecePtr->second.setPosition(m_squares.at(y).at(x).getPosition());
             }
         }
+    }
+    for(auto& circle : m_circles){
+        sf::Vector2f position = m_squares.at(circle.first.y).at(circle.first.x).getPosition()
+            +  m_squares.at(circle.first.y).at(circle.first.x).getSize()/2.f;
+        circle.second.setPosition(position);
     }
 }
 

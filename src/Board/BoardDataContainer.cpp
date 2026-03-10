@@ -40,6 +40,12 @@ bool BoardDataContainer::load(const std::string& filename){
                 ifs >> pieceContainer.position;
                 logicPieces.push_back(pieceContainer);
             }
+            else if(key == "Circle:"){
+                sigrid::CircleDataContainer circleContainer;
+                ifs >> circleContainer.colorId;
+                ifs >> circleContainer.position;
+                logicCircles.push_back(circleContainer);
+            }
             else if(key == "ImageFilename:"){
                 ifs >> imageFilename;
             }

@@ -47,7 +47,20 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
             continue;
         }
         m_pieces.insert({coord, LogicPiece(pieceContainer.name, pieceContainer.colorId)});
-    }    
+    }
+
+    for(const auto cData : data.logicCircles){
+
+        Coord coord{cData.position};
+
+        if(!isWithinBoard(coord)){
+            std::cout << "LogicBoard constructor: Failed to set circle at " << coord.getNotation() << std::endl;
+            std::cout << "coordinate is outside of board" << std::endl;
+            continue;
+        }
+
+        m_circles.insert({coord, LogicCircle{cData.colorId}});
+    }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
         std::vector<std::unique_ptr<int>> highlightRow;
@@ -60,7 +73,8 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
 }
 
 LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieces{board.m_pieces}{
+: m_pieces{board.m_pieces}
+, m_circles{board.m_circles}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
         std::vector<int> squareRow;
         std::vector<std::unique_ptr<int>> highlightRow;
@@ -99,7 +113,8 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
-    return m_pieces.find(coord) == m_pieces.end();
+    return m_pieces.find(coord) == m_pieces.end()
+        && m_circles.find(coord) == m_circles.end();
 }
 
 std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
@@ -331,14 +346,8 @@ void LogicBoard::print(){
 }
 
 void LogicBoard::clear(){
-    for(int y = 0; y < height(); y++){
-        for(int x = 0; x < width(); x++){
-            auto it = m_pieces.find({x,y});
-            if(it != m_pieces.end()){
-                m_pieces.erase(it);
-            }
-        }
-    }
+    m_pieces.clear();
+    m_circles.clear();
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
@@ -361,6 +370,9 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
 
             out << "Piece: " << it->second.colorId() << " " << it->second.notation() << " " << it->first.getNotation();
         }
+    }
+    for(const auto& circle: board.m_circles){
+        out << "\nCircle: " << circle.second.getColorId() << " " << circle.first.getNotation();
     }
     return out;
 }
