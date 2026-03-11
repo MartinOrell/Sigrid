@@ -14,6 +14,7 @@
 #include "../Arrow/LogicArrow.h"
 #include "../Piece/PieceDataContainer.h"
 #include "../Shape/Circle/LogicCircle.h"
+#include "../Entity/LogicEntities.h"
 
 namespace sigrid{
     class LogicBoard{
@@ -44,8 +45,6 @@ namespace sigrid{
             void addCircle(const LogicCircle& circle, const Coord& coord);
             void removeCircle(const Coord& coord);
 
-            void setCircleColorAt(const int colorId, const Coord& coord);
-
             void print();
             void clear();
 
@@ -53,9 +52,8 @@ namespace sigrid{
         private:
             std::vector<int> m_repeatedSquareIds;
             std::vector<std::vector<int>> m_squareLayer; //colorIds
+            LogicEntities m_pieceLayer;
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
-            std::map<Coord, LogicPiece> m_pieces;
             std::vector<LogicArrow> m_arrows;
-            std::map<Coord, LogicCircle> m_circles;
     };
 }

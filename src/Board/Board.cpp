@@ -224,8 +224,10 @@ void Board::addCircle(const int colorId, const Coord& coord){
     }
 
     if(logicCircle_o.value().getColorId() != colorId){
-        m_logicBoard->setCircleColorAt(colorId, coord);
-        m_graphicBoard->setCircleColorAt(colorId, coord);
+        m_logicBoard->removeCircle(coord);
+        m_logicBoard->addCircle(colorId, coord);
+        m_graphicBoard->removeCircle(coord);
+        m_graphicBoard->addCircle(colorId, coord);
         return;
     }
 

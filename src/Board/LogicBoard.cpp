@@ -46,7 +46,7 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
-        m_pieces.insert({coord, LogicPiece(pieceContainer.name, pieceContainer.colorId)});
+        m_pieceLayer.addPiece(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
     }
 
     for(const auto cData : data.logicCircles){
@@ -59,7 +59,7 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
             continue;
         }
 
-        m_circles.insert({coord, LogicCircle{cData.colorId}});
+        m_pieceLayer.addCircle(coord, LogicCircle{cData.colorId});
     }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
@@ -73,8 +73,7 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
 }
 
 LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieces{board.m_pieces}
-, m_circles{board.m_circles}{
+: m_pieceLayer{board.m_pieceLayer}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
         std::vector<int> squareRow;
         std::vector<std::unique_ptr<int>> highlightRow;
@@ -113,8 +112,7 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
-    return m_pieces.find(coord) == m_pieces.end()
-        && m_circles.find(coord) == m_circles.end();
+    return m_pieceLayer.isEmptySquare(coord);
 }
 
 std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
@@ -126,20 +124,11 @@ std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
 }
 
 std::optional<LogicPiece> LogicBoard::getPieceAt(const Coord& coord) const{
-    
-    auto it = m_pieces.find(coord);
-    if(it == m_pieces.end()){
-        return std::nullopt;
-    }
-    return it->second;
+    return m_pieceLayer.getPieceAt(coord);
 }
 
 std::optional<LogicCircle> LogicBoard::getCircleAt(const Coord& coord) const{
-    auto it = m_circles.find(coord);
-    if(it == m_circles.end()){
-        return std::nullopt;
-    }
-    return it->second;
+    return m_pieceLayer.getCircleAt(coord);
 }
 
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
@@ -167,17 +156,17 @@ std::string LogicBoard::getFen() const{
     for(int y = height()-1; y >= 0; y--){
         int i = 0;
         for(int x = 0; x < width();x++){
-            auto it = m_pieces.find({x,y});
-            if(it == m_pieces.end()){
+            auto piece_o = m_pieceLayer.getPieceAt({x,y});
+            if(piece_o == std::nullopt){
                 i++;
             }
             else{
                 if(i > 0){
-                    fen.append(std::to_string(i));;
+                    fen.append(std::to_string(i));
                     i = 0;
                 }
-                std::string s = it->second.getNotation();
-                if(it->second.getColorId() == 1){
+                std::string s = piece_o.value().getNotation();
+                if(piece_o.value().getColorId() == 1){
                     s.front() = tolower(s.front());
                 }
                 fen.append(s);
@@ -195,28 +184,37 @@ std::string LogicBoard::getFen() const{
 }
 
 void LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
-    
-    auto it = m_pieces.find(coord);
 
-    if(it != m_pieces.end()){
+    if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
-        std::cout << "There is already a piece there" << std::endl;
+        std::cout << "The square is outside of the board" << std::endl;
         return;
     }
 
-    m_pieces.insert({coord, piece});
+    if(!m_pieceLayer.isEmptySquare(coord)){
+        std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
+        std::cout << "The square is already occupied" << std::endl;
+        return;
+    }
+
+    m_pieceLayer.addPiece(coord,piece);
 }
 
 void LogicBoard::removePiece(const Coord& coord){
-    auto it = m_pieces.find(coord);
 
-    if(it == m_pieces.end()){
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
+        std::cout << "The square is outside of the board" << std::endl;
+        return;
+    }
+
+    if(m_pieceLayer.isEmptySquare(coord)){
         std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
         std::cout << "There is no piece there" << std::endl;
         return;
     }
 
-    m_pieces.erase(it);
+    m_pieceLayer.removePiece(coord);
 }
 
 bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
@@ -228,22 +226,22 @@ bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
         return false;
     }
 
-    auto itFrom = m_pieces.find(fromCoord);
+    auto pieceFrom_o = m_pieceLayer.getPieceAt(fromCoord);
 
-    if(itFrom == m_pieces.end()){
+    if(pieceFrom_o == std::nullopt){
         std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation() << std::endl;
         std::cout << "No piece is standing there" << std::endl;
         return false;
     }
 
-    auto itTo = m_pieces.find(toCoord);
+    auto pieceTo_o = m_pieceLayer.getPieceAt(toCoord);
 
-    if(itTo != m_pieces.end()){
-        m_pieces.erase(itTo);
+    if(pieceTo_o != std::nullopt){
+        m_pieceLayer.removePiece(toCoord);
     }
 
-    addPiece(itFrom->second, toCoord);
-    removePiece(fromCoord);
+    m_pieceLayer.addPiece(toCoord, pieceFrom_o.value());
+    m_pieceLayer.removePiece(fromCoord);
     return true;
 }
 
@@ -289,37 +287,36 @@ void LogicBoard::removeArrow(const LogicArrow& arrow){
 
 void LogicBoard::addCircle(const LogicCircle& circle, const Coord& coord){
 
-    auto it = m_circles.find(coord);
-    if(it != m_circles.end()){
-        std::cout << "Unable to add circle at " << coord.getNotation() << std::endl;
-        std::cout << "There is already a circle there" << std::endl;
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "The square is outside of the board" << std::endl;
         return;
     }
 
-    m_circles.insert({coord, circle});
+    if(!m_pieceLayer.isEmptySquare(coord)){
+        std::cout << "LogicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "The square is already occupied" << std::endl;
+        return;
+    }
+
+    m_pieceLayer.addCircle(coord,circle);
 }
 
 void LogicBoard::removeCircle(const Coord& coord){
-    auto it = m_circles.find(coord);
-    if(it == m_circles.end()){
-        std::cout << "Unable to remove circle at " << coord.getNotation() << std::endl;
+
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
+        std::cout << "The square is outside of the board" << std::endl;
+        return;
+    }
+
+    if(m_pieceLayer.isEmptySquare(coord)){
+        std::cout << "LogicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
         std::cout << "There is no circle there" << std::endl;
         return;
     }
 
-    m_circles.erase(coord);
-}
-
-void LogicBoard::setCircleColorAt(const int colorId, const Coord& coord){
-
-    auto it = m_circles.find(coord);
-    if(it == m_circles.end()){
-        std::cout << "Unable to set circle color at " << coord.getNotation() << std::endl;
-        std::cout << "There is no circle there" << std::endl;
-        return;
-    }
-
-    m_circles.at(coord).setColor(colorId);
+    m_pieceLayer.removeCircle(coord);
 }
 
 void LogicBoard::print(){
@@ -329,12 +326,12 @@ void LogicBoard::print(){
     
     for(int y = 0; y < height(); y++){
         for(int x = 0; x < width(); x++){
-            auto it = m_pieces.find({x,y});
-            if(it == m_pieces.end()){
+            auto piece_o = m_pieceLayer.getPieceAt({x,y});
+            if(piece_o == std::nullopt){
                 std::cout << " ";
             }
             else{
-                std::cout << it->second.getNotation();
+                std::cout << piece_o.value().getNotation();
             }
         }
         std::cout << "\n";
@@ -342,8 +339,7 @@ void LogicBoard::print(){
 }
 
 void LogicBoard::clear(){
-    m_pieces.clear();
-    m_circles.clear();
+    m_pieceLayer.clear();
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
@@ -354,14 +350,6 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
     for(const auto& id: board.m_repeatedSquareIds){
         out << " " << id;
     }
-    for(const auto& piece: board.m_pieces){
-        out << "\nPiece: " << piece.second.getColorId()
-            << " " << piece.second.getNotation()
-            << " " << piece.first.getNotation();
-    }
-    for(const auto& circle: board.m_circles){
-        out << "\nCircle: " << circle.second.getColorId()
-            << " " << circle.first.getNotation();
-    }
+    out << board.m_pieceLayer;
     return out;
 }

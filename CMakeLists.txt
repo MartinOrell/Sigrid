@@ -31,6 +31,7 @@ set(SRC_FILES
     src/Action/Action.cpp
     src/Shape/Circle/LogicCircle.cpp
     src/Shape/Circle/GraphicCircle.cpp
+    src/Entity/LogicEntities.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
