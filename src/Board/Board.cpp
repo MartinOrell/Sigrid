@@ -168,28 +168,32 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
 
     auto logicPiece_o = m_logicBoard->getPieceAt(coord);
     if(logicPiece_o == std::nullopt){
-        m_logicBoard->addPiece(piece.logic(), coord);
-        m_graphicBoard->addPiece(piece.graphic(), coord);
+        if(m_logicBoard->addPiece(piece.logic(), coord)){
+            m_graphicBoard->addPiece(piece.graphic(), coord);
+        }
         return;
     }
 
     if(logicPiece_o.value() == piece.logic()){
-        m_logicBoard->removePiece(coord);
-        m_graphicBoard->removePiece(coord);
+        if(m_logicBoard->removePiece(coord)){
+            m_graphicBoard->removePiece(coord);
+        }
         return;
     }
 
-    m_logicBoard->removePiece(coord);
-    m_graphicBoard->removePiece(coord);
-    m_logicBoard->addPiece(piece.logic(), coord);
-    m_graphicBoard->addPiece(piece.graphic(), coord);
+    if(m_logicBoard->removePiece(coord)){
+        m_graphicBoard->removePiece(coord);
+    }
+    if(m_logicBoard->addPiece(piece.logic(), coord)){
+        m_graphicBoard->addPiece(piece.graphic(), coord);
+    }
 }
 
 void Board::addSquareHighlight(const int colorId, const Coord& coord){
 
-    m_logicBoard->addSquareHighlight(colorId, coord);
-    m_graphicBoard->addSquareHighlight(colorId, coord);
-
+    if(m_logicBoard->addSquareHighlight(colorId, coord)){
+        m_graphicBoard->addSquareHighlight(colorId, coord);
+    }
 }
 
 void Board::movePiece(const Coord& fromCoord, const Coord& toCoord){
@@ -203,8 +207,9 @@ void Board::movePiece(const Coord& fromCoord, const Coord& toCoord){
 
 void Board::addArrow(const int colorId, const Coord& fromCoord, const Coord& toCoord){
     LogicArrow logicArrow{fromCoord, toCoord, colorId};
-    m_logicBoard->addArrow(logicArrow);
-    m_graphicBoard->addArrow(logicArrow);
+    if(m_logicBoard->addArrow(logicArrow)){
+        m_graphicBoard->addArrow(logicArrow);
+    }
 }
 
 void Board::addCircle(const int colorId, const Coord& coord){
@@ -218,21 +223,25 @@ void Board::addCircle(const int colorId, const Coord& coord){
     auto logicCircle_o = m_logicBoard->getCircleAt(coord);
     if(logicCircle_o == std::nullopt){
         LogicCircle logicCircle(colorId);
-        m_logicBoard->addCircle(logicCircle, coord);
-        m_graphicBoard->addCircle(logicCircle, coord);
+        if(m_logicBoard->addCircle(logicCircle, coord)){
+            m_graphicBoard->addCircle(logicCircle, coord);
+        }
         return;
     }
 
     if(logicCircle_o.value().getColorId() != colorId){
-        m_logicBoard->removeCircle(coord);
-        m_logicBoard->addCircle(colorId, coord);
-        m_graphicBoard->removeCircle(coord);
-        m_graphicBoard->addCircle(colorId, coord);
+        if(m_logicBoard->removeCircle(coord)){
+            m_graphicBoard->removeCircle(coord);
+        }
+        if(m_logicBoard->addCircle(colorId, coord)){
+            m_graphicBoard->addCircle(colorId, coord);
+        }
         return;
     }
 
-    m_logicBoard->removeCircle(coord);
-    m_graphicBoard->removeCircle(coord);
+    if(m_logicBoard->removeCircle(coord)){
+        m_graphicBoard->removeCircle(coord);
+    }
 }
 
 void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

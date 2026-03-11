@@ -183,38 +183,40 @@ std::string LogicBoard::getFen() const{
     return fen;
 }
 
-void LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
+bool LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
         std::cout << "The square is outside of the board" << std::endl;
-        return;
+        return false;
     }
 
     if(!m_pieceLayer.isEmptySquare(coord)){
         std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
         std::cout << "The square is already occupied" << std::endl;
-        return;
+        return false;
     }
 
     m_pieceLayer.addPiece(coord,piece);
+    return true;
 }
 
-void LogicBoard::removePiece(const Coord& coord){
+bool LogicBoard::removePiece(const Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
         std::cout << "The square is outside of the board" << std::endl;
-        return;
+        return false;
     }
 
     if(m_pieceLayer.isEmptySquare(coord)){
         std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
         std::cout << "There is no piece there" << std::endl;
-        return;
+        return false;
     }
 
     m_pieceLayer.removePiece(coord);
+    return true;
 }
 
 bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
@@ -245,78 +247,83 @@ bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
     return true;
 }
 
-void LogicBoard::addSquareHighlight(const int colorId, const Coord& coord){
+bool LogicBoard::addSquareHighlight(const int colorId, const Coord& coord){
     assert(coord.x < m_squareLayer.at(0).size());
     assert(coord.y < m_squareLayer.size());
 
     if(!m_squareHighlight.at(coord.y).at(coord.x)){
         m_squareHighlight.at(coord.y).at(coord.x) = std::make_unique<int>(colorId);
-        return;
+        return true;
     }
 
     if(*m_squareHighlight.at(coord.y).at(coord.x) == colorId){
         m_squareHighlight.at(coord.y).at(coord.x) = nullptr;
-        return;
+        return true;
     }
 
     *m_squareHighlight.at(coord.y).at(coord.x) = colorId;
+    return true;
 }
 
-void LogicBoard::addArrow(const LogicArrow& arrow){
+bool LogicBoard::addArrow(const LogicArrow& arrow){
 
     for(auto it = m_arrows.begin(); it != m_arrows.end(); it++){
         if(it->fromCoord() == arrow.fromCoord() && it->toCoord() == arrow.toCoord()){
             if(it->colorId() == arrow.colorId()){
                 m_arrows.erase(it);
-                return;
+                return true;
             }
             it->setColor(arrow.colorId());
-            return;
+            return true;
         }
     }
     m_arrows.push_back(arrow);
+    return true;
 }
 
 
-void LogicBoard::removeArrow(const LogicArrow& arrow){
+bool LogicBoard::removeArrow(const LogicArrow& arrow){
     auto it = std::find(m_arrows.begin(), m_arrows.end(), arrow);
     if(it != m_arrows.end()){
         m_arrows.erase(it);
     }
+    return true;
 }
 
-void LogicBoard::addCircle(const LogicCircle& circle, const Coord& coord){
+bool LogicBoard::addCircle(const LogicCircle& circle, const Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
         std::cout << "The square is outside of the board" << std::endl;
-        return;
+        return false;
     }
 
     if(!m_pieceLayer.isEmptySquare(coord)){
         std::cout << "LogicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
         std::cout << "The square is already occupied" << std::endl;
-        return;
+        return false;
     }
 
     m_pieceLayer.addCircle(coord,circle);
+    return true;
 }
 
-void LogicBoard::removeCircle(const Coord& coord){
+bool LogicBoard::removeCircle(const Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
         std::cout << "The square is outside of the board" << std::endl;
-        return;
+        return false;
     }
 
     if(m_pieceLayer.isEmptySquare(coord)){
         std::cout << "LogicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
         std::cout << "There is no circle there" << std::endl;
-        return;
+        return false;
     }
 
     m_pieceLayer.removeCircle(coord);
+    return true;
 }
 
 void LogicBoard::print(){
