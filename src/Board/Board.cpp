@@ -109,16 +109,15 @@ void Board::select(const Coord& newCoord){
         return;
     }
 
-    std::optional<sigrid::LogicPiece> o_piece = m_logicBoard->getPieceAt(oldCoord);
-
-    if(o_piece == std::nullopt){
+    if(m_logicBoard->isEmptySquare(oldCoord)){
         m_selection = std::make_unique<Coord>(newCoord);
         m_graphicBoard->highlightSquare(newCoord);
         return;
     }
 
-    moveEntity(oldCoord, newCoord);
-    
+    if(m_logicBoard->moveEntity(oldCoord, newCoord)){
+        m_graphicBoard->moveEntity(oldCoord, newCoord);
+    }
 
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
@@ -205,8 +204,12 @@ void Board::addSquareHighlight(const int colorId, const Coord& coord){
     }
 }
 
-void Board::moveEntity(const Coord& fromCoord, const Coord& toCoord){
+void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     assert(fromCoord != toCoord);
+
+    if(m_logicBoard->isEmptySquare(fromCoord)){
+        return;
+    }
 
     if(m_logicBoard->moveEntity(fromCoord, toCoord)){
         m_graphicBoard->moveEntity(fromCoord, toCoord);
