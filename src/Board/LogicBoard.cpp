@@ -354,21 +354,14 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
     for(const auto& id: board.m_repeatedSquareIds){
         out << " " << id;
     }
-    out << "\n";
-    for(int y = board.m_squareLayer.size()-1; y >= 0; y--){
-        for(int x = 0; x < board.m_squareLayer.at(0).size(); x++){
-            auto it = board.m_pieces.find({x,y});
-            if(it == board.m_pieces.end()){
-                continue;
-            }
-
-            out << "\n";
-
-            out << "Piece: " << it->second.colorId() << " " << it->second.notation() << " " << it->first.getNotation();
-        }
+    for(const auto& piece: board.m_pieces){
+        out << "\nPiece: " << piece.second.colorId()
+            << " " << piece.second.notation()
+            << " " << piece.first.getNotation();
     }
     for(const auto& circle: board.m_circles){
-        out << "\nCircle: " << circle.second.getColorId() << " " << circle.first.getNotation();
+        out << "\nCircle: " << circle.second.getColorId()
+            << " " << circle.first.getNotation();
     }
     return out;
 }
