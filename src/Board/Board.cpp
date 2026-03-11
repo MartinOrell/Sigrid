@@ -117,7 +117,7 @@ void Board::select(const Coord& newCoord){
         return;
     }
 
-    movePiece(oldCoord, newCoord);
+    moveEntity(oldCoord, newCoord);
     
 
     m_selection = nullptr;
@@ -205,11 +205,11 @@ void Board::addSquareHighlight(const int colorId, const Coord& coord){
     }
 }
 
-void Board::movePiece(const Coord& fromCoord, const Coord& toCoord){
+void Board::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     assert(fromCoord != toCoord);
 
-    if(m_logicBoard->movePiece(fromCoord, toCoord)){
-        m_graphicBoard->movePiece(fromCoord, toCoord);
+    if(m_logicBoard->moveEntity(fromCoord, toCoord)){
+        m_graphicBoard->moveEntity(fromCoord, toCoord);
     }
     
 }

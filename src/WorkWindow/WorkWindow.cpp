@@ -133,7 +133,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
                 m_boardPtr->select(toCoord);
             }
             else{
-                m_boardPtr->movePiece(fromCoord_o.value(), toCoord_o.value());
+                m_boardPtr->moveEntity(fromCoord_o.value(), toCoord_o.value());
             }
             return ActionType::None();
         case ToolSelection::PieceAdder:

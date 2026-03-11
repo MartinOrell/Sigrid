@@ -62,7 +62,7 @@ namespace sigrid{
             void addPiece(const GraphicPiece& piece, const Coord& coord);
             void removePiece(const Coord& coord);
 
-            void movePiece(const Coord& fromCoord, const Coord& toCoord);
+            void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
             void addSquareHighlight(const int colorId, const Coord& coord);
 

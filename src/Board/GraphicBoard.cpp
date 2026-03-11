@@ -237,7 +237,7 @@ void GraphicBoard::removePiece(const Coord& coord){
     redrawTexture();
 }
 
-void GraphicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
+void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     assert(fromCoord != toCoord);
 
     auto capturedPieceIt = m_pieces.find(toCoord);
@@ -246,12 +246,32 @@ void GraphicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
         m_pieces.erase(capturedPieceIt);
     }
 
-    GraphicPiece newPiece{m_pieces.at(fromCoord)};
-    newPiece.setPosition(m_squares[toCoord.y][toCoord.x].getPosition());
+    auto capturedCircleIt = m_circles.find(toCoord);
 
-    m_pieces.insert({toCoord, newPiece});
+    if(capturedCircleIt != m_circles.end()){
+        m_circles.erase(capturedCircleIt);
+    }
 
-    m_pieces.erase(fromCoord);
+    {
+        auto it = m_pieces.find(fromCoord);
+        if(it != m_pieces.end()){
+            GraphicPiece newPiece{m_pieces.at(fromCoord)};
+            newPiece.setPosition(m_squares[toCoord.y][toCoord.x].getPosition());
+            m_pieces.insert({toCoord, newPiece});
+            m_pieces.erase(fromCoord);
+        }
+    }
+    {
+        auto it = m_circles.find(fromCoord);
+        if(it != m_circles.end()){
+            GraphicCircle newCircle{m_circles.at(fromCoord)};
+            sf::Vector2f position = m_squares[toCoord.y][toCoord.x].getPosition()
+                + m_squares[toCoord.y][toCoord.x].getSize()/2.f;
+            newCircle.setPosition(position);
+            m_circles.insert({toCoord, newCircle});
+            m_circles.erase(fromCoord);
+        }
+    }
 
     redrawTexture();
 }

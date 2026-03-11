@@ -11,6 +11,25 @@ void LogicEntities::removeEntity(const Coord& coord){
     m_circles.erase(coord);
 }
 
+void LogicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord){
+    {
+        auto it = m_pieces.find(fromCoord);
+        if(it != m_pieces.end()){
+            m_pieces.insert({toCoord, it->second});
+            m_pieces.erase(fromCoord);
+            return;
+        }
+    }
+    {
+        auto it = m_circles.find(fromCoord);
+        if(it != m_circles.end()){
+            m_circles.insert({toCoord, it->second});
+            m_circles.erase(fromCoord);
+            return;
+        }
+    }
+}
+
 void LogicEntities::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     m_pieces.insert({coord, logicPiece});
 }

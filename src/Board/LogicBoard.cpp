@@ -219,31 +219,40 @@ bool LogicBoard::removePiece(const Coord& coord){
     return true;
 }
 
-bool LogicBoard::movePiece(const Coord& fromCoord, const Coord& toCoord){
+bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 
     if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
-        std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation()
+        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
         std::cout << "both coordinates are the same" << std::endl;
         return false;
     }
 
-    auto pieceFrom_o = m_pieceLayer.getPieceAt(fromCoord);
+    if(!isWithinBoard(fromCoord)){
+        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+            << " to " << toCoord.getNotation() << std::endl;
+        std::cout << "start square is out of bounds" << std::endl;
+        return false;
+    }
 
-    if(pieceFrom_o == std::nullopt){
+    if(!isWithinBoard(toCoord)){
+        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+            << " to " << toCoord.getNotation() << std::endl;
+        std::cout << "destination square is out of bounds" << std::endl;
+        return false;
+    }
+
+    if(isEmptySquare(fromCoord)){
         std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation() << std::endl;
         std::cout << "No piece is standing there" << std::endl;
         return false;
     }
 
-    auto pieceTo_o = m_pieceLayer.getPieceAt(toCoord);
-
-    if(pieceTo_o != std::nullopt){
-        m_pieceLayer.removePiece(toCoord);
+    if(!isEmptySquare(toCoord)){
+        m_pieceLayer.removeEntity(toCoord);
     }
 
-    m_pieceLayer.addPiece(toCoord, pieceFrom_o.value());
-    m_pieceLayer.removePiece(fromCoord);
+    m_pieceLayer.moveEntity(fromCoord, toCoord);
     return true;
 }
 
