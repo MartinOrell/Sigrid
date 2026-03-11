@@ -620,7 +620,7 @@ void MainWindow::pickPiece(const sigrid::Piece& piece){
     m_tools.at(sf::Mouse::Button::Left).setPiece(piece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(piece);
-    m_toolPickerWindow->setPieceColorTools(piece.logic().notation());
+    m_toolPickerWindow->setPieceColorTools(piece.logic().getNotation());
 }
 
 void MainWindow::pickPieceColor(const sigrid::Piece& piece){
@@ -637,7 +637,7 @@ void MainWindow::pickPieceColor(const sigrid::Piece& piece){
     m_tools.at(sf::Mouse::Button::Left).setPiece(piece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(piece);
-    m_toolPickerWindow->setPieceTools(piece.logic().colorId());
+    m_toolPickerWindow->setPieceTools(piece.logic().getColorId());
 }
 
 void MainWindow::pickArrow(const int colorId){

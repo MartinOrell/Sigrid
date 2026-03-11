@@ -9,11 +9,11 @@ LogicPiece::LogicPiece(std::string notation, int colorId)
 , m_colorId(colorId){}
 
 
-std::string LogicPiece::notation() const{
+std::string LogicPiece::getNotation() const{
     return m_notation;
 }
 
-int LogicPiece::colorId() const{
+int LogicPiece::getColorId() const{
     return m_colorId;
 }
 

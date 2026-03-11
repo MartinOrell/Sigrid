@@ -176,8 +176,8 @@ std::string LogicBoard::getFen() const{
                     fen.append(std::to_string(i));;
                     i = 0;
                 }
-                std::string s = it->second.notation();
-                if(it->second.colorId() == 1){
+                std::string s = it->second.getNotation();
+                if(it->second.getColorId() == 1){
                     s.front() = tolower(s.front());
                 }
                 fen.append(s);
@@ -334,7 +334,7 @@ void LogicBoard::print(){
                 std::cout << " ";
             }
             else{
-                std::cout << it->second.notation();
+                std::cout << it->second.getNotation();
             }
         }
         std::cout << "\n";
@@ -355,8 +355,8 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
         out << " " << id;
     }
     for(const auto& piece: board.m_pieces){
-        out << "\nPiece: " << piece.second.colorId()
-            << " " << piece.second.notation()
+        out << "\nPiece: " << piece.second.getColorId()
+            << " " << piece.second.getNotation()
             << " " << piece.first.getNotation();
     }
     for(const auto& circle: board.m_circles){

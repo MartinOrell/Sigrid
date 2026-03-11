@@ -37,14 +37,14 @@ void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
 // If the piece does not exist, create it together with its texture
 std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
 
-    int colorId = logicPiece.colorId();
+    int colorId = logicPiece.getColorId();
 
     if(colorId >= m_pieces.size()){
         return std::nullopt;
     }
 
     PieceIdentifier id;
-    id.name = logicPiece.notation();
+    id.name = logicPiece.getNotation();
     if(m_colors.at(colorId).isLight){
         id.style = "light";
     }

@@ -9,8 +9,8 @@ namespace sigrid{
         public:
 
             LogicPiece(std::string notation, int colorId);
-            int colorId() const;
-            std::string notation() const;
+            int getColorId() const;
+            std::string getNotation() const;
 
             bool operator==(const LogicPiece& rhs) const;
 
