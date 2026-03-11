@@ -35,3 +35,7 @@ bool LogicPiece::operator==(const LogicPiece& rhs) const{
 
     return true;
 }
+
+bool LogicPiece::operator!=(const LogicPiece& rhs) const{
+    return !(*this == rhs);
+}

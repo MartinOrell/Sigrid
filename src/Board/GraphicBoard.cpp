@@ -429,7 +429,11 @@ void GraphicBoard::unhighlight(){
     }
 }
 
-
+void GraphicBoard::removeEntity(const Coord& coord){
+    m_pieces.erase(coord);
+    m_circles.erase(coord);
+    redrawTexture();
+}
 
 void GraphicBoard::saveImage(const std::string& fileName){
     auto image = m_texturePtr->getTexture().copyToImage();

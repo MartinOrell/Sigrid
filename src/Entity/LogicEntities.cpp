@@ -6,6 +6,11 @@ using namespace sigrid;
 
 LogicEntities::LogicEntities(){}
 
+void LogicEntities::removeEntity(const Coord& coord){
+    m_pieces.erase(coord);
+    m_circles.erase(coord);
+}
+
 void LogicEntities::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     m_pieces.insert({coord, logicPiece});
 }

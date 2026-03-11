@@ -12,6 +12,8 @@ namespace sigrid{
         public:
             LogicEntities();
 
+            void removeEntity(const Coord& coord);
+
             void addPiece(const Coord& coord, const LogicPiece& logicPiece);
             void addCircle(const Coord& coord, const LogicCircle& logicCircle);
 

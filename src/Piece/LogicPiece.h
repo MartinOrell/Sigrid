@@ -13,6 +13,7 @@ namespace sigrid{
             std::string getNotation() const;
 
             bool operator==(const LogicPiece& rhs) const;
+            bool operator!=(const LogicPiece& rhs) const;
 
         private:
             std::string m_notation;

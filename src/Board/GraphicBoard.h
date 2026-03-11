@@ -80,6 +80,7 @@ namespace sigrid{
 
             void unhighlight();
 
+            void removeEntity(const Coord& coord);
             
 
             void saveImage(const std::string& fileName);

@@ -45,6 +45,8 @@ namespace sigrid{
             bool addCircle(const LogicCircle& circle, const Coord& coord);
             bool removeCircle(const Coord& coord);
 
+            bool removeEntity(const Coord& coord);
+
             void print();
             void clear();
 
