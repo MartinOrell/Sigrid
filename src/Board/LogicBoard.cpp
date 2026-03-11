@@ -198,17 +198,13 @@ void LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
     
     auto it = m_pieces.find(coord);
 
-    if(it == m_pieces.end()){
-        m_pieces.insert({coord, piece});
+    if(it != m_pieces.end()){
+        std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
+        std::cout << "There is already a piece there" << std::endl;
         return;
     }
 
-    if(it->second == piece){
-        m_pieces.erase(it);
-        return;
-    }
-
-    it->second = piece;
+    m_pieces.insert({coord, piece});
 }
 
 void LogicBoard::removePiece(const Coord& coord){
@@ -216,7 +212,7 @@ void LogicBoard::removePiece(const Coord& coord){
 
     if(it == m_pieces.end()){
         std::cout << "LogicBoard: Unable to remove piece at " << coord.getNotation() << std::endl;
-        std::cout << "There is no piece there";
+        std::cout << "There is no piece there" << std::endl;
         return;
     }
 
