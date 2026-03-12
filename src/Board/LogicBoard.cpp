@@ -286,6 +286,24 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
 
 bool LogicBoard::addArrow(const LogicArrow& arrow){
 
+    if(!isWithinBoard(arrow.fromCoord())){
+        std::cout << "LogicBoard: Unable to add arrow from square: " << arrow.fromCoord().getNotation() << std::endl;
+        std::cout << "Starting square is outside of the board" << std::endl;
+        return false;
+    }
+
+    if(!isWithinBoard(arrow.toCoord())){
+        std::cout << "LogicBoard: Unable to add arrow to square: " << arrow.fromCoord().getNotation() << std::endl;
+        std::cout << "Destination square is outside of the board" << std::endl;
+        return false;
+    }
+
+    if(arrow.colorId() < 0){
+        std::cout << "LogicBoard: Unable to add arrow" << std::endl;
+        std::cout << "ColorId is not set (value: " << arrow.colorId() << ")" << std::endl;
+        return false;
+    }
+
     for(auto it = m_arrows.begin(); it != m_arrows.end(); it++){
         if(it->fromCoord() == arrow.fromCoord() && it->toCoord() == arrow.toCoord()){
             if(it->colorId() == arrow.colorId()){
