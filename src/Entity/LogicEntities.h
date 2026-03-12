@@ -25,7 +25,7 @@ namespace sigrid{
 
             bool isEmptySquare(const Coord& coord) const;
 
-            friend std::ostream& operator<<(std::ostream& out, const LogicEntities& board);
+            friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
             std::map<Coord, LogicPiece> m_pieces;
             std::map<Coord, LogicCircle> m_circles;
