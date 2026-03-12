@@ -288,7 +288,7 @@ void ToolPickerWindow::redrawTexture(){
     int y = m_miscBlock.coord.y;
     int i;
     for(i = 0; i < m_miscTools.size(); i++){
-        m_boardPtr->addTool(m_miscTools.at(i).texturePtr, {x,y});
+        m_boardPtr->addTool({x,y}, m_miscTools.at(i).texturePtr);
         m_clickActions.insert_or_assign({x,y}, m_miscTools.at(i).action);
         if((i+1)%m_miscBlock.columns == 0){
             x = m_miscBlock.coord.x;
@@ -303,7 +303,7 @@ void ToolPickerWindow::redrawTexture(){
     if(m_arrowColorId >= 0){
         auto drawArrowTexture_o = m_toolManagerPtr->getArrowTexturePtr(m_arrowColorId);
         if(drawArrowTexture_o != std::nullopt){
-            m_boardPtr->addTool(drawArrowTexture_o.value(), {x,y});
+            m_boardPtr->addTool({x,y}, drawArrowTexture_o.value());
             ActionType::PickArrow action{m_arrowColorId};
             m_clickActions.insert_or_assign({x,y}, action);
             if((i+1)%m_miscBlock.columns == 0){
@@ -321,7 +321,7 @@ void ToolPickerWindow::redrawTexture(){
     if(m_circleColorId >= 0){
         auto drawCircleTexture_o = m_toolManagerPtr->getCircleTexturePtr(m_circleColorId);
         if(drawCircleTexture_o != std::nullopt){
-            m_boardPtr->addTool(drawCircleTexture_o.value(), {x,y});
+            m_boardPtr->addTool({x,y}, drawCircleTexture_o.value());
             ActionType::PickCircle action{m_circleColorId};
             m_clickActions.insert_or_assign({x,y}, action);
             if((i+1)%m_miscBlock.columns == 0){
@@ -351,7 +351,7 @@ void ToolPickerWindow::redrawTexture(){
                         continue;
                     }
 
-                    m_boardPtr->addTool(piece_o.value().graphic().getTexturePtr(), {x,y});
+                    m_boardPtr->addTool({x,y}, piece_o.value().graphic().getTexturePtr());
 
                     ActionType::PickPieceColor action{piece_o.value()};
 
@@ -374,7 +374,7 @@ void ToolPickerWindow::redrawTexture(){
                         continue;
                     }
 
-                    m_boardPtr->addTool(arrowPtr_o.value(), {x,y});
+                    m_boardPtr->addTool({x,y}, arrowPtr_o.value());
                     ActionType::PickArrowColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -395,7 +395,7 @@ void ToolPickerWindow::redrawTexture(){
                         continue;
                     }
 
-                    m_boardPtr->addTool(circlePtr_o.value(), {x,y});
+                    m_boardPtr->addTool({x,y}, circlePtr_o.value());
                     ActionType::PickCircleColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -426,7 +426,7 @@ void ToolPickerWindow::redrawTexture(){
                 continue;
             }
 
-            m_boardPtr->addTool(piece_o.value().graphic().getTexturePtr(), {x,y});
+            m_boardPtr->addTool({x,y}, piece_o.value().graphic().getTexturePtr());
 
             ActionType::PickPiece action{piece_o.value()};
 

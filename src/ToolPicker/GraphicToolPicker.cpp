@@ -115,7 +115,7 @@ std::optional<Coord> GraphicToolPicker::getSquareCoord(sf::Vector2i point){
     return std::make_optional<Coord>((int)x,(int)y);
 }
 
-void GraphicToolPicker::addTool(const sf::Texture* texturePtr, const Coord& coord){
+void GraphicToolPicker::addTool(const Coord& coord, const sf::Texture* texturePtr){
 
     bool addedSquares = false;
     while((int)m_squares.size() - 1 < coord.y){

@@ -59,19 +59,19 @@ namespace sigrid{
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
-            void addPiece(const GraphicPiece& piece, const Coord& coord);
+            void addPiece(const Coord& coord, const GraphicPiece& piece);
             void removePiece(const Coord& coord);
 
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            void addSquareHighlight(const int colorId, const Coord& coord);
+            void addSquareHighlight(const Coord& coord, const int colorId);
 
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
-            void addCircle(const LogicCircle& circle, const Coord& coord);
+            void addCircle(const Coord& coord, const LogicCircle& circle);
             void removeCircle(const Coord& coord);
 
-            void setCircleColorAt(const int colorId, const Coord& coord);
+            void setCircleColorAt(const Coord& coord, const int colorId);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();

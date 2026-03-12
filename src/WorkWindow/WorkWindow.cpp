@@ -137,7 +137,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             return ActionType::None();
         case ToolSelection::PieceAdder:
-            m_boardPtr->addPiece(tool.piece(), toCoord);
+            m_boardPtr->addPiece(toCoord, tool.piece());
             return ActionType::None();
         case ToolSelection::PiecePicker:
             {
@@ -150,13 +150,13 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
         case ToolSelection::DrawArrow:
             if(fromCoord == toCoord){
-                m_boardPtr->addSquareHighlight(tool.arrowColorId(), toCoord);
+                m_boardPtr->addSquareHighlight(toCoord, tool.arrowColorId());
                 return ActionType::None();
             }
-            m_boardPtr->addArrow(tool.arrowColorId(), fromCoord, toCoord);
+            m_boardPtr->addArrow(fromCoord, toCoord, tool.arrowColorId());
             return ActionType::None();
         case ToolSelection::AddCircle:
-            m_boardPtr->addCircle(tool.getCircleColorId(), toCoord);
+            m_boardPtr->addCircle(toCoord, tool.getCircleColorId());
             return ActionType::None();
         default:
             return ActionType::None();

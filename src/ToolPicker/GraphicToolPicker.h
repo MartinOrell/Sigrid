@@ -34,7 +34,7 @@ namespace sigrid{
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
-            void addTool(const sf::Texture* texturePtr, const Coord& coord);
+            void addTool(const Coord& coord, const sf::Texture* texturePtr);
 
             void removeTool(const Coord& coord);
 

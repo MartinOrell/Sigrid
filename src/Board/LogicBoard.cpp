@@ -183,7 +183,7 @@ std::string LogicBoard::getFen() const{
     return fen;
 }
 
-bool LogicBoard::addPiece(const LogicPiece& piece, const Coord& coord){
+bool LogicBoard::addPiece(const Coord& coord, const LogicPiece& piece){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add piece at " << coord.getNotation() << std::endl;
@@ -256,7 +256,7 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     return true;
 }
 
-bool LogicBoard::addSquareHighlight(const int colorId, const Coord& coord){
+bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     assert(coord.x < m_squareLayer.at(0).size());
     assert(coord.y < m_squareLayer.size());
 
@@ -299,7 +299,7 @@ bool LogicBoard::removeArrow(const LogicArrow& arrow){
     return true;
 }
 
-bool LogicBoard::addCircle(const LogicCircle& circle, const Coord& coord){
+bool LogicBoard::addCircle(const Coord& coord, const LogicCircle& circle){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add circle at " << coord.getNotation() << std::endl;

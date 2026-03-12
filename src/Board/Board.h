@@ -66,14 +66,14 @@ namespace sigrid{
 
             void deselect();
 
-            void addPiece(const Piece& piece, const Coord& coord);
+            void addPiece(const Coord& coord, const Piece& piece);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
-            void addArrow(const int colorId, const Coord& fromCoord, const Coord& toCoord);
+            void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
 
-            void addCircle(const int colorId, const Coord& coord);
+            void addCircle(const Coord& coord, const int colorId);
 
-            void addSquareHighlight(const int colorId, const Coord& coord);
+            void addSquareHighlight(const Coord& coord, const int colorId);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();

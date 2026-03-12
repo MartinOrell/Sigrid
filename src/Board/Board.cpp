@@ -146,7 +146,7 @@ void Board::textEntered(std::string text){
     if(m_selection == nullptr){
         return;
     }
-    addPiece(piece_o.value(), *m_selection);
+    addPiece(*m_selection, piece_o.value());
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
 }
@@ -156,7 +156,7 @@ void Board::deselect(){
     m_graphicBoard->unhighlight();
 }
 
-void Board::addPiece(const Piece& piece, const Coord& coord){
+void Board::addPiece(const Coord& coord, const Piece& piece){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Piece at " << coord.getNotation() << std::endl;
@@ -165,8 +165,8 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
     }
 
     if(m_logicBoard->isEmptySquare(coord)){
-        if(m_logicBoard->addPiece(piece.logic(), coord)){
-            m_graphicBoard->addPiece(piece.graphic(), coord);
+        if(m_logicBoard->addPiece(coord, piece.logic())){
+            m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
     }
@@ -176,8 +176,8 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addPiece(piece.logic(), coord)){
-            m_graphicBoard->addPiece(piece.graphic(), coord);
+        if(m_logicBoard->addPiece(coord, piece.logic())){
+            m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
     }
@@ -186,8 +186,8 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
         if(m_logicBoard->removePiece(coord)){
             m_graphicBoard->removePiece(coord);
         }
-        if(m_logicBoard->addPiece(piece.logic(), coord)){
-            m_graphicBoard->addPiece(piece.graphic(), coord);
+        if(m_logicBoard->addPiece(coord, piece.logic())){
+            m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
     }
@@ -197,10 +197,10 @@ void Board::addPiece(const Piece& piece, const Coord& coord){
     }
 }
 
-void Board::addSquareHighlight(const int colorId, const Coord& coord){
+void Board::addSquareHighlight(const Coord& coord, const int colorId){
 
-    if(m_logicBoard->addSquareHighlight(colorId, coord)){
-        m_graphicBoard->addSquareHighlight(colorId, coord);
+    if(m_logicBoard->addSquareHighlight(coord, colorId)){
+        m_graphicBoard->addSquareHighlight(coord, colorId);
     }
 }
 
@@ -217,14 +217,14 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     
 }
 
-void Board::addArrow(const int colorId, const Coord& fromCoord, const Coord& toCoord){
+void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId){
     LogicArrow logicArrow{fromCoord, toCoord, colorId};
     if(m_logicBoard->addArrow(logicArrow)){
         m_graphicBoard->addArrow(logicArrow);
     }
 }
 
-void Board::addCircle(const int colorId, const Coord& coord){
+void Board::addCircle(const Coord& coord, const int colorId){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Circle at " << coord.getNotation() << std::endl;
@@ -234,8 +234,8 @@ void Board::addCircle(const int colorId, const Coord& coord){
 
     if(m_logicBoard->isEmptySquare(coord)){
         LogicCircle logicCircle(colorId);
-        if(m_logicBoard->addCircle(logicCircle, coord)){
-            m_graphicBoard->addCircle(logicCircle, coord);
+        if(m_logicBoard->addCircle(coord, logicCircle)){
+            m_graphicBoard->addCircle(coord, logicCircle);
         }
         return;
     }
@@ -246,8 +246,8 @@ void Board::addCircle(const int colorId, const Coord& coord){
             m_graphicBoard->removeEntity(coord);
         }
         LogicCircle logicCircle(colorId);
-        if(m_logicBoard->addCircle(logicCircle, coord)){
-            m_graphicBoard->addCircle(logicCircle, coord);
+        if(m_logicBoard->addCircle(coord, logicCircle)){
+            m_graphicBoard->addCircle(coord, logicCircle);
         }
         return;
     }
@@ -256,8 +256,8 @@ void Board::addCircle(const int colorId, const Coord& coord){
         if(m_logicBoard->removeCircle(coord)){
             m_graphicBoard->removeCircle(coord);
         }
-        if(m_logicBoard->addCircle(colorId, coord)){
-            m_graphicBoard->addCircle(colorId, coord);
+        if(m_logicBoard->addCircle(coord, colorId)){
+            m_graphicBoard->addCircle(coord, colorId);
         }
         return;
     }
@@ -307,7 +307,7 @@ void Board::loadFen(const std::string& fen){
 
             auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
             if(piece_o != std::nullopt){
-                addPiece(piece_o.value(), {x,y});
+                addPiece({x,y}, piece_o.value());
             }
             else{
                 std::cout << "Failed to get piece of character \"" << s

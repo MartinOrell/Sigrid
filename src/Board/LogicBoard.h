@@ -34,15 +34,15 @@ namespace sigrid{
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;
             std::string getFen() const;
 
-            bool addPiece(const LogicPiece& piece, const Coord& coord);
+            bool addPiece(const Coord& coord, const LogicPiece& piece);
             bool removePiece(const Coord& coord);
             bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            bool addSquareHighlight(const int colorId, const Coord& coord);
+            bool addSquareHighlight(const Coord& coord, const int colorId);
 
             bool addArrow(const LogicArrow& arrow);
             bool removeArrow(const LogicArrow& arrow);
-            bool addCircle(const LogicCircle& circle, const Coord& coord);
+            bool addCircle(const Coord& coord, const LogicCircle& circle);
             bool removeCircle(const Coord& coord);
 
             bool removeEntity(const Coord& coord);

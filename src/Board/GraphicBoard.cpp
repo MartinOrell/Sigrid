@@ -219,7 +219,7 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
     return std::make_optional<Coord>((int)x,(int)y);
 }
 
-void GraphicBoard::addPiece(const GraphicPiece& piece, const Coord& coord){
+void GraphicBoard::addPiece(const Coord& coord, const GraphicPiece& piece){
     
     assert(m_pieces.find(coord) == m_pieces.end());
 
@@ -276,7 +276,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareHighlight(const int colorId, const Coord& coord){
+void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
 
     auto it = m_squareHighlights.find(coord);
 
@@ -346,7 +346,7 @@ void GraphicBoard::removeArrow(const LogicArrow& arrow){
 
 }
 
-void GraphicBoard::addCircle(const LogicCircle& logicCircle, const Coord& coord){
+void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle){
 
     auto it = m_circles.find(coord);
     if(it != m_circles.end()){
@@ -379,7 +379,7 @@ void GraphicBoard::removeCircle(const Coord& coord){
     redrawTexture();
 }
 
-void GraphicBoard::setCircleColorAt(const int colorId, const Coord& coord){
+void GraphicBoard::setCircleColorAt(const Coord& coord, const int colorId){
     
     auto it = m_circles.find(coord);
     if(it == m_circles.end()){
