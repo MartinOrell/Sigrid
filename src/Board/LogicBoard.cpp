@@ -112,7 +112,7 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
-    return m_pieceLayer.isEmptySquare(coord);
+    return m_pieceLayer.getEntityAt(coord) == std::nullopt;
 }
 
 std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
@@ -190,7 +190,7 @@ bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
         return false;
     }
 
-    if(!m_pieceLayer.isEmptySquare(coord)){
+    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
         std::cout << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
         std::cout << "The square is already occupied" << std::endl;
         return false;
@@ -208,7 +208,7 @@ bool LogicBoard::removeEntity(const Coord& coord){
         return false;
     }
 
-    if(m_pieceLayer.isEmptySquare(coord)){
+    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
         std::cout << "There is no entity there" << std::endl;
         return false;

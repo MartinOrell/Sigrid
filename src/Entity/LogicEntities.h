@@ -22,8 +22,6 @@ namespace sigrid{
             
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
 
-            bool isEmptySquare(const Coord& coord) const;
-
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
             std::map<Coord, LogicPiece> m_pieces;
