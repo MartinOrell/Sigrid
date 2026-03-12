@@ -170,7 +170,7 @@ void Board::addPiece(const Coord& coord, const Piece& piece){
     auto logicEntity_o = m_logicBoard->getEntityAt(coord);
 
     if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addPiece(coord, piece.logic())){
+        if(m_logicBoard->addEntity(coord, piece.logic())){
             m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
@@ -181,13 +181,13 @@ void Board::addPiece(const Coord& coord, const Piece& piece){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addPiece(coord, piece.logic())){
+        if(m_logicBoard->addEntity(coord, piece.logic())){
             m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
     }
 
-    if(m_logicBoard->removePiece(coord)){
+    if(m_logicBoard->removeEntity(coord)){
         m_graphicBoard->removePiece(coord);
     }
 }
@@ -231,7 +231,7 @@ void Board::addCircle(const Coord& coord, const int colorId){
 
     LogicCircle logicCircle(colorId);
     if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addCircle(coord, logicCircle)){
+        if(m_logicBoard->addEntity(coord, logicCircle)){
             m_graphicBoard->addCircle(coord, logicCircle);
         }
         return;
@@ -242,13 +242,13 @@ void Board::addCircle(const Coord& coord, const int colorId){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addCircle(coord, logicCircle)){
+        if(m_logicBoard->addEntity(coord, logicCircle)){
             m_graphicBoard->addCircle(coord, logicCircle);
         }
         return;
     }
 
-    if(m_logicBoard->removeCircle(coord)){
+    if(m_logicBoard->removeEntity(coord)){
         m_graphicBoard->removeCircle(coord);
     }
 }
