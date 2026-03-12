@@ -197,6 +197,24 @@ bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     return true;
 }
 
+bool LogicBoard::removeEntity(const Coord& coord){
+
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cout << "The square is outside of the board" << std::endl;
+        return false;
+    }
+
+    if(m_pieceLayer.isEmptySquare(coord)){
+        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cout << "There is no entity there" << std::endl;
+        return false;
+    }
+
+    m_pieceLayer.removeEntity(coord);
+    return true;
+}
+
 bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 
     if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
@@ -302,24 +320,6 @@ bool LogicBoard::removeArrow(const LogicArrow& arrow){
     if(it != m_arrows.end()){
         m_arrows.erase(it);
     }
-    return true;
-}
-
-bool LogicBoard::removeEntity(const Coord& coord){
-
-    if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
-        std::cout << "The square is outside of the board" << std::endl;
-        return false;
-    }
-
-    if(m_pieceLayer.isEmptySquare(coord)){
-        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
-        std::cout << "There is no circle there" << std::endl;
-        return false;
-    }
-
-    m_pieceLayer.removeEntity(coord);
     return true;
 }
 
