@@ -242,7 +242,7 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     }
 
     if(isEmptySquare(fromCoord)){
-        std::cout << "LogicBoard: Unable to move piece from " << fromCoord.getNotation() << std::endl;
+        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation() << std::endl;
         std::cout << "No piece is standing there" << std::endl;
         return false;
     }
