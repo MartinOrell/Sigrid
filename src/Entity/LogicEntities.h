@@ -13,10 +13,9 @@ namespace sigrid{
         public:
             LogicEntities();
 
+            void addEntity(const Coord& coord, const LogicEntity& entity);
             void removeEntity(const Coord& coord);
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
-
-            void addEntity(const Coord& coord, const LogicEntity& entity);
 
             void clear();
             

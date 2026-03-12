@@ -6,6 +6,19 @@ using namespace sigrid;
 
 LogicEntities::LogicEntities(){}
 
+void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
+    if(std::holds_alternative<LogicPiece>(entity)){
+        m_pieces.insert({coord, std::get<LogicPiece>(entity)});
+    }
+    else if(std::holds_alternative<LogicCircle>(entity)){
+        m_circles.insert({coord, std::get<LogicCircle>(entity)});
+    }
+    else{
+        std::cout << "LogicEntities: Unable to add Entity" << std::endl;
+        std::cout << "Unknown index of variant: " << entity.index() << std::endl;
+    }
+}
+
 void LogicEntities::removeEntity(const Coord& coord){
     m_pieces.erase(coord);
     m_circles.erase(coord);
@@ -27,19 +40,6 @@ void LogicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord){
             m_circles.erase(fromCoord);
             return;
         }
-    }
-}
-
-void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
-    if(std::holds_alternative<LogicPiece>(entity)){
-        m_pieces.insert({coord, std::get<LogicPiece>(entity)});
-    }
-    else if(std::holds_alternative<LogicCircle>(entity)){
-        m_circles.insert({coord, std::get<LogicCircle>(entity)});
-    }
-    else{
-        std::cout << "LogicEntities: Unable to add Entity" << std::endl;
-        std::cout << "Unknown index of variant: " << entity.index() << std::endl;
     }
 }
 
