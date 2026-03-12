@@ -1,20 +1,14 @@
 #pragma once
 
 #include <vector>
-#include <map>
-
-#include "../Piece/LogicPiece.h"
-#include <SFML/System/Vector2.hpp>
 #include <optional>
 #include <memory>
-#include "../Coord/Coord.h"
 #include <string>
 
 #include "BoardDataContainer.h"
-#include "../Arrow/LogicArrow.h"
-#include "../Piece/PieceDataContainer.h"
-#include "../Shape/Circle/LogicCircle.h"
+#include "../Coord/Coord.h"
 #include "../Entity/LogicEntities.h"
+#include "../Arrow/LogicArrow.h"
 
 namespace sigrid{
     class LogicBoard{
@@ -41,7 +35,7 @@ namespace sigrid{
 
             bool addArrow(const LogicArrow& arrow);
             bool removeArrow(const LogicArrow& arrow);
-            
+
             void print();
             void clear();
 
