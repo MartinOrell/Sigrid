@@ -53,14 +53,6 @@ bool LogicEntities::isEmptySquare(const Coord& coord) const{
         && m_circles.find(coord) == m_circles.end();
 }
 
-std::optional<LogicPiece> LogicEntities::getPieceAt(const Coord& coord) const{
-    auto it = m_pieces.find(coord);
-    if(it != m_pieces.end()){
-        return it->second;
-    }
-    return std::nullopt;
-}
-
 std::optional<LogicEntity> LogicEntities::getEntityAt(const Coord& coord) const{
 
     {   

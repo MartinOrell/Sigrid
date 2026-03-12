@@ -152,21 +152,24 @@ std::string LogicBoard::getFen() const{
     for(int y = height()-1; y >= 0; y--){
         int i = 0;
         for(int x = 0; x < width();x++){
-            auto piece_o = m_pieceLayer.getPieceAt({x,y});
-            if(piece_o == std::nullopt){
+            auto entity_o = m_pieceLayer.getEntityAt({x,y});
+            if(entity_o == std::nullopt
+            || !std::holds_alternative<LogicPiece>(entity_o.value())){
                 i++;
+                continue;
             }
-            else{
-                if(i > 0){
-                    fen.append(std::to_string(i));
-                    i = 0;
-                }
-                std::string s = piece_o.value().getNotation();
-                if(piece_o.value().getColorId() == 1){
-                    s.front() = tolower(s.front());
-                }
-                fen.append(s);
+            
+            if(i > 0){
+                fen.append(std::to_string(i));
+                i = 0;
             }
+            LogicPiece piece = std::get<LogicPiece>(entity_o.value());
+            std::string s = piece.getNotation();
+            if(piece.getColorId() == 1){
+                s.front() = tolower(s.front());
+            }
+            fen.append(s);
+            
         }
         if(i > 0){
             fen.append(std::to_string(i));
@@ -330,12 +333,13 @@ void LogicBoard::print(){
     
     for(int y = 0; y < height(); y++){
         for(int x = 0; x < width(); x++){
-            auto piece_o = m_pieceLayer.getPieceAt({x,y});
-            if(piece_o == std::nullopt){
+            auto entity_o = m_pieceLayer.getEntityAt({x,y});
+            if(entity_o == std::nullopt
+            || !std::holds_alternative<LogicPiece>(entity_o.value())){
                 std::cout << " ";
             }
             else{
-                std::cout << piece_o.value().getNotation();
+                std::cout << std::get<LogicPiece>(entity_o.value()).getNotation();
             }
         }
         std::cout << "\n";
