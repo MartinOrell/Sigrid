@@ -257,8 +257,18 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 }
 
 bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
-    assert(coord.x < m_squareLayer.at(0).size());
-    assert(coord.y < m_squareLayer.size());
+    
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
+        std::cout << "Coord is not a valid square (value:" << coord.getNotation() << ")" << std::endl;
+        return false;
+    }
+
+    if(colorId < 0){
+        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
+        std::cout << "ColorId is not set (value: " << colorId << ")" << std::endl;
+        return false;
+    }
 
     if(!m_squareHighlight.at(coord.y).at(coord.x)){
         m_squareHighlight.at(coord.y).at(coord.x) = std::make_unique<int>(colorId);
