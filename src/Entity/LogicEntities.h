@@ -21,7 +21,7 @@ namespace sigrid{
             void clear();
             
             std::optional<LogicPiece> getPieceAt(const Coord& coord) const;
-            std::optional<LogicCircle> getCircleAt(const Coord& coord) const;
+            std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
 
             bool isEmptySquare(const Coord& coord) const;
 

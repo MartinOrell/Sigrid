@@ -64,23 +64,25 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
             square.setPosition(position);
             row.push_back(square);
 
-            auto piece_o = logicBoard.getPieceAt({x,y});
-            if(piece_o != std::nullopt){
+            auto entity_o = logicBoard.getEntityAt({x,y});
+            if(entity_o == std::nullopt){
+                continue;
+            }
+            if(std::holds_alternative<LogicPiece>(entity_o.value())){
 
-                auto newPiece_o = pieceManagerPtr->getPiece(piece_o.value());
+                auto newPiece_o = pieceManagerPtr->getPiece(std::get<LogicPiece>(entity_o.value()));
                 if(newPiece_o != std::nullopt){
                     GraphicPiece newPiece = newPiece_o.value().graphic();
                     newPiece.resize({(float)config.squareSize,(float)config.squareSize});
                     newPiece.setPosition(square.getPosition());
                     m_pieces.insert({{x,y}, newPiece});
                 }
+                continue;
             }
-
-            auto circle_o = logicBoard.getCircleAt({x,y});
-            if(circle_o != std::nullopt){
+            if(std::holds_alternative<LogicCircle>(entity_o.value())){
                 sf::Vector2f position = square.getPosition()
                     + square.getSize()/2.f;;
-                sf::Color color = m_colorManagerPtr->getSolidColor(circle_o.value().getColorId());
+                sf::Color color = m_colorManagerPtr->getSolidColor(std::get<LogicCircle>(entity_o.value()).getColorId());
                 GraphicCircle newCircle{position, color, m_circleDiameter};
                 m_circles.insert({{x,y}, newCircle});
             }

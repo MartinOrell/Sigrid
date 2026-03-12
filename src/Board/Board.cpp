@@ -83,11 +83,14 @@ std::optional<Coord> Board::getSquareCoord(sf::Vector2i point){
 }
 
 std::optional<Piece> Board::getPiece(const Coord& coord){
-    auto piece_o = m_logicBoard->getPieceAt(coord);
-    if(piece_o == std::nullopt){
+    auto entity_o = m_logicBoard->getEntityAt(coord);
+    if(entity_o == std::nullopt){
         return std::nullopt;
     }
-    return m_pieceManagerPtr->getPiece(piece_o.value());
+    if(!std::holds_alternative<LogicPiece>(entity_o.value())){
+        return std::nullopt;
+    }
+    return m_pieceManagerPtr->getPiece(std::get<LogicPiece>(entity_o.value()));
 }
 
 std::string Board::getFen() const{
@@ -164,27 +167,19 @@ void Board::addPiece(const Coord& coord, const Piece& piece){
         return;
     }
 
-    if(m_logicBoard->isEmptySquare(coord)){
+    auto logicEntity_o = m_logicBoard->getEntityAt(coord);
+
+    if(logicEntity_o == std::nullopt){
         if(m_logicBoard->addPiece(coord, piece.logic())){
             m_graphicBoard->addPiece(coord, piece.graphic());
         }
         return;
     }
 
-    auto logicPiece_o = m_logicBoard->getPieceAt(coord);
-    if(logicPiece_o == std::nullopt){
+    if(!std::holds_alternative<LogicPiece>(logicEntity_o.value())
+    || std::get<LogicPiece>(logicEntity_o.value()) != piece.logic()){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
-        }
-        if(m_logicBoard->addPiece(coord, piece.logic())){
-            m_graphicBoard->addPiece(coord, piece.graphic());
-        }
-        return;
-    }
-
-    if(logicPiece_o.value() != piece.logic()){
-        if(m_logicBoard->removePiece(coord)){
-            m_graphicBoard->removePiece(coord);
         }
         if(m_logicBoard->addPiece(coord, piece.logic())){
             m_graphicBoard->addPiece(coord, piece.graphic());
@@ -232,32 +227,23 @@ void Board::addCircle(const Coord& coord, const int colorId){
         return;
     }
 
-    if(m_logicBoard->isEmptySquare(coord)){
-        LogicCircle logicCircle(colorId);
+    auto logicEntity_o = m_logicBoard->getEntityAt(coord);
+
+    LogicCircle logicCircle(colorId);
+    if(logicEntity_o == std::nullopt){
         if(m_logicBoard->addCircle(coord, logicCircle)){
             m_graphicBoard->addCircle(coord, logicCircle);
         }
         return;
     }
 
-    auto logicCircle_o = m_logicBoard->getCircleAt(coord);
-    if(logicCircle_o == std::nullopt){
+    if(!std::holds_alternative<LogicCircle>(logicEntity_o.value())
+    || std::get<LogicCircle>(logicEntity_o.value()) != logicCircle){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        LogicCircle logicCircle(colorId);
         if(m_logicBoard->addCircle(coord, logicCircle)){
             m_graphicBoard->addCircle(coord, logicCircle);
-        }
-        return;
-    }
-
-    if(logicCircle_o.value().getColorId() != colorId){
-        if(m_logicBoard->removeCircle(coord)){
-            m_graphicBoard->removeCircle(coord);
-        }
-        if(m_logicBoard->addCircle(coord, colorId)){
-            m_graphicBoard->addCircle(coord, colorId);
         }
         return;
     }

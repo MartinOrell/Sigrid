@@ -54,21 +54,28 @@ bool LogicEntities::isEmptySquare(const Coord& coord) const{
 }
 
 std::optional<LogicPiece> LogicEntities::getPieceAt(const Coord& coord) const{
-    
     auto it = m_pieces.find(coord);
-    if(it == m_pieces.end()){
-        return std::nullopt;
+    if(it != m_pieces.end()){
+        return it->second;
     }
-    return it->second;
+    return std::nullopt;
 }
 
-std::optional<LogicCircle> LogicEntities::getCircleAt(const Coord& coord) const{
-    
-    auto it = m_circles.find(coord);
-    if(it == m_circles.end()){
-        return std::nullopt;
+std::optional<LogicEntity> LogicEntities::getEntityAt(const Coord& coord) const{
+
+    {   
+        auto it = m_pieces.find(coord);
+        if(it != m_pieces.end()){
+            return it->second;
+        }
     }
-    return it->second;
+    {   
+        auto it = m_circles.find(coord);
+        if(it != m_circles.end()){
+            return it->second;
+        }
+    }
+    return std::nullopt;
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)

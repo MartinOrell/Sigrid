@@ -123,12 +123,8 @@ std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
     return m_squareLayer.at(coord.y).at(coord.x);
 }
 
-std::optional<LogicPiece> LogicBoard::getPieceAt(const Coord& coord) const{
-    return m_pieceLayer.getPieceAt(coord);
-}
-
-std::optional<LogicCircle> LogicBoard::getCircleAt(const Coord& coord) const{
-    return m_pieceLayer.getCircleAt(coord);
+std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
+    return m_pieceLayer.getEntityAt(coord);
 }
 
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
