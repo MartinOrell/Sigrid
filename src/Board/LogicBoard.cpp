@@ -46,7 +46,7 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
-        m_pieceLayer.addPiece(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
+        m_pieceLayer.addEntity(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
     }
 
     for(const auto cData : data.logicCircles){
@@ -59,7 +59,7 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
             continue;
         }
 
-        m_pieceLayer.addCircle(coord, LogicCircle{cData.colorId});
+        m_pieceLayer.addEntity(coord, LogicCircle{cData.colorId});
     }
 
     for(int y = 0; y < m_squareLayer.size(); y++){
@@ -197,7 +197,7 @@ bool LogicBoard::addPiece(const Coord& coord, const LogicPiece& piece){
         return false;
     }
 
-    m_pieceLayer.addPiece(coord,piece);
+    m_pieceLayer.addEntity(coord,piece);
     return true;
 }
 
@@ -215,7 +215,7 @@ bool LogicBoard::removePiece(const Coord& coord){
         return false;
     }
 
-    m_pieceLayer.removePiece(coord);
+    m_pieceLayer.removeEntity(coord);
     return true;
 }
 
@@ -341,7 +341,7 @@ bool LogicBoard::addCircle(const Coord& coord, const LogicCircle& circle){
         return false;
     }
 
-    m_pieceLayer.addCircle(coord,circle);
+    m_pieceLayer.addEntity(coord,circle);
     return true;
 }
 
@@ -359,7 +359,7 @@ bool LogicBoard::removeCircle(const Coord& coord){
         return false;
     }
 
-    m_pieceLayer.removeCircle(coord);
+    m_pieceLayer.removeEntity(coord);
     return true;
 }
 
