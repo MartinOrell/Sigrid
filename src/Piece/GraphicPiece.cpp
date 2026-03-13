@@ -54,6 +54,10 @@ const sf::Texture* GraphicPiece::getTexturePtr() const{
     return m_texturePtr;
 }
 
+void GraphicPiece::move(const sf::Vector2f& offset){
+    m_sprite.move(offset);
+}
+
 void GraphicPiece::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_sprite);
 }

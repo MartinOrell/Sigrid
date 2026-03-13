@@ -28,6 +28,8 @@
 #include "../Shape/Circle/LogicCircle.h"
 #include "../Shape/Circle/GraphicCircle.h"
 
+#include "../Entity/GraphicEntities.h"
+
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
@@ -70,8 +72,6 @@ namespace sigrid{
             void removeArrow(const LogicArrow& arrow);
             void addCircle(const Coord& coord, const LogicCircle& circle);
             void removeCircle(const Coord& coord);
-
-            void setCircleColorAt(const Coord& coord, const int colorId);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
@@ -166,11 +166,9 @@ namespace sigrid{
 
             std::map<Coord, sf::RectangleShape> m_squareHighlights;
 
-            std::map<Coord, GraphicPiece> m_pieces;
-
             std::map<LogicArrow, GraphicArrow> m_arrows;
 
-            std::map<Coord, GraphicCircle> m_circles;
+            GraphicEntities m_pieceLayer;
 
             std::unique_ptr<Arrow> m_dragArrowPtr;
 

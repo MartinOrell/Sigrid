@@ -23,6 +23,8 @@ namespace sigrid{
             const sf::Texture getTexture() const;
             const sf::Texture* getTexturePtr() const;
 
+            void move(const sf::Vector2f& offset);
+
         private:
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

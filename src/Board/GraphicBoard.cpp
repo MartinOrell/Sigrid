@@ -76,8 +76,8 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
                 if(newGraphicPiece_o != std::nullopt){
                     GraphicPiece newGraphicPiece = newGraphicPiece_o.value();
                     newGraphicPiece.resize({(float)config.squareSize,(float)config.squareSize});
-                    newGraphicPiece.setPosition(square.getPosition());
-                    m_pieces.insert({{x,y}, newGraphicPiece});
+                    newGraphicPiece.setPosition(square.getPosition()+square.getSize()/2.f);
+                    m_pieceLayer.addPiece({x,y}, newGraphicPiece);
                 }
                 continue;
             }
@@ -87,7 +87,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
                 sf::Color color = m_colorManagerPtr->getSolidColor(std::get<LogicCircle>(entity_o.value()).getColorId());
                 GraphicCircle newCircle{color, m_circleDiameter};
                 newCircle.setPosition(position);
-                m_circles.insert({{x,y}, newCircle});
+                m_pieceLayer.addCircle({x,y}, newCircle);
             }
         }
         m_squares.push_back(row);
@@ -234,7 +234,9 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
         return;
     }
 
-    if(m_pieces.find(coord) != m_pieces.end()){
+    auto piece_o = m_pieceLayer.getPieceAt(coord);
+
+    if(piece_o != std::nullopt){
         std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
         std::cout << "There is already a piece there" << std::endl;
         return;
@@ -257,14 +259,19 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     GraphicPiece newPiece{graphicPiece_o.value()};
     newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
     newPiece.setPosition(position_o.value());
-    m_pieces.insert({coord, newPiece});
+    m_pieceLayer.addPiece(coord, newPiece);
     redrawTexture();
 }
 
 void GraphicBoard::removePiece(const Coord& coord){
-    auto pieceIt = m_pieces.find(coord);
-    assert(pieceIt != m_pieces.end());
-    m_pieces.erase(pieceIt);
+
+    if(m_pieceLayer.getPieceAt(coord) == std::nullopt){
+        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cout << "There is no entity there" << std::endl;
+        return;
+    }
+
+    m_pieceLayer.removeEntity(coord);
     redrawTexture();
 }
 
@@ -298,34 +305,34 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    auto capturedPieceIt = m_pieces.find(toCoord);
+    auto capturedPiece_o = m_pieceLayer.getPieceAt(toCoord);
 
-    if(capturedPieceIt != m_pieces.end()){
-        m_pieces.erase(capturedPieceIt);
+    if(capturedPiece_o != std::nullopt){
+        m_pieceLayer.removeEntity(toCoord);
     }
 
-    auto capturedCircleIt = m_circles.find(toCoord);
+    auto capturedCircle_o = m_pieceLayer.getCircleAt(toCoord);
 
-    if(capturedCircleIt != m_circles.end()){
-        m_circles.erase(capturedCircleIt);
+    if(capturedCircle_o != std::nullopt){
+        m_pieceLayer.removeEntity(toCoord);
     }
 
     {
-        auto it = m_pieces.find(fromCoord);
-        if(it != m_pieces.end()){
-            GraphicPiece newPiece{m_pieces.at(fromCoord)};
+        auto movePiece_o = m_pieceLayer.getPieceAt(fromCoord);
+        if(movePiece_o != std::nullopt){
+            GraphicPiece newPiece{movePiece_o.value()};
             newPiece.setPosition(toPosition_o.value());
-            m_pieces.insert({toCoord, newPiece});
-            m_pieces.erase(fromCoord);
+            m_pieceLayer.addPiece(toCoord, newPiece);
+            m_pieceLayer.removeEntity(fromCoord);
         }
     }
     {
-        auto it = m_circles.find(fromCoord);
-        if(it != m_circles.end()){
-            GraphicCircle newCircle{m_circles.at(fromCoord)};
+        auto moveCircle_o = m_pieceLayer.getCircleAt(fromCoord);
+        if(moveCircle_o != std::nullopt){
+            GraphicCircle newCircle{moveCircle_o.value()};
             newCircle.setPosition(toPosition_o.value());
-            m_circles.insert({toCoord, newCircle});
-            m_circles.erase(fromCoord);
+            m_pieceLayer.addCircle(toCoord, newCircle);
+            m_pieceLayer.removeEntity(fromCoord);
         }
     }
 
@@ -432,8 +439,7 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
         return;
     }
 
-    auto it = m_circles.find(coord);
-    if(it != m_circles.end()){
+    if(m_pieceLayer.getCircleAt(coord) != std::nullopt){
         std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
         std::cout << "There is already a circle there" << std::endl;
         return;
@@ -449,28 +455,18 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
 
     GraphicCircle newCircle(color, m_circleDiameter);
     newCircle.setPosition(position_o.value());
-    m_circles.insert({coord, newCircle});
+    m_pieceLayer.addCircle(coord, newCircle);
     redrawTexture();
 }
 
 
 void GraphicBoard::removeCircle(const Coord& coord){
-    auto it = m_circles.find(coord);
-    assert(it != m_circles.end());
-    m_circles.erase(it);
-    redrawTexture();
-}
-
-void GraphicBoard::setCircleColorAt(const Coord& coord, const int colorId){
-    
-    auto it = m_circles.find(coord);
-    if(it == m_circles.end()){
-        std::cout << "GraphicBoard: Unable to set circle color at " << coord.getNotation() << std::endl;
-        std::cout << "There is no circle there";
+    if(m_pieceLayer.getCircleAt(coord) == std::nullopt){
+        std::cout << "GraphicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
+        std::cout << "There is no circle there" << std::endl;
         return;
     }
-    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
-    m_circles.at(coord).setColor(color);
+    m_pieceLayer.removeEntity(coord);
     redrawTexture();
 }
 
@@ -564,8 +560,7 @@ void GraphicBoard::unhighlight(){
 }
 
 void GraphicBoard::removeEntity(const Coord& coord){
-    m_pieces.erase(coord);
-    m_circles.erase(coord);
+    m_pieceLayer.removeEntity(coord);
     redrawTexture();
 }
 
@@ -583,8 +578,7 @@ void GraphicBoard::saveImage(const std::string& fileName){
 }
 
 void GraphicBoard::clear(){
-    m_pieces.clear();
-    m_circles.clear();
+    m_pieceLayer.clear();
     redrawTexture();
 }
 
@@ -615,11 +609,19 @@ void GraphicBoard::flip(){
             }
             position.y += m_topEdgeWidth;
             m_squares.at(y).at(x).setPosition(position);
-        }
-    }
 
-    for(auto& piece : m_pieces){
-        piece.second.setPosition(getSquareCenterPosition(piece.first).value());
+            auto m_piece_o = m_pieceLayer.getPieceAt({x,y});
+
+            if(m_piece_o != std::nullopt){
+                m_pieceLayer.setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
+            }
+
+            auto m_circle_o = m_pieceLayer.getCircleAt({x,y});
+
+            if(m_circle_o != std::nullopt){
+                m_pieceLayer.setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
+            }
+        }
     }
 
     for(auto& square : m_squareHighlights){
@@ -953,13 +955,7 @@ void GraphicBoard::redrawTexture(){
         m_texturePtr->draw(*m_selectHighlight);
     }
 
-    for(auto& piece : m_pieces){
-        m_texturePtr->draw(piece.second);
-    }
-
-    for(auto& circle : m_circles){
-        m_texturePtr->draw(circle.second);
-    }
+    m_texturePtr->draw(m_pieceLayer);
 
     for(auto& arrow : m_arrows){
         m_texturePtr->draw(arrow.second);
@@ -1136,12 +1132,7 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
             m_squares.at(y).at(x).move(offset);
         }
     }
-    for(auto& piece : m_pieces){
-        piece.second.setPosition(getSquareCenterPosition(piece.first).value());
-    }
-    for(auto& circle : m_circles){
-        circle.second.setPosition(getSquareCenterPosition(circle.first).value());
-    }
+    m_pieceLayer.move(offset);
 }
 
 void GraphicBoard::moveBorder(const sf::Vector2f& offset){

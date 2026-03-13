@@ -34,6 +34,10 @@ void GraphicCircle::setColor(const sf::Color& color){
     m_shape.setFillColor(color);
 }
 
+void GraphicCircle::move(const sf::Vector2f& offset){
+    m_shape.move(offset);
+}
+
 void GraphicCircle::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_shape);
 }
