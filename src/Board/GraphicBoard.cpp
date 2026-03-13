@@ -225,7 +225,11 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
 
 void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     
-    assert(m_pieces.find(coord) == m_pieces.end());
+    if(m_pieces.find(coord) != m_pieces.end()){
+        std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
+        std::cout << "There is already a piece there" << std::endl;
+        return;
+    }
 
     if(m_pieceManagerPtr == nullptr){
         std::cout << "GraphicBoard: Failed to add piece" << std::endl;
