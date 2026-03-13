@@ -225,6 +225,14 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
 
 void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     
+    auto position_o = getSquareCenterPosition(coord);
+
+    if(position_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
+        std::cout << "Position for coordinate not found" << std::endl;
+        return;
+    }
+
     if(m_pieces.find(coord) != m_pieces.end()){
         std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
         std::cout << "There is already a piece there" << std::endl;
@@ -247,7 +255,7 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
     GraphicPiece newPiece{graphicPiece_o.value()};
     newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
-    newPiece.setPosition(getSquareCenterPosition(coord).value());
+    newPiece.setPosition(position_o.value());
     m_pieces.insert({coord, newPiece});
     redrawTexture();
 }
@@ -260,7 +268,34 @@ void GraphicBoard::removePiece(const Coord& coord){
 }
 
 void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
-    assert(fromCoord != toCoord);
+    
+    if(fromCoord == toCoord){
+        std::cout << "GraphicBoard: Failed to move entity from "
+            << fromCoord.getNotation() << " to "
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Starting square and destination square are the same" << std::endl;
+        return; 
+    }
+
+    auto fromPosition_o = getSquareCenterPosition(fromCoord);
+
+    if(fromPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to move entity from "
+            << fromCoord.getNotation() << " to "
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Starting square position not found" << std::endl;
+        return;
+    }
+
+    auto toPosition_o = getSquareCenterPosition(toCoord);
+
+    if(toPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to move entity from "
+            << fromCoord.getNotation() << " to "
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Destination square position not found" << std::endl;
+        return;
+    }
 
     auto capturedPieceIt = m_pieces.find(toCoord);
 
@@ -278,7 +313,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         auto it = m_pieces.find(fromCoord);
         if(it != m_pieces.end()){
             GraphicPiece newPiece{m_pieces.at(fromCoord)};
-            newPiece.setPosition(getSquareCenterPosition(toCoord).value());
+            newPiece.setPosition(toPosition_o.value());
             m_pieces.insert({toCoord, newPiece});
             m_pieces.erase(fromCoord);
         }
@@ -287,7 +322,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         auto it = m_circles.find(fromCoord);
         if(it != m_circles.end()){
             GraphicCircle newCircle{m_circles.at(fromCoord)};
-            newCircle.setPosition(getSquareCenterPosition(toCoord).value());
+            newCircle.setPosition(toPosition_o.value());
             m_circles.insert({toCoord, newCircle});
             m_circles.erase(fromCoord);
         }
@@ -306,6 +341,15 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
         return;
     }
 
+    auto position_o = getSquarePosition(coord);
+
+    if(position_o == std::nullopt){
+        std::cout << "GraphicBoard: Unable to add square highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "Square position not found" << std::endl;
+        return;
+    }
+
     sf::RectangleShape newHighlight(getSquareSize());
 
     sf::Color color;
@@ -317,7 +361,7 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     }
 
     newHighlight.setFillColor(color);
-    newHighlight.setPosition(getSquarePosition(coord).value());
+    newHighlight.setPosition(position_o.value());
 
     auto result = m_squareHighlights.insert({coord, newHighlight});
 
@@ -327,6 +371,24 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
 }
 
 void GraphicBoard::addArrow(const LogicArrow& logicArrow){
+
+    auto fromPosition_o = getSquareCenterPosition(logicArrow.fromCoord());
+
+    if(fromPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add arrow from "
+            << logicArrow.fromCoord().getNotation() << std::endl;
+        std::cout << "Starting square position not found" << std::endl;
+        return;
+    }
+
+    auto toPosition_o = getSquareCenterPosition(logicArrow.toCoord());
+
+    if(toPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add arrow to "
+            << logicArrow.toCoord().getNotation() << std::endl;
+        std::cout << "Destination square position not found" << std::endl;
+        return;
+    }
 
     for(auto it = m_arrows.begin(); it != m_arrows.end(); it++){
         if(it->first.fromCoord() == logicArrow.fromCoord() && it->first.toCoord() == logicArrow.toCoord()){
@@ -339,9 +401,6 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
             break;
         }
     }
-
-    auto fromPosition = getSquareCenterPosition(logicArrow.fromCoord()).value();
-    auto toPosition = getSquareCenterPosition(logicArrow.toCoord()).value();
     
     sf::Color color;
     if(m_colorManagerPtr == nullptr){
@@ -351,7 +410,7 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
         color = m_colorManagerPtr->getSolidColor(logicArrow.colorId());
     }
 
-    GraphicArrow graphicArrow(fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
+    GraphicArrow graphicArrow(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
     m_texturePtr->draw(graphicArrow);
     auto result = m_arrows.insert({logicArrow, graphicArrow});
 
@@ -363,6 +422,14 @@ void GraphicBoard::removeArrow(const LogicArrow& arrow){
 }
 
 void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle){
+
+    auto position_o = getSquareCenterPosition(coord);
+
+    if(position_o == std::nullopt){
+        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
+        std::cout << "Position of square not found" << std::endl;
+        return;
+    }
 
     auto it = m_circles.find(coord);
     if(it != m_circles.end()){
@@ -379,9 +446,7 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
     
     sf::Color color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
 
-    auto position = getSquareCenterPosition(coord).value();
-
-    GraphicCircle newCircle(position, color, m_circleDiameter);
+    GraphicCircle newCircle(position_o.value(), color, m_circleDiameter);
     m_circles.insert({coord, newCircle});
     redrawTexture();
 }
@@ -410,12 +475,28 @@ void GraphicBoard::setCircleColorAt(const Coord& coord, const int colorId){
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){
     
     if(!m_dragArrowPtr){
-        auto fromPosition = getSquareCenterPosition(fromCoord).value();
-        auto toPosition = getSquareCenterPosition(toCoord).value();
+
+        auto fromPosition_o = getSquareCenterPosition(fromCoord);
+        
+        if(fromPosition_o == std::nullopt){
+            std::cout << "GraphicBoard: Unable to add dragArrow from "
+                << fromCoord.getNotation() << std::endl;
+            std::cout << "Starting square position not found";
+            return;
+        }
+
+        auto toPosition_o = getSquareCenterPosition(toCoord);
+
+        if(toPosition_o == std::nullopt){
+            std::cout << "GraphicBoard: Unable to add dragArrow to "
+                << toCoord.getNotation() << std::endl;
+            std::cout << "Destination square position not found";
+            return;
+        }
 
         sf::Color color = sf::Color::Red;
 
-        m_dragArrowPtr = std::make_unique<Arrow>(fromCoord, toCoord, 0, fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
+        m_dragArrowPtr = std::make_unique<Arrow>(fromCoord, toCoord, 0, fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
         m_texturePtr->draw(*m_dragArrowPtr);
         return;
     }
@@ -424,10 +505,25 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
         return;
     }
 
-    auto fromPosition = getSquareCenterPosition(fromCoord).value();
-    auto toPosition = getSquareCenterPosition(toCoord).value();
+    auto fromPosition_o = getSquareCenterPosition(fromCoord);
+        
+    if(fromPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Unable to update dragArrow from "
+            << fromCoord.getNotation() << std::endl;
+        std::cout << "Starting square position not found";
+        return;
+    }
 
-    m_dragArrowPtr->set(fromCoord, toCoord, fromPosition, toPosition);
+    auto toPosition_o = getSquareCenterPosition(toCoord);
+
+    if(toPosition_o == std::nullopt){
+        std::cout << "GraphicBoard: Unable to update dragArrow to "
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Destination square position not found";
+        return;
+    }
+
+    m_dragArrowPtr->set(fromCoord, toCoord, fromPosition_o.value(), toPosition_o.value());
     redrawTexture();
 }
 
@@ -439,12 +535,21 @@ void GraphicBoard::removeDragArrow(){
 }
 
 void GraphicBoard::highlightSquare(const Coord& coord){
+
+    auto position_o = getSquarePosition(coord);
+
+    if(position_o == std::nullopt){
+        std::cout << "GraphicBoard: Unable to highlight square at "
+            << coord.getNotation() << std::endl;
+        std::cout << "Square position not found" << std::endl;
+    }
+
     if(!m_selectHighlight){
         m_selectHighlight = std::make_unique<sf::RectangleShape>(m_squares[coord.y][coord.x].getSize());
         m_selectHighlight->setFillColor(sf::Color(255,255,0,100));
     }
 
-    m_selectHighlight->setPosition(getSquarePosition(coord).value());
+    m_selectHighlight->setPosition(position_o.value());
 
     redrawTexture();
 }
