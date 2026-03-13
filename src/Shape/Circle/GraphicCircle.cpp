@@ -4,9 +4,8 @@
 
 using namespace sigrid;
 
-GraphicCircle::GraphicCircle(const sf::Vector2f& position, const sf::Color& color, const float& diameter)
+GraphicCircle::GraphicCircle(const sf::Color& color, const float& diameter)
 : m_shape(diameter/2.f, 100){
-    m_shape.setPosition(position);
     m_shape.setOrigin(sf::Vector2f{diameter/2.f,diameter/2.f});
     m_shape.setFillColor(color);
     m_shape.setOutlineColor(sf::Color::Black);

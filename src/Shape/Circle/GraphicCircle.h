@@ -11,7 +11,7 @@ namespace sigrid{
     class GraphicCircle: public sf::Drawable{
 
         public:
-            GraphicCircle(const sf::Vector2f& position, const sf::Color& color, const float& diameter);
+            GraphicCircle(const sf::Color& color, const float& diameter);
             GraphicCircle(const GraphicCircle&);
             GraphicCircle& operator =(const GraphicCircle&);
 

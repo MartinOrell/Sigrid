@@ -81,7 +81,8 @@ std::optional<sf::Texture*> ToolManager::getCircleTexturePtr(const int colorId){
         position.y = (float)squareHeight/2.f;
         float diameter = squareWidth*0.4f;
 
-        m_graphicCirclePtr = std::make_unique<GraphicCircle>(position, color, diameter);
+        m_graphicCirclePtr = std::make_unique<GraphicCircle>(color, diameter);
+        m_graphicCirclePtr->setPosition(position);
     }
     else{
         m_graphicCirclePtr->setColor(color);

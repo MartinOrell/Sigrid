@@ -85,7 +85,8 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
                 sf::Vector2f position = square.getPosition()
                     + square.getSize()/2.f;;
                 sf::Color color = m_colorManagerPtr->getSolidColor(std::get<LogicCircle>(entity_o.value()).getColorId());
-                GraphicCircle newCircle{position, color, m_circleDiameter};
+                GraphicCircle newCircle{color, m_circleDiameter};
+                newCircle.setPosition(position);
                 m_circles.insert({{x,y}, newCircle});
             }
         }
@@ -446,7 +447,8 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
     
     sf::Color color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
 
-    GraphicCircle newCircle(position_o.value(), color, m_circleDiameter);
+    GraphicCircle newCircle(color, m_circleDiameter);
+    newCircle.setPosition(position_o.value());
     m_circles.insert({coord, newCircle});
     redrawTexture();
 }
