@@ -219,7 +219,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int col
     }
 }
 
-void Board::addCircle(const Coord& coord, const int colorId){
+void Board::addCircle(const Coord& coord, const LogicCircle& circle){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Circle at " << coord.getNotation() << std::endl;
@@ -229,21 +229,20 @@ void Board::addCircle(const Coord& coord, const int colorId){
 
     auto logicEntity_o = m_logicBoard->getEntityAt(coord);
 
-    LogicCircle logicCircle(colorId);
     if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addEntity(coord, logicCircle)){
-            m_graphicBoard->addCircle(coord, logicCircle);
+        if(m_logicBoard->addEntity(coord, circle)){
+            m_graphicBoard->addCircle(coord, circle);
         }
         return;
     }
 
     if(!std::holds_alternative<LogicCircle>(logicEntity_o.value())
-    || std::get<LogicCircle>(logicEntity_o.value()) != logicCircle){
+    || std::get<LogicCircle>(logicEntity_o.value()) != circle){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addEntity(coord, logicCircle)){
-            m_graphicBoard->addCircle(coord, logicCircle);
+        if(m_logicBoard->addEntity(coord, circle)){
+            m_graphicBoard->addCircle(coord, circle);
         }
         return;
     }

@@ -71,7 +71,7 @@ namespace sigrid{
 
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
 
-            void addCircle(const Coord& coord, const int colorId);
+            void addCircle(const Coord& coord, const LogicCircle& circle);
 
             void addSquareHighlight(const Coord& coord, const int colorId);
 
