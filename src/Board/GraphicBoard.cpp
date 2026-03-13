@@ -234,11 +234,11 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
         return;
     }
 
-    auto piece_o = m_pieceLayer.getPieceAt(coord);
+    auto entity_o = m_pieceLayer.getEntityAt(coord);
 
-    if(piece_o != std::nullopt){
+    if(entity_o != std::nullopt){
         std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
-        std::cout << "There is already a piece there" << std::endl;
+        std::cout << "There is already an entity there" << std::endl;
         return;
     }
 
@@ -265,7 +265,7 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
 void GraphicBoard::removePiece(const Coord& coord){
 
-    if(m_pieceLayer.getPieceAt(coord) == std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
         std::cout << "There is no entity there" << std::endl;
         return;
@@ -305,31 +305,23 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    auto capturedPiece_o = m_pieceLayer.getPieceAt(toCoord);
+    auto capturedEntity_o = m_pieceLayer.getEntityAt(toCoord);
 
-    if(capturedPiece_o != std::nullopt){
+    if(capturedEntity_o != std::nullopt){
         m_pieceLayer.removeEntity(toCoord);
     }
 
-    auto capturedCircle_o = m_pieceLayer.getCircleAt(toCoord);
+    auto moveEntity_o = m_pieceLayer.getEntityAt(fromCoord);
 
-    if(capturedCircle_o != std::nullopt){
-        m_pieceLayer.removeEntity(toCoord);
-    }
-
-    {
-        auto movePiece_o = m_pieceLayer.getPieceAt(fromCoord);
-        if(movePiece_o != std::nullopt){
-            GraphicPiece newPiece{movePiece_o.value()};
+    if(moveEntity_o != std::nullopt){
+        if(std::holds_alternative<GraphicPiece>(moveEntity_o.value())){
+            GraphicPiece newPiece{std::get<GraphicPiece>(moveEntity_o.value())};
             newPiece.setPosition(toPosition_o.value());
             m_pieceLayer.addPiece(toCoord, newPiece);
             m_pieceLayer.removeEntity(fromCoord);
         }
-    }
-    {
-        auto moveCircle_o = m_pieceLayer.getCircleAt(fromCoord);
-        if(moveCircle_o != std::nullopt){
-            GraphicCircle newCircle{moveCircle_o.value()};
+        else if(std::holds_alternative<GraphicCircle>(moveEntity_o.value())){
+            GraphicCircle newCircle{std::get<GraphicCircle>(moveEntity_o.value())};
             newCircle.setPosition(toPosition_o.value());
             m_pieceLayer.addCircle(toCoord, newCircle);
             m_pieceLayer.removeEntity(fromCoord);
@@ -439,9 +431,9 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
         return;
     }
 
-    if(m_pieceLayer.getCircleAt(coord) != std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
         std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
-        std::cout << "There is already a circle there" << std::endl;
+        std::cout << "There is already an entity there" << std::endl;
         return;
     }
     
@@ -461,7 +453,7 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
 
 
 void GraphicBoard::removeCircle(const Coord& coord){
-    if(m_pieceLayer.getCircleAt(coord) == std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cout << "GraphicBoard: Unable to remove circle at " << coord.getNotation() << std::endl;
         std::cout << "There is no circle there" << std::endl;
         return;
@@ -610,15 +602,9 @@ void GraphicBoard::flip(){
             position.y += m_topEdgeWidth;
             m_squares.at(y).at(x).setPosition(position);
 
-            auto m_piece_o = m_pieceLayer.getPieceAt({x,y});
+            auto entity_o = m_pieceLayer.getEntityAt({x,y});
 
-            if(m_piece_o != std::nullopt){
-                m_pieceLayer.setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
-            }
-
-            auto m_circle_o = m_pieceLayer.getCircleAt({x,y});
-
-            if(m_circle_o != std::nullopt){
+            if(entity_o != std::nullopt){
                 m_pieceLayer.setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
             }
         }

@@ -3,6 +3,7 @@
 #include <map>
 #include <optional>
 #include "../Coord/Coord.h"
+#include "GraphicEntity.h"
 #include "../Piece/GraphicPiece.h"
 #include "../Shape/Circle/GraphicCircle.h"
 
@@ -17,8 +18,7 @@ namespace sigrid{
 
             void clear();
 
-            std::optional<GraphicPiece> getPieceAt(const Coord& coord) const;
-            std::optional<GraphicCircle> getCircleAt(const Coord& coord) const;
+            std::optional<GraphicEntity> getEntityAt(const Coord& coord) const;
 
             void move(const sf::Vector2f& offset);
             void setEntityPosition(const Coord& coord, const sf::Vector2f& position);

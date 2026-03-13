@@ -24,18 +24,18 @@ void GraphicEntities::clear(){
     m_circles.clear();
 }
 
-std::optional<GraphicPiece> GraphicEntities::getPieceAt(const Coord& coord) const{
-    auto it = m_pieces.find(coord);
-    if(it != m_pieces.end()){
-        return it->second;
+std::optional<GraphicEntity> GraphicEntities::getEntityAt(const Coord& coord) const{
+    {
+        auto it = m_pieces.find(coord);
+        if(it != m_pieces.end()){
+            return it->second;
+        }
     }
-    return std::nullopt;
-}
-
-std::optional<GraphicCircle> GraphicEntities::getCircleAt(const Coord& coord) const{
-    auto it = m_circles.find(coord);
-    if(it != m_circles.end()){
-        return it->second;
+    {
+        auto it = m_circles.find(coord);
+        if(it != m_circles.end()){
+            return it->second;
+        }
     }
     return std::nullopt;
 }
