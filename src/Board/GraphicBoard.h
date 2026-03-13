@@ -111,6 +111,9 @@ namespace sigrid{
 
         private:
 
+            std::optional<sf::Vector2f> getSquarePosition(const Coord& coord);
+            std::optional<sf::Vector2f> getSquareCenterPosition(const Coord& coord);
+
             void initPlayerToMoveToken();
 
             void initLeftBorder();

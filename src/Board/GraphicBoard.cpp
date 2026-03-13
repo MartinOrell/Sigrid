@@ -247,7 +247,7 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
     GraphicPiece newPiece{graphicPiece_o.value()};
     newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
-    newPiece.setPosition(m_squares[coord.y][coord.x].getPosition());
+    newPiece.setPosition(getSquarePosition(coord).value());
     m_pieces.insert({coord, newPiece});
     redrawTexture();
 }
@@ -278,7 +278,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         auto it = m_pieces.find(fromCoord);
         if(it != m_pieces.end()){
             GraphicPiece newPiece{m_pieces.at(fromCoord)};
-            newPiece.setPosition(m_squares[toCoord.y][toCoord.x].getPosition());
+            newPiece.setPosition(getSquarePosition(toCoord).value());
             m_pieces.insert({toCoord, newPiece});
             m_pieces.erase(fromCoord);
         }
@@ -287,9 +287,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         auto it = m_circles.find(fromCoord);
         if(it != m_circles.end()){
             GraphicCircle newCircle{m_circles.at(fromCoord)};
-            sf::Vector2f position = m_squares[toCoord.y][toCoord.x].getPosition()
-                + m_squares[toCoord.y][toCoord.x].getSize()/2.f;
-            newCircle.setPosition(position);
+            newCircle.setPosition(getSquareCenterPosition(toCoord).value());
             m_circles.insert({toCoord, newCircle});
             m_circles.erase(fromCoord);
         }
@@ -319,7 +317,7 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     }
 
     newHighlight.setFillColor(color);
-    newHighlight.setPosition(m_squares.at(coord.y).at(coord.x).getPosition());
+    newHighlight.setPosition(getSquarePosition(coord).value());
 
     auto result = m_squareHighlights.insert({coord, newHighlight});
 
@@ -342,12 +340,8 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
         }
     }
 
-    int fromX = logicArrow.fromCoord().x;
-    int fromY = logicArrow.fromCoord().y;
-    int toX = logicArrow.toCoord().x;
-    int toY = logicArrow.toCoord().y;
-    auto fromPosition = m_squares.at(fromY).at(fromX).getPosition() + m_squares.at(fromY).at(fromX).getSize()/2.f;
-    auto toPosition = m_squares.at(toY).at(toX).getPosition() + m_squares.at(toY).at(toX).getSize()/2.f;
+    auto fromPosition = getSquareCenterPosition(logicArrow.fromCoord()).value();
+    auto toPosition = getSquareCenterPosition(logicArrow.toCoord()).value();
     
     sf::Color color;
     if(m_colorManagerPtr == nullptr){
@@ -385,8 +379,7 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
     
     sf::Color color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
 
-    auto position = m_squares.at(coord.y).at(coord.x).getPosition()
-        + m_squares.at(coord.y).at(coord.x).getSize()/2.f;
+    auto position = getSquareCenterPosition(coord).value();
 
     GraphicCircle newCircle(position, color, m_circleDiameter);
     m_circles.insert({coord, newCircle});
@@ -417,12 +410,8 @@ void GraphicBoard::setCircleColorAt(const Coord& coord, const int colorId){
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){
     
     if(!m_dragArrowPtr){
-        int fromX = fromCoord.x;
-        int fromY = fromCoord.y;
-        int toX = toCoord.x;
-        int toY = toCoord.y;
-        auto fromPosition = m_squares.at(fromY).at(fromX).getPosition() + m_squares.at(fromY).at(fromX).getSize()/2.f;
-        auto toPosition = m_squares.at(toY).at(toX).getPosition() + m_squares.at(toY).at(toX).getSize()/2.f;
+        auto fromPosition = getSquareCenterPosition(fromCoord).value();
+        auto toPosition = getSquareCenterPosition(toCoord).value();
 
         sf::Color color = sf::Color::Red;
 
@@ -435,12 +424,8 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
         return;
     }
 
-    int fromX = fromCoord.x;
-    int fromY = fromCoord.y;
-    int toX = toCoord.x;
-    int toY = toCoord.y;
-    auto fromPosition = m_squares.at(fromY).at(fromX).getPosition() + m_squares.at(fromY).at(fromX).getSize()/2.f;
-    auto toPosition = m_squares.at(toY).at(toX).getPosition() + m_squares.at(toY).at(toX).getSize()/2.f;
+    auto fromPosition = getSquareCenterPosition(fromCoord).value();
+    auto toPosition = getSquareCenterPosition(toCoord).value();
 
     m_dragArrowPtr->set(fromCoord, toCoord, fromPosition, toPosition);
     redrawTexture();
@@ -459,7 +444,7 @@ void GraphicBoard::highlightSquare(const Coord& coord){
         m_selectHighlight->setFillColor(sf::Color(255,255,0,100));
     }
 
-    m_selectHighlight->setPosition(m_squares[coord.y][coord.x].getPosition());
+    m_selectHighlight->setPosition(getSquarePosition(coord).value());
 
     redrawTexture();
 }
@@ -527,22 +512,16 @@ void GraphicBoard::flip(){
     }
 
     for(auto& piece : m_pieces){
-        sf::Vector2f position(m_squares.at(piece.first.y).at(piece.first.x).getPosition());
-        piece.second.setPosition(position);
+        piece.second.setPosition(getSquarePosition(piece.first).value());
     }
 
     for(auto& square : m_squareHighlights){
-        sf::Vector2f position(m_squares.at(square.first.y).at(square.first.x).getPosition());
-        square.second.setPosition(position);
+        square.second.setPosition(getSquarePosition(square.first).value());
     }
 
     for(auto& arrow : m_arrows){
-        sf::Vector2f fromPos(m_squares.at(arrow.first.fromCoord().y).at(arrow.first.fromCoord().x).getPosition());
-        fromPos.x += squareWidth/2;
-        fromPos.y += squareHeight/2;
-        sf::Vector2f toPos(m_squares.at(arrow.first.toCoord().y).at(arrow.first.toCoord().x).getPosition());
-        toPos.x += squareWidth/2;
-        toPos.y += squareHeight/2;
+        sf::Vector2f fromPos = getSquareCenterPosition(arrow.first.fromCoord()).value();
+        sf::Vector2f toPos = getSquareCenterPosition(arrow.first.toCoord()).value();
         arrow.second.set(fromPos,toPos);
     }
 
@@ -735,6 +714,24 @@ void GraphicBoard::togglePlayerToMoveToken(){
     }
 
     m_texturePtr->draw(*m_playerToMoveToken);
+}
+
+std::optional<sf::Vector2f> GraphicBoard::getSquarePosition(const Coord& coord){
+    if(coord.y >= m_squares.size()){
+        return std::nullopt;
+    }
+    if(coord.x >= m_squares.at(coord.y).size()){
+        return std::nullopt;
+    }
+    return m_squares.at(coord.y).at(coord.x).getPosition();
+}
+
+std::optional<sf::Vector2f> GraphicBoard::getSquareCenterPosition(const Coord& coord){
+    auto position_o = getSquarePosition(coord);
+    if(position_o == std::nullopt){
+        return std::nullopt;
+    }
+    return position_o.value() + m_squares.at(coord.y).at(coord.x).getSize()/2.f;
 }
 
 void GraphicBoard::initPlayerToMoveToken(){
@@ -1033,14 +1030,12 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
 
             auto piecePtr = m_pieces.find({x,y});
             if(piecePtr != m_pieces.end()){
-                piecePtr->second.setPosition(m_squares.at(y).at(x).getPosition());
+                piecePtr->second.setPosition(getSquarePosition({x,y}).value());
             }
         }
     }
     for(auto& circle : m_circles){
-        sf::Vector2f position = m_squares.at(circle.first.y).at(circle.first.x).getPosition()
-            +  m_squares.at(circle.first.y).at(circle.first.x).getSize()/2.f;
-        circle.second.setPosition(position);
+        circle.second.setPosition(getSquareCenterPosition(circle.first).value());
     }
 }
 
