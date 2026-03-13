@@ -28,7 +28,6 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             sf::Sprite m_sprite;
-            sf::Vector2f m_offset;
             const sf::Texture* m_texturePtr;
     };
 }

@@ -247,7 +247,7 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
     GraphicPiece newPiece{graphicPiece_o.value()};
     newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
-    newPiece.setPosition(getSquarePosition(coord).value());
+    newPiece.setPosition(getSquareCenterPosition(coord).value());
     m_pieces.insert({coord, newPiece});
     redrawTexture();
 }
@@ -278,7 +278,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         auto it = m_pieces.find(fromCoord);
         if(it != m_pieces.end()){
             GraphicPiece newPiece{m_pieces.at(fromCoord)};
-            newPiece.setPosition(getSquarePosition(toCoord).value());
+            newPiece.setPosition(getSquareCenterPosition(toCoord).value());
             m_pieces.insert({toCoord, newPiece});
             m_pieces.erase(fromCoord);
         }
@@ -512,7 +512,7 @@ void GraphicBoard::flip(){
     }
 
     for(auto& piece : m_pieces){
-        piece.second.setPosition(getSquarePosition(piece.first).value());
+        piece.second.setPosition(getSquareCenterPosition(piece.first).value());
     }
 
     for(auto& square : m_squareHighlights){
@@ -1030,7 +1030,7 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
         }
     }
     for(auto& piece : m_pieces){
-        piece.second.setPosition(getSquarePosition(piece.first).value());
+        piece.second.setPosition(getSquareCenterPosition(piece.first).value());
     }
     for(auto& circle : m_circles){
         circle.second.setPosition(getSquareCenterPosition(circle.first).value());
