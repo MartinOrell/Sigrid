@@ -1027,12 +1027,10 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
     for(int y = 0; y < m_squares.size(); y++){
         for(int x = 0; x < m_squares.at(y).size(); x++){
             m_squares.at(y).at(x).move(offset);
-
-            auto piecePtr = m_pieces.find({x,y});
-            if(piecePtr != m_pieces.end()){
-                piecePtr->second.setPosition(getSquarePosition({x,y}).value());
-            }
         }
+    }
+    for(auto& piece : m_pieces){
+        piece.second.setPosition(getSquarePosition(piece.first).value());
     }
     for(auto& circle : m_circles){
         circle.second.setPosition(getSquareCenterPosition(circle.first).value());
