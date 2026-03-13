@@ -345,15 +345,15 @@ void ToolPickerWindow::redrawTexture(){
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
                     LogicPiece logicPiece{m_pieceNotation, colorId};
-                    auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
+                    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
 
-                    if(piece_o == std::nullopt){
+                    if(graphicPiece_o == std::nullopt){
                         continue;
                     }
 
-                    m_boardPtr->addTool({x,y}, piece_o.value().graphic().getTexturePtr());
+                    m_boardPtr->addTool({x,y}, graphicPiece_o.value().getTexturePtr());
 
-                    ActionType::PickPieceColor action{piece_o.value()};
+                    ActionType::PickPieceColor action{logicPiece, graphicPiece_o.value()};
 
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -420,15 +420,15 @@ void ToolPickerWindow::redrawTexture(){
     for(int notationId = 0; notationId < m_pieceNotations.size(); notationId++){
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
             LogicPiece logicPiece{m_pieceNotations.at(notationId), m_displayedPieceColorIds.at(i)};
-            auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
+            auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
 
-            if(piece_o == std::nullopt){
+            if(graphicPiece_o == std::nullopt){
                 continue;
             }
 
-            m_boardPtr->addTool({x,y}, piece_o.value().graphic().getTexturePtr());
+            m_boardPtr->addTool({x,y}, graphicPiece_o.value().getTexturePtr());
 
-            ActionType::PickPiece action{piece_o.value()};
+            ActionType::PickPiece action{logicPiece, graphicPiece_o.value()};
 
             m_clickActions.insert_or_assign({x,y}, action);
 

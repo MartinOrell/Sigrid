@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Piece/Piece.h"
 #include "GraphicBoard.h"
 #include "LogicBoard.h"
 #include "../Piece/LogicPiece.h"
@@ -55,7 +54,8 @@ namespace sigrid{
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
-            std::optional<Piece> getPiece(const Coord& coord);
+            std::optional<LogicPiece> getLogicPiece(const Coord& coord);
+            std::optional<GraphicPiece> getGraphicPiece(const Coord& coord);
 
             std::string getFen() const;
 
@@ -66,7 +66,7 @@ namespace sigrid{
 
             void deselect();
 
-            void addPiece(const Coord& coord, const Piece& piece);
+            void addPiece(const Coord& coord, const LogicPiece& logicPiece, const GraphicPiece& graphicPiece);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);

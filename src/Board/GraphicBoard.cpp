@@ -70,12 +70,13 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
             }
             if(std::holds_alternative<LogicPiece>(entity_o.value())){
 
-                auto newPiece_o = pieceManagerPtr->getPiece(std::get<LogicPiece>(entity_o.value()));
-                if(newPiece_o != std::nullopt){
-                    GraphicPiece newPiece = newPiece_o.value().graphic();
-                    newPiece.resize({(float)config.squareSize,(float)config.squareSize});
-                    newPiece.setPosition(square.getPosition());
-                    m_pieces.insert({{x,y}, newPiece});
+                LogicPiece newLogicPiece = std::get<LogicPiece>(entity_o.value());
+                auto newGraphicPiece_o = pieceManagerPtr->getGraphicPiece(newLogicPiece);
+                if(newGraphicPiece_o != std::nullopt){
+                    GraphicPiece newGraphicPiece = newGraphicPiece_o.value();
+                    newGraphicPiece.resize({(float)config.squareSize,(float)config.squareSize});
+                    newGraphicPiece.setPosition(square.getPosition());
+                    m_pieces.insert({{x,y}, newGraphicPiece});
                 }
                 continue;
             }

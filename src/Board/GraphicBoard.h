@@ -7,7 +7,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "../Piece/Piece.h"
+#include "../Piece/LogicPiece.h"
 #include "LogicBoard.h"
 #include "../Piece/PieceManager.h"
 

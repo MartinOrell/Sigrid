@@ -13,8 +13,12 @@ const ToolSelection Tool::selection() const{
     return m_selection;
 }
 
-const Piece Tool::piece() const{
-    return *m_piece;
+LogicPiece Tool::getLogicPiece() const{
+    return *m_logicPiece;
+}
+
+GraphicPiece Tool::getGraphicPiece() const{
+    return *m_graphicPiece;
 }
 
 const int Tool::arrowColorId() const{
@@ -25,8 +29,9 @@ const int Tool::getCircleColorId() const{
     return m_circleColorId;
 }
 
-void Tool::setPiece(const Piece& piece){
-    m_piece = std::make_unique<Piece>(piece);
+void Tool::setPiece(const LogicPiece& logicPiece, const GraphicPiece& graphicPiece){
+    m_logicPiece = std::make_unique<LogicPiece>(logicPiece);
+    m_graphicPiece = std::make_unique<GraphicPiece>(graphicPiece);
 }
 
 void Tool::setSelection(const ToolSelection& selection){

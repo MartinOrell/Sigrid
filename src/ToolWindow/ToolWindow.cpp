@@ -84,8 +84,8 @@ Action ToolWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& positio
 }
 
 
-void ToolWindow::setSetPieceTool(const Piece& piece){
-    m_items.at(0)->setTexture(piece.graphic().getTexturePtr());
+void ToolWindow::setSetPieceTool(const GraphicPiece& graphicPiece){
+    m_items.at(0)->setTexture(graphicPiece.getTexturePtr());
     redrawTexture();
 }
 

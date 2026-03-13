@@ -82,7 +82,7 @@ std::optional<Coord> Board::getSquareCoord(sf::Vector2i point){
     return m_graphicBoard->getSquareCoord(point);
 }
 
-std::optional<Piece> Board::getPiece(const Coord& coord){
+std::optional<LogicPiece> Board::getLogicPiece(const Coord& coord){
     auto entity_o = m_logicBoard->getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
@@ -90,7 +90,18 @@ std::optional<Piece> Board::getPiece(const Coord& coord){
     if(!std::holds_alternative<LogicPiece>(entity_o.value())){
         return std::nullopt;
     }
-    return m_pieceManagerPtr->getPiece(std::get<LogicPiece>(entity_o.value()));
+    return std::get<LogicPiece>(entity_o.value());
+}
+
+std::optional<GraphicPiece> Board::getGraphicPiece(const Coord& coord){
+    auto entity_o = m_logicBoard->getEntityAt(coord);
+    if(entity_o == std::nullopt){
+        return std::nullopt;
+    }
+    if(!std::holds_alternative<LogicPiece>(entity_o.value())){
+        return std::nullopt;
+    }
+    return m_pieceManagerPtr->getGraphicPiece(std::get<LogicPiece>(entity_o.value()));
 }
 
 std::string Board::getFen() const{
@@ -141,15 +152,15 @@ void Board::textEntered(std::string text){
 
     LogicPiece logicPiece{text, colorId};
 
-    auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
+    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
 
-    if(piece_o == std::nullopt){
+    if(graphicPiece_o == std::nullopt){
         return;
     }
     if(m_selection == nullptr){
         return;
     }
-    addPiece(*m_selection, piece_o.value());
+    addPiece(*m_selection, logicPiece, graphicPiece_o.value());
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
 }
@@ -159,7 +170,7 @@ void Board::deselect(){
     m_graphicBoard->unhighlight();
 }
 
-void Board::addPiece(const Coord& coord, const Piece& piece){
+void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece, const GraphicPiece& graphicPiece){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Piece at " << coord.getNotation() << std::endl;
@@ -170,19 +181,19 @@ void Board::addPiece(const Coord& coord, const Piece& piece){
     auto logicEntity_o = m_logicBoard->getEntityAt(coord);
 
     if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addEntity(coord, piece.logic())){
-            m_graphicBoard->addPiece(coord, piece.graphic());
+        if(m_logicBoard->addEntity(coord, logicPiece)){
+            m_graphicBoard->addPiece(coord, graphicPiece);
         }
         return;
     }
 
     if(!std::holds_alternative<LogicPiece>(logicEntity_o.value())
-    || std::get<LogicPiece>(logicEntity_o.value()) != piece.logic()){
+    || std::get<LogicPiece>(logicEntity_o.value()) != logicPiece){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addEntity(coord, piece.logic())){
-            m_graphicBoard->addPiece(coord, piece.graphic());
+        if(m_logicBoard->addEntity(coord, logicPiece)){
+            m_graphicBoard->addPiece(coord, graphicPiece);
         }
         return;
     }
@@ -290,9 +301,9 @@ void Board::loadFen(const std::string& fen){
             s.at(0) = std::toupper(s.at(0));
             LogicPiece logicPiece{s, colorId};
 
-            auto piece_o = m_pieceManagerPtr->getPiece(logicPiece);
-            if(piece_o != std::nullopt){
-                addPiece({x,y}, piece_o.value());
+            auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
+            if(graphicPiece_o != std::nullopt){
+                addPiece({x,y}, logicPiece, graphicPiece_o.value());
             }
             else{
                 std::cout << "Failed to get piece of character \"" << s

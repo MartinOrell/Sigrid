@@ -37,8 +37,8 @@ namespace sigrid{
             void reset();
             void clear();
             void print();
-            void pickPiece(const sigrid::Piece& piece);
-            void pickPieceColor(const sigrid::Piece& piece);
+            void pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece);
+            void pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece);
             void pickArrow(const int colorId);
             void pickArrowColor(const int colorId);
             void pickCircle(const int colorId);

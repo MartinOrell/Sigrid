@@ -18,7 +18,6 @@ set(SRC_FILES
     src/Piece/LogicPiece.cpp
     src/Piece/GraphicPiece.cpp
     src/Piece/PieceIdentifier.cpp
-    src/Piece/Piece.cpp
     src/Piece/PieceManager.cpp
     src/Tool/Tool.cpp
     src/Tool/ToolManager.cpp

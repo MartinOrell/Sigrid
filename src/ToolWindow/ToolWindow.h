@@ -27,7 +27,7 @@ namespace sigrid{
 
             Action clicked(const sigrid::Tool& tool, const sf::Vector2i& position);
 
-            void setSetPieceTool(const Piece& piece);
+            void setSetPieceTool(const GraphicPiece& graphicPiece);
 
             void setSelectTool(const sf::Mouse::Button button, const ToolSelection selection);
 

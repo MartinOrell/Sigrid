@@ -137,15 +137,19 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             return ActionType::None();
         case ToolSelection::PieceAdder:
-            m_boardPtr->addPiece(toCoord, tool.piece());
+            m_boardPtr->addPiece(toCoord, tool.getLogicPiece(), tool.getGraphicPiece());
             return ActionType::None();
         case ToolSelection::PiecePicker:
             {
-                auto piece_o = m_boardPtr->getPiece(toCoord);
-                if(piece_o == std::nullopt){
+                auto logicPiece_o = m_boardPtr->getLogicPiece(toCoord);
+                if(logicPiece_o == std::nullopt){
                     return ActionType::None();
                 }
-                ActionType::PickPiece action{piece_o.value()};
+                auto graphicPiece_o = m_boardPtr->getGraphicPiece(toCoord);
+                if(graphicPiece_o == std::nullopt){
+                    return ActionType::None();
+                }
+                ActionType::PickPiece action{logicPiece_o.value(), graphicPiece_o.value()};
                 return action;
             }
         case ToolSelection::DrawArrow:

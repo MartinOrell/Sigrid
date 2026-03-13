@@ -16,8 +16,8 @@ PieceManager::PieceManager(const std::vector<PieceColor>& pieceColors)
 
 void PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
-    std::map<PieceIdentifier, Piece> coloredPieces;
-    m_pieces.push_back(coloredPieces);
+    std::map<PieceIdentifier, GraphicPiece> coloredPieces;
+    m_graphicPieces.push_back(coloredPieces);
     std::map<PieceIdentifier, sf::Texture> pieceColorTextures;
     m_pieceTextures.push_back(pieceColorTextures);
 }
@@ -35,11 +35,11 @@ void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
 
 // Get the piece matching the value of the logicPiece
 // If the piece does not exist, create it together with its texture
-std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
+std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logicPiece){
 
     int colorId = logicPiece.getColorId();
 
-    if(colorId >= m_pieces.size()){
+    if(colorId >= m_graphicPieces.size()){
         return std::nullopt;
     }
 
@@ -53,10 +53,10 @@ std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
     }
 
     {
-        auto it = m_pieces.at(colorId).find(id);
+        auto it = m_graphicPieces.at(colorId).find(id);
 
-        if(it != m_pieces.at(colorId).end()){
-            return m_pieces.at(colorId).at(id);
+        if(it != m_graphicPieces.at(colorId).end()){
+            return m_graphicPieces.at(colorId).at(id);
         }
     }
 
@@ -89,8 +89,8 @@ std::optional<Piece> PieceManager::getPiece(const LogicPiece& logicPiece){
         sf::Texture newTexture{newImage};
         m_pieceTextures.at(colorId).insert(std::pair{id, newTexture});
 
-        m_pieces.at(colorId).insert({id, Piece{m_pieceSize, &(m_pieceTextures.at(colorId).at(id)), colorId, id.name}});
+        m_graphicPieces.at(colorId).insert({id, GraphicPiece{m_pieceSize, &(m_pieceTextures.at(colorId).at(id))}});
     }
 
-    return m_pieces.at(colorId).at(id);
+    return m_graphicPieces.at(colorId).at(id);
 }

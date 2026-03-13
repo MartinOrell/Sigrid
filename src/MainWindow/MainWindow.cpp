@@ -446,14 +446,18 @@ void MainWindow::handleAction(const sigrid::Action action){
     }
     else if(std::holds_alternative<ActionType::PickPiece>(action)){
         
-        sigrid::Piece piece = std::get<ActionType::PickPiece>(action).piece;
-        pickPiece(piece);
+        sigrid::LogicPiece logicPiece = std::get<ActionType::PickPiece>(action).logicPiece;
+        sigrid::GraphicPiece graphicPiece = std::get<ActionType::PickPiece>(action).graphicPiece;
+        
+        pickPiece(logicPiece, graphicPiece);
         return;
     }
     else if(std::holds_alternative<ActionType::PickPieceColor>(action)){
 
-        sigrid::Piece piece = std::get<ActionType::PickPieceColor>(action).piece;
-        pickPieceColor(piece);
+        sigrid::LogicPiece logicPiece = std::get<ActionType::PickPieceColor>(action).logicPiece;
+        sigrid::GraphicPiece graphicPiece = std::get<ActionType::PickPieceColor>(action).graphicPiece;
+   
+        pickPieceColor(logicPiece, graphicPiece);
         return;
     }
     else if(std::holds_alternative<ActionType::PickArrow>(action)){
@@ -608,7 +612,7 @@ void MainWindow::print(){
     m_workWindow->print();
 }
 
-void MainWindow::pickPiece(const sigrid::Piece& piece){
+void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece){
     if(!m_toolWindow){
         std::cout << "Unable to pick piece, toolwindow does not exist" << std::endl;
         return;
@@ -617,13 +621,13 @@ void MainWindow::pickPiece(const sigrid::Piece& piece){
         std::cout << "Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setPiece(piece);
+    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece, graphicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
-    m_toolWindow->setSetPieceTool(piece);
-    m_toolPickerWindow->setPieceColorTools(piece.logic().getNotation());
+    m_toolWindow->setSetPieceTool(graphicPiece);
+    m_toolPickerWindow->setPieceColorTools(logicPiece.getNotation());
 }
 
-void MainWindow::pickPieceColor(const sigrid::Piece& piece){
+void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece){
 
     if(!m_toolWindow){
         std::cout << "Unable to pick piece color, toolwindow does not exist" << std::endl;
@@ -634,10 +638,10 @@ void MainWindow::pickPieceColor(const sigrid::Piece& piece){
         return;
     }
 
-    m_tools.at(sf::Mouse::Button::Left).setPiece(piece);
+    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece, graphicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
-    m_toolWindow->setSetPieceTool(piece);
-    m_toolPickerWindow->setPieceTools(piece.logic().getColorId());
+    m_toolWindow->setSetPieceTool(graphicPiece);
+    m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
 }
 
 void MainWindow::pickArrow(const int colorId){

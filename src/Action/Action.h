@@ -2,7 +2,8 @@
 
 #include <variant>
 
-#include "../Piece/Piece.h"
+#include "../Piece/LogicPiece.h"
+#include "../Piece/GraphicPiece.h"
 #include "../Tool/Tool.h"
 
 namespace sigrid{
@@ -17,10 +18,12 @@ namespace sigrid{
         struct Clear{};
         struct Print{};
         struct PickPiece{
-            Piece piece;
+            LogicPiece logicPiece;
+            GraphicPiece graphicPiece;
         };
         struct PickPieceColor{
-            Piece piece;
+            LogicPiece logicPiece;
+            GraphicPiece graphicPiece;
         };
         struct PickArrow{
             int colorId;
