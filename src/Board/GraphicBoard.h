@@ -59,7 +59,7 @@ namespace sigrid{
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
-            void addPiece(const Coord& coord, const GraphicPiece& piece);
+            void addPiece(const Coord& coord, const LogicPiece& logicPiece);
             void removePiece(const Coord& coord);
 
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
@@ -143,6 +143,8 @@ namespace sigrid{
             void movePlayerToMoveToken(const sf::Vector2f& offset);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+            PieceManager* m_pieceManagerPtr;
 
             std::unique_ptr<sf::RenderTexture> m_texturePtr;
             sf::Vector2f m_position;

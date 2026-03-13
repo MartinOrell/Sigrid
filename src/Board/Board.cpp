@@ -160,7 +160,7 @@ void Board::textEntered(std::string text){
     if(m_selection == nullptr){
         return;
     }
-    addPiece(*m_selection, logicPiece, graphicPiece_o.value());
+    addPiece(*m_selection, logicPiece);
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
 }
@@ -170,7 +170,7 @@ void Board::deselect(){
     m_graphicBoard->unhighlight();
 }
 
-void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece, const GraphicPiece& graphicPiece){
+void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Piece at " << coord.getNotation() << std::endl;
@@ -182,7 +182,7 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece, const Gra
 
     if(logicEntity_o == std::nullopt){
         if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addPiece(coord, graphicPiece);
+            m_graphicBoard->addPiece(coord, logicPiece);
         }
         return;
     }
@@ -193,7 +193,7 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece, const Gra
             m_graphicBoard->removeEntity(coord);
         }
         if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addPiece(coord, graphicPiece);
+            m_graphicBoard->addPiece(coord, logicPiece);
         }
         return;
     }
@@ -303,7 +303,7 @@ void Board::loadFen(const std::string& fen){
 
             auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
             if(graphicPiece_o != std::nullopt){
-                addPiece({x,y}, logicPiece, graphicPiece_o.value());
+                addPiece({x,y}, logicPiece);
             }
             else{
                 std::cout << "Failed to get piece of character \"" << s

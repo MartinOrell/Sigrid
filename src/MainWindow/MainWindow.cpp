@@ -621,7 +621,7 @@ void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::G
         std::cout << "Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece, graphicPiece);
+    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceColorTools(logicPiece.getNotation());
@@ -638,7 +638,7 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigr
         return;
     }
 
-    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece, graphicPiece);
+    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());

@@ -137,7 +137,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             return ActionType::None();
         case ToolSelection::PieceAdder:
-            m_boardPtr->addPiece(toCoord, tool.getLogicPiece(), tool.getGraphicPiece());
+            m_boardPtr->addPiece(toCoord, tool.getLogicPiece());
             return ActionType::None();
         case ToolSelection::PiecePicker:
             {

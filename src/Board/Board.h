@@ -66,7 +66,7 @@ namespace sigrid{
 
             void deselect();
 
-            void addPiece(const Coord& coord, const LogicPiece& logicPiece, const GraphicPiece& graphicPiece);
+            void addPiece(const Coord& coord, const LogicPiece& logicPiece);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);

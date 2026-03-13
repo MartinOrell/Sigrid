@@ -28,7 +28,8 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_isTopToBottom{false}
 , m_arrowThickness{config.arrowThickness}
 , m_arrowHeadSize{config.arrowHeadSize}
-, m_circleDiameter{config.circleDiameter}{
+, m_circleDiameter{config.circleDiameter}
+, m_pieceManagerPtr{pieceManagerPtr}{
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -222,11 +223,25 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
     return std::make_optional<Coord>((int)x,(int)y);
 }
 
-void GraphicBoard::addPiece(const Coord& coord, const GraphicPiece& piece){
+void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     
     assert(m_pieces.find(coord) == m_pieces.end());
 
-    GraphicPiece newPiece{piece};
+    if(m_pieceManagerPtr == nullptr){
+        std::cout << "GraphicBoard: Failed to add piece" << std::endl;
+        std::cout << "PieceManagerPtr is null" << std::endl;
+        return;
+    }
+
+    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
+
+    if(graphicPiece_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add piece" << std::endl;
+        std::cout << "Piece not found in pieceManager" << std::endl;
+        return; 
+    }
+
+    GraphicPiece newPiece{graphicPiece_o.value()};
     newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
     newPiece.setPosition(m_squares[coord.y][coord.x].getPosition());
     m_pieces.insert({coord, newPiece});
