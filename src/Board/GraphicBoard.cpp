@@ -28,8 +28,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
 , m_isTopToBottom{false}
 , m_arrowThickness{config.arrowThickness}
 , m_arrowHeadSize{config.arrowHeadSize}
-, m_circleDiameter{config.circleDiameter}
-, m_pieceManagerPtr{pieceManagerPtr}{
+, m_pieceLayer{sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, colorManagerPtr}{
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -66,28 +65,10 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
             row.push_back(square);
 
             auto entity_o = logicBoard.getEntityAt({x,y});
-            if(entity_o == std::nullopt){
-                continue;
-            }
-            if(std::holds_alternative<LogicPiece>(entity_o.value())){
-
-                LogicPiece newLogicPiece = std::get<LogicPiece>(entity_o.value());
-                auto newGraphicPiece_o = pieceManagerPtr->getGraphicPiece(newLogicPiece);
-                if(newGraphicPiece_o != std::nullopt){
-                    GraphicPiece newGraphicPiece = newGraphicPiece_o.value();
-                    newGraphicPiece.resize({(float)config.squareSize,(float)config.squareSize});
-                    newGraphicPiece.setPosition(square.getPosition()+square.getSize()/2.f);
-                    m_pieceLayer.addPiece({x,y}, newGraphicPiece);
-                }
-                continue;
-            }
-            if(std::holds_alternative<LogicCircle>(entity_o.value())){
+            if(entity_o != std::nullopt){
                 sf::Vector2f position = square.getPosition()
-                    + square.getSize()/2.f;;
-                sf::Color color = m_colorManagerPtr->getSolidColor(std::get<LogicCircle>(entity_o.value()).getColorId());
-                GraphicCircle newCircle{color, m_circleDiameter};
-                newCircle.setPosition(position);
-                m_pieceLayer.addCircle({x,y}, newCircle);
+                    + square.getSize()/2.f;
+                m_pieceLayer.addEntity({x,y},position,entity_o.value());
             }
         }
         m_squares.push_back(row);
@@ -234,32 +215,13 @@ void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
         return;
     }
 
-    auto entity_o = m_pieceLayer.getEntityAt(coord);
-
-    if(entity_o != std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
         std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
         std::cout << "There is already an entity there" << std::endl;
         return;
     }
 
-    if(m_pieceManagerPtr == nullptr){
-        std::cout << "GraphicBoard: Failed to add piece" << std::endl;
-        std::cout << "PieceManagerPtr is null" << std::endl;
-        return;
-    }
-
-    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-
-    if(graphicPiece_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to add piece" << std::endl;
-        std::cout << "Piece not found in pieceManager" << std::endl;
-        return; 
-    }
-
-    GraphicPiece newPiece{graphicPiece_o.value()};
-    newPiece.resize({(float)m_squares[coord.y][coord.x].getSize().x,(float)m_squares[coord.y][coord.x].getSize().y});
-    newPiece.setPosition(position_o.value());
-    m_pieceLayer.addPiece(coord, newPiece);
+    m_pieceLayer.addEntity(coord,position_o.value(),logicPiece);
     redrawTexture();
 }
 
@@ -285,16 +247,6 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return; 
     }
 
-    auto fromPosition_o = getSquareCenterPosition(fromCoord);
-
-    if(fromPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to move entity from "
-            << fromCoord.getNotation() << " to "
-            << toCoord.getNotation() << std::endl;
-        std::cout << "Starting square position not found" << std::endl;
-        return;
-    }
-
     auto toPosition_o = getSquareCenterPosition(toCoord);
 
     if(toPosition_o == std::nullopt){
@@ -305,27 +257,12 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    auto capturedEntity_o = m_pieceLayer.getEntityAt(toCoord);
-
-    if(capturedEntity_o != std::nullopt){
+    if(m_pieceLayer.getEntityAt(toCoord) != std::nullopt){
         m_pieceLayer.removeEntity(toCoord);
     }
 
-    auto moveEntity_o = m_pieceLayer.getEntityAt(fromCoord);
-
-    if(moveEntity_o != std::nullopt){
-        if(std::holds_alternative<GraphicPiece>(moveEntity_o.value())){
-            GraphicPiece newPiece{std::get<GraphicPiece>(moveEntity_o.value())};
-            newPiece.setPosition(toPosition_o.value());
-            m_pieceLayer.addPiece(toCoord, newPiece);
-            m_pieceLayer.removeEntity(fromCoord);
-        }
-        else if(std::holds_alternative<GraphicCircle>(moveEntity_o.value())){
-            GraphicCircle newCircle{std::get<GraphicCircle>(moveEntity_o.value())};
-            newCircle.setPosition(toPosition_o.value());
-            m_pieceLayer.addCircle(toCoord, newCircle);
-            m_pieceLayer.removeEntity(fromCoord);
-        }
+    if(m_pieceLayer.getEntityAt(fromCoord) != std::nullopt){
+        m_pieceLayer.moveEntity(fromCoord, toCoord,toPosition_o.value());
     }
 
     redrawTexture();
@@ -436,18 +373,9 @@ void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle)
         std::cout << "There is already an entity there" << std::endl;
         return;
     }
-    
-    if(m_colorManagerPtr == nullptr){
-        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
-        std::cout << "ColorManager does not exist to assign color" << std::endl;
-        return;
-    }
-    
-    sf::Color color = m_colorManagerPtr->getSolidColor(logicCircle.getColorId());
 
-    GraphicCircle newCircle(color, m_circleDiameter);
-    newCircle.setPosition(position_o.value());
-    m_pieceLayer.addCircle(coord, newCircle);
+    m_pieceLayer.addEntity(coord,position_o.value(),logicCircle);
+    
     redrawTexture();
 }
 

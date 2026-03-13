@@ -147,8 +147,6 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            PieceManager* m_pieceManagerPtr;
-
             std::unique_ptr<sf::RenderTexture> m_texturePtr;
             sf::Vector2f m_position;
             float m_scale;
@@ -202,7 +200,5 @@ namespace sigrid{
 
             float m_arrowThickness;
             float m_arrowHeadSize;
-
-            float m_circleDiameter;
     };
 }
