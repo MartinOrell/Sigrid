@@ -58,11 +58,15 @@ GraphicArrow::GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f&
 GraphicArrow::GraphicArrow(const GraphicArrow& src){
     m_line = src.m_line;
     m_head = src.m_head;
+    m_thickness = src.m_thickness;
+    m_headSize = src.m_headSize;
 }
 
 GraphicArrow& GraphicArrow::operator =(const GraphicArrow& src){
     m_line = src.m_line;
     m_head = src.m_head;
+    m_thickness = src.m_thickness;
+    m_headSize = src.m_headSize;
     return *this;
 }
 
