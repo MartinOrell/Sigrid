@@ -136,7 +136,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
                 m_boardPtr->dragAndDrop(fromCoord_o.value(), toCoord_o.value());
             }
             return ActionType::None();
-        case ToolSelection::PieceAdder:
+        case ToolSelection::EntityAdder:
             m_boardPtr->addEntity(toCoord, tool.getEntity());
             return ActionType::None();
         case ToolSelection::PiecePicker:
@@ -158,9 +158,6 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
                 return ActionType::None();
             }
             m_boardPtr->addArrow(fromCoord, toCoord, tool.arrowColorId());
-            return ActionType::None();
-        case ToolSelection::AddCircle:
-            m_boardPtr->addEntity(toCoord, tool.getEntity());
             return ActionType::None();
         default:
             return ActionType::None();

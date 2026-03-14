@@ -5,14 +5,13 @@ namespace sigrid{
     enum ToolSelection{
         Select,
         MultiSelect,
-        PieceAdder,
+        EntityAdder,
         PieceEraser,
         PiecePicker,
         SquareAdder,
         SquareEraser,
         SquarePicker,
-        DrawArrow,
-        AddCircle
+        DrawArrow
     };
 
 }

@@ -622,7 +622,7 @@ void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::G
         return;
     }
     m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceColorTools(logicPiece.getNotation());
 }
@@ -639,7 +639,7 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigr
     }
 
     m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
 }
@@ -684,7 +684,7 @@ void MainWindow::pickCircle(const int colorId){
         return;
     }
     m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setCircleColors();
 }
@@ -699,7 +699,7 @@ void MainWindow::pickCircleColor(const int colorId){
         return;
     }
     m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
+    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setAddCircleTool(colorId);
 }
