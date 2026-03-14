@@ -205,23 +205,25 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
     return std::make_optional<Coord>((int)x,(int)y);
 }
 
-void GraphicBoard::addPiece(const Coord& coord, const LogicPiece& logicPiece){
+void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     
     auto position_o = getSquareCenterPosition(coord);
 
     if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
+        std::cout << "GraphicBoard: Failed to add entity at "
+            << coord.getNotation() << std::endl;
         std::cout << "Position for coordinate not found" << std::endl;
         return;
     }
 
     if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
-        std::cout << "GraphicBoard: Failed to add piece at " << coord.getNotation() <<std::endl;
+        std::cout << "GraphicBoard: Failed to add entity at "
+            << coord.getNotation() << std::endl;
         std::cout << "There is already an entity there" << std::endl;
         return;
     }
 
-    m_pieceLayer.addEntity(coord,position_o.value(),logicPiece);
+    m_pieceLayer.addEntity(coord,position_o.value(),entity);
     redrawTexture();
 }
 
@@ -344,27 +346,6 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
 
 void GraphicBoard::removeArrow(const LogicArrow& arrow){
 
-}
-
-void GraphicBoard::addCircle(const Coord& coord, const LogicCircle& logicCircle){
-
-    auto position_o = getSquareCenterPosition(coord);
-
-    if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
-        std::cout << "Position of square not found" << std::endl;
-        return;
-    }
-
-    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
-        std::cout << "GraphicBoard: Unable to add circle at " << coord.getNotation() << std::endl;
-        std::cout << "There is already an entity there" << std::endl;
-        return;
-    }
-
-    m_pieceLayer.addEntity(coord,position_o.value(),logicCircle);
-    
-    redrawTexture();
 }
 
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

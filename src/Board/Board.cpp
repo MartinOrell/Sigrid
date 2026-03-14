@@ -182,7 +182,7 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
 
     if(logicEntity_o == std::nullopt){
         if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addPiece(coord, logicPiece);
+            m_graphicBoard->addEntity(coord, logicPiece);
         }
         return;
     }
@@ -193,7 +193,7 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
             m_graphicBoard->removeEntity(coord);
         }
         if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addPiece(coord, logicPiece);
+            m_graphicBoard->addEntity(coord, logicPiece);
         }
         return;
     }
@@ -242,7 +242,7 @@ void Board::addCircle(const Coord& coord, const LogicCircle& circle){
 
     if(logicEntity_o == std::nullopt){
         if(m_logicBoard->addEntity(coord, circle)){
-            m_graphicBoard->addCircle(coord, circle);
+            m_graphicBoard->addEntity(coord, circle);
         }
         return;
     }
@@ -253,7 +253,7 @@ void Board::addCircle(const Coord& coord, const LogicCircle& circle){
             m_graphicBoard->removeEntity(coord);
         }
         if(m_logicBoard->addEntity(coord, circle)){
-            m_graphicBoard->addCircle(coord, circle);
+            m_graphicBoard->addEntity(coord, circle);
         }
         return;
     }
