@@ -428,7 +428,7 @@ void ToolPickerWindow::redrawTexture(){
 
             m_boardPtr->addTool({x,y}, graphicPiece_o.value().getTexturePtr());
 
-            ActionType::PickPiece action{logicPiece, graphicPiece_o.value()};
+            ActionType::PickEntity action{logicPiece, graphicPiece_o.value()};
 
             m_clickActions.insert_or_assign({x,y}, action);
 

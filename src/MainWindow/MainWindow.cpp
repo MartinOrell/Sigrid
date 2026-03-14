@@ -36,7 +36,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
     m_tools.insert({sf::Mouse::Button::Left,std::move(tool1)});
     sigrid::Tool tool2{sigrid::ToolSelection::DrawArrow};
     m_tools.insert({sf::Mouse::Button::Right, std::move(tool2)});
-    sigrid::Tool tool3{sigrid::ToolSelection::PiecePicker};
+    sigrid::Tool tool3{sigrid::ToolSelection::EntityPicker};
     m_tools.insert({sf::Mouse::Button::Middle, std::move(tool3)});
     sigrid::Tool tool4{sigrid::ToolSelection::Select};
     m_tools.insert({sf::Mouse::Button::Extra1, std::move(tool4)});
@@ -444,12 +444,12 @@ void MainWindow::handleAction(const sigrid::Action action){
         print();
         return;
     }
-    else if(std::holds_alternative<ActionType::PickPiece>(action)){
+    else if(std::holds_alternative<ActionType::PickEntity>(action)){
         
-        sigrid::LogicPiece logicPiece = std::get<ActionType::PickPiece>(action).logicPiece;
-        sigrid::GraphicPiece graphicPiece = std::get<ActionType::PickPiece>(action).graphicPiece;
+        sigrid::LogicEntity logicEntity = std::get<ActionType::PickEntity>(action).logicEntity;
+        sigrid::GraphicEntity graphicEntity = std::get<ActionType::PickEntity>(action).graphicEntity;
         
-        pickPiece(logicPiece, graphicPiece);
+        pickEntity(logicEntity, graphicEntity);
         return;
     }
     else if(std::holds_alternative<ActionType::PickPieceColor>(action)){
@@ -612,7 +612,7 @@ void MainWindow::print(){
     m_workWindow->print();
 }
 
-void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece){
+void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid::GraphicEntity& graphicEntity){
     if(!m_toolWindow){
         std::cout << "Unable to pick piece, toolwindow does not exist" << std::endl;
         return;
@@ -621,10 +621,19 @@ void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::G
         std::cout << "Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
+    m_tools.at(sf::Mouse::Button::Left).setEntity(logicEntity);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
-    m_toolWindow->setSetPieceTool(graphicPiece);
-    m_toolPickerWindow->setPieceColorTools(logicPiece.getNotation());
+    if(std::holds_alternative<GraphicPiece>(graphicEntity)){
+        m_toolWindow->setSetPieceTool(std::get<GraphicPiece>(graphicEntity));
+    }
+    if(std::holds_alternative<LogicPiece>(logicEntity)){
+        m_toolPickerWindow->setPieceColorTools(std::get<LogicPiece>(logicEntity).getNotation());
+    }
+    else if(std::holds_alternative<LogicCircle>(logicEntity)){
+        LogicCircle circle = std::get<LogicCircle>(logicEntity);
+        m_toolWindow->setAddCircleTool(circle.getColorId());
+        m_toolPickerWindow->setAddCircleTool(circle.getColorId());
+    }
 }
 
 void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece){

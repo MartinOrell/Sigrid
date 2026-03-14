@@ -2,6 +2,8 @@
 
 #include <variant>
 
+#include "../Entity/LogicEntity.h"
+#include "../Entity/GraphicEntity.h"
 #include "../Piece/LogicPiece.h"
 #include "../Piece/GraphicPiece.h"
 #include "../Tool/Tool.h"
@@ -17,9 +19,9 @@ namespace sigrid{
         struct Reset{};
         struct Clear{};
         struct Print{};
-        struct PickPiece{
-            LogicPiece logicPiece;
-            GraphicPiece graphicPiece;
+        struct PickEntity{
+            LogicEntity logicEntity;
+            GraphicEntity graphicEntity;
         };
         struct PickPieceColor{
             LogicPiece logicPiece;
@@ -71,7 +73,7 @@ namespace sigrid{
         ActionType::Reset,
         ActionType::Clear,
         ActionType::Print,
-        ActionType::PickPiece,
+        ActionType::PickEntity,
         ActionType::PickPieceColor,
         ActionType::PickArrow,
         ActionType::PickArrowColor,

@@ -54,8 +54,8 @@ namespace sigrid{
 
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
-            std::optional<LogicPiece> getLogicPiece(const Coord& coord);
-            std::optional<GraphicPiece> getGraphicPiece(const Coord& coord);
+            std::optional<LogicEntity> getLogicEntity(const Coord& coord);
+            std::optional<GraphicEntity> getGraphicEntity(const Coord& coord);
 
             std::string getFen() const;
 

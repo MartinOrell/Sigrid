@@ -82,26 +82,20 @@ std::optional<Coord> Board::getSquareCoord(sf::Vector2i point){
     return m_graphicBoard->getSquareCoord(point);
 }
 
-std::optional<LogicPiece> Board::getLogicPiece(const Coord& coord){
+std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
     auto entity_o = m_logicBoard->getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
     }
-    if(!std::holds_alternative<LogicPiece>(entity_o.value())){
-        return std::nullopt;
-    }
-    return std::get<LogicPiece>(entity_o.value());
+    return entity_o.value();
 }
 
-std::optional<GraphicPiece> Board::getGraphicPiece(const Coord& coord){
-    auto entity_o = m_logicBoard->getEntityAt(coord);
+std::optional<GraphicEntity> Board::getGraphicEntity(const Coord& coord){
+    auto entity_o = m_graphicBoard->getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
     }
-    if(!std::holds_alternative<LogicPiece>(entity_o.value())){
-        return std::nullopt;
-    }
-    return m_pieceManagerPtr->getGraphicPiece(std::get<LogicPiece>(entity_o.value()));
+    return entity_o.value();
 }
 
 std::string Board::getFen() const{

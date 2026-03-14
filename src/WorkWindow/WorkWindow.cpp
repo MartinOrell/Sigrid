@@ -139,17 +139,17 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
         case ToolSelection::EntityAdder:
             m_boardPtr->addEntity(toCoord, tool.getEntity());
             return ActionType::None();
-        case ToolSelection::PiecePicker:
+        case ToolSelection::EntityPicker:
             {
-                auto logicPiece_o = m_boardPtr->getLogicPiece(toCoord);
-                if(logicPiece_o == std::nullopt){
+                auto logicEntity_o = m_boardPtr->getLogicEntity(toCoord);
+                if(logicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
-                auto graphicPiece_o = m_boardPtr->getGraphicPiece(toCoord);
-                if(graphicPiece_o == std::nullopt){
+                auto graphicEntity_o = m_boardPtr->getGraphicEntity(toCoord);
+                if(graphicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
-                ActionType::PickPiece action{logicPiece_o.value(), graphicPiece_o.value()};
+                ActionType::PickEntity action{logicEntity_o.value(), graphicEntity_o.value()};
                 return action;
             }
         case ToolSelection::DrawArrow:

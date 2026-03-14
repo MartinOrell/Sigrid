@@ -53,6 +53,8 @@ namespace sigrid{
 
             float getDisplayHeight() const;
 
+            std::optional<GraphicEntity> getEntityAt(const Coord& coord) const;
+
             bool contains(sf::Vector2i point) const;
 
             bool isCoordinatesOutside() const;

@@ -7,7 +7,7 @@ namespace sigrid{
         MultiSelect,
         EntityAdder,
         PieceEraser,
-        PiecePicker,
+        EntityPicker,
         SquareAdder,
         SquareEraser,
         SquarePicker,

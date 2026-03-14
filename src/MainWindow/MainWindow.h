@@ -37,7 +37,7 @@ namespace sigrid{
             void reset();
             void clear();
             void print();
-            void pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece);
+            void pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid::GraphicEntity& graphicEntity);
             void pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece);
             void pickArrow(const int colorId);
             void pickArrowColor(const int colorId);
