@@ -2,8 +2,8 @@
 
 #include <variant>
 
-#include "../Piece/LogicPiece.h"
-#include "../Shape/Circle/LogicCircle.h"
+#include "Piece/LogicPiece.h"
+#include "Shape/Circle/LogicCircle.h"
 
 namespace sigrid{
     typedef std::variant<

@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../../Piece/PieceColor.h"
-#include "../../Piece/PieceContainer.h"
+#include "../../Entity/Piece/PieceColor.h"
+#include "../../Entity/Piece/PieceContainer.h"
 #include "../../Board/BoardDesignContainer.h"
 #include "../../Menu/MenuContainer.h"
 #include "../../ToolPicker/ToolPickerContainer.h"

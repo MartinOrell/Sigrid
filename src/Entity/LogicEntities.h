@@ -3,9 +3,10 @@
 #include <map>
 #include <optional>
 
+#include "../Coord/Coord.h"
 #include "LogicEntity.h"
-#include "../Piece/LogicPiece.h"
-#include "../Shape/Circle/LogicCircle.h"
+#include "Piece/LogicPiece.h"
+#include "Shape/Circle/LogicCircle.h"
 
 namespace sigrid{
     class LogicEntities{

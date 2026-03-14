@@ -5,10 +5,10 @@
 #include "../Coord/Coord.h"
 #include "LogicEntity.h"
 #include "GraphicEntity.h"
-#include "../Piece/GraphicPiece.h"
-#include "../Shape/Circle/GraphicCircle.h"
+#include "Piece/GraphicPiece.h"
+#include "Shape/Circle/GraphicCircle.h"
 
-#include "../Piece/PieceManager.h"
+#include "Piece/PieceManager.h"
 #include "../Color/ColorManager.h"
 
 namespace sigrid{

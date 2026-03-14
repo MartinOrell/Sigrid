@@ -6,7 +6,7 @@
 #include <memory>
 #include "../Arrow/GraphicArrow.h"
 #include "../Color/ColorManager.h"
-#include "../Shape/Circle/GraphicCircle.h"
+#include "../Entity/Shape/Circle/GraphicCircle.h"
 
 namespace sigrid{
 

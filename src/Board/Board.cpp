@@ -4,7 +4,7 @@
 #include <fstream>
 #include <cctype> //isdigit
 
-#include "../Shape/Circle/LogicCircle.h"
+#include "../Entity/Shape/Circle/LogicCircle.h"
 
 using namespace sigrid;
 

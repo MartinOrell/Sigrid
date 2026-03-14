@@ -15,10 +15,10 @@ set(SRC_FILES
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
     src/Coord/Coord.cpp
-    src/Piece/LogicPiece.cpp
-    src/Piece/GraphicPiece.cpp
-    src/Piece/PieceIdentifier.cpp
-    src/Piece/PieceManager.cpp
+    src/Entity/Piece/LogicPiece.cpp
+    src/Entity/Piece/GraphicPiece.cpp
+    src/Entity/Piece/PieceIdentifier.cpp
+    src/Entity/Piece/PieceManager.cpp
     src/Tool/Tool.cpp
     src/Tool/ToolManager.cpp
     src/ToolPicker/GraphicToolPicker.cpp
@@ -28,8 +28,8 @@ set(SRC_FILES
     src/Arrow/GraphicArrow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
-    src/Shape/Circle/LogicCircle.cpp
-    src/Shape/Circle/GraphicCircle.cpp
+    src/Entity/Shape/Circle/LogicCircle.cpp
+    src/Entity/Shape/Circle/GraphicCircle.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
 )

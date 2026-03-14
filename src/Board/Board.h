@@ -2,10 +2,10 @@
 
 #include "GraphicBoard.h"
 #include "LogicBoard.h"
-#include "../Piece/LogicPiece.h"
-#include "../Piece/GraphicPiece.h"
+#include "../Entity/Piece/LogicPiece.h"
+#include "../Entity/Piece/GraphicPiece.h"
 #include "../Coord/Coord.h"
-#include "../Piece/PieceManager.h"
+#include "../Entity/Piece/PieceManager.h"
 #include "../Tool/Tool.h"
 
 #include <SFML/Window/Event.hpp>

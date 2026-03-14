@@ -7,9 +7,9 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "../Piece/LogicPiece.h"
+#include "../Entity/Piece/LogicPiece.h"
 #include "LogicBoard.h"
-#include "../Piece/PieceManager.h"
+#include "../Entity/Piece/PieceManager.h"
 
 #include <vector>
 #include <map>
@@ -25,8 +25,8 @@
 
 #include "BoardDesignContainer.h"
 
-#include "../Shape/Circle/LogicCircle.h"
-#include "../Shape/Circle/GraphicCircle.h"
+#include "../Entity/Shape/Circle/LogicCircle.h"
+#include "../Entity/Shape/Circle/GraphicCircle.h"
 
 #include "../Entity/GraphicEntities.h"
 

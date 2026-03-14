@@ -1,7 +1,7 @@
 #include "LogicBoard.h"
 
 #include <iostream>
-#include "../Piece/LogicPiece.h"
+#include "../Entity/Piece/LogicPiece.h"
 #include <cctype>
 
 #include <algorithm>

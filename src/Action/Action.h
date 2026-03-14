@@ -4,8 +4,8 @@
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
-#include "../Piece/LogicPiece.h"
-#include "../Piece/GraphicPiece.h"
+#include "../Entity/Piece/LogicPiece.h"
+#include "../Entity/Piece/GraphicPiece.h"
 #include "../Tool/Tool.h"
 
 namespace sigrid{

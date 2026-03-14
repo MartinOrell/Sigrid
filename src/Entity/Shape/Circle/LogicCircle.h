@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../Coord/Coord.h"
-
 namespace sigrid{
     class LogicCircle{
 

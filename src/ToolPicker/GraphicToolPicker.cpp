@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include "../Board/LogicBoard.h"
-#include "../Piece/PieceManager.h"
+#include "../Entity/Piece/PieceManager.h"
 
 
 using namespace sigrid;
