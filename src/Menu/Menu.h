@@ -5,6 +5,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include <vector>
+#include <map>
 #include "MenuItem.h"
 
 #include <SFML/Graphics/Font.hpp>

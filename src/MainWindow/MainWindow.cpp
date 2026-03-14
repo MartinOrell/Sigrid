@@ -621,7 +621,7 @@ void MainWindow::pickPiece(const sigrid::LogicPiece& logicPiece, const sigrid::G
         std::cout << "Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece);
+    m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceColorTools(logicPiece.getNotation());
@@ -638,7 +638,7 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigr
         return;
     }
 
-    m_tools.at(sf::Mouse::Button::Left).setPiece(logicPiece);
+    m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::PieceAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
@@ -683,7 +683,7 @@ void MainWindow::pickCircle(const int colorId){
         std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setCircle(colorId);
+    m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setCircleColors();
@@ -698,7 +698,7 @@ void MainWindow::pickCircleColor(const int colorId){
         std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setCircle(colorId);
+    m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::AddCircle);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setAddCircleTool(colorId);

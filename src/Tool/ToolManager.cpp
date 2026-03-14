@@ -1,6 +1,7 @@
 #include "ToolManager.h"
 
 #include "../Arrow/GraphicArrow.h"
+#include <SFML/Graphics/RenderTexture.hpp>
 
 #include <iostream>
 

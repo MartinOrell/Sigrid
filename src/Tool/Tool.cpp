@@ -20,8 +20,8 @@ const int Tool::arrowColorId() const{
     return m_arrowColorId;
 }
 
-void Tool::setPiece(const LogicPiece& logicPiece){
-    m_entity = std::make_unique<LogicEntity>(logicPiece);
+void Tool::setEntity(const LogicEntity& entity){
+    m_entity = std::make_unique<LogicEntity>(entity);
 }
 
 void Tool::setSelection(const ToolSelection& selection){
@@ -30,8 +30,4 @@ void Tool::setSelection(const ToolSelection& selection){
 
 void Tool::setArrow(const int colorId){
     m_arrowColorId = colorId;
-}
-
-void Tool::setCircle(const int colorId){
-    m_entity = std::make_unique<LogicEntity>(LogicCircle{colorId});
 }

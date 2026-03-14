@@ -10,6 +10,7 @@
 #include "../Action/Action.h"
 
 #include "../Tool/ToolManager.h"
+#include "../Piece/PieceManager.h"
 
 #include "../MainWindow/MainWindowConfigContainer.h"
 

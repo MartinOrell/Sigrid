@@ -1,13 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <variant>
 
 #include "ToolSelection.h"
 
 #include "../Entity/LogicEntity.h"
-#include "../Piece/LogicPiece.h"
-#include "../Piece/PieceManager.h"
 #include "SFML/Window/Mouse.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 
 namespace sigrid{
@@ -19,10 +19,9 @@ namespace sigrid{
             const ToolSelection selection() const;
             LogicEntity getEntity() const;
             const int arrowColorId() const;
-            void setPiece(const LogicPiece& logicPiece);
+            void setEntity(const LogicEntity& entity);
             void setSelection(const ToolSelection& selection);
             void setArrow(const int colorId);
-            void setCircle(const int colorId);
 
         private:
             ToolSelection m_selection;
