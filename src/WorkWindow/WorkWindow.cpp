@@ -137,7 +137,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             return ActionType::None();
         case ToolSelection::PieceAdder:
-            m_boardPtr->addPiece(toCoord, tool.getLogicPiece());
+            m_boardPtr->addEntity(toCoord, tool.getLogicPiece());
             return ActionType::None();
         case ToolSelection::PiecePicker:
             {
@@ -160,7 +160,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             m_boardPtr->addArrow(fromCoord, toCoord, tool.arrowColorId());
             return ActionType::None();
         case ToolSelection::AddCircle:
-            m_boardPtr->addCircle(toCoord, tool.getCircleColorId());
+            m_boardPtr->addEntity(toCoord, tool.getCircleColorId());
             return ActionType::None();
         default:
             return ActionType::None();

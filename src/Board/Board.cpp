@@ -160,7 +160,7 @@ void Board::textEntered(std::string text){
     if(m_selection == nullptr){
         return;
     }
-    addPiece(*m_selection, logicPiece);
+    addEntity(*m_selection, logicPiece);
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
 }
@@ -170,7 +170,7 @@ void Board::deselect(){
     m_graphicBoard->unhighlight();
 }
 
-void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
+void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add Piece at " << coord.getNotation() << std::endl;
@@ -178,22 +178,21 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
         return;
     }
 
-    auto logicEntity_o = m_logicBoard->getEntityAt(coord);
+    auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
 
-    if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addEntity(coord, logicPiece);
+    if(occupyingEntity_o == std::nullopt){
+        if(m_logicBoard->addEntity(coord, newEntity)){
+            m_graphicBoard->addEntity(coord, newEntity);
         }
         return;
     }
 
-    if(!std::holds_alternative<LogicPiece>(logicEntity_o.value())
-    || std::get<LogicPiece>(logicEntity_o.value()) != logicPiece){
+    if(occupyingEntity_o.value()!= newEntity){
         if(m_logicBoard->removeEntity(coord)){
             m_graphicBoard->removeEntity(coord);
         }
-        if(m_logicBoard->addEntity(coord, logicPiece)){
-            m_graphicBoard->addEntity(coord, logicPiece);
+        if(m_logicBoard->addEntity(coord, newEntity)){
+            m_graphicBoard->addEntity(coord, newEntity);
         }
         return;
     }
@@ -227,39 +226,6 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int col
     LogicArrow logicArrow{fromCoord, toCoord, colorId};
     if(m_logicBoard->addArrow(logicArrow)){
         m_graphicBoard->addArrow(logicArrow);
-    }
-}
-
-void Board::addCircle(const Coord& coord, const LogicCircle& circle){
-
-    if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to add Circle at " << coord.getNotation() << std::endl;
-        std::cout << "because it is out of bounds" << std::endl;
-        return;
-    }
-
-    auto logicEntity_o = m_logicBoard->getEntityAt(coord);
-
-    if(logicEntity_o == std::nullopt){
-        if(m_logicBoard->addEntity(coord, circle)){
-            m_graphicBoard->addEntity(coord, circle);
-        }
-        return;
-    }
-
-    if(!std::holds_alternative<LogicCircle>(logicEntity_o.value())
-    || std::get<LogicCircle>(logicEntity_o.value()) != circle){
-        if(m_logicBoard->removeEntity(coord)){
-            m_graphicBoard->removeEntity(coord);
-        }
-        if(m_logicBoard->addEntity(coord, circle)){
-            m_graphicBoard->addEntity(coord, circle);
-        }
-        return;
-    }
-
-    if(m_logicBoard->removeEntity(coord)){
-        m_graphicBoard->removeEntity(coord);
     }
 }
 
@@ -303,7 +269,7 @@ void Board::loadFen(const std::string& fen){
 
             auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
             if(graphicPiece_o != std::nullopt){
-                addPiece({x,y}, logicPiece);
+                addEntity({x,y}, logicPiece);
             }
             else{
                 std::cout << "Failed to get piece of character \"" << s
