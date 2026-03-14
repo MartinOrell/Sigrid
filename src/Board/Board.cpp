@@ -199,7 +199,7 @@ void Board::addPiece(const Coord& coord, const LogicPiece& logicPiece){
     }
 
     if(m_logicBoard->removeEntity(coord)){
-        m_graphicBoard->removePiece(coord);
+        m_graphicBoard->removeEntity(coord);
     }
 }
 
@@ -259,7 +259,7 @@ void Board::addCircle(const Coord& coord, const LogicCircle& circle){
     }
 
     if(m_logicBoard->removeEntity(coord)){
-        m_graphicBoard->removeCircle(coord);
+        m_graphicBoard->removeEntity(coord);
     }
 }
 

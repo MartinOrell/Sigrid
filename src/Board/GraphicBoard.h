@@ -62,7 +62,6 @@ namespace sigrid{
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
             void addPiece(const Coord& coord, const LogicPiece& logicPiece);
-            void removePiece(const Coord& coord);
 
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
@@ -71,7 +70,6 @@ namespace sigrid{
             void addArrow(const LogicArrow& arrow);
             void removeArrow(const LogicArrow& arrow);
             void addCircle(const Coord& coord, const LogicCircle& circle);
-            void removeCircle(const Coord& coord);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
