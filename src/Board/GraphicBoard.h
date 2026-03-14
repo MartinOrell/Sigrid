@@ -64,7 +64,7 @@ namespace sigrid{
             std::optional<Coord> getSquareCoord(sf::Vector2i point);
 
             void addEntity(const Coord& coord, const LogicEntity& logicEntity);
-
+            void removeEntity(const Coord& coord);
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
             void addSquareHighlight(const Coord& coord, const int colorId);
@@ -78,8 +78,6 @@ namespace sigrid{
             void highlightSquare(const Coord& coord);
 
             void unhighlight();
-
-            void removeEntity(const Coord& coord);
             
 
             void saveImage(const std::string& fileName);

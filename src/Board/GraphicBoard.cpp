@@ -231,6 +231,19 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     redrawTexture();
 }
 
+void GraphicBoard::removeEntity(const Coord& coord){
+
+    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
+        std::cout << "GraphicBoard: Failed to remove entity at "
+            << coord.getNotation() << std::endl;
+        std::cout << "There is no entity there" << std::endl;
+        return;
+    }
+
+    m_pieceLayer.removeEntity(coord);
+    redrawTexture();
+}
+
 void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     
     if(fromCoord == toCoord){
@@ -439,19 +452,6 @@ void GraphicBoard::unhighlight(){
         m_selectHighlight = nullptr;
         redrawTexture();
     }
-}
-
-void GraphicBoard::removeEntity(const Coord& coord){
-
-    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
-        std::cout << "GraphicBoard: Failed to remove entity at "
-            << coord.getNotation() << std::endl;
-        std::cout << "There is no entity there" << std::endl;
-        return;
-    }
-
-    m_pieceLayer.removeEntity(coord);
-    redrawTexture();
 }
 
 void GraphicBoard::saveImage(const std::string& fileName){
