@@ -6,27 +6,22 @@ using namespace sigrid;
 
 Tool::Tool(const ToolSelection& selection)
 : m_selection(selection)
-, m_arrowColorId(-1)
-, m_circleColorId(-1){}
+, m_arrowColorId(-1){}
 
 const ToolSelection Tool::selection() const{
     return m_selection;
 }
 
-LogicPiece Tool::getLogicPiece() const{
-    return *m_logicPiece;
+LogicEntity Tool::getEntity() const{
+    return *m_entity;
 }
 
 const int Tool::arrowColorId() const{
     return m_arrowColorId;
 }
 
-const int Tool::getCircleColorId() const{
-    return m_circleColorId;
-}
-
 void Tool::setPiece(const LogicPiece& logicPiece){
-    m_logicPiece = std::make_unique<LogicPiece>(logicPiece);
+    m_entity = std::make_unique<LogicEntity>(logicPiece);
 }
 
 void Tool::setSelection(const ToolSelection& selection){
@@ -38,5 +33,5 @@ void Tool::setArrow(const int colorId){
 }
 
 void Tool::setCircle(const int colorId){
-    m_circleColorId = colorId;
+    m_entity = std::make_unique<LogicEntity>(LogicCircle{colorId});
 }
