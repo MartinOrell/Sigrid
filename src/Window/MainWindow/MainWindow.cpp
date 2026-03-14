@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-#include "../Action/Action.h"
-#include "../Tool/Tool.h"
+#include "../../Action/Action.h"
 #include <SFML/Window/Clipboard.hpp>
 
 using namespace sigrid;

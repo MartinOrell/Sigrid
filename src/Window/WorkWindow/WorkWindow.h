@@ -3,10 +3,10 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "../Board/Board.h"
-#include "../Tool/Tool.h"
+#include "../../Board/Board.h"
+#include "../../Tool/Tool.h"
 
-#include "../Action/Action.h"
+#include "../../Action/Action.h"
 
 namespace sigrid{
     class WorkWindow: public sf::Drawable{

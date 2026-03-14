@@ -5,12 +5,12 @@
 #include <vector>
 #include <memory>
 
-#include "../Menu/Menu.h"
+#include "../../Menu/Menu.h"
 #include "../WorkWindow/WorkWindow.h"
 #include "../ToolWindow/ToolWindow.h"
-#include "../ToolPicker/ToolPickerWindow.h"
+#include "../../ToolPicker/ToolPickerWindow.h"
 
-#include "../Tool/Tool.h"
+#include "../../Tool/Tool.h"
 #include "MainWindowConfigContainer.h"
 
 namespace sigrid{

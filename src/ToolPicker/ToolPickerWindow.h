@@ -12,7 +12,7 @@
 #include "../Tool/ToolManager.h"
 #include "../Piece/PieceManager.h"
 
-#include "../MainWindow/MainWindowConfigContainer.h"
+#include "../Window/MainWindow/MainWindowConfigContainer.h"
 
 #include "ToolPickerContainer.h"
 

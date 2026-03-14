@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <iostream>
-#include "../Action/Action.h"
 
 using namespace sigrid;
 

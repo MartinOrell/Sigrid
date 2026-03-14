@@ -2,11 +2,11 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
-#include "../Tool/Tool.h"
+#include "../../Tool/Tool.h"
 #include "ToolItem.h"
 #include <SFML/Graphics/Font.hpp>
 #include <memory>
-#include "../Tool/ToolManager.h"
+#include "../../Tool/ToolManager.h"
 
 #include <SFML/Window/Event.hpp>
 

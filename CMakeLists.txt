@@ -3,13 +3,13 @@ project(MyEditTool LANGUAGES CXX)
 
 set(SRC_FILES
     src/main.cpp
-    src/MainWindow/MainWindow.cpp
-    src/MainWindow/MainWindowConfigContainer.cpp
+    src/Window/MainWindow/MainWindow.cpp
+    src/Window/MainWindow/MainWindowConfigContainer.cpp
     src/Menu/Menu.cpp
     src/Menu/MenuItem.cpp
-    src/WorkWindow/WorkWindow.cpp
-    src/ToolWindow/ToolWindow.cpp
-    src/ToolWindow/ToolItem.cpp
+    src/Window/WorkWindow/WorkWindow.cpp
+    src/Window/ToolWindow/ToolWindow.cpp
+    src/Window/ToolWindow/ToolItem.cpp
     src/Board/BoardDataContainer.cpp
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp

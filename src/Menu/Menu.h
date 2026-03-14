@@ -12,7 +12,7 @@
 #include "../Tool/Tool.h"
 
 #include "../Board/BoardDesignContainer.h"
-#include "../MainWindow/MainWindowConfigContainer.h"
+#include "../Window/MainWindow/MainWindowConfigContainer.h"
 
 #include "MenuContainer.h"
 

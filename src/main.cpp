@@ -1,8 +1,8 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
-#include "MainWindow/MainWindow.h"
-#include "MainWindow/MainWindowConfigContainer.h"
+#include "Window/MainWindow/MainWindow.h"
+#include "Window/MainWindow/MainWindowConfigContainer.h"
 
 int main()
 {
