@@ -37,10 +37,16 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
             std::cout << "ColorManager does not exist to assign color" << std::endl;
             return;
         }
-        
-        sf::Color color = m_colorManagerPtr->getSolidColor(std::get<LogicCircle>(entity).getColorId());
 
-        GraphicCircle newCircle(color, m_circleDiameter);
+        int colorId = std::get<LogicCircle>(entity).getColorId();
+        auto color_o = m_colorManagerPtr->getSolidColor(colorId);
+        if(color_o == std::nullopt){
+            std::cout << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
+            std::cout << "Color of colorId " << colorId << " not found" << std::endl;
+            return;
+        }
+
+        GraphicCircle newCircle(color_o.value(), m_circleDiameter);
         newCircle.setPosition(position);
         m_circles.insert({coord, newCircle});
     }

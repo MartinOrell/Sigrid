@@ -31,10 +31,22 @@ std::optional<sf::Texture*> ToolManager::getArrowTexturePtr(const int colorId){
         return &(m_arrowTextures.at(colorId));
     }
 
+    if(m_colorManagerPtr == nullptr){
+        std::cout << "ToolManager unable to get arrowTexturePtr" << std::endl;
+        std::cout << "ColorManagerPtr is nullptr" << std::endl;
+        return std::nullopt;
+    }
+
+    auto color_o = m_colorManagerPtr->getSolidColor(colorId);
+    
+    if(color_o == std::nullopt){
+        std::cout << "ToolManager unable to get arrowTexturePtr" << std::endl;
+        std::cout << "Color of ColorId " << colorId << " not found" << std::endl;
+        return std::nullopt;
+    }
+
     unsigned int squareWidth(70);
     unsigned int squareHeight(70);
-
-    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
 
     if(m_graphicArrowPtr == nullptr){
 
@@ -45,10 +57,10 @@ std::optional<sf::Texture*> ToolManager::getArrowTexturePtr(const int colorId){
         to.x = (float)squareWidth/2.f;
         to.y = (float)squareHeight*0.1f;
 
-        m_graphicArrowPtr = std::make_unique<GraphicArrow>(from, to, color, 5.f, 15.f);
+        m_graphicArrowPtr = std::make_unique<GraphicArrow>(from, to, color_o.value(), 5.f, 15.f);
     }
     else{
-        m_graphicArrowPtr->setColor(color);
+        m_graphicArrowPtr->setColor(color_o.value());
     }
 
     sf::RenderTexture renderTexture{{squareWidth,squareHeight}};
@@ -70,10 +82,22 @@ std::optional<sf::Texture*> ToolManager::getCircleTexturePtr(const int colorId){
         return &(m_circleTextures.at(colorId));
     }
 
+    if(m_colorManagerPtr == nullptr){
+        std::cout << "ToolManager unable to get circleTexturePtr" << std::endl;
+        std::cout << "ColorManagerPtr is nullptr" << std::endl;
+        return std::nullopt;
+    }
+
+    auto color_o = m_colorManagerPtr->getSolidColor(colorId);
+
+    if(color_o == std::nullopt){
+        std::cout << "ToolManager unable to get circleTexturePtr" << std::endl;
+        std::cout << "Color of ColorId " << colorId << " not found" << std::endl;
+        return std::nullopt;
+    }
+
     unsigned int squareWidth(70);
     unsigned int squareHeight(70);
-
-    sf::Color color = m_colorManagerPtr->getSolidColor(colorId);
 
     if(m_graphicCirclePtr == nullptr){
 
@@ -82,11 +106,11 @@ std::optional<sf::Texture*> ToolManager::getCircleTexturePtr(const int colorId){
         position.y = (float)squareHeight/2.f;
         float diameter = squareWidth*0.4f;
 
-        m_graphicCirclePtr = std::make_unique<GraphicCircle>(color, diameter);
+        m_graphicCirclePtr = std::make_unique<GraphicCircle>(color_o.value(), diameter);
         m_graphicCirclePtr->setPosition(position);
     }
     else{
-        m_graphicCirclePtr->setColor(color);
+        m_graphicCirclePtr->setColor(color_o.value());
     }
 
     sf::RenderTexture renderTexture{{squareWidth,squareHeight}};

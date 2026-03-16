@@ -298,10 +298,19 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
 
     sf::Color color;
     if(m_colorManagerPtr == nullptr){
+        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding square highlight" << std::endl;
         color = sf::Color(0xff000088);
     }
     else{
-        color = m_colorManagerPtr->getTransparentColor(colorId);
+        auto color_o = m_colorManagerPtr->getTransparentColor(colorId);
+        if(color_o == std::nullopt){
+            std::cout << "GraphicBoard: color of colorId "
+                << colorId << "not found when adding square highlight" << std::endl;
+            color = sf::Color(0xff000088);
+        }
+        else{
+            color = color_o.value();
+        }
     }
 
     newHighlight.setFillColor(color);
@@ -348,10 +357,19 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
     
     sf::Color color;
     if(m_colorManagerPtr == nullptr){
+        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding arrow" << std::endl;
         color = sf::Color::Red;
     }
     else{
-        color = m_colorManagerPtr->getSolidColor(logicArrow.colorId());
+        auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.colorId());
+        if(color_o == std::nullopt){
+            std::cout << "GraphicBoard: color of colorId "
+                << logicArrow.colorId() << "not found when adding arrow" << std::endl;
+            color = sf::Color::Red;
+        }
+        else{
+            color = color_o.value();
+        }
     }
 
     GraphicArrow graphicArrow(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
