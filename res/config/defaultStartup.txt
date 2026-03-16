@@ -157,6 +157,16 @@ Pieces: [
     imageFilename: res/pieces/standard/black_king.png
   ]
 ]
+LeftClickTool: [
+  selection: Select
+]
+RightClickTool: [
+  selection: DrawArrow
+  color: 0
+]
+MiddleClickTool: [
+  selection: EntityPicker
+]
 Menu: [
   pin: OFF
   font: res/fonts/calibri.ttf

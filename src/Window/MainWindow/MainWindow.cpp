@@ -31,16 +31,16 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
     m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra1, {0,0}});
     m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra2, {0,0}});
 
-    sigrid::Tool tool1{sigrid::ToolSelection::Select};
-    m_tools.insert({sf::Mouse::Button::Left,std::move(tool1)});
-    sigrid::Tool tool2{sigrid::ToolSelection::DrawArrow};
-    m_tools.insert({sf::Mouse::Button::Right, std::move(tool2)});
-    sigrid::Tool tool3{sigrid::ToolSelection::EntityPicker};
-    m_tools.insert({sf::Mouse::Button::Middle, std::move(tool3)});
-    sigrid::Tool tool4{sigrid::ToolSelection::Select};
-    m_tools.insert({sf::Mouse::Button::Extra1, std::move(tool4)});
-    sigrid::Tool tool5{sigrid::ToolSelection::Select};
-    m_tools.insert({sf::Mouse::Button::Extra2, std::move(tool5)});
+    sigrid::Tool leftClickTool{config.leftClickTool};
+    m_tools.insert({sf::Mouse::Button::Left,std::move(leftClickTool)});
+    sigrid::Tool rightClickTool{config.rightClickTool};
+    m_tools.insert({sf::Mouse::Button::Right, std::move(rightClickTool)});
+    sigrid::Tool middleClickTool{config.middleClickTool};
+    m_tools.insert({sf::Mouse::Button::Middle, std::move(middleClickTool)});
+    sigrid::Tool extra1ClickTool{config.extra1ClickTool};
+    m_tools.insert({sf::Mouse::Button::Extra1, std::move(extra1ClickTool)});
+    sigrid::Tool extra2ClickTool{config.extra2ClickTool};
+    m_tools.insert({sf::Mouse::Button::Extra2, std::move(extra2ClickTool)});
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(&m_toolManager);
 

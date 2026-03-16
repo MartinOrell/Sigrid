@@ -4,9 +4,25 @@
 
 using namespace sigrid;
 
-Tool::Tool(const ToolSelection& selection)
-: m_selection(selection)
-, m_arrowColorId(-1){}
+sigrid::ToolSelection getTool(const std::string& toolname){
+    if(toolname == "Select"){
+        return sigrid::ToolSelection::Select;
+    }
+    else if(toolname == "DrawArrow"){
+        return sigrid::ToolSelection::DrawArrow;
+    }
+    else if(toolname == "EntityPicker"){
+        return sigrid::EntityPicker;
+    }
+    else{
+        std::cout << "Tool: Unknown tool name: " << toolname <<std::endl;
+        return sigrid::ToolSelection::Select;
+    }
+}
+
+Tool::Tool(const ToolContainer& data)
+: m_selection(getTool(data.selection))
+, m_arrowColorId(data.colorId){}
 
 const ToolSelection Tool::selection() const{
     return m_selection;

@@ -7,6 +7,7 @@
 #include "../../Board/BoardDesignContainer.h"
 #include "../../Menu/MenuContainer.h"
 #include "../../ToolPicker/ToolPickerContainer.h"
+#include "../../Tool/ToolContainer.h"
 
 namespace sigrid{
     struct MainWindowConfigContainer{
@@ -24,6 +25,11 @@ namespace sigrid{
         BoardDesignContainer boardData;
         MenuContainer menuData;
         ToolPickerContainer toolPickerData;
+        ToolContainer leftClickTool;
+        ToolContainer rightClickTool;
+        ToolContainer middleClickTool;
+        ToolContainer extra1ClickTool;
+        ToolContainer extra2ClickTool;
 
         std::string resetBoardFilename;
         std::string boardFilename;
@@ -38,5 +44,6 @@ namespace sigrid{
             void loadMenu(std::istream& is);
             void loadToolPicker(std::istream& is);
             void loadBoardStyle(std::istream& is);
+            void loadTool(std::istream& is, ToolContainer& tool);
     };
 }

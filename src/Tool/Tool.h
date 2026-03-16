@@ -8,6 +8,7 @@
 #include "../Entity/LogicEntity.h"
 #include "SFML/Window/Mouse.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "ToolContainer.h"
 
 
 namespace sigrid{
@@ -15,7 +16,7 @@ namespace sigrid{
     class Tool{
         public:
 
-            Tool(const ToolSelection& selection);
+            Tool(const ToolContainer& data);
             const ToolSelection selection() const;
             LogicEntity getEntity() const;
             const int arrowColorId() const;

@@ -511,6 +511,24 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
     }
 }
 
+void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "selection:"){
+                tool.selection = readString(is);
+            }
+            else if(s == "color:"){
+                is >> tool.colorId;
+            }
+            else{
+                std::cout << "Unknown key: \"" << s << "\"";
+                std::cout << " read in ClickTool object" << std::endl;
+            }
+        }
+    }
+}
+
 bool MainWindowConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
@@ -546,6 +564,15 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         }
         else if(key == "ToolPicker:"){
             loadToolPicker(ifs);   
+        }
+        else if(key == "LeftClickTool:"){
+            loadTool(ifs, leftClickTool);
+        }
+        else if(key == "RightClickTool:"){
+            loadTool(ifs, rightClickTool);
+        }
+        else if(key == "MiddleClickTool:"){
+            loadTool(ifs, middleClickTool);
         }
         else{
             std::cout << "Unknown key: \"" << key << "\"" << std::endl;
