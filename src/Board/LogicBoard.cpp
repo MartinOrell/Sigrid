@@ -297,9 +297,9 @@ bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
         return false;
     }
 
-    if(arrow.colorId() < 0){
+    if(arrow.getColorId() < 0){
         std::cout << "LogicBoard: Unable to add arrow" << std::endl;
-        std::cout << "ColorId is not set (value: " << arrow.colorId() << ")" << std::endl;
+        std::cout << "ColorId is not set (value: " << arrow.getColorId() << ")" << std::endl;
         return false;
     }
 
@@ -314,7 +314,7 @@ bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
         return true;
     }
 
-    it->second.setColor(arrow.colorId());
+    it->second.setColor(arrow.getColorId());
     return true;
 }
 

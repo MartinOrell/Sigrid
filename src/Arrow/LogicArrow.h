@@ -7,7 +7,7 @@ namespace sigrid{
 
         public:
             LogicArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
-            int colorId() const;
+            int getColorId() const;
 
             void setColor(const int colorId);
 

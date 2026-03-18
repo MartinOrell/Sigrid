@@ -349,10 +349,10 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         color = sf::Color::Red;
     }
     else{
-        auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.colorId());
+        auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
-                << logicArrow.colorId() << "not found when adding arrow" << std::endl;
+                << logicArrow.getColorId() << "not found when adding arrow" << std::endl;
             color = sf::Color::Red;
         }
         else{
