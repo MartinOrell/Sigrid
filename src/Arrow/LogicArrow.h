@@ -6,7 +6,7 @@ namespace sigrid{
     class LogicArrow{
 
         public:
-            LogicArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
+            LogicArrow(const int colorId);
             int getColorId() const;
 
             void setColor(const int colorId);
