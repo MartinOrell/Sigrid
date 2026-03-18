@@ -323,38 +323,26 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     redrawTexture();
 }
 
-void GraphicBoard::addArrow(const LogicArrow& logicArrow){
+void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicArrow){
 
-    auto fromPosition_o = getSquareCenterPosition(logicArrow.fromCoord());
+    auto fromPosition_o = getSquareCenterPosition(coordPair.from);
 
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow from "
-            << logicArrow.fromCoord().getNotation() << std::endl;
+            << coordPair.from.getNotation() << std::endl;
         std::cout << "Starting square position not found" << std::endl;
         return;
     }
 
-    auto toPosition_o = getSquareCenterPosition(logicArrow.toCoord());
+    auto toPosition_o = getSquareCenterPosition(coordPair.to);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow to "
-            << logicArrow.toCoord().getNotation() << std::endl;
+            << coordPair.to.getNotation() << std::endl;
         std::cout << "Destination square position not found" << std::endl;
         return;
     }
 
-    for(auto it = m_arrows.begin(); it != m_arrows.end(); it++){
-        if(it->first.fromCoord() == logicArrow.fromCoord() && it->first.toCoord() == logicArrow.toCoord()){
-            if(it->first.colorId() == logicArrow.colorId()){
-                m_arrows.erase(it);
-                redrawTexture();
-                return;
-            }
-            m_arrows.erase(it);
-            break;
-        }
-    }
-    
     sf::Color color;
     if(m_colorManagerPtr == nullptr){
         std::cout << "GraphicBoard: colorManagerPts == nullptr when adding arrow" << std::endl;
@@ -372,14 +360,22 @@ void GraphicBoard::addArrow(const LogicArrow& logicArrow){
         }
     }
 
+    auto it = m_arrows.find(coordPair);
+    if(it != m_arrows.end()){
+        m_arrows.erase(it);
+        redrawTexture();
+        return;
+    }
+
     GraphicArrow graphicArrow(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
     m_texturePtr->draw(graphicArrow);
-    auto result = m_arrows.insert({logicArrow, graphicArrow});
+    auto result = m_arrows.insert({coordPair, graphicArrow});
 
     assert(result.second);
+    redrawTexture();
 }
 
-void GraphicBoard::removeArrow(const LogicArrow& arrow){
+void GraphicBoard::removeArrow(const CoordPair& coordPair){
 
 }
 
@@ -407,12 +403,8 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
 
         sf::Color color = sf::Color::Red;
 
-        m_dragArrowPtr = std::make_unique<Arrow>(fromCoord, toCoord, 0, fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
+        m_dragArrowPtr = std::make_unique<GraphicArrow>(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
         m_texturePtr->draw(*m_dragArrowPtr);
-        return;
-    }
-
-    if(m_dragArrowPtr->fromCoord() == fromCoord && m_dragArrowPtr->toCoord() == toCoord){
         return;
     }
 
@@ -434,7 +426,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
         return;
     }
 
-    m_dragArrowPtr->set(fromCoord, toCoord, fromPosition_o.value(), toPosition_o.value());
+    m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());
     redrawTexture();
 }
 
@@ -531,8 +523,8 @@ void GraphicBoard::flip(){
     }
 
     for(auto& arrow : m_arrows){
-        sf::Vector2f fromPos = getSquareCenterPosition(arrow.first.fromCoord()).value();
-        sf::Vector2f toPos = getSquareCenterPosition(arrow.first.toCoord()).value();
+        sf::Vector2f fromPos = getSquareCenterPosition(arrow.first.from).value();
+        sf::Vector2f toPos = getSquareCenterPosition(arrow.first.to).value();
         arrow.second.set(fromPos,toPos);
     }
 

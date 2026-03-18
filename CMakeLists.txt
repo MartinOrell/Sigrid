@@ -15,6 +15,7 @@ set(SRC_FILES
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
     src/Coord/Coord.cpp
+    src/Coord/CoordPair.cpp
     src/Entity/Piece/LogicPiece.cpp
     src/Entity/Piece/GraphicPiece.cpp
     src/Entity/Piece/PieceIdentifier.cpp
@@ -23,7 +24,6 @@ set(SRC_FILES
     src/Tool/ToolManager.cpp
     src/ToolPicker/GraphicToolPicker.cpp
     src/ToolPicker/ToolPickerWindow.cpp
-    src/Arrow/Arrow.cpp
     src/Arrow/LogicArrow.cpp
     src/Arrow/GraphicArrow.cpp
     src/Color/ColorManager.cpp

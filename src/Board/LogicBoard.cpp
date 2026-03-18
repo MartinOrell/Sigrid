@@ -283,16 +283,16 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     return true;
 }
 
-bool LogicBoard::addArrow(const LogicArrow& arrow){
+bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
 
-    if(!isWithinBoard(arrow.fromCoord())){
-        std::cout << "LogicBoard: Unable to add arrow from square: " << arrow.fromCoord().getNotation() << std::endl;
+    if(!isWithinBoard(coordPair.from)){
+        std::cout << "LogicBoard: Unable to add arrow from square: " << coordPair.from.getNotation() << std::endl;
         std::cout << "Starting square is outside of the board" << std::endl;
         return false;
     }
 
-    if(!isWithinBoard(arrow.toCoord())){
-        std::cout << "LogicBoard: Unable to add arrow to square: " << arrow.fromCoord().getNotation() << std::endl;
+    if(!isWithinBoard(coordPair.to)){
+        std::cout << "LogicBoard: Unable to add arrow to square: " << coordPair.to.getNotation() << std::endl;
         std::cout << "Destination square is outside of the board" << std::endl;
         return false;
     }
@@ -303,23 +303,25 @@ bool LogicBoard::addArrow(const LogicArrow& arrow){
         return false;
     }
 
-    for(auto it = m_arrows.begin(); it != m_arrows.end(); it++){
-        if(it->fromCoord() == arrow.fromCoord() && it->toCoord() == arrow.toCoord()){
-            if(it->colorId() == arrow.colorId()){
-                m_arrows.erase(it);
-                return true;
-            }
-            it->setColor(arrow.colorId());
-            return true;
-        }
+    auto it = m_arrows.find(coordPair);
+    if(it == m_arrows.end()){
+        m_arrows.insert({coordPair, arrow});
+        return true;
     }
-    m_arrows.push_back(arrow);
+
+    if(it->second == arrow){
+        m_arrows.erase(it);
+        return true;
+    }
+
+    it->second.setColor(arrow.colorId());
     return true;
 }
 
 
-bool LogicBoard::removeArrow(const LogicArrow& arrow){
-    auto it = std::find(m_arrows.begin(), m_arrows.end(), arrow);
+bool LogicBoard::removeArrow(const CoordPair& coordPair){
+
+    auto it = m_arrows.find(coordPair);
     if(it != m_arrows.end()){
         m_arrows.erase(it);
     }

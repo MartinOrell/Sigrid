@@ -16,8 +16,8 @@
 #include <optional>
 #include <memory>
 #include "../Coord/Coord.h"
+#include "../Coord/CoordPair.h"
 
-#include "../Arrow/Arrow.h"
 #include "../Arrow/LogicArrow.h"
 #include "../Arrow/GraphicArrow.h"
 
@@ -69,8 +69,8 @@ namespace sigrid{
 
             void addSquareHighlight(const Coord& coord, const int colorId);
 
-            void addArrow(const LogicArrow& arrow);
-            void removeArrow(const LogicArrow& arrow);
+            void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
+            void removeArrow(const CoordPair& coordPair);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
@@ -161,11 +161,11 @@ namespace sigrid{
 
             std::map<Coord, sf::RectangleShape> m_squareHighlights;
 
-            std::map<LogicArrow, GraphicArrow> m_arrows;
+            std::map<CoordPair, GraphicArrow> m_arrows;
 
             GraphicEntities m_pieceLayer;
 
-            std::unique_ptr<Arrow> m_dragArrowPtr;
+            std::unique_ptr<GraphicArrow> m_dragArrowPtr;
 
             std::unique_ptr<sf::RectangleShape> m_selectHighlight;
 

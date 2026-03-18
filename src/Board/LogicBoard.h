@@ -7,6 +7,7 @@
 
 #include "BoardDataContainer.h"
 #include "../Coord/Coord.h"
+#include "../Coord/CoordPair.h"
 #include "../Entity/LogicEntities.h"
 #include "../Arrow/LogicArrow.h"
 
@@ -33,8 +34,8 @@ namespace sigrid{
 
             bool addSquareHighlight(const Coord& coord, const int colorId);
 
-            bool addArrow(const LogicArrow& arrow);
-            bool removeArrow(const LogicArrow& arrow);
+            bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
+            bool removeArrow(const CoordPair& coordPair);
 
             void print();
             void clear();
@@ -45,6 +46,6 @@ namespace sigrid{
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             LogicEntities m_pieceLayer;
             std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
-            std::vector<LogicArrow> m_arrows;
+            std::map<CoordPair, LogicArrow> m_arrows;
     };
 }

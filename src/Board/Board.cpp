@@ -218,8 +218,8 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
 
 void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId){
     LogicArrow logicArrow{fromCoord, toCoord, colorId};
-    if(m_logicBoard->addArrow(logicArrow)){
-        m_graphicBoard->addArrow(logicArrow);
+    if(m_logicBoard->addArrow({fromCoord, toCoord}, logicArrow)){
+        m_graphicBoard->addArrow({fromCoord, toCoord}, logicArrow);
     }
 }
 
