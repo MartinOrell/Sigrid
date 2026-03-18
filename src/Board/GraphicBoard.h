@@ -18,8 +18,8 @@
 #include "../Coord/Coord.h"
 #include "../Coord/CoordPair.h"
 
-#include "../Arrow/LogicArrow.h"
-#include "../Arrow/GraphicArrow.h"
+#include "../Entity/Shape/Arrow/LogicArrow.h"
+#include "../Entity/Shape/Arrow/GraphicArrow.h"
 
 #include "../Color/ColorManager.h"
 

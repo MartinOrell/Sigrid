@@ -10,9 +10,9 @@
 
 #include <SFML/Window/Event.hpp>
 
-#include "../Arrow/LogicArrow.h"
+#include "../Entity/Shape/Arrow/LogicArrow.h"
+#include "../Entity/Shape/Arrow/GraphicArrow.h"
 
-#include "../Arrow/GraphicArrow.h"
 #include "BoardDataContainer.h"
 
 namespace sigrid{

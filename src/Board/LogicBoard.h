@@ -9,7 +9,7 @@
 #include "../Coord/Coord.h"
 #include "../Coord/CoordPair.h"
 #include "../Entity/LogicEntities.h"
-#include "../Arrow/LogicArrow.h"
+#include "../Entity/Shape/Arrow/LogicArrow.h"
 
 namespace sigrid{
     class LogicBoard{

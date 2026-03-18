@@ -24,12 +24,12 @@ set(SRC_FILES
     src/Tool/ToolManager.cpp
     src/ToolPicker/GraphicToolPicker.cpp
     src/ToolPicker/ToolPickerWindow.cpp
-    src/Arrow/LogicArrow.cpp
-    src/Arrow/GraphicArrow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
     src/Entity/Shape/Circle/LogicCircle.cpp
     src/Entity/Shape/Circle/GraphicCircle.cpp
+    src/Entity/Shape/Arrow/LogicArrow.cpp
+    src/Entity/Shape/Arrow/GraphicArrow.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
 )
