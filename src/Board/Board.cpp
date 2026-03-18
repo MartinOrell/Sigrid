@@ -217,9 +217,44 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
 }
 
 void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId){
-    LogicArrow logicArrow{colorId};
-    if(m_logicBoard->addArrow({fromCoord, toCoord}, logicArrow)){
-        m_graphicBoard->addArrow({fromCoord, toCoord}, logicArrow);
+
+    if(!m_logicBoard->isWithinBoard(fromCoord)){
+        std::cout << "Board: Unable to add arrow from "
+            << fromCoord.getNotation() << std::endl;
+        std::cout << "Starting square is out of bounds" << std::endl;
+        return;
+    }
+
+    if(!m_logicBoard->isWithinBoard(fromCoord)){
+        std::cout << "Board: Unable to add arrow to "
+            << fromCoord.getNotation() << std::endl;
+        std::cout << "Destination square is out of bounds" << std::endl;
+        return;
+    }
+
+    auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
+
+    LogicArrow arrow{colorId};
+
+    if(occupyingEntity_o == std::nullopt){
+        if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
+            m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
+        }
+        return;
+    }
+
+    if(occupyingEntity_o.value() != arrow){
+        if(m_logicBoard->removeArrow({fromCoord, toCoord})){
+            m_graphicBoard->removeArrow({fromCoord, toCoord});
+        }
+        if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
+            m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
+        }
+        return;
+    }
+
+    if(m_logicBoard->removeArrow({fromCoord, toCoord})){
+        m_graphicBoard->removeArrow({fromCoord, toCoord});
     }
 }
 

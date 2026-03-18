@@ -362,13 +362,13 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
 
     auto it = m_arrows.find(coordPair);
     if(it != m_arrows.end()){
-        m_arrows.erase(it);
-        redrawTexture();
+        std::cout << "GraphicBoard: Failed to add arrow at "
+            << coordPair.getNotation() << std::endl;
+        std::cout << "There is already an arrow there" << std::endl;
         return;
     }
 
     GraphicArrow graphicArrow(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
-    m_texturePtr->draw(graphicArrow);
     auto result = m_arrows.insert({coordPair, graphicArrow});
 
     assert(result.second);
@@ -376,7 +376,16 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
 }
 
 void GraphicBoard::removeArrow(const CoordPair& coordPair){
+    auto it = m_arrows.find(coordPair);
+    if(it == m_arrows.end()){
+        std::cout << "GraphicBoard: Failed to remove arrow at "
+            << coordPair.getNotation() << std::endl;
+        std::cout << "There is no arrow there" << std::endl;
+        return;
+    }
 
+    m_arrows.erase(coordPair);
+    redrawTexture();
 }
 
 void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){

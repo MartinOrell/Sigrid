@@ -127,6 +127,16 @@ std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
     return m_pieceLayer.getEntityAt(coord);
 }
 
+std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) const{
+    auto it = m_arrows.find(coordPair);
+
+    if(it == m_arrows.end()){
+        return std::nullopt;
+    }
+
+    return it->second;
+}
+
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
 
     std::cout << "LogicBoard: getSquareHighlightAt" << std::endl;
@@ -304,17 +314,15 @@ bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
     }
 
     auto it = m_arrows.find(coordPair);
-    if(it == m_arrows.end()){
-        m_arrows.insert({coordPair, arrow});
-        return true;
+
+    if(it != m_arrows.end()){
+        std::cout << "LogicBoard: Unable to add arrow at "
+            << coordPair.getNotation() << std::endl;
+        std::cout << "There is already an arrow there" << std::endl;
+        return false;
     }
 
-    if(it->second == arrow){
-        m_arrows.erase(it);
-        return true;
-    }
-
-    it->second.setColor(arrow.getColorId());
+    m_arrows.insert({coordPair, arrow});
     return true;
 }
 
@@ -322,9 +330,14 @@ bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
 bool LogicBoard::removeArrow(const CoordPair& coordPair){
 
     auto it = m_arrows.find(coordPair);
-    if(it != m_arrows.end()){
-        m_arrows.erase(it);
+    if(it == m_arrows.end()){
+        std::cout << "LogicBoard: Unable to remove arrow at "
+            << coordPair.getNotation() << std::endl;
+        std::cout << "There is no arrow there" << std::endl;
+        return false;
     }
+
+    m_arrows.erase(it);
     return true;
 }
 

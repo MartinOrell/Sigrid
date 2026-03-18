@@ -25,6 +25,7 @@ namespace sigrid{
             bool isEmptySquare(const Coord& coord) const;
             std::optional<int> getSquareColorAt(const Coord& coord) const;
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
+            std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
             std::optional<int> getSquareHighlightAt(const Coord& coord) const;
             std::string getFen() const;
 
