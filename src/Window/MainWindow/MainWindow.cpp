@@ -8,17 +8,11 @@
 using namespace sigrid;
 
 
-MainWindow::MainWindow(const MainWindowConfigContainer& config)
-: m_window{sf::VideoMode({config.windowWidth, config.windowHeight}), config.windowName}
-, m_backgroundColor{sf::Color(30,30,30)}
-, m_size{sf::Vector2u{config.windowWidth, config.windowHeight}}
+MainWindow::MainWindow()
+: m_backgroundColor{sf::Color(30,30,30)}
 , m_scale{1.f,1.f}
-, m_piecePickerToBoardGap{10.f}
-, m_colorManager{config.arrowColors}
-, m_toolManager(&m_colorManager)
-, m_pieceManager{config.pieceColors}{
-    m_window.setFramerateLimit(60);
-
+, m_piecePickerToBoardGap{10.f}{
+    
     m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Left, false});
     m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Right, false});
     m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Middle, false});
@@ -30,6 +24,17 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
     m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Middle, {0,0}});
     m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra1, {0,0}});
     m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra2, {0,0}});
+}
+
+bool MainWindow::init(const MainWindowConfigContainer& config){
+    
+    m_window.create(sf::VideoMode({config.windowWidth, config.windowHeight}), config.windowName);
+    m_window.setFramerateLimit(60);
+
+    m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
+    m_colorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
+    m_toolManagerPtr = std::make_unique<ToolManager>(m_colorManagerPtr.get());
+    m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
 
     sigrid::Tool leftClickTool{config.leftClickTool};
     m_tools.insert({sf::Mouse::Button::Left,std::move(leftClickTool)});
@@ -42,13 +47,11 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
     sigrid::Tool extra2ClickTool{config.extra2ClickTool};
     m_tools.insert({sf::Mouse::Button::Extra2, std::move(extra2ClickTool)});
 
-    m_toolWindow = std::make_unique<sigrid::ToolWindow>(&m_toolManager);
+    m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
-    m_pieceManager.loadImages(config.pieces);
+    m_pieceManagerPtr->loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, config.squareColors, &m_pieceManager, &m_toolManager);
-
-    m_workWindow = std::make_unique<sigrid::WorkWindow>();
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, config.squareColors, m_pieceManagerPtr.get(), m_toolManagerPtr.get());
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){
@@ -64,7 +67,7 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
             std::cout << "Main Window failed reading both " << config.boardFilename
             << " and " << config.resetBoardFilename << "." << std::endl;
             std::cout << "Main Window failed creating board." << std::endl;
-            return;
+            return false;
         }
     }
     else if (boardData.load(config.resetBoardFilename)){
@@ -73,10 +76,10 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
     else{
         std::cout << "Main Window failed reading " << config.resetBoardFilename << std::endl;
         std::cout << "Main Window failed creating board." << std::endl;
-        return;
+        return false;
     }
 
-    auto board = std::make_unique<sigrid::Board>(boardData, config.boardData, config.squareColors, &m_pieceManager, &m_colorManager);
+    auto board = std::make_unique<sigrid::Board>(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_colorManagerPtr.get());
 
     std::cout << "Save location: " << config.boardFilename << std::endl;
 
@@ -86,9 +89,11 @@ MainWindow::MainWindow(const MainWindowConfigContainer& config)
         board->setImageFilename(config.defaultBoardImageFilename);
     }
 
+    m_workWindow = std::make_unique<sigrid::WorkWindow>();
     m_workWindow->addBoard(std::move(board));
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);
+    return true;
 }
 
 void MainWindow::run(){

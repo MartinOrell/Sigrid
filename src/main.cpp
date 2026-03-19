@@ -21,9 +21,10 @@ int main()
         return -1;
     }
 
-    sigrid::MainWindow mainWindow(config);
-
-    mainWindow.run();
+    sigrid::MainWindow mainWindow;
+    if(mainWindow.init(config)){
+        mainWindow.run();
+    }
 
     std::cout << "End" << std::endl;
 }

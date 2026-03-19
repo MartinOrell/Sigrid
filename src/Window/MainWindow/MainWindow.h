@@ -16,7 +16,8 @@
 namespace sigrid{
     class MainWindow{
         public:
-            MainWindow(const MainWindowConfigContainer& config);
+            MainWindow();
+            bool init(const MainWindowConfigContainer& config);
             void run();
         private:
             void createGraphic();
@@ -80,8 +81,8 @@ namespace sigrid{
             std::map<sf::Mouse::Button, bool> m_isMouseButtonPressedMap;
             std::map<sf::Mouse::Button, sf::Vector2i> m_mouseButtonPressedPositionMap;
 
-            ColorManager m_colorManager;
-            ToolManager m_toolManager;
-            PieceManager m_pieceManager;
+            std::unique_ptr<ColorManager> m_colorManagerPtr;
+            std::unique_ptr<ToolManager> m_toolManagerPtr;
+            std::unique_ptr<PieceManager> m_pieceManagerPtr;
     };
 }
