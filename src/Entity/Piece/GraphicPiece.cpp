@@ -7,7 +7,7 @@
 
 using namespace sigrid;
 
-GraphicPiece::GraphicPiece(sf::Vector2u size, const sf::Texture* texturePtr)
+GraphicPiece::GraphicPiece(sf::Vector2u size, const sf::Texture* const texturePtr)
 : m_sprite(*texturePtr)
 , m_texturePtr(texturePtr){
     sf::FloatRect rect(m_sprite.getLocalBounds());

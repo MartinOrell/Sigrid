@@ -13,7 +13,7 @@ namespace sigrid{
     class ToolManager{
 
         public:
-            ToolManager(ColorManager* _colorManagerPtr);
+            ToolManager(ColorManager* const _colorManagerPtr);
             std::optional<sf::Texture*> getTexturePtr(const ToolSelection& selection);
             std::optional<sf::Texture*> getArrowTexturePtr(const int colorId);
             std::optional<sf::Texture*> getCircleTexturePtr(const int colorId);

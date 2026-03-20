@@ -6,7 +6,7 @@
 
 using namespace sigrid;
 
-ToolManager::ToolManager(ColorManager* colorManagerPtr)
+ToolManager::ToolManager(ColorManager* const colorManagerPtr)
 : m_colorManagerPtr{colorManagerPtr}{
     sf::Texture selectTexture{"res/icons/select_object.png"};
     m_toolTextures.insert({ToolSelection::Select, selectTexture});

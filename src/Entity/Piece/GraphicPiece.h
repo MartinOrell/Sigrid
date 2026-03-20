@@ -13,7 +13,7 @@
 namespace sigrid{
     class GraphicPiece: public sf::Drawable{
         public:
-            GraphicPiece(sf::Vector2u size, const sf::Texture* texturePtr);
+            GraphicPiece(sf::Vector2u size, const sf::Texture* const texturePtr);
             GraphicPiece(const GraphicPiece&);
             GraphicPiece& operator =(const GraphicPiece&);
             void setPosition(sf::Vector2f);

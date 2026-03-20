@@ -13,13 +13,13 @@
 namespace sigrid{
     class ToolWindow: public sf::Drawable{
         public:
-            ToolWindow(ToolManager* toolManagerPtr);
+            ToolWindow(ToolManager* const toolManagerPtr);
 
             void createGraphic(const sf::Vector2u& size);
 
             virtual void setPosition(sf::Vector2f);
 
-            void setItemTexture(const unsigned int id, const sf::Texture* texturePtr, bool resetRect = false);
+            void setItemTexture(const unsigned int id, const sf::Texture* const texturePtr, bool resetRect = false);
 
             bool isHidden() const;
 

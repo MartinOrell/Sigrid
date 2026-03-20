@@ -33,7 +33,7 @@ void ToolItem::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
 }
 
-void ToolItem::setTexture(const sf::Texture* texturePtr, bool resetRect){
+void ToolItem::setTexture(const sf::Texture* const texturePtr, bool resetRect){
     m_shape.setTexture(texturePtr, true);
 }
 

@@ -4,7 +4,7 @@
 
 using namespace sigrid;
 
-GraphicEntities::GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
+GraphicEntities::GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
 : m_pieceSize{pieceSize}
 , m_circleDiameter{circleDiameter}
 , m_pieceManagerPtr{pieceManagerPtr}

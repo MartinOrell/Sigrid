@@ -6,7 +6,7 @@
 
 using namespace sigrid;
 
-ToolWindow::ToolWindow(ToolManager* toolManagerPtr)
+ToolWindow::ToolWindow(ToolManager* const toolManagerPtr)
 : m_toolManagerPtr(toolManagerPtr)
 , m_show{true}
 , m_backgroundColor{255,255,255,0}{
@@ -52,7 +52,7 @@ void ToolWindow::setPosition(sf::Vector2f position){
     m_position = position;
 }
 
-void ToolWindow::setItemTexture(const unsigned int id, const sf::Texture* texturePtr, bool resetRect){
+void ToolWindow::setItemTexture(const unsigned int id, const sf::Texture* const texturePtr, bool resetRect){
     m_items.at(id)->setTexture(texturePtr,resetRect);
 }
 

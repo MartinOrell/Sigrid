@@ -14,7 +14,7 @@ namespace sigrid{
 
             void setSize(const sf::Vector2f& size);
             void setPosition(const sf::Vector2f& position);
-            void setTexture(const sf::Texture* texturePtr, bool resetRect = false);
+            void setTexture(const sf::Texture* const texturePtr, bool resetRect = false);
             bool isWithin(const sf::Vector2i& point);
 
             float getPositionRight();

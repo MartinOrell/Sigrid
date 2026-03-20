@@ -8,7 +8,7 @@
 
 using namespace sigrid;
 
-Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ColorManager* colorManagerPtr)
+Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
 : m_pieceManagerPtr(pieceManagerPtr)
 , m_filename{boardData.filename}{
 
