@@ -79,7 +79,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
         return false;
     }
 
-    auto board = std::make_unique<sigrid::Board>(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_colorManagerPtr.get());
+    auto board = std::make_unique<sigrid::Board>();
+
+    board->init(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_colorManagerPtr.get());
 
     std::cout << "Save location: " << config.boardFilename << std::endl;
 

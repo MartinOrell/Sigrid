@@ -8,16 +8,18 @@
 
 using namespace sigrid;
 
-Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
-: m_filename{boardData.filename}{
+Board::Board(){}
 
-    m_logicBoard = std::make_unique<sigrid::LogicBoard>();
+void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr){
+
+    m_filename = boardData.filename;
+
+     m_logicBoard = std::make_unique<sigrid::LogicBoard>();
 
     if(m_logicBoard->init(boardData)){
         m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
         m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
-    }    
-
+    }
 }
 
 void Board::setPosition(sf::Vector2f position){

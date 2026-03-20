@@ -19,8 +19,9 @@ namespace sigrid{
     class Board: public sf::Drawable{
         public:            
 
-            Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr);
+            Board();
 
+            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr);
 
             void setPosition(sf::Vector2f);
 
