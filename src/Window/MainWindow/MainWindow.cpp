@@ -90,6 +90,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
+    m_workWindow->init(m_pieceManagerPtr.get());
     m_workWindow->addBoard(std::move(board));
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);

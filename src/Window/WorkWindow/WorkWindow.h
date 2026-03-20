@@ -13,6 +13,8 @@ namespace sigrid{
         public:
             WorkWindow();
 
+            void init(PieceManager* const pieceManagerPtr);
+
             void createGraphic(const sf::Vector2u& size);
 
             void addBoard(std::unique_ptr<sigrid::Board> board);
@@ -72,5 +74,7 @@ namespace sigrid{
             std::unique_ptr<sigrid::Board> m_boardPtr;
 
             sf::Color m_backgroundColor;
+
+            PieceManager* m_pieceManagerPtr;
     };
 }

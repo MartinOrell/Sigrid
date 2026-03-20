@@ -135,30 +135,6 @@ void Board::keyPressed(sf::Event::KeyPressed event){
 
 }
 
-void Board::textEntered(std::string text){
-    int colorId;
-    if(std::isupper(text.back())){
-        colorId = 0;
-    }
-    else{
-        colorId = 1;
-    }
-
-    LogicPiece logicPiece{text, colorId};
-
-    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-
-    if(graphicPiece_o == std::nullopt){
-        return;
-    }
-    if(m_selection == nullptr){
-        return;
-    }
-    addEntity(*m_selection, logicPiece);
-    m_selection = nullptr;
-    m_graphicBoard->unhighlight();
-}
-
 void Board::deselect(){
     m_selection = nullptr;
     m_graphicBoard->unhighlight();
@@ -194,6 +170,15 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
     if(m_logicBoard->removeEntity(coord)){
         m_graphicBoard->removeEntity(coord);
     }
+}
+
+void Board::addEntityAtSelection(const LogicEntity& newEntity){
+    if(m_selection == nullptr){
+        return;
+    }
+    addEntity(*m_selection, newEntity);
+    m_selection = nullptr;
+    m_graphicBoard->unhighlight();
 }
 
 void Board::addSquareHighlight(const Coord& coord, const int colorId){

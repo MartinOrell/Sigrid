@@ -62,11 +62,11 @@ namespace sigrid{
             void select(const Coord& coord);
 
             void keyPressed(sf::Event::KeyPressed);
-            void textEntered(std::string text);
 
             void deselect();
 
             void addEntity(const Coord& coord, const LogicEntity& newEntity);
+            void addEntityAtSelection(const LogicEntity& newEntity);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);

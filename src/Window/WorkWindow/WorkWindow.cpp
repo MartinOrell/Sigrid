@@ -10,6 +10,10 @@ using namespace sigrid;
 WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}{}
 
+void WorkWindow::init(PieceManager* const pieceManagerPtr){
+    m_pieceManagerPtr = pieceManagerPtr;
+}
+
 void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
     m_texture = std::make_unique<sf::RenderTexture>(size);
@@ -214,7 +218,25 @@ void WorkWindow::keyPressed(const sf::Event::KeyPressed& event){
 }
 
 void WorkWindow::textEntered(const std::string& text){
-    m_boardPtr->textEntered(text);
+    int colorId;
+    std::string pieceNotation(text);
+    if(std::isupper(pieceNotation.back())){
+        colorId = 0;
+    }
+    else{
+        colorId = 1;
+        pieceNotation.back() = std::toupper(pieceNotation.back());
+    }
+
+    LogicPiece logicPiece{pieceNotation, colorId};
+
+    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
+
+    if(graphicPiece_o == std::nullopt){
+        return;
+    }
+
+    m_boardPtr->addEntityAtSelection(logicPiece);
 }
 
 void WorkWindow::reset(){
