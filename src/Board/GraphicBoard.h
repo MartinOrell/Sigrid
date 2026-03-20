@@ -34,8 +34,9 @@ namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
             
-            GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr);
+            GraphicBoard();
             
+            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr);
 
             sf::Vector2f getSquareSize() const;
 
@@ -163,7 +164,7 @@ namespace sigrid{
 
             std::map<CoordPair, GraphicArrow> m_arrows;
 
-            GraphicEntities m_pieceLayer;
+            std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
 
             std::unique_ptr<GraphicArrow> m_dragArrowPtr;
 

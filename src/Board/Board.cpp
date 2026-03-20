@@ -14,7 +14,8 @@ Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& gr
     m_logicBoard = std::make_unique<sigrid::LogicBoard>();
 
     if(m_logicBoard->init(boardData)){
-        m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
+        m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
+        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
     }    
 
 }

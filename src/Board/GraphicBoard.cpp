@@ -9,26 +9,30 @@
 
 using namespace sigrid;
 
-GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr)
+GraphicBoard::GraphicBoard()
 : m_scale{1.f}
-, m_colorManagerPtr{colorManagerPtr}
 , m_backgroundColor{sf::Color{255,255,255,255}}
 , m_leftEdgeWidth{0}
 , m_rightEdgeWidth{0}
 , m_topEdgeWidth{0}
 , m_bottomEdgeWidth{0}
-, m_showLabels{config.labelsInside || config.labelsOutside}
-, m_isCoordinateLabelsInside{config.labelsInside}
-, m_insideLabelSizeFactor{config.insideLabelSize}
-, m_outsideLabelSizeFactor{config.outsideLabelSize}
-, m_showBorder{config.border}
-, m_borderWidth{config.borderWidth}
-, m_showPlayerToMoveToken{config.playerToMoveToken}
 , m_isLeftToRight{true}
-, m_isTopToBottom{false}
-, m_arrowThickness{config.arrowThickness}
-, m_arrowHeadSize{config.arrowHeadSize}
-, m_pieceLayer{sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, colorManagerPtr}{
+, m_isTopToBottom{false}{}
+
+void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr){
+
+    m_colorManagerPtr = colorManagerPtr;
+    m_showLabels = config.labelsInside || config.labelsOutside;
+
+    m_isCoordinateLabelsInside = config.labelsInside;
+    m_insideLabelSizeFactor = config.insideLabelSize;
+    m_outsideLabelSizeFactor = config.outsideLabelSize;
+    m_showBorder = config.border;
+    m_borderWidth = config.borderWidth;
+    m_showPlayerToMoveToken = config.playerToMoveToken;
+    m_arrowThickness = config.arrowThickness;
+    m_arrowHeadSize = config.arrowHeadSize;
+    m_pieceLayerPtr = std::make_unique<GraphicEntities>(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, colorManagerPtr);
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -68,7 +72,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
             if(entity_o != std::nullopt){
                 sf::Vector2f position = square.getPosition()
                     + square.getSize()/2.f;
-                m_pieceLayer.addEntity({x,y},position,entity_o.value());
+                m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
             }
         }
         m_squares.push_back(row);
@@ -103,6 +107,7 @@ GraphicBoard::GraphicBoard(const LogicBoard& logicBoard, const BoardDesignContai
     m_texturePtr = std::make_unique<sf::RenderTexture>();
     resizeTexture();
     redrawTexture();
+
 }
 
 sf::Vector2f GraphicBoard::getSquareSize() const{
@@ -138,7 +143,7 @@ float GraphicBoard::getDisplayHeight() const{
 }
 
 std::optional<GraphicEntity> GraphicBoard::getEntityAt(const Coord& coord) const{
-    return m_pieceLayer.getEntityAt(coord);
+    return m_pieceLayerPtr->getEntityAt(coord);
 }
 
 bool GraphicBoard::contains(sf::Vector2i point) const{
@@ -220,27 +225,27 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
         return;
     }
 
-    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
+    if(m_pieceLayerPtr->getEntityAt(coord) != std::nullopt){
         std::cout << "GraphicBoard: Failed to add entity at "
             << coord.getNotation() << std::endl;
         std::cout << "There is already an entity there" << std::endl;
         return;
     }
 
-    m_pieceLayer.addEntity(coord,position_o.value(),entity);
+    m_pieceLayerPtr->addEntity(coord,position_o.value(),entity);
     redrawTexture();
 }
 
 void GraphicBoard::removeEntity(const Coord& coord){
 
-    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
+    if(m_pieceLayerPtr->getEntityAt(coord) == std::nullopt){
         std::cout << "GraphicBoard: Failed to remove entity at "
             << coord.getNotation() << std::endl;
         std::cout << "There is no entity there" << std::endl;
         return;
     }
 
-    m_pieceLayer.removeEntity(coord);
+    m_pieceLayerPtr->removeEntity(coord);
     redrawTexture();
 }
 
@@ -264,12 +269,12 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    if(m_pieceLayer.getEntityAt(toCoord) != std::nullopt){
-        m_pieceLayer.removeEntity(toCoord);
+    if(m_pieceLayerPtr->getEntityAt(toCoord) != std::nullopt){
+        m_pieceLayerPtr->removeEntity(toCoord);
     }
 
-    if(m_pieceLayer.getEntityAt(fromCoord) != std::nullopt){
-        m_pieceLayer.moveEntity(fromCoord, toCoord,toPosition_o.value());
+    if(m_pieceLayerPtr->getEntityAt(fromCoord) != std::nullopt){
+        m_pieceLayerPtr->moveEntity(fromCoord, toCoord,toPosition_o.value());
     }
 
     redrawTexture();
@@ -487,7 +492,7 @@ void GraphicBoard::saveImage(const std::string& fileName){
 }
 
 void GraphicBoard::clear(){
-    m_pieceLayer.clear();
+    m_pieceLayerPtr->clear();
     redrawTexture();
 }
 
@@ -519,10 +524,10 @@ void GraphicBoard::flip(){
             position.y += m_topEdgeWidth;
             m_squares.at(y).at(x).setPosition(position);
 
-            auto entity_o = m_pieceLayer.getEntityAt({x,y});
+            auto entity_o = m_pieceLayerPtr->getEntityAt({x,y});
 
             if(entity_o != std::nullopt){
-                m_pieceLayer.setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
+                m_pieceLayerPtr->setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
             }
         }
     }
@@ -858,7 +863,7 @@ void GraphicBoard::redrawTexture(){
         m_texturePtr->draw(*m_selectHighlight);
     }
 
-    m_texturePtr->draw(m_pieceLayer);
+    m_texturePtr->draw(*m_pieceLayerPtr);
 
     for(auto& arrow : m_arrows){
         m_texturePtr->draw(arrow.second);
@@ -1035,7 +1040,7 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
             m_squares.at(y).at(x).move(offset);
         }
     }
-    m_pieceLayer.move(offset);
+    m_pieceLayerPtr->move(offset);
 }
 
 void GraphicBoard::moveBorder(const sf::Vector2f& offset){
