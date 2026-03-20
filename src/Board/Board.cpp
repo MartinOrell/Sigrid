@@ -14,7 +14,7 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
 
     m_filename = boardData.filename;
 
-     m_logicBoard = std::make_unique<sigrid::LogicBoard>();
+    m_logicBoard = std::make_unique<sigrid::LogicBoard>();
 
     if(m_logicBoard->init(boardData)){
         m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
