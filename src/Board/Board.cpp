@@ -9,8 +9,7 @@
 using namespace sigrid;
 
 Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
-: m_pieceManagerPtr(pieceManagerPtr)
-, m_filename{boardData.filename}{
+: m_filename{boardData.filename}{
 
     m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardData);
 
@@ -281,14 +280,7 @@ void Board::loadFen(const std::string& fen){
             s.at(0) = std::toupper(s.at(0));
             LogicPiece logicPiece{s, colorId};
 
-            auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-            if(graphicPiece_o != std::nullopt){
-                addEntity({x,y}, logicPiece);
-            }
-            else{
-                std::cout << "Failed to get piece of character \"" << s
-                << "\" when loading FEN" << std::endl;
-            }
+            addEntity({x,y}, logicPiece);
             x++;
         }
     }

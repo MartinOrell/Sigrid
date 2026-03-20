@@ -21,7 +21,8 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(std::get<LogicPiece>(entity));
 
         if(graphicPiece_o == std::nullopt){
-            std::cout << "GraphicEntities: Failed to add piece" << std::endl;
+            std::cout << "GraphicEntities: Failed to add piece \""
+                << std::get<LogicPiece>(entity).getNotation() << "\"" << std::endl;
             std::cout << "Piece not found in pieceManager" << std::endl;
             return;
         }
