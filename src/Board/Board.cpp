@@ -11,9 +11,11 @@ using namespace sigrid;
 Board::Board(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
 : m_filename{boardData.filename}{
 
-    m_logicBoard = std::make_unique<sigrid::LogicBoard>(boardData);
+    m_logicBoard = std::make_unique<sigrid::LogicBoard>();
 
-    m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
+    if(m_logicBoard->init(boardData)){
+        m_graphicBoard = std::make_unique<sigrid::GraphicBoard>(*m_logicBoard, graphicData, pieceManagerPtr, squareColors, colorManagerPtr);
+    }    
 
 }
 

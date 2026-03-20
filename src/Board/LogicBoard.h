@@ -15,9 +15,12 @@ namespace sigrid{
     class LogicBoard{
 
         public:
-            LogicBoard(const BoardDataContainer& data);
+            LogicBoard();
             LogicBoard(const LogicBoard& board);
             ~LogicBoard();
+
+            bool init(const BoardDataContainer& data);
+
             const unsigned int width() const;
             const unsigned int height() const;
 

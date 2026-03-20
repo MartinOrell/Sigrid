@@ -10,12 +10,31 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(const BoardDataContainer& data)
-: m_repeatedSquareIds{data.repeatedSquareIds}{
+LogicBoard::LogicBoard(){}
+
+LogicBoard::LogicBoard(const LogicBoard& board)
+: m_pieceLayer{board.m_pieceLayer}{
+    for(int y = 0; y < board.m_squareLayer.size(); y++){
+        std::vector<int> squareRow;
+        std::vector<std::unique_ptr<int>> highlightRow;
+        for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
+            squareRow.push_back(board.m_squareLayer.at(y).at(x));
+            std::unique_ptr<int> noHighlight;
+            highlightRow.push_back(std::move(noHighlight));
+        }
+        m_squareLayer.push_back(squareRow);
+        m_squareHighlight.push_back(std::move(highlightRow));
+    }
+}
+
+LogicBoard::~LogicBoard(){}
+
+bool LogicBoard::init(const BoardDataContainer& data){
+    m_repeatedSquareIds = data.repeatedSquareIds;
 
     if(m_repeatedSquareIds.size() == 0){
         std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
-        return;
+        return false;
     }
 
     for(unsigned int y = 0; y < data.rows; y++){
@@ -70,24 +89,8 @@ LogicBoard::LogicBoard(const BoardDataContainer& data)
         }
         m_squareHighlight.push_back(std::move(highlightRow));
     }
-}
 
-LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieceLayer{board.m_pieceLayer}{
-    for(int y = 0; y < board.m_squareLayer.size(); y++){
-        std::vector<int> squareRow;
-        std::vector<std::unique_ptr<int>> highlightRow;
-        for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
-            squareRow.push_back(board.m_squareLayer.at(y).at(x));
-            std::unique_ptr<int> noHighlight;
-            highlightRow.push_back(std::move(noHighlight));
-        }
-        m_squareLayer.push_back(squareRow);
-        m_squareHighlight.push_back(std::move(highlightRow));
-    }
-}
-
-LogicBoard::~LogicBoard(){
+    return true;
 }
 
 const unsigned int LogicBoard::width() const{
