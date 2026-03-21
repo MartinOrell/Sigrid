@@ -7,7 +7,7 @@
 using namespace sigrid;
 
 
-ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, const std::vector<uint32_t>& squareColors, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr)
+ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const squareColorManagerPtr, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr)
 : m_pieceManagerPtr{pieceManagerPtr}
 , m_toolManagerPtr{toolManagerPtr}
 , m_columns{data.columns}
@@ -26,7 +26,7 @@ ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, const std::v
 , m_defaultArrowColorId{data.defaultArrowColorId}
 , m_defaultCircleColorId{data.defaultCircleColorId}{
 
-    m_boardPtr = std::make_unique<GraphicToolPicker>(squareColors);
+    m_boardPtr = std::make_unique<GraphicToolPicker>(squareColorManagerPtr);
 
     m_displayedPieceColorIds.push_back(0);
     m_displayedPieceColorIds.push_back(1);

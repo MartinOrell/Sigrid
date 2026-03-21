@@ -19,8 +19,9 @@ GraphicBoard::GraphicBoard()
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}{}
 
-void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const arrowColorManagerPtr){
+void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const squareColorManagerPtr, ColorManager* const arrowColorManagerPtr){
 
+    m_squareColorManagerPtr = squareColorManagerPtr;
     m_arrowColorManagerPtr = arrowColorManagerPtr;
     m_showLabels = config.labelsInside || config.labelsOutside;
 
@@ -38,17 +39,17 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
     }
 
-    for(int i = 0; i < squareColors.size(); i++){
-        m_squareColors.push_back(sf::Color(squareColors.at(i)));
-    }
-
     for(int y = 0; y < logicBoard.height(); y++){
         std::vector<sf::RectangleShape> row;
         for(int x = 0; x < logicBoard.width(); x++){
             sf::RectangleShape square{sf::Vector2f((float)config.squareSize, (float)config.squareSize)};
             auto squareColorId_o = logicBoard.getSquareColorAt({x,y});
             if(squareColorId_o.has_value()){
-                square.setFillColor(m_squareColors.at(squareColorId_o.value()));
+                auto color_o = m_squareColorManagerPtr->getSolidColor(squareColorId_o.value());
+                if(color_o.has_value()){
+                    square.setFillColor(color_o.value());
+                }
+                
             }
             sf::Vector2f position;
             if(m_isLeftToRight){
@@ -1002,7 +1003,12 @@ void GraphicBoard::addInsideLabels(){
         label.setPosition(position);
 
         label.setFillColor(sf::Color(100,100,100,255));
-        label.setOutlineColor(m_squareColors.at((i+1)%2));
+
+        auto outlineColor_o = m_squareColorManagerPtr->getSolidColor((i+1)%2);
+        if(outlineColor_o.has_value()){
+            label.setOutlineColor(outlineColor_o.value());
+        }
+
         label.setOutlineThickness(2);
 
         m_bottomInsideCoordinateLabels.push_back(label);
@@ -1027,7 +1033,12 @@ void GraphicBoard::addInsideLabels(){
         label.setPosition(position);
 
         label.setFillColor(sf::Color(100,100,100,255));
-        label.setOutlineColor(m_squareColors.at(i%2));
+
+        auto outlineColor_o = m_squareColorManagerPtr->getSolidColor((i+1)%2);
+        if(outlineColor_o.has_value()){
+            label.setOutlineColor(outlineColor_o.value());
+        }
+        
         label.setOutlineThickness(2);
 
         m_leftInsideCoordinateLabels.push_back(label);

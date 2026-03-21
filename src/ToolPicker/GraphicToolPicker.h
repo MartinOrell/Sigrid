@@ -13,12 +13,13 @@
 #include <memory>
 #include "../Coord/Coord.h"
 
+#include "../Color/ColorManager.h"
 
 namespace sigrid{
     class GraphicToolPicker: public sf::Drawable{
         public:
 
-            GraphicToolPicker(const std::vector<uint32_t>& squareColors);
+            GraphicToolPicker(ColorManager* const squareColorManagerPtr);
 
             void createGraphic(const sf::Vector2u& size);
             
@@ -65,7 +66,7 @@ namespace sigrid{
             float m_offsetY;
 
             sf::Color m_backgroundColor;
-            std::vector<sf::Color> m_squareColors;
+            ColorManager* m_squareColorManagerPtr;
 
             std::map<Coord, sf::RectangleShape> m_tools;
     };

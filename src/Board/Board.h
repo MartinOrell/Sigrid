@@ -21,7 +21,7 @@ namespace sigrid{
 
             Board();
 
-            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, const std::vector<uint32_t>& squareColors, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             void setPosition(sf::Vector2f);
 

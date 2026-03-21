@@ -6,16 +6,11 @@
 #include "../Board/LogicBoard.h"
 #include "../Entity/Piece/PieceManager.h"
 
-
 using namespace sigrid;
 
-GraphicToolPicker::GraphicToolPicker(const std::vector<uint32_t>& squareColors)
-{
+GraphicToolPicker::GraphicToolPicker(ColorManager* const squareColorManagerPtr)
+: m_squareColorManagerPtr{squareColorManagerPtr}{
     m_backgroundColor = sf::Color{255,255,255,0};
-
-    for(int i = 0; i < squareColors.size(); i++){
-        m_squareColors.push_back(sf::Color(squareColors.at(i)));
-    }
 }
 
 void GraphicToolPicker::createGraphic(const sf::Vector2u& size){
@@ -48,8 +43,12 @@ void GraphicToolPicker::createGraphic(const sf::Vector2u& size){
         for(int x = 0; x < numColumns; x++){
 
             m_squares.at(y).at(x) = std::make_unique<sf::RectangleShape>(m_squareSize);
-            sf::Color squareColor = m_squareColors.at((x+y)%m_squareColors.size());
-            m_squares.at(y).at(x)->setFillColor(squareColor);
+            
+            auto color_o = m_squareColorManagerPtr->getSolidColor((x+y)%2);
+            if(color_o.has_value()){
+                m_squares.at(y).at(x)->setFillColor(color_o.value());
+            }
+            
             m_squares.at(y).at(x)->setPosition(sf::Vector2f(x*m_squareSize.x, y*m_squareSize.y+m_offsetY));
 
             auto toolIt = m_tools.find({x,y});
@@ -216,8 +215,12 @@ void GraphicToolPicker::addSquareRow(){
         std::unique_ptr<sf::RectangleShape> squarePtr;
         
         squarePtr = std::make_unique<sf::RectangleShape>(m_squareSize);
-        sf::Color squareColor = m_squareColors.at((x+y)%m_squareColors.size());
-        squarePtr->setFillColor(squareColor);
+
+        auto color_o = m_squareColorManagerPtr->getSolidColor((x+y)%2);
+        if(color_o.has_value()){
+            squarePtr->setFillColor(color_o.value());
+        }
+        
         squarePtr->setPosition(sf::Vector2f(x*m_squareSize.x, y*m_squareSize.y));
 
         row.push_back(std::move(squarePtr));
@@ -237,8 +240,12 @@ void GraphicToolPicker::addSquareColumn(){
         std::unique_ptr<sf::RectangleShape> squarePtr;
                 
         squarePtr = std::make_unique<sf::RectangleShape>(m_squareSize);
-        sf::Color squareColor = m_squareColors.at((x+y)%m_squareColors.size());
-        squarePtr->setFillColor(squareColor);
+
+        auto color_o = m_squareColorManagerPtr->getSolidColor((x+y)%2);
+        if(color_o.has_value()){
+            squarePtr->setFillColor(color_o.value());
+        }
+
         squarePtr->setPosition(sf::Vector2f(x*m_squareSize.x, y*m_squareSize.y));
 
         m_squares.at(y).push_back(std::move(squarePtr));

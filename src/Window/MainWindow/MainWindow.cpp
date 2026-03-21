@@ -32,6 +32,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_window.setFramerateLimit(60);
 
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
+    m_squareColorManagerPtr = std::make_unique<ColorManager>(config.squareColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
     m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
@@ -51,7 +52,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     m_pieceManagerPtr->loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, config.squareColors, m_pieceManagerPtr.get(), m_toolManagerPtr.get());
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get());
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){
@@ -81,7 +82,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     auto board = std::make_unique<sigrid::Board>();
 
-    board->init(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
+    board->init(boardData, config.boardData, m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
 
     std::cout << "Save location: " << config.boardFilename << std::endl;
 
@@ -100,7 +101,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 }
 
 void MainWindow::run(){
-    
+
     createGraphic();
 
     while (m_window.isOpen())
