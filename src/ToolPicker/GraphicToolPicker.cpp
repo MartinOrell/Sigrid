@@ -116,15 +116,12 @@ std::optional<Coord> GraphicToolPicker::getSquareCoord(sf::Vector2i point){
 
 void GraphicToolPicker::addTool(const Coord& coord, const sf::Texture* const texturePtr){
 
-    bool addedSquares = false;
     while((int)m_squares.size() - 1 < coord.y){
         addSquareRow();
-        addedSquares = true;
     }
 
     while((int)m_squares.at(0).size() - 1 < coord.x){
         addSquareColumn();
-        addedSquares = true;
     }
 
     sf::RectangleShape tool;
