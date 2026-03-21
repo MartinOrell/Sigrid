@@ -36,7 +36,7 @@ namespace sigrid{
             
             GraphicBoard();
             
-            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr);
+            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const arrowColorManagerPtr);
 
             sf::Vector2f getSquareSize() const;
 
@@ -170,7 +170,7 @@ namespace sigrid{
 
             std::unique_ptr<sf::RectangleShape> m_selectHighlight;
 
-            ColorManager* m_colorManagerPtr;
+            ColorManager* m_arrowColorManagerPtr;
 
             bool m_showLabels;
             bool m_isCoordinateLabelsInside;

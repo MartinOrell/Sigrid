@@ -32,8 +32,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_window.setFramerateLimit(60);
 
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
-    m_colorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
-    m_toolManagerPtr = std::make_unique<ToolManager>(m_colorManagerPtr.get());
+    m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
+    m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
 
     sigrid::Tool leftClickTool{config.leftClickTool};
@@ -81,7 +81,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     auto board = std::make_unique<sigrid::Board>();
 
-    board->init(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_colorManagerPtr.get());
+    board->init(boardData, config.boardData, config.squareColors, m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
 
     std::cout << "Save location: " << config.boardFilename << std::endl;
 

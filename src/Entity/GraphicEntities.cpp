@@ -4,11 +4,11 @@
 
 using namespace sigrid;
 
-GraphicEntities::GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr)
+GraphicEntities::GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr)
 : m_pieceSize{pieceSize}
 , m_circleDiameter{circleDiameter}
 , m_pieceManagerPtr{pieceManagerPtr}
-, m_colorManagerPtr{colorManagerPtr}{}
+, m_arrowColorManagerPtr{arrowColorManagerPtr}{}
 
 void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
@@ -33,14 +33,14 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         m_pieces.insert({coord, newPiece});
     }
     else if(std::holds_alternative<LogicCircle>(entity)){
-        if(m_colorManagerPtr == nullptr){
+        if(m_arrowColorManagerPtr == nullptr){
             std::cout << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
             std::cout << "ColorManager does not exist to assign color" << std::endl;
             return;
         }
 
         int colorId = std::get<LogicCircle>(entity).getColorId();
-        auto color_o = m_colorManagerPtr->getSolidColor(colorId);
+        auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
         if(color_o == std::nullopt){
             std::cout << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
             std::cout << "Color of colorId " << colorId << " not found" << std::endl;

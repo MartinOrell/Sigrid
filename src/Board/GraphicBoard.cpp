@@ -19,9 +19,9 @@ GraphicBoard::GraphicBoard()
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}{}
 
-void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const colorManagerPtr){
+void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, const std::vector<uint32_t>& squareColors, ColorManager* const arrowColorManagerPtr){
 
-    m_colorManagerPtr = colorManagerPtr;
+    m_arrowColorManagerPtr = arrowColorManagerPtr;
     m_showLabels = config.labelsInside || config.labelsOutside;
 
     m_isCoordinateLabelsInside = config.labelsInside;
@@ -32,7 +32,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_arrowThickness = config.arrowThickness;
     m_arrowHeadSize = config.arrowHeadSize;
-    m_pieceLayerPtr = std::make_unique<GraphicEntities>(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, colorManagerPtr);
+    m_pieceLayerPtr = std::make_unique<GraphicEntities>(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -302,12 +302,12 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     sf::RectangleShape newHighlight(getSquareSize());
 
     sf::Color color;
-    if(m_colorManagerPtr == nullptr){
+    if(m_arrowColorManagerPtr == nullptr){
         std::cout << "GraphicBoard: colorManagerPts == nullptr when adding square highlight" << std::endl;
         color = sf::Color(0xff000088);
     }
     else{
-        auto color_o = m_colorManagerPtr->getTransparentColor(colorId);
+        auto color_o = m_arrowColorManagerPtr->getTransparentColor(colorId);
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
                 << colorId << "not found when adding square highlight" << std::endl;
@@ -349,12 +349,12 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
     }
 
     sf::Color color;
-    if(m_colorManagerPtr == nullptr){
+    if(m_arrowColorManagerPtr == nullptr){
         std::cout << "GraphicBoard: colorManagerPts == nullptr when adding arrow" << std::endl;
         color = sf::Color::Red;
     }
     else{
-        auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
+        auto color_o = m_arrowColorManagerPtr->getSolidColor(logicArrow.getColorId());
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
                 << logicArrow.getColorId() << "not found when adding arrow" << std::endl;

@@ -14,7 +14,7 @@
 namespace sigrid{
     class GraphicEntities: public sf::Drawable{
         public:
-            GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const colorManagerPtr);
+            GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             void addEntity(const Coord& coord, const sf::Vector2f position, const LogicEntity& entity);
             void removeEntity(const Coord& coord);
@@ -37,6 +37,6 @@ namespace sigrid{
             float m_circleDiameter;
             
             PieceManager* m_pieceManagerPtr;
-            ColorManager* m_colorManagerPtr;
+            ColorManager* m_arrowColorManagerPtr;
     };
 }
