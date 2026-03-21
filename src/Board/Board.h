@@ -62,8 +62,6 @@ namespace sigrid{
 
             void select(const Coord& coord);
 
-            void keyPressed(sf::Event::KeyPressed);
-
             void deselect();
 
             void addEntity(const Coord& coord, const LogicEntity& newEntity);

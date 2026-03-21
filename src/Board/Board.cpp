@@ -135,10 +135,6 @@ void Board::select(const Coord& newCoord){
     m_graphicBoard->unhighlight();
 }
 
-void Board::keyPressed(sf::Event::KeyPressed event){
-
-}
-
 void Board::deselect(){
     m_selection = nullptr;
     m_graphicBoard->unhighlight();

@@ -214,7 +214,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
 }
 
 void WorkWindow::keyPressed(const sf::Event::KeyPressed& event){
-    m_boardPtr->keyPressed(event);
+    
 }
 
 void WorkWindow::textEntered(const std::string& text){
