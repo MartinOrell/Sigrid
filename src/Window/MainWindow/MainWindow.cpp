@@ -80,21 +80,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
         return false;
     }
 
-    auto board = std::make_unique<sigrid::Board>();
-
-    board->init(boardData, config.boardData, m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
-
-    std::cout << "Save location: " << config.boardFilename << std::endl;
-
-    board->setFilename(config.boardFilename);
-
-    if(!board->isImageFilenameSet()){
-        board->setImageFilename(config.defaultBoardImageFilename);
-    }
-
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->init(m_pieceManagerPtr.get());
-    m_workWindow->addBoard(std::move(board));
+    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);
     return true;

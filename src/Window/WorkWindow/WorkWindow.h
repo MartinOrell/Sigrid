@@ -13,11 +13,9 @@ namespace sigrid{
         public:
             WorkWindow();
 
-            void init(PieceManager* const pieceManagerPtr);
+            void init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             void createGraphic(const sf::Vector2u& size);
-
-            void addBoard(std::unique_ptr<sigrid::Board> board);
 
             void loadFen(const std::string& fen);
 

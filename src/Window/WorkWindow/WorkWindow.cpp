@@ -10,8 +10,20 @@ using namespace sigrid;
 WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}{}
 
-void WorkWindow::init(PieceManager* const pieceManagerPtr){
+void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
     m_pieceManagerPtr = pieceManagerPtr;
+
+    m_boardPtr = std::make_unique<sigrid::Board>();
+
+    m_boardPtr->init(boardData, graphicData, squareColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
+
+    std::cout << "Save location: " << boardFilename << std::endl;
+
+    m_boardPtr->setFilename(boardFilename);
+
+    if(!m_boardPtr->isImageFilenameSet()){
+        m_boardPtr->setImageFilename(defaultBoardImageFilename);
+    }
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)
@@ -36,10 +48,6 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         float posY = ((float)(size.y)-float(m_boardPtr->getDisplayHeight()))/2.f;
         m_boardPtr->setPosition({posX, posY});
     }
-}
-
-void WorkWindow::addBoard(std::unique_ptr<sigrid::Board> board){
-    m_boardPtr = std::move(board);
 }
 
 void WorkWindow::loadFen(const std::string& fen){
