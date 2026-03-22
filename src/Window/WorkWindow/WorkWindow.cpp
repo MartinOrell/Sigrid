@@ -11,28 +11,31 @@ WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}{}
 
 void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+    
+    m_activeBoardId = 0;
     m_pieceManagerPtr = pieceManagerPtr;
 
-    m_boardPtr = std::make_unique<sigrid::Board>();
+    auto board = std::make_unique<Board>();
 
-    m_boardPtr->init(boardData, graphicData, squareColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
+    board->init(boardData, graphicData, squareColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
 
     std::cout << "Save location: " << boardFilename << std::endl;
 
-    m_boardPtr->setFilename(boardFilename);
+    board->setFilename(boardFilename);
 
-    if(!m_boardPtr->isImageFilenameSet()){
-        m_boardPtr->setImageFilename(defaultBoardImageFilename);
+    if(!board->isImageFilenameSet()){
+        board->setImageFilename(defaultBoardImageFilename);
     }
+    m_boardPtrs.push_back(std::move(board));
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    if(m_boardPtr){
-        unsigned int boardWidth = m_boardPtr->getImageWidth();
-        unsigned int boardHeight = m_boardPtr->getImageHeight();
+    for(auto& board: m_boardPtrs){
+        unsigned int boardWidth = board->getImageWidth();
+        unsigned int boardHeight = board->getImageHeight();
         float widthRatio = (float)size.x/(float)boardWidth;
         float heightRatio = (float)size.y/(float)boardHeight;
         float boardScale;
@@ -42,20 +45,20 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         else{
             boardScale = heightRatio;
         }
-        m_boardPtr->setScale(boardScale);
+        board->setScale(boardScale);
 
-        float posX = ((float)(size.x)-float(m_boardPtr->getDisplayWidth()))/2.f;
-        float posY = ((float)(size.y)-float(m_boardPtr->getDisplayHeight()))/2.f;
-        m_boardPtr->setPosition({posX, posY});
+        float posX = ((float)(size.x)-float(board->getDisplayWidth()))/2.f;
+        float posY = ((float)(size.y)-float(board->getDisplayHeight()))/2.f;
+        board->setPosition({posX, posY});
     }
 }
 
 void WorkWindow::loadFen(const std::string& fen){
-    m_boardPtr->loadFen(fen);
+    m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
 }
 
 std::string WorkWindow::getFen() const{
-    return m_boardPtr->getFen();
+    return m_boardPtrs.at(m_activeBoardId)->getFen();
 }
 
 void WorkWindow::setPosition(sf::Vector2f position){
@@ -63,10 +66,10 @@ void WorkWindow::setPosition(sf::Vector2f position){
 }
 
 unsigned int WorkWindow::getNumColumns() const{
-    if(!m_boardPtr){
+    if(m_boardPtrs.size() <= m_activeBoardId){
         return 0;
     }
-    return m_boardPtr->getNumColumns();
+    return m_boardPtrs.at(m_activeBoardId)->getNumColumns();
 }
 
 bool WorkWindow::contains(sf::Vector2i point) const{
@@ -82,7 +85,7 @@ bool WorkWindow::contains(sf::Vector2i point) const{
 }
 
 bool WorkWindow::isCoordinatesOutside() const{
-    return m_boardPtr->isCoordinatesOutside();
+    return m_boardPtrs.at(m_activeBoardId)->isCoordinatesOutside();
 }
 
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -93,7 +96,9 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     sf::RenderTexture texture(m_texture->getSize());
     texture.clear(m_backgroundColor);
-    texture.draw(*m_boardPtr);
+    for(auto& board: m_boardPtrs){
+        texture.draw(*board);
+    }
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
     target.draw(sprite);
@@ -103,7 +108,7 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
 Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPosition, const sf::Vector2i& releasePosition){
     
-    m_boardPtr->removeDragArrow();
+    m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
 
     int fromX = pressPosition.x-(int)m_position.x;
     int fromY = pressPosition.y-(int)m_position.y;
@@ -112,13 +117,13 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
     int toY = releasePosition.y-(int)m_position.y;
 
 
-    if(m_boardPtr->isWithinPlayerToMoveToken({fromX, fromY}) &&
-    m_boardPtr->isWithinPlayerToMoveToken({toX, toY})){
-        m_boardPtr->togglePlayerToMoveToken();
+    if(m_boardPtrs.at(m_activeBoardId)->isWithinPlayerToMoveToken({fromX, fromY}) &&
+    m_boardPtrs.at(m_activeBoardId)->isWithinPlayerToMoveToken({toX, toY})){
+        m_boardPtrs.at(m_activeBoardId)->togglePlayerToMoveToken();
     }
 
-    auto fromCoord_o = m_boardPtr->getSquareCoord({fromX,fromY});
-    auto toCoord_o = m_boardPtr->getSquareCoord({toX, toY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({fromX,fromY});
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({toX, toY});
 
     
     if(fromCoord_o == std::nullopt){
@@ -128,7 +133,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
     if(toCoord_o == std::nullopt){
         switch(tool.selection()){
             case ToolSelection::Select:
-                m_boardPtr->deselect();
+                m_boardPtrs.at(m_activeBoardId)->deselect();
                 break;
             default:
                 break;
@@ -142,22 +147,22 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
     switch(tool.selection()){
         case ToolSelection::Select:
             if(fromCoord == toCoord){
-                m_boardPtr->select(toCoord);
+                m_boardPtrs.at(m_activeBoardId)->select(toCoord);
             }
             else{
-                m_boardPtr->dragAndDrop(fromCoord_o.value(), toCoord_o.value());
+                m_boardPtrs.at(m_activeBoardId)->dragAndDrop(fromCoord_o.value(), toCoord_o.value());
             }
             return ActionType::None();
         case ToolSelection::EntityAdder:
-            m_boardPtr->addEntity(toCoord, tool.getEntity());
+            m_boardPtrs.at(m_activeBoardId)->addEntity(toCoord, tool.getEntity());
             return ActionType::None();
         case ToolSelection::EntityPicker:
             {
-                auto logicEntity_o = m_boardPtr->getLogicEntity(toCoord);
+                auto logicEntity_o = m_boardPtrs.at(m_activeBoardId)->getLogicEntity(toCoord);
                 if(logicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
-                auto graphicEntity_o = m_boardPtr->getGraphicEntity(toCoord);
+                auto graphicEntity_o = m_boardPtrs.at(m_activeBoardId)->getGraphicEntity(toCoord);
                 if(graphicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
@@ -166,10 +171,10 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
         case ToolSelection::DrawArrow:
             if(fromCoord == toCoord){
-                m_boardPtr->addSquareHighlight(toCoord, tool.arrowColorId());
+                m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(toCoord, tool.arrowColorId());
                 return ActionType::None();
             }
-            m_boardPtr->addArrow(fromCoord, toCoord, tool.arrowColorId());
+            m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, tool.arrowColorId());
             return ActionType::None();
         default:
             return ActionType::None();
@@ -182,7 +187,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     int fromX = pressPosition.x-(int)m_position.x;
     int fromY = pressPosition.y-(int)m_position.y;
 
-    auto fromCoord_o = m_boardPtr->getSquareCoord({fromX,fromY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({fromX,fromY});
 
     if(fromCoord_o == std::nullopt){
         return;
@@ -191,10 +196,10 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     int toX = currentPosition.x-(int)m_position.x;
     int toY = currentPosition.y-(int)m_position.y;
 
-    auto toCoord_o = m_boardPtr->getSquareCoord({toX, toY});
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({toX, toY});
 
     if(toCoord_o == std::nullopt){
-        m_boardPtr->removeDragArrow();
+        m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
         return;
     }
 
@@ -202,18 +207,18 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     auto toCoord = toCoord_o.value();
 
     if(fromCoord == toCoord){
-        m_boardPtr->removeDragArrow();
+        m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
         return;
     }
 
     switch(tool.selection()){
         case ToolSelection::Select:
-            if(!m_boardPtr->isEmptySquare(fromCoord)){
-                m_boardPtr->updateDragArrow(fromCoord, toCoord);
+            if(!m_boardPtrs.at(m_activeBoardId)->isEmptySquare(fromCoord)){
+                m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord);
             }
             return;
         case ToolSelection::DrawArrow:
-            m_boardPtr->updateDragArrow(fromCoord, toCoord);
+            m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord);
             return;
         default:
             return;
@@ -222,7 +227,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
 }
 
 void WorkWindow::keyPressed(const sf::Event::KeyPressed& event){
-    
+
 }
 
 void WorkWindow::textEntered(const std::string& text){
@@ -244,62 +249,62 @@ void WorkWindow::textEntered(const std::string& text){
         return;
     }
 
-    m_boardPtr->addEntityAtSelection(logicPiece);
+    m_boardPtrs.at(m_activeBoardId)->addEntityAtSelection(logicPiece);
 }
 
 void WorkWindow::reset(){
     std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"};
-    m_boardPtr->loadFen(fen);
+    m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
 }
 
 void WorkWindow::clear(){
-    m_boardPtr->clear();
+    m_boardPtrs.at(m_activeBoardId)->clear();
 }
 
 void WorkWindow::print(){
-    m_boardPtr->print();
+    m_boardPtrs.at(m_activeBoardId)->print();
 }
 
 void WorkWindow::saveBoard(){
-    m_boardPtr->save();
+    m_boardPtrs.at(m_activeBoardId)->save();
 }
 
 void WorkWindow::flipBoard(){
-    m_boardPtr->flipBoard();
+    m_boardPtrs.at(m_activeBoardId)->flipBoard();
 }
 
 void WorkWindow::addCoordinates(){
-    m_boardPtr->addCoordinates();
+    m_boardPtrs.at(m_activeBoardId)->addCoordinates();
 }
 
 void WorkWindow::removeCoordinates(){
-    m_boardPtr->removeCoordinates();
+    m_boardPtrs.at(m_activeBoardId)->removeCoordinates();
 }
 
 void WorkWindow::moveCoordinatesOutside(){
-    m_boardPtr->moveCoordinatesOutside();
+    m_boardPtrs.at(m_activeBoardId)->moveCoordinatesOutside();
 }
 
 void WorkWindow::moveCoordinatesInside(){
-    m_boardPtr->moveCoordinatesInside();
+    m_boardPtrs.at(m_activeBoardId)->moveCoordinatesInside();
 }
 
 void WorkWindow::setCoordinateSize(const float& size){
-    m_boardPtr->setCoordinateSize(size);    
+    m_boardPtrs.at(m_activeBoardId)->setCoordinateSize(size);    
 }
 
 void WorkWindow::addBoardBorder(){
-    m_boardPtr->addBorder();
+    m_boardPtrs.at(m_activeBoardId)->addBorder();
 }
 
 void WorkWindow::removeBoardBorder(){
-    m_boardPtr->removeBorder();
+    m_boardPtrs.at(m_activeBoardId)->removeBorder();
 }
 
 void WorkWindow::addPlayerToMoveToken(){
-    m_boardPtr->addPlayerToMoveToken();
+    m_boardPtrs.at(m_activeBoardId)->addPlayerToMoveToken();
 }
 
 void WorkWindow::removePlayerToMoveToken(){
-    m_boardPtr->removePlayerToMoveToken();
+    m_boardPtrs.at(m_activeBoardId)->removePlayerToMoveToken();
 }

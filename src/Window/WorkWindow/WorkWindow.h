@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -69,7 +71,8 @@ namespace sigrid{
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
-            std::unique_ptr<sigrid::Board> m_boardPtr;
+            std::vector<std::unique_ptr<sigrid::Board>> m_boardPtrs;
+            int m_activeBoardId;
 
             sf::Color m_backgroundColor;
 
