@@ -6,9 +6,10 @@ using namespace sigrid;
 
 GraphicArrow::GraphicArrow(){}
 
-GraphicArrow::GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize)
-: m_thickness{thickness}
-, m_headSize{headSize}{
+void GraphicArrow::init(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize){
+
+    m_thickness = thickness;
+    m_headSize = headSize;
 
     m_line.setFillColor(color);
     m_line.setOrigin({0, thickness/2.f});
@@ -55,13 +56,6 @@ GraphicArrow::GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f&
     headPosition.y = fromPosition.y + (sin(rotation)) * (length - headSize);
 
     m_head.setPosition(headPosition);
-}
-
-GraphicArrow::GraphicArrow(const GraphicArrow& src){
-    m_line = src.m_line;
-    m_head = src.m_head;
-    m_thickness = src.m_thickness;
-    m_headSize = src.m_headSize;
 }
 
 GraphicArrow& GraphicArrow::operator =(const GraphicArrow& src){

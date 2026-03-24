@@ -488,7 +488,9 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    GraphicArrow graphicArrow(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
+    GraphicArrow graphicArrow;
+    graphicArrow.init(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
+
     auto result = m_arrows.insert({coordPair, graphicArrow});
 
     assert(result.second);
@@ -532,7 +534,8 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
 
         sf::Color color = sf::Color::Red;
 
-        m_dragArrowPtr = std::make_unique<GraphicArrow>(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
+        m_dragArrowPtr = std::make_unique<GraphicArrow>();
+        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
         m_texturePtr->draw(*m_dragArrowPtr);
         return;
     }

@@ -56,7 +56,8 @@ std::optional<sf::Texture*> ToolManager::getArrowTexturePtr(const int colorId){
         to.x = (float)squareWidth/2.f;
         to.y = (float)squareHeight*0.1f;
 
-        m_graphicArrowPtr = std::make_unique<GraphicArrow>(from, to, color_o.value(), 5.f, 15.f);
+        m_graphicArrowPtr = std::make_unique<GraphicArrow>();
+        m_graphicArrowPtr->init(from, to, color_o.value(), 5.f, 15.f);
     }
     else{
         m_graphicArrowPtr->setColor(color_o.value());
