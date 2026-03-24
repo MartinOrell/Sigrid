@@ -33,7 +33,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_arrowThickness = config.arrowThickness;
     m_arrowHeadSize = config.arrowHeadSize;
-    m_pieceLayerPtr = std::make_unique<GraphicEntities>(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
+    m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+    m_pieceLayerPtr->init(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;

@@ -6,11 +6,14 @@ using namespace sigrid;
 
 GraphicEntities::GraphicEntities(){}
 
-GraphicEntities::GraphicEntities(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr)
-: m_pieceSize{pieceSize}
-, m_circleDiameter{circleDiameter}
-, m_pieceManagerPtr{pieceManagerPtr}
-, m_arrowColorManagerPtr{arrowColorManagerPtr}{}
+void GraphicEntities::init(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+
+    m_pieceSize = pieceSize;
+    m_circleDiameter = circleDiameter;
+    m_pieceManagerPtr = pieceManagerPtr;
+    m_arrowColorManagerPtr = arrowColorManagerPtr;
+
+}
 
 void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
