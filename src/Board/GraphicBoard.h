@@ -71,6 +71,7 @@ namespace sigrid{
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
             void addSquareHighlight(const Coord& coord, const int colorId);
+            void removeSquareHighlight(const Coord& coord);
 
             void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             void removeArrow(const CoordPair& coordPair);

@@ -400,8 +400,9 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     auto it = m_squareHighlights.find(coord);
 
     if(it != m_squareHighlights.end()){
-        m_squareHighlights.erase(it);
-        redrawTexture();
+        std::cout << "GraphicBoard: Failed to add highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "There is already a highlight there";
         return;
     }
 
@@ -438,8 +439,26 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
 
     auto result = m_squareHighlights.insert({coord, newHighlight});
 
-    assert (result.second);
+    if(!result.second){
+        std::cout << "GraphicBoard: Failed to add highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "insertion call failed" << std::endl;
+    }
 
+    redrawTexture();
+}
+
+void GraphicBoard::removeSquareHighlight(const Coord& coord){
+
+    auto it = m_squareHighlights.find(coord);
+
+    if(it == m_squareHighlights.end()){
+        std::cout << "GraphicBoard: Failed to remove highlight at "
+            << coord.getNotation() << std::endl;
+        return;
+    }
+
+    m_squareHighlights.erase(it);
     redrawTexture();
 }
 

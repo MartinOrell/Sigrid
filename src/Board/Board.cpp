@@ -235,7 +235,7 @@ void Board::addSquareHighlight(const Coord& coord, const int colorId){
 
     if(occupyingHighlight_o.value() != colorId){
         if(m_logicBoard->removeSquareHighlight(coord)){
-            m_graphicBoard->addSquareHighlight(coord, colorId);
+            m_graphicBoard->removeSquareHighlight(coord);
         }
         if(m_logicBoard->addSquareHighlight(coord, colorId)){
             m_graphicBoard->addSquareHighlight(coord, colorId);
@@ -244,7 +244,7 @@ void Board::addSquareHighlight(const Coord& coord, const int colorId){
     }
 
     if(m_logicBoard->removeSquareHighlight(coord)){
-        m_graphicBoard->addSquareHighlight(coord, colorId);
+        m_graphicBoard->removeSquareHighlight(coord);
     }
 }
 
