@@ -43,6 +43,8 @@ namespace sigrid{
 
             void print();
 
+            void newBoard();
+
             void saveBoard();
 
             void flipBoard();
@@ -66,6 +68,8 @@ namespace sigrid{
             void removePlayerToMoveToken();
 
         private:
+
+            std::string getUniqueName(const std::string& name);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

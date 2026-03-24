@@ -111,6 +111,119 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
 
 }
 
+GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
+    
+    if(rhs.m_texturePtr){
+        if(!m_texturePtr){
+            m_texturePtr = std::make_unique<sf::RenderTexture>();
+        }
+        if(!(m_texturePtr->resize(rhs.m_texturePtr->getSize()))){
+            std::cout << "GraphicBoard: Failed to resize texture during assignment operation" << std::endl;
+        }
+    }
+
+    m_position = rhs.m_position;
+    m_scale = rhs.m_scale;
+
+    m_leftEdgeWidth = rhs.m_leftEdgeWidth;
+    m_rightEdgeWidth = rhs.m_rightEdgeWidth;
+    m_topEdgeWidth = rhs.m_topEdgeWidth;
+    m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
+
+    m_squares = rhs.m_squares;
+
+    m_backgroundColor = rhs.m_backgroundColor;
+
+    m_squareHighlights = rhs.m_squareHighlights;
+
+    m_arrows = rhs.m_arrows;
+
+    if(rhs.m_pieceLayerPtr){
+        if(!m_pieceLayerPtr){
+            m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+        }
+        *m_pieceLayerPtr = *(rhs.m_pieceLayerPtr);
+    }
+
+    if(rhs.m_dragArrowPtr){
+        if(!m_dragArrowPtr){
+            m_dragArrowPtr = std::make_unique<GraphicArrow>();
+        }
+        *m_dragArrowPtr = *(rhs.m_dragArrowPtr);
+    }
+
+    if(rhs.m_selectHighlight){
+        if(!m_selectHighlight){
+            m_selectHighlight = std::make_unique<sf::RectangleShape>();
+        }
+        *m_selectHighlight = *(rhs.m_selectHighlight);
+    }
+
+    m_squareColorManagerPtr = rhs.m_squareColorManagerPtr;
+    m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
+
+    m_showLabels = rhs.m_showLabels;
+    m_isCoordinateLabelsInside = rhs.m_isCoordinateLabelsInside;
+    m_font = rhs.m_font;
+    m_leftOutsideCoordinateLabels = rhs.m_leftOutsideCoordinateLabels;
+    m_bottomOutsideCoordinateLabels = rhs.m_bottomOutsideCoordinateLabels;
+    m_bottomInsideCoordinateLabels = rhs.m_bottomInsideCoordinateLabels;
+    m_leftInsideCoordinateLabels = rhs.m_leftInsideCoordinateLabels;
+
+    m_showBorder = rhs.m_showBorder;
+    m_borderWidth = rhs.m_borderWidth;
+
+    if(rhs.m_leftBorder){
+        if(!m_leftBorder){
+            m_leftBorder = std::make_unique<sf::RectangleShape>();
+        }
+        *m_leftBorder = *(rhs.m_leftBorder);
+    }
+
+    if(rhs.m_rightBorder){
+        if(!m_rightBorder){
+            m_rightBorder = std::make_unique<sf::RectangleShape>();
+        }
+        *m_rightBorder = *(rhs.m_rightBorder);
+    }
+
+    if(rhs.m_topBorder){
+        if(!m_topBorder){
+            m_topBorder = std::make_unique<sf::RectangleShape>();
+        }
+        *m_topBorder = *(rhs.m_topBorder);
+    }
+
+    if(rhs.m_bottomBorder){
+        if(!m_bottomBorder){
+            m_bottomBorder = std::make_unique<sf::RectangleShape>();
+        }
+        *m_bottomBorder = *(rhs.m_bottomBorder);
+    }
+
+    m_insideLabelSizeFactor = rhs.m_insideLabelSizeFactor;
+    m_outsideLabelSizeFactor = rhs.m_outsideLabelSizeFactor;
+
+    m_showPlayerToMoveToken = rhs.m_showPlayerToMoveToken;
+
+    if(rhs.m_playerToMoveToken){
+        if(!m_playerToMoveToken){
+            m_playerToMoveToken = std::make_unique<sf::CircleShape>();
+        }
+        *m_playerToMoveToken = *(rhs.m_playerToMoveToken);
+    }
+
+    m_isLeftToRight = rhs.m_isLeftToRight;
+    m_isTopToBottom = rhs.m_isTopToBottom;
+
+    m_arrowThickness = rhs.m_arrowThickness;
+    m_arrowHeadSize = rhs.m_arrowHeadSize;
+
+    redrawTexture();
+
+    return *this;
+}
+
 sf::Vector2f GraphicBoard::getSquareSize() const{
     return m_squares.at(0).at(0).getSize();
 }

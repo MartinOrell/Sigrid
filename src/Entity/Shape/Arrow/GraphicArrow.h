@@ -13,6 +13,7 @@ namespace sigrid{
     class GraphicArrow: public sf::Drawable{
 
         public:
+            GraphicArrow();
             GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize);
             GraphicArrow(const GraphicArrow&);
             GraphicArrow& operator =(const GraphicArrow&);

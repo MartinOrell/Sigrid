@@ -38,6 +38,8 @@ namespace sigrid{
             
             void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const squareColorManagerPtr, ColorManager* const arrowColorManagerPtr);
 
+            GraphicBoard& operator=(const GraphicBoard& rhs);
+
             sf::Vector2f getSquareSize() const;
 
             void setPosition(sf::Vector2f);

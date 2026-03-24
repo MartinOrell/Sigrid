@@ -41,6 +41,13 @@ Coord::Coord(const std::string& notation){
     y = ny - 1;
 }
 
+Coord& Coord::operator=(const Coord& rhs){
+    x = rhs.x;
+    y = rhs.y;
+    
+    return *this;
+}
+
 bool Coord::operator<(const Coord& rhs) const{
     if(y < rhs.y){
         return true;

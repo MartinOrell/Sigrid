@@ -23,6 +23,8 @@ namespace sigrid{
 
             void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
+            Board& operator=(const Board& rhs);
+
             void setPosition(sf::Vector2f);
 
             void setPositionX(const float x);
@@ -42,6 +44,10 @@ namespace sigrid{
             float getDisplayWidth() const;
 
             float getDisplayHeight() const;
+
+            std::string getName() const;
+
+            std::string getImageName() const;
 
             bool contains(sf::Vector2i point) const;
 

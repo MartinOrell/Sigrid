@@ -93,6 +93,30 @@ bool LogicBoard::init(const BoardDataContainer& data){
     return true;
 }
 
+LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
+
+    m_repeatedSquareIds = rhs.m_repeatedSquareIds;
+    m_squareLayer = rhs.m_squareLayer;
+    m_pieceLayer = rhs.m_pieceLayer;
+    m_arrows = rhs.m_arrows;
+
+    m_squareHighlight.clear();
+    for(int y = 0; y < rhs.m_squareHighlight.size(); y++){
+        std::vector<std::unique_ptr<int>> highlightRow;
+        for(int x = 0; x < rhs.m_squareHighlight.at(y).size(); x++){
+            std::unique_ptr<int> highlight;
+            auto highlight_o = rhs.getSquareHighlightAt({x,y});
+            if(highlight_o.has_value()){
+                *highlight = highlight_o.value();
+            }
+            highlightRow.push_back(std::move(highlight));
+        }
+        m_squareHighlight.push_back(std::move(highlightRow));
+    }
+
+    return *this;
+}
+
 const unsigned int LogicBoard::width() const{
     return m_squareLayer.at(0).size();
 }
@@ -142,7 +166,6 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) con
 
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
 
-    std::cout << "LogicBoard: getSquareHighlightAt" << std::endl;
     if(coord.x > m_squareHighlight.at(0).size()){
         return std::nullopt;
     }

@@ -21,6 +21,8 @@ namespace sigrid{
 
             bool init(const BoardDataContainer& data);
 
+            LogicBoard& operator=(const LogicBoard& rhs);
+
             const unsigned int width() const;
             const unsigned int height() const;
 

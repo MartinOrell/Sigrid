@@ -20,6 +20,9 @@ Action sigrid::getAction(const std::string& s){
     if(name == "save"){
         return ActionType::SaveBoard{};
     }
+    if(name == "new"){
+        return ActionType::NewBoard{};
+    }
     else if(name == "reset"){
         return ActionType::Reset{};
     }

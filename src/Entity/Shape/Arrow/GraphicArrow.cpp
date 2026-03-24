@@ -4,6 +4,8 @@
 
 using namespace sigrid;
 
+GraphicArrow::GraphicArrow(){}
+
 GraphicArrow::GraphicArrow(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize)
 : m_thickness{thickness}
 , m_headSize{headSize}{

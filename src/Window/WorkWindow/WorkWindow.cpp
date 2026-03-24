@@ -96,9 +96,7 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     sf::RenderTexture texture(m_texture->getSize());
     texture.clear(m_backgroundColor);
-    for(auto& board: m_boardPtrs){
-        texture.draw(*board);
-    }
+    texture.draw(*m_boardPtrs.at(m_activeBoardId));
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
     target.draw(sprite);
@@ -263,6 +261,66 @@ void WorkWindow::clear(){
 
 void WorkWindow::print(){
     m_boardPtrs.at(m_activeBoardId)->print();
+}
+
+std::string WorkWindow::getUniqueName(const std::string& name){
+    std::string newName(name);
+    while(true){
+        
+        bool exists = false;
+        for(const auto& board: m_boardPtrs){
+            if(board->getName() == newName || board->getImageName() == newName){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            if(!std::filesystem::exists(newName)){
+                break;
+            }
+        }
+
+        auto endPos = newName.rfind('.');
+        if(endPos == newName.npos){
+            std::cout << "WorkWindow: No . in getUniqueName";
+            return newName;
+        }
+        auto startPos = endPos;
+        while(std::isdigit(newName.at(startPos-1))){
+            startPos--;
+        }
+        if(startPos == endPos){
+            newName.insert(startPos, "2");
+        }
+        else{
+            std::string digitString = newName.substr(startPos,endPos-startPos);
+            int digit = std::stoi(digitString);
+            digit++;
+            digitString = std::to_string(digit);
+            newName.erase(startPos,endPos-startPos);
+            newName.insert(startPos, digitString);
+        }
+    }
+    return newName;
+}
+
+void WorkWindow::newBoard(){
+
+    auto newBoard = std::make_unique<Board>();
+    *newBoard = *m_boardPtrs.at(m_activeBoardId);
+
+    std::string newName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getName());
+    std::string newImageName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getImageName());
+
+    std::cout << "New board name " << newName << std::endl;
+    std::cout << "New image name " << newImageName << std::endl;    
+    
+    newBoard->setFilename(newName);
+    newBoard->setImageFilename(newImageName);
+
+    m_boardPtrs.push_back(std::move(newBoard));
+    m_activeBoardId = m_boardPtrs.size()-1;
+    reset();
 }
 
 void WorkWindow::saveBoard(){

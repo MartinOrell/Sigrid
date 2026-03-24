@@ -499,8 +499,11 @@ void MainWindow::handleAction(const sigrid::Action action){
         hideTools();
         return;
     }
+    else if(std::holds_alternative<ActionType::NewBoard>(action)){
+        newBoard();
+        return;
+    }
     else if(std::holds_alternative<ActionType::SaveBoard>(action)){
-
         saveBoard();
         return;
     }
@@ -787,6 +790,17 @@ void MainWindow::hideTools(){
     }
     
     createGraphic();
+}
+
+void MainWindow::newBoard(){
+
+    if(!m_workWindow){
+        std::cout << "Unable to add new board, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->newBoard();
+
 }
 
 void MainWindow::saveBoard(){

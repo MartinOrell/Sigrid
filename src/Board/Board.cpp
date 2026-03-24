@@ -22,6 +22,33 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
     }
 }
 
+Board& Board::operator=(const Board& rhs){
+    m_filename = rhs.m_filename;
+    m_imageFilename = rhs.m_imageFilename;
+    if(rhs.m_logicBoard){
+        if(!m_logicBoard){
+            m_logicBoard = std::make_unique<LogicBoard>();
+        }
+        *m_logicBoard = *(rhs.m_logicBoard);
+    }
+    
+    if(rhs.m_graphicBoard){
+        if(!m_graphicBoard){
+            m_graphicBoard = std::make_unique<GraphicBoard>();
+        }
+        *m_graphicBoard = *(rhs.m_graphicBoard);
+    }
+    
+    if(rhs.m_selection){
+        if(!m_selection){
+            m_selection = std::make_unique<Coord>();
+        }
+        *m_selection = *(rhs.m_selection);
+    }
+
+    return *this;
+}
+
 void Board::setPosition(sf::Vector2f position){
     m_graphicBoard->setPosition(position);
 }
@@ -60,6 +87,14 @@ float Board::getDisplayWidth() const{
 
 float Board::getDisplayHeight() const{
     return m_graphicBoard->getDisplayHeight();
+}
+
+std::string Board::getName() const{
+    return m_filename;
+}
+
+std::string Board::getImageName() const{
+    return m_imageFilename;
 }
 
 bool Board::contains(sf::Vector2i point) const{

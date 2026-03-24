@@ -49,6 +49,7 @@ namespace sigrid{
             void hideColorTools();
             void showTools();
             void hideTools();
+            void newBoard();
             void saveBoard();
             void pasteFen();
             void copyFen();

@@ -173,6 +173,7 @@ Menu: [
   title: Menu
   headers: [
     File [
+      New new
       Save save
     ]
     Edit [
