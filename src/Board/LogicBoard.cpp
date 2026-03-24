@@ -13,17 +13,14 @@ using namespace sigrid;
 LogicBoard::LogicBoard(){}
 
 LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieceLayer{board.m_pieceLayer}{
+: m_pieceLayer{board.m_pieceLayer}
+, m_squareHighlights{board.m_squareHighlights}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
         std::vector<int> squareRow;
-        std::vector<std::unique_ptr<int>> highlightRow;
         for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
             squareRow.push_back(board.m_squareLayer.at(y).at(x));
-            std::unique_ptr<int> noHighlight;
-            highlightRow.push_back(std::move(noHighlight));
         }
         m_squareLayer.push_back(squareRow);
-        m_squareHighlight.push_back(std::move(highlightRow));
     }
 }
 
@@ -81,15 +78,6 @@ bool LogicBoard::init(const BoardDataContainer& data){
         m_pieceLayer.addEntity(coord, LogicCircle{cData.colorId});
     }
 
-    for(int y = 0; y < m_squareLayer.size(); y++){
-        std::vector<std::unique_ptr<int>> highlightRow;
-        for(int x = 0; x < m_squareLayer.at(y).size(); x++){
-            std::unique_ptr<int> noHighlight;
-            highlightRow.push_back(std::move(noHighlight));
-        }
-        m_squareHighlight.push_back(std::move(highlightRow));
-    }
-
     return true;
 }
 
@@ -99,20 +87,7 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     m_squareLayer = rhs.m_squareLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrows = rhs.m_arrows;
-
-    m_squareHighlight.clear();
-    for(int y = 0; y < rhs.m_squareHighlight.size(); y++){
-        std::vector<std::unique_ptr<int>> highlightRow;
-        for(int x = 0; x < rhs.m_squareHighlight.at(y).size(); x++){
-            std::unique_ptr<int> highlight;
-            auto highlight_o = rhs.getSquareHighlightAt({x,y});
-            if(highlight_o.has_value()){
-                *highlight = highlight_o.value();
-            }
-            highlightRow.push_back(std::move(highlight));
-        }
-        m_squareHighlight.push_back(std::move(highlightRow));
-    }
+    m_squareHighlights = rhs.m_squareHighlights;
 
     return *this;
 }
@@ -166,19 +141,11 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) con
 
 std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
 
-    if(coord.x > m_squareHighlight.at(0).size()){
+    auto it = m_squareHighlights.find(coord);
+    if(it == m_squareHighlights.end()){
         return std::nullopt;
     }
-    if(coord.y > m_squareHighlight.size()){
-        return std::nullopt;
-    }
-
-    if(!m_squareHighlight.at(coord.y).at(coord.x)){
-        return std::nullopt;
-    }
-
-    int colorId = *m_squareHighlight[coord.y][coord.x];
-    return colorId;
+    return it->second;
 }
 
 std::string LogicBoard::getFen() const{
@@ -305,17 +272,19 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
         return false;
     }
 
-    if(!m_squareHighlight.at(coord.y).at(coord.x)){
-        m_squareHighlight.at(coord.y).at(coord.x) = std::make_unique<int>(colorId);
+    auto it = m_squareHighlights.find(coord);
+    if(it == m_squareHighlights.end()){
+        m_squareHighlights.insert({coord, colorId});
         return true;
     }
 
-    if(*m_squareHighlight.at(coord.y).at(coord.x) == colorId){
-        m_squareHighlight.at(coord.y).at(coord.x) = nullptr;
+    if(it->second == colorId){
+        m_squareHighlights.erase(coord);
         return true;
     }
 
-    *m_squareHighlight.at(coord.y).at(coord.x) = colorId;
+    it->second = colorId;
+    
     return true;
 }
 

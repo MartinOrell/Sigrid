@@ -51,7 +51,7 @@ namespace sigrid{
             std::vector<int> m_repeatedSquareIds;
             std::vector<std::vector<int>> m_squareLayer; //colorIds
             LogicEntities m_pieceLayer;
-            std::vector<std::vector<std::unique_ptr<int>>> m_squareHighlight; //highlightColorIds
+            std::map<Coord, int> m_squareHighlights;
             std::map<CoordPair, LogicArrow> m_arrows;
     };
 }
