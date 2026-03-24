@@ -273,18 +273,33 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
     }
 
     auto it = m_squareHighlights.find(coord);
+
+    if(it != m_squareHighlights.end()){
+        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
+        std::cout << "There is already a highlight at " << coord.getNotation() << std::endl;
+        return false;
+    }
+
+    m_squareHighlights.insert({coord, colorId});
+    return true;
+}
+
+bool LogicBoard::removeSquareHighlight(const Coord& coord){
+
+    if(!isWithinBoard(coord)){
+        std::cout << "LogicBoard: Unable to remove square highlight." << std::endl;
+        std::cout << "Coord is not a valid square (value:" << coord.getNotation() << ")" << std::endl;
+        return false;
+    }
+
+    auto it = m_squareHighlights.find(coord);
     if(it == m_squareHighlights.end()){
-        m_squareHighlights.insert({coord, colorId});
-        return true;
+        std::cout << "LogicBoard: Unable to remove square highlight." << std::endl;
+        std::cout << "There is no highlight at " << coord.getNotation() << std::endl;
+        return false;
     }
 
-    if(it->second == colorId){
-        m_squareHighlights.erase(coord);
-        return true;
-    }
-
-    it->second = colorId;
-    
+    m_squareHighlights.erase(it);
     return true;
 }
 

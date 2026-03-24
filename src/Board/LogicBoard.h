@@ -39,6 +39,7 @@ namespace sigrid{
             bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
             bool addSquareHighlight(const Coord& coord, const int colorId);
+            bool removeSquareHighlight(const Coord& coord);
 
             bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             bool removeArrow(const CoordPair& coordPair);

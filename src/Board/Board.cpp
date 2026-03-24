@@ -218,7 +218,32 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
 
 void Board::addSquareHighlight(const Coord& coord, const int colorId){
 
-    if(m_logicBoard->addSquareHighlight(coord, colorId)){
+    if(!m_logicBoard->isWithinBoard(coord)){
+        std::cout << "Board: Failed to add highlight at " << coord.getNotation() << std::endl;
+        std::cout << "because it is out of bounds" << std::endl;
+        return;
+    }
+
+    auto occupyingHighlight_o = m_logicBoard->getSquareHighlightAt(coord);
+
+    if(occupyingHighlight_o == std::nullopt){
+        if(m_logicBoard->addSquareHighlight(coord, colorId)){
+            m_graphicBoard->addSquareHighlight(coord, colorId);
+        }
+        return;
+    }
+
+    if(occupyingHighlight_o.value() != colorId){
+        if(m_logicBoard->removeSquareHighlight(coord)){
+            m_graphicBoard->addSquareHighlight(coord, colorId);
+        }
+        if(m_logicBoard->addSquareHighlight(coord, colorId)){
+            m_graphicBoard->addSquareHighlight(coord, colorId);
+        }
+        return;
+    }
+
+    if(m_logicBoard->removeSquareHighlight(coord)){
         m_graphicBoard->addSquareHighlight(coord, colorId);
     }
 }
