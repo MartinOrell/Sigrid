@@ -152,7 +152,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
             return ActionType::None();
         case ToolSelection::EntityAdder:
-            m_boardPtrs.at(m_activeBoardId)->addEntity(toCoord, tool.getEntity());
+            useAddEntityTool(toCoord,tool.getEntity());
             return ActionType::None();
         case ToolSelection::EntityPicker:
             {
@@ -365,4 +365,22 @@ void WorkWindow::addPlayerToMoveToken(){
 
 void WorkWindow::removePlayerToMoveToken(){
     m_boardPtrs.at(m_activeBoardId)->removePlayerToMoveToken();
+}
+
+void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){
+
+    auto occupying_entity_o = m_boardPtrs.at(m_activeBoardId)->getLogicEntity(coord);
+
+    if(occupying_entity_o == std::nullopt){
+        m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
+        return;
+    }
+
+    if(occupying_entity_o.value() == newEntity){
+        m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
+        return;
+    }
+
+    m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
+    m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
 }

@@ -71,6 +71,8 @@ namespace sigrid{
 
             std::string getUniqueName(const std::string& name);
 
+            void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
+
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             std::unique_ptr<sf::RenderTexture> m_texture;

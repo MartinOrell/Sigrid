@@ -178,7 +178,28 @@ void Board::deselect(){
 void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to add Piece at " << coord.getNotation() << std::endl;
+        std::cout << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
+        std::cout << "because it is out of bounds" << std::endl;
+        return;
+    }
+
+    auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
+
+    if(occupyingEntity_o != std::nullopt){
+        std::cout << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
+        std::cout << "because the square is already occupied" << std::endl;
+        return;
+    }
+
+    if(m_logicBoard->addEntity(coord, newEntity)){
+        m_graphicBoard->addEntity(coord, newEntity);
+    }
+}
+
+void Board::removeEntity(const Coord& coord){
+
+    if(!m_logicBoard->isWithinBoard(coord)){
+        std::cout << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
         std::cout << "because it is out of bounds" << std::endl;
         return;
     }
@@ -186,19 +207,8 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
     auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
 
     if(occupyingEntity_o == std::nullopt){
-        if(m_logicBoard->addEntity(coord, newEntity)){
-            m_graphicBoard->addEntity(coord, newEntity);
-        }
-        return;
-    }
-
-    if(occupyingEntity_o.value()!= newEntity){
-        if(m_logicBoard->removeEntity(coord)){
-            m_graphicBoard->removeEntity(coord);
-        }
-        if(m_logicBoard->addEntity(coord, newEntity)){
-            m_graphicBoard->addEntity(coord, newEntity);
-        }
+        std::cout << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
+        std::cout << "because there is no entity there" << std::endl;
         return;
     }
 

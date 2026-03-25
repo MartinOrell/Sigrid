@@ -71,6 +71,8 @@ namespace sigrid{
             void deselect();
 
             void addEntity(const Coord& coord, const LogicEntity& newEntity);
+            void removeEntity(const Coord& coord);
+
             void addEntityAtSelection(const LogicEntity& newEntity);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
