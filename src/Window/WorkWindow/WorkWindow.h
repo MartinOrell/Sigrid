@@ -73,6 +73,7 @@ namespace sigrid{
 
             void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
             void useAddSquareHighlightTool(const Coord& coord, const int& colorId);
+            void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& clolorId);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

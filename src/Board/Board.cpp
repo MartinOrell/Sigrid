@@ -145,6 +145,14 @@ std::optional<int> Board::getSquareHighlight(const Coord& coord){
     return highlight_o.value();
 }
 
+std::optional<LogicArrow> Board::getLogicArrow(const CoordPair& coordPair){
+    auto arrow_o = m_logicBoard->getArrowAt(coordPair);
+    if(arrow_o == std::nullopt){
+        return std::nullopt;
+    }
+    return arrow_o.value();
+}
+
 std::string Board::getFen() const{
     return m_logicBoard->getFen();
 }
@@ -296,37 +304,63 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
 void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId){
 
     if(!m_logicBoard->isWithinBoard(fromCoord)){
-        std::cout << "Board: Unable to add arrow from "
-            << fromCoord.getNotation() << std::endl;
+        std::cout << "Board: Unable to add arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
         std::cout << "Starting square is out of bounds" << std::endl;
         return;
     }
 
-    if(!m_logicBoard->isWithinBoard(fromCoord)){
-        std::cout << "Board: Unable to add arrow to "
-            << fromCoord.getNotation() << std::endl;
+    if(!m_logicBoard->isWithinBoard(toCoord)){
+        std::cout << "Board: Unable to add arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
         std::cout << "Destination square is out of bounds" << std::endl;
         return;
     }
 
     auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
 
-    LogicArrow arrow{colorId};
-
-    if(occupyingEntity_o == std::nullopt){
-        if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
-            m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
-        }
+    if(occupyingEntity_o != std::nullopt){
+        std::cout << "Board: Unable to remove arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
+        std::cout << "There is already an arrow there" << std::endl;
         return;
     }
 
-    if(occupyingEntity_o.value() != arrow){
-        if(m_logicBoard->removeArrow({fromCoord, toCoord})){
-            m_graphicBoard->removeArrow({fromCoord, toCoord});
-        }
-        if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
-            m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
-        }
+    LogicArrow arrow{colorId};
+
+    if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
+        m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
+    }
+}
+
+void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
+
+    if(!m_logicBoard->isWithinBoard(fromCoord)){
+        std::cout << "Board: Unable to remove arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Starting square is out of bounds" << std::endl;
+        return;
+    }
+
+    if(!m_logicBoard->isWithinBoard(toCoord)){
+        std::cout << "Board: Unable to remove arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
+        std::cout << "Destination square is out of bounds" << std::endl;
+        return;
+    }
+
+    auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
+
+    if(occupyingEntity_o == std::nullopt){
+        std::cout << "Board: Unable to remove arrow "
+            << fromCoord.getNotation() << "-"
+            << toCoord.getNotation() << std::endl;
+        std::cout << "There is no arrow there" << std::endl;
         return;
     }
 

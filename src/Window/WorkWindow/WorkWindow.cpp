@@ -172,7 +172,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
                 useAddSquareHighlightTool(toCoord, tool.arrowColorId());
                 return ActionType::None();
             }
-            m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, tool.arrowColorId());
+            useAddArrowTool(fromCoord, toCoord, tool.arrowColorId());
             return ActionType::None();
         default:
             return ActionType::None();
@@ -401,4 +401,22 @@ void WorkWindow::useAddSquareHighlightTool(const Coord& coord, const int& colorI
 
     m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
     m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+}
+
+void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
+
+    auto occupyingArrow_o = m_boardPtrs.at(m_activeBoardId)->getLogicArrow({fromCoord, toCoord});
+
+    if(occupyingArrow_o == std::nullopt){
+        m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, colorId);
+        return;
+    }
+
+    if(occupyingArrow_o.value().getColorId() == colorId){
+        m_boardPtrs.at(m_activeBoardId)->removeArrow(fromCoord, toCoord);
+        return;
+    }
+
+    m_boardPtrs.at(m_activeBoardId)->removeArrow(fromCoord, toCoord);
+    m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, colorId);
 }
