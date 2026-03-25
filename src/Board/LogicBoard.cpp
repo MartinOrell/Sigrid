@@ -16,7 +16,7 @@ LogicBoard::LogicBoard(const LogicBoard& board)
 : m_pieceLayer{board.m_pieceLayer}
 , m_squareHighlights{board.m_squareHighlights}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
-        std::vector<int> squareRow;
+        std::vector<LogicTile> squareRow;
         for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
             squareRow.push_back(board.m_squareLayer.at(y).at(x));
         }
@@ -35,9 +35,9 @@ bool LogicBoard::init(const BoardDataContainer& data){
     }
 
     for(unsigned int y = 0; y < data.rows; y++){
-        std::vector<int> squareRow;
+        std::vector<LogicTile> squareRow;
         for(unsigned int x = 0; x < data.columns; x++){
-            squareRow.push_back(m_repeatedSquareIds.at((x+y)%m_repeatedSquareIds.size()));
+            squareRow.push_back(LogicTile{m_repeatedSquareIds.at((x+y)%m_repeatedSquareIds.size())});
         }
         m_squareLayer.push_back(squareRow);
     }
@@ -117,7 +117,7 @@ bool LogicBoard::isEmptySquare(const Coord& coord) const{
     return m_pieceLayer.getEntityAt(coord) == std::nullopt;
 }
 
-std::optional<int> LogicBoard::getSquareColorAt(const Coord& coord) const{
+std::optional<LogicTile> LogicBoard::getSquare(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return std::nullopt;
     }
@@ -139,7 +139,7 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) con
     return it->second;
 }
 
-std::optional<int> LogicBoard::getSquareHighlightAt(const Coord& coord) const{
+std::optional<LogicTile> LogicBoard::getSquareHighlight(const Coord& coord) const{
 
     auto it = m_squareHighlights.find(coord);
     if(it == m_squareHighlights.end()){
@@ -258,7 +258,7 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     return true;
 }
 
-bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
+bool LogicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newHighlight){
     
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
@@ -266,9 +266,9 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
         return false;
     }
 
-    if(colorId < 0){
+    if(newHighlight.getColorId() < 0){
         std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
-        std::cout << "ColorId is not set (value: " << colorId << ")" << std::endl;
+        std::cout << "ColorId is not set (value: " << newHighlight.getColorId() << ")" << std::endl;
         return false;
     }
 
@@ -280,7 +280,7 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const int colorId){
         return false;
     }
 
-    m_squareHighlights.insert({coord, colorId});
+    m_squareHighlights.insert({coord, newHighlight});
     return true;
 }
 

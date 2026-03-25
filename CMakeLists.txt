@@ -26,6 +26,7 @@ set(SRC_FILES
     src/ToolPicker/ToolPickerWindow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
+    src/Entity/Tile/LogicTile.cpp
     src/Entity/Shape/Circle/LogicCircle.cpp
     src/Entity/Shape/Circle/GraphicCircle.cpp
     src/Entity/Shape/Arrow/LogicArrow.cpp

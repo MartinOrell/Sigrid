@@ -387,20 +387,22 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
 void WorkWindow::useAddSquareHighlightTool(const Coord& coord, const int& colorId){
 
+    LogicTile newHighlight{colorId};
+
     auto occupyingHighlight_o = m_boardPtrs.at(m_activeBoardId)->getSquareHighlight(coord);
 
     if(occupyingHighlight_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, newHighlight);
         return;
     }
 
-    if(occupyingHighlight_o.value() == colorId){
+    if(occupyingHighlight_o.value() == newHighlight){
         m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
         return;
     }
 
     m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
-    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, newHighlight);
 }
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){

@@ -44,9 +44,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         std::vector<sf::RectangleShape> row;
         for(int x = 0; x < logicBoard.width(); x++){
             sf::RectangleShape square{sf::Vector2f((float)config.squareSize, (float)config.squareSize)};
-            auto squareColorId_o = logicBoard.getSquareColorAt({x,y});
-            if(squareColorId_o.has_value()){
-                auto color_o = m_squareColorManagerPtr->getSolidColor(squareColorId_o.value());
+            auto square_o = logicBoard.getSquare({x,y});
+            if(square_o.has_value()){
+                int colorId = square_o->getColorId();
+                auto color_o = m_squareColorManagerPtr->getSolidColor(colorId);
                 if(color_o.has_value()){
                     square.setFillColor(color_o.value());
                 }
@@ -395,7 +396,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
+void GraphicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newLogicHighlight){
 
     auto it = m_squareHighlights.find(coord);
 
@@ -423,10 +424,10 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int colorId){
         color = sf::Color(0xff000088);
     }
     else{
-        auto color_o = m_arrowColorManagerPtr->getTransparentColor(colorId);
+        auto color_o = m_arrowColorManagerPtr->getTransparentColor(newLogicHighlight.getColorId());
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
-                << colorId << "not found when adding square highlight" << std::endl;
+                << newLogicHighlight.getColorId() << "not found when adding square highlight" << std::endl;
             color = sf::Color(0xff000088);
         }
         else{
