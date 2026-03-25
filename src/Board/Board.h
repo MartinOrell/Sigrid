@@ -80,7 +80,7 @@ namespace sigrid{
             void addEntityAtSelection(const LogicEntity& newEntity);
             void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
-            void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
+            void addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow);
             void removeArrow(const Coord& fromCoord, const Coord& toCoord);
 
             void addSquareHighlight(const Coord& coord, const int colorId);

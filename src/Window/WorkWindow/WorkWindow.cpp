@@ -408,7 +408,7 @@ void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, c
     auto occupyingArrow_o = m_boardPtrs.at(m_activeBoardId)->getLogicArrow({fromCoord, toCoord});
 
     if(occupyingArrow_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, colorId);
+        m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, LogicArrow{colorId});
         return;
     }
 
@@ -418,5 +418,5 @@ void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, c
     }
 
     m_boardPtrs.at(m_activeBoardId)->removeArrow(fromCoord, toCoord);
-    m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, colorId);
+    m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, LogicArrow{colorId});
 }

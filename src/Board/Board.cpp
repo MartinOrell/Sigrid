@@ -301,7 +301,7 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     
 }
 
-void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId){
+void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow){
 
     if(!m_logicBoard->isWithinBoard(fromCoord)){
         std::cout << "Board: Unable to add arrow "
@@ -319,9 +319,9 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int col
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
+    auto occupyingArrow_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
 
-    if(occupyingEntity_o != std::nullopt){
+    if(occupyingArrow_o != std::nullopt){
         std::cout << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -329,10 +329,8 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const int col
         return;
     }
 
-    LogicArrow arrow{colorId};
-
-    if(m_logicBoard->addArrow({fromCoord, toCoord}, arrow)){
-        m_graphicBoard->addArrow({fromCoord, toCoord}, arrow);
+    if(m_logicBoard->addArrow({fromCoord, toCoord}, newArrow)){
+        m_graphicBoard->addArrow({fromCoord, toCoord}, newArrow);
     }
 }
 
