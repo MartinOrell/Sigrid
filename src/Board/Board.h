@@ -64,6 +64,8 @@ namespace sigrid{
             std::optional<LogicEntity> getLogicEntity(const Coord& coord);
             std::optional<GraphicEntity> getGraphicEntity(const Coord& coord);
 
+            std::optional<int> getSquareHighlight(const Coord& coord);
+
             std::string getFen() const;
 
             void select(const Coord& coord);
@@ -79,6 +81,7 @@ namespace sigrid{
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const int colorId);
 
             void addSquareHighlight(const Coord& coord, const int colorId);
+            void removeSquareHighlight(const Coord& coord);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();

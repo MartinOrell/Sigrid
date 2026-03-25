@@ -72,6 +72,7 @@ namespace sigrid{
             std::string getUniqueName(const std::string& name);
 
             void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
+            void useAddSquareHighlightTool(const Coord& coord, const int& colorId);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

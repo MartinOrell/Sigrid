@@ -137,6 +137,14 @@ std::optional<GraphicEntity> Board::getGraphicEntity(const Coord& coord){
     return entity_o.value();
 }
 
+std::optional<int> Board::getSquareHighlight(const Coord& coord){
+    auto highlight_o = m_logicBoard->getSquareHighlightAt(coord);
+    if(highlight_o == std::nullopt){
+        return std::nullopt;
+    }
+    return highlight_o.value();
+}
+
 std::string Board::getFen() const{
     return m_logicBoard->getFen();
 }
@@ -229,7 +237,31 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
 void Board::addSquareHighlight(const Coord& coord, const int colorId){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to add highlight at " << coord.getNotation() << std::endl;
+        std::cout << "Board: Failed to add highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "because it is out of bounds" << std::endl;
+        return;
+    }
+
+    auto occupyingHighlight_o = m_logicBoard->getSquareHighlightAt(coord);
+
+    if(occupyingHighlight_o != std::nullopt){
+        std::cout << "Board: Failed to add highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "There is already a highlight there" << std::endl;
+        return;
+    }
+
+    if(m_logicBoard->addSquareHighlight(coord, colorId)){
+        m_graphicBoard->addSquareHighlight(coord, colorId);
+    }
+}
+
+void Board::removeSquareHighlight(const Coord& coord){
+
+    if(!m_logicBoard->isWithinBoard(coord)){
+        std::cout << "Board: Failed to remove highlight at "
+            << coord.getNotation() << std::endl;
         std::cout << "because it is out of bounds" << std::endl;
         return;
     }
@@ -237,19 +269,9 @@ void Board::addSquareHighlight(const Coord& coord, const int colorId){
     auto occupyingHighlight_o = m_logicBoard->getSquareHighlightAt(coord);
 
     if(occupyingHighlight_o == std::nullopt){
-        if(m_logicBoard->addSquareHighlight(coord, colorId)){
-            m_graphicBoard->addSquareHighlight(coord, colorId);
-        }
-        return;
-    }
-
-    if(occupyingHighlight_o.value() != colorId){
-        if(m_logicBoard->removeSquareHighlight(coord)){
-            m_graphicBoard->removeSquareHighlight(coord);
-        }
-        if(m_logicBoard->addSquareHighlight(coord, colorId)){
-            m_graphicBoard->addSquareHighlight(coord, colorId);
-        }
+        std::cout << "Board: Failed to remove highlight at "
+            << coord.getNotation() << std::endl;
+        std::cout << "There is no highlight there" << std::endl;
         return;
     }
 

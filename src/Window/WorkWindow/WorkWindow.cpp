@@ -169,7 +169,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
         case ToolSelection::DrawArrow:
             if(fromCoord == toCoord){
-                m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(toCoord, tool.arrowColorId());
+                useAddSquareHighlightTool(toCoord, tool.arrowColorId());
                 return ActionType::None();
             }
             m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, tool.arrowColorId());
@@ -383,4 +383,22 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
     m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
     m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
+}
+
+void WorkWindow::useAddSquareHighlightTool(const Coord& coord, const int& colorId){
+
+    auto occupyingHighlight_o = m_boardPtrs.at(m_activeBoardId)->getSquareHighlight(coord);
+
+    if(occupyingHighlight_o == std::nullopt){
+        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+        return;
+    }
+
+    if(occupyingHighlight_o.value() == colorId){
+        m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
+        return;
+    }
+
+    m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
+    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
 }
