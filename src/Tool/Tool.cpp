@@ -32,7 +32,7 @@ LogicEntity Tool::getEntity() const{
     return *m_entity;
 }
 
-const int Tool::arrowColorId() const{
+int Tool::getArrowColorId() const{
     return m_arrowColorId;
 }
 

@@ -169,10 +169,10 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
         case ToolSelection::DrawArrow:
             if(fromCoord == toCoord){
-                useAddSquareHighlightTool(toCoord, tool.arrowColorId());
+                useAddSquareHighlightTool(toCoord, tool.getArrowColorId());
                 return ActionType::None();
             }
-            useAddArrowTool(fromCoord, toCoord, tool.arrowColorId());
+            useAddArrowTool(fromCoord, toCoord, tool.getArrowColorId());
             return ActionType::None();
         default:
             return ActionType::None();

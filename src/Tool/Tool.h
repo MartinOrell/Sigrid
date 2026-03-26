@@ -19,7 +19,7 @@ namespace sigrid{
             Tool(const ToolContainer& data);
             const ToolSelection selection() const;
             LogicEntity getEntity() const;
-            const int arrowColorId() const;
+            int getArrowColorId() const;
             void setEntity(const LogicEntity& entity);
             void setSelection(const ToolSelection& selection);
             void setArrow(const int colorId);
