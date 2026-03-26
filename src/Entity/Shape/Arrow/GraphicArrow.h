@@ -22,6 +22,8 @@ namespace sigrid{
             void set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
             void setColor(const sf::Color& color);
 
+            void move(const sf::Vector2f& offset);
+
         private:
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

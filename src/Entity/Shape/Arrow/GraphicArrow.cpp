@@ -111,6 +111,11 @@ void GraphicArrow::setColor(const sf::Color& color){
     m_head.setFillColor(color);
 }
 
+void GraphicArrow::move(const sf::Vector2f& offset){
+    m_line.move(offset);
+    m_head.move(offset);
+}
+
 void GraphicArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_line);
     target.draw(m_head);

@@ -1191,6 +1191,12 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
         }
     }
     m_pieceLayerPtr->move(offset);
+    for(auto& highlightSquare: m_squareHighlights){
+        highlightSquare.second.move(offset);
+    }
+    for(auto& arrow: m_arrows){
+        arrow.second.move(offset);
+    }
 }
 
 void GraphicBoard::moveBorder(const sf::Vector2f& offset){
