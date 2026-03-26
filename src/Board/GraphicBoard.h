@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -29,6 +28,8 @@
 #include "../Entity/Shape/Circle/GraphicCircle.h"
 
 #include "../Entity/GraphicEntities.h"
+
+#include "../Entity/Tile/GraphicTile.h"
 
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
@@ -157,11 +158,11 @@ namespace sigrid{
             unsigned int m_topEdgeWidth;
             unsigned int m_bottomEdgeWidth;
 
-            std::vector<std::vector<sf::RectangleShape>> m_squares;
+            std::vector<std::vector<GraphicTile>> m_squares;
 
             sf::Color m_backgroundColor;
 
-            std::map<Coord, sf::RectangleShape> m_squareHighlights;
+            std::map<Coord, GraphicTile> m_squareHighlights;
 
             std::map<CoordPair, GraphicArrow> m_arrows;
 
@@ -169,7 +170,7 @@ namespace sigrid{
 
             std::unique_ptr<GraphicArrow> m_dragArrowPtr;
 
-            std::unique_ptr<sf::RectangleShape> m_selectHighlight;
+            std::unique_ptr<GraphicTile> m_selectHighlight;
 
             ColorManager* m_squareColorManagerPtr;
             ColorManager* m_arrowColorManagerPtr;

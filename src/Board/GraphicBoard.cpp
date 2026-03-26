@@ -41,18 +41,24 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     for(int y = 0; y < logicBoard.height(); y++){
-        std::vector<sf::RectangleShape> row;
+        std::vector<GraphicTile> row;
         for(int x = 0; x < logicBoard.width(); x++){
-            sf::RectangleShape square{sf::Vector2f((float)config.squareSize, (float)config.squareSize)};
+
+            sf::Color squareColor;
             auto square_o = logicBoard.getSquare({x,y});
             if(square_o.has_value()){
                 int colorId = square_o->getColorId();
                 auto color_o = m_squareColorManagerPtr->getSolidColor(colorId);
                 if(color_o.has_value()){
-                    square.setFillColor(color_o.value());
+                    squareColor = color_o.value();
                 }
-                
             }
+
+            float tileWidth = float(config.squareSize);
+            float tileHeight = float(config.squareSize);
+            GraphicTile tile;
+            tile.init({tileWidth, tileHeight}, squareColor);
+            
             sf::Vector2f position;
             if(m_isLeftToRight){
                 position.x = (float)(x*config.squareSize);
@@ -68,13 +74,12 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                 position.y = (float)((logicBoard.height()-y-1)*config.squareSize);
             }
             position.y += m_topEdgeWidth;
-            square.setPosition(position);
-            row.push_back(square);
+            tile.setPosition(position);
+            row.push_back(tile);
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
-                sf::Vector2f position = square.getPosition()
-                    + square.getSize()/2.f;
+                sf::Vector2f position = tile.getCentrePosition();
                 m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
             }
         }
@@ -156,7 +161,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     if(rhs.m_selectHighlight){
         if(!m_selectHighlight){
-            m_selectHighlight = std::make_unique<sf::RectangleShape>();
+            m_selectHighlight = std::make_unique<GraphicTile>();
         }
         *m_selectHighlight = *(rhs.m_selectHighlight);
     }
@@ -416,8 +421,6 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newLo
         return;
     }
 
-    sf::RectangleShape newHighlight(getSquareSize());
-
     sf::Color color;
     if(m_arrowColorManagerPtr == nullptr){
         std::cout << "GraphicBoard: colorManagerPts == nullptr when adding square highlight" << std::endl;
@@ -435,7 +438,8 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newLo
         }
     }
 
-    newHighlight.setFillColor(color);
+    GraphicTile newHighlight;
+    newHighlight.init(getSquareSize(), color);
     newHighlight.setPosition(position_o.value());
 
     auto result = m_squareHighlights.insert({coord, newHighlight});
@@ -600,8 +604,9 @@ void GraphicBoard::highlightSquare(const Coord& coord){
     }
 
     if(!m_selectHighlight){
-        m_selectHighlight = std::make_unique<sf::RectangleShape>(m_squares[coord.y][coord.x].getSize());
-        m_selectHighlight->setFillColor(sf::Color(255,255,0,100));
+        m_selectHighlight = std::make_unique<GraphicTile>();
+        sf::Color color{255,255,0,100};
+        m_selectHighlight->init(m_squares[coord.y][coord.x].getSize(), color);
     }
 
     m_selectHighlight->setPosition(position_o.value());
@@ -878,7 +883,7 @@ std::optional<sf::Vector2f> GraphicBoard::getSquarePosition(const Coord& coord){
     if(coord.x >= m_squares.at(coord.y).size()){
         return std::nullopt;
     }
-    return m_squares.at(coord.y).at(coord.x).getPosition();
+    return m_squares.at(coord.y).at(coord.x).getTopLeftPosition();
 }
 
 std::optional<sf::Vector2f> GraphicBoard::getSquareCenterPosition(const Coord& coord){
@@ -1077,8 +1082,7 @@ void GraphicBoard::addOutsideLabels(){
 
         sf::Vector2f position;
         position.x =
-            m_squares.at(0).at(i).getPosition().x +
-            m_squares.at(0).at(i).getSize().x/2 -
+            m_squares.at(0).at(i).getCentrePosition().x -
             label.getLocalBounds().size.x/2;
 
         position.y =
@@ -1105,8 +1109,7 @@ void GraphicBoard::addOutsideLabels(){
         position.x = ((float)m_leftEdgeWidth-(float)labelSize/2.f)/2.f;
 
         int j = m_squares.size()-i-1;
-        position.y = m_squares.at(j).at(0).getPosition().y +
-            m_squares.at(j).at(0).getSize().y/2.f -
+        position.y = m_squares.at(j).at(0).getCentrePosition().y -
             (float)labelSize*9.f/14.f;
         
         label.setPosition(position);
@@ -1129,8 +1132,7 @@ void GraphicBoard::addInsideLabels(){
 
         sf::Vector2f position;
         position.x =
-            m_squares.at(0).at(i).getPosition().x +
-            m_squares.at(0).at(i).getSize().x -
+            m_squares.at(0).at(i).getRightPosition() -
             label.getLocalBounds().size.x*5/4;
         
         position.y = getTextureHeight() - labelSize*5/4;
@@ -1165,7 +1167,7 @@ void GraphicBoard::addInsideLabels(){
         position.x += (float)m_leftEdgeWidth;
 
         int j = m_squares.size()-i-1;
-        position.y = m_squares.at(j).at(0).getPosition().y - (float)labelSize/4.f;
+        position.y = m_squares.at(j).at(0).getTopPosition() - (float)labelSize/4.f;
         
         label.setPosition(position);
 
