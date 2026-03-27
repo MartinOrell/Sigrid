@@ -358,7 +358,7 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "Square:"){
+            if(s == "Tile:"){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
