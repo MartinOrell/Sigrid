@@ -61,7 +61,7 @@ PieceColors: [
   [
     name: orange
     style: light
-    lightModifier: 00ff00
+    lightModifier: ffa500
     darkModifier: 000000
   ]
   [
