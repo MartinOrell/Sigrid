@@ -70,12 +70,12 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadSquareColors(std::istream& is){
+void MainWindowConfigContainer::loadTileColors(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             uint32_t colorHex = getColorHex(s);
-            squareColors.push_back(colorHex);
+            tileColors.push_back(colorHex);
         }
     }
 }
@@ -541,8 +541,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
         if(key == "Window:"){
             loadWindow(ifs);
         }
-        else if(key == "SquareColors:"){
-            loadSquareColors(ifs);
+        else if(key == "TileColors:"){
+            loadTileColors(ifs);
         }
         else if(key == "ArrowColors:"){
             loadArrowColors(ifs);

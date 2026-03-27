@@ -3,7 +3,7 @@ Window: [
   height: 1080
   name: Sigrid
 ]
-SquareColors: [
+TileColors: [
   ffffff
   d0d0d0
 ]

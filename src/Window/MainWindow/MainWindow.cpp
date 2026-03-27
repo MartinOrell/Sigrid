@@ -32,7 +32,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_window.setFramerateLimit(60);
 
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
-    m_tileColorManagerPtr = std::make_unique<ColorManager>(config.squareColors);
+    m_tileColorManagerPtr = std::make_unique<ColorManager>(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
     m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);

@@ -18,7 +18,7 @@ namespace sigrid{
         unsigned int windowHeight;
         std::string windowName;
 
-        std::vector<uint32_t> squareColors;
+        std::vector<uint32_t> tileColors;
         std::vector<uint32_t> arrowColors;
         std::vector<PieceColor> pieceColors;
         std::vector<PieceContainer> pieces;
@@ -37,7 +37,7 @@ namespace sigrid{
 
         private:
             void loadWindow(std::istream& is);
-            void loadSquareColors(std::istream& is);
+            void loadTileColors(std::istream& is);
             void loadArrowColors(std::istream& is);
             void loadPieceColors(std::istream& is);
             void loadPieces(std::istream& is);
