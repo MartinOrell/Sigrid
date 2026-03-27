@@ -26,12 +26,12 @@ bool BoardDataContainer::load(const std::string& filename){
             else if(key == "Rows:"){
                 ifs >> rows;
             }
-            else if(key == "RepeatSquares:"){
-                int squareId;
-                ifs >> squareId;
-                repeatedSquareIds.push_back(squareId);
-                ifs >> squareId;
-                repeatedSquareIds.push_back(squareId);
+            else if(key == "RepeatTileColors:"){
+                int colorId;
+                ifs >> colorId;
+                repeatTileColorIds.push_back(colorId);
+                ifs >> colorId;
+                repeatTileColorIds.push_back(colorId);
             }
             else if(key == "Piece:"){
                 sigrid::PieceDataContainer pieceContainer;

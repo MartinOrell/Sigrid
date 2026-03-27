@@ -12,7 +12,7 @@ namespace sigrid{
 
         int columns;
         int rows;
-        std::vector<int> repeatedSquareIds;
+        std::vector<int> repeatTileColorIds;
         std::vector<PieceDataContainer> logicPieces;
         std::vector<CircleDataContainer> logicCircles;
         std::string filename;

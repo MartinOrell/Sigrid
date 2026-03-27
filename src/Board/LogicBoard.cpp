@@ -26,9 +26,9 @@ LogicBoard::LogicBoard(const LogicBoard& board)
 LogicBoard::~LogicBoard(){}
 
 bool LogicBoard::init(const BoardDataContainer& data){
-    m_repeatedTileColorIds = data.repeatedSquareIds;
+    m_repeatTileColorIds = data.repeatTileColorIds;
 
-    if(m_repeatedTileColorIds.size() == 0){
+    if(m_repeatTileColorIds.size() == 0){
         std::cout << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
@@ -36,7 +36,7 @@ bool LogicBoard::init(const BoardDataContainer& data){
     for(unsigned int y = 0; y < data.rows; y++){
         std::vector<LogicTile> tileRow;
         for(unsigned int x = 0; x < data.columns; x++){
-            tileRow.push_back(LogicTile{m_repeatedTileColorIds.at((x+y)%m_repeatedTileColorIds.size())});
+            tileRow.push_back(LogicTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())});
         }
         m_tileLayer.push_back(tileRow);
     }
@@ -82,7 +82,7 @@ bool LogicBoard::init(const BoardDataContainer& data){
 
 LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 
-    m_repeatedTileColorIds = rhs.m_repeatedTileColorIds;
+    m_repeatTileColorIds = rhs.m_repeatTileColorIds;
     m_tileLayer = rhs.m_tileLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrows = rhs.m_arrows;
@@ -353,8 +353,8 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
 {
     out << "Columns: " << board.width() << "\n";
     out << "Rows: " << board.height() << "\n";
-    out << "RepeatSquares:";
-    for(const auto& id: board.m_repeatedTileColorIds){
+    out << "RepeatTileColors:";
+    for(const auto& id: board.m_repeatTileColorIds){
         out << " " << id;
     }
     out << board.m_pieceLayer;
