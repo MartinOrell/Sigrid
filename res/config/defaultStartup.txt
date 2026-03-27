@@ -282,7 +282,7 @@ ToolPicker: [
     Q
     K
   ]
-  SquareColors: [
+  TileColors: [
     0
     1
   ]

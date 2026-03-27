@@ -9,7 +9,7 @@
 namespace sigrid{
 
     struct ToolPickerContainer{
-        std::vector<int> squareColorIds;
+        std::vector<int> tileColorIds;
         int columns;
         int rows;
         CoordBlock miscToolBlock;

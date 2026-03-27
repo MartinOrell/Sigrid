@@ -337,12 +337,12 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                     }
                 }
             }
-            else if(s == "SquareColors:"){
+            else if(s == "TileColors:"){
                 std::string s2 = readString(is);
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
                         int colorId = std::stoi(s2);
-                        toolPickerData.squareColorIds.push_back(colorId);
+                        toolPickerData.tileColorIds.push_back(colorId);
                     }
                 }
             }
