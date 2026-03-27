@@ -401,7 +401,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newLogicHighlight){
+void GraphicBoard::addSquareHighlight(const Coord& coord, const int& highlightColorId){
 
     auto it = m_squareHighlights.find(coord);
 
@@ -427,10 +427,10 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newLo
         color = sf::Color(0xff000088);
     }
     else{
-        auto color_o = m_arrowColorManagerPtr->getTransparentColor(newLogicHighlight.getColorId());
+        auto color_o = m_arrowColorManagerPtr->getTransparentColor(highlightColorId);
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
-                << newLogicHighlight.getColorId() << "not found when adding square highlight" << std::endl;
+                << highlightColorId << "not found when adding square highlight" << std::endl;
             color = sf::Color(0xff000088);
         }
         else{

@@ -32,14 +32,13 @@ namespace sigrid{
             std::optional<LogicTile> getSquare(const Coord& coord) const;
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
             std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
-            std::optional<LogicTile> getSquareHighlight(const Coord& coord) const;
             std::string getFen() const;
 
             bool addEntity(const Coord& coord, const LogicEntity& entity);
             bool removeEntity(const Coord& coord);
             bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            bool addSquareHighlight(const Coord& coord, const LogicTile& newHighlight);
+            bool addSquareHighlight(const Coord& coord, const int& highlightColorId);
             bool removeSquareHighlight(const Coord& coord);
 
             bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
@@ -53,7 +52,6 @@ namespace sigrid{
             std::vector<int> m_repeatedSquareIds;
             std::vector<std::vector<LogicTile>> m_squareLayer;
             LogicEntities m_pieceLayer;
-            std::map<Coord, LogicTile> m_squareHighlights;
             std::map<CoordPair, LogicArrow> m_arrows;
     };
 }

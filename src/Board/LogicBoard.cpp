@@ -13,8 +13,7 @@ using namespace sigrid;
 LogicBoard::LogicBoard(){}
 
 LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieceLayer{board.m_pieceLayer}
-, m_squareHighlights{board.m_squareHighlights}{
+: m_pieceLayer{board.m_pieceLayer}{
     for(int y = 0; y < board.m_squareLayer.size(); y++){
         std::vector<LogicTile> squareRow;
         for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
@@ -87,7 +86,6 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     m_squareLayer = rhs.m_squareLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrows = rhs.m_arrows;
-    m_squareHighlights = rhs.m_squareHighlights;
 
     return *this;
 }
@@ -136,15 +134,6 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) con
         return std::nullopt;
     }
 
-    return it->second;
-}
-
-std::optional<LogicTile> LogicBoard::getSquareHighlight(const Coord& coord) const{
-
-    auto it = m_squareHighlights.find(coord);
-    if(it == m_squareHighlights.end()){
-        return std::nullopt;
-    }
     return it->second;
 }
 
@@ -258,7 +247,7 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     return true;
 }
 
-bool LogicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newHighlight){
+bool LogicBoard::addSquareHighlight(const Coord& coord, const int& highlightColorId){
     
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
@@ -266,21 +255,13 @@ bool LogicBoard::addSquareHighlight(const Coord& coord, const LogicTile& newHigh
         return false;
     }
 
-    if(newHighlight.getColorId() < 0){
+    if(highlightColorId < 0){
         std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
-        std::cout << "ColorId is not set (value: " << newHighlight.getColorId() << ")" << std::endl;
+        std::cout << "ColorId is not set (value: " << highlightColorId << ")" << std::endl;
         return false;
     }
 
-    auto it = m_squareHighlights.find(coord);
-
-    if(it != m_squareHighlights.end()){
-        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
-        std::cout << "There is already a highlight at " << coord.getNotation() << std::endl;
-        return false;
-    }
-
-    m_squareHighlights.insert({coord, newHighlight});
+    m_squareLayer.at(coord.y).at(coord.x).setHighlightColor(highlightColorId);
     return true;
 }
 
@@ -292,14 +273,7 @@ bool LogicBoard::removeSquareHighlight(const Coord& coord){
         return false;
     }
 
-    auto it = m_squareHighlights.find(coord);
-    if(it == m_squareHighlights.end()){
-        std::cout << "LogicBoard: Unable to remove square highlight." << std::endl;
-        std::cout << "There is no highlight at " << coord.getNotation() << std::endl;
-        return false;
-    }
-
-    m_squareHighlights.erase(it);
+    m_squareLayer.at(coord.y).at(coord.x).removeHighlight();
     return true;
 }
 

@@ -387,22 +387,30 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
 void WorkWindow::useAddSquareHighlightTool(const Coord& coord, const int& colorId){
 
-    LogicTile newHighlight{colorId};
+    auto square_o = m_boardPtrs.at(m_activeBoardId)->getSquare(coord);
 
-    auto occupyingHighlight_o = m_boardPtrs.at(m_activeBoardId)->getSquareHighlight(coord);
-
-    if(occupyingHighlight_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, newHighlight);
+    if(square_o == std::nullopt){
+        std::cout << "WorkWindow: unable to find square "
+            << coord.getNotation() << " on board id "
+            << m_activeBoardId
+            << " when adding highlight" << std::endl;
         return;
     }
 
-    if(occupyingHighlight_o.value() == newHighlight){
+    auto occupyingColor_o = square_o.value().getHighlightColorId();
+
+    if(occupyingColor_o == std::nullopt){
+        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+        return;
+    }
+
+    if(occupyingColor_o.value() == colorId){
         m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
         return;
     }
 
     m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
-    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, newHighlight);
+    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
 }
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
