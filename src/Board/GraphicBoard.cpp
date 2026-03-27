@@ -17,7 +17,8 @@ GraphicBoard::GraphicBoard()
 , m_topEdgeWidth{0}
 , m_bottomEdgeWidth{0}
 , m_isLeftToRight{true}
-, m_isTopToBottom{false}{}
+, m_isTopToBottom{false}
+, m_dragArrowColor{sf::Color::Red}{}
 
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr){
 
@@ -517,10 +518,8 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
             return;
         }
 
-        sf::Color color = sf::Color::Red;
-
         m_dragArrowPtr = std::make_unique<GraphicArrow>();
-        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color, m_arrowThickness, m_arrowHeadSize);
+        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), m_dragArrowColor, m_arrowThickness, m_arrowHeadSize);
         m_texturePtr->draw(*m_dragArrowPtr);
         return;
     }
@@ -544,6 +543,26 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
     }
 
     m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());
+    redrawTexture();
+}
+
+void GraphicBoard::setDragArrowColor(const int& arrowColorId){
+
+    auto color_o = m_arrowColorManagerPtr->getSolidColor(arrowColorId);
+
+    if(color_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to set drag arrow color" << std::endl;
+        std::cout << "Failed to receive color with id " << arrowColorId << std::endl;
+        return;
+    }
+
+    m_dragArrowColor = color_o.value();
+
+    if(!m_dragArrowPtr){
+        return;
+    }
+
+    m_dragArrowPtr->setColor(color_o.value());
     redrawTexture();
 }
 

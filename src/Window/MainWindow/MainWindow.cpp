@@ -664,6 +664,9 @@ void MainWindow::pickArrow(const int colorId){
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::DrawArrow);
     m_toolWindow->setAddArrowTool(colorId);
     m_toolPickerWindow->setArrowColors();
+    if(m_workWindow){
+        m_workWindow->setDragArrowColor(colorId);
+    }
 }
 
 void MainWindow::pickArrowColor(const int colorId){
@@ -679,6 +682,9 @@ void MainWindow::pickArrowColor(const int colorId){
     m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::DrawArrow);
     m_toolWindow->setAddArrowTool(colorId);
     m_toolPickerWindow->setAddArrowTool(colorId);
+    if(m_workWindow){
+        m_workWindow->setDragArrowColor(colorId);
+    }
 }
 
 void MainWindow::pickCircle(const int colorId){
@@ -718,6 +724,11 @@ void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse
     }
     m_tools.at(button).setSelection(selection);
     m_toolWindow->setSelectTool(button, selection);
+    if(selection == ToolSelection::Select){
+        if(m_workWindow){
+            m_workWindow->setDragArrowColor(0);
+        }
+    }
 }
 
 void MainWindow::showColorTools(){

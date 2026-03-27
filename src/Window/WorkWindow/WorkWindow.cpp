@@ -65,6 +65,12 @@ void WorkWindow::setPosition(sf::Vector2f position){
     m_position = position;
 }
 
+void WorkWindow::setDragArrowColor(const int& colorId){
+    for(auto& board : m_boardPtrs){
+        board->setDragArrowColor(colorId);
+    }
+}
+
 unsigned int WorkWindow::getNumColumns() const{
     if(m_boardPtrs.size() <= m_activeBoardId){
         return 0;

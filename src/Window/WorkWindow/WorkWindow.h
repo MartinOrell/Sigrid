@@ -25,6 +25,8 @@ namespace sigrid{
             
             virtual void setPosition(sf::Vector2f);
 
+            void setDragArrowColor(const int& colorId);
+
             unsigned int getNumColumns() const;
 
             bool contains(sf::Vector2i point) const;
