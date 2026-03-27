@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -12,10 +14,15 @@ namespace sigrid{
 
         public:
             GraphicTile();
+            GraphicTile(const GraphicTile& src);
 
             void init(const sf::Vector2f& size, const sf::Color& color);
 
             void setPosition(const sf::Vector2f& topLeftPosition);
+
+            void setHighlightColor(const sf::Color& color);
+
+            void removeHighlight();
 
             sf::Vector2f getSize() const;
 
@@ -36,6 +43,7 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
             
             sf::RectangleShape m_shape;
+            std::unique_ptr<sf::RectangleShape> m_highlightPtr;
     };
 
 }

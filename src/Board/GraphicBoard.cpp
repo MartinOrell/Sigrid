@@ -141,8 +141,6 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     m_backgroundColor = rhs.m_backgroundColor;
 
-    m_squareHighlights = rhs.m_squareHighlights;
-
     m_arrows = rhs.m_arrows;
 
     if(rhs.m_pieceLayerPtr){
@@ -403,24 +401,6 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 
 void GraphicBoard::addSquareHighlight(const Coord& coord, const int& highlightColorId){
 
-    auto it = m_squareHighlights.find(coord);
-
-    if(it != m_squareHighlights.end()){
-        std::cout << "GraphicBoard: Failed to add highlight at "
-            << coord.getNotation() << std::endl;
-        std::cout << "There is already a highlight there";
-        return;
-    }
-
-    auto position_o = getSquarePosition(coord);
-
-    if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to add square highlight at "
-            << coord.getNotation() << std::endl;
-        std::cout << "Square position not found" << std::endl;
-        return;
-    }
-
     sf::Color color;
     if(m_arrowColorManagerPtr == nullptr){
         std::cout << "GraphicBoard: colorManagerPts == nullptr when adding square highlight" << std::endl;
@@ -438,32 +418,15 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int& highlightCo
         }
     }
 
-    GraphicTile newHighlight;
-    newHighlight.init(getSquareSize(), color);
-    newHighlight.setPosition(position_o.value());
-
-    auto result = m_squareHighlights.insert({coord, newHighlight});
-
-    if(!result.second){
-        std::cout << "GraphicBoard: Failed to add highlight at "
-            << coord.getNotation() << std::endl;
-        std::cout << "insertion call failed" << std::endl;
-    }
+    m_squares.at(coord.y).at(coord.x).setHighlightColor(color);
 
     redrawTexture();
 }
 
 void GraphicBoard::removeSquareHighlight(const Coord& coord){
 
-    auto it = m_squareHighlights.find(coord);
+    m_squares.at(coord.y).at(coord.x).removeHighlight();
 
-    if(it == m_squareHighlights.end()){
-        std::cout << "GraphicBoard: Failed to remove highlight at "
-            << coord.getNotation() << std::endl;
-        return;
-    }
-
-    m_squareHighlights.erase(it);
     redrawTexture();
 }
 
@@ -673,10 +636,6 @@ void GraphicBoard::flip(){
                 m_pieceLayerPtr->setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
             }
         }
-    }
-
-    for(auto& square : m_squareHighlights){
-        square.second.setPosition(getSquarePosition(square.first).value());
     }
 
     for(auto& arrow : m_arrows){
@@ -996,12 +955,6 @@ void GraphicBoard::redrawTexture(){
         }
     }
 
-    
-
-    for(const auto& highlightSquare: m_squareHighlights){
-        m_texturePtr->draw(highlightSquare.second);
-    }
-
     if(m_selectHighlight){
         m_texturePtr->draw(*m_selectHighlight);
     }
@@ -1191,9 +1144,6 @@ void GraphicBoard::moveSquares(const sf::Vector2f& offset){
         }
     }
     m_pieceLayerPtr->move(offset);
-    for(auto& highlightSquare: m_squareHighlights){
-        highlightSquare.second.move(offset);
-    }
     for(auto& arrow: m_arrows){
         arrow.second.move(offset);
     }

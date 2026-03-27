@@ -162,8 +162,6 @@ namespace sigrid{
 
             sf::Color m_backgroundColor;
 
-            std::map<Coord, GraphicTile> m_squareHighlights;
-
             std::map<CoordPair, GraphicArrow> m_arrows;
 
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
