@@ -28,8 +28,8 @@ namespace sigrid{
             const unsigned int height() const;
 
             bool isWithinBoard(const Coord& coord) const;
-            bool isEmptySquare(const Coord& coord) const;
-            std::optional<LogicTile> getSquare(const Coord& coord) const;
+            bool isEmptyTile(const Coord& coord) const;
+            std::optional<LogicTile> getTile(const Coord& coord) const;
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
             std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
             std::string getFen() const;
@@ -38,8 +38,8 @@ namespace sigrid{
             bool removeEntity(const Coord& coord);
             bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            bool addSquareHighlight(const Coord& coord, const int& highlightColorId);
-            bool removeSquareHighlight(const Coord& coord);
+            bool addTileHighlight(const Coord& coord, const int& highlightColorId);
+            bool removeTileHighlight(const Coord& coord);
 
             bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             bool removeArrow(const CoordPair& coordPair);
@@ -49,8 +49,8 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
-            std::vector<int> m_repeatedSquareIds;
-            std::vector<std::vector<LogicTile>> m_squareLayer;
+            std::vector<int> m_repeatedTileColorIds;
+            std::vector<std::vector<LogicTile>> m_tileLayer;
             LogicEntities m_pieceLayer;
             std::map<CoordPair, LogicArrow> m_arrows;
     };

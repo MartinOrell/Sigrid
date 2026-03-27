@@ -14,31 +14,31 @@ LogicBoard::LogicBoard(){}
 
 LogicBoard::LogicBoard(const LogicBoard& board)
 : m_pieceLayer{board.m_pieceLayer}{
-    for(int y = 0; y < board.m_squareLayer.size(); y++){
-        std::vector<LogicTile> squareRow;
-        for(int x = 0; x < board.m_squareLayer.at(y).size(); x++){
-            squareRow.push_back(board.m_squareLayer.at(y).at(x));
+    for(int y = 0; y < board.m_tileLayer.size(); y++){
+        std::vector<LogicTile> tileRow;
+        for(int x = 0; x < board.m_tileLayer.at(y).size(); x++){
+            tileRow.push_back(board.m_tileLayer.at(y).at(x));
         }
-        m_squareLayer.push_back(squareRow);
+        m_tileLayer.push_back(tileRow);
     }
 }
 
 LogicBoard::~LogicBoard(){}
 
 bool LogicBoard::init(const BoardDataContainer& data){
-    m_repeatedSquareIds = data.repeatedSquareIds;
+    m_repeatedTileColorIds = data.repeatedSquareIds;
 
-    if(m_repeatedSquareIds.size() == 0){
-        std::cout << "Failed to setup LogicBoard: repeatSquares not set" << std::endl;
+    if(m_repeatedTileColorIds.size() == 0){
+        std::cout << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
 
     for(unsigned int y = 0; y < data.rows; y++){
-        std::vector<LogicTile> squareRow;
+        std::vector<LogicTile> tileRow;
         for(unsigned int x = 0; x < data.columns; x++){
-            squareRow.push_back(LogicTile{m_repeatedSquareIds.at((x+y)%m_repeatedSquareIds.size())});
+            tileRow.push_back(LogicTile{m_repeatedTileColorIds.at((x+y)%m_repeatedTileColorIds.size())});
         }
-        m_squareLayer.push_back(squareRow);
+        m_tileLayer.push_back(tileRow);
     }
 
     for(const auto pieceContainer : data.logicPieces){
@@ -82,8 +82,8 @@ bool LogicBoard::init(const BoardDataContainer& data){
 
 LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 
-    m_repeatedSquareIds = rhs.m_repeatedSquareIds;
-    m_squareLayer = rhs.m_squareLayer;
+    m_repeatedTileColorIds = rhs.m_repeatedTileColorIds;
+    m_tileLayer = rhs.m_tileLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrows = rhs.m_arrows;
 
@@ -91,11 +91,11 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 }
 
 const unsigned int LogicBoard::width() const{
-    return m_squareLayer.at(0).size();
+    return m_tileLayer.at(0).size();
 }
 
 const unsigned int LogicBoard::height() const{
-    return m_squareLayer.size();
+    return m_tileLayer.size();
 }
 
 bool LogicBoard::isWithinBoard(const Coord& coord) const{
@@ -108,19 +108,19 @@ bool LogicBoard::isWithinBoard(const Coord& coord) const{
     return true;
 }
 
-bool LogicBoard::isEmptySquare(const Coord& coord) const{
+bool LogicBoard::isEmptyTile(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
     return m_pieceLayer.getEntityAt(coord) == std::nullopt;
 }
 
-std::optional<LogicTile> LogicBoard::getSquare(const Coord& coord) const{
+std::optional<LogicTile> LogicBoard::getTile(const Coord& coord) const{
     if(!isWithinBoard(coord)){
         return std::nullopt;
     }
 
-    return m_squareLayer.at(coord.y).at(coord.x);
+    return m_tileLayer.at(coord.y).at(coord.x);
 }
 
 std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
@@ -178,13 +178,13 @@ bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
-        std::cout << "The square is outside of the board" << std::endl;
+        std::cout << "The tile is outside of the board" << std::endl;
         return false;
     }
 
     if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
         std::cout << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
-        std::cout << "The square is already occupied" << std::endl;
+        std::cout << "The tile is already occupied" << std::endl;
         return false;
     }
 
@@ -196,7 +196,7 @@ bool LogicBoard::removeEntity(const Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
-        std::cout << "The square is outside of the board" << std::endl;
+        std::cout << "The tile is outside of the board" << std::endl;
         return false;
     }
 
@@ -222,24 +222,24 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     if(!isWithinBoard(fromCoord)){
         std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
-        std::cout << "start square is out of bounds" << std::endl;
+        std::cout << "starting tile is out of bounds" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(toCoord)){
         std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
-        std::cout << "destination square is out of bounds" << std::endl;
+        std::cout << "destination tile is out of bounds" << std::endl;
         return false;
     }
 
-    if(isEmptySquare(fromCoord)){
+    if(isEmptyTile(fromCoord)){
         std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation() << std::endl;
         std::cout << "No piece is standing there" << std::endl;
         return false;
     }
 
-    if(!isEmptySquare(toCoord)){
+    if(!isEmptyTile(toCoord)){
         m_pieceLayer.removeEntity(toCoord);
     }
 
@@ -247,47 +247,47 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     return true;
 }
 
-bool LogicBoard::addSquareHighlight(const Coord& coord, const int& highlightColorId){
+bool LogicBoard::addTileHighlight(const Coord& coord, const int& highlightColorId){
     
     if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
-        std::cout << "Coord is not a valid square (value:" << coord.getNotation() << ")" << std::endl;
+        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
 
     if(highlightColorId < 0){
-        std::cout << "LogicBoard: Unable to add square highlight." << std::endl;
+        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
         std::cout << "ColorId is not set (value: " << highlightColorId << ")" << std::endl;
         return false;
     }
 
-    m_squareLayer.at(coord.y).at(coord.x).setHighlightColor(highlightColorId);
+    m_tileLayer.at(coord.y).at(coord.x).setHighlightColor(highlightColorId);
     return true;
 }
 
-bool LogicBoard::removeSquareHighlight(const Coord& coord){
+bool LogicBoard::removeTileHighlight(const Coord& coord){
 
     if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to remove square highlight." << std::endl;
-        std::cout << "Coord is not a valid square (value:" << coord.getNotation() << ")" << std::endl;
+        std::cout << "LogicBoard: Unable to remove highlight." << std::endl;
+        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
 
-    m_squareLayer.at(coord.y).at(coord.x).removeHighlight();
+    m_tileLayer.at(coord.y).at(coord.x).removeHighlight();
     return true;
 }
 
 bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
 
     if(!isWithinBoard(coordPair.from)){
-        std::cout << "LogicBoard: Unable to add arrow from square: " << coordPair.from.getNotation() << std::endl;
-        std::cout << "Starting square is outside of the board" << std::endl;
+        std::cout << "LogicBoard: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
+        std::cout << "Starting tile is outside of the board" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(coordPair.to)){
-        std::cout << "LogicBoard: Unable to add arrow to square: " << coordPair.to.getNotation() << std::endl;
-        std::cout << "Destination square is outside of the board" << std::endl;
+        std::cout << "LogicBoard: Unable to add arrow to tile: " << coordPair.to.getNotation() << std::endl;
+        std::cout << "Destination tile is outside of the board" << std::endl;
         return false;
     }
 
@@ -354,7 +354,7 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
     out << "Columns: " << board.width() << "\n";
     out << "Rows: " << board.height() << "\n";
     out << "RepeatSquares:";
-    for(const auto& id: board.m_repeatedSquareIds){
+    for(const auto& id: board.m_repeatedTileColorIds){
         out << " " << id;
     }
     out << board.m_pieceLayer;

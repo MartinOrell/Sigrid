@@ -15,7 +15,7 @@ namespace sigrid{
         public:
             WorkWindow();
 
-            void init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -72,7 +72,7 @@ namespace sigrid{
             std::string getUniqueName(const std::string& name);
 
             void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
-            void useAddSquareHighlightTool(const Coord& coord, const int& colorId);
+            void useAddTileHighlightTool(const Coord& coord, const int& colorId);
             void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

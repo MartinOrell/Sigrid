@@ -37,11 +37,11 @@ namespace sigrid{
             
             GraphicBoard();
             
-            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const squareColorManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             GraphicBoard& operator=(const GraphicBoard& rhs);
 
-            sf::Vector2f getSquareSize() const;
+            sf::Vector2f getTileSize() const;
 
             void setPosition(sf::Vector2f);
 
@@ -65,14 +65,14 @@ namespace sigrid{
 
             bool isWithinPlayerToMoveToken(sf::Vector2i point) const;
 
-            std::optional<Coord> getSquareCoord(sf::Vector2i point);
+            std::optional<Coord> getTileCoord(sf::Vector2i point);
 
             void addEntity(const Coord& coord, const LogicEntity& logicEntity);
             void removeEntity(const Coord& coord);
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            void addSquareHighlight(const Coord& coord, const int& highlightColorId);
-            void removeSquareHighlight(const Coord& coord);
+            void addTileHighlight(const Coord& coord, const int& highlightColorId);
+            void removeTileHighlight(const Coord& coord);
 
             void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             void removeArrow(const CoordPair& coordPair);
@@ -80,7 +80,7 @@ namespace sigrid{
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();
 
-            void highlightSquare(const Coord& coord);
+            void highlightTile(const Coord& coord);
 
             void unhighlight();
             
@@ -113,8 +113,8 @@ namespace sigrid{
 
         private:
 
-            std::optional<sf::Vector2f> getSquarePosition(const Coord& coord);
-            std::optional<sf::Vector2f> getSquareCenterPosition(const Coord& coord);
+            std::optional<sf::Vector2f> getTilePosition(const Coord& coord);
+            std::optional<sf::Vector2f> getTileCenterPosition(const Coord& coord);
 
             void initPlayerToMoveToken();
 
@@ -139,7 +139,7 @@ namespace sigrid{
             void addOutsideLabels();
             void addInsideLabels();
 
-            void moveSquares(const sf::Vector2f& offset);
+            void moveTiles(const sf::Vector2f& offset);
             void moveBorder(const sf::Vector2f& offset);
             void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
@@ -158,7 +158,7 @@ namespace sigrid{
             unsigned int m_topEdgeWidth;
             unsigned int m_bottomEdgeWidth;
 
-            std::vector<std::vector<GraphicTile>> m_squares;
+            std::vector<std::vector<GraphicTile>> m_tiles;
 
             sf::Color m_backgroundColor;
 
@@ -170,7 +170,7 @@ namespace sigrid{
 
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
-            ColorManager* m_squareColorManagerPtr;
+            ColorManager* m_tileColorManagerPtr;
             ColorManager* m_arrowColorManagerPtr;
 
             bool m_showLabels;

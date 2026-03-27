@@ -21,7 +21,7 @@ namespace sigrid{
 
             Board();
 
-            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
 
             Board& operator=(const Board& rhs);
 
@@ -51,7 +51,7 @@ namespace sigrid{
 
             bool contains(sf::Vector2i point) const;
 
-            bool isEmptySquare(const Coord& coord) const;
+            bool isEmptyTile(const Coord& coord) const;
 
             bool isCoordinatesOutside() const;
 
@@ -59,9 +59,9 @@ namespace sigrid{
 
             bool isImageFilenameSet() const;
 
-            std::optional<Coord> getSquareCoord(sf::Vector2i point);
+            std::optional<Coord> getTileCoord(sf::Vector2i point);
 
-            std::optional<LogicTile> getSquare(const Coord& coord);
+            std::optional<LogicTile> getTile(const Coord& coord);
 
             std::optional<LogicEntity> getLogicEntity(const Coord& coord);
             std::optional<GraphicEntity> getGraphicEntity(const Coord& coord);
@@ -83,8 +83,8 @@ namespace sigrid{
             void addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow);
             void removeArrow(const Coord& fromCoord, const Coord& toCoord);
 
-            void addSquareHighlight(const Coord& coord, const int& colorId);
-            void removeSquareHighlight(const Coord& coord);
+            void addTileHighlight(const Coord& coord, const int& colorId);
+            void removeTileHighlight(const Coord& coord);
 
             void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
             void removeDragArrow();

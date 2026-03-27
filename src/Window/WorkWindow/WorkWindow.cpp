@@ -10,14 +10,14 @@ using namespace sigrid;
 WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}{}
 
-void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
     
     m_activeBoardId = 0;
     m_pieceManagerPtr = pieceManagerPtr;
 
     auto board = std::make_unique<Board>();
 
-    board->init(boardData, graphicData, squareColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
+    board->init(boardData, graphicData, tileColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
 
     std::cout << "Save location: " << boardFilename << std::endl;
 
@@ -120,8 +120,8 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
         m_boardPtrs.at(m_activeBoardId)->togglePlayerToMoveToken();
     }
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({fromX,fromY});
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({toX, toY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({fromX,fromY});
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({toX, toY});
 
     
     if(fromCoord_o == std::nullopt){
@@ -169,7 +169,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
             }
         case ToolSelection::DrawArrow:
             if(fromCoord == toCoord){
-                useAddSquareHighlightTool(toCoord, tool.getArrowColorId());
+                useAddTileHighlightTool(toCoord, tool.getArrowColorId());
                 return ActionType::None();
             }
             useAddArrowTool(fromCoord, toCoord, tool.getArrowColorId());
@@ -185,7 +185,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     int fromX = pressPosition.x-(int)m_position.x;
     int fromY = pressPosition.y-(int)m_position.y;
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({fromX,fromY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({fromX,fromY});
 
     if(fromCoord_o == std::nullopt){
         return;
@@ -194,7 +194,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     int toX = currentPosition.x-(int)m_position.x;
     int toY = currentPosition.y-(int)m_position.y;
 
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getSquareCoord({toX, toY});
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({toX, toY});
 
     if(toCoord_o == std::nullopt){
         m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
@@ -211,7 +211,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
 
     switch(tool.selection()){
         case ToolSelection::Select:
-            if(!m_boardPtrs.at(m_activeBoardId)->isEmptySquare(fromCoord)){
+            if(!m_boardPtrs.at(m_activeBoardId)->isEmptyTile(fromCoord)){
                 m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord);
             }
             return;
@@ -385,32 +385,32 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
     m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
 }
 
-void WorkWindow::useAddSquareHighlightTool(const Coord& coord, const int& colorId){
+void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
 
-    auto square_o = m_boardPtrs.at(m_activeBoardId)->getSquare(coord);
+    auto tile_o = m_boardPtrs.at(m_activeBoardId)->getTile(coord);
 
-    if(square_o == std::nullopt){
-        std::cout << "WorkWindow: unable to find square "
-            << coord.getNotation() << " on board id "
+    if(tile_o == std::nullopt){
+        std::cout << "WorkWindow: unable to find tile "
+            << coord.getNotation() << " on board with id "
             << m_activeBoardId
             << " when adding highlight" << std::endl;
         return;
     }
 
-    auto occupyingColor_o = square_o.value().getHighlightColorId();
+    auto occupyingColor_o = tile_o.value().getHighlightColorId();
 
     if(occupyingColor_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+        m_boardPtrs.at(m_activeBoardId)->addTileHighlight(coord, colorId);
         return;
     }
 
     if(occupyingColor_o.value() == colorId){
-        m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
+        m_boardPtrs.at(m_activeBoardId)->removeTileHighlight(coord);
         return;
     }
 
-    m_boardPtrs.at(m_activeBoardId)->removeSquareHighlight(coord);
-    m_boardPtrs.at(m_activeBoardId)->addSquareHighlight(coord, colorId);
+    m_boardPtrs.at(m_activeBoardId)->removeTileHighlight(coord);
+    m_boardPtrs.at(m_activeBoardId)->addTileHighlight(coord, colorId);
 }
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){

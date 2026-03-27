@@ -19,9 +19,9 @@ GraphicBoard::GraphicBoard()
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}{}
 
-void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const squareColorManagerPtr, ColorManager* const arrowColorManagerPtr){
+void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr){
 
-    m_squareColorManagerPtr = squareColorManagerPtr;
+    m_tileColorManagerPtr = tileColorManagerPtr;
     m_arrowColorManagerPtr = arrowColorManagerPtr;
     m_showLabels = config.labelsInside || config.labelsOutside;
 
@@ -44,20 +44,20 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         std::vector<GraphicTile> row;
         for(int x = 0; x < logicBoard.width(); x++){
 
-            sf::Color squareColor;
-            auto square_o = logicBoard.getSquare({x,y});
-            if(square_o.has_value()){
-                int colorId = square_o->getColorId();
-                auto color_o = m_squareColorManagerPtr->getSolidColor(colorId);
+            sf::Color tileColor;
+            auto tile_o = logicBoard.getTile({x,y});
+            if(tile_o.has_value()){
+                int colorId = tile_o->getColorId();
+                auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
                 if(color_o.has_value()){
-                    squareColor = color_o.value();
+                    tileColor = color_o.value();
                 }
             }
 
             float tileWidth = float(config.squareSize);
             float tileHeight = float(config.squareSize);
             GraphicTile tile;
-            tile.init({tileWidth, tileHeight}, squareColor);
+            tile.init({tileWidth, tileHeight}, tileColor);
             
             sf::Vector2f position;
             if(m_isLeftToRight){
@@ -83,7 +83,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                 m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
             }
         }
-        m_squares.push_back(row);
+        m_tiles.push_back(row);
     }
 
     if(m_showLabels){
@@ -91,8 +91,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             addInsideLabels();
         }
         else{
-            unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().x;
-            unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().y;
+            unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
+            unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
 
             setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
             addOutsideLabels();
@@ -100,12 +100,12 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     if(m_showPlayerToMoveToken){
-        m_rightEdgeWidth = (unsigned int)(0.5*m_squares.at(0).at(0).getSize().y);
+        m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at(0).at(0).getSize().y);
         initPlayerToMoveToken();
     }
 
     if(m_showBorder){
-        moveSquares({(float)m_borderWidth, (float)m_borderWidth});
+        moveTiles({(float)m_borderWidth, (float)m_borderWidth});
         initLeftBorder();
         initRightBorder();
         initTopBorder();
@@ -137,7 +137,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     m_topEdgeWidth = rhs.m_topEdgeWidth;
     m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
 
-    m_squares = rhs.m_squares;
+    m_tiles = rhs.m_tiles;
 
     m_backgroundColor = rhs.m_backgroundColor;
 
@@ -164,7 +164,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_selectHighlight = *(rhs.m_selectHighlight);
     }
 
-    m_squareColorManagerPtr = rhs.m_squareColorManagerPtr;
+    m_tileColorManagerPtr = rhs.m_tileColorManagerPtr;
     m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
 
     m_showLabels = rhs.m_showLabels;
@@ -229,8 +229,8 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     return *this;
 }
 
-sf::Vector2f GraphicBoard::getSquareSize() const{
-    return m_squares.at(0).at(0).getSize();
+sf::Vector2f GraphicBoard::getTileSize() const{
+    return m_tiles.at(0).at(0).getSize();
 }
 
 void GraphicBoard::setPosition(sf::Vector2f position){
@@ -294,7 +294,7 @@ bool GraphicBoard::isWithinPlayerToMoveToken(sf::Vector2i point) const{
     return (x-centerX)*(x-centerX)+(y-centerY)*(y-centerY) < radius*radius;
 }
 
-std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
+std::optional<Coord> GraphicBoard::getTileCoord(sf::Vector2i point){
 
     sf::Vector2u rect = m_texturePtr->getSize();
     rect.x = rect.x - m_leftEdgeWidth - m_rightEdgeWidth;
@@ -305,37 +305,37 @@ std::optional<Coord> GraphicBoard::getSquareCoord(sf::Vector2i point){
 
     float x = (float)point.x - m_position.x;
     x = x - (float)m_leftEdgeWidth*m_scale;
-    x = x *(float)m_squares.at(0).size()/(float)rect.x;
+    x = x *(float)m_tiles.at(0).size()/(float)rect.x;
 
     float y = (float)point.y - m_position.y;
     y = y - (float)(m_topEdgeWidth*m_scale);
-    y = y * (float)m_squares.size() / (float)rect.y;
+    y = y * (float)m_tiles.size() / (float)rect.y;
 
     if(x < 0.f){
         return std::nullopt;
     }
-    if(x >= (float)m_squares.at(0).size()){
+    if(x >= (float)m_tiles.at(0).size()){
         return std::nullopt;
     }
     if(y < 0.f){
         return std::nullopt;
     }
-    if(y >= (float)m_squares.size()){
+    if(y >= (float)m_tiles.size()){
         return std::nullopt;
     }
 
     if(!m_isLeftToRight){
-        x = m_squares.at(0).size()-x;
+        x = m_tiles.at(0).size()-x;
     }
     if(!m_isTopToBottom){
-        y = m_squares.size()-y;
+        y = m_tiles.size()-y;
     }
     return std::make_optional<Coord>((int)x,(int)y);
 }
 
 void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     
-    auto position_o = getSquareCenterPosition(coord);
+    auto position_o = getTileCenterPosition(coord);
 
     if(position_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add entity at "
@@ -374,17 +374,17 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         std::cout << "GraphicBoard: Failed to move entity from "
             << fromCoord.getNotation() << " to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting square and destination square are the same" << std::endl;
+        std::cout << "Starting tile and destination tile are the same" << std::endl;
         return; 
     }
 
-    auto toPosition_o = getSquareCenterPosition(toCoord);
+    auto toPosition_o = getTileCenterPosition(toCoord);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to move entity from "
             << fromCoord.getNotation() << " to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination square position not found" << std::endl;
+        std::cout << "Destination tile position not found" << std::endl;
         return;
     }
 
@@ -399,18 +399,18 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareHighlight(const Coord& coord, const int& highlightColorId){
+void GraphicBoard::addTileHighlight(const Coord& coord, const int& highlightColorId){
 
     sf::Color color;
     if(m_arrowColorManagerPtr == nullptr){
-        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding square highlight" << std::endl;
+        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding highlight" << std::endl;
         color = sf::Color(0xff000088);
     }
     else{
         auto color_o = m_arrowColorManagerPtr->getTransparentColor(highlightColorId);
         if(color_o == std::nullopt){
             std::cout << "GraphicBoard: color of colorId "
-                << highlightColorId << "not found when adding square highlight" << std::endl;
+                << highlightColorId << "not found when adding highlight" << std::endl;
             color = sf::Color(0xff000088);
         }
         else{
@@ -418,35 +418,35 @@ void GraphicBoard::addSquareHighlight(const Coord& coord, const int& highlightCo
         }
     }
 
-    m_squares.at(coord.y).at(coord.x).setHighlightColor(color);
+    m_tiles.at(coord.y).at(coord.x).setHighlightColor(color);
 
     redrawTexture();
 }
 
-void GraphicBoard::removeSquareHighlight(const Coord& coord){
+void GraphicBoard::removeTileHighlight(const Coord& coord){
 
-    m_squares.at(coord.y).at(coord.x).removeHighlight();
+    m_tiles.at(coord.y).at(coord.x).removeHighlight();
 
     redrawTexture();
 }
 
 void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicArrow){
 
-    auto fromPosition_o = getSquareCenterPosition(coordPair.from);
+    auto fromPosition_o = getTileCenterPosition(coordPair.from);
 
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow from "
             << coordPair.from.getNotation() << std::endl;
-        std::cout << "Starting square position not found" << std::endl;
+        std::cout << "Starting tile position not found" << std::endl;
         return;
     }
 
-    auto toPosition_o = getSquareCenterPosition(coordPair.to);
+    auto toPosition_o = getTileCenterPosition(coordPair.to);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow to "
             << coordPair.to.getNotation() << std::endl;
-        std::cout << "Destination square position not found" << std::endl;
+        std::cout << "Destination tile position not found" << std::endl;
         return;
     }
 
@@ -501,21 +501,21 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
     
     if(!m_dragArrowPtr){
 
-        auto fromPosition_o = getSquareCenterPosition(fromCoord);
+        auto fromPosition_o = getTileCenterPosition(fromCoord);
         
         if(fromPosition_o == std::nullopt){
             std::cout << "GraphicBoard: Unable to add dragArrow from "
                 << fromCoord.getNotation() << std::endl;
-            std::cout << "Starting square position not found";
+            std::cout << "Starting tile position not found";
             return;
         }
 
-        auto toPosition_o = getSquareCenterPosition(toCoord);
+        auto toPosition_o = getTileCenterPosition(toCoord);
 
         if(toPosition_o == std::nullopt){
             std::cout << "GraphicBoard: Unable to add dragArrow to "
                 << toCoord.getNotation() << std::endl;
-            std::cout << "Destination square position not found";
+            std::cout << "Destination tile position not found";
             return;
         }
 
@@ -527,21 +527,21 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord)
         return;
     }
 
-    auto fromPosition_o = getSquareCenterPosition(fromCoord);
+    auto fromPosition_o = getTileCenterPosition(fromCoord);
         
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow from "
             << fromCoord.getNotation() << std::endl;
-        std::cout << "Starting square position not found";
+        std::cout << "Starting tile position not found";
         return;
     }
 
-    auto toPosition_o = getSquareCenterPosition(toCoord);
+    auto toPosition_o = getTileCenterPosition(toCoord);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination square position not found";
+        std::cout << "Destination tile position not found";
         return;
     }
 
@@ -556,20 +556,20 @@ void GraphicBoard::removeDragArrow(){
     }
 }
 
-void GraphicBoard::highlightSquare(const Coord& coord){
+void GraphicBoard::highlightTile(const Coord& coord){
 
-    auto position_o = getSquarePosition(coord);
+    auto position_o = getTilePosition(coord);
 
     if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to highlight square at "
+        std::cout << "GraphicBoard: Unable to highlight tile at "
             << coord.getNotation() << std::endl;
-        std::cout << "Square position not found" << std::endl;
+        std::cout << "Tile position not found" << std::endl;
     }
 
     if(!m_selectHighlight){
         m_selectHighlight = std::make_unique<GraphicTile>();
         sf::Color color{255,255,0,100};
-        m_selectHighlight->init(m_squares[coord.y][coord.x].getSize(), color);
+        m_selectHighlight->init(m_tiles[coord.y][coord.x].getSize(), color);
     }
 
     m_selectHighlight->setPosition(position_o.value());
@@ -606,41 +606,41 @@ void GraphicBoard::flip(){
     m_isLeftToRight = !m_isLeftToRight;
     m_isTopToBottom = !m_isTopToBottom;
 
-    int squareWidth = m_squares.at(0).at(0).getSize().x;
-    int squareHeight = m_squares.at(0).at(0).getSize().y;
-    int numColumns = m_squares.at(0).size();
-    int numRows = m_squares.size();
+    int tileWidth = m_tiles.at(0).at(0).getSize().x;
+    int tileHeight = m_tiles.at(0).at(0).getSize().y;
+    int numColumns = m_tiles.at(0).size();
+    int numRows = m_tiles.size();
 
-    for(int y = 0; y < m_squares.size(); y++){
-        for(int x = 0; x < m_squares.at(y).size(); x++){
+    for(int y = 0; y < m_tiles.size(); y++){
+        for(int x = 0; x < m_tiles.at(y).size(); x++){
             sf::Vector2f position;
             if(m_isLeftToRight){
-                position.x = (float)(x*squareWidth);
+                position.x = (float)(x*tileWidth);
             }
             else{
-                position.x = (float)((numColumns-x-1)*squareWidth);
+                position.x = (float)((numColumns-x-1)*tileWidth);
             }
             position.x += m_leftEdgeWidth;
             if(m_isTopToBottom){
-                position.y = (float)(y*squareHeight);
+                position.y = (float)(y*tileHeight);
             }
             else{
-                position.y = (float)((numRows-y-1)*squareHeight);
+                position.y = (float)((numRows-y-1)*tileHeight);
             }
             position.y += m_topEdgeWidth;
-            m_squares.at(y).at(x).setPosition(position);
+            m_tiles.at(y).at(x).setPosition(position);
 
             auto entity_o = m_pieceLayerPtr->getEntityAt({x,y});
 
             if(entity_o != std::nullopt){
-                m_pieceLayerPtr->setEntityPosition({x,y}, position+m_squares.at(0).at(0).getSize()/2.f);
+                m_pieceLayerPtr->setEntityPosition({x,y}, position+m_tiles.at(0).at(0).getSize()/2.f);
             }
         }
     }
 
     for(auto& arrow : m_arrows){
-        sf::Vector2f fromPos = getSquareCenterPosition(arrow.first.from).value();
-        sf::Vector2f toPos = getSquareCenterPosition(arrow.first.to).value();
+        sf::Vector2f fromPos = getTileCenterPosition(arrow.first.from).value();
+        sf::Vector2f toPos = getTileCenterPosition(arrow.first.to).value();
         arrow.second.set(fromPos,toPos);
     }
 
@@ -660,8 +660,8 @@ void GraphicBoard::addCoordinates(){
         return;
     }
 
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
+    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -693,8 +693,8 @@ void GraphicBoard::moveCoordinatesOutside(){
     m_isCoordinateLabelsInside = false;
     m_showLabels = true;
 
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_squares.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
+    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -723,8 +723,8 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
     m_outsideLabelSizeFactor = size;
 
-    unsigned int leftEdgeWidth = size* m_squares.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = size* m_squares.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = size* m_tiles.at(0).at(0).getSize().x;
+    unsigned int leftEdgeHeight = size* m_tiles.at(0).at(0).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -741,7 +741,7 @@ void GraphicBoard::addBorder(){
 
     m_showBorder = true;
 
-    moveSquares({(float)m_borderWidth, (float)m_borderWidth});
+    moveTiles({(float)m_borderWidth, (float)m_borderWidth});
     moveLeftInsideCoordinateLabels({(float)m_borderWidth, (float)m_borderWidth});
     moveBottomInsideCoordinateLabels({(float)m_borderWidth, (float)m_borderWidth});
     moveLeftOutsideCoordinateLabels({0.f, (float)m_borderWidth});
@@ -776,7 +776,7 @@ void GraphicBoard::removeBorder(){
 
     m_showBorder = false;
 
-    moveSquares({-(float)m_borderWidth, -(float)m_borderWidth});
+    moveTiles({-(float)m_borderWidth, -(float)m_borderWidth});
     movePlayerToMoveToken({-2.f*(float)m_borderWidth, -(float)m_borderWidth});
     moveLeftInsideCoordinateLabels({-(float)m_borderWidth, -(float)m_borderWidth});
     moveBottomInsideCoordinateLabels({-(float)m_borderWidth, -(float)m_borderWidth});
@@ -795,7 +795,7 @@ void GraphicBoard::addPlayerToMoveToken(){
 
     m_showPlayerToMoveToken = true;
 
-    m_rightEdgeWidth = (unsigned int)(0.5*m_squares.at(0).at(0).getSize().y);
+    m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at(0).at(0).getSize().y);
 
     if(!m_playerToMoveToken){
         initPlayerToMoveToken();
@@ -835,37 +835,37 @@ void GraphicBoard::togglePlayerToMoveToken(){
     m_texturePtr->draw(*m_playerToMoveToken);
 }
 
-std::optional<sf::Vector2f> GraphicBoard::getSquarePosition(const Coord& coord){
-    if(coord.y >= m_squares.size()){
+std::optional<sf::Vector2f> GraphicBoard::getTilePosition(const Coord& coord){
+    if(coord.y >= m_tiles.size()){
         return std::nullopt;
     }
-    if(coord.x >= m_squares.at(coord.y).size()){
+    if(coord.x >= m_tiles.at(coord.y).size()){
         return std::nullopt;
     }
-    return m_squares.at(coord.y).at(coord.x).getTopLeftPosition();
+    return m_tiles.at(coord.y).at(coord.x).getTopLeftPosition();
 }
 
-std::optional<sf::Vector2f> GraphicBoard::getSquareCenterPosition(const Coord& coord){
-    auto position_o = getSquarePosition(coord);
+std::optional<sf::Vector2f> GraphicBoard::getTileCenterPosition(const Coord& coord){
+    auto position_o = getTilePosition(coord);
     if(position_o == std::nullopt){
         return std::nullopt;
     }
-    return position_o.value() + m_squares.at(coord.y).at(coord.x).getSize()/2.f;
+    return position_o.value() + m_tiles.at(coord.y).at(coord.x).getSize()/2.f;
 }
 
 void GraphicBoard::initPlayerToMoveToken(){
-    float radius = 0.2*m_squares.at(0).at(0).getSize().y;
+    float radius = 0.2*m_tiles.at(0).at(0).getSize().y;
     std::size_t pointCount = 30;
     m_playerToMoveToken = std::make_unique<sf::CircleShape>(radius, pointCount);
     float x = m_leftEdgeWidth;
     if(m_showBorder){
         x+= 2*m_borderWidth;
     }
-    x += m_squares.at(0).at(0).getSize().x*m_squares.size();
+    x += m_tiles.at(0).at(0).getSize().x*m_tiles.size();
     x += m_rightEdgeWidth/2.f;
     x -= radius;
     float y = m_topEdgeWidth;
-    y += m_squares.at(0).at(0).getSize().y/2.f;
+    y += m_tiles.at(0).at(0).getSize().y/2.f;
     y -= radius;
     m_playerToMoveToken->setPosition({x,y});
 
@@ -876,7 +876,7 @@ void GraphicBoard::initPlayerToMoveToken(){
 
 void GraphicBoard::initLeftBorder(){
     float width = (float)m_borderWidth;
-    float height = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
+    float height = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
     m_leftBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
     float y = 0.f;
@@ -886,16 +886,16 @@ void GraphicBoard::initLeftBorder(){
 
 void GraphicBoard::initRightBorder(){
     float width = (float)m_borderWidth;
-    float height = m_squares.at(0).at(0).getSize().y*m_squares.at(0).size() + 2*m_borderWidth;
+    float height = m_tiles.at(0).at(0).getSize().y*m_tiles.at(0).size() + 2*m_borderWidth;
     m_rightBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth + (float)m_squares.at(0).at(0).getSize().x*(float)m_squares.at(0).size() + m_borderWidth;
+    float x = (float)m_leftEdgeWidth + (float)m_tiles.at(0).at(0).getSize().x*(float)m_tiles.at(0).size() + m_borderWidth;
     float y = 0.f;
     m_rightBorder->setPosition({x,y});
     m_rightBorder->setFillColor(sf::Color{0,0,0,255});
 }
 
 void GraphicBoard::initTopBorder(){
-    float width = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
+    float width = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
     float height = (float)m_borderWidth;
     m_topBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
@@ -905,18 +905,18 @@ void GraphicBoard::initTopBorder(){
 }
 
 void GraphicBoard::initBottomBorder(){
-    float width = m_squares.at(0).at(0).getSize().x*m_squares.at(0).size() + 2*m_borderWidth;
+    float width = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
     float height = (float)m_borderWidth;
     m_bottomBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
-    float y = (float)m_topEdgeWidth + (float)m_squares.at(0).at(0).getSize().y*(float)m_squares.at(0).size() + m_borderWidth;
+    float y = (float)m_topEdgeWidth + (float)m_tiles.at(0).at(0).getSize().y*(float)m_tiles.at(0).size() + m_borderWidth;
     m_bottomBorder->setPosition({x,y});
     m_bottomBorder->setFillColor(sf::Color{0,0,0,255});
 }
 
 unsigned int GraphicBoard::getTextureWidth() const{
 
-    unsigned int boardWidth = (unsigned int)(m_squares.at(0).at(0).getSize().x*m_squares.at(0).size());
+    unsigned int boardWidth = (unsigned int)(m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size());
     boardWidth += m_leftEdgeWidth+m_rightEdgeWidth;
     if(m_showBorder){
         boardWidth += 2*m_borderWidth;
@@ -927,7 +927,7 @@ unsigned int GraphicBoard::getTextureWidth() const{
 }
 
 unsigned int GraphicBoard::getTextureHeight() const{
-    unsigned int boardHeight = (unsigned int)(m_squares.at(0).at(0).getSize().y*(unsigned int)m_squares.size());
+    unsigned int boardHeight = (unsigned int)(m_tiles.at(0).at(0).getSize().y*(unsigned int)m_tiles.size());
     boardHeight += m_topEdgeWidth+m_bottomEdgeWidth;
     if(m_showBorder){
         boardHeight += 2*m_borderWidth;
@@ -949,9 +949,9 @@ void GraphicBoard::resizeTexture(){
 void GraphicBoard::redrawTexture(){
     m_texturePtr->clear(m_backgroundColor);
 
-    for(int y = 0; y < m_squares.size(); y++){
-        for(int x = 0; x < m_squares.at(y).size(); x++){
-            m_texturePtr->draw(m_squares[y][x]);
+    for(int y = 0; y < m_tiles.size(); y++){
+        for(int x = 0; x < m_tiles.at(y).size(); x++){
+            m_texturePtr->draw(m_tiles[y][x]);
         }
     }
 
@@ -1012,7 +1012,7 @@ void GraphicBoard::setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const
     m_leftEdgeWidth = leftWidth;
     m_bottomEdgeWidth = bottomWidth;
 
-    moveSquares({moveX, 0.f});
+    moveTiles({moveX, 0.f});
     moveBorder({moveX, 0.f});
     movePlayerToMoveToken({moveX, 0.f});
 
@@ -1027,15 +1027,15 @@ void GraphicBoard::addOutsideLabels(){
     m_bottomOutsideCoordinateLabels.clear();
     m_leftOutsideCoordinateLabels.clear();
 
-    for(int i = 0; i < m_squares.at(0).size(); i++){
+    for(int i = 0; i < m_tiles.at(0).size(); i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
-        unsigned int labelSize = m_outsideLabelSizeFactor*m_squares.at(0).at(i).getSize().x;
+        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at(0).at(i).getSize().x;
         sf::Text label{m_font, s, labelSize};
 
         sf::Vector2f position;
         position.x =
-            m_squares.at(0).at(i).getCentrePosition().x -
+            m_tiles.at(0).at(i).getCentrePosition().x -
             label.getLocalBounds().size.x/2;
 
         position.y =
@@ -1049,9 +1049,9 @@ void GraphicBoard::addOutsideLabels(){
         m_bottomOutsideCoordinateLabels.push_back(label);
     }
 
-    for(int i = 0; i < m_squares.size(); i++){
-        std::string s = std::to_string(m_squares.size() -i);
-        unsigned int labelSize = m_outsideLabelSizeFactor*m_squares.at(i).at(0).getSize().y;
+    for(int i = 0; i < m_tiles.size(); i++){
+        std::string s = std::to_string(m_tiles.size() -i);
+        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at(i).at(0).getSize().y;
         sf::Text label{m_font, s, labelSize};
 
         label.setOrigin({0.f,0.f});
@@ -1061,8 +1061,8 @@ void GraphicBoard::addOutsideLabels(){
         //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
         position.x = ((float)m_leftEdgeWidth-(float)labelSize/2.f)/2.f;
 
-        int j = m_squares.size()-i-1;
-        position.y = m_squares.at(j).at(0).getCentrePosition().y -
+        int j = m_tiles.size()-i-1;
+        position.y = m_tiles.at(j).at(0).getCentrePosition().y -
             (float)labelSize*9.f/14.f;
         
         label.setPosition(position);
@@ -1077,15 +1077,15 @@ void GraphicBoard::addInsideLabels(){
     m_bottomInsideCoordinateLabels.clear();
     m_leftInsideCoordinateLabels.clear();
 
-    for(int i = 0; i < m_squares.at(0).size(); i++){
+    for(int i = 0; i < m_tiles.at(0).size(); i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
-        unsigned int labelSize = m_insideLabelSizeFactor*m_squares.at(0).at(i).getSize().x;
+        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at(0).at(i).getSize().x;
         sf::Text label{m_font, s, labelSize};
 
         sf::Vector2f position;
         position.x =
-            m_squares.at(0).at(i).getRightPosition() -
+            m_tiles.at(0).at(i).getRightPosition() -
             label.getLocalBounds().size.x*5/4;
         
         position.y = getTextureHeight() - labelSize*5/4;
@@ -1096,7 +1096,7 @@ void GraphicBoard::addInsideLabels(){
 
         label.setFillColor(sf::Color(100,100,100,255));
 
-        auto outlineColor_o = m_squareColorManagerPtr->getSolidColor((i+1)%2);
+        auto outlineColor_o = m_tileColorManagerPtr->getSolidColor((i+1)%2);
         if(outlineColor_o.has_value()){
             label.setOutlineColor(outlineColor_o.value());
         }
@@ -1106,9 +1106,9 @@ void GraphicBoard::addInsideLabels(){
         m_bottomInsideCoordinateLabels.push_back(label);
     }
 
-    for(int i = 0; i < m_squares.size(); i++){
-        std::string s = std::to_string(m_squares.size() -i);
-        unsigned int labelSize = m_insideLabelSizeFactor*m_squares.at(i).at(0).getSize().y;
+    for(int i = 0; i < m_tiles.size(); i++){
+        std::string s = std::to_string(m_tiles.size() -i);
+        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at(i).at(0).getSize().y;
         sf::Text label{m_font, s, labelSize};
 
         label.setOrigin({0.f,0.f});
@@ -1119,14 +1119,14 @@ void GraphicBoard::addInsideLabels(){
         position.x = (float)labelSize/16.f;
         position.x += (float)m_leftEdgeWidth;
 
-        int j = m_squares.size()-i-1;
-        position.y = m_squares.at(j).at(0).getTopPosition() - (float)labelSize/4.f;
+        int j = m_tiles.size()-i-1;
+        position.y = m_tiles.at(j).at(0).getTopPosition() - (float)labelSize/4.f;
         
         label.setPosition(position);
 
         label.setFillColor(sf::Color(100,100,100,255));
 
-        auto outlineColor_o = m_squareColorManagerPtr->getSolidColor((i+1)%2);
+        auto outlineColor_o = m_tileColorManagerPtr->getSolidColor((i+1)%2);
         if(outlineColor_o.has_value()){
             label.setOutlineColor(outlineColor_o.value());
         }
@@ -1137,10 +1137,10 @@ void GraphicBoard::addInsideLabels(){
     }
 }
 
-void GraphicBoard::moveSquares(const sf::Vector2f& offset){
-    for(int y = 0; y < m_squares.size(); y++){
-        for(int x = 0; x < m_squares.at(y).size(); x++){
-            m_squares.at(y).at(x).move(offset);
+void GraphicBoard::moveTiles(const sf::Vector2f& offset){
+    for(int y = 0; y < m_tiles.size(); y++){
+        for(int x = 0; x < m_tiles.at(y).size(); x++){
+            m_tiles.at(y).at(x).move(offset);
         }
     }
     m_pieceLayerPtr->move(offset);

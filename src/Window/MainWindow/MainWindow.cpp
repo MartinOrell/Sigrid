@@ -32,7 +32,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_window.setFramerateLimit(60);
 
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
-    m_squareColorManagerPtr = std::make_unique<ColorManager>(config.squareColors);
+    m_tileColorManagerPtr = std::make_unique<ColorManager>(config.squareColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
     m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
@@ -52,7 +52,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     m_pieceManagerPtr->loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get());
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get());
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){
@@ -81,7 +81,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_squareColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
+    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);
     return true;
@@ -221,10 +221,10 @@ void MainWindow::createGraphic(){
         float xCandidate1 = (x[3] - x[0])*((float)toolPickerColumns/(float)(toolPickerColumns+boardColumns));
 
         float toolPickerHeight = y[2]-y[1];
-        unsigned int toolPickerSquareHeight = toolPickerHeight/toolPickerRows;
-        unsigned int toolPickerSquareWidth = toolPickerSquareHeight;
+        unsigned int toolPickerTileHeight = toolPickerHeight/toolPickerRows;
+        unsigned int toolPickerTileWidth = toolPickerTileHeight;
 
-        float xCandidate2 = toolPickerSquareWidth*toolPickerColumns;
+        float xCandidate2 = toolPickerTileWidth*toolPickerColumns;
 
         if(xCandidate2 < xCandidate1){
             x[1] = xCandidate2;

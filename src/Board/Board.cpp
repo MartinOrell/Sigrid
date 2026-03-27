@@ -10,7 +10,7 @@ using namespace sigrid;
 
 Board::Board(){}
 
-void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const squareColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
 
     m_filename = boardData.filename;
 
@@ -18,7 +18,7 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
 
     if(m_logicBoard->init(boardData)){
         m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
-        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, squareColorManagerPtr, arrowColorManagerPtr);
+        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, tileColorManagerPtr, arrowColorManagerPtr);
     }
 }
 
@@ -101,8 +101,8 @@ bool Board::contains(sf::Vector2i point) const{
     return m_graphicBoard->contains(point);
 }
 
-bool Board::isEmptySquare(const Coord& coord) const{
-    return m_logicBoard->isEmptySquare(coord);
+bool Board::isEmptyTile(const Coord& coord) const{
+    return m_logicBoard->isEmptyTile(coord);
 }
 
 bool Board::isCoordinatesOutside() const{
@@ -117,8 +117,8 @@ bool Board::isImageFilenameSet() const{
     return m_imageFilename.length() > 0;
 }
 
-std::optional<Coord> Board::getSquareCoord(sf::Vector2i point){
-    return m_graphicBoard->getSquareCoord(point);
+std::optional<Coord> Board::getTileCoord(sf::Vector2i point){
+    return m_graphicBoard->getTileCoord(point);
 }
 
 std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
@@ -137,12 +137,12 @@ std::optional<GraphicEntity> Board::getGraphicEntity(const Coord& coord){
     return entity_o.value();
 }
 
-std::optional<LogicTile> Board::getSquare(const Coord& coord){
-    auto square_o = m_logicBoard->getSquare(coord);
-    if(square_o == std::nullopt){
+std::optional<LogicTile> Board::getTile(const Coord& coord){
+    auto tile_o = m_logicBoard->getTile(coord);
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
-    return square_o.value();
+    return tile_o.value();
 }
 
 std::optional<LogicArrow> Board::getLogicArrow(const CoordPair& coordPair){
@@ -160,7 +160,7 @@ std::string Board::getFen() const{
 void Board::select(const Coord& newCoord){
     if(!m_selection){
         m_selection = std::make_unique<Coord>(newCoord);
-        m_graphicBoard->highlightSquare(newCoord);
+        m_graphicBoard->highlightTile(newCoord);
         return;
     }
 
@@ -172,9 +172,9 @@ void Board::select(const Coord& newCoord){
         return;
     }
 
-    if(m_logicBoard->isEmptySquare(oldCoord)){
+    if(m_logicBoard->isEmptyTile(oldCoord)){
         m_selection = std::make_unique<Coord>(newCoord);
-        m_graphicBoard->highlightSquare(newCoord);
+        m_graphicBoard->highlightTile(newCoord);
         return;
     }
 
@@ -203,7 +203,7 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 
     if(occupyingEntity_o != std::nullopt){
         std::cout << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
-        std::cout << "because the square is already occupied" << std::endl;
+        std::cout << "because the tile is already occupied" << std::endl;
         return;
     }
 
@@ -242,7 +242,7 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
     m_graphicBoard->unhighlight();
 }
 
-void Board::addSquareHighlight(const Coord& coord, const int& colorId){
+void Board::addTileHighlight(const Coord& coord, const int& colorId){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to add highlight at "
@@ -251,16 +251,16 @@ void Board::addSquareHighlight(const Coord& coord, const int& colorId){
         return;
     }
 
-    auto square_o = m_logicBoard->getSquare(coord);
+    auto tile_o = m_logicBoard->getTile(coord);
 
-    if(square_o == std::nullopt){
+    if(tile_o == std::nullopt){
         std::cout << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no square there" << std::endl;
+        std::cout << "There is no tile there" << std::endl;
         return;
     }
 
-    auto highlightColor_o = square_o.value().getHighlightColorId();
+    auto highlightColor_o = tile_o.value().getHighlightColorId();
 
     if(highlightColor_o != std::nullopt){
         std::cout << "Board: Failed to add highlight at "
@@ -269,12 +269,12 @@ void Board::addSquareHighlight(const Coord& coord, const int& colorId){
         return;
     }
 
-    if(m_logicBoard->addSquareHighlight(coord, colorId)){
-        m_graphicBoard->addSquareHighlight(coord, colorId);
+    if(m_logicBoard->addTileHighlight(coord, colorId)){
+        m_graphicBoard->addTileHighlight(coord, colorId);
     }
 }
 
-void Board::removeSquareHighlight(const Coord& coord){
+void Board::removeTileHighlight(const Coord& coord){
 
     if(!m_logicBoard->isWithinBoard(coord)){
         std::cout << "Board: Failed to remove highlight at "
@@ -283,16 +283,16 @@ void Board::removeSquareHighlight(const Coord& coord){
         return;
     }
 
-    auto square_o = m_logicBoard->getSquare(coord);
+    auto tile_o = m_logicBoard->getTile(coord);
 
-    if(square_o == std::nullopt){
+    if(tile_o == std::nullopt){
         std::cout << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no square there" << std::endl;
+        std::cout << "There is no tile there" << std::endl;
         return;
     }
 
-    auto highlightColor_o = square_o.value().getHighlightColorId();
+    auto highlightColor_o = tile_o.value().getHighlightColorId();
 
     if(highlightColor_o == std::nullopt){
         std::cout << "Board: Failed to remove highlight at "
@@ -301,15 +301,15 @@ void Board::removeSquareHighlight(const Coord& coord){
         return;
     }
 
-    if(m_logicBoard->removeSquareHighlight(coord)){
-        m_graphicBoard->removeSquareHighlight(coord);
+    if(m_logicBoard->removeTileHighlight(coord)){
+        m_graphicBoard->removeTileHighlight(coord);
     }
 }
 
 void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     assert(fromCoord != toCoord);
 
-    if(m_logicBoard->isEmptySquare(fromCoord)){
+    if(m_logicBoard->isEmptyTile(fromCoord)){
         return;
     }
 
@@ -325,7 +325,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
         std::cout << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting square is out of bounds" << std::endl;
+        std::cout << "Starting tile is out of bounds" << std::endl;
         return;
     }
 
@@ -333,7 +333,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
         std::cout << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination square is out of bounds" << std::endl;
+        std::cout << "Destination tile is out of bounds" << std::endl;
         return;
     }
 
@@ -358,7 +358,7 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
         std::cout << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting square is out of bounds" << std::endl;
+        std::cout << "Starting tile is out of bounds" << std::endl;
         return;
     }
 
@@ -366,7 +366,7 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
         std::cout << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination square is out of bounds" << std::endl;
+        std::cout << "Destination tile is out of bounds" << std::endl;
         return;
     }
 
