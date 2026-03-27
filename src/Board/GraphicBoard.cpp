@@ -34,7 +34,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_arrowThickness = config.arrowThickness;
     m_arrowHeadSize = config.arrowHeadSize;
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-    m_pieceLayerPtr->init(sf::Vector2f{(float)config.squareSize, (float)config.squareSize}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
+    m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -54,24 +54,22 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                 }
             }
 
-            float tileWidth = float(config.squareSize);
-            float tileHeight = float(config.squareSize);
             GraphicTile tile;
-            tile.init({tileWidth, tileHeight}, tileColor);
+            tile.init({config.tileWidth, config.tileHeight}, tileColor);
             
             sf::Vector2f position;
             if(m_isLeftToRight){
-                position.x = (float)(x*config.squareSize);
+                position.x = (float)(x*config.tileWidth);
             }
             else{
-                position.x = (float)((logicBoard.width()-x-1)*config.squareSize);
+                position.x = (float)((logicBoard.width()-x-1)*config.tileWidth);
             }
             position.x += m_leftEdgeWidth;
             if(m_isTopToBottom){
-                position.y = (float)(y*config.squareSize);
+                position.y = (float)(y*config.tileHeight);
             }
             else{
-                position.y = (float)((logicBoard.height()-y-1)*config.squareSize);
+                position.y = (float)((logicBoard.height()-y-1)*config.tileHeight);
             }
             position.y += m_topEdgeWidth;
             tile.setPosition(position);

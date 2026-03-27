@@ -5,7 +5,8 @@
 namespace sigrid{
     struct BoardDesignContainer{
 
-        int squareSize;
+        float tileWidth;
+        float tileHeight;
         float arrowThickness;
         float arrowHeadSize;
         float circleDiameter;

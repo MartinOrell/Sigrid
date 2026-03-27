@@ -363,11 +363,10 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 if(s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
                         if(s2 == "width:"){
-                            is >> boardData.squareSize;
+                            is >> boardData.tileWidth;
                         }
                         else if(s2 == "height:"){
-                            int height;
-                            is >> height; //Currently not used and assumed to be equal to width
+                            is >> boardData.tileHeight;
                         }
                         else{
                             std::cout << "Unknown key: \"" << s2 << "\"";
