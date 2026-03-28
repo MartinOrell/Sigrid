@@ -2,6 +2,7 @@
 
 #include <map>
 #include <optional>
+#include <vector>
 
 #include "../../../Coord/CoordPair.h"
 #include "GraphicArrow.h"
@@ -30,6 +31,7 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             std::map<CoordPair, GraphicArrow> m_arrows;
+            std::vector<CoordPair> m_drawOrder;
 
             float m_arrowThickness;
             float m_arrowHeadSize;

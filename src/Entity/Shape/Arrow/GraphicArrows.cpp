@@ -26,11 +26,19 @@ void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fro
     graphicArrow.init(fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
 
     m_arrows.insert({coordPair, graphicArrow});
+    m_drawOrder.push_back(coordPair);
 }
 
 void GraphicArrows::removeArrow(const CoordPair& coordPair){
 
     m_arrows.erase(coordPair);
+
+    for(auto it = m_drawOrder.begin(); it != m_drawOrder.end(); it++){
+        if(*it == coordPair){
+            m_drawOrder.erase(it);
+            break;
+        }
+    }
 }
 
 float GraphicArrows::getThickness() const{
@@ -63,7 +71,7 @@ void GraphicArrows::move(const sf::Vector2f& offset){
 
 void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
-    for(auto& arrow : m_arrows){
-        target.draw(arrow.second);
+    for(auto& coordPair: m_drawOrder){
+        target.draw(m_arrows.at(coordPair));
     }
 }
