@@ -14,27 +14,18 @@ LogicBoard::LogicBoard(){}
 
 LogicBoard::LogicBoard(const LogicBoard& board)
 : m_pieceLayer{board.m_pieceLayer}
-, m_tileLayer{board.m_tileLayer}
-, m_columns{board.m_columns}
-, m_rows{board.m_rows}{}
+, m_tileLayer{board.m_tileLayer}{}
 
 LogicBoard::~LogicBoard(){}
 
 bool LogicBoard::init(const BoardDataContainer& data){
-    m_columns = data.columns;
-    m_rows = data.rows;
-    m_repeatTileColorIds = data.repeatTileColorIds;
 
-    if(m_repeatTileColorIds.size() == 0){
+    if(data.repeatTileColorIds.size() == 0){
         std::cout << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
 
-    for(int y = 0; y < data.rows; y++){
-        for(int x = 0; x < data.columns; x++){
-            m_tileLayer.insert({Coord{x,y}, LogicTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())}});
-        }
-    }
+    m_tileLayer.init(data.rows, data.columns, data.repeatTileColorIds);
 
     for(const auto pieceContainer : data.logicPieces){
 
@@ -77,7 +68,6 @@ bool LogicBoard::init(const BoardDataContainer& data){
 
 LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 
-    m_repeatTileColorIds = rhs.m_repeatTileColorIds;
     m_tileLayer = rhs.m_tileLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrowLayer = rhs.m_arrowLayer;
@@ -86,11 +76,11 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 }
 
 const unsigned int LogicBoard::width() const{
-    return m_columns;
+    return m_tileLayer.getNumColumns();
 }
 
 const unsigned int LogicBoard::height() const{
-    return m_rows;
+    return m_tileLayer.getNumRows();
 }
 
 bool LogicBoard::isWithinBoard(const Coord& coord) const{
@@ -111,11 +101,14 @@ bool LogicBoard::isEmptyTile(const Coord& coord) const{
 }
 
 std::optional<LogicTile> LogicBoard::getTile(const Coord& coord) const{
-    if(!isWithinBoard(coord)){
+
+    auto tile_o = m_tileLayer.getTile(coord);
+
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
 
-    return m_tileLayer.at(coord);
+    return tile_o.value();
 }
 
 std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
@@ -244,12 +237,6 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 }
 
 bool LogicBoard::addTileHighlight(const Coord& coord, const int& highlightColorId){
-    
-    if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
-        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
-        return false;
-    }
 
     if(highlightColorId < 0){
         std::cout << "LogicBoard: Unable to add highlight." << std::endl;
@@ -257,19 +244,29 @@ bool LogicBoard::addTileHighlight(const Coord& coord, const int& highlightColorI
         return false;
     }
 
-    m_tileLayer.at(coord).setHighlightColor(highlightColorId);
+    auto tile_o = m_tileLayer.getTile(coord);
+
+    if(tile_o == std::nullopt){
+        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
+        return false;
+    }
+
+    m_tileLayer.setHighlightColor(coord, highlightColorId);
     return true;
 }
 
 bool LogicBoard::removeTileHighlight(const Coord& coord){
 
-    if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to remove highlight." << std::endl;
+    auto tile_o = m_tileLayer.getTile(coord);
+
+    if(tile_o == std::nullopt){
+        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
         std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
 
-    m_tileLayer.at(coord).removeHighlight();
+    m_tileLayer.removeHighlight(coord);
     return true;
 }
 
@@ -348,12 +345,7 @@ void LogicBoard::clear(){
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
 {
-    out << "Columns: " << board.width() << "\n";
-    out << "Rows: " << board.height() << "\n";
-    out << "RepeatTileColors:";
-    for(const auto& id: board.m_repeatTileColorIds){
-        out << " " << id;
-    }
+    out << board.m_tileLayer;
     out << board.m_pieceLayer;
     return out;
 }

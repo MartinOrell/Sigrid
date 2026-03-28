@@ -9,6 +9,7 @@
 #include "../Coord/Coord.h"
 #include "../Coord/CoordPair.h"
 #include "../Entity/Tile/LogicTile.h"
+#include "../Entity/Tile/LogicTiles.h"
 #include "../Entity/LogicEntities.h"
 #include "../Entity/Shape/Arrow/LogicArrow.h"
 #include "../Entity/Shape/Arrow/LogicArrows.h"
@@ -50,10 +51,8 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
-            int m_columns;
-            int m_rows;
-            std::vector<int> m_repeatTileColorIds;
-            std::map<Coord, LogicTile> m_tileLayer;
+            
+            LogicTiles m_tileLayer;
             LogicEntities m_pieceLayer;
             LogicArrows m_arrowLayer;
 
