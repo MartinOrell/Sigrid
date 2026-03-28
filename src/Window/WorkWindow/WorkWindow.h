@@ -23,11 +23,11 @@ namespace sigrid{
 
             std::string getFen() const;
             
-            virtual void setPosition(sf::Vector2f);
+            void setPosition(const sf::Vector2f& position);
 
             unsigned int getNumColumns() const;
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2i& point) const;
 
             bool isCoordinatesOutside() const;
 

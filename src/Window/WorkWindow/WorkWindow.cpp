@@ -61,7 +61,7 @@ std::string WorkWindow::getFen() const{
     return m_boardPtrs.at(m_activeBoardId)->getFen();
 }
 
-void WorkWindow::setPosition(sf::Vector2f position){
+void WorkWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
@@ -72,7 +72,7 @@ unsigned int WorkWindow::getNumColumns() const{
     return m_boardPtrs.at(m_activeBoardId)->getNumColumns();
 }
 
-bool WorkWindow::contains(sf::Vector2i point) const{
+bool WorkWindow::contains(const sf::Vector2i& point) const{
 
     if(!m_texture){
         return false;
