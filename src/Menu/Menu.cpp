@@ -379,9 +379,11 @@ void Menu::addHeaderGraphic(const unsigned int id){
 
 void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex){
 
+    int reverseItemIndex = m_itemKeys.at(headerIndex).size() - itemIndex;
+
     m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->createGraphic((unsigned int)m_lineHeight);
     float posX = m_items.at(m_itemKeys.at(headerIndex).at(0))->getPositionLeft();
-    float posY = itemIndex*m_lineHeight-m_lineHeight/2.f;
+    float posY = reverseItemIndex*m_lineHeight-m_lineHeight/2.f;
     m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->setPosition({posX, posY});
     if(m_showItems){
         m_texture->draw(*m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)));
