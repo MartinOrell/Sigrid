@@ -385,12 +385,8 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
     }
 }
 
-void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord){
-    m_graphicBoard->updateDragArrow(fromCoord, toCoord);
-}
-
-void Board::setDragArrowColor(const int& colorId){
-    m_graphicBoard->setDragArrowColor(colorId);
+void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
+    m_graphicBoard->updateDragArrow(fromCoord, toCoord, colorId);
 }
 
 void Board::removeDragArrow(){

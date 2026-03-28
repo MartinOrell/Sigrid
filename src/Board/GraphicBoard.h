@@ -77,8 +77,7 @@ namespace sigrid{
             void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             void removeArrow(const CoordPair& coordPair);
 
-            void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
-            void setDragArrowColor(const int& colorId);
+            void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
             void removeDragArrow();
 
             void highlightTile(const Coord& coord);
@@ -168,7 +167,6 @@ namespace sigrid{
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
 
             std::unique_ptr<GraphicArrow> m_dragArrowPtr;
-            sf::Color m_dragArrowColor;
 
             std::unique_ptr<GraphicTile> m_selectHighlight;
 

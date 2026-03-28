@@ -65,12 +65,6 @@ void WorkWindow::setPosition(sf::Vector2f position){
     m_position = position;
 }
 
-void WorkWindow::setDragArrowColor(const int& colorId){
-    for(auto& board : m_boardPtrs){
-        board->setDragArrowColor(colorId);
-    }
-}
-
 unsigned int WorkWindow::getNumColumns() const{
     if(m_boardPtrs.size() <= m_activeBoardId){
         return 0;
@@ -218,11 +212,11 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, 
     switch(tool.selection()){
         case ToolSelection::Select:
             if(!m_boardPtrs.at(m_activeBoardId)->isEmptyTile(fromCoord)){
-                m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord);
+                m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
             }
             return;
         case ToolSelection::DrawArrow:
-            m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord);
+            m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
             return;
         default:
             return;

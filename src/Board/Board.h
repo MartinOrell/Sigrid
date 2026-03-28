@@ -86,8 +86,7 @@ namespace sigrid{
             void addTileHighlight(const Coord& coord, const int& colorId);
             void removeTileHighlight(const Coord& coord);
 
-            void updateDragArrow(const Coord& fromCoord, const Coord& toCoord);
-            void setDragArrowColor(const int& colorId);
+            void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
             void removeDragArrow();
 
             void loadFen(const std::string& fen);
