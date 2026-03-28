@@ -159,7 +159,9 @@ namespace sigrid{
             unsigned int m_topEdgeWidth;
             unsigned int m_bottomEdgeWidth;
 
-            std::vector<std::vector<GraphicTile>> m_tiles;
+            int m_columns;
+            int m_rows;
+            std::map<Coord, GraphicTile> m_tiles;
 
             sf::Color m_backgroundColor;
 

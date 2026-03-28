@@ -35,13 +35,14 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
     m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize);
+    m_columns = logicBoard.width();
+    m_rows = logicBoard.height();
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
     }
 
     for(int y = 0; y < logicBoard.height(); y++){
-        std::vector<GraphicTile> row;
         for(int x = 0; x < logicBoard.width(); x++){
 
             sf::Color tileColor;
@@ -73,7 +74,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             }
             position.y += m_topEdgeWidth;
             tile.setPosition(position);
-            row.push_back(tile);
+            m_tiles.insert({{x,y},tile});
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
@@ -81,7 +82,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                 m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
             }
         }
-        m_tiles.push_back(row);
     }
 
     if(m_showLabels){
@@ -89,8 +89,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             addInsideLabels();
         }
         else{
-            unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
-            unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
+            unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().x;
+            unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().y;
 
             setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
             addOutsideLabels();
@@ -98,7 +98,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     if(m_showPlayerToMoveToken){
-        m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at(0).at(0).getSize().y);
+        m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at({0,0}).getSize().y);
         initPlayerToMoveToken();
     }
 
@@ -127,6 +127,8 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         }
     }
 
+    m_columns = rhs.m_columns;
+    m_rows = rhs.m_rows;
     m_position = rhs.m_position;
     m_scale = rhs.m_scale;
 
@@ -230,7 +232,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 }
 
 sf::Vector2f GraphicBoard::getTileSize() const{
-    return m_tiles.at(0).at(0).getSize();
+    return m_tiles.at({0,0}).getSize();
 }
 
 void GraphicBoard::setPosition(sf::Vector2f position){
@@ -305,30 +307,30 @@ std::optional<Coord> GraphicBoard::getTileCoord(sf::Vector2i point){
 
     float x = (float)point.x - m_position.x;
     x = x - (float)m_leftEdgeWidth*m_scale;
-    x = x *(float)m_tiles.at(0).size()/(float)rect.x;
+    x = x *(float)m_columns/(float)rect.x;
 
     float y = (float)point.y - m_position.y;
     y = y - (float)(m_topEdgeWidth*m_scale);
-    y = y * (float)m_tiles.size() / (float)rect.y;
+    y = y * (float)m_rows / (float)rect.y;
 
     if(x < 0.f){
         return std::nullopt;
     }
-    if(x >= (float)m_tiles.at(0).size()){
+    if(x >= m_columns){
         return std::nullopt;
     }
     if(y < 0.f){
         return std::nullopt;
     }
-    if(y >= (float)m_tiles.size()){
+    if(y >= m_rows){
         return std::nullopt;
     }
 
     if(!m_isLeftToRight){
-        x = m_tiles.at(0).size()-x;
+        x = m_columns-x;
     }
     if(!m_isTopToBottom){
-        y = m_tiles.size()-y;
+        y = m_rows-y;
     }
     return std::make_optional<Coord>((int)x,(int)y);
 }
@@ -418,14 +420,14 @@ void GraphicBoard::addTileHighlight(const Coord& coord, const int& highlightColo
         }
     }
 
-    m_tiles.at(coord.y).at(coord.x).setHighlightColor(color);
+    m_tiles.at(coord).setHighlightColor(color);
 
     redrawTexture();
 }
 
 void GraphicBoard::removeTileHighlight(const Coord& coord){
 
-    m_tiles.at(coord.y).at(coord.x).removeHighlight();
+    m_tiles.at(coord).removeHighlight();
 
     redrawTexture();
 }
@@ -564,7 +566,7 @@ void GraphicBoard::highlightTile(const Coord& coord){
     if(!m_selectHighlight){
         m_selectHighlight = std::make_unique<GraphicTile>();
         sf::Color color{255,255,0,100};
-        m_selectHighlight->init(m_tiles[coord.y][coord.x].getSize(), color);
+        m_selectHighlight->init(m_tiles.at(coord).getSize(), color);
     }
 
     m_selectHighlight->setPosition(position_o.value());
@@ -601,34 +603,32 @@ void GraphicBoard::flip(){
     m_isLeftToRight = !m_isLeftToRight;
     m_isTopToBottom = !m_isTopToBottom;
 
-    int tileWidth = m_tiles.at(0).at(0).getSize().x;
-    int tileHeight = m_tiles.at(0).at(0).getSize().y;
-    int numColumns = m_tiles.at(0).size();
-    int numRows = m_tiles.size();
+    int tileWidth = m_tiles.at({0,0}).getSize().x;
+    int tileHeight = m_tiles.at({0,0}).getSize().y;
 
-    for(int y = 0; y < m_tiles.size(); y++){
-        for(int x = 0; x < m_tiles.at(y).size(); x++){
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
             sf::Vector2f position;
             if(m_isLeftToRight){
                 position.x = (float)(x*tileWidth);
             }
             else{
-                position.x = (float)((numColumns-x-1)*tileWidth);
+                position.x = (float)((m_columns-x-1)*tileWidth);
             }
             position.x += m_leftEdgeWidth;
             if(m_isTopToBottom){
                 position.y = (float)(y*tileHeight);
             }
             else{
-                position.y = (float)((numRows-y-1)*tileHeight);
+                position.y = (float)((m_rows-y-1)*tileHeight);
             }
             position.y += m_topEdgeWidth;
-            m_tiles.at(y).at(x).setPosition(position);
+            m_tiles.at({x,y}).setPosition(position);
 
             auto entity_o = m_pieceLayerPtr->getEntityAt({x,y});
 
             if(entity_o != std::nullopt){
-                m_pieceLayerPtr->setEntityPosition({x,y}, position+m_tiles.at(0).at(0).getSize()/2.f);
+                m_pieceLayerPtr->setEntityPosition({x,y}, position+m_tiles.at({x,y}).getSize()/2.f);
             }
         }
     }
@@ -658,8 +658,8 @@ void GraphicBoard::addCoordinates(){
         return;
     }
 
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().x;
+    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -691,8 +691,8 @@ void GraphicBoard::moveCoordinatesOutside(){
     m_isCoordinateLabelsInside = false;
     m_showLabels = true;
 
-    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().x;
+    unsigned int leftEdgeHeight = m_outsideLabelSizeFactor* m_tiles.at({0,0}).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -721,8 +721,8 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
     m_outsideLabelSizeFactor = size;
 
-    unsigned int leftEdgeWidth = size* m_tiles.at(0).at(0).getSize().x;
-    unsigned int leftEdgeHeight = size* m_tiles.at(0).at(0).getSize().y;
+    unsigned int leftEdgeWidth = size* m_tiles.at({0,0}).getSize().x;
+    unsigned int leftEdgeHeight = size* m_tiles.at({0,0}).getSize().y;
 
     setLeftAndBottomEdgeWidth(leftEdgeWidth,leftEdgeHeight);
 
@@ -793,7 +793,7 @@ void GraphicBoard::addPlayerToMoveToken(){
 
     m_showPlayerToMoveToken = true;
 
-    m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at(0).at(0).getSize().y);
+    m_rightEdgeWidth = (unsigned int)(0.5*m_tiles.at({0,0}).getSize().y);
 
     if(!m_playerToMoveToken){
         initPlayerToMoveToken();
@@ -834,13 +834,13 @@ void GraphicBoard::togglePlayerToMoveToken(){
 }
 
 std::optional<sf::Vector2f> GraphicBoard::getTilePosition(const Coord& coord){
-    if(coord.y >= m_tiles.size()){
+    if(coord.y >= m_rows){
         return std::nullopt;
     }
-    if(coord.x >= m_tiles.at(coord.y).size()){
+    if(coord.x >= m_columns){
         return std::nullopt;
     }
-    return m_tiles.at(coord.y).at(coord.x).getTopLeftPosition();
+    return m_tiles.at(coord).getTopLeftPosition();
 }
 
 std::optional<sf::Vector2f> GraphicBoard::getTileCenterPosition(const Coord& coord){
@@ -848,22 +848,22 @@ std::optional<sf::Vector2f> GraphicBoard::getTileCenterPosition(const Coord& coo
     if(position_o == std::nullopt){
         return std::nullopt;
     }
-    return position_o.value() + m_tiles.at(coord.y).at(coord.x).getSize()/2.f;
+    return position_o.value() + m_tiles.at(coord).getSize()/2.f;
 }
 
 void GraphicBoard::initPlayerToMoveToken(){
-    float radius = 0.2*m_tiles.at(0).at(0).getSize().y;
+    float radius = 0.2*m_tiles.at({0,0}).getSize().y;
     std::size_t pointCount = 30;
     m_playerToMoveToken = std::make_unique<sf::CircleShape>(radius, pointCount);
     float x = m_leftEdgeWidth;
     if(m_showBorder){
         x+= 2*m_borderWidth;
     }
-    x += m_tiles.at(0).at(0).getSize().x*m_tiles.size();
+    x += m_tiles.at({0,0}).getSize().x*m_columns;
     x += m_rightEdgeWidth/2.f;
     x -= radius;
     float y = m_topEdgeWidth;
-    y += m_tiles.at(0).at(0).getSize().y/2.f;
+    y += m_tiles.at({0,0}).getSize().y/2.f;
     y -= radius;
     m_playerToMoveToken->setPosition({x,y});
 
@@ -874,7 +874,7 @@ void GraphicBoard::initPlayerToMoveToken(){
 
 void GraphicBoard::initLeftBorder(){
     float width = (float)m_borderWidth;
-    float height = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
+    float height = m_tiles.at({0,0}).getSize().y*m_rows + 2*m_borderWidth;
     m_leftBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
     float y = 0.f;
@@ -884,16 +884,16 @@ void GraphicBoard::initLeftBorder(){
 
 void GraphicBoard::initRightBorder(){
     float width = (float)m_borderWidth;
-    float height = m_tiles.at(0).at(0).getSize().y*m_tiles.at(0).size() + 2*m_borderWidth;
+    float height = m_tiles.at({0,0}).getSize().y*m_rows + 2*m_borderWidth;
     m_rightBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth + (float)m_tiles.at(0).at(0).getSize().x*(float)m_tiles.at(0).size() + m_borderWidth;
+    float x = (float)m_leftEdgeWidth + (float)m_tiles.at({0,0}).getSize().x*(float)m_columns + m_borderWidth;
     float y = 0.f;
     m_rightBorder->setPosition({x,y});
     m_rightBorder->setFillColor(sf::Color{0,0,0,255});
 }
 
 void GraphicBoard::initTopBorder(){
-    float width = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
+    float width = m_tiles.at({0,0}).getSize().x*m_columns + 2*m_borderWidth;
     float height = (float)m_borderWidth;
     m_topBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
@@ -903,18 +903,18 @@ void GraphicBoard::initTopBorder(){
 }
 
 void GraphicBoard::initBottomBorder(){
-    float width = m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size() + 2*m_borderWidth;
+    float width = m_tiles.at({0,0}).getSize().x*m_columns + 2*m_borderWidth;
     float height = (float)m_borderWidth;
     m_bottomBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = (float)m_leftEdgeWidth;
-    float y = (float)m_topEdgeWidth + (float)m_tiles.at(0).at(0).getSize().y*(float)m_tiles.at(0).size() + m_borderWidth;
+    float y = (float)m_topEdgeWidth + (float)m_tiles.at({0,0}).getSize().y*(float)m_rows + m_borderWidth;
     m_bottomBorder->setPosition({x,y});
     m_bottomBorder->setFillColor(sf::Color{0,0,0,255});
 }
 
 unsigned int GraphicBoard::getTextureWidth() const{
 
-    unsigned int boardWidth = (unsigned int)(m_tiles.at(0).at(0).getSize().x*m_tiles.at(0).size());
+    unsigned int boardWidth = (unsigned int)(m_tiles.at({0,0}).getSize().x*m_columns);
     boardWidth += m_leftEdgeWidth+m_rightEdgeWidth;
     if(m_showBorder){
         boardWidth += 2*m_borderWidth;
@@ -925,7 +925,7 @@ unsigned int GraphicBoard::getTextureWidth() const{
 }
 
 unsigned int GraphicBoard::getTextureHeight() const{
-    unsigned int boardHeight = (unsigned int)(m_tiles.at(0).at(0).getSize().y*(unsigned int)m_tiles.size());
+    unsigned int boardHeight = (unsigned int)(m_tiles.at({0,0}).getSize().y*(unsigned int)m_rows);
     boardHeight += m_topEdgeWidth+m_bottomEdgeWidth;
     if(m_showBorder){
         boardHeight += 2*m_borderWidth;
@@ -947,9 +947,9 @@ void GraphicBoard::resizeTexture(){
 void GraphicBoard::redrawTexture(){
     m_texturePtr->clear(m_backgroundColor);
 
-    for(int y = 0; y < m_tiles.size(); y++){
-        for(int x = 0; x < m_tiles.at(y).size(); x++){
-            m_texturePtr->draw(m_tiles[y][x]);
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
+            m_texturePtr->draw(m_tiles.at({x,y}));
         }
     }
 
@@ -1027,15 +1027,15 @@ void GraphicBoard::addOutsideLabels(){
     m_bottomOutsideCoordinateLabels.clear();
     m_leftOutsideCoordinateLabels.clear();
 
-    for(int i = 0; i < m_tiles.at(0).size(); i++){
+    for(int i = 0; i < m_columns; i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
-        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at(0).at(i).getSize().x;
+        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at({i,0}).getSize().x;
         sf::Text label{m_font, s, labelSize};
 
         sf::Vector2f position;
         position.x =
-            m_tiles.at(0).at(i).getCentrePosition().x -
+            m_tiles.at({i,0}).getCentrePosition().x -
             label.getLocalBounds().size.x/2;
 
         position.y =
@@ -1049,9 +1049,9 @@ void GraphicBoard::addOutsideLabels(){
         m_bottomOutsideCoordinateLabels.push_back(label);
     }
 
-    for(int i = 0; i < m_tiles.size(); i++){
-        std::string s = std::to_string(m_tiles.size() -i);
-        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at(i).at(0).getSize().y;
+    for(int i = 0; i < m_rows; i++){
+        std::string s = std::to_string(m_rows -i);
+        unsigned int labelSize = m_outsideLabelSizeFactor*m_tiles.at({0,i}).getSize().y;
         sf::Text label{m_font, s, labelSize};
 
         label.setOrigin({0.f,0.f});
@@ -1061,8 +1061,8 @@ void GraphicBoard::addOutsideLabels(){
         //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
         position.x = ((float)m_leftEdgeWidth-(float)labelSize/2.f)/2.f;
 
-        int j = m_tiles.size()-i-1;
-        position.y = m_tiles.at(j).at(0).getCentrePosition().y -
+        int j = m_rows-i-1;
+        position.y = m_tiles.at({0,j}).getCentrePosition().y -
             (float)labelSize*9.f/14.f;
         
         label.setPosition(position);
@@ -1077,15 +1077,15 @@ void GraphicBoard::addInsideLabels(){
     m_bottomInsideCoordinateLabels.clear();
     m_leftInsideCoordinateLabels.clear();
 
-    for(int i = 0; i < m_tiles.at(0).size(); i++){
+    for(int i = 0; i < m_columns; i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
-        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at(0).at(i).getSize().x;
+        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at({i,0}).getSize().x;
         sf::Text label{m_font, s, labelSize};
 
         sf::Vector2f position;
         position.x =
-            m_tiles.at(0).at(i).getRightPosition() -
+            m_tiles.at({i,0}).getRightPosition() -
             label.getLocalBounds().size.x*5/4;
         
         position.y = getTextureHeight() - labelSize*5/4;
@@ -1106,9 +1106,9 @@ void GraphicBoard::addInsideLabels(){
         m_bottomInsideCoordinateLabels.push_back(label);
     }
 
-    for(int i = 0; i < m_tiles.size(); i++){
-        std::string s = std::to_string(m_tiles.size() -i);
-        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at(i).at(0).getSize().y;
+    for(int i = 0; i < m_rows; i++){
+        std::string s = std::to_string(m_rows -i);
+        unsigned int labelSize = m_insideLabelSizeFactor*m_tiles.at({0,i}).getSize().y;
         sf::Text label{m_font, s, labelSize};
 
         label.setOrigin({0.f,0.f});
@@ -1119,8 +1119,8 @@ void GraphicBoard::addInsideLabels(){
         position.x = (float)labelSize/16.f;
         position.x += (float)m_leftEdgeWidth;
 
-        int j = m_tiles.size()-i-1;
-        position.y = m_tiles.at(j).at(0).getTopPosition() - (float)labelSize/4.f;
+        int j = m_rows-i-1;
+        position.y = m_tiles.at({0,j}).getTopPosition() - (float)labelSize/4.f;
         
         label.setPosition(position);
 
@@ -1138,9 +1138,9 @@ void GraphicBoard::addInsideLabels(){
 }
 
 void GraphicBoard::moveTiles(const sf::Vector2f& offset){
-    for(int y = 0; y < m_tiles.size(); y++){
-        for(int x = 0; x < m_tiles.at(y).size(); x++){
-            m_tiles.at(y).at(x).move(offset);
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
+            m_tiles.at({x,y}).move(offset);
         }
     }
 
