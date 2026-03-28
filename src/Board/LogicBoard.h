@@ -50,8 +50,10 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:
+            int m_columns;
+            int m_rows;
             std::vector<int> m_repeatTileColorIds;
-            std::vector<std::vector<LogicTile>> m_tileLayer;
+            std::map<Coord, LogicTile> m_tileLayer;
             LogicEntities m_pieceLayer;
             LogicArrows m_arrowLayer;
 

@@ -13,19 +13,16 @@ using namespace sigrid;
 LogicBoard::LogicBoard(){}
 
 LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieceLayer{board.m_pieceLayer}{
-    for(int y = 0; y < board.m_tileLayer.size(); y++){
-        std::vector<LogicTile> tileRow;
-        for(int x = 0; x < board.m_tileLayer.at(y).size(); x++){
-            tileRow.push_back(board.m_tileLayer.at(y).at(x));
-        }
-        m_tileLayer.push_back(tileRow);
-    }
-}
+: m_pieceLayer{board.m_pieceLayer}
+, m_tileLayer{board.m_tileLayer}
+, m_columns{board.m_columns}
+, m_rows{board.m_rows}{}
 
 LogicBoard::~LogicBoard(){}
 
 bool LogicBoard::init(const BoardDataContainer& data){
+    m_columns = data.columns;
+    m_rows = data.rows;
     m_repeatTileColorIds = data.repeatTileColorIds;
 
     if(m_repeatTileColorIds.size() == 0){
@@ -33,12 +30,10 @@ bool LogicBoard::init(const BoardDataContainer& data){
         return false;
     }
 
-    for(unsigned int y = 0; y < data.rows; y++){
-        std::vector<LogicTile> tileRow;
-        for(unsigned int x = 0; x < data.columns; x++){
-            tileRow.push_back(LogicTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())});
+    for(int y = 0; y < data.rows; y++){
+        for(int x = 0; x < data.columns; x++){
+            m_tileLayer.insert({Coord{x,y}, LogicTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())}});
         }
-        m_tileLayer.push_back(tileRow);
     }
 
     for(const auto pieceContainer : data.logicPieces){
@@ -91,11 +86,11 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
 }
 
 const unsigned int LogicBoard::width() const{
-    return m_tileLayer.at(0).size();
+    return m_columns;
 }
 
 const unsigned int LogicBoard::height() const{
-    return m_tileLayer.size();
+    return m_rows;
 }
 
 bool LogicBoard::isWithinBoard(const Coord& coord) const{
@@ -120,7 +115,7 @@ std::optional<LogicTile> LogicBoard::getTile(const Coord& coord) const{
         return std::nullopt;
     }
 
-    return m_tileLayer.at(coord.y).at(coord.x);
+    return m_tileLayer.at(coord);
 }
 
 std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
@@ -262,7 +257,7 @@ bool LogicBoard::addTileHighlight(const Coord& coord, const int& highlightColorI
         return false;
     }
 
-    m_tileLayer.at(coord.y).at(coord.x).setHighlightColor(highlightColorId);
+    m_tileLayer.at(coord).setHighlightColor(highlightColorId);
     return true;
 }
 
@@ -274,7 +269,7 @@ bool LogicBoard::removeTileHighlight(const Coord& coord){
         return false;
     }
 
-    m_tileLayer.at(coord.y).at(coord.x).removeHighlight();
+    m_tileLayer.at(coord).removeHighlight();
     return true;
 }
 
