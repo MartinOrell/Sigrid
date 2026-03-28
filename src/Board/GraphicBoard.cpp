@@ -505,36 +505,10 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         return;
     }
 
-    if(!m_dragArrowPtr){
-
-        auto fromPosition_o = getTileCenterPosition(fromCoord);
-        
-        if(fromPosition_o == std::nullopt){
-            std::cout << "GraphicBoard: Unable to add dragArrow from "
-                << fromCoord.getNotation() << std::endl;
-            std::cout << "Starting tile position not found";
-            return;
-        }
-
-        auto toPosition_o = getTileCenterPosition(toCoord);
-
-        if(toPosition_o == std::nullopt){
-            std::cout << "GraphicBoard: Unable to add dragArrow to "
-                << toCoord.getNotation() << std::endl;
-            std::cout << "Destination tile position not found";
-            return;
-        }
-
-        m_dragArrowPtr = std::make_unique<GraphicArrow>();
-        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color_o.value(), m_arrowThickness, m_arrowHeadSize);
-        m_texturePtr->draw(*m_dragArrowPtr);
-        return;
-    }
-
     auto fromPosition_o = getTileCenterPosition(fromCoord);
         
     if(fromPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to update dragArrow from "
+        std::cout << "GraphicBoard: Unable to update dragArrow position from "
             << fromCoord.getNotation() << std::endl;
         std::cout << "Starting tile position not found";
         return;
@@ -543,14 +517,21 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
     auto toPosition_o = getTileCenterPosition(toCoord);
 
     if(toPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to update dragArrow to "
+        std::cout << "GraphicBoard: Unable to update dragArrow position to "
             << toCoord.getNotation() << std::endl;
         std::cout << "Destination tile position not found";
         return;
     }
 
-    m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());
-    m_dragArrowPtr->setColor(color_o.value());
+    if(!m_dragArrowPtr){
+        m_dragArrowPtr = std::make_unique<GraphicArrow>();
+        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color_o.value(), m_arrowThickness, m_arrowHeadSize);
+    }
+    else{
+        m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());
+        m_dragArrowPtr->setColor(color_o.value());
+    }
+    
     redrawTexture();
 }
 
