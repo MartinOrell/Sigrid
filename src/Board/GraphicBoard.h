@@ -28,6 +28,7 @@
 #include "../Entity/Shape/Circle/GraphicCircle.h"
 
 #include "../Entity/GraphicEntities.h"
+#include "../Entity/Shape/Arrow/GraphicArrows.h"
 
 #include "../Entity/Tile/GraphicTile.h"
 
@@ -162,9 +163,9 @@ namespace sigrid{
 
             sf::Color m_backgroundColor;
 
-            std::map<CoordPair, GraphicArrow> m_arrows;
-
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
+
+            std::unique_ptr<GraphicArrows> m_arrowLayerPtr;
 
             std::unique_ptr<GraphicArrow> m_dragArrowPtr;
 
@@ -196,8 +197,5 @@ namespace sigrid{
 
             bool m_isLeftToRight;
             bool m_isTopToBottom;
-
-            float m_arrowThickness;
-            float m_arrowHeadSize;
     };
 }

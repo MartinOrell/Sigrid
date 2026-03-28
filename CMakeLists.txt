@@ -33,6 +33,7 @@ set(SRC_FILES
     src/Entity/Shape/Arrow/LogicArrow.cpp
     src/Entity/Shape/Arrow/GraphicArrow.cpp
     src/Entity/Shape/Arrow/LogicArrows.cpp
+    src/Entity/Shape/Arrow/GraphicArrows.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
 )
