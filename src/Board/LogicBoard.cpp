@@ -85,7 +85,7 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     m_repeatTileColorIds = rhs.m_repeatTileColorIds;
     m_tileLayer = rhs.m_tileLayer;
     m_pieceLayer = rhs.m_pieceLayer;
-    m_arrows = rhs.m_arrows;
+    m_arrowLayer = rhs.m_arrowLayer;
 
     return *this;
 }
@@ -128,13 +128,14 @@ std::optional<LogicEntity> LogicBoard::getEntityAt(const Coord& coord) const{
 }
 
 std::optional<LogicArrow> LogicBoard::getArrowAt(const CoordPair& coordPair) const{
-    auto it = m_arrows.find(coordPair);
 
-    if(it == m_arrows.end()){
+    auto arrow_o = m_arrowLayer.getArrow(coordPair);
+
+    if(arrow_o == std::nullopt){
         return std::nullopt;
     }
 
-    return it->second;
+    return arrow_o.value();
 }
 
 std::string LogicBoard::getFen() const{
@@ -297,31 +298,32 @@ bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
         return false;
     }
 
-    auto it = m_arrows.find(coordPair);
+    auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
-    if(it != m_arrows.end()){
+    if(occupyingArrow_o != std::nullopt){
         std::cout << "LogicBoard: Unable to add arrow at "
             << coordPair.getNotation() << std::endl;
         std::cout << "There is already an arrow there" << std::endl;
         return false;
     }
 
-    m_arrows.insert({coordPair, arrow});
+    m_arrowLayer.addArrow(coordPair, arrow);
     return true;
 }
 
 
 bool LogicBoard::removeArrow(const CoordPair& coordPair){
 
-    auto it = m_arrows.find(coordPair);
-    if(it == m_arrows.end()){
+    auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
+
+    if(occupyingArrow_o == std::nullopt){
         std::cout << "LogicBoard: Unable to remove arrow at "
             << coordPair.getNotation() << std::endl;
         std::cout << "There is no arrow there" << std::endl;
         return false;
     }
 
-    m_arrows.erase(it);
+    m_arrowLayer.removeArrow(coordPair);
     return true;
 }
 

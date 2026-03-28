@@ -11,6 +11,7 @@
 #include "../Entity/Tile/LogicTile.h"
 #include "../Entity/LogicEntities.h"
 #include "../Entity/Shape/Arrow/LogicArrow.h"
+#include "../Entity/Shape/Arrow/LogicArrows.h"
 
 namespace sigrid{
     class LogicBoard{
@@ -52,6 +53,7 @@ namespace sigrid{
             std::vector<int> m_repeatTileColorIds;
             std::vector<std::vector<LogicTile>> m_tileLayer;
             LogicEntities m_pieceLayer;
-            std::map<CoordPair, LogicArrow> m_arrows;
+            LogicArrows m_arrowLayer;
+
     };
 }
