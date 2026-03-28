@@ -23,20 +23,24 @@ Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData)
     }
 
     for(const auto& menuItem : menuData.menuItems){
-        addItem(menuItem.displayName, menuItem.headerId, getAction(menuItem.actionName));
+        if(menuItem.displayNames.size() == 1){
+            addItem(menuItem.displayNames.at(0), menuItem.headerId, getAction(menuItem.actionNames.at(0)));
+        }
+        else if(menuItem.displayNames.size() == 2){
+            addToggleItem(
+                menuItem.keyName,
+                menuItem.headerId,
+                menuItem.displayNames.at(0),
+                getAction(menuItem.actionNames.at(0)),
+                menuItem.displayNames.at(1),
+                getAction(menuItem.actionNames.at(1))
+            );
+        }
+        else{
+            std::cout << "Menu: Unable to handle menuItem with "
+                << menuItem.displayNames.size() << " states" << std::endl;
+        }
     }
-
-    for(const auto& menuItem : menuData.menuToggleItems){
-        addToggleItem(
-            menuItem.keyName,
-            menuItem.headerId,
-            menuItem.displayNameOn,
-            getAction(menuItem.actionNameOn),
-            menuItem.displayNameOff,
-            getAction(menuItem.actionNameOff)
-        );
-    }
-    
 
     if(boardData.labelsInside){
         toggleItem("Coordinates");

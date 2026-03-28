@@ -175,20 +175,20 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
                                 if(s4 != "["){
                                     MenuItemContainer item;
                                     item.headerId = menuData.headerNames.size()-1;
-                                    item.displayName = s3;
-                                    item.actionName = s4;
+                                    item.displayNames.push_back(s3);
+                                    item.actionNames.push_back(s4);
                                     menuData.menuItems.push_back(item);
                                 }
                                 else{
                                     for(s4 = readString(is); s4 != "]"; s4 = readString(is)){
-                                        MenuToggleItemContainer item;
+                                        MenuItemContainer item;
                                         item.headerId = menuData.headerNames.size()-1;
                                         item.keyName = s3;
-                                        item.displayNameOn = s4;
-                                        item.actionNameOn = readString(is);
-                                        item.displayNameOff = readString(is);
-                                        item.actionNameOff = readString(is);
-                                        menuData.menuToggleItems.push_back(item);
+                                        item.displayNames.push_back(s4);
+                                        item.actionNames.push_back(readString(is));
+                                        item.displayNames.push_back(readString(is));
+                                        item.actionNames.push_back(readString(is));
+                                        menuData.menuItems.push_back(item);
                                     }
                                 }
                             }

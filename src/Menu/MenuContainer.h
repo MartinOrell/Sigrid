@@ -8,17 +8,9 @@ namespace sigrid{
 
     struct MenuItemContainer{
         int headerId;
-        std::string displayName;
-        std::string actionName;
-    };
-
-    struct MenuToggleItemContainer{
         std::string keyName;
-        int headerId;
-        std::string displayNameOn;
-        std::string actionNameOn;
-        std::string displayNameOff;
-        std::string actionNameOff;
+        std::vector<std::string> displayNames;
+        std::vector<std::string> actionNames;
     };
 
     struct MenuContainer{
@@ -26,7 +18,6 @@ namespace sigrid{
         std::string title;
         std::vector<std::string> headerNames;
         std::vector<MenuItemContainer> menuItems;
-        std::vector<MenuToggleItemContainer> menuToggleItems;
         bool isPinned;
         bool showItems;
         bool showToolWindow;
