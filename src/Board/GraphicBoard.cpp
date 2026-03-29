@@ -31,7 +31,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_borderWidth = config.borderWidth;
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
-    m_tileLayerPtr->init(logicBoard.width(), logicBoard.height(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr);
+    m_tileLayerPtr->init(logicBoard.width(), logicBoard.height(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
@@ -44,28 +44,11 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     for(int y = 0; y < logicBoard.height(); y++){
         for(int x = 0; x < logicBoard.width(); x++){
 
-            int colorId = 0;
             auto tile_o = logicBoard.getTile({x,y});
             if(tile_o.has_value()){
-                colorId = tile_o->getColorId();
+                int colorId = tile_o->getColorId();
+                m_tileLayerPtr->setTileColor({x,y},colorId);
             }
-            
-            sf::Vector2f position;
-            if(m_isLeftToRight){
-                position.x = (float)(x*config.tileWidth);
-            }
-            else{
-                position.x = (float)((logicBoard.width()-x-1)*config.tileWidth);
-            }
-            position.x += m_leftEdgeWidth;
-            if(m_isTopToBottom){
-                position.y = (float)(y*config.tileHeight);
-            }
-            else{
-                position.y = (float)((logicBoard.height()-y-1)*config.tileHeight);
-            }
-            position.y += m_topEdgeWidth;
-            m_tileLayerPtr->addTile({x,y}, position, colorId);
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){

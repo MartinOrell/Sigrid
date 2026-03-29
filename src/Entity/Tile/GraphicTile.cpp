@@ -28,6 +28,10 @@ void GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
     }
 }
 
+void GraphicTile::setTileColor(const sf::Color& color){
+    m_shape.setFillColor(color);
+}
+
 void GraphicTile::setHighlightColor(const sf::Color& color){
     if(!m_highlightPtr){
         m_highlightPtr = std::make_unique<sf::RectangleShape>(m_shape.getSize());

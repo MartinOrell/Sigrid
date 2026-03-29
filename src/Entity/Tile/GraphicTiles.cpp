@@ -4,35 +4,51 @@ using namespace sigrid;
 
 GraphicTiles::GraphicTiles(){}
 
-void GraphicTiles::init(const int& columns, const int& rows, const sf::Vector2f& tileSize, ColorManager* const tileColorManagerPtr, ColorManager* const highlightColorManagerPtr){
+void GraphicTiles::init(const int& columns, const int& rows, const sf::Vector2f& tileSize, ColorManager* const tileColorManagerPtr, ColorManager* const highlightColorManagerPtr, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom){
     m_columns = columns;
     m_rows = rows;
     m_tileSize = tileSize;
     m_tileColorManagerPtr = tileColorManagerPtr;
     m_highlightColorManagerPtr = highlightColorManagerPtr;
-}
 
-void GraphicTiles::addTile(const Coord& coord, const sf::Vector2f& position, const int& colorId){
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
+            
+            sf::Vector2f position;
+            if(isLeftToRight){
+                position.x = (float)(x*m_tileSize.x);
+            }
+            else{
+                position.x = (float)((m_columns-x-1)*m_tileSize.x);
+            }
+            position.x += topLeftPosition.x;
+            if(isTopToBottom){
+                position.y = (float)(y*m_tileSize.y);
+            }
+            else{
+                position.y = (float)((m_rows-y-1)*m_tileSize.y);
+            }
+            position.y += topLeftPosition.y;
 
-    if(!m_tileColorManagerPtr){
-        return;
+            GraphicTile newTile;
+            newTile.init(m_tileSize, sf::Color::White);
+            newTile.setPosition(position);
+            m_tiles.insert({{x,y}, newTile});
+        }
     }
-
-    auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
-
-    sf::Color color;
-    if(color_o != std::nullopt){
-        color = color_o.value();
-    }
-
-    GraphicTile newTile;
-    newTile.init(m_tileSize, color);
-    newTile.setPosition(position);
-    m_tiles.insert({coord, newTile});
 }
 
 void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& position){
     m_tiles.at(coord).setPosition(position);
+}
+
+void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
+    
+    auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
+
+    if(color_o != std::nullopt){
+        m_tiles.at(coord).setTileColor(color_o.value());
+    }
 }
 
 void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){

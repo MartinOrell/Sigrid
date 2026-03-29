@@ -20,6 +20,8 @@ namespace sigrid{
 
             void setPosition(const sf::Vector2f& topLeftPosition);
 
+            void setTileColor(const sf::Color& color);
+
             void setHighlightColor(const sf::Color& color);
 
             void removeHighlight();
