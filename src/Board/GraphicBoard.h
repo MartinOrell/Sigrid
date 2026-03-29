@@ -73,7 +73,7 @@ namespace sigrid{
             void removeEntity(const Coord& coord);
             void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            void addTileHighlight(const Coord& coord, const int& highlightColorId);
+            void addTileHighlight(const Coord& coord, const int& colorId);
             void removeTileHighlight(const Coord& coord);
 
             void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
@@ -172,7 +172,6 @@ namespace sigrid{
 
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
-            ColorManager* m_tileColorManagerPtr;
             ColorManager* m_arrowColorManagerPtr;
 
             bool m_showLabels;

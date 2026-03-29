@@ -7,6 +7,8 @@
 #include "../../Coord/Coord.h"
 #include "GraphicTile.h"
 
+#include "../../Color/ColorManager.h"
+
 #include <SFML/System/Vector2.hpp>
 
 namespace sigrid{
@@ -14,13 +16,13 @@ namespace sigrid{
         public:
             GraphicTiles();
 
-            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize);
+            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize, ColorManager* const tileColorManagerPtr, ColorManager* const highlightColorManagerPtr);
 
-            void addTile(const Coord& coord, const sf::Vector2f& position, const GraphicTile& tile);
+            void addTile(const Coord& coord, const sf::Vector2f& position, const int& colorId);
 
             void setTilePosition(const Coord& coord, const sf::Vector2f& position);
 
-            void setHighlightColor(const Coord& coord, const sf::Color& color);
+            void setHighlightColor(const Coord& coord, const int& colorId);
             void removeHighlight(const Coord& coord);
 
             int getNumColumns() const;
@@ -35,10 +37,15 @@ namespace sigrid{
             float getTileRightPosition(const Coord& coord) const;
             float getTileTopPosition(const Coord& coord) const;
 
+            std::optional<sf::Color> getTileColor(const Coord& coord) const;
+
             void move(const sf::Vector2f& offset);
 
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+            ColorManager* m_tileColorManagerPtr;
+            ColorManager* m_highlightColorManagerPtr;
 
             int m_columns;
             int m_rows;

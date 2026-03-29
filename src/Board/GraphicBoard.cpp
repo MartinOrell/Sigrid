@@ -21,7 +21,6 @@ GraphicBoard::GraphicBoard()
 
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr){
 
-    m_tileColorManagerPtr = tileColorManagerPtr;
     m_arrowColorManagerPtr = arrowColorManagerPtr;
     m_showLabels = config.labelsInside || config.labelsOutside;
 
@@ -32,7 +31,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_borderWidth = config.borderWidth;
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
-    m_tileLayerPtr->init(logicBoard.width(), logicBoard.height(), {config.tileWidth, config.tileHeight});
+    m_tileLayerPtr->init(logicBoard.width(), logicBoard.height(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr);
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
@@ -45,18 +44,11 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     for(int y = 0; y < logicBoard.height(); y++){
         for(int x = 0; x < logicBoard.width(); x++){
 
-            sf::Color tileColor;
+            int colorId = 0;
             auto tile_o = logicBoard.getTile({x,y});
             if(tile_o.has_value()){
-                int colorId = tile_o->getColorId();
-                auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
-                if(color_o.has_value()){
-                    tileColor = color_o.value();
-                }
+                colorId = tile_o->getColorId();
             }
-
-            GraphicTile tile;
-            tile.init({config.tileWidth, config.tileHeight}, tileColor);
             
             sf::Vector2f position;
             if(m_isLeftToRight){
@@ -73,11 +65,11 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                 position.y = (float)((logicBoard.height()-y-1)*config.tileHeight);
             }
             position.y += m_topEdgeWidth;
-            m_tileLayerPtr->addTile({x,y}, position, tile);
+            m_tileLayerPtr->addTile({x,y}, position, colorId);
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
-                sf::Vector2f position = tile.getCentrePosition();
+                sf::Vector2f position = m_tileLayerPtr->getTileCentrePosition({x,y});
                 m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
             }
         }
@@ -171,7 +163,6 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_selectHighlight = *(rhs.m_selectHighlight);
     }
 
-    m_tileColorManagerPtr = rhs.m_tileColorManagerPtr;
     m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
 
     m_showLabels = rhs.m_showLabels;
@@ -406,26 +397,9 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addTileHighlight(const Coord& coord, const int& highlightColorId){
+void GraphicBoard::addTileHighlight(const Coord& coord, const int& colorId){
 
-    sf::Color color;
-    if(m_arrowColorManagerPtr == nullptr){
-        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding highlight" << std::endl;
-        color = sf::Color(0xff000088);
-    }
-    else{
-        auto color_o = m_arrowColorManagerPtr->getTransparentColor(highlightColorId);
-        if(color_o == std::nullopt){
-            std::cout << "GraphicBoard: color of colorId "
-                << highlightColorId << "not found when adding highlight" << std::endl;
-            color = sf::Color(0xff000088);
-        }
-        else{
-            color = color_o.value();
-        }
-    }
-
-    m_tileLayerPtr->setHighlightColor(coord, color);
+    m_tileLayerPtr->setHighlightColor(coord, colorId);
 
     redrawTexture();
 }
@@ -1099,7 +1073,7 @@ void GraphicBoard::addInsideLabels(){
 
         label.setFillColor(sf::Color(100,100,100,255));
 
-        auto outlineColor_o = m_tileColorManagerPtr->getSolidColor((i+1)%2);
+        auto outlineColor_o = m_tileLayerPtr->getTileColor({i,0});
         if(outlineColor_o.has_value()){
             label.setOutlineColor(outlineColor_o.value());
         }
@@ -1129,7 +1103,7 @@ void GraphicBoard::addInsideLabels(){
 
         label.setFillColor(sf::Color(100,100,100,255));
 
-        auto outlineColor_o = m_tileColorManagerPtr->getSolidColor((i+1)%2);
+        auto outlineColor_o = m_tileLayerPtr->getTileColor({0,j});
         if(outlineColor_o.has_value()){
             label.setOutlineColor(outlineColor_o.value());
         }

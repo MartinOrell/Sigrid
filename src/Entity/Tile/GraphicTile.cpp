@@ -60,6 +60,10 @@ float GraphicTile::getTopPosition() const{
     return m_shape.getPosition().y;
 }
 
+sf::Color GraphicTile::getColor() const{
+    return m_shape.getFillColor();
+}
+
 GraphicTile& GraphicTile::operator =(const GraphicTile& rhs){
     m_shape = rhs.m_shape;
     if(rhs.m_highlightPtr){

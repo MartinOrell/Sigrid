@@ -34,6 +34,8 @@ namespace sigrid{
 
             float getTopPosition() const;
 
+            sf::Color getColor() const;
+
             GraphicTile& operator =(const GraphicTile&);
 
             void move(const sf::Vector2f& offset);
