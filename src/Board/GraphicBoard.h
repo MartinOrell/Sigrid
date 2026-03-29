@@ -115,9 +115,6 @@ namespace sigrid{
 
         private:
 
-            std::optional<sf::Vector2f> getTilePosition(const Coord& coord);
-            std::optional<sf::Vector2f> getTileCenterPosition(const Coord& coord);
-
             void initPlayerToMoveToken();
 
             void initLeftBorder();

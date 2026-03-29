@@ -68,20 +68,48 @@ sf::Vector2f GraphicTiles::getTileSize() const{
     return m_tileSize;
 }
 
-sf::Vector2f GraphicTiles::getTileTopLeftPosition(const Coord& coord) const{
-    return m_tiles.at(coord).getTopLeftPosition();
+std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const Coord& coord) const{
+
+    auto it = m_tiles.find(coord);
+
+    if(it == m_tiles.end()){
+        return std::nullopt;
+    }
+
+    return it->second.getTopLeftPosition();
 }
 
-sf::Vector2f GraphicTiles::getTileCentrePosition(const Coord& coord) const{
-    return m_tiles.at(coord).getCentrePosition();
+std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const Coord& coord) const{
+
+    auto it = m_tiles.find(coord);
+
+    if(it == m_tiles.end()){
+        return std::nullopt;
+    }
+
+    return it->second.getCentrePosition();
 }
 
-float GraphicTiles::getTileRightPosition(const Coord& coord) const{
-    return m_tiles.at(coord).getRightPosition();
+std::optional<float> GraphicTiles::getTileRightPosition(const Coord& coord) const{
+
+    auto it = m_tiles.find(coord);
+
+    if(it == m_tiles.end()){
+        return std::nullopt;
+    }
+
+    return it->second.getRightPosition();
 }
 
-float GraphicTiles::getTileTopPosition(const Coord& coord) const{
-    return m_tiles.at(coord).getTopPosition();
+std::optional<float> GraphicTiles::getTileTopPosition(const Coord& coord) const{
+
+    auto it = m_tiles.find(coord);
+
+    if(it == m_tiles.end()){
+        return std::nullopt;
+    }
+
+    return it->second.getTopPosition();
 }
 
 std::optional<sf::Color> GraphicTiles::getTileColor(const Coord& coord) const{
@@ -92,7 +120,7 @@ std::optional<sf::Color> GraphicTiles::getTileColor(const Coord& coord) const{
         return std::nullopt;
     }
 
-    return m_tiles.at(coord).getColor();
+    return it->second.getColor();
 
 }
 

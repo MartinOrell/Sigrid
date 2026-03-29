@@ -32,10 +32,10 @@ namespace sigrid{
             float getTileHeight() const;
             sf::Vector2f getTileSize() const;
             
-            sf::Vector2f getTileTopLeftPosition(const Coord& coord) const;
-            sf::Vector2f getTileCentrePosition(const Coord& coord) const;
-            float getTileRightPosition(const Coord& coord) const;
-            float getTileTopPosition(const Coord& coord) const;
+            std::optional<sf::Vector2f> getTileTopLeftPosition(const Coord& coord) const;
+            std::optional<sf::Vector2f> getTileCentrePosition(const Coord& coord) const;
+            std::optional<float> getTileRightPosition(const Coord& coord) const;
+            std::optional<float> getTileTopPosition(const Coord& coord) const;
 
             std::optional<sf::Color> getTileColor(const Coord& coord) const;
 

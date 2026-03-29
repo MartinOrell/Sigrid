@@ -69,8 +69,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
-                sf::Vector2f position = m_tileLayerPtr->getTileCentrePosition({x,y});
-                m_pieceLayerPtr->addEntity({x,y},position,entity_o.value());
+                auto position_o = m_tileLayerPtr->getTileCentrePosition({x,y});
+                m_pieceLayerPtr->addEntity({x,y},position_o.value(),entity_o.value());
             }
         }
     }
@@ -333,7 +333,7 @@ std::optional<Coord> GraphicBoard::getTileCoord(sf::Vector2i point){
 
 void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     
-    auto position_o = getTileCenterPosition(coord);
+    auto position_o = m_tileLayerPtr->getTileCentrePosition(coord);
 
     if(position_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add entity at "
@@ -376,7 +376,7 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return; 
     }
 
-    auto toPosition_o = getTileCenterPosition(toCoord);
+    auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(toCoord);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to move entity from "
@@ -413,7 +413,7 @@ void GraphicBoard::removeTileHighlight(const Coord& coord){
 
 void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicArrow){
 
-    auto fromPosition_o = getTileCenterPosition(coordPair.from);
+    auto fromPosition_o = m_tileLayerPtr->getTileCentrePosition(coordPair.from);
 
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow from "
@@ -422,7 +422,7 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    auto toPosition_o = getTileCenterPosition(coordPair.to);
+    auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(coordPair.to);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Failed to add arrow to "
@@ -478,7 +478,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         return;
     }
 
-    auto fromPosition_o = getTileCenterPosition(fromCoord);
+    auto fromPosition_o = m_tileLayerPtr->getTileCentrePosition(fromCoord);
         
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow position from "
@@ -487,7 +487,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         return;
     }
 
-    auto toPosition_o = getTileCenterPosition(toCoord);
+    auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(toCoord);
 
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow position to "
@@ -517,7 +517,7 @@ void GraphicBoard::removeDragArrow(){
 
 void GraphicBoard::highlightTile(const Coord& coord){
 
-    auto position_o = getTilePosition(coord);
+    auto position_o = m_tileLayerPtr->getTileTopLeftPosition(coord);
 
     if(position_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to highlight tile at "
@@ -590,15 +590,16 @@ void GraphicBoard::flip(){
             auto entity_o = m_pieceLayerPtr->getEntityAt({x,y});
 
             if(entity_o != std::nullopt){
-                m_pieceLayerPtr->setEntityPosition({x,y}, position + m_tileLayerPtr->getTileSize()/2.f);
+                auto position_o = m_tileLayerPtr->getTileCentrePosition({x,y});
+                m_pieceLayerPtr->setEntityPosition({x,y}, position_o.value());
             }
         }
     }
 
     if(m_arrowLayerPtr){
         for(auto& arrow : *m_arrowLayerPtr){
-            sf::Vector2f fromPos = getTileCenterPosition(arrow.first.from).value();
-            sf::Vector2f toPos = getTileCenterPosition(arrow.first.to).value();
+            sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.from).value();
+            sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.to).value();
             arrow.second.set(fromPos,toPos);
         }
     }
@@ -755,7 +756,7 @@ void GraphicBoard::addPlayerToMoveToken(){
 
     m_showPlayerToMoveToken = true;
 
-    m_rightEdgeWidth = (unsigned int)(0.5* m_tileLayerPtr->getTileHeight());
+    m_rightEdgeWidth = (unsigned int)(0.5* m_tileLayerPtr->getTileWidth());
 
     if(!m_playerToMoveToken){
         initPlayerToMoveToken();
@@ -793,24 +794,6 @@ void GraphicBoard::togglePlayerToMoveToken(){
     }
 
     m_texturePtr->draw(*m_playerToMoveToken);
-}
-
-std::optional<sf::Vector2f> GraphicBoard::getTilePosition(const Coord& coord){
-    if(coord.y >= m_tileLayerPtr->getNumRows()){
-        return std::nullopt;
-    }
-    if(coord.x >= m_tileLayerPtr->getNumColumns()){
-        return std::nullopt;
-    }
-    return m_tileLayerPtr->getTileTopLeftPosition(coord);
-}
-
-std::optional<sf::Vector2f> GraphicBoard::getTileCenterPosition(const Coord& coord){
-    auto position_o = getTilePosition(coord);
-    if(position_o == std::nullopt){
-        return std::nullopt;
-    }
-    return position_o.value() + m_tileLayerPtr->getTileSize()/2.f;
 }
 
 void GraphicBoard::initPlayerToMoveToken(){
@@ -995,7 +978,7 @@ void GraphicBoard::addOutsideLabels(){
 
         sf::Vector2f position;
         position.x =
-            m_tileLayerPtr->getTileCentrePosition({i,0}).x -
+            m_tileLayerPtr->getTileCentrePosition({i,0}).value().x -
             label.getLocalBounds().size.x/2;
 
         position.y =
@@ -1022,7 +1005,7 @@ void GraphicBoard::addOutsideLabels(){
         position.x = ((float)m_leftEdgeWidth-(float)labelSize/2.f)/2.f;
 
         int j = m_tileLayerPtr->getNumRows()-i-1;
-        position.y = m_tileLayerPtr->getTileCentrePosition({0,j}).y -
+        position.y = m_tileLayerPtr->getTileCentrePosition({0,j}).value().y -
             (float)labelSize*9.f/14.f;
         
         label.setPosition(position);
@@ -1045,7 +1028,7 @@ void GraphicBoard::addInsideLabels(){
 
         sf::Vector2f position;
         position.x =
-            m_tileLayerPtr->getTileRightPosition({i,0}) -
+            m_tileLayerPtr->getTileRightPosition({i,0}).value() -
             label.getLocalBounds().size.x*5/4;
         
         position.y = getTextureHeight() - labelSize*5/4;
@@ -1080,7 +1063,7 @@ void GraphicBoard::addInsideLabels(){
         position.x += (float)m_leftEdgeWidth;
 
         int j = m_tileLayerPtr->getNumRows()-i-1;
-        position.y = m_tileLayerPtr->getTileTopPosition({0,j}) - (float)labelSize/4.f;
+        position.y = m_tileLayerPtr->getTileTopPosition({0,j}).value() - (float)labelSize/4.f;
         
         label.setPosition(position);
 
