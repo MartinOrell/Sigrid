@@ -5,19 +5,21 @@
 #include <vector>
 
 #include "../../../Coord/CoordPair.h"
+#include "LogicArrow.h"
 #include "GraphicArrow.h"
+#include "../../../Color/ColorManager.h"
 
 namespace sigrid{
     class GraphicArrows: public sf::Drawable{
         public:
             GraphicArrows();
 
-            void init(const float& arrowThickness, const float& arrowHeadSize);
+            void init(const float& arrowThickness, const float& arrowHeadSize, ColorManager* const colorManagerPtr);
 
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator begin();
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator end();
 
-            void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color);
+            void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
             void removeArrow(const CoordPair& coordPair);
 
             float getThickness() const;
@@ -29,6 +31,8 @@ namespace sigrid{
 
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+            ColorManager* m_colorManagerPtr;
 
             std::map<CoordPair, GraphicArrow> m_arrows;
             std::vector<CoordPair> m_drawOrder;

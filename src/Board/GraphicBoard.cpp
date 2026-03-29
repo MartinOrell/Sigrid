@@ -35,7 +35,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
-    m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize);
+    m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize, arrowColorManagerPtr);
 
     if(!m_font.openFromFile(config.labelFont)){
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
@@ -431,23 +431,6 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    sf::Color color;
-    if(m_arrowColorManagerPtr == nullptr){
-        std::cout << "GraphicBoard: colorManagerPts == nullptr when adding arrow" << std::endl;
-        color = sf::Color::Red;
-    }
-    else{
-        auto color_o = m_arrowColorManagerPtr->getSolidColor(logicArrow.getColorId());
-        if(color_o == std::nullopt){
-            std::cout << "GraphicBoard: color of colorId "
-                << logicArrow.getColorId() << "not found when adding arrow" << std::endl;
-            color = sf::Color::Red;
-        }
-        else{
-            color = color_o.value();
-        }
-    }
-
     if(!m_arrowLayerPtr){
         std::cout << "GraphicBoard: Failed to add arrow at "
             << coordPair.getNotation() << std::endl;
@@ -464,7 +447,7 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    m_arrowLayerPtr->addArrow(coordPair, fromPosition_o.value(), toPosition_o.value(), color);
+    m_arrowLayerPtr->addArrow(coordPair, fromPosition_o.value(), toPosition_o.value(), logicArrow);
 
     redrawTexture();
 }

@@ -4,8 +4,9 @@ using namespace sigrid;
 
 GraphicArrows::GraphicArrows(){}
 
-void GraphicArrows::init(const float& arrowThickness, const float& arrowHeadSize){
+void GraphicArrows::init(const float& arrowThickness, const float& arrowHeadSize, ColorManager* const colorManagerPtr){
 
+    m_colorManagerPtr = colorManagerPtr;
     m_arrowThickness = arrowThickness;
     m_arrowHeadSize = arrowHeadSize;
 }
@@ -20,8 +21,15 @@ std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator GraphicArrows::end()
     return m_arrows.end();
 }
 
-void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color){
-    
+void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
+
+    auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
+
+    sf::Color color;
+    if(color_o != std::nullopt){
+        color = color_o.value();
+    }
+
     GraphicArrow graphicArrow;
     graphicArrow.init(fromPosition, toPosition, color, m_arrowThickness, m_arrowHeadSize);
 
