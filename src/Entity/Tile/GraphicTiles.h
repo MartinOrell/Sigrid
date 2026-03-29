@@ -1,0 +1,50 @@
+#pragma once
+
+#include <map>
+#include <optional>
+#include <vector>
+
+#include "../../Coord/Coord.h"
+#include "GraphicTile.h"
+
+#include <SFML/System/Vector2.hpp>
+
+namespace sigrid{
+    class GraphicTiles: public sf::Drawable{
+        public:
+            GraphicTiles();
+
+            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize);
+
+            void addTile(const Coord& coord, const sf::Vector2f& position, const GraphicTile& tile);
+
+            void setTilePosition(const Coord& coord, const sf::Vector2f& position);
+
+            void setHighlightColor(const Coord& coord, const sf::Color& color);
+            void removeHighlight(const Coord& coord);
+
+            int getNumColumns() const;
+            int getNumRows() const;
+
+            float getTileWidth() const;
+            float getTileHeight() const;
+            sf::Vector2f getTileSize() const;
+            
+            sf::Vector2f getTileTopLeftPosition(const Coord& coord) const;
+            sf::Vector2f getTileCentrePosition(const Coord& coord) const;
+            float getTileRightPosition(const Coord& coord) const;
+            float getTileTopPosition(const Coord& coord) const;
+
+            void move(const sf::Vector2f& offset);
+
+        private:
+            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+            int m_columns;
+            int m_rows;
+
+            sf::Vector2f m_tileSize;
+
+            std::map<Coord, GraphicTile> m_tiles;
+    };
+}

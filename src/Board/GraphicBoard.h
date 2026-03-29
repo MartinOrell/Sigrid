@@ -31,6 +31,7 @@
 #include "../Entity/Shape/Arrow/GraphicArrows.h"
 
 #include "../Entity/Tile/GraphicTile.h"
+#include "../Entity/Tile/GraphicTiles.h"
 
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
@@ -159,11 +160,9 @@ namespace sigrid{
             unsigned int m_topEdgeWidth;
             unsigned int m_bottomEdgeWidth;
 
-            int m_columns;
-            int m_rows;
-            std::map<Coord, GraphicTile> m_tiles;
-
             sf::Color m_backgroundColor;
+
+            std::unique_ptr<GraphicTiles> m_tileLayerPtr;
 
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
 
