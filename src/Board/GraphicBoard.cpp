@@ -27,7 +27,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_isCoordinateLabelsInside = config.labelsInside;
     m_insideLabelSizeFactor = config.insideLabelSize;
     m_outsideLabelSizeFactor = config.outsideLabelSize;
-    m_showBorder = config.border;
     m_borderWidth = config.borderWidth;
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
@@ -76,12 +75,17 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         initPlayerToMoveToken();
     }
 
-    if(m_showBorder){
-        moveTiles({(float)m_borderWidth, (float)m_borderWidth});
-        initLeftBorder();
-        initRightBorder();
-        initTopBorder();
-        initBottomBorder();
+    if(config.border){
+
+        m_borderPtr = std::make_unique<RectangleBorder>();
+        sf::Vector2f boardArea;
+        boardArea.x = config.tileWidth* logicBoard.width();
+        boardArea.y = config.tileHeight* logicBoard.height();
+        m_borderPtr->init(config.border, config.borderWidth, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},boardArea);
+    }
+
+    if(m_borderPtr && m_borderPtr->isVisible()){
+        moveTiles({m_borderPtr->getWidth(), m_borderPtr->getWidth()});
     }
     
     m_texturePtr = std::make_unique<sf::RenderTexture>();
@@ -156,35 +160,13 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     m_bottomInsideCoordinateLabels = rhs.m_bottomInsideCoordinateLabels;
     m_leftInsideCoordinateLabels = rhs.m_leftInsideCoordinateLabels;
 
-    m_showBorder = rhs.m_showBorder;
     m_borderWidth = rhs.m_borderWidth;
 
-    if(rhs.m_leftBorder){
-        if(!m_leftBorder){
-            m_leftBorder = std::make_unique<sf::RectangleShape>();
+    if(rhs.m_borderPtr){
+        if(!m_borderPtr){
+            m_borderPtr = std::make_unique<RectangleBorder>();
         }
-        *m_leftBorder = *(rhs.m_leftBorder);
-    }
-
-    if(rhs.m_rightBorder){
-        if(!m_rightBorder){
-            m_rightBorder = std::make_unique<sf::RectangleShape>();
-        }
-        *m_rightBorder = *(rhs.m_rightBorder);
-    }
-
-    if(rhs.m_topBorder){
-        if(!m_topBorder){
-            m_topBorder = std::make_unique<sf::RectangleShape>();
-        }
-        *m_topBorder = *(rhs.m_topBorder);
-    }
-
-    if(rhs.m_bottomBorder){
-        if(!m_bottomBorder){
-            m_bottomBorder = std::make_unique<sf::RectangleShape>();
-        }
-        *m_bottomBorder = *(rhs.m_bottomBorder);
+        *m_borderPtr = *(rhs.m_borderPtr);
     }
 
     m_insideLabelSizeFactor = rhs.m_insideLabelSizeFactor;
@@ -437,6 +419,13 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
 
 void GraphicBoard::removeArrow(const CoordPair& coordPair){
 
+    if(!m_arrowLayerPtr){
+        std::cout << "GraphicBoard: Failed to remove arrow at "
+            << coordPair.getNotation() << std::endl;
+        std::cout << "ArrowLayer not found" << std::endl;
+        return;
+    }
+
     auto occupyingArrow_o = m_arrowLayerPtr->getArrow(coordPair);
 
     if(occupyingArrow_o == std::nullopt){
@@ -466,7 +455,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
     if(fromPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow position from "
             << fromCoord.getNotation() << std::endl;
-        std::cout << "Starting tile position not found";
+        std::cout << "Starting tile position not found" << std::endl;
         return;
     }
 
@@ -475,11 +464,19 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
     if(toPosition_o == std::nullopt){
         std::cout << "GraphicBoard: Unable to update dragArrow position to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination tile position not found";
+        std::cout << "Destination tile position not found" << std::endl;
         return;
     }
 
     if(!m_dragArrowPtr){
+
+        if(!m_arrowLayerPtr){
+            std::cerr << "GraphicBoard: Unable to update dragArrow position to "
+                << toCoord.getNotation() << std::endl;
+            std::cerr << "arrowLayer not found" << std::endl;
+            return;
+        }
+
         m_dragArrowPtr = std::make_unique<GraphicArrow>();
         m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color_o.value(), m_arrowLayerPtr->getThickness(), m_arrowLayerPtr->getHeadSize());
     }
@@ -679,11 +676,25 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
 void GraphicBoard::addBorder(){
 
-    if(m_showBorder){
+    if(!m_borderPtr){
+        m_borderPtr = std::make_unique<RectangleBorder>();
+        bool isVisible = true;
+        sf::Vector2f topLeftPosition{(float)m_leftEdgeWidth, (float)m_topEdgeWidth};
+        sf::Vector2f boardArea;
+        boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
+        boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
+        m_borderPtr->init(isVisible, (float)m_borderWidth, topLeftPosition, boardArea);
+    }
+    else if(m_borderPtr->isVisible()){
         return;
     }
 
-    m_showBorder = true;
+    sf::Vector2f topLeftPosition{(float)m_leftEdgeWidth, (float)m_topEdgeWidth};
+    sf::Vector2f boardArea;
+    boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
+    boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
+
+    m_borderPtr->show(topLeftPosition, boardArea);
 
     moveTiles({(float)m_borderWidth, (float)m_borderWidth});
     moveLeftInsideCoordinateLabels({(float)m_borderWidth, (float)m_borderWidth});
@@ -692,33 +703,17 @@ void GraphicBoard::addBorder(){
     moveBottomOutsideCoordinateLabels({(float)m_borderWidth, 2.f*(float)m_borderWidth});
     movePlayerToMoveToken({2.f*(float)m_borderWidth, (float)m_borderWidth});
 
-    if(!m_leftBorder){
-        initLeftBorder();
-    }
-
-    if(!m_rightBorder){
-        initRightBorder();
-    }
-
-    if(!m_topBorder){
-        initTopBorder();
-    }
-
-    if(!m_bottomBorder){
-        initBottomBorder();
-    }
-
     resizeTexture();
     redrawTexture();
 }
 
 void GraphicBoard::removeBorder(){
 
-    if(!m_showBorder){
+    if(!m_borderPtr || !m_borderPtr->isVisible()){
         return;
     }
 
-    m_showBorder = false;
+    m_borderPtr->hide();
 
     moveTiles({-(float)m_borderWidth, -(float)m_borderWidth});
     movePlayerToMoveToken({-2.f*(float)m_borderWidth, -(float)m_borderWidth});
@@ -784,7 +779,7 @@ void GraphicBoard::initPlayerToMoveToken(){
     std::size_t pointCount = 30;
     m_playerToMoveToken = std::make_unique<sf::CircleShape>(radius, pointCount);
     float x = m_leftEdgeWidth;
-    if(m_showBorder){
+    if(m_borderPtr && m_borderPtr->isVisible()){
         x+= 2*m_borderWidth;
     }
     x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
@@ -800,51 +795,11 @@ void GraphicBoard::initPlayerToMoveToken(){
     m_playerToMoveToken->setOutlineThickness(-6.f);
 }
 
-void GraphicBoard::initLeftBorder(){
-    float width = (float)m_borderWidth;
-    float height = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows() + 2*m_borderWidth;
-    m_leftBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth;
-    float y = 0.f;
-    m_leftBorder->setPosition({x,y});
-    m_leftBorder->setFillColor(sf::Color{0,0,0,255});
-}
-
-void GraphicBoard::initRightBorder(){
-    float width = (float)m_borderWidth;
-    float height = m_tileLayerPtr->getTileHeight()* m_tileLayerPtr->getNumRows() + 2*m_borderWidth;
-    m_rightBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth + (float)m_tileLayerPtr->getTileWidth()*(float)m_tileLayerPtr->getNumColumns() + m_borderWidth;
-    float y = 0.f;
-    m_rightBorder->setPosition({x,y});
-    m_rightBorder->setFillColor(sf::Color{0,0,0,255});
-}
-
-void GraphicBoard::initTopBorder(){
-    float width = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns() + 2*m_borderWidth;
-    float height = (float)m_borderWidth;
-    m_topBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth;
-    float y = 0.f;
-    m_topBorder->setPosition({x,y});
-    m_topBorder->setFillColor(sf::Color{0,0,0,255});
-}
-
-void GraphicBoard::initBottomBorder(){
-    float width = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns() + 2*m_borderWidth;
-    float height = (float)m_borderWidth;
-    m_bottomBorder = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = (float)m_leftEdgeWidth;
-    float y = (float)m_topEdgeWidth + (float)m_tileLayerPtr->getTileHeight()*(float)m_tileLayerPtr->getNumRows() + m_borderWidth;
-    m_bottomBorder->setPosition({x,y});
-    m_bottomBorder->setFillColor(sf::Color{0,0,0,255});
-}
-
 unsigned int GraphicBoard::getTextureWidth() const{
 
     unsigned int boardWidth = (unsigned int)(m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns());
     boardWidth += m_leftEdgeWidth+m_rightEdgeWidth;
-    if(m_showBorder){
+    if(m_borderPtr && m_borderPtr->isVisible()){
         boardWidth += 2*m_borderWidth;
     }
 
@@ -855,7 +810,7 @@ unsigned int GraphicBoard::getTextureWidth() const{
 unsigned int GraphicBoard::getTextureHeight() const{
     unsigned int boardHeight = (unsigned int)(m_tileLayerPtr->getTileHeight()*(unsigned int)m_tileLayerPtr->getNumRows());
     boardHeight += m_topEdgeWidth+m_bottomEdgeWidth;
-    if(m_showBorder){
+    if(m_borderPtr && m_borderPtr->isVisible()){
         boardHeight += 2*m_borderWidth;
     }
 
@@ -911,20 +866,8 @@ void GraphicBoard::redrawTexture(){
         m_texturePtr->draw(label);
     }
 
-    if(m_leftBorder && m_showBorder){
-        m_texturePtr->draw(*m_leftBorder);
-    }
-
-    if(m_rightBorder && m_showBorder){
-        m_texturePtr->draw(*m_rightBorder);
-    }
-
-    if(m_topBorder && m_showBorder){
-        m_texturePtr->draw(*m_topBorder);
-    }
-
-    if(m_bottomBorder && m_showBorder){
-        m_texturePtr->draw(*m_bottomBorder);
+    if(m_borderPtr){
+        m_texturePtr->draw(*m_borderPtr);
     }
 
     if(m_playerToMoveToken && m_showPlayerToMoveToken){
@@ -939,7 +882,9 @@ void GraphicBoard::setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const
     m_bottomEdgeWidth = bottomWidth;
 
     moveTiles({moveX, 0.f});
-    moveBorder({moveX, 0.f});
+    if(m_borderPtr){
+        m_borderPtr->move({moveX, 0.f});
+    }
     movePlayerToMoveToken({moveX, 0.f});
 
     if(m_texturePtr){
@@ -1075,24 +1020,6 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
     
     if(m_arrowLayerPtr){
         m_arrowLayerPtr->move(offset);
-    }
-}
-
-void GraphicBoard::moveBorder(const sf::Vector2f& offset){
-    if(m_leftBorder){
-        m_leftBorder->move(offset);
-    }
-
-    if(m_rightBorder){
-        m_rightBorder->move(offset);
-    }
-
-    if(m_topBorder){
-        m_topBorder->move(offset);
-    }
-
-    if(m_bottomBorder){
-        m_bottomBorder->move(offset);
     }
 }
 

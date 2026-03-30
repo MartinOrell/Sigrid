@@ -33,6 +33,8 @@
 #include "../Entity/Tile/GraphicTile.h"
 #include "../Entity/Tile/GraphicTiles.h"
 
+#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
@@ -117,14 +119,6 @@ namespace sigrid{
 
             void initPlayerToMoveToken();
 
-            void initLeftBorder();
-
-            void initRightBorder();
-
-            void initTopBorder();
-
-            void initBottomBorder();
-
             unsigned int getTextureWidth() const;
 
             unsigned int getTextureHeight() const;
@@ -139,7 +133,6 @@ namespace sigrid{
             void addInsideLabels();
 
             void moveTiles(const sf::Vector2f& offset);
-            void moveBorder(const sf::Vector2f& offset);
             void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset);
@@ -158,6 +151,8 @@ namespace sigrid{
             unsigned int m_bottomEdgeWidth;
 
             sf::Color m_backgroundColor;
+
+            std::unique_ptr<RectangleBorder> m_borderPtr;
 
             std::unique_ptr<GraphicTiles> m_tileLayerPtr;
 
@@ -179,13 +174,7 @@ namespace sigrid{
             std::vector<sf::Text> m_bottomInsideCoordinateLabels;
             std::vector<sf::Text> m_leftInsideCoordinateLabels;
 
-            bool m_showBorder;
             unsigned int m_borderWidth;
-            std::unique_ptr<sf::RectangleShape> m_leftBorder;
-            std::unique_ptr<sf::RectangleShape> m_rightBorder;
-            std::unique_ptr<sf::RectangleShape> m_topBorder;
-            std::unique_ptr<sf::RectangleShape> m_bottomBorder;
-
             float m_insideLabelSizeFactor;
             float m_outsideLabelSizeFactor;
 
