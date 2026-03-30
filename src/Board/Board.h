@@ -93,7 +93,8 @@ namespace sigrid{
 
             void save();
 
-            void clear();
+            void clearEntities();
+            void clearArrows();
             void print();
 
             void flipBoard();

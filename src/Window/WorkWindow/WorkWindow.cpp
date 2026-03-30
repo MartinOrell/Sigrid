@@ -253,10 +253,12 @@ void WorkWindow::textEntered(const std::string& text){
 void WorkWindow::reset(){
     std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"};
     m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
+    m_boardPtrs.at(m_activeBoardId)->clearArrows();
 }
 
 void WorkWindow::clear(){
-    m_boardPtrs.at(m_activeBoardId)->clear();
+    m_boardPtrs.at(m_activeBoardId)->clearEntities();
+    m_boardPtrs.at(m_activeBoardId)->clearArrows();
 }
 
 void WorkWindow::print(){

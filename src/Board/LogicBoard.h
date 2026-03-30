@@ -47,7 +47,8 @@ namespace sigrid{
             bool removeArrow(const CoordPair& coordPair);
 
             void print();
-            void clear();
+            void clearEntities();
+            void clearArrows();
 
             friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
         private:

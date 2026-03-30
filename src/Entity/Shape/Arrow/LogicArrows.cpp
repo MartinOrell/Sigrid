@@ -21,3 +21,7 @@ std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) cons
 
     return it->second;
 }
+
+void LogicArrows::clear(){
+    m_arrows.clear();
+}

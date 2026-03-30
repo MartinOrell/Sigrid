@@ -91,7 +91,8 @@ namespace sigrid{
 
             void saveImage(const std::string& fileName);
 
-            void clear();
+            void clearEntities();
+            void clearArrows();
 
             void flip();
 

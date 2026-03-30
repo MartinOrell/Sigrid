@@ -397,7 +397,7 @@ void Board::loadFen(const std::string& fen){
 
     std::cout << "Loading position from FEN: " << fen << std::endl;
 
-    clear();
+    clearEntities();
     int x = 0;
     int y = m_logicBoard->width()-1;
     for(int i = 0; i < fen.size(); i++){
@@ -493,9 +493,14 @@ void Board::save(){
     m_graphicBoard->saveImage(m_imageFilename);
 }
 
-void Board::clear(){
-    m_logicBoard->clear();
-    m_graphicBoard->clear();
+void Board::clearEntities(){
+    m_logicBoard->clearEntities();
+    m_graphicBoard->clearEntities();
+}
+
+void Board::clearArrows(){
+    m_logicBoard->clearArrows();
+    m_graphicBoard->clearArrows();
 }
 
 void Board::print(){

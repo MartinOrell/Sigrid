@@ -27,6 +27,8 @@ namespace sigrid{
 
             std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
 
+            void clear();
+
             void move(const sf::Vector2f& offset);
 
         private:

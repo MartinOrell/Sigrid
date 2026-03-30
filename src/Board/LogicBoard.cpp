@@ -339,8 +339,12 @@ void LogicBoard::print(){
     }
 }
 
-void LogicBoard::clear(){
+void LogicBoard::clearEntities(){
     m_pieceLayer.clear();
+}
+
+void LogicBoard::clearArrows(){
+    m_arrowLayer.clear();
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)

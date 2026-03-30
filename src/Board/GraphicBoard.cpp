@@ -536,8 +536,13 @@ void GraphicBoard::saveImage(const std::string& fileName){
     }
 }
 
-void GraphicBoard::clear(){
+void GraphicBoard::clearEntities(){
     m_pieceLayerPtr->clear();
+    redrawTexture();
+}
+
+void GraphicBoard::clearArrows(){
+    m_arrowLayerPtr->clear();
     redrawTexture();
 }
 

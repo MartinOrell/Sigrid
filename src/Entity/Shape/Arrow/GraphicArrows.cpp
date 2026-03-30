@@ -1,5 +1,7 @@
 #include "GraphicArrows.h"
 
+#include <iostream>
+
 using namespace sigrid;
 
 GraphicArrows::GraphicArrows(){}
@@ -70,6 +72,11 @@ std::optional<GraphicArrow> GraphicArrows::getArrow(const CoordPair& coordPair) 
     return it->second;
 }
 
+void GraphicArrows::clear(){
+    m_arrows.clear();
+    m_drawOrder.clear();
+}
+
 void GraphicArrows::move(const sf::Vector2f& offset){
 
     for(auto& arrow: m_arrows){
@@ -80,6 +87,11 @@ void GraphicArrows::move(const sf::Vector2f& offset){
 void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     for(auto& coordPair: m_drawOrder){
-        target.draw(m_arrows.at(coordPair));
+        auto it = m_arrows.find(coordPair);
+        if(it == m_arrows.end()){
+            std::cout << "Failed to draw arrow at " << coordPair.getNotation() << std::endl;
+            continue;
+        }
+        target.draw(it->second);
     }
 }

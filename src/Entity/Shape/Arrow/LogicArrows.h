@@ -16,6 +16,8 @@ namespace sigrid{
             void removeArrow(const CoordPair& coordPair);
             
             std::optional<LogicArrow> getArrow(const CoordPair& coordPair) const;
+
+            void clear();
         private:
             std::map<CoordPair, LogicArrow> m_arrows;
     };
