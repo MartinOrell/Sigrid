@@ -70,7 +70,7 @@ void Board::setImageFilename(const std::string& filename){
 }
 
 unsigned int Board::getNumColumns() const{
-    return m_logicBoard->width();
+    return m_logicBoard->getNumColumns();
 }
 
 unsigned int Board::getImageWidth() const{
@@ -399,7 +399,7 @@ void Board::loadFen(const std::string& fen){
 
     clearEntities();
     int x = 0;
-    int y = m_logicBoard->width()-1;
+    int y = m_logicBoard->getNumRows()-1;
     for(int i = 0; i < fen.size(); i++){
         std::string s = fen.substr(i, 1);
         if(s == " "){

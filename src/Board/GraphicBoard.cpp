@@ -30,7 +30,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_borderWidth = config.borderWidth;
     m_showPlayerToMoveToken = config.playerToMoveToken;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
-    m_tileLayerPtr->init(logicBoard.width(), logicBoard.height(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
+    m_tileLayerPtr->init(logicBoard.getNumColumns(), logicBoard.getNumRows(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, pieceManagerPtr, arrowColorManagerPtr);
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
@@ -40,8 +40,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
     }
 
-    for(int y = 0; y < logicBoard.height(); y++){
-        for(int x = 0; x < logicBoard.width(); x++){
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
 
             auto tile_o = logicBoard.getTile({x,y});
             if(tile_o.has_value()){
@@ -79,8 +79,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
 
         m_borderPtr = std::make_unique<RectangleBorder>();
         sf::Vector2f boardArea;
-        boardArea.x = config.tileWidth* logicBoard.width();
-        boardArea.y = config.tileHeight* logicBoard.height();
+        boardArea.x = config.tileWidth* logicBoard.getNumColumns();
+        boardArea.y = config.tileHeight* logicBoard.getNumRows();
         m_borderPtr->init(config.border, config.borderWidth, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},boardArea);
     }
 

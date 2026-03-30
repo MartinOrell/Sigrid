@@ -35,7 +35,7 @@ bool LogicBoard::init(const BoardDataContainer& data){
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
-        if(coord.y >= height()){
+        if(coord.y >= getNumRows()){
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
@@ -43,7 +43,7 @@ bool LogicBoard::init(const BoardDataContainer& data){
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
-        if(coord.x >= width()){
+        if(coord.x >= getNumColumns()){
             std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
@@ -75,19 +75,19 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     return *this;
 }
 
-const unsigned int LogicBoard::width() const{
+const unsigned int LogicBoard::getNumColumns() const{
     return m_tileLayer.getNumColumns();
 }
 
-const unsigned int LogicBoard::height() const{
+const unsigned int LogicBoard::getNumRows() const{
     return m_tileLayer.getNumRows();
 }
 
 bool LogicBoard::isWithinBoard(const Coord& coord) const{
-    if(coord.x >= width()){
+    if(coord.x >= getNumColumns()){
         return false;
     }
-    if(coord.y >= height()){
+    if(coord.y >= getNumRows()){
         return false;
     }
     return true;
@@ -130,9 +130,9 @@ std::string LogicBoard::getFen() const{
 
     std::string fen;
 
-    for(int y = height()-1; y >= 0; y--){
+    for(int y = getNumRows()-1; y >= 0; y--){
         int i = 0;
-        for(int x = 0; x < width();x++){
+        for(int x = 0; x < getNumColumns();x++){
             auto entity_o = m_pieceLayer.getEntityAt({x,y});
             if(entity_o == std::nullopt
             || !std::holds_alternative<LogicPiece>(entity_o.value())){
@@ -321,11 +321,11 @@ bool LogicBoard::removeArrow(const CoordPair& coordPair){
 
 void LogicBoard::print(){
     std::cout << "Printing board" << std::endl;
-    std::cout << "height = " << height() << std::endl;
-    std::cout << "width = " << width() << std::endl;
+    std::cout << "Number of columns: " << getNumColumns() << std::endl;
+    std::cout << "Number of rows: " << getNumRows() << std::endl;
     
-    for(int y = 0; y < height(); y++){
-        for(int x = 0; x < width(); x++){
+    for(int y = 0; y < getNumRows(); y++){
+        for(int x = 0; x < getNumColumns(); x++){
             auto entity_o = m_pieceLayer.getEntityAt({x,y});
             if(entity_o == std::nullopt
             || !std::holds_alternative<LogicPiece>(entity_o.value())){

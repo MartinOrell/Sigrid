@@ -26,8 +26,8 @@ namespace sigrid{
 
             LogicBoard& operator=(const LogicBoard& rhs);
 
-            const unsigned int width() const;
-            const unsigned int height() const;
+            const unsigned int getNumColumns() const;
+            const unsigned int getNumRows() const;
 
             bool isWithinBoard(const Coord& coord) const;
             bool isEmptyTile(const Coord& coord) const;
