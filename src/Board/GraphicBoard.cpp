@@ -129,7 +129,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_pieceLayerPtr = *(rhs.m_pieceLayerPtr);
     }
 
-    if(m_arrowLayerPtr){
+    if(rhs.m_arrowLayerPtr){
         if(!m_arrowLayerPtr){
             m_arrowLayerPtr = std::make_unique<GraphicArrows>();
         }
