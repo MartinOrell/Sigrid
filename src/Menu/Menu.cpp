@@ -59,7 +59,7 @@ Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData)
         toggleItem("ToggleBoardBorder");
     }
     
-    if(boardData.playerToMoveToken){
+    if(boardData.turnToken){
         toggleItem("ToggleTurnToken");
     }
     

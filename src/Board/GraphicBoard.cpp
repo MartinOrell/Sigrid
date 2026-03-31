@@ -69,7 +69,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         }
     }
 
-    if(config.playerToMoveToken){
+    if(config.turnToken){
         m_rightEdgeWidth = (unsigned int)(0.5*m_tileLayerPtr->getTileHeight());
         m_turnTokenPtr = std::make_unique<TurnToken>();
         initTurnToken();

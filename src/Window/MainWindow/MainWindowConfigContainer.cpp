@@ -487,7 +487,7 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
                         if(s2 == "visibility:"){
                             std::string visibilityString = readString(is);
-                            boardData.playerToMoveToken = visibilityString == "Visible";
+                            boardData.turnToken = visibilityString == "Visible";
                         }
                         else{
                             std::cout << "Unknown key: \"" << s2 << "\"";

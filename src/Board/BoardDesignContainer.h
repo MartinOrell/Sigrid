@@ -17,6 +17,6 @@ namespace sigrid{
         float outsideLabelSize;
         bool border;
         unsigned int borderWidth;
-        bool playerToMoveToken;
+        bool turnToken;
     };
 }
