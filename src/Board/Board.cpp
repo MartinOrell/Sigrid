@@ -49,7 +49,7 @@ Board& Board::operator=(const Board& rhs){
     return *this;
 }
 
-void Board::setPosition(sf::Vector2f position){
+void Board::setPosition(const sf::Vector2f& position){
     m_graphicBoard->setPosition(position);
 }
 
@@ -97,7 +97,7 @@ std::string Board::getImageName() const{
     return m_imageFilename;
 }
 
-bool Board::contains(sf::Vector2i point) const{
+bool Board::contains(const sf::Vector2f& point) const{
     return m_graphicBoard->contains(point);
 }
 
@@ -109,7 +109,7 @@ bool Board::isCoordinatesOutside() const{
     return m_graphicBoard->isCoordinatesOutside();
 }
 
-bool Board::isWithinTurnToken(sf::Vector2i point) const{
+bool Board::isWithinTurnToken(const sf::Vector2f& point) const{
     return m_graphicBoard->isWithinTurnToken(point);
 }
 
@@ -117,7 +117,7 @@ bool Board::isImageFilenameSet() const{
     return m_imageFilename.length() > 0;
 }
 
-std::optional<Coord> Board::getTileCoord(sf::Vector2i point){
+std::optional<Coord> Board::getTileCoord(const sf::Vector2f& point){
     return m_graphicBoard->getTileCoord(point);
 }
 

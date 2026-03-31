@@ -17,15 +17,15 @@ namespace sigrid{
 
             void createGraphic(const sf::Vector2u& size);
 
-            virtual void setPosition(sf::Vector2f);
+            virtual void setPosition(const sf::Vector2f& position);
 
             void setItemTexture(const unsigned int id, const sf::Texture* const texturePtr, bool resetRect = false);
 
             bool isHidden() const;
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2f& point) const;
 
-            Action clicked(const sigrid::Tool& tool, const sf::Vector2i& position);
+            Action clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
             void setSetPieceTool(const GraphicPiece& graphicPiece);
 
@@ -46,7 +46,7 @@ namespace sigrid{
 
             void redrawTexture();
 
-            std::optional<int> getToolItemId(sf::Vector2i point);
+            std::optional<int> getToolItemId(const sf::Vector2f& point);
 
             bool m_show;
 

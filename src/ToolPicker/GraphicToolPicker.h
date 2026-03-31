@@ -23,9 +23,9 @@ namespace sigrid{
 
             void createGraphic(const sf::Vector2u& size);
             
-            void setPosition(const sf::Vector2f&);
+            void setPosition(const sf::Vector2f& position);
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2f& point) const;
 
             sf::Vector2u getSize() const;
 
@@ -33,7 +33,7 @@ namespace sigrid{
 
             unsigned int getNumRows() const;
 
-            std::optional<Coord> getSquareCoord(sf::Vector2i point);
+            std::optional<Coord> getSquareCoord(const sf::Vector2f& point);
 
             void addTool(const Coord& coord, const sf::Texture* const texturePtr);
 

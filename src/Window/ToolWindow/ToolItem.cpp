@@ -37,7 +37,7 @@ void ToolItem::setTexture(const sf::Texture* const texturePtr, bool resetRect){
     m_shape.setTexture(texturePtr, true);
 }
 
-bool ToolItem::isWithin(const sf::Vector2i& point){
+bool ToolItem::isWithin(const sf::Vector2f& point){
     //Currently only look at x values
     if(point.x < m_boxShape.getPosition().x){
         return false;

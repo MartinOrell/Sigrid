@@ -44,9 +44,9 @@ namespace sigrid{
 
             unsigned int getNumRows() const;
 
-            bool contains(const sf::Vector2i& point) const;
+            bool contains(const sf::Vector2f& point) const;
 
-            Action clicked(const sigrid::Tool& tool, const sf::Vector2i& position);
+            Action clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
             void setPieceColorTools(const std::string& pieceNotation);
 

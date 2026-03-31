@@ -48,7 +48,7 @@ namespace sigrid{
 
             sf::Vector2f getTileSize() const;
 
-            void setPosition(sf::Vector2f);
+            void setPosition(const sf::Vector2f& position);
 
             void setPositionX(float x);
 
@@ -64,13 +64,13 @@ namespace sigrid{
 
             std::optional<GraphicEntity> getEntityAt(const Coord& coord) const;
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2f& point) const;
 
             bool isCoordinatesOutside() const;
 
-            bool isWithinTurnToken(sf::Vector2i point) const;
+            bool isWithinTurnToken(const sf::Vector2f& point) const;
 
-            std::optional<Coord> getTileCoord(sf::Vector2i point);
+            std::optional<Coord> getTileCoord(const sf::Vector2f& point);
 
             void addEntity(const Coord& coord, const LogicEntity& logicEntity);
             void removeEntity(const Coord& coord);

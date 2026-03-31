@@ -107,11 +107,11 @@ void Menu::createGraphic(const sf::Vector2u& size){
     reDrawTexture();
 }
 
-void Menu::setPosition(sf::Vector2f position){
+void Menu::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
-bool Menu::contains(sf::Vector2i point) const{
+bool Menu::contains(const sf::Vector2f& point) const{
     if(!m_texture){
         return false;
     }
@@ -119,7 +119,7 @@ bool Menu::contains(sf::Vector2i point) const{
     sf::Sprite sprite(m_texture->getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 bool Menu::isPinned() const{
@@ -130,7 +130,7 @@ bool Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-Action Menu::clicked(const sigrid::Tool& tool, const sf::Vector2i& position){
+Action Menu::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     std::optional<sigrid::Menu::PosIndex> o_itemId = getMenuItemPosIndex(position);
     if(o_itemId == std::nullopt){
@@ -466,7 +466,7 @@ float sigrid::Menu::getBottomPos(){
     return m_position.y+(float)m_texture->getSize().y;
 }
 
-std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(sf::Vector2i point){
+std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector2f& point){
     if(m_superHeaderPtr && !m_isPinned && m_superHeaderPtr->isWithin(point, getTopPos(), getBottomPos())){
         sigrid::Menu::PosIndex id{-1,0};
         return id;

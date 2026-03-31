@@ -27,12 +27,12 @@ namespace sigrid{
 
             unsigned int getNumColumns() const;
 
-            bool contains(const sf::Vector2i& point) const;
+            bool contains(const sf::Vector2f& point) const;
 
             bool isCoordinatesOutside() const;
 
-            Action clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPosition, const sf::Vector2i& releasePosition);
-            void dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, const sf::Vector2i& currentPosition);
+            Action clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
+            void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
             
             void keyPressed(const sf::Event::KeyPressed& event);
             void textEntered(const std::string& text);

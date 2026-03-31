@@ -68,11 +68,11 @@ void GraphicToolPicker::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
-bool GraphicToolPicker::contains(sf::Vector2i point) const{
+bool GraphicToolPicker::contains(const sf::Vector2f& point) const{
     sf::Sprite sprite(m_texture.getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 sf::Vector2u GraphicToolPicker::getSize() const{
@@ -90,14 +90,14 @@ unsigned int GraphicToolPicker::getNumRows() const{
     return m_squares.size();
 }
 
-std::optional<Coord> GraphicToolPicker::getSquareCoord(sf::Vector2i point){
+std::optional<Coord> GraphicToolPicker::getSquareCoord(const sf::Vector2f& point){
 
     int columns = m_squares.at(0).size();
     int rows = m_squares.size();
     float width = (float)columns*m_squareSize.x;
     float height = (float)rows*m_squareSize.y;
-    float x = (float)(point.x - m_position.x)*(float)columns/width;
-    float y = (float)(point.y - m_position.y - m_offsetY)*(float)rows/height;
+    float x = (point.x - m_position.x)*(float)columns/width;
+    float y = (point.y - m_position.y - m_offsetY)*(float)rows/height;
 
     if(x < 0.f){
         return std::nullopt;

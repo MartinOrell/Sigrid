@@ -5,7 +5,7 @@
 
 using namespace sigrid;
 
-MenuItem::MenuItem(std::string name, const sf::Font& font, const Action action)
+MenuItem::MenuItem(const std::string& name, const sf::Font& font, const Action action)
 : m_name(name)
 , m_action(action)
 , m_text(font)
@@ -37,7 +37,7 @@ void MenuItem::createGraphic(const unsigned int height){
     m_shapePtr->setOutlineThickness(-2.f);
 }
 
-void MenuItem::setPosition(sf::Vector2f position){
+void MenuItem::setPosition(const sf::Vector2f& position){
     m_shapePtr->setPosition(position);
     m_text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
 }
@@ -69,7 +69,7 @@ float MenuItem::getPositionTop(){
     return m_shapePtr->getPosition().y;
 }
 
-bool MenuItem::isWithin(sf::Vector2i point, float maxYPos, float minYPos){    
+bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos){    
 
     if(point.x < m_shapePtr->getPosition().x){
         return false;

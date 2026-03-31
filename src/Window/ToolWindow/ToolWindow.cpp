@@ -48,7 +48,7 @@ void ToolWindow::createGraphic(const sf::Vector2u& size){
     }
 }
 
-void ToolWindow::setPosition(sf::Vector2f position){
+void ToolWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
@@ -60,7 +60,7 @@ bool ToolWindow::isHidden() const{
     return !m_show;
 }
 
-bool ToolWindow::contains(sf::Vector2i point) const{
+bool ToolWindow::contains(const sf::Vector2f& point) const{
     if(!m_texture){
         return false;
     }
@@ -68,12 +68,12 @@ bool ToolWindow::contains(sf::Vector2i point) const{
     sf::Sprite sprite(m_texture->getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 
 
-Action ToolWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& position){
+Action ToolWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     std::optional<int> o_itemId = getToolItemId(position);
     if(o_itemId == std::nullopt){
@@ -163,7 +163,7 @@ void ToolWindow::redrawTexture(){
     }
 }
 
-std::optional<int> ToolWindow::getToolItemId(sf::Vector2i point){
+std::optional<int> ToolWindow::getToolItemId(const sf::Vector2f& point){
     int i{0};
     for(const auto& item: m_items){
         if(item->isWithin(point)){

@@ -25,7 +25,7 @@ namespace sigrid{
 
             Board& operator=(const Board& rhs);
 
-            void setPosition(sf::Vector2f);
+            void setPosition(const sf::Vector2f& position);
 
             void setPositionX(const float x);
 
@@ -49,17 +49,17 @@ namespace sigrid{
 
             std::string getImageName() const;
 
-            bool contains(sf::Vector2i point) const;
+            bool contains(const sf::Vector2f& point) const;
 
             bool isEmptyTile(const Coord& coord) const;
 
             bool isCoordinatesOutside() const;
 
-            bool isWithinTurnToken(sf::Vector2i point) const;
+            bool isWithinTurnToken(const sf::Vector2f& point) const;
 
             bool isImageFilenameSet() const;
 
-            std::optional<Coord> getTileCoord(sf::Vector2i point);
+            std::optional<Coord> getTileCoord(const sf::Vector2f& point);
 
             std::optional<LogicTile> getTile(const Coord& coord);
 

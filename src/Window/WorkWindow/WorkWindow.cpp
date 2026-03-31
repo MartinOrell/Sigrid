@@ -72,7 +72,7 @@ unsigned int WorkWindow::getNumColumns() const{
     return m_boardPtrs.at(m_activeBoardId)->getNumColumns();
 }
 
-bool WorkWindow::contains(const sf::Vector2i& point) const{
+bool WorkWindow::contains(const sf::Vector2f& point) const{
 
     if(!m_texture){
         return false;
@@ -81,7 +81,7 @@ bool WorkWindow::contains(const sf::Vector2i& point) const{
     sf::Sprite sprite(m_texture->getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 bool WorkWindow::isCoordinatesOutside() const{
@@ -104,24 +104,20 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
 
 
-Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPosition, const sf::Vector2i& releasePosition){
+Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
     m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
 
-    int fromX = pressPosition.x-(int)m_position.x;
-    int fromY = pressPosition.y-(int)m_position.y;
+    sf::Vector2f from = pressPosition - m_position;
+    sf::Vector2f to = releasePosition - m_position;
 
-    int toX = releasePosition.x-(int)m_position.x;
-    int toY = releasePosition.y-(int)m_position.y;
-
-
-    if(m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken({fromX, fromY}) &&
-    m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken({toX, toY})){
+    if(m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken(from) &&
+    m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken(to)){
         m_boardPtrs.at(m_activeBoardId)->toggleTurnToken();
     }
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({fromX,fromY});
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({toX, toY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(from);
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(to);
 
     
     if(fromCoord_o == std::nullopt){
@@ -180,21 +176,19 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
     return ActionType::None();
 }
 
-void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2i& pressPosition, const sf::Vector2i& currentPosition){
+void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
     
-    int fromX = pressPosition.x-(int)m_position.x;
-    int fromY = pressPosition.y-(int)m_position.y;
+    sf::Vector2f from = pressPosition - m_position;
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({fromX,fromY});
+    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(from);
 
     if(fromCoord_o == std::nullopt){
         return;
     }
 
-    int toX = currentPosition.x-(int)m_position.x;
-    int toY = currentPosition.y-(int)m_position.y;
+    sf::Vector2f to = currentPosition - m_position;
 
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({toX, toY});
+    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(to);
 
     if(toCoord_o == std::nullopt){
         m_boardPtrs.at(m_activeBoardId)->removeDragArrow();

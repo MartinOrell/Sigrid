@@ -194,7 +194,7 @@ sf::Vector2f GraphicBoard::getTileSize() const{
     return {0.0, 0.0};
 }
 
-void GraphicBoard::setPosition(sf::Vector2f position){
+void GraphicBoard::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
@@ -226,61 +226,61 @@ std::optional<GraphicEntity> GraphicBoard::getEntityAt(const Coord& coord) const
     return m_pieceLayerPtr->getEntityAt(coord);
 }
 
-bool GraphicBoard::contains(sf::Vector2i point) const{
+bool GraphicBoard::contains(const sf::Vector2f& point) const{
     sf::Sprite sprite(m_texturePtr->getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 bool GraphicBoard::isCoordinatesOutside() const{
     return !m_isCoordinateLabelsInside;
 }
 
-bool GraphicBoard::isWithinTurnToken(sf::Vector2i point) const{
+bool GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
 
     if(!m_turnTokenPtr){
         return false;
     }
 
-    return m_turnTokenPtr->isWithin((sf::Vector2f(point)-m_position)/m_scale);
+    return m_turnTokenPtr->isWithin((point-m_position)/m_scale);
 }
 
-std::optional<Coord> GraphicBoard::getTileCoord(sf::Vector2i point){
+std::optional<Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
 
-    sf::Vector2u rect = m_texturePtr->getSize();
-    rect.x = rect.x - m_leftEdgeWidth - m_rightEdgeWidth;
+    sf::Vector2f rect = (sf::Vector2f)m_texturePtr->getSize();
+    rect.x = rect.x - (float)m_leftEdgeWidth - (float)m_rightEdgeWidth;
     rect.x *= m_scale;
 
-    rect.y = rect.y - m_topEdgeWidth - m_bottomEdgeWidth;
+    rect.y = rect.y - (float)m_topEdgeWidth - (float)m_bottomEdgeWidth;
     rect.y *= m_scale;
 
-    float x = (float)point.x - m_position.x;
+    float x = point.x - m_position.x;
     x = x - (float)m_leftEdgeWidth*m_scale;
-    x = x *(float)m_tileLayerPtr->getNumColumns()/(float)rect.x;
+    x = x *(float)m_tileLayerPtr->getNumColumns()/rect.x;
 
-    float y = (float)point.y - m_position.y;
-    y = y - (float)(m_topEdgeWidth*m_scale);
-    y = y * (float)m_tileLayerPtr->getNumRows() / (float)rect.y;
+    float y = point.y - m_position.y;
+    y = y - (float)m_topEdgeWidth*m_scale;
+    y = y * (float)m_tileLayerPtr->getNumRows() /rect.y;
 
     if(x < 0.f){
         return std::nullopt;
     }
-    if(x >= m_tileLayerPtr->getNumColumns()){
+    if(x >= (float)m_tileLayerPtr->getNumColumns()){
         return std::nullopt;
     }
     if(y < 0.f){
         return std::nullopt;
     }
-    if(y >= m_tileLayerPtr->getNumRows()){
+    if(y >= (float)m_tileLayerPtr->getNumRows()){
         return std::nullopt;
     }
 
     if(!m_isLeftToRight){
-        x = m_tileLayerPtr->getNumColumns()-x;
+        x = (float)m_tileLayerPtr->getNumColumns()-x;
     }
     if(!m_isTopToBottom){
-        y = m_tileLayerPtr->getNumRows()-y;
+        y = (float)m_tileLayerPtr->getNumRows()-y;
     }
     return std::make_optional<Coord>((int)x,(int)y);
 }

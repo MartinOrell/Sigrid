@@ -116,7 +116,7 @@ unsigned int ToolPickerWindow::getNumRows() const{
     return m_rows;
 }
 
-bool ToolPickerWindow::contains(const sf::Vector2i& point) const{
+bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
     
     if(!m_show){
         return false;
@@ -129,20 +129,17 @@ bool ToolPickerWindow::contains(const sf::Vector2i& point) const{
     sf::Sprite sprite(m_texture->getTexture());
     sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
+    return rect.contains(point);
 }
 
 
-Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& position){
+Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     if(!m_show){
         return ActionType::None();
     }
 
-    int x = position.x-(int)m_position.x;
-    int y = position.y-(int)m_position.y;
-
-    auto coord_o = m_boardPtr->getSquareCoord({x,y});
+    auto coord_o = m_boardPtr->getSquareCoord(position - m_position);
 
     if(coord_o == std::nullopt){
         return ActionType::None();

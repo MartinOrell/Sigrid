@@ -305,7 +305,7 @@ void MainWindow::resize(const sf::Vector2u& size){
 
 void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
-    sf::Vector2i scaledPosition{(int)(m_scale.x*position.x), (int)(m_scale.y*position.y)};
+    sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
     m_mouseButtonPressedPositionMap.at(button) = scaledPosition;
     m_isMouseButtonPressedMap.at(button) = true;
@@ -314,7 +314,7 @@ void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse:
 
 void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
-    sf::Vector2i scaledPosition{(int)(m_scale.x*position.x), (int)(m_scale.y*position.y)};
+    sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
     if(m_menu && m_menu->contains(scaledPosition)){
         sigrid::Tool *usedToolPtr = &m_tools.at(button);
@@ -365,7 +365,7 @@ void MainWindow::textEnter(const char32_t& unicode){
 
 void MainWindow::mouseMove(const sf::Vector2i& position){
 
-    sf::Vector2i scaledPosition{(int)(m_scale.x*position.x), (int)(m_scale.y*position.y)};
+    sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
     if(m_workWindow && m_workWindow->contains(scaledPosition)){
         sf::Mouse::Button buttons[5] = {sf::Mouse::Button::Left, sf::Mouse::Button::Right, sf::Mouse::Button::Middle, sf::Mouse::Button::Extra1, sf::Mouse::Button::Extra2};

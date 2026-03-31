@@ -23,14 +23,14 @@ namespace sigrid{
 
             void createGraphic(const sf::Vector2u& size);
 
-            void setPosition(sf::Vector2f position);
-            bool contains(sf::Vector2i point) const;
+            void setPosition(const sf::Vector2f& position);
+            bool contains(const sf::Vector2f& point) const;
 
             bool isPinned() const;
 
             bool isCollapsed() const;
 
-            Action clicked(const Tool& tool, const sf::Vector2i& position);
+            Action clicked(const Tool& tool, const sf::Vector2f& position);
 
             void pinMenu();
 
@@ -74,7 +74,7 @@ namespace sigrid{
 
             float getTopPos();
             float getBottomPos();
-            std::optional<PosIndex> getMenuItemPosIndex(sf::Vector2i point);
+            std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;

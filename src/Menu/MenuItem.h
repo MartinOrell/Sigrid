@@ -12,17 +12,17 @@ namespace sigrid{
     class MenuItem: public sf::Drawable{
 
         public:
-            MenuItem(std::string name, const sf::Font& font, const Action);
+            MenuItem(const std::string& name, const sf::Font& font, const Action);
 
             void createGraphic(const unsigned int height);
 
-            void setPosition(sf::Vector2f position);
+            void setPosition(const sf::Vector2f& position);
             void setAction(const Action& action);
             void setText(const std::string& text);
             float getPositionLeft();
             float getPositionRight();
             float getPositionTop();
-            bool isWithin(sf::Vector2i point, float maxYPos, float minYPos);
+            bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos);
             Action getAction();
             std::string getName();
             void addToggle(const std::string& text, const Action&);
