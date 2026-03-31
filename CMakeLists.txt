@@ -39,6 +39,7 @@ set(SRC_FILES
     src/Entity/Shape/RectangleBorder/RectangleBorder.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
+    src/Entity/TurnToken/TurnToken.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

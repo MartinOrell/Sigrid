@@ -34,6 +34,7 @@
 #include "../Entity/Tile/GraphicTiles.h"
 
 #include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "../Entity/TurnToken/TurnToken.h"
 
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
@@ -118,7 +119,7 @@ namespace sigrid{
 
         private:
 
-            void initPlayerToMoveToken();
+            void initTurnToken();
 
             unsigned int getTextureWidth() const;
 
@@ -155,6 +156,8 @@ namespace sigrid{
 
             std::unique_ptr<RectangleBorder> m_borderPtr;
 
+            std::unique_ptr<TurnToken> m_turnTokenPtr;
+
             std::unique_ptr<GraphicTiles> m_tileLayerPtr;
 
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
@@ -178,9 +181,6 @@ namespace sigrid{
             unsigned int m_borderWidth;
             float m_insideLabelSizeFactor;
             float m_outsideLabelSizeFactor;
-
-            bool m_showPlayerToMoveToken;
-            std::unique_ptr<sf::CircleShape> m_playerToMoveToken;
 
             bool m_isLeftToRight;
             bool m_isTopToBottom;

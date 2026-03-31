@@ -28,7 +28,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_insideLabelSizeFactor = config.insideLabelSize;
     m_outsideLabelSizeFactor = config.outsideLabelSize;
     m_borderWidth = config.borderWidth;
-    m_showPlayerToMoveToken = config.playerToMoveToken;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
     m_tileLayerPtr->init(logicBoard.getNumColumns(), logicBoard.getNumRows(), {config.tileWidth, config.tileHeight}, tileColorManagerPtr, arrowColorManagerPtr, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
@@ -70,9 +69,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         }
     }
 
-    if(m_showPlayerToMoveToken){
+    if(config.playerToMoveToken){
         m_rightEdgeWidth = (unsigned int)(0.5*m_tileLayerPtr->getTileHeight());
-        initPlayerToMoveToken();
+        m_turnTokenPtr = std::make_unique<TurnToken>();
+        initTurnToken();
     }
 
     if(config.border){
@@ -172,13 +172,11 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     m_insideLabelSizeFactor = rhs.m_insideLabelSizeFactor;
     m_outsideLabelSizeFactor = rhs.m_outsideLabelSizeFactor;
 
-    m_showPlayerToMoveToken = rhs.m_showPlayerToMoveToken;
-
-    if(rhs.m_playerToMoveToken){
-        if(!m_playerToMoveToken){
-            m_playerToMoveToken = std::make_unique<sf::CircleShape>();
+    if(rhs.m_turnTokenPtr){
+        if(!m_turnTokenPtr){
+            m_turnTokenPtr = std::make_unique<TurnToken>();
         }
-        *m_playerToMoveToken = *(rhs.m_playerToMoveToken);
+        *m_turnTokenPtr = *(rhs.m_turnTokenPtr);
     }
 
     m_isLeftToRight = rhs.m_isLeftToRight;
@@ -240,21 +238,12 @@ bool GraphicBoard::isCoordinatesOutside() const{
 }
 
 bool GraphicBoard::isWithinPlayerToMoveToken(sf::Vector2i point) const{
-    if(!m_showPlayerToMoveToken){
+
+    if(!m_turnTokenPtr){
         return false;
     }
-    if(!m_playerToMoveToken){
-        return false;
-    }
 
-    float x = (float)point.x - m_position.x;
-    float y = (float)point.y - m_position.y;
-
-    float radius = m_playerToMoveToken->getRadius()*m_scale;
-    float centerX = m_playerToMoveToken->getPosition().x*m_scale+radius;
-    float centerY = m_playerToMoveToken->getPosition().y*m_scale+radius;
-
-    return (x-centerX)*(x-centerX)+(y-centerY)*(y-centerY) < radius*radius;
+    return m_turnTokenPtr->isWithin((sf::Vector2f(point)-m_position)/m_scale);
 }
 
 std::optional<Coord> GraphicBoard::getTileCoord(sf::Vector2i point){
@@ -733,16 +722,18 @@ void GraphicBoard::removeBorder(){
 
 void GraphicBoard::addPlayerToMoveToken(){
 
-    if(m_showPlayerToMoveToken){
+    if(m_turnTokenPtr && m_turnTokenPtr->isVisible()){
         return;
     }
 
-    m_showPlayerToMoveToken = true;
-
     m_rightEdgeWidth = (unsigned int)(0.5* m_tileLayerPtr->getTileWidth());
 
-    if(!m_playerToMoveToken){
-        initPlayerToMoveToken();
+    if(!m_turnTokenPtr){
+        m_turnTokenPtr = std::make_unique<TurnToken>();
+        initTurnToken();
+    }
+    else{
+        m_turnTokenPtr->show();
     }
 
     resizeTexture();
@@ -751,11 +742,11 @@ void GraphicBoard::addPlayerToMoveToken(){
 
 void GraphicBoard::removePlayerToMoveToken(){
 
-    if(!m_showPlayerToMoveToken){
+    if(!m_turnTokenPtr){
         return;
     }
 
-    m_showPlayerToMoveToken = false;
+    m_turnTokenPtr->hide();
 
     m_rightEdgeWidth = 0;
 
@@ -764,40 +755,29 @@ void GraphicBoard::removePlayerToMoveToken(){
 }
 
 void GraphicBoard::togglePlayerToMoveToken(){
-    if(!m_playerToMoveToken){
+    if(!m_turnTokenPtr){
         std::cout << "GraphicBoard: Unable to toggle player-to-move token. It does not exist" << std::endl;
         return;
     }
 
-    if(m_playerToMoveToken->getFillColor().toInteger() == sf::Color{255,255,255,255}.toInteger()){
-        m_playerToMoveToken->setFillColor(sf::Color{0,0,0,255});
-    }
-    else{
-        m_playerToMoveToken->setFillColor(sf::Color{255,255,255,255});
-    }
+    m_turnTokenPtr->toggle();
 
-    m_texturePtr->draw(*m_playerToMoveToken);
+    m_texturePtr->draw(*m_turnTokenPtr);
 }
 
-void GraphicBoard::initPlayerToMoveToken(){
+void GraphicBoard::initTurnToken(){
     float radius = 0.2* m_tileLayerPtr->getTileHeight();
-    std::size_t pointCount = 30;
-    m_playerToMoveToken = std::make_unique<sf::CircleShape>(radius, pointCount);
+    
     float x = m_leftEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
         x+= 2*m_borderWidth;
     }
     x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
     x += m_rightEdgeWidth/2.f;
-    x -= radius;
     float y = m_topEdgeWidth;
     y += m_tileLayerPtr->getTileHeight()/2.f;
-    y -= radius;
-    m_playerToMoveToken->setPosition({x,y});
 
-    m_playerToMoveToken->setFillColor(sf::Color{255,255,255,255});
-    m_playerToMoveToken->setOutlineColor(sf::Color{0,0,0,255});
-    m_playerToMoveToken->setOutlineThickness(-6.f);
+    m_turnTokenPtr->init(radius, {x,y});
 }
 
 unsigned int GraphicBoard::getTextureWidth() const{
@@ -875,8 +855,8 @@ void GraphicBoard::redrawTexture(){
         m_texturePtr->draw(*m_borderPtr);
     }
 
-    if(m_playerToMoveToken && m_showPlayerToMoveToken){
-        m_texturePtr->draw(*m_playerToMoveToken);
+    if(m_turnTokenPtr){
+        m_texturePtr->draw(*m_turnTokenPtr);
     }
 }
 
@@ -1053,8 +1033,8 @@ void GraphicBoard::moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset)
 }
 
 void GraphicBoard::movePlayerToMoveToken(const sf::Vector2f& offset){
-    if(m_playerToMoveToken){
-        m_playerToMoveToken->move(offset);
+    if(m_turnTokenPtr){
+        m_turnTokenPtr->move(offset);
     }
 }
 
