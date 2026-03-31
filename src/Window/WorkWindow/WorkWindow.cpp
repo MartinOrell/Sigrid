@@ -115,9 +115,9 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2i& pressPo
     int toY = releasePosition.y-(int)m_position.y;
 
 
-    if(m_boardPtrs.at(m_activeBoardId)->isWithinPlayerToMoveToken({fromX, fromY}) &&
-    m_boardPtrs.at(m_activeBoardId)->isWithinPlayerToMoveToken({toX, toY})){
-        m_boardPtrs.at(m_activeBoardId)->togglePlayerToMoveToken();
+    if(m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken({fromX, fromY}) &&
+    m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken({toX, toY})){
+        m_boardPtrs.at(m_activeBoardId)->toggleTurnToken();
     }
 
     auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord({fromX,fromY});
@@ -361,12 +361,12 @@ void WorkWindow::removeBoardBorder(){
     m_boardPtrs.at(m_activeBoardId)->removeBorder();
 }
 
-void WorkWindow::addPlayerToMoveToken(){
-    m_boardPtrs.at(m_activeBoardId)->addPlayerToMoveToken();
+void WorkWindow::addTurnToken(){
+    m_boardPtrs.at(m_activeBoardId)->addTurnToken();
 }
 
-void WorkWindow::removePlayerToMoveToken(){
-    m_boardPtrs.at(m_activeBoardId)->removePlayerToMoveToken();
+void WorkWindow::removeTurnToken(){
+    m_boardPtrs.at(m_activeBoardId)->removeTurnToken();
 }
 
 void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){

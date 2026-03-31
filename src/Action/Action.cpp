@@ -54,10 +54,10 @@ Action sigrid::getAction(const std::string& s){
         return ActionType::RemoveBoardBorder{};
     }
     else if(name == "addTurnToken"){
-        return ActionType::AddPlayerToMoveToken{};
+        return ActionType::AddTurnToken{};
     }
     else if(name == "removeTurnToken"){
-        return ActionType::RemovePlayerToMoveToken{};
+        return ActionType::RemoveTurnToken{};
     }
     else if(name == "pasteFen"){
         return ActionType::PasteFen{};

@@ -237,7 +237,7 @@ bool GraphicBoard::isCoordinatesOutside() const{
     return !m_isCoordinateLabelsInside;
 }
 
-bool GraphicBoard::isWithinPlayerToMoveToken(sf::Vector2i point) const{
+bool GraphicBoard::isWithinTurnToken(sf::Vector2i point) const{
 
     if(!m_turnTokenPtr){
         return false;
@@ -695,7 +695,7 @@ void GraphicBoard::addBorder(){
     moveBottomInsideCoordinateLabels({(float)m_borderWidth, (float)m_borderWidth});
     moveLeftOutsideCoordinateLabels({0.f, (float)m_borderWidth});
     moveBottomOutsideCoordinateLabels({(float)m_borderWidth, 2.f*(float)m_borderWidth});
-    movePlayerToMoveToken({2.f*(float)m_borderWidth, (float)m_borderWidth});
+    moveTurnToken({2.f*(float)m_borderWidth, (float)m_borderWidth});
 
     resizeTexture();
     redrawTexture();
@@ -710,7 +710,7 @@ void GraphicBoard::removeBorder(){
     m_borderPtr->hide();
 
     moveTiles({-(float)m_borderWidth, -(float)m_borderWidth});
-    movePlayerToMoveToken({-2.f*(float)m_borderWidth, -(float)m_borderWidth});
+    moveTurnToken({-2.f*(float)m_borderWidth, -(float)m_borderWidth});
     moveLeftInsideCoordinateLabels({-(float)m_borderWidth, -(float)m_borderWidth});
     moveBottomInsideCoordinateLabels({-(float)m_borderWidth, -(float)m_borderWidth});
     moveLeftOutsideCoordinateLabels({0.f, -(float)m_borderWidth});
@@ -720,7 +720,7 @@ void GraphicBoard::removeBorder(){
     redrawTexture();
 }
 
-void GraphicBoard::addPlayerToMoveToken(){
+void GraphicBoard::addTurnToken(){
 
     if(m_turnTokenPtr && m_turnTokenPtr->isVisible()){
         return;
@@ -740,7 +740,7 @@ void GraphicBoard::addPlayerToMoveToken(){
     redrawTexture();
 }
 
-void GraphicBoard::removePlayerToMoveToken(){
+void GraphicBoard::removeTurnToken(){
 
     if(!m_turnTokenPtr){
         return;
@@ -754,7 +754,7 @@ void GraphicBoard::removePlayerToMoveToken(){
     redrawTexture();
 }
 
-void GraphicBoard::togglePlayerToMoveToken(){
+void GraphicBoard::toggleTurnToken(){
     if(!m_turnTokenPtr){
         std::cout << "GraphicBoard: Unable to toggle player-to-move token. It does not exist" << std::endl;
         return;
@@ -870,7 +870,7 @@ void GraphicBoard::setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const
     if(m_borderPtr){
         m_borderPtr->move({moveX, 0.f});
     }
-    movePlayerToMoveToken({moveX, 0.f});
+    moveTurnToken({moveX, 0.f});
 
     if(m_texturePtr){
         resizeTexture();
@@ -1032,7 +1032,7 @@ void GraphicBoard::moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset)
     }
 }
 
-void GraphicBoard::movePlayerToMoveToken(const sf::Vector2f& offset){
+void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
     if(m_turnTokenPtr){
         m_turnTokenPtr->move(offset);
     }

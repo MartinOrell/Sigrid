@@ -61,8 +61,8 @@ namespace sigrid{
             void setCoordinateSize(const float& size);
             void addBoardBorder();
             void removeBoardBorder();
-            void addPlayerToMoveToken();
-            void removePlayerToMoveToken();
+            void addTurnToken();
+            void removeTurnToken();
 
             void redraw();
 

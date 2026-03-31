@@ -63,9 +63,9 @@ namespace sigrid{
 
             void removeBoardBorder();
 
-            void addPlayerToMoveToken();
+            void addTurnToken();
 
-            void removePlayerToMoveToken();
+            void removeTurnToken();
 
         private:
 

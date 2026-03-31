@@ -549,12 +549,12 @@ void MainWindow::handleAction(const sigrid::Action action){
         removeBoardBorder();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddPlayerToMoveToken>(action)){
-        addPlayerToMoveToken();
+    else if(std::holds_alternative<ActionType::AddTurnToken>(action)){
+        addTurnToken();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemovePlayerToMoveToken>(action)){
-        removePlayerToMoveToken();
+    else if(std::holds_alternative<ActionType::RemoveTurnToken>(action)){
+        removeTurnToken();
         return;
     }
 }
@@ -968,14 +968,14 @@ void MainWindow::removeBoardBorder(){
     createGraphic();
 }
 
-void MainWindow::addPlayerToMoveToken(){
+void MainWindow::addTurnToken(){
 
     if(!m_workWindow){
         std::cout << "Unable to add turn token, workWindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->addPlayerToMoveToken();
+    m_workWindow->addTurnToken();
 
     if(m_menu){
         m_menu->toggleItem("ToggleAddTurnToken");
@@ -984,14 +984,14 @@ void MainWindow::addPlayerToMoveToken(){
     createGraphic();
 }
 
-void MainWindow::removePlayerToMoveToken(){
+void MainWindow::removeTurnToken(){
 
     if(!m_workWindow){
         std::cout << "Unable to remove turn token, workWindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->removePlayerToMoveToken();
+    m_workWindow->removeTurnToken();
 
     if(m_menu){
         m_menu->toggleItem("ToggleAddTurnToken");

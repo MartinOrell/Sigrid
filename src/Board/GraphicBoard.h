@@ -68,7 +68,7 @@ namespace sigrid{
 
             bool isCoordinatesOutside() const;
 
-            bool isWithinPlayerToMoveToken(sf::Vector2i point) const;
+            bool isWithinTurnToken(sf::Vector2i point) const;
 
             std::optional<Coord> getTileCoord(sf::Vector2i point);
 
@@ -111,11 +111,11 @@ namespace sigrid{
 
             void removeBorder();
 
-            void addPlayerToMoveToken();
+            void addTurnToken();
 
-            void removePlayerToMoveToken();
+            void removeTurnToken();
 
-            void togglePlayerToMoveToken();
+            void toggleTurnToken();
 
         private:
 
@@ -139,7 +139,7 @@ namespace sigrid{
             void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset);
-            void movePlayerToMoveToken(const sf::Vector2f& offset);
+            void moveTurnToken(const sf::Vector2f& offset);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

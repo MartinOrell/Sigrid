@@ -55,7 +55,7 @@ namespace sigrid{
 
             bool isCoordinatesOutside() const;
 
-            bool isWithinPlayerToMoveToken(sf::Vector2i point) const;
+            bool isWithinTurnToken(sf::Vector2i point) const;
 
             bool isImageFilenameSet() const;
 
@@ -113,11 +113,11 @@ namespace sigrid{
 
             void removeBorder();
 
-            void addPlayerToMoveToken();
+            void addTurnToken();
 
-            void removePlayerToMoveToken();
+            void removeTurnToken();
 
-            void togglePlayerToMoveToken();
+            void toggleTurnToken();
         private:
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

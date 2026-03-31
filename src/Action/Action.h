@@ -62,8 +62,8 @@ namespace sigrid{
         };
         struct AddBoardBorder{};
         struct RemoveBoardBorder{};
-        struct AddPlayerToMoveToken{};
-        struct RemovePlayerToMoveToken{};
+        struct AddTurnToken{};
+        struct RemoveTurnToken{};
     }
 
     typedef std::variant<
@@ -97,8 +97,8 @@ namespace sigrid{
         ActionType::SetCoordinateSize,
         ActionType::AddBoardBorder,
         ActionType::RemoveBoardBorder,
-        ActionType::AddPlayerToMoveToken,
-        ActionType::RemovePlayerToMoveToken
+        ActionType::AddTurnToken,
+        ActionType::RemoveTurnToken
     > Action;
 
     Action getAction(const std::string& s);

@@ -109,8 +109,8 @@ bool Board::isCoordinatesOutside() const{
     return m_graphicBoard->isCoordinatesOutside();
 }
 
-bool Board::isWithinPlayerToMoveToken(sf::Vector2i point) const{
-    return m_graphicBoard->isWithinPlayerToMoveToken(point);
+bool Board::isWithinTurnToken(sf::Vector2i point) const{
+    return m_graphicBoard->isWithinTurnToken(point);
 }
 
 bool Board::isImageFilenameSet() const{
@@ -539,16 +539,16 @@ void Board::removeBorder(){
     m_graphicBoard->removeBorder();
 }
 
-void Board::addPlayerToMoveToken(){
-    m_graphicBoard->addPlayerToMoveToken();
+void Board::addTurnToken(){
+    m_graphicBoard->addTurnToken();
 }
 
-void Board::removePlayerToMoveToken(){
-    m_graphicBoard->removePlayerToMoveToken();
+void Board::removeTurnToken(){
+    m_graphicBoard->removeTurnToken();
 }
 
-void Board::togglePlayerToMoveToken(){
-    m_graphicBoard->togglePlayerToMoveToken();
+void Board::toggleTurnToken(){
+    m_graphicBoard->toggleTurnToken();
 }
 
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const{
