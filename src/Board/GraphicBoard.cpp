@@ -19,9 +19,10 @@ GraphicBoard::GraphicBoard()
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}{}
 
-void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr){
+void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr){
 
     m_arrowColorManagerPtr = arrowColorManagerPtr;
+    m_fontManagerPtr = fontManagerPtr;
     m_showLabels = config.labelsInside || config.labelsOutside;
 
     m_isCoordinateLabelsInside = config.labelsInside;
@@ -35,9 +36,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_arrowLayerPtr = std::make_unique<GraphicArrows>();
     m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize, arrowColorManagerPtr);
 
-    if(!m_font.openFromFile(config.labelFont)){
-        std::cout << "GraphicBoard: Failed to open font: " << config.labelFont << std::endl;
-    }
+    m_labelFontFilename = config.labelFont;
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){
         for(int x = 0; x < logicBoard.getNumColumns(); x++){
@@ -151,10 +150,11 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     }
 
     m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
+    m_fontManagerPtr = rhs.m_fontManagerPtr;
 
     m_showLabels = rhs.m_showLabels;
     m_isCoordinateLabelsInside = rhs.m_isCoordinateLabelsInside;
-    m_font = rhs.m_font;
+    m_labelFontFilename = rhs.m_labelFontFilename;
     m_leftOutsideCoordinateLabels = rhs.m_leftOutsideCoordinateLabels;
     m_bottomOutsideCoordinateLabels = rhs.m_bottomOutsideCoordinateLabels;
     m_bottomInsideCoordinateLabels = rhs.m_bottomInsideCoordinateLabels;
@@ -883,11 +883,18 @@ void GraphicBoard::addOutsideLabels(){
     m_bottomOutsideCoordinateLabels.clear();
     m_leftOutsideCoordinateLabels.clear();
 
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_labelFontFilename);
+    if(fontPtr_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add outside labels" << std::endl;
+        std::cout << "Font " << m_labelFontFilename << " not found" << std::endl;
+        return;
+    }
+
     for(int i = 0; i < m_tileLayerPtr->getNumColumns(); i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
         unsigned int labelSize = m_outsideLabelSizeFactor*m_tileLayerPtr->getTileWidth();
-        sf::Text label{m_font, s, labelSize};
+        sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
         sf::Vector2f position;
         position.x =
@@ -908,7 +915,7 @@ void GraphicBoard::addOutsideLabels(){
     for(int i = 0; i < m_tileLayerPtr->getNumRows(); i++){
         std::string s = std::to_string(m_tileLayerPtr->getNumRows() -i);
         unsigned int labelSize = m_outsideLabelSizeFactor* m_tileLayerPtr->getTileHeight();
-        sf::Text label{m_font, s, labelSize};
+        sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
         label.setOrigin({0.f,0.f});
 
@@ -933,11 +940,18 @@ void GraphicBoard::addInsideLabels(){
     m_bottomInsideCoordinateLabels.clear();
     m_leftInsideCoordinateLabels.clear();
 
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_labelFontFilename);
+    if(fontPtr_o == std::nullopt){
+        std::cout << "GraphicBoard: Failed to add inside labels" << std::endl;
+        std::cout << "Font " << m_labelFontFilename << " not found" << std::endl;
+        return;
+    }
+
     for(int i = 0; i < m_tileLayerPtr->getNumColumns(); i++){
         std::string s = std::to_string(i);
         s[0] = s[0] + 'a' - '0';
         unsigned int labelSize = m_insideLabelSizeFactor* m_tileLayerPtr->getTileWidth();
-        sf::Text label{m_font, s, labelSize};
+        sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
         sf::Vector2f position;
         position.x =
@@ -965,7 +979,7 @@ void GraphicBoard::addInsideLabels(){
     for(int i = 0; i < m_tileLayerPtr->getNumRows(); i++){
         std::string s = std::to_string(m_tileLayerPtr->getNumRows() -i);
         unsigned int labelSize = m_insideLabelSizeFactor* m_tileLayerPtr->getTileHeight();
-        sf::Text label{m_font, s, labelSize};
+        sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
         label.setOrigin({0.f,0.f});
 

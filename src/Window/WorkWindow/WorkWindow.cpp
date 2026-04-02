@@ -10,14 +10,14 @@ using namespace sigrid;
 WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}{}
 
-void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr){
     
     m_activeBoardId = 0;
     m_pieceManagerPtr = pieceManagerPtr;
 
     auto board = std::make_unique<Board>();
 
-    board->init(boardData, graphicData, tileColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr);
+    board->init(boardData, graphicData, tileColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr, fontManagerPtr);
 
     std::cout << "Save location: " << boardFilename << std::endl;
 

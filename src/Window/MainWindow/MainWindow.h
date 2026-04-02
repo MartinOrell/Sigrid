@@ -82,6 +82,7 @@ namespace sigrid{
             std::map<sf::Mouse::Button, bool> m_isMouseButtonPressedMap;
             std::map<sf::Mouse::Button, sf::Vector2f> m_mouseButtonPressedPositionMap;
 
+            std::unique_ptr<FontManager> m_fontManagerPtr;
             std::unique_ptr<ColorManager> m_tileColorManagerPtr;
             std::unique_ptr<ColorManager> m_arrowColorManagerPtr;
             std::unique_ptr<ToolManager> m_toolManagerPtr;

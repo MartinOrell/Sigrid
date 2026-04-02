@@ -36,13 +36,15 @@
 #include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "../Entity/TurnToken/TurnToken.h"
 
+#include "../Font/FontManager.h"
+
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
         public:
             
             GraphicBoard();
             
-            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr);
 
             GraphicBoard& operator=(const GraphicBoard& rhs);
 
@@ -169,10 +171,11 @@ namespace sigrid{
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
             ColorManager* m_arrowColorManagerPtr;
+            FontManager* m_fontManagerPtr;
 
             bool m_showLabels;
             bool m_isCoordinateLabelsInside;
-            sf::Font m_font;
+            std::string m_labelFontFilename;
             std::vector<sf::Text> m_leftOutsideCoordinateLabels;
             std::vector<sf::Text> m_bottomOutsideCoordinateLabels;
             std::vector<sf::Text> m_bottomInsideCoordinateLabels;

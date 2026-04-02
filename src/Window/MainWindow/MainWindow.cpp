@@ -31,6 +31,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_window.create(sf::VideoMode({config.windowWidth, config.windowHeight}), config.windowName);
     m_window.setFramerateLimit(60);
 
+    m_fontManagerPtr = std::make_unique<FontManager>();
+
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
     m_tileColorManagerPtr = std::make_unique<ColorManager>(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
@@ -81,7 +83,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get());
+    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get(), m_fontManagerPtr.get());
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData);
     return true;

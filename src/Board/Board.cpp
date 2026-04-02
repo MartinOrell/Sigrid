@@ -10,7 +10,7 @@ using namespace sigrid;
 
 Board::Board(){}
 
-void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
+void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr){
 
     m_filename = boardData.filename;
 
@@ -18,7 +18,7 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
 
     if(m_logicBoard->init(boardData)){
         m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
-        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, tileColorManagerPtr, arrowColorManagerPtr);
+        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, tileColorManagerPtr, arrowColorManagerPtr, fontManagerPtr);
     }
 }
 
