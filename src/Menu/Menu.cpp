@@ -8,14 +8,13 @@
 using namespace sigrid;
 
 
-Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData)
+Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData, FontManager* const fontManagerPtr)
 : m_isPinned(menuData.isPinned)
 , m_showItems(menuData.showItems)
 , m_showHeaderIndex(-1)
-, m_backgroundColor{255,255,255,0}{
-
-    bool loadFont = m_font.openFromFile(menuData.fontName);
-    assert(loadFont);
+, m_backgroundColor{255,255,255,0}
+, m_fontManagerPtr{fontManagerPtr}
+, m_fontFilename{menuData.fontName}{
 
     addSuperHeader(menuData.title);
     for(const auto& headerName : menuData.headerNames){
@@ -189,8 +188,16 @@ void Menu::toggleHeader(const int headerId){
 
 void Menu::addSuperHeader(const std::string& name){
     
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+
+    if(fontPtr_o == std::nullopt){
+        std::cout << "Menu: Failed to add superHeader" << name << std::endl;
+        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        return;
+    }
+
     sigrid::ActionType::ShowMenu action;
-    m_superHeaderPtr = std::make_unique<MenuItem>(name, m_font, action);
+    m_superHeaderPtr = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
 
     if(m_texture){
         addSuperHeaderGraphic();
@@ -199,10 +206,18 @@ void Menu::addSuperHeader(const std::string& name){
 
 void Menu::addHeader(const std::string& name){
 
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+
+    if(fontPtr_o == std::nullopt){
+        std::cout << "Menu: Failed to add header" << name << std::endl;
+        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        return;
+    }
+
     int id = m_items.size();
     sigrid::ActionType::ToggleHeader action{id};    
 
-    auto newItem = std::make_unique<MenuItem>(name, m_font, action);
+    auto newItem = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -222,10 +237,18 @@ void Menu::addHeader(const std::string& name){
 
 void Menu::addItem(const std::string& name, const int headerIndex, const Action action){
 
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+
+    if(fontPtr_o == std::nullopt){
+        std::cout << "Menu: Failed to menu item " << name << std::endl;
+        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        return;
+    }
+
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>(name, m_font, action);
+    auto newItem = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -244,10 +267,18 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
 
 void Menu::addToggleItem(const std::string& key, const int headerIndex, const std::string& text0, const Action action0, const std::string& text1, const Action action1){
 
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+
+    if(fontPtr_o == std::nullopt){
+        std::cout << "Menu: Failed to menu toggle item " << key << std::endl;
+        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        return;
+    }
+
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>(text0, m_font, action0);
+    auto newItem = std::make_unique<MenuItem>(text0, *(fontPtr_o.value()), action0);
 
     newItem->addToggle(text1, action1);
 

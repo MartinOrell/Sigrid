@@ -16,10 +16,12 @@
 
 #include "MenuContainer.h"
 
+#include "../Font/FontManager.h"
+
 namespace sigrid{
     class Menu: public sf::Drawable{
         public:
-            Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData);
+            Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData, FontManager* const fontManagerPtr);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -76,6 +78,8 @@ namespace sigrid{
             float getBottomPos();
             std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
 
+            FontManager* m_fontManagerPtr;
+
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
 
@@ -91,7 +95,7 @@ namespace sigrid{
             float m_itemOffsetX;
 
             sf::Color m_backgroundColor;
-            sf::Font m_font;
+            std::string m_fontFilename;
 
             bool m_isPinned;
             bool m_showItems;
