@@ -395,12 +395,13 @@ void Board::removeDragArrow(){
 
 void Board::loadFen(const std::string& fen){
 
-    std::cout << "Loading position from FEN: " << fen << std::endl;
+    std::cout << "Loading position from FEN: \"" << fen << "\"" << std::endl;
 
     clearEntities();
     int x = 0;
     int y = m_logicBoard->getNumRows()-1;
-    for(int i = 0; i < fen.size(); i++){
+    int i;
+    for(i = 0; i < fen.size(); i++){
         std::string s = fen.substr(i, 1);
         if(s == " "){
             break;
@@ -425,6 +426,17 @@ void Board::loadFen(const std::string& fen){
 
             addEntity({x,y}, logicPiece);
             x++;
+        }
+    }
+    if(fen.length() >= i+1){
+        char activeColorChar = fen.at(i+1);
+        if(activeColorChar == 'b'){
+            m_logicBoard->setTurnToMove(1);
+            m_graphicBoard->setTurnToMove(1);
+        }
+        else{
+            m_logicBoard->setTurnToMove(0);
+            m_graphicBoard->setTurnToMove(0);
         }
     }
 }
@@ -540,7 +552,7 @@ void Board::removeBorder(){
 }
 
 void Board::addTurnToken(){
-    m_graphicBoard->addTurnToken();
+    m_graphicBoard->addTurnToken(m_logicBoard->getTurnToMove());
 }
 
 void Board::removeTurnToken(){
@@ -548,7 +560,15 @@ void Board::removeTurnToken(){
 }
 
 void Board::toggleTurnToken(){
-    m_graphicBoard->toggleTurnToken();
+    int turnToMove = m_logicBoard->getTurnToMove();
+    if(turnToMove == 0){
+        m_logicBoard->setTurnToMove(1);
+        m_graphicBoard->setTurnToMove(1);
+    }
+    else if(turnToMove == 1){
+        m_logicBoard->setTurnToMove(0);
+        m_graphicBoard->setTurnToMove(0);
+    }
 }
 
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const{

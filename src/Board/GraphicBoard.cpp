@@ -67,7 +67,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     if(config.turnToken){
         m_rightEdgeWidth = (unsigned int)(0.5*m_tileLayerPtr->getTileHeight());
         m_turnTokenPtr = std::make_unique<TurnToken>();
-        initTurnToken();
+        initTurnToken(logicBoard.getTurnToMove());
     }
 
     if(config.border){
@@ -739,7 +739,7 @@ void GraphicBoard::removeBorder(){
     redrawTexture();
 }
 
-void GraphicBoard::addTurnToken(){
+void GraphicBoard::addTurnToken(const int& turnToMove){
 
     if(m_turnTokenPtr && m_turnTokenPtr->isVisible()){
         return;
@@ -749,7 +749,7 @@ void GraphicBoard::addTurnToken(){
 
     if(!m_turnTokenPtr){
         m_turnTokenPtr = std::make_unique<TurnToken>();
-        initTurnToken();
+        initTurnToken(turnToMove);
     }
     else{
         m_turnTokenPtr->show();
@@ -773,18 +773,17 @@ void GraphicBoard::removeTurnToken(){
     redrawTexture();
 }
 
-void GraphicBoard::toggleTurnToken(){
+void GraphicBoard::setTurnToMove(const int& turnToMove){
     if(!m_turnTokenPtr){
-        std::cout << "GraphicBoard: Unable to toggle player-to-move token. It does not exist" << std::endl;
         return;
     }
 
-    m_turnTokenPtr->toggle();
+    m_turnTokenPtr->setTurnToMove(turnToMove);
 
     m_texturePtr->draw(*m_turnTokenPtr);
 }
 
-void GraphicBoard::initTurnToken(){
+void GraphicBoard::initTurnToken(const int& turnToMove){
     float radius = 0.2* m_tileLayerPtr->getTileHeight();
     
     float x = m_leftEdgeWidth;
@@ -796,7 +795,7 @@ void GraphicBoard::initTurnToken(){
     float y = m_topEdgeWidth;
     y += m_tileLayerPtr->getTileHeight()/2.f;
 
-    m_turnTokenPtr->init(radius, {x,y});
+    m_turnTokenPtr->init(radius, {x,y}, turnToMove);
 }
 
 unsigned int GraphicBoard::getTextureWidth() const{

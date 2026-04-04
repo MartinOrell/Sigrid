@@ -35,6 +35,9 @@ namespace sigrid{
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
             std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
             std::string getFen() const;
+            int getTurnToMove() const;
+
+            void setTurnToMove(const int& turnToMove);
 
             bool addEntity(const Coord& coord, const LogicEntity& entity);
             bool removeEntity(const Coord& coord);
@@ -56,6 +59,7 @@ namespace sigrid{
             LogicTiles m_tileLayer;
             LogicEntities m_pieceLayer;
             LogicArrows m_arrowLayer;
+            int m_turnToMove; //0 = white to move, 1 = black to move
 
     };
 }

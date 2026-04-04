@@ -114,15 +114,15 @@ namespace sigrid{
 
             void removeBorder();
 
-            void addTurnToken();
+            void addTurnToken(const int& turnToMove);
 
             void removeTurnToken();
 
-            void toggleTurnToken();
+            void setTurnToMove(const int& turnToMove);
 
         private:
 
-            void initTurnToken();
+            void initTurnToken(const int& turnToMove);
 
             unsigned int getTextureWidth() const;
 

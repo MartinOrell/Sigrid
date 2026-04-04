@@ -15,7 +15,7 @@ namespace sigrid{
         public:
             TurnToken();
 
-            void init(const float& radius, const sf::Vector2f& centerPosition);
+            void init(const float& radius, const sf::Vector2f& centerPosition, const int& turnToMove);
 
             TurnToken& operator =(const TurnToken& rhs);
 
@@ -31,11 +31,13 @@ namespace sigrid{
 
             void hide();
 
-            void toggle();
+            void setTurnToMove(const int& turnToMove);
 
             void move(const sf::Vector2f& offset);
 
         private:
+
+            sf::Color getColor(const int& turnToMove) const;
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

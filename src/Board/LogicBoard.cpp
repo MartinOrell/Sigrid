@@ -63,6 +63,8 @@ bool LogicBoard::init(const BoardDataContainer& data){
         m_pieceLayer.addEntity(coord, LogicCircle{cData.colorId});
     }
 
+    m_turnToMove = 0;
+
     return true;
 }
 
@@ -71,6 +73,7 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     m_tileLayer = rhs.m_tileLayer;
     m_pieceLayer = rhs.m_pieceLayer;
     m_arrowLayer = rhs.m_arrowLayer;
+    m_turnToMove = rhs.m_turnToMove;
 
     return *this;
 }
@@ -159,8 +162,24 @@ std::string LogicBoard::getFen() const{
             fen.append("/");
         }
     }
+    fen.append(" ");
+    if(m_turnToMove == 0){
+        fen.append("w");
+    }
+    else{
+        fen.append("b");
+    }
+    fen.append(" KQkq - 0 1");
 
     return fen;
+}
+
+int LogicBoard::getTurnToMove() const{
+    return m_turnToMove;
+}
+
+void LogicBoard::setTurnToMove(const int& turnToMove){
+    m_turnToMove = turnToMove;
 }
 
 bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){

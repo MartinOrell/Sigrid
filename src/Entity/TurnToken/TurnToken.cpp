@@ -5,13 +5,13 @@ using namespace sigrid;
 TurnToken::TurnToken()
 : m_isVisible(true){}
 
-void TurnToken::init(const float& radius, const sf::Vector2f& centerPosition){
+void TurnToken::init(const float& radius, const sf::Vector2f& centerPosition, const int& turnToMove){
 
     std::size_t pointCount = 30;
     m_shapePtr = std::make_unique<sf::CircleShape>(radius, pointCount);
     m_shapePtr->setPosition(centerPosition - sf::Vector2f{radius, radius});
 
-    m_shapePtr->setFillColor(sf::Color{255,255,255,255});
+    m_shapePtr->setFillColor(getColor(turnToMove));
     m_shapePtr->setOutlineColor(sf::Color{0,0,0,255});
     m_shapePtr->setOutlineThickness(-6.f);
 }
@@ -79,17 +79,12 @@ void TurnToken::hide(){
     m_isVisible = false;
 }
 
-void TurnToken::toggle(){
+void TurnToken::setTurnToMove(const int& turnToMove){
     if(!m_shapePtr){
         return;
     }
 
-    if(m_shapePtr->getFillColor().toInteger() == sf::Color{255,255,255,255}.toInteger()){
-        m_shapePtr->setFillColor(sf::Color{0,0,0,255});
-    }
-    else{
-        m_shapePtr->setFillColor(sf::Color{255,255,255,255});
-    }
+    m_shapePtr->setFillColor(getColor(turnToMove));
 }
 
 void TurnToken::move(const sf::Vector2f& offset){
@@ -97,6 +92,15 @@ void TurnToken::move(const sf::Vector2f& offset){
         return;
     }
     m_shapePtr->move(offset);
+}
+
+sf::Color TurnToken::getColor(const int& turnToMove) const{
+    if(turnToMove == 1){
+        return sf::Color{0,0,0,255};
+    }
+    else{
+        return sf::Color{255,255,255,255};
+    }
 }
 
 void TurnToken::draw(sf::RenderTarget& target, sf::RenderStates states) const{
