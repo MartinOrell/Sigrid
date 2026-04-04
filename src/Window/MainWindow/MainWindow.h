@@ -50,6 +50,8 @@ namespace sigrid{
             void showTools();
             void hideTools();
             void newBoard();
+            void openLeftBoard();
+            void openRightBoard();
             void saveBoard();
             void pasteFen();
             void copyFen();

@@ -319,6 +319,20 @@ void WorkWindow::newBoard(){
     reset();
 }
 
+void WorkWindow::openLeftBoard(){
+
+    if(m_activeBoardId == 0){
+        m_activeBoardId = m_boardPtrs.size()-1;
+    }
+    else{
+        m_activeBoardId--;
+    }
+}
+
+void WorkWindow::openRightBoard(){
+    m_activeBoardId = (m_activeBoardId+1)%m_boardPtrs.size();
+}
+
 void WorkWindow::saveBoard(){
     m_boardPtrs.at(m_activeBoardId)->save();
 }

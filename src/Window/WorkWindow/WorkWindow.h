@@ -45,6 +45,9 @@ namespace sigrid{
 
             void newBoard();
 
+            void openLeftBoard();
+            void openRightBoard();
+
             void saveBoard();
 
             void flipBoard();

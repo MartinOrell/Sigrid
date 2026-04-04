@@ -48,6 +48,8 @@ namespace sigrid{
         struct ShowTools{};
         struct HideTools{};
         struct NewBoard{};
+        struct OpenLeftBoard{};
+        struct OpenRightBoard{};
         struct SaveBoard{};
         struct PasteFen{};
         struct CopyFen{};
@@ -86,6 +88,8 @@ namespace sigrid{
         ActionType::ShowTools,
         ActionType::HideTools,
         ActionType::NewBoard,
+        ActionType::OpenLeftBoard,
+        ActionType::OpenRightBoard,
         ActionType::SaveBoard,
         ActionType::PasteFen,
         ActionType::CopyFen,

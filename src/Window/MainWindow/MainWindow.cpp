@@ -506,6 +506,14 @@ void MainWindow::handleAction(const sigrid::Action action){
         newBoard();
         return;
     }
+    else if(std::holds_alternative<ActionType::OpenLeftBoard>(action)){
+        openLeftBoard();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::OpenRightBoard>(action)){
+        openRightBoard();
+        return;
+    }
     else if(std::holds_alternative<ActionType::SaveBoard>(action)){
         saveBoard();
         return;
@@ -807,6 +815,14 @@ void MainWindow::newBoard(){
 
     m_workWindow->newBoard();
 
+}
+
+void MainWindow::openLeftBoard(){
+    m_workWindow->openLeftBoard();
+}
+
+void MainWindow::openRightBoard(){
+    m_workWindow->openRightBoard();
 }
 
 void MainWindow::saveBoard(){
