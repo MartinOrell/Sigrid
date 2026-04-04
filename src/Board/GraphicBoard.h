@@ -37,6 +37,7 @@
 #include "../Entity/TurnToken/TurnToken.h"
 
 #include "../Font/FontManager.h"
+#include "BoardLabels.h"
 
 namespace sigrid{
     class GraphicBoard: public sf::Drawable{
@@ -137,10 +138,6 @@ namespace sigrid{
             void addInsideLabels();
 
             void moveTiles(const sf::Vector2f& offset);
-            void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset);
             void moveTurnToken(const sf::Vector2f& offset);
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -158,6 +155,8 @@ namespace sigrid{
 
             std::unique_ptr<RectangleBorder> m_borderPtr;
 
+            std::unique_ptr<BoardLabels> m_labelsPtr;
+
             std::unique_ptr<TurnToken> m_turnTokenPtr;
 
             std::unique_ptr<GraphicTiles> m_tileLayerPtr;
@@ -171,19 +170,8 @@ namespace sigrid{
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
             ColorManager* m_arrowColorManagerPtr;
-            FontManager* m_fontManagerPtr;
-
-            bool m_showLabels;
-            bool m_isCoordinateLabelsInside;
-            std::string m_labelFontFilename;
-            std::vector<sf::Text> m_leftOutsideCoordinateLabels;
-            std::vector<sf::Text> m_bottomOutsideCoordinateLabels;
-            std::vector<sf::Text> m_bottomInsideCoordinateLabels;
-            std::vector<sf::Text> m_leftInsideCoordinateLabels;
 
             unsigned int m_borderWidth;
-            float m_insideLabelSizeFactor;
-            float m_outsideLabelSizeFactor;
 
             bool m_isLeftToRight;
             bool m_isTopToBottom;
