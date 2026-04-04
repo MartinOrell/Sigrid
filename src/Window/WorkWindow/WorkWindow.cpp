@@ -57,6 +57,10 @@ void WorkWindow::loadFen(const std::string& fen){
     m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
 }
 
+std::string WorkWindow::getName() const{
+    return m_boardPtrs.at(m_activeBoardId)->getName();
+}
+
 std::string WorkWindow::getFen() const{
     return m_boardPtrs.at(m_activeBoardId)->getFen();
 }
@@ -265,7 +269,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
         
         bool exists = false;
         for(const auto& board: m_boardPtrs){
-            if(board->getName() == newName || board->getImageName() == newName){
+            if(board->getFilename() == newName || board->getImageFilename() == newName){
                 exists = true;
                 break;
             }
@@ -305,8 +309,8 @@ void WorkWindow::newBoard(){
     auto newBoard = std::make_unique<Board>();
     *newBoard = *m_boardPtrs.at(m_activeBoardId);
 
-    std::string newName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getName());
-    std::string newImageName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getImageName());
+    std::string newName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getFilename());
+    std::string newImageName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getImageFilename());
 
     std::cout << "New board name " << newName << std::endl;
     std::cout << "New image name " << newImageName << std::endl;    

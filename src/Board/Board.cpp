@@ -90,10 +90,28 @@ float Board::getDisplayHeight() const{
 }
 
 std::string Board::getName() const{
+    if(m_filename.size() == 0){
+        return "";
+    }
+    auto end = m_filename.rfind('.');
+    if(end == std::string::npos){
+        end = m_filename.size()-1;
+    }
+    auto begin = m_filename.rfind('/');
+    if(begin == std::string::npos){
+        begin = 0;
+    }
+    else{
+        begin++;
+    }
+    return m_filename.substr(begin, (end-begin));
+}
+
+std::string Board::getFilename() const{
     return m_filename;
 }
 
-std::string Board::getImageName() const{
+std::string Board::getImageFilename() const{
     return m_imageFilename;
 }
 

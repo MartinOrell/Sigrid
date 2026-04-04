@@ -21,6 +21,8 @@ namespace sigrid{
 
             void loadFen(const std::string& fen);
 
+            std::string getName() const;
+
             std::string getFen() const;
             
             void setPosition(const sf::Vector2f& position);

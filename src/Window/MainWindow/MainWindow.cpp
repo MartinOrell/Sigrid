@@ -86,6 +86,13 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get(), m_fontManagerPtr.get());
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData, m_fontManagerPtr.get());
+    
+    if(m_workWindow){
+        std::string title = m_workWindow->getName();
+        if(title.size() > 0){
+            m_window.setTitle(title);
+        }
+    }
     return true;
 }
 
@@ -814,15 +821,31 @@ void MainWindow::newBoard(){
     }
 
     m_workWindow->newBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
 
 }
 
 void MainWindow::openLeftBoard(){
+    
+    if(!m_workWindow){
+        return;
+    }
+
     m_workWindow->openLeftBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
 }
 
 void MainWindow::openRightBoard(){
+
+    if(!m_workWindow){
+        return;
+    }
+
     m_workWindow->openRightBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
 }
 
 void MainWindow::saveBoard(){

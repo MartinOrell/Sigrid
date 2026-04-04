@@ -47,7 +47,9 @@ namespace sigrid{
 
             std::string getName() const;
 
-            std::string getImageName() const;
+            std::string getFilename() const;
+
+            std::string getImageFilename() const;
 
             bool contains(const sf::Vector2f& point) const;
 
