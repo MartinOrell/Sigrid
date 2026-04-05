@@ -124,7 +124,7 @@ void GraphicToolPicker::addTool(const Coord& coord, const sf::Texture* const tex
         addSquareColumn();
     }
 
-    sf::RectangleShape tool;
+    Icon tool;
     tool.setTexture(texturePtr);
 
     if(m_squares.at(coord.y).at(coord.x)){

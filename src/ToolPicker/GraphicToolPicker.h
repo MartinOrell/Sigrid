@@ -14,6 +14,7 @@
 #include "../Coord/Coord.h"
 
 #include "../Color/ColorManager.h"
+#include "../Entity/Icon/Icon.h"
 
 namespace sigrid{
     class GraphicToolPicker: public sf::Drawable{
@@ -68,6 +69,6 @@ namespace sigrid{
             sf::Color m_backgroundColor;
             ColorManager* m_squareColorManagerPtr;
 
-            std::map<Coord, sf::RectangleShape> m_tools;
+            std::map<Coord, Icon> m_tools;
     };
 }
