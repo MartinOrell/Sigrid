@@ -26,6 +26,11 @@ namespace sigrid{
 
             std::optional<GraphicEntity> getEntityAt(const Coord& coord) const;
 
+            void removeColumn(const int& columnId);
+
+            void moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight);
+            void moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight);
+
             void move(const sf::Vector2f& offset);
             void setEntityPosition(const Coord& coord, const sf::Vector2f& position);
 

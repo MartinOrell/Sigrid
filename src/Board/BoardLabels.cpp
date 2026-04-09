@@ -180,6 +180,46 @@ void BoardLabels::removeOutsideLabels(){
     m_leftOutsideCoordinateLabels.clear();
 }
 
+void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight){
+    //currently not taking textWidth into consideration
+    //currently not taking coordinates after z into consideration
+    if(m_bottomInsideCoordinateLabels.size() > 0){
+        sf::Text label{m_bottomInsideCoordinateLabels.back()};
+        if(isLeftToRight){
+            label.move({tileWidth, 0});
+        }
+        else{
+            label.move({-tileWidth, 0});
+        }
+        std::string s = label.getString();
+        s.at(0)++;
+        label.setString(s);
+        m_bottomInsideCoordinateLabels.push_back(label);
+    }
+    if(m_bottomOutsideCoordinateLabels.size() > 0){
+        sf::Text label{m_bottomOutsideCoordinateLabels.back()};
+        if(isLeftToRight){
+            label.move({tileWidth, 0});
+        }
+        else{
+            label.move({-tileWidth, 0});
+        }
+        std::string s = label.getString();
+        s.at(0)++;
+        label.setString(s);
+        m_bottomOutsideCoordinateLabels.push_back(label);
+    }
+}
+
+void BoardLabels::removeHorizontalLabel(){
+    if(m_bottomInsideCoordinateLabels.size() > 0){
+        m_bottomInsideCoordinateLabels.pop_back();
+    }
+    if(m_bottomOutsideCoordinateLabels.size() > 0){
+        m_bottomOutsideCoordinateLabels.pop_back();
+    }
+}
+
 void BoardLabels::show(){
     m_isVisible = true;
 }

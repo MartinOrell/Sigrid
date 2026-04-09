@@ -64,6 +64,174 @@ void GraphicTiles::removeHighlight(const Coord& coord){
     m_tiles.at(coord).removeHighlight();
 }
 
+void GraphicTiles::addColumnRight(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight){
+
+    m_columns++;
+    int x = m_columns-1;
+    for(int y = 0; y < m_rows; y++){
+        auto leftIt = m_tiles.find({x-1,y});
+        if(leftIt != m_tiles.end()){
+
+            sf::Vector2f position = leftIt->second.getTopLeftPosition();
+            if(isLeftToRight){
+                position.x += m_tileSize.x;
+            }
+
+            sf::Color color;
+            if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+                color = sf::Color::White;
+            }
+            else{
+                auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+                if(color_o == std::nullopt){
+                    color = sf::Color::White;
+                }
+                else{
+                    color = color_o.value();
+                }
+            }
+
+            GraphicTile newTile;
+            newTile.init(m_tileSize, color);
+            newTile.setPosition(position);
+            m_tiles.insert({{x,y}, newTile});
+
+        }
+    }
+    if(!isLeftToRight){
+        for(int x = 0; x < m_columns-1; x++){
+            for(int y = 0; y < m_rows; y++){
+                auto it = m_tiles.find({x,y});
+                if(it != m_tiles.end()){
+                    it->second.move(sf::Vector2f{m_tileSize.x, 0.f});
+                }
+            }
+        }
+    }
+}
+
+void GraphicTiles::addColumnLeft(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight){
+
+    m_columns++;
+    {
+        int x = m_columns-1;
+        for(int y = 0; y < m_rows; y++){
+            auto leftIt = m_tiles.find({x-1,y});
+            if(leftIt != m_tiles.end()){
+                GraphicTile newTile = leftIt->second;
+                if(isLeftToRight){
+                    newTile.move(sf::Vector2f{m_tileSize.x,0.f});
+                }
+                m_tiles.insert({{x,y},newTile});
+            }
+        }
+    }
+
+    for(int x = m_columns-2; x > 0; x--){
+        for(int y = 0; y < m_rows; y++){
+            auto currentIt = m_tiles.find({x,y});
+            auto leftIt = m_tiles.find({x-1,y});
+            if(leftIt != m_tiles.end()){
+                if(currentIt == m_tiles.end()){
+                    GraphicTile tile = leftIt->second;
+                    if(isLeftToRight){
+                        tile.move(sf::Vector2f{m_tileSize.x,0.f});
+                    }
+                    m_tiles.insert({{x,y}, tile});
+                }
+                else{
+                    currentIt->second = leftIt->second;
+                    if(isLeftToRight){
+                        currentIt->second.move(sf::Vector2f{m_tileSize.x,0.f});
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    {
+        int x = 0;
+        for(int y = 0; y < m_rows; y++){
+            auto currentIt = m_tiles.find({x,y});
+            if(currentIt != m_tiles.end()){
+                sf::Vector2f position = currentIt->second.getTopLeftPosition();
+                if(!isLeftToRight){
+                    position.x += m_tileSize.x;
+                }
+
+                sf::Color color;
+                if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+                    color = sf::Color::White;
+                }
+                else{
+                    auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+                    if(color_o == std::nullopt){
+                        color = sf::Color::White;
+                    }
+                    else{
+                        color = color_o.value();
+                    }
+                }
+                
+                GraphicTile newTile;
+                newTile.init(m_tileSize, color);
+                newTile.setPosition(position);
+                currentIt->second = newTile;
+            }
+        }
+    }
+}
+
+void GraphicTiles::removeColumnRight(const bool& isLeftToRight){
+    m_columns--;
+
+    int x = m_columns;
+    for(int y = 0; y < m_rows; y++){
+        m_tiles.erase({x,y});
+    }
+
+    if(!isLeftToRight){
+        for(auto& tile: m_tiles){
+            tile.second.move(sf::Vector2f{-m_tileSize.x, 0.f});
+        }
+    }
+}
+
+void GraphicTiles::removeColumnLeft(const bool& isLeftToRight){
+
+    m_columns--;
+    for(int x = 0; x < m_columns; x++){
+        for(int y=0; y<m_rows; y++){
+            auto currentIt = m_tiles.find({x,y});
+            auto rightIt = m_tiles.find({x+1,y});
+
+            if(rightIt != m_tiles.end()){
+                if(currentIt == m_tiles.end()){
+                    GraphicTile tile = rightIt->second;
+                    if(isLeftToRight){
+                        tile.move(sf::Vector2f{-m_tileSize.x,0.f});
+                    }
+                    m_tiles.insert({{x,y},tile});
+                }
+                else{
+                    currentIt->second = rightIt->second;
+                    if(isLeftToRight){
+                        currentIt->second.move(sf::Vector2f{-m_tileSize.x,0.f});
+                    }
+                }
+            }
+        }
+    }
+
+    {
+        int x = m_columns;
+        for(int y = 0; y < m_rows; y++){
+            m_tiles.erase({x,y});
+        }
+    }
+}
+
 int GraphicTiles::getNumColumns() const{
     return m_columns;
 }

@@ -561,6 +561,70 @@ void Board::setCoordinateSize(const float& size){
     m_graphicBoard->setCoordinateSize(size);
 }
 
+void Board::addSquareColumnRight(){
+
+    if(m_graphicBoard->isLeftToRight()){
+        if(m_logicBoard->addSquareColumnRight()){
+            m_graphicBoard->addSquareColumnRight(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    else{
+        if(m_logicBoard->addSquareColumnLeft()){
+            m_graphicBoard->addSquareColumnLeft(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    
+    deselect();
+}
+
+void Board::addSquareColumnLeft(){
+
+    if(m_graphicBoard->isLeftToRight()){
+        if(m_logicBoard->addSquareColumnLeft()){
+            m_graphicBoard->addSquareColumnLeft(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    else{
+        if(m_logicBoard->addSquareColumnRight()){
+            m_graphicBoard->addSquareColumnRight(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    
+    deselect();
+}
+
+void Board::removeSquareColumnRight(){
+
+    if(m_graphicBoard->isLeftToRight()){
+        if(m_logicBoard->removeSquareColumnRight()){
+            m_graphicBoard->removeSquareColumnRight();
+        }
+    }
+    else{
+        if(m_logicBoard->removeSquareColumnLeft()){
+            m_graphicBoard->removeSquareColumnLeft();
+        }
+    }
+
+    deselect();
+}
+
+void Board::removeSquareColumnLeft(){
+
+    if(m_graphicBoard->isLeftToRight()){
+        if(m_logicBoard->removeSquareColumnLeft()){
+            m_graphicBoard->removeSquareColumnLeft();
+        }
+    }
+    else{
+        if(m_logicBoard->removeSquareColumnRight()){
+            m_graphicBoard->removeSquareColumnRight();
+        }
+    }
+    
+    deselect();
+}
+
 void Board::addBorder(){
     m_graphicBoard->addBorder();
 }

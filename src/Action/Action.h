@@ -62,6 +62,10 @@ namespace sigrid{
         struct SetCoordinateSize{
             float size;
         };
+        struct AddSquareColumnRight{};
+        struct AddSquareColumnLeft{};
+        struct RemoveSquareColumnRight{};
+        struct RemoveSquareColumnLeft{};
         struct AddBoardBorder{};
         struct RemoveBoardBorder{};
         struct AddTurnToken{};
@@ -99,6 +103,10 @@ namespace sigrid{
         ActionType::MoveCoordinatesOutside,
         ActionType::MoveCoordinatesInside,
         ActionType::SetCoordinateSize,
+        ActionType::AddSquareColumnRight,
+        ActionType::AddSquareColumnLeft,
+        ActionType::RemoveSquareColumnRight,
+        ActionType::RemoveSquareColumnLeft,
         ActionType::AddBoardBorder,
         ActionType::RemoveBoardBorder,
         ActionType::AddTurnToken,

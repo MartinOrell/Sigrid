@@ -61,6 +61,10 @@ namespace sigrid{
             void moveCoordinatesOutside();
             void moveCoordinatesInside();
             void setCoordinateSize(const float& size);
+            void addSquareColumnRight();
+            void addSquareColumnLeft();
+            void removeSquareColumnRight();
+            void removeSquareColumnLeft();
             void addBoardBorder();
             void removeBoardBorder();
             void addTurnToken();

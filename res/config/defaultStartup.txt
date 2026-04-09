@@ -194,6 +194,10 @@ Menu: [
         "Set Big Coordinates" setCoordinateSize(60%)
         "Set Small Coordinates" setCoordinateSize(40%)
       ]
+      "Insert Column Right" addSquareColumnRight
+      "Insert Column Left" addSquareColumnLeft
+      "Remove Column Right" removeSquareColumnRight
+      "Remove Column Left" removeSquareColumnLeft
       ToggleBoardBorder [
         "Add Border" addBoardBorder
         "Remove Border" removeBoardBorder

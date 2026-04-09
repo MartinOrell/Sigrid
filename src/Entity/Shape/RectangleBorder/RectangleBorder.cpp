@@ -76,6 +76,18 @@ void RectangleBorder::hide(){
     m_isVisible = false;
 }
 
+void RectangleBorder::addWidth(const float& addedWidth){
+    if(m_right){
+        m_right->move({addedWidth, 0});
+    }
+    if(m_top){
+        m_top->setSize(m_top->getSize()+sf::Vector2f{addedWidth, 0});
+    }
+    if(m_bottom){
+        m_bottom->setSize(m_bottom->getSize()+sf::Vector2f{addedWidth, 0});
+    }
+}
+
 void RectangleBorder::move(const sf::Vector2f& offset){
 
     if(m_left){

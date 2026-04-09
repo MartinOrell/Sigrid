@@ -107,6 +107,173 @@ std::optional<GraphicEntity> GraphicEntities::getEntityAt(const Coord& coord) co
     return std::nullopt;
 }
 
+void GraphicEntities::removeColumn(const int& columnId){
+
+    for(auto it = m_pieces.begin(); it != m_pieces.end();){
+        if(it->first.x == columnId){
+            it = m_pieces.erase(it);
+        }
+        else{
+            it++;
+        }
+    }
+
+    for(auto it = m_circles.begin(); it != m_circles.end();){
+        if(it->first.x == columnId){
+            it = m_circles.erase(it);
+        }
+        else{
+            it++;
+        }
+    }
+}
+
+void GraphicEntities::moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight){
+
+    {
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& piece: m_pieces){
+            if(piece.first.x < minX){
+                minX = piece.first.x;
+            }
+            if(piece.first.x > maxX){
+                maxX = piece.first.x;
+            }
+            if(piece.first.y < minY){
+                minY = piece.first.y;
+            }
+            if(piece.first.y > maxY){
+                maxY = piece.first.y;
+            }
+        }
+
+        for(int x = maxX; x >= minX; x--){
+            for(int y = minY; y <= maxY; y++){
+                auto it = m_pieces.find({x,y});
+                if(it != m_pieces.end()){
+                    m_pieces.insert({{x+1,y},it->second});
+                    if(isLeftToRight){
+                        m_pieces.at({x+1,y}).move({tileWidth, 0.f});
+                    }
+                    m_pieces.erase(it);
+                }
+            }
+        }
+    }
+
+    {
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& circle: m_circles){
+            if(circle.first.x < minX){
+                minX = circle.first.x;
+            }
+            if(circle.first.x > maxX){
+                maxX = circle.first.x;
+            }
+            if(circle.first.y < minY){
+                minY = circle.first.y;
+            }
+            if(circle.first.y > maxY){
+                maxY = circle.first.y;
+            }
+        }
+
+        for(int x = maxX; x >= minX; x--){
+            for(int y = minY; y <= maxY; y++){
+                auto it = m_circles.find({x,y});
+                if(it != m_circles.end()){
+                    m_circles.insert({{x+1,y},it->second});
+                    if(isLeftToRight){
+                        m_circles.at({x+1,y}).move({tileWidth, 0.f});
+                    }
+                    m_circles.erase(it);
+                }
+            }
+        }
+    }
+}
+
+void GraphicEntities::moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight){
+
+    {
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& piece: m_pieces){
+            if(piece.first.x < minX){
+                minX = piece.first.x;
+            }
+            if(piece.first.x > maxX){
+                maxX = piece.first.x;
+            }
+            if(piece.first.y < minY){
+                minY = piece.first.y;
+            }
+            if(piece.first.y > maxY){
+                maxY = piece.first.y;
+            }
+        }
+
+        for(int x = minX; x <= maxX; x++){
+            for(int y = minY; y <= maxY; y++){
+                auto it = m_pieces.find({x,y});
+                if(it != m_pieces.end()){
+                    m_pieces.insert({{x-1,y},it->second});
+                    if(isLeftToRight){
+                        m_pieces.at({x-1,y}).move({-tileWidth, 0.f});
+                    }
+                    m_pieces.erase(it);
+                }
+            }
+        }
+    }
+
+    {
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& circle: m_circles){
+            if(circle.first.x < minX){
+                minX = circle.first.x;
+            }
+            if(circle.first.x > maxX){
+                maxX = circle.first.x;
+            }
+            if(circle.first.y < minY){
+                minY = circle.first.y;
+            }
+            if(circle.first.y > maxY){
+                maxY = circle.first.y;
+            }
+        }
+
+        for(int x = minX; x <= maxX; x++){
+            for(int y = minY; y <= maxY; y++){
+                auto it = m_circles.find({x,y});
+                if(it != m_circles.end()){
+                    m_circles.insert({{x-1,y},it->second});
+                    if(isLeftToRight){
+                        m_circles.at({x-1,y}).move({-tileWidth, 0.f});
+                    }
+                    m_circles.erase(it);
+                }
+            }
+        }
+    }
+}
+
 void GraphicEntities::move(const sf::Vector2f& offset){
     for(auto& piece : m_pieces){
         piece.second.move(offset);

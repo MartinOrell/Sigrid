@@ -53,6 +53,18 @@ Action sigrid::getAction(const std::string& s){
         float size = std::stof(number)/100.f;
         return ActionType::SetCoordinateSize{size};
     }
+    else if(name == "addSquareColumnRight"){
+        return ActionType::AddSquareColumnRight{};
+    }
+    else if(name == "addSquareColumnLeft"){
+        return ActionType::AddSquareColumnLeft{};
+    }
+    else if(name == "removeSquareColumnRight"){
+        return ActionType::RemoveSquareColumnRight{};
+    }
+    else if(name == "removeSquareColumnLeft"){
+        return ActionType::RemoveSquareColumnLeft{};
+    }
     else if(name == "addBoardBorder"){
         return ActionType::AddBoardBorder{};
     }

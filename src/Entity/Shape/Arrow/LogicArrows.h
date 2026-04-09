@@ -17,6 +17,11 @@ namespace sigrid{
             
             std::optional<LogicArrow> getArrow(const CoordPair& coordPair) const;
 
+            void removeColumn(const int& columnId);
+
+            void moveArrowsRight();
+            void moveArrowsLeft();
+
             void clear();
         private:
             std::map<CoordPair, LogicArrow> m_arrows;

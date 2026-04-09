@@ -36,6 +36,7 @@ namespace sigrid{
             std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
             std::string getFen() const;
             int getTurnToMove() const;
+            std::vector<int> getRepeatColorIds() const;
 
             void setTurnToMove(const int& turnToMove);
 
@@ -48,6 +49,11 @@ namespace sigrid{
 
             bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             bool removeArrow(const CoordPair& coordPair);
+
+            bool addSquareColumnRight();
+            bool addSquareColumnLeft();
+            bool removeSquareColumnRight();
+            bool removeSquareColumnLeft();
 
             void print();
             void clearEntities();

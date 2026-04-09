@@ -21,6 +21,13 @@ namespace sigrid{
             int getNumColumns() const;
             int getNumRows() const;
 
+            std::vector<int> getRepeatColorIds() const;
+
+            bool addColumnRight();
+            bool addColumnLeft();
+            bool removeColumnRight();
+            bool removeColumnLeft();
+
             std::optional<LogicTile> getTile(const Coord& coord) const;
 
             friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);

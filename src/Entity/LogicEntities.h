@@ -22,6 +22,11 @@ namespace sigrid{
             
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
 
+            void removeColumn(const int& columnId);
+
+            void moveEntitiesRight();
+            void moveEntitiesLeft();
+
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
             std::map<Coord, LogicPiece> m_pieces;

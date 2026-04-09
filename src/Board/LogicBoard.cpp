@@ -178,6 +178,10 @@ int LogicBoard::getTurnToMove() const{
     return m_turnToMove;
 }
 
+std::vector<int> LogicBoard::getRepeatColorIds() const{
+    return m_tileLayer.getRepeatColorIds();
+}
+
 void LogicBoard::setTurnToMove(const int& turnToMove){
     m_turnToMove = turnToMove;
 }
@@ -335,6 +339,40 @@ bool LogicBoard::removeArrow(const CoordPair& coordPair){
     }
 
     m_arrowLayer.removeArrow(coordPair);
+    return true;
+}
+
+bool LogicBoard::addSquareColumnRight(){
+    return m_tileLayer.addColumnRight();
+}
+
+bool LogicBoard::addSquareColumnLeft(){
+    if(!m_tileLayer.addColumnLeft()){
+        return false;
+    }
+    m_pieceLayer.moveEntitiesRight();
+    m_arrowLayer.moveArrowsRight();
+    return true;
+}
+
+bool LogicBoard::removeSquareColumnRight(){
+    if(!m_tileLayer.removeColumnRight()){
+        return false;
+    }
+    int columnId = m_tileLayer.getNumColumns();
+    m_pieceLayer.removeColumn(columnId);
+    m_arrowLayer.removeColumn(columnId);
+    return true;
+}
+
+bool LogicBoard::removeSquareColumnLeft(){
+    if(!m_tileLayer.removeColumnLeft()){
+        return false;
+    }
+    m_pieceLayer.removeColumn(0);
+    m_pieceLayer.moveEntitiesLeft();
+    m_arrowLayer.removeColumn(0);
+    m_arrowLayer.moveArrowsLeft();
     return true;
 }
 

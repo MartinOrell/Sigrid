@@ -365,6 +365,22 @@ void WorkWindow::setCoordinateSize(const float& size){
     m_boardPtrs.at(m_activeBoardId)->setCoordinateSize(size);    
 }
 
+void WorkWindow::addSquareColumnRight(){
+    m_boardPtrs.at(m_activeBoardId)->addSquareColumnRight();
+}
+
+void WorkWindow::addSquareColumnLeft(){
+    m_boardPtrs.at(m_activeBoardId)->addSquareColumnLeft();
+}
+
+void WorkWindow::removeSquareColumnRight(){
+    m_boardPtrs.at(m_activeBoardId)->removeSquareColumnRight();
+}
+
+void WorkWindow::removeSquareColumnLeft(){
+    m_boardPtrs.at(m_activeBoardId)->removeSquareColumnLeft();
+}
+
 void WorkWindow::addBoardBorder(){
     m_boardPtrs.at(m_activeBoardId)->addBorder();
 }
@@ -404,7 +420,7 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
     auto tile_o = m_boardPtrs.at(m_activeBoardId)->getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "WorkWindow: unable to find tile "
+        std::cout << "WorkWindow: unable to find logic tile "
             << coord.getNotation() << " on board with id "
             << m_activeBoardId
             << " when adding highlight" << std::endl;

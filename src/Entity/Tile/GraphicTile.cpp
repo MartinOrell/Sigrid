@@ -78,6 +78,11 @@ GraphicTile& GraphicTile::operator =(const GraphicTile& rhs){
         m_highlightPtr->setFillColor(rhs.m_highlightPtr->getFillColor());
         m_highlightPtr->setPosition(rhs.m_highlightPtr->getPosition());
     }
+    else{
+        if(m_highlightPtr){
+            m_highlightPtr.reset();
+        }
+    }
     return *this;
 }
 

@@ -558,6 +558,22 @@ void MainWindow::handleAction(const sigrid::Action action){
         setCoordinateSize(size);
         return;
     }
+    else if(std::holds_alternative<ActionType::AddSquareColumnRight>(action)){
+        addSquareColumnRight();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::AddSquareColumnLeft>(action)){
+        addSquareColumnLeft();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveSquareColumnRight>(action)){
+        removeSquareColumnRight();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveSquareColumnLeft>(action)){
+        removeSquareColumnLeft();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
         addBoardBorder();
         return;
@@ -974,6 +990,42 @@ void MainWindow::setCoordinateSize(const float& size){
         m_menu->toggleItem("SetCoordinateSize");
     }
 
+    createGraphic();
+}
+
+void MainWindow::addSquareColumnRight(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->addSquareColumnRight();
+    createGraphic();
+}
+
+void MainWindow::addSquareColumnLeft(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->addSquareColumnLeft();
+    createGraphic();
+}
+
+void MainWindow::removeSquareColumnRight(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->removeSquareColumnRight();
+    createGraphic();
+}
+
+void MainWindow::removeSquareColumnLeft(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->removeSquareColumnLeft();
     createGraphic();
 }
 

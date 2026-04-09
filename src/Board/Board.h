@@ -111,6 +111,14 @@ namespace sigrid{
 
             void setCoordinateSize(const float& size);
 
+            void addSquareColumnRight();
+
+            void addSquareColumnLeft();
+
+            void removeSquareColumnRight();
+
+            void removeSquareColumnLeft();
+
             void addBorder();
 
             void removeBorder();
