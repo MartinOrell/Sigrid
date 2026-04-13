@@ -29,6 +29,10 @@ namespace sigrid{
             void addColumnLeft(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight);
             void removeColumnRight(const bool& isLeftToRight);
             void removeColumnLeft(const bool& isLeftToRight);
+            void addRowUp(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
+            void addRowDown(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
+            void removeRowUp(const bool& isTopToBottom);
+            void removeRowDown(const bool& isTopToBottom);
 
             int getNumColumns() const;
             int getNumRows() const;

@@ -77,14 +77,29 @@ void RectangleBorder::hide(){
 }
 
 void RectangleBorder::addWidth(const float& addedWidth){
+
     if(m_right){
-        m_right->move({addedWidth, 0});
+        m_right->move({addedWidth, 0.f});
     }
     if(m_top){
-        m_top->setSize(m_top->getSize()+sf::Vector2f{addedWidth, 0});
+        m_top->setSize(m_top->getSize()+sf::Vector2f{addedWidth, 0.f});
     }
     if(m_bottom){
-        m_bottom->setSize(m_bottom->getSize()+sf::Vector2f{addedWidth, 0});
+        m_bottom->setSize(m_bottom->getSize()+sf::Vector2f{addedWidth, 0.f});
+    }
+}
+
+void RectangleBorder::addHeight(const float& addedHeight){
+
+    if(m_left){
+        m_left->setSize(m_left->getSize()+sf::Vector2f{0,addedHeight});
+    }
+    if(m_right){
+        m_right->setSize(m_right->getSize()+sf::Vector2f{0,addedHeight});
+        
+    }
+    if(m_bottom){
+        m_bottom->move({0.f, addedHeight});
     }
 }
 

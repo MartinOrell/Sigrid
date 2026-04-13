@@ -574,6 +574,22 @@ void MainWindow::handleAction(const sigrid::Action action){
         removeSquareColumnLeft();
         return;
     }
+    else if(std::holds_alternative<ActionType::AddSquareRowUp>(action)){
+        addSquareRowUp();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::AddSquareRowDown>(action)){
+        addSquareRowDown();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveSquareRowUp>(action)){
+        removeSquareRowUp();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveSquareRowDown>(action)){
+        removeSquareRowDown();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
         addBoardBorder();
         return;
@@ -1026,6 +1042,42 @@ void MainWindow::removeSquareColumnLeft(){
     }
 
     m_workWindow->removeSquareColumnLeft();
+    createGraphic();
+}
+
+void MainWindow::addSquareRowUp(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->addSquareRowUp();
+    createGraphic();
+}
+
+void MainWindow::addSquareRowDown(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->addSquareRowDown();
+    createGraphic();
+}
+
+void MainWindow::removeSquareRowUp(){
+    if(!m_workWindow){
+        return;
+    }
+    
+    m_workWindow->removeSquareRowUp();
+    createGraphic();
+}
+
+void MainWindow::removeSquareRowDown(){
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->removeSquareRowDown();
     createGraphic();
 }
 

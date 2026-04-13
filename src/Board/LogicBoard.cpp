@@ -376,6 +376,40 @@ bool LogicBoard::removeSquareColumnLeft(){
     return true;
 }
 
+bool LogicBoard::addSquareRowUp(){
+    if(!m_tileLayer.addRowUp()){
+        return false;
+    }
+    m_pieceLayer.moveEntitiesDown();
+    m_arrowLayer.moveArrowsDown();
+    return true;
+}
+
+bool LogicBoard::addSquareRowDown(){
+    return m_tileLayer.addRowDown();
+}
+
+bool LogicBoard::removeSquareRowUp(){
+    if(!m_tileLayer.removeRowUp()){
+        return false;
+    }
+    m_pieceLayer.removeRow(0);
+    m_pieceLayer.moveEntitiesUp();
+    m_arrowLayer.removeRow(0);
+    m_arrowLayer.moveArrowsUp();
+    return true;
+}
+
+bool LogicBoard::removeSquareRowDown(){
+    if(!m_tileLayer.removeRowDown()){
+        return false;
+    }
+    int rowId = m_tileLayer.getNumRows();
+    m_pieceLayer.removeRow(rowId);
+    m_arrowLayer.removeRow(rowId);
+    return true;
+}
+
 void LogicBoard::print(){
     std::cout << "Printing board" << std::endl;
     std::cout << "Number of columns: " << getNumColumns() << std::endl;

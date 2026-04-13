@@ -381,6 +381,22 @@ void WorkWindow::removeSquareColumnLeft(){
     m_boardPtrs.at(m_activeBoardId)->removeSquareColumnLeft();
 }
 
+void WorkWindow::addSquareRowUp(){
+    m_boardPtrs.at(m_activeBoardId)->addSquareRowUp();
+}
+
+void WorkWindow::addSquareRowDown(){
+    m_boardPtrs.at(m_activeBoardId)->addSquareRowDown();
+}
+
+void WorkWindow::removeSquareRowUp(){
+    m_boardPtrs.at(m_activeBoardId)->removeSquareRowUp();
+}
+
+void WorkWindow::removeSquareRowDown(){
+    m_boardPtrs.at(m_activeBoardId)->removeSquareRowDown();
+}
+
 void WorkWindow::addBoardBorder(){
     m_boardPtrs.at(m_activeBoardId)->addBorder();
 }

@@ -95,6 +95,24 @@ void GraphicArrows::removeColumn(const int& columnId){
     }
 }
 
+void GraphicArrows::removeRow(const int& rowId){
+
+    for(auto arrowIt = m_arrows.begin(); arrowIt != m_arrows.end();){
+        if(arrowIt->first.from.y == rowId || arrowIt->first.to.y == rowId){
+            for(auto orderIt = m_drawOrder.begin(); orderIt != m_drawOrder.end(); orderIt++){
+                if(*orderIt == arrowIt->first){
+                    m_drawOrder.erase(orderIt);
+                    break;
+                }
+            }
+            arrowIt = m_arrows.erase(arrowIt);
+        }
+        else{
+            arrowIt++;
+        }
+    }
+}
+
 void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftToRight){
     int minX = 2147483647;
     int maxX = 0;
@@ -123,7 +141,6 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
                 return arrow.first.from == Coord{x,y};
             };
 
-            ;
             for(auto arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);arrowIt != m_arrows.end();arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                 Coord from{x+1,y};
                 Coord to{arrowIt->first.to.x+1,arrowIt->first.to.y};
@@ -173,7 +190,6 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
                 return arrow.first.from == Coord{x,y};
             };
 
-            ;
             for(auto arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);arrowIt != m_arrows.end();arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                 Coord from{x-1,y};
                 Coord to{arrowIt->first.to.x-1,arrowIt->first.to.y};
@@ -187,6 +203,104 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
                 m_arrows.insert({{from,to},arrowIt->second});
                 if(isLeftToRight){
                     m_arrows.at({from,to}).move({-tileWidth, 0.f});
+                }
+                m_arrows.erase(arrowIt);
+            }
+        }
+    }
+}
+
+void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBottom){
+
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(auto& arrow: m_arrows){
+        if(arrow.first.from.x < minX){
+            minX = arrow.first.from.x;
+        }
+        if(arrow.first.from.x > maxX){
+            maxX = arrow.first.from.x;
+        }
+        if(arrow.first.from.y < minY){
+            minY = arrow.first.from.y;
+        }
+        if(arrow.first.from.y > maxY){
+            maxY = arrow.first.from.y;
+        }
+    }
+
+    for(int y = minY; y <= maxY; y++){
+        for(int x = minX; x <= maxX; x++){
+
+            auto isFrom = [&x, &y](std::pair<CoordPair,GraphicArrow> arrow) {
+                return arrow.first.from == Coord{x,y};
+            };
+
+            for(auto arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);arrowIt != m_arrows.end();arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
+                Coord from{x,y-1};
+                Coord to{arrowIt->first.to.x,arrowIt->first.to.y-1};
+                for(auto orderIt = m_drawOrder.begin(); orderIt != m_drawOrder.end(); orderIt++){
+                    if(*orderIt == arrowIt->first){
+                        m_drawOrder.erase(orderIt);
+                        break;
+                    }
+                }
+                m_drawOrder.push_back({from, to});
+                m_arrows.insert({{from,to},arrowIt->second});
+                if(isTopToBottom){
+                    m_arrows.at({from,to}).move({0.f, -tileHeight});
+                }
+                m_arrows.erase(arrowIt);
+            }
+        }
+    }
+}
+
+void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToBottom){
+
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(auto& arrow: m_arrows){
+        if(arrow.first.from.x < minX){
+            minX = arrow.first.from.x;
+        }
+        if(arrow.first.from.x > maxX){
+            maxX = arrow.first.from.x;
+        }
+        if(arrow.first.from.y < minY){
+            minY = arrow.first.from.y;
+        }
+        if(arrow.first.from.y > maxY){
+            maxY = arrow.first.from.y;
+        }
+    }
+
+    for(int y = maxY; y >= minY; y--){
+        for(int x = minX; x <= maxX; x++){
+
+            auto isFrom = [&x, &y](std::pair<CoordPair,GraphicArrow> arrow) {
+                return arrow.first.from == Coord{x,y};
+            };
+
+            for(auto arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);arrowIt != m_arrows.end();arrowIt = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
+                Coord from{x,y+1};
+                Coord to{arrowIt->first.to.x,arrowIt->first.to.y+1};
+                for(auto orderIt = m_drawOrder.begin(); orderIt != m_drawOrder.end(); orderIt++){
+                    if(*orderIt == arrowIt->first){
+                        m_drawOrder.erase(orderIt);
+                        break;
+                    }
+                }
+                m_drawOrder.push_back({from, to});
+                m_arrows.insert({{from,to},arrowIt->second});
+                if(isTopToBottom){
+                    m_arrows.at({from,to}).move({0.f, tileHeight});
                 }
                 m_arrows.erase(arrowIt);
             }

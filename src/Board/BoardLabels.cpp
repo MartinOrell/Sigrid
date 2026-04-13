@@ -186,10 +186,10 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
     if(m_bottomInsideCoordinateLabels.size() > 0){
         sf::Text label{m_bottomInsideCoordinateLabels.back()};
         if(isLeftToRight){
-            label.move({tileWidth, 0});
+            label.move({tileWidth, 0.f});
         }
         else{
-            label.move({-tileWidth, 0});
+            label.move({-tileWidth, 0.f});
         }
         std::string s = label.getString();
         s.at(0)++;
@@ -199,10 +199,10 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
     if(m_bottomOutsideCoordinateLabels.size() > 0){
         sf::Text label{m_bottomOutsideCoordinateLabels.back()};
         if(isLeftToRight){
-            label.move({tileWidth, 0});
+            label.move({tileWidth, 0.f});
         }
         else{
-            label.move({-tileWidth, 0});
+            label.move({-tileWidth, 0.f});
         }
         std::string s = label.getString();
         s.at(0)++;
@@ -217,6 +217,51 @@ void BoardLabels::removeHorizontalLabel(){
     }
     if(m_bottomOutsideCoordinateLabels.size() > 0){
         m_bottomOutsideCoordinateLabels.pop_back();
+    }
+}
+
+void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToBottom){
+    //currently not taking textWidth into consideration
+
+    if(m_leftInsideCoordinateLabels.size() > 0){
+        sf::Text label{m_leftInsideCoordinateLabels.back()};
+        if(isTopToBottom){
+            label.move({0.f, tileHeight});
+        }
+        else{
+            label.move({0.f, -tileHeight});
+        }
+        std::string s = label.getString();
+        int i = stoi(s);
+        i++;
+        s = std::to_string(i);
+        label.setString(s);
+        m_leftInsideCoordinateLabels.push_back(label);
+    }
+    if(m_leftOutsideCoordinateLabels.size() > 0){
+        sf::Text label{m_leftOutsideCoordinateLabels.back()};
+        if(isTopToBottom){
+            label.move({0.f, tileHeight});
+        }
+        else{
+            label.move({0.f, -tileHeight});
+        }
+        std::string s = label.getString();
+        int i = stoi(s);
+        i++;
+        s = std::to_string(i);
+        label.setString(s);
+        m_leftOutsideCoordinateLabels.push_back(label);
+    }
+}
+
+void BoardLabels::removeVerticalLabel(){
+
+    if(m_leftInsideCoordinateLabels.size() > 0){
+        m_leftInsideCoordinateLabels.pop_back();
+    }
+    if(m_leftOutsideCoordinateLabels.size() > 0){
+        m_leftOutsideCoordinateLabels.pop_back();
     }
 }
 

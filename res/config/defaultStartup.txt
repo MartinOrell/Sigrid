@@ -198,6 +198,10 @@ Menu: [
       "Insert Column Left" addSquareColumnLeft
       "Remove Column Right" removeSquareColumnRight
       "Remove Column Left" removeSquareColumnLeft
+      "Insert Row Up" addSquareRowUp
+      "Insert Row Down" addSquareRowDown
+      "Remove Row Up" removeSquareRowUp
+      "Remove Row Down" removeSquareRowDown
       ToggleBoardBorder [
         "Add Border" addBoardBorder
         "Remove Border" removeBoardBorder

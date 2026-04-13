@@ -65,6 +65,18 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "removeSquareColumnLeft"){
         return ActionType::RemoveSquareColumnLeft{};
     }
+    else if(name == "addSquareRowUp"){
+        return ActionType::AddSquareRowUp{};
+    }
+    else if(name == "addSquareRowDown"){
+        return ActionType::AddSquareRowDown{};
+    }
+    else if(name == "removeSquareRowUp"){
+        return ActionType::RemoveSquareRowUp{};
+    }
+    else if(name == "removeSquareRowDown"){
+        return ActionType::RemoveSquareRowDown{};
+    }
     else if(name == "addBoardBorder"){
         return ActionType::AddBoardBorder{};
     }

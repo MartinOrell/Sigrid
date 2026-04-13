@@ -228,6 +228,10 @@ bool GraphicBoard::isLeftToRight() const{
     return m_isLeftToRight;
 }
 
+bool GraphicBoard::isTopToBottom() const{
+    return m_isTopToBottom;
+}
+
 bool GraphicBoard::isCoordinatesOutside() const{
     if(!m_labelsPtr){
         return false;
@@ -654,6 +658,135 @@ void GraphicBoard::removeSquareColumnLeft(){
             m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
             m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
         }
+    }
+    resizeTexture();
+    redrawTexture();
+}
+
+void GraphicBoard::addSquareRowUp(const std::vector<int>& repeatTileColorIds){
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+
+    m_tileLayerPtr->addRowUp(repeatTileColorIds, m_isTopToBottom);
+    if(m_pieceLayerPtr){
+        m_pieceLayerPtr->moveEntitiesDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+    }
+    if(m_arrowLayerPtr){
+        m_arrowLayerPtr->moveArrowsDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+    }
+    if(m_borderPtr){
+        m_borderPtr->addHeight(m_tileLayerPtr->getTileSize().y);
+    }
+    if(m_labelsPtr){
+        m_labelsPtr->addVerticalLabel(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+        if(!m_isTopToBottom){
+            m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        }
+        m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+    }
+    resizeTexture();
+    redrawTexture();
+}
+
+void GraphicBoard::addSquareRowDown(const std::vector<int>& repeatTileColorIds){
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+    m_tileLayerPtr->addRowDown(repeatTileColorIds, m_isTopToBottom);
+    if(m_pieceLayerPtr){
+        if(!m_isTopToBottom){
+            m_pieceLayerPtr->move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        }
+    }
+    if(m_arrowLayerPtr){
+        if(!m_isTopToBottom){
+            m_arrowLayerPtr->move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        }
+    }
+    if(m_borderPtr){
+        m_borderPtr->addHeight(m_tileLayerPtr->getTileSize().y);
+    }
+    if(m_labelsPtr){
+        m_labelsPtr->addVerticalLabel(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+        if(!m_isTopToBottom){
+            m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        }
+        m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+        m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+    }
+    resizeTexture();
+    redrawTexture();
+}
+
+void GraphicBoard::removeSquareRowUp(){
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+    m_tileLayerPtr->removeRowUp(m_isLeftToRight);
+    if(m_pieceLayerPtr){
+        m_pieceLayerPtr->removeRow(0);
+        m_pieceLayerPtr->moveEntitiesUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+    }
+    if(m_arrowLayerPtr){
+        m_arrowLayerPtr->removeRow(0);
+        m_arrowLayerPtr->moveArrowsUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
+    }
+    if(m_turnTokenPtr){
+        m_turnTokenPtr->move({0.f, -m_tileLayerPtr->getTileSize().y});
+    }
+    if(m_borderPtr){
+        m_borderPtr->addHeight(-m_tileLayerPtr->getTileSize().y);
+    }
+    if(m_labelsPtr){
+        m_labelsPtr->removeVerticalLabel();
+        if(!m_isTopToBottom){
+            m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        }
+        m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+    }
+    resizeTexture();
+    redrawTexture();
+}
+
+void GraphicBoard::removeSquareRowDown(){
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+    m_tileLayerPtr->removeRowDown(m_isTopToBottom);
+    int rowId = m_tileLayerPtr->getNumRows();
+    if(m_pieceLayerPtr){
+        m_pieceLayerPtr->removeRow(rowId);
+        if(!m_isTopToBottom){
+            m_pieceLayerPtr->move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        }
+    }
+    if(m_arrowLayerPtr){
+        m_arrowLayerPtr->removeRow(rowId);
+        if(!m_isTopToBottom){
+            m_arrowLayerPtr->move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        }
+    }
+    if(m_borderPtr){
+        m_borderPtr->addHeight(-m_tileLayerPtr->getTileSize().y);
+    }
+    if(m_labelsPtr){
+        m_labelsPtr->removeVerticalLabel();
+        if(!m_isTopToBottom){
+            m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        }
+        m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+        m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
     }
     resizeTexture();
     redrawTexture();

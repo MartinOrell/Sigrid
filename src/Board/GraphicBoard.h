@@ -71,6 +71,8 @@ namespace sigrid{
 
             bool isLeftToRight() const;
 
+            bool isTopToBottom() const;
+
             bool isCoordinatesOutside() const;
 
             bool isWithinTurnToken(const sf::Vector2f& point) const;
@@ -104,6 +106,11 @@ namespace sigrid{
             void addSquareColumnLeft(const std::vector<int>& repeatTileColorIds);
             void removeSquareColumnRight();
             void removeSquareColumnLeft();
+
+            void addSquareRowUp(const std::vector<int>& repeatTileColorIds);
+            void addSquareRowDown(const std::vector<int>& repeatTileColorIds);
+            void removeSquareRowUp();
+            void removeSquareRowDown();
 
             void flip();
 

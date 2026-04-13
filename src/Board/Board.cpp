@@ -625,6 +625,70 @@ void Board::removeSquareColumnLeft(){
     deselect();
 }
 
+void Board::addSquareRowUp(){
+
+    if(m_graphicBoard->isTopToBottom()){
+        if(m_logicBoard->addSquareRowUp()){
+            m_graphicBoard->addSquareRowUp(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    else{
+        if(m_logicBoard->addSquareRowDown()){
+            m_graphicBoard->addSquareRowDown(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    
+    deselect();
+}
+
+void Board::addSquareRowDown(){
+
+    if(m_graphicBoard->isTopToBottom()){
+        if(m_logicBoard->addSquareRowDown()){
+            m_graphicBoard->addSquareRowDown(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    else{
+        if(m_logicBoard->addSquareRowUp()){
+            m_graphicBoard->addSquareRowUp(m_logicBoard->getRepeatColorIds());
+        }
+    }
+    
+    deselect();
+}
+
+void Board::removeSquareRowUp(){
+
+    if(m_graphicBoard->isTopToBottom()){
+        if(m_logicBoard->removeSquareRowUp()){
+            m_graphicBoard->removeSquareRowUp();
+        }
+    }
+    else{
+        if(m_logicBoard->removeSquareRowDown()){
+            m_graphicBoard->removeSquareRowDown();
+        }
+    }
+
+    deselect();
+}
+
+void Board::removeSquareRowDown(){
+
+    if(m_graphicBoard->isTopToBottom()){
+        if(m_logicBoard->removeSquareRowDown()){
+            m_graphicBoard->removeSquareRowDown();
+        }
+    }
+    else{
+        if(m_logicBoard->removeSquareRowUp()){
+            m_graphicBoard->removeSquareRowUp();
+        }
+    }
+    
+    deselect();
+}
+
 void Board::addBorder(){
     m_graphicBoard->addBorder();
 }

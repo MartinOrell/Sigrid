@@ -65,6 +65,10 @@ namespace sigrid{
             void addSquareColumnLeft();
             void removeSquareColumnRight();
             void removeSquareColumnLeft();
+            void addSquareRowUp();
+            void addSquareRowDown();
+            void removeSquareRowUp();
+            void removeSquareRowDown();
             void addBoardBorder();
             void removeBoardBorder();
             void addTurnToken();

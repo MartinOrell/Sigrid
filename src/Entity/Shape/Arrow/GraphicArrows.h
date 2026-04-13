@@ -30,9 +30,12 @@ namespace sigrid{
             void clear();
 
             void removeColumn(const int& columnId);
+            void removeRow(const int& rowId);
 
             void moveArrowsRight(const float& tileWidth, const bool& isLeftToRight);
             void moveArrowsLeft(const float& tileWidth, const bool& isLeftToRight);
+            void moveArrowsUp(const float& tileHeight, const bool& isTopToBottom);
+            void moveArrowsDown(const float& tileHeight, const bool& isTopToBottom);
 
             void move(const sf::Vector2f& offset);
 

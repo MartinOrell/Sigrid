@@ -165,6 +165,136 @@ bool LogicTiles::removeColumnLeft(){
     return true;
 }
 
+bool LogicTiles::addRowUp(){
+
+    if(m_repeatTileColorIds.size() == 0){
+        return false;
+    }
+    int lastTileColorId = m_repeatTileColorIds.back();
+    m_repeatTileColorIds.insert(m_repeatTileColorIds.begin(),lastTileColorId);
+    m_repeatTileColorIds.pop_back();
+
+    m_rows++;
+    if(m_rows > 1){
+        int y = m_rows-1;
+        for(int x = 0; x < m_columns; x++){
+            auto upIt = m_tiles.find({x,y-1});
+            if(upIt != m_tiles.end()){
+                LogicTile newTile = upIt->second;
+                m_tiles.insert({{x,y},newTile});
+            }
+        }
+    }
+    for(int y = m_rows-1; y > 0; y--){
+        for(int x = 0; x < m_columns; x++){
+            auto currentIt = m_tiles.find({x,y});
+            auto upIt = m_tiles.find({x,y-1});
+            if(upIt != m_tiles.end()){
+                if(currentIt == m_tiles.end()){
+                    LogicTile newTile = upIt->second;
+                    m_tiles.insert({{x,y},newTile});
+                }
+                else{
+                    currentIt->second = upIt->second;
+                }
+            }
+            else{
+                if(currentIt != m_tiles.end()){
+                    m_tiles.erase(currentIt);
+                }
+            }
+        }
+    }
+    {
+        int y = 0;
+        for(int x = 0; x < m_columns; x++){
+            auto currentIt = m_tiles.find({x,y});
+            if(currentIt == m_tiles.end()){
+                LogicTile newTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())};
+                m_tiles.insert({{x,y},newTile});
+            }
+            else{
+                currentIt->second = LogicTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())};
+            }
+        }
+    }
+
+    return true;
+}
+
+bool LogicTiles::addRowDown(){
+
+    if(m_repeatTileColorIds.size() == 0){
+        return false;
+    }
+
+    m_rows++;
+    int y = m_rows-1;
+    for(int x = 0; x < m_columns; x++){
+        LogicTile newTile{m_repeatTileColorIds.at((x+y)%m_repeatTileColorIds.size())};
+        m_tiles.insert({{x,y},newTile});
+    }
+    return true;
+}
+
+bool LogicTiles::removeRowUp(){
+
+    if(m_rows <= 1){
+        return false;
+    }
+
+    int lastTileColorId = m_repeatTileColorIds.back();
+    m_repeatTileColorIds.insert(m_repeatTileColorIds.begin(),lastTileColorId);
+    m_repeatTileColorIds.pop_back();
+    m_rows--;
+
+    for(int y = m_rows-1; y >= 0; y--){
+        for(int x = 0; x < m_columns; x++){
+            auto currentIt = m_tiles.find({x,y});
+            auto downIt = m_tiles.find({x, y+1});
+            if(downIt != m_tiles.end()){
+                if(currentIt == m_tiles.end()){
+                    m_tiles.insert({{x,y}, downIt->second});
+                }
+                else{
+                    currentIt->second = downIt->second;
+                }
+            }
+            else{
+                if(currentIt != m_tiles.end()){
+                    m_tiles.erase(currentIt);
+                }
+            }
+        }
+    }
+    {
+        int y = m_rows;
+        for(int x = 0; x < m_columns; x++){
+            auto it = m_tiles.find({x,y});
+            if(it != m_tiles.end()){
+                m_tiles.erase(it);
+            }
+        }
+    }
+    return true;
+}
+
+bool LogicTiles::removeRowDown(){
+    
+    if(m_rows <= 1){
+        return false;
+    }
+    m_rows--;
+    int y = m_rows;
+    for(int x = 0; x < m_columns; x++){
+        auto currentIt = m_tiles.find({x,y});
+        if(currentIt != m_tiles.end()){
+            m_tiles.erase(currentIt);
+        }
+    }
+    return true;
+}
+
 std::optional<LogicTile> LogicTiles::getTile(const Coord& coord) const{
     
     auto it = m_tiles.find(coord);

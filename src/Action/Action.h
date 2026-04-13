@@ -66,6 +66,10 @@ namespace sigrid{
         struct AddSquareColumnLeft{};
         struct RemoveSquareColumnRight{};
         struct RemoveSquareColumnLeft{};
+        struct AddSquareRowUp{};
+        struct AddSquareRowDown{};
+        struct RemoveSquareRowUp{};
+        struct RemoveSquareRowDown{};
         struct AddBoardBorder{};
         struct RemoveBoardBorder{};
         struct AddTurnToken{};
@@ -107,6 +111,10 @@ namespace sigrid{
         ActionType::AddSquareColumnLeft,
         ActionType::RemoveSquareColumnRight,
         ActionType::RemoveSquareColumnLeft,
+        ActionType::AddSquareRowUp,
+        ActionType::AddSquareRowDown,
+        ActionType::RemoveSquareRowUp,
+        ActionType::RemoveSquareRowDown,
         ActionType::AddBoardBorder,
         ActionType::RemoveBoardBorder,
         ActionType::AddTurnToken,

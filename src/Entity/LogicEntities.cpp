@@ -87,6 +87,26 @@ void LogicEntities::removeColumn(const int& columnId){
     }
 }
 
+void LogicEntities::removeRow(const int& rowId){
+    for(auto it = m_pieces.begin(); it != m_pieces.end();){
+        if(it->first.y == rowId){
+            it = m_pieces.erase(it);
+        }
+        else{
+            it++;
+        }
+    }
+
+    for(auto it = m_circles.begin(); it != m_circles.end();){
+        if(it->first.y == rowId){
+            it = m_circles.erase(it);
+        }
+        else{
+            it++;
+        }
+    }
+}
+
 void LogicEntities::moveEntitiesRight(){
 
     if(m_pieces.size() > 0){
@@ -214,6 +234,140 @@ void LogicEntities::moveEntitiesLeft(){
                 auto it = m_circles.find({x,y});
                 if(it != m_circles.end()){
                     m_circles.insert({{x-1,y},it->second});
+                    m_circles.erase(it);
+                }
+            }
+        }
+    }
+}
+
+void LogicEntities::moveEntitiesUp(){
+
+    if(m_pieces.size() > 0){
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& piece: m_pieces){
+            if(piece.first.x < minX){
+                minX = piece.first.x;
+            }
+            if(piece.first.x > maxX){
+                maxX = piece.first.x;
+            }
+            if(piece.first.y < minY){
+                minY = piece.first.y;
+            }
+            if(piece.first.y > maxY){
+                maxY = piece.first.y;
+            }
+        }
+
+        for(int y = minY; y <= maxY; y++){
+            for(int x = minX; x <= maxX; x++){
+                auto it = m_pieces.find({x,y});
+                if(it != m_pieces.end()){
+                    m_pieces.insert({{x,y-1},it->second});
+                    m_pieces.erase(it);
+                }
+            }
+        }
+    }
+
+    if(m_circles.size() > 0){
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& circle: m_circles){
+            if(circle.first.x < minX){
+                minX = circle.first.x;
+            }
+            if(circle.first.x > maxX){
+                maxX = circle.first.x;
+            }
+            if(circle.first.y < minY){
+                minY = circle.first.y;
+            }
+            if(circle.first.y > maxY){
+                maxY = circle.first.y;
+            }
+        }
+
+        for(int y = minY; y <= maxY; y++){
+            for(int x = minX; x <= maxX; x++){
+                auto it = m_circles.find({x,y});
+                if(it != m_circles.end()){
+                    m_circles.insert({{x,y-1},it->second});
+                    m_circles.erase(it);
+                }
+            }
+        }
+    }
+}
+
+void LogicEntities::moveEntitiesDown(){
+
+    if(m_pieces.size() > 0){
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& piece: m_pieces){
+            if(piece.first.x < minX){
+                minX = piece.first.x;
+            }
+            if(piece.first.x > maxX){
+                maxX = piece.first.x;
+            }
+            if(piece.first.y < minY){
+                minY = piece.first.y;
+            }
+            if(piece.first.y > maxY){
+                maxY = piece.first.y;
+            }
+        }
+
+        for(int y = maxY; y >= minY; y--){
+            for(int x = minX; x <= maxX; x++){
+                auto it = m_pieces.find({x,y});
+                if(it != m_pieces.end()){
+                    m_pieces.insert({{x,y+1},it->second});
+                    m_pieces.erase(it);
+                }
+            }
+        }
+    }
+
+    if(m_circles.size() > 0){
+        int minX = 2147483647;
+        int maxX = 0;
+        int minY = 2147483647;
+        int maxY = 0;
+
+        for(auto& circle: m_circles){
+            if(circle.first.x < minX){
+                minX = circle.first.x;
+            }
+            if(circle.first.x > maxX){
+                maxX = circle.first.x;
+            }
+            if(circle.first.y < minY){
+                minY = circle.first.y;
+            }
+            if(circle.first.y > maxY){
+                maxY = circle.first.y;
+            }
+        }
+
+        for(int y = maxY; y >= minY; y--){
+            for(int x = minX; x <= maxX; x++){
+                auto it = m_circles.find({x,y});
+                if(it != m_circles.end()){
+                    m_circles.insert({{x,y+1},it->second});
                     m_circles.erase(it);
                 }
             }

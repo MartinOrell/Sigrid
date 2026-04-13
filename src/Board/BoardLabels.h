@@ -35,6 +35,8 @@ namespace sigrid{
 
             void addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight);
             void removeHorizontalLabel();
+            void addVerticalLabel(const float& tileHeight, const bool& isTopToBottom);
+            void removeVerticalLabel();
 
             void show();
             void hide();

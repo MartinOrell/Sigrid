@@ -27,6 +27,7 @@ namespace sigrid{
             void hide();
 
             void addWidth(const float& addedWidth);
+            void addHeight(const float& addedHeight);
 
             void move(const sf::Vector2f& offset);
 

@@ -72,6 +72,14 @@ namespace sigrid{
 
             void removeSquareColumnLeft();
 
+            void addSquareRowUp();
+
+            void addSquareRowDown();
+
+            void removeSquareRowUp();
+
+            void removeSquareRowDown();
+
             void addBoardBorder();
 
             void removeBoardBorder();

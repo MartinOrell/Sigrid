@@ -27,6 +27,10 @@ namespace sigrid{
             bool addColumnLeft();
             bool removeColumnRight();
             bool removeColumnLeft();
+            bool addRowUp();
+            bool addRowDown();
+            bool removeRowUp();
+            bool removeRowDown();
 
             std::optional<LogicTile> getTile(const Coord& coord) const;
 

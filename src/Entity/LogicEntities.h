@@ -23,9 +23,12 @@ namespace sigrid{
             std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
 
             void removeColumn(const int& columnId);
+            void removeRow(const int& rowId);
 
             void moveEntitiesRight();
             void moveEntitiesLeft();
+            void moveEntitiesUp();
+            void moveEntitiesDown();
 
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:

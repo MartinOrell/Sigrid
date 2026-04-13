@@ -54,6 +54,10 @@ namespace sigrid{
             bool addSquareColumnLeft();
             bool removeSquareColumnRight();
             bool removeSquareColumnLeft();
+            bool addSquareRowUp();
+            bool addSquareRowDown();
+            bool removeSquareRowUp();
+            bool removeSquareRowDown();
 
             void print();
             void clearEntities();
