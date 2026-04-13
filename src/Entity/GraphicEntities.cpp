@@ -63,27 +63,24 @@ void GraphicEntities::removeEntity(const Coord& coord){
     m_circles.erase(coord);
 }
 
+template<typename T> bool moveEntity_h(T& list, const Coord& fromCoord, const Coord& toCoord, const sf::Vector2f& newPosition){
+
+    auto it = list.find(fromCoord);
+    if(it == list.end()){
+        return false;
+    }
+    it->second.setPosition(newPosition);
+    list.insert({toCoord, it->second});
+    list.erase(it);
+    return true;
+}
+
 void GraphicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord, const sf::Vector2f& newPosition){
-    {
-        auto it = m_pieces.find(fromCoord);
-        if(it != m_pieces.end()){
-            GraphicPiece piece{it->second};
-            piece.setPosition(newPosition);
-            m_pieces.insert({toCoord, piece});
-            m_pieces.erase(fromCoord);
-            return;
-        }
+    
+    if(moveEntity_h<std::map<Coord, GraphicPiece>>(m_pieces, fromCoord, toCoord, newPosition)){
+        return;
     }
-    {
-        auto it = m_circles.find(fromCoord);
-        if(it != m_circles.end()){
-            GraphicCircle circle{it->second};
-            circle.setPosition(newPosition);
-            m_circles.insert({toCoord, circle});
-            m_circles.erase(fromCoord);
-            return;
-        }
-    }
+    moveEntity_h<std::map<Coord, GraphicCircle>>(m_circles, fromCoord, toCoord, newPosition);
 }
 
 void GraphicEntities::clear(){
@@ -107,20 +104,28 @@ std::optional<GraphicEntity> GraphicEntities::getEntityAt(const Coord& coord) co
     return std::nullopt;
 }
 
-void GraphicEntities::removeColumn(const int& columnId){
+template <typename T> void removeColumn_h(T& list, const int& columnId){
 
-    for(auto it = m_pieces.begin(); it != m_pieces.end();){
+    for(auto it = list.begin(); it != list.end();){
         if(it->first.x == columnId){
-            it = m_pieces.erase(it);
+            it = list.erase(it);
         }
         else{
             it++;
         }
     }
+}
 
-    for(auto it = m_circles.begin(); it != m_circles.end();){
-        if(it->first.x == columnId){
-            it = m_circles.erase(it);
+void GraphicEntities::removeColumn(const int& columnId){
+    removeColumn_h<std::map<Coord, GraphicPiece>>(m_pieces, columnId);
+    removeColumn_h<std::map<Coord, GraphicCircle>>(m_circles, columnId);
+}
+
+template <typename T> void removeRow_h(T& list, const int& rowId){
+
+    for(auto it = list.begin(); it != list.end();){
+        if(it->first.y == rowId){
+            it = list.erase(it);
         }
         else{
             it++;
@@ -129,316 +134,171 @@ void GraphicEntities::removeColumn(const int& columnId){
 }
 
 void GraphicEntities::removeRow(const int& rowId){
+    removeRow_h<std::map<Coord, GraphicPiece>>(m_pieces, rowId);
+    removeRow_h<std::map<Coord, GraphicCircle>>(m_circles, rowId);
+}
 
-    for(auto it = m_pieces.begin(); it != m_pieces.end();){
-        if(it->first.y == rowId){
-            it = m_pieces.erase(it);
+template <typename T> void moveEntitiesRight_h(T& list, const float& tileWidth, const bool& isLeftToRight){
+
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(auto& entity: list){
+        if(entity.first.x < minX){
+            minX = entity.first.x;
         }
-        else{
-            it++;
+        if(entity.first.x > maxX){
+            maxX = entity.first.x;
+        }
+        if(entity.first.y < minY){
+            minY = entity.first.y;
+        }
+        if(entity.first.y > maxY){
+            maxY = entity.first.y;
         }
     }
 
-    for(auto it = m_circles.begin(); it != m_circles.end();){
-        if(it->first.y == rowId){
-            it = m_circles.erase(it);
-        }
-        else{
-            it++;
+    for(int x = maxX; x >= minX; x--){
+        for(int y = minY; y <= maxY; y++){
+            auto it = list.find({x,y});
+            if(it != list.end()){
+                list.insert({{x+1,y},it->second});
+                if(isLeftToRight){
+                    list.at({x+1,y}).move({tileWidth, 0.f});
+                }
+                list.erase(it);
+            }
         }
     }
 }
 
 void GraphicEntities::moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight){
+    moveEntitiesRight_h<std::map<Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
+    moveEntitiesRight_h<std::map<Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
+}
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+template<typename T> void moveEntitiesLeft_h(T& list, const float& tileWidth, const bool& isLeftToRight){
 
-        for(auto& piece: m_pieces){
-            if(piece.first.x < minX){
-                minX = piece.first.x;
-            }
-            if(piece.first.x > maxX){
-                maxX = piece.first.x;
-            }
-            if(piece.first.y < minY){
-                minY = piece.first.y;
-            }
-            if(piece.first.y > maxY){
-                maxY = piece.first.y;
-            }
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(auto& entity: list){
+        if(entity.first.x < minX){
+            minX = entity.first.x;
         }
-
-        for(int x = maxX; x >= minX; x--){
-            for(int y = minY; y <= maxY; y++){
-                auto it = m_pieces.find({x,y});
-                if(it != m_pieces.end()){
-                    m_pieces.insert({{x+1,y},it->second});
-                    if(isLeftToRight){
-                        m_pieces.at({x+1,y}).move({tileWidth, 0.f});
-                    }
-                    m_pieces.erase(it);
-                }
-            }
+        if(entity.first.x > maxX){
+            maxX = entity.first.x;
+        }
+        if(entity.first.y < minY){
+            minY = entity.first.y;
+        }
+        if(entity.first.y > maxY){
+            maxY = entity.first.y;
         }
     }
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
-
-        for(auto& circle: m_circles){
-            if(circle.first.x < minX){
-                minX = circle.first.x;
-            }
-            if(circle.first.x > maxX){
-                maxX = circle.first.x;
-            }
-            if(circle.first.y < minY){
-                minY = circle.first.y;
-            }
-            if(circle.first.y > maxY){
-                maxY = circle.first.y;
-            }
-        }
-
-        for(int x = maxX; x >= minX; x--){
-            for(int y = minY; y <= maxY; y++){
-                auto it = m_circles.find({x,y});
-                if(it != m_circles.end()){
-                    m_circles.insert({{x+1,y},it->second});
-                    if(isLeftToRight){
-                        m_circles.at({x+1,y}).move({tileWidth, 0.f});
-                    }
-                    m_circles.erase(it);
+    for(int x = minX; x <= maxX; x++){
+        for(int y = minY; y <= maxY; y++){
+            auto it = list.find({x,y});
+            if(it != list.end()){
+                list.insert({{x-1,y},it->second});
+                if(isLeftToRight){
+                    list.at({x-1,y}).move({-tileWidth, 0.f});
                 }
+                list.erase(it);
             }
         }
     }
 }
 
 void GraphicEntities::moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight){
+    moveEntitiesLeft_h<std::map<Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
+    moveEntitiesLeft_h<std::map<Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
+}
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+template <typename T> void moveEntitiesUp_h(T& list, const float& tileHeight, const bool& isTopToBottom){
 
-        for(auto& piece: m_pieces){
-            if(piece.first.x < minX){
-                minX = piece.first.x;
-            }
-            if(piece.first.x > maxX){
-                maxX = piece.first.x;
-            }
-            if(piece.first.y < minY){
-                minY = piece.first.y;
-            }
-            if(piece.first.y > maxY){
-                maxY = piece.first.y;
-            }
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(auto& entity: list){
+        if(entity.first.x < minX){
+            minX = entity.first.x;
         }
-
-        for(int x = minX; x <= maxX; x++){
-            for(int y = minY; y <= maxY; y++){
-                auto it = m_pieces.find({x,y});
-                if(it != m_pieces.end()){
-                    m_pieces.insert({{x-1,y},it->second});
-                    if(isLeftToRight){
-                        m_pieces.at({x-1,y}).move({-tileWidth, 0.f});
-                    }
-                    m_pieces.erase(it);
-                }
-            }
+        if(entity.first.x > maxX){
+            maxX = entity.first.x;
+        }
+        if(entity.first.y < minY){
+            minY = entity.first.y;
+        }
+        if(entity.first.y > maxY){
+            maxY = entity.first.y;
         }
     }
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
-
-        for(auto& circle: m_circles){
-            if(circle.first.x < minX){
-                minX = circle.first.x;
-            }
-            if(circle.first.x > maxX){
-                maxX = circle.first.x;
-            }
-            if(circle.first.y < minY){
-                minY = circle.first.y;
-            }
-            if(circle.first.y > maxY){
-                maxY = circle.first.y;
-            }
-        }
-
+    for(int y = minY; y <= maxY; y++){
         for(int x = minX; x <= maxX; x++){
-            for(int y = minY; y <= maxY; y++){
-                auto it = m_circles.find({x,y});
-                if(it != m_circles.end()){
-                    m_circles.insert({{x-1,y},it->second});
-                    if(isLeftToRight){
-                        m_circles.at({x-1,y}).move({-tileWidth, 0.f});
-                    }
-                    m_circles.erase(it);
+            auto it = list.find({x,y});
+            if(it != list.end()){
+                list.insert({{x,y-1},it->second});
+                if(isTopToBottom){
+                    list.at({x,y-1}).move({0.f, -tileHeight});
                 }
+                list.erase(it);
             }
         }
     }
 }
 
 void GraphicEntities::moveEntitiesUp(const float& tileHeight, const bool& isTopToBottom){
+    moveEntitiesUp_h<std::map<Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
+    moveEntitiesUp_h<std::map<Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
+}
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+template <typename T> void moveEntitiesDown_h(T& list, const float& tileHeight, const bool& isTopToBottom){
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
 
-        for(auto& piece: m_pieces){
-            if(piece.first.x < minX){
-                minX = piece.first.x;
-            }
-            if(piece.first.x > maxX){
-                maxX = piece.first.x;
-            }
-            if(piece.first.y < minY){
-                minY = piece.first.y;
-            }
-            if(piece.first.y > maxY){
-                maxY = piece.first.y;
-            }
+    for(auto& entity: list){
+        if(entity.first.x < minX){
+            minX = entity.first.x;
         }
-
-        for(int y = minY; y <= maxY; y++){
-            for(int x = minX; x <= maxX; x++){
-                auto it = m_pieces.find({x,y});
-                if(it != m_pieces.end()){
-                    m_pieces.insert({{x,y-1},it->second});
-                    if(isTopToBottom){
-                        m_pieces.at({x,y-1}).move({0.f, -tileHeight});
-                    }
-                    m_pieces.erase(it);
-                }
-            }
+        if(entity.first.x > maxX){
+            maxX = entity.first.x;
+        }
+        if(entity.first.y < minY){
+            minY = entity.first.y;
+        }
+        if(entity.first.y > maxY){
+            maxY = entity.first.y;
         }
     }
 
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
-
-        for(auto& circle: m_circles){
-            if(circle.first.x < minX){
-                minX = circle.first.x;
-            }
-            if(circle.first.x > maxX){
-                maxX = circle.first.x;
-            }
-            if(circle.first.y < minY){
-                minY = circle.first.y;
-            }
-            if(circle.first.y > maxY){
-                maxY = circle.first.y;
-            }
-        }
-
-        for(int y = minY; y <= maxY; y++){
-            for(int x = minX; x <= maxX; x++){
-                auto it = m_circles.find({x,y});
-                if(it != m_circles.end()){
-                    m_circles.insert({{x,y-1},it->second});
-                    if(isTopToBottom){
-                        m_circles.at({x,y-1}).move({0.f, -tileHeight});
-                    }
-                    m_circles.erase(it);
+    for(int y = maxY; y >= minY; y--){
+        for(int x = minX; x <= maxX; x++){
+            auto it = list.find({x,y});
+            if(it != list.end()){
+                list.insert({{x,y+1},it->second});
+                if(isTopToBottom){
+                    list.at({x,y+1}).move({0.f, tileHeight});
                 }
+                list.erase(it);
             }
         }
     }
 }
 
 void GraphicEntities::moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom){
-
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
-
-        for(auto& piece: m_pieces){
-            if(piece.first.x < minX){
-                minX = piece.first.x;
-            }
-            if(piece.first.x > maxX){
-                maxX = piece.first.x;
-            }
-            if(piece.first.y < minY){
-                minY = piece.first.y;
-            }
-            if(piece.first.y > maxY){
-                maxY = piece.first.y;
-            }
-        }
-
-        for(int y = maxY; y >= minY; y--){
-            for(int x = minX; x <= maxX; x++){
-                auto it = m_pieces.find({x,y});
-                if(it != m_pieces.end()){
-                    m_pieces.insert({{x,y+1},it->second});
-                    if(isTopToBottom){
-                        m_pieces.at({x,y+1}).move({0.f, tileHeight});
-                    }
-                    m_pieces.erase(it);
-                }
-            }
-        }
-    }
-
-    {
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
-
-        for(auto& circle: m_circles){
-            if(circle.first.x < minX){
-                minX = circle.first.x;
-            }
-            if(circle.first.x > maxX){
-                maxX = circle.first.x;
-            }
-            if(circle.first.y < minY){
-                minY = circle.first.y;
-            }
-            if(circle.first.y > maxY){
-                maxY = circle.first.y;
-            }
-        }
-
-        for(int y = maxY; y >= minY; y--){
-            for(int x = minX; x <= maxX; x++){
-                auto it = m_circles.find({x,y});
-                if(it != m_circles.end()){
-                    m_circles.insert({{x,y+1},it->second});
-                    if(isTopToBottom){
-                        m_circles.at({x,y+1}).move({0.f, tileHeight});
-                    }
-                    m_circles.erase(it);
-                }
-            }
-        }
-    }
+    moveEntitiesDown_h<std::map<Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
+    moveEntitiesDown_h<std::map<Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
 }
 
 void GraphicEntities::move(const sf::Vector2f& offset){
