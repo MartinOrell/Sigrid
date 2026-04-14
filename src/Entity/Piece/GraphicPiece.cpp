@@ -1,9 +1,7 @@
 #include "GraphicPiece.h"
 
-#include <iostream>
-
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 using namespace sigrid;
 

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cctype>
 
+#include <SFML/Graphics/Image.hpp>
+
 using namespace sigrid;
 
 PieceManager::PieceManager(const std::vector<PieceColor>& pieceColors)
