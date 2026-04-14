@@ -1,6 +1,5 @@
 #include "Coord.h"
 
-#include <cctype>
 #include <iostream>
 
 using namespace sigrid;
