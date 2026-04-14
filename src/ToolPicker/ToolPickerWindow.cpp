@@ -1,8 +1,12 @@
 #include "ToolPickerWindow.h"
 
-#include <iostream>
+#include "ToolPickerContainer.h"
+#include "../Entity/Piece/PieceManager.h"
+#include "../Tool/ToolManager.h"
+#include "GraphicToolPicker.h"
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <iostream>
 
 using namespace sigrid;
 

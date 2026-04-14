@@ -1,24 +1,26 @@
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
+#include <memory>
+#include <map>
+
 #include <SFML/System/Vector2.hpp>
-
-#include "GraphicToolPicker.h"
-
-#include "../Tool/Tool.h"
-
 #include "../Action/Action.h"
-
-#include "../Tool/ToolManager.h"
-#include "../Entity/Piece/PieceManager.h"
-
-#include "../Window/MainWindow/MainWindowConfigContainer.h"
-
-#include "ToolPickerContainer.h"
-
 #include "../Coord/CoordBlock.h"
 
+namespace sf{
+    class RenderTexture;
+}
+
 namespace sigrid{
+
+    class ToolPickerContainer;
+    class ColorManager;
+    class PieceManager;
+    class ToolManager;
+
+    class GraphicToolPicker;
+    class Tool;
+
     class ToolPickerWindow: public sf::Drawable{
         public:
 
