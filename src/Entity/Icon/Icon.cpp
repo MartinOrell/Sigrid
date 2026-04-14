@@ -1,5 +1,7 @@
 #include "Icon.h"
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 using namespace sigrid;
 
 Icon::Icon(){}
