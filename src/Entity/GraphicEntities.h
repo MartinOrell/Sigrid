@@ -8,10 +8,11 @@
 #include "Piece/GraphicPiece.h"
 #include "Shape/Circle/GraphicCircle.h"
 
-#include "Piece/PieceManager.h"
-#include "../Color/ColorManager.h"
-
 namespace sigrid{
+
+    class PieceManager;
+    class ColorManager;
+
     class GraphicEntities: public sf::Drawable{
         public:
             GraphicEntities();

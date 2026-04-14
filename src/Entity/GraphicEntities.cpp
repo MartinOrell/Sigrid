@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "Piece/PieceManager.h"
+#include "../Color/ColorManager.h"
 
 using namespace sigrid;
 
