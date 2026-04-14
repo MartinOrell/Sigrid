@@ -1,12 +1,13 @@
 #pragma once
 
 #include <variant>
+#include <SFML/Window/Mouse.hpp>
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
 #include "../Entity/Piece/LogicPiece.h"
 #include "../Entity/Piece/GraphicPiece.h"
-#include "../Tool/Tool.h"
+#include "../Tool/ToolSelection.h"
 
 namespace sigrid{
     namespace ActionType{
