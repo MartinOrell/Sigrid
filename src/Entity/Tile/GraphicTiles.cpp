@@ -1,6 +1,7 @@
 #include "GraphicTiles.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "../../Color/ColorManager.h"
 
 using namespace sigrid;
 

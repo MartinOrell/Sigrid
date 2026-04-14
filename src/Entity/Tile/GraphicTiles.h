@@ -2,16 +2,14 @@
 
 #include <map>
 #include <optional>
-#include <vector>
 
 #include "../../Coord/Coord.h"
 #include "GraphicTile.h"
 
-#include "../../Color/ColorManager.h"
-
-#include <SFML/System/Vector2.hpp>
-
 namespace sigrid{
+    
+    class ColorManager;
+
     class GraphicTiles: public sf::Drawable{
         public:
             GraphicTiles();
