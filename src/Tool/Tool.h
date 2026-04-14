@@ -1,17 +1,13 @@
 #pragma once
 
 #include <memory>
-#include <variant>
 
 #include "ToolSelection.h"
-
 #include "../Entity/LogicEntity.h"
-#include "SFML/Window/Mouse.hpp"
-#include <SFML/Graphics/RectangleShape.hpp>
-#include "ToolContainer.h"
-
 
 namespace sigrid{
+
+    struct ToolContainer;
 
     class Tool{
         public:
@@ -28,6 +24,5 @@ namespace sigrid{
             ToolSelection m_selection;
             std::unique_ptr<LogicEntity> m_entity;
             int m_arrowColorId;
-            std::vector<sf::RectangleShape> m_square;
     };
 }

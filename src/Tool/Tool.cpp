@@ -1,5 +1,7 @@
 #include "Tool.h"
 
+#include "ToolContainer.h"
+
 #include <iostream>
 
 using namespace sigrid;
