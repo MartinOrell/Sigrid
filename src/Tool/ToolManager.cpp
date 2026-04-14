@@ -2,6 +2,11 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include "../Color/ColorManager.h"
+#include "ToolSelection.h"
+#include "../Entity/Shape/Arrow/GraphicArrow.h"
+#include "../Entity/Shape/Circle/GraphicCircle.h"
+
 #include <iostream>
 
 using namespace sigrid;

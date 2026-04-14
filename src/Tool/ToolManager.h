@@ -1,14 +1,16 @@
 #pragma once
 
-#include <map>
-#include "Tool.h"
-#include <SFML/Graphics/Texture.hpp>
 #include <memory>
-#include "../Entity/Shape/Arrow/GraphicArrow.h"
-#include "../Color/ColorManager.h"
-#include "../Entity/Shape/Circle/GraphicCircle.h"
+#include <map>
+
+#include <SFML/Graphics/Texture.hpp>
 
 namespace sigrid{
+
+    class ColorManager;
+    enum ToolSelection;
+    class GraphicArrow;
+    class GraphicCircle;
 
     class ToolManager{
 
