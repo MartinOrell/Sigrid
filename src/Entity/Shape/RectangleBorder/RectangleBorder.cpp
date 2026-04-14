@@ -2,6 +2,8 @@
 
 using namespace sigrid;
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 RectangleBorder::RectangleBorder(){}
 
 void RectangleBorder::init(const bool& isVisible, const unsigned int& width, const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea){
