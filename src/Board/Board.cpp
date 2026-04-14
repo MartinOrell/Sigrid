@@ -5,6 +5,7 @@
 #include <cctype> //isdigit
 
 #include "../Entity/Shape/Circle/LogicCircle.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 
 using namespace sigrid;
 

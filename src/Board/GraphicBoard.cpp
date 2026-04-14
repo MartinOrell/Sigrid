@@ -1,11 +1,22 @@
 #include "GraphicBoard.h"
 
-#include <iostream>
-
-#include <SFML/Graphics/Sprite.hpp>
 #include "LogicBoard.h"
-#include "../Entity/Piece/PieceManager.h"
+#include "BoardDesignContainer.h"
+#include "../Color/ColorManager.h"
+
+#include "../Entity/Tile/GraphicTiles.h"
+#include "../Entity/GraphicEntities.h"
+#include "../Entity/Shape/Arrow/GraphicArrows.h"
+
+#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "BoardLabels.h"
+#include "../Entity/TurnToken/TurnToken.h"
+
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Image.hpp>
+
+#include <iostream>
 
 using namespace sigrid;
 

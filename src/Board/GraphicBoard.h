@@ -1,45 +1,35 @@
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Text.hpp>
-
-#include "../Entity/Piece/LogicPiece.h"
-#include "LogicBoard.h"
-#include "../Entity/Piece/PieceManager.h"
-
-#include <vector>
-#include <map>
-#include <optional>
 #include <memory>
-#include "../Coord/Coord.h"
-#include "../Coord/CoordPair.h"
+#include <optional>
+
+#include "../Entity/LogicEntity.h"
+#include "../Entity/GraphicEntity.h"
 
 #include "../Entity/Shape/Arrow/LogicArrow.h"
 #include "../Entity/Shape/Arrow/GraphicArrow.h"
 
-#include "../Color/ColorManager.h"
-
-#include "BoardDesignContainer.h"
-
-#include "../Entity/Shape/Circle/LogicCircle.h"
-#include "../Entity/Shape/Circle/GraphicCircle.h"
-
-#include "../Entity/GraphicEntities.h"
-#include "../Entity/Shape/Arrow/GraphicArrows.h"
-
-#include "../Entity/Tile/GraphicTile.h"
-#include "../Entity/Tile/GraphicTiles.h"
-
-#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
-#include "../Entity/TurnToken/TurnToken.h"
-
 #include "../Font/FontManager.h"
-#include "BoardLabels.h"
 
 namespace sigrid{
+
+    class LogicBoard;
+    class BoardDesignContainer;
+    class PieceManager;
+    class ColorManager;
+    
+    class Coord;
+    class CoordPair;
+
+    class GraphicTile;
+    class GraphicTiles;
+    class GraphicEntities;
+    class GraphicArrows;
+    
+    class RectangleBorder;
+    class BoardLabels;
+    class TurnToken;
+
     class GraphicBoard: public sf::Drawable{
         public:
             

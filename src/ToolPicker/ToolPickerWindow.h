@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "../Action/Action.h"
 #include "../Coord/CoordBlock.h"
-
+#include "../Color/ColorManager.h"
 namespace sf{
     class RenderTexture;
 }
@@ -14,7 +14,6 @@ namespace sf{
 namespace sigrid{
 
     class ToolPickerContainer;
-    class ColorManager;
     class PieceManager;
     class ToolManager;
 
