@@ -1,5 +1,7 @@
 #include "GraphicTiles.h"
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 using namespace sigrid;
 
 GraphicTiles::GraphicTiles(){}
