@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
-#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "../Action/Action.h"
+
+namespace sf{
+    class RectangleShape;
+}
 
 namespace sigrid{
 

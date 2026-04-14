@@ -1,24 +1,26 @@
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
-#include <vector>
+#include <memory>
 #include <map>
-#include "MenuItem.h"
+#include <vector>
 
-#include <SFML/Graphics/Font.hpp>
-#include "../Tool/Tool.h"
+#include <SFML/System/Vector2.hpp>
+#include "../Action/Action.h"
 
-#include "../Board/BoardDesignContainer.h"
-#include "../Window/MainWindow/MainWindowConfigContainer.h"
-
-#include "MenuContainer.h"
-
-#include "../Font/FontManager.h"
+namespace sf{
+    class RenderTexture;
+}
 
 namespace sigrid{
+
+    class MenuContainer;
+    class BoardDesignContainer;
+    class FontManager;
+    class MenuItem;
+    class Tool;
+
     class Menu: public sf::Drawable{
         public:
             Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData, FontManager* const fontManagerPtr);

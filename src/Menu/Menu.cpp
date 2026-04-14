@@ -1,9 +1,13 @@
 #include "Menu.h"
 
-#include <iostream>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include "MenuContainer.h"
+#include "../Board/BoardDesignContainer.h"
+#include "../Font/FontManager.h"
+#include "MenuItem.h"
+#include "../Tool/Tool.h"
 
-#include <SFML/Graphics/Sprite.hpp>
-#include "../Action/Action.h"
+#include <iostream>
 
 using namespace sigrid;
 

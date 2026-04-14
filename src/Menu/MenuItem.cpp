@@ -1,7 +1,7 @@
 #include "MenuItem.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <iostream>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 using namespace sigrid;
 
