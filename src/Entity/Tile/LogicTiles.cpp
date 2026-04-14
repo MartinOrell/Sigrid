@@ -1,6 +1,6 @@
 #include "LogicTiles.h"
 
-#include <iostream>
+#include <ostream>
 
 using namespace sigrid;
 
