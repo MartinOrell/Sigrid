@@ -3,13 +3,10 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-
-#include "../Font/FontManager.h"
 
 namespace sigrid{
+
+    class FontManager;
 
     class BoardLabels: public sf::Drawable{
 

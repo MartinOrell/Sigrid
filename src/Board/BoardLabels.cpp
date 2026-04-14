@@ -1,5 +1,8 @@
 #include "BoardLabels.h"
 
+#include <SFML/Graphics/RenderTarget.hpp>
+#include "../Font/FontManager.h"
+
 #include <iostream>
 
 using namespace sigrid;
