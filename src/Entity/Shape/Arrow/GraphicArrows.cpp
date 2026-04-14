@@ -1,8 +1,10 @@
 #include "GraphicArrows.h"
 
-#include <iostream>
-
+#include "LogicArrow.h"
+#include "../../../Color/ColorManager.h"
 #include <SFML/Graphics/RenderTarget.hpp>
+
+#include <iostream>
 
 using namespace sigrid;
 

@@ -5,11 +5,13 @@
 #include <vector>
 
 #include "../../../Coord/CoordPair.h"
-#include "LogicArrow.h"
 #include "GraphicArrow.h"
-#include "../../../Color/ColorManager.h"
 
 namespace sigrid{
+
+    class LogicArrow;
+    class ColorManager;
+
     class GraphicArrows: public sf::Drawable{
         public:
             GraphicArrows();
