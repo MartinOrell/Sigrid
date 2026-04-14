@@ -1,5 +1,8 @@
 #include "TurnToken.h"
 
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 using namespace sigrid;
 
 TurnToken::TurnToken()

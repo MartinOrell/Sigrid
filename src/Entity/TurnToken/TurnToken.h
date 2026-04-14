@@ -3,10 +3,13 @@
 #include <memory>
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
 
+namespace sf{
+    template <typename T> class Vector2;
+    using Vector2f = Vector2<float>;
+    class Color;
+    class CircleShape;
+}
 
 namespace sigrid{
 
