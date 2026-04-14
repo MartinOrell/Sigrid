@@ -1,10 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace sigrid{
 
