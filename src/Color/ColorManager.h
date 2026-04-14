@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <SFML/Graphics/Color.hpp>
-#include <string>
 #include <optional>
 
 namespace sigrid{

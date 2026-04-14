@@ -1,9 +1,5 @@
 #include "ColorManager.h"
 
-#include <iostream>
-#include <fstream>
-#include <cassert>
-
 using namespace sigrid;
 
 ColorManager::ColorManager(const std::vector<uint32_t>& colors){
