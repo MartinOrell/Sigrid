@@ -1,22 +1,21 @@
 #pragma once
 
+#include <memory>
+#include <map>
+#include <vector>
+#include <optional>
+
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
-
-#include "../Board/LogicBoard.h"
-
-#include <vector>
-#include <map>
-#include <optional>
-#include <memory>
 #include "../Coord/Coord.h"
-
-#include "../Color/ColorManager.h"
 #include "../Entity/Icon/Icon.h"
 
 namespace sigrid{
+
+    class ColorManager;
+
     class GraphicToolPicker: public sf::Drawable{
         public:
 

@@ -1,10 +1,9 @@
 #include "GraphicToolPicker.h"
 
-#include <iostream>
+#include "../Color/ColorManager.h"
 
 #include <SFML/Graphics/Sprite.hpp>
-#include "../Board/LogicBoard.h"
-#include "../Entity/Piece/PieceManager.h"
+#include <iostream>
 
 using namespace sigrid;
 
