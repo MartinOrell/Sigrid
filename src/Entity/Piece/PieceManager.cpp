@@ -1,10 +1,8 @@
 #include "PieceManager.h"
 
-#include <fstream>
-#include <iostream>
-#include <cctype>
-
 #include <SFML/Graphics/Image.hpp>
+
+#include "PieceContainer.h"
 
 using namespace sigrid;
 

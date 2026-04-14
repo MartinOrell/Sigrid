@@ -6,11 +6,11 @@
 #include "LogicPiece.h"
 #include "GraphicPiece.h"
 #include "PieceColor.h"
-#include "PieceContainer.h"
 #include "PieceIdentifier.h"
 
 namespace sigrid{
 
+    struct PieceContainer;
 
     class PieceManager{
 
@@ -18,7 +18,7 @@ namespace sigrid{
             PieceManager(const std::vector<PieceColor>& pieceColors);
             void addPieceColor(const PieceColor& newColor);
             void loadImages(const std::vector<PieceContainer>& pieces);
-            std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece = LogicPiece{"P", 0});
+            std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);
         private:
             std::map<PieceIdentifier, std::string> m_pieceImageFilenames;
 
