@@ -1,12 +1,8 @@
 #include "LogicBoard.h"
 
+#include "BoardDataContainer.h"
+
 #include <iostream>
-#include "../Entity/Piece/LogicPiece.h"
-#include <cctype>
-
-#include <algorithm>
-
-#include <fstream>
 
 using namespace sigrid;
 

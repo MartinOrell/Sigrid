@@ -1,20 +1,15 @@
 #pragma once
 
-#include <vector>
 #include <optional>
-#include <memory>
-#include <string>
 
-#include "BoardDataContainer.h"
-#include "../Coord/Coord.h"
-#include "../Coord/CoordPair.h"
-#include "../Entity/Tile/LogicTile.h"
 #include "../Entity/Tile/LogicTiles.h"
 #include "../Entity/LogicEntities.h"
-#include "../Entity/Shape/Arrow/LogicArrow.h"
 #include "../Entity/Shape/Arrow/LogicArrows.h"
 
 namespace sigrid{
+
+    class BoardDataContainer;
+
     class LogicBoard{
 
         public:
