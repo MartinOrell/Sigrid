@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 using namespace sigrid;
 
 GraphicArrows::GraphicArrows(){}
