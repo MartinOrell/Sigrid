@@ -1,5 +1,5 @@
 #include "LogicPiece.h"
-#include <iostream>
+
 #include <cctype>
 
 using namespace sigrid;
