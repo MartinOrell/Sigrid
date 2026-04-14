@@ -11,6 +11,10 @@
 
 #include "../Font/FontManager.h"
 
+namespace sf{
+    class RenderTexture;
+}
+
 namespace sigrid{
 
     class LogicBoard;
@@ -28,7 +32,7 @@ namespace sigrid{
     
     class RectangleBorder;
     class BoardLabels;
-    class TurnToken;
+    class TurnToken;    
 
     class GraphicBoard: public sf::Drawable{
         public:

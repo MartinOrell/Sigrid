@@ -5,6 +5,8 @@
 #include "../../Action/Action.h"
 #include <SFML/Window/Clipboard.hpp>
 
+#include "../../Board/BoardDataContainer.h"
+
 using namespace sigrid;
 
 

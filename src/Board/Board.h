@@ -1,21 +1,18 @@
 #pragma once
 
+#include <memory>
+#include <optional>
+#include <string>
+
 #include "GraphicBoard.h"
 #include "LogicBoard.h"
-#include "../Entity/Piece/LogicPiece.h"
-#include "../Entity/Piece/GraphicPiece.h"
-#include "../Coord/Coord.h"
 #include "../Entity/Piece/PieceManager.h"
-#include "../Tool/Tool.h"
-
-#include <SFML/Window/Event.hpp>
-
-#include "../Entity/Shape/Arrow/LogicArrow.h"
-#include "../Entity/Shape/Arrow/GraphicArrow.h"
-
-#include "BoardDataContainer.h"
 
 namespace sigrid{
+
+    class BoardDataContainer;
+    class LogicTile;
+
     class Board: public sf::Drawable{
         public:            
 

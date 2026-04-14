@@ -10,6 +10,8 @@
 
 #include "../../Action/Action.h"
 
+#include <SFML/Window/Event.hpp>
+
 namespace sigrid{
     class WorkWindow: public sf::Drawable{
         public:

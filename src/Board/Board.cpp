@@ -7,6 +7,8 @@
 #include "../Entity/Shape/Circle/LogicCircle.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include "BoardDataContainer.h"
+
 using namespace sigrid;
 
 Board::Board(){}
