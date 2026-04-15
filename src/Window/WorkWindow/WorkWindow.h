@@ -1,18 +1,21 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/System/Vector2.hpp>
-
 #include "../../Board/Board.h"
-#include "../../Tool/Tool.h"
-
 #include "../../Action/Action.h"
-
 #include <SFML/Window/Event.hpp>
 
+namespace sf{
+    class RenderTexture;
+}
+
 namespace sigrid{
+
+    class BoardDataContainer;
+    class Tool;
+
     class WorkWindow: public sf::Drawable{
         public:
             WorkWindow();

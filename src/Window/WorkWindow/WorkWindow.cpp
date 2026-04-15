@@ -1,13 +1,13 @@
 #include "WorkWindow.h"
 
-#include <iostream>
+#include <SFML/Graphics/RenderTexture.hpp>
+#include "../../Tool/Tool.h"
 
 #include <SFML/Graphics/Sprite.hpp>
-
 #include "../../Coord/Coord.h"
-#include "../../Coord/CoordPair.h"
-#include "../../Entity/Tile/LogicTile.h"
 #include "../../Entity/Shape/Arrow/LogicArrow.h"
+
+#include <iostream>
 
 using namespace sigrid;
 
