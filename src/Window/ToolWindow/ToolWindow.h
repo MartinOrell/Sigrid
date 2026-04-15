@@ -1,16 +1,27 @@
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/System/Vector2.hpp>
-#include "../../Tool/Tool.h"
-#include "ToolItem.h"
-#include <SFML/Graphics/Font.hpp>
 #include <memory>
-#include "../../Tool/ToolManager.h"
+#include <vector>
+#include <optional>
 
-#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "../../Action/Action.h"
+
+namespace sf{
+    class RenderTexture;
+}
 
 namespace sigrid{
+
+    class Tool;
+    class ToolItem;
+    class ToolManager;
+
     class ToolWindow: public sf::Drawable{
         public:
             ToolWindow(ToolManager* const toolManagerPtr);

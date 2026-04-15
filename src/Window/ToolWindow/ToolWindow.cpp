@@ -1,8 +1,13 @@
 #include "ToolWindow.h"
 
-#include <iostream>
+#include <SFML/Graphics/RenderTexture.hpp>
+
+#include "../../Tool/Tool.h"
+#include "ToolItem.h"
+#include "../../Tool/ToolManager.h"
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <iostream>
 
 using namespace sigrid;
 

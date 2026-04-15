@@ -13,6 +13,8 @@
 #include "../../Tool/Tool.h"
 #include "MainWindowConfigContainer.h"
 
+#include "../../Tool/ToolManager.h"
+
 namespace sigrid{
     class MainWindow{
         public:
