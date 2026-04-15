@@ -1,11 +1,10 @@
 #include "MainWindow.h"
 
-#include <iostream>
-
-#include "../../Action/Action.h"
-#include <SFML/Window/Clipboard.hpp>
+#include "MainWindowConfigContainer.h"
 
 #include "../../Board/BoardDataContainer.h"
+#include <SFML/Window/Clipboard.hpp>
+#include <iostream>
 
 using namespace sigrid;
 

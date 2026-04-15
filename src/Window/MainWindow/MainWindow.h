@@ -1,21 +1,25 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
-#include <vector>
 #include <memory>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include "../../Tool/Tool.h"
+
 
 #include "../../Menu/Menu.h"
 #include "../WorkWindow/WorkWindow.h"
 #include "../ToolWindow/ToolWindow.h"
 #include "../../ToolPicker/ToolPickerWindow.h"
 
-#include "../../Tool/Tool.h"
-#include "MainWindowConfigContainer.h"
-
 #include "../../Tool/ToolManager.h"
 
 namespace sigrid{
+
+    struct MainWindowConfigContainer;
+
     class MainWindow{
         public:
             MainWindow();
