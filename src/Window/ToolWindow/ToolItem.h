@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "../../Action/Action.h"
 
