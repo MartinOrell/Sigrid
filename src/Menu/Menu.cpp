@@ -5,7 +5,6 @@
 #include "../Board/BoardDesignContainer.h"
 #include "../Font/FontManager.h"
 #include "MenuItem.h"
-#include "../Tool/Tool.h"
 
 #include <iostream>
 
@@ -133,7 +132,7 @@ bool Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-Action Menu::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
+Action Menu::clicked(const sf::Vector2f& position){
 
     std::optional<sigrid::Menu::PosIndex> o_itemId = getMenuItemPosIndex(position);
     if(o_itemId == std::nullopt){

@@ -19,7 +19,6 @@ namespace sigrid{
     class BoardDesignContainer;
     class FontManager;
     class MenuItem;
-    class Tool;
 
     class Menu: public sf::Drawable{
         public:
@@ -34,7 +33,7 @@ namespace sigrid{
 
             bool isCollapsed() const;
 
-            Action clicked(const Tool& tool, const sf::Vector2f& position);
+            Action clicked(const sf::Vector2f& position);
 
             void pinMenu();
 

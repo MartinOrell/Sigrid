@@ -327,8 +327,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
     if(m_menu && m_menu->contains(scaledPosition)){
-        sigrid::Tool *usedToolPtr = &m_tools.at(button);
-        Action action = m_menu->clicked(*usedToolPtr, scaledPosition);
+        Action action = m_menu->clicked(scaledPosition);
         handleAction(action);
     }
     else if(m_workWindow && m_workWindow->contains(scaledPosition)){
