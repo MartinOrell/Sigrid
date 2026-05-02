@@ -2,7 +2,9 @@
 
 #include <map>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include "../Tool/Tool.h"
+#include "../Action/Action.h"
 
 namespace sigrid{
 
@@ -21,9 +23,12 @@ namespace sigrid{
 
             sigrid::Tool* getToolPtr(const sf::Mouse::Button& button);
 
+            std::optional<sigrid::Action> getAction(const sf::Keyboard::Key& key);
+
         private:
 
             std::map<sf::Mouse::Button, sigrid::Tool> m_tools;
+            std::map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
 
     };
 

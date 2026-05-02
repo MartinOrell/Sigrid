@@ -336,14 +336,13 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
 
 void MainWindow::keyPress(const sf::Keyboard::Key& keyboardKey){
 
-    if(keyboardKey == sf::Keyboard::Key::Space){
-        auto action = ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select};
-        handleAction(action);
+    auto action_o = m_inputHandler.getAction(keyboardKey);
+
+    if(action_o == std::nullopt){
+        return;
     }
-    else if(keyboardKey == sf::Keyboard::Key::Delete){
-        //delete selected piece
-    }
-    return;
+
+    handleAction(action_o.value());
 }
 
 void MainWindow::textEnter(const char32_t& unicode){
