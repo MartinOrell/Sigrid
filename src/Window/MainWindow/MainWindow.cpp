@@ -337,11 +337,8 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
 void MainWindow::keyPress(const sf::Keyboard::Key& keyboardKey){
 
     if(keyboardKey == sf::Keyboard::Key::Space){
-        m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::Select);
-        m_tools.at(sf::Mouse::Button::Left).setArrow(0);
-        if(m_toolWindow){
-            m_toolWindow->setSelectTool(sf::Mouse::Button::Left, ToolSelection::Select);
-        }
+        auto action = ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select};
+        handleAction(action);
     }
     else if(keyboardKey == sf::Keyboard::Key::Delete){
         //delete selected piece
