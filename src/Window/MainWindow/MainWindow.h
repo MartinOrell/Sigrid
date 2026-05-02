@@ -8,6 +8,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include "../../Tool/Tool.h"
 
+#include "../../Input/Mouse/Mouse.h"
 
 #include "../../Menu/Menu.h"
 #include "../WorkWindow/WorkWindow.h"
@@ -95,8 +96,7 @@ namespace sigrid{
 
             std::map<sf::Mouse::Button, sigrid::Tool> m_tools;
 
-            std::map<sf::Mouse::Button, bool> m_isMouseButtonPressedMap;
-            std::map<sf::Mouse::Button, sf::Vector2f> m_mouseButtonPressedPositionMap;
+            sigrid::Mouse m_mouse;
 
             std::unique_ptr<FontManager> m_fontManagerPtr;
             std::unique_ptr<ColorManager> m_tileColorManagerPtr;

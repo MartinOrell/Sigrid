@@ -12,20 +12,7 @@ using namespace sigrid;
 MainWindow::MainWindow()
 : m_backgroundColor{sf::Color(30,30,30)}
 , m_scale{1.f,1.f}
-, m_piecePickerToBoardGap{10.f}{
-    
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Left, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Right, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Middle, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Extra1, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Extra2, false});
-
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Left, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Right, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Middle, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra1, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra2, {0,0}});
-}
+, m_piecePickerToBoardGap{10.f}{}
 
 bool MainWindow::init(const MainWindowConfigContainer& config){
     
@@ -317,8 +304,7 @@ void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse:
 
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
-    m_mouseButtonPressedPositionMap.at(button) = scaledPosition;
-    m_isMouseButtonPressedMap.at(button) = true;
+    m_mouse.press(button, scaledPosition);
 
 }
 
@@ -332,7 +318,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
     }
     else if(m_workWindow && m_workWindow->contains(scaledPosition)){
         sigrid::Tool* usedToolPtr = &m_tools.at(button);
-        Action action = m_workWindow->clicked(*usedToolPtr, m_mouseButtonPressedPositionMap.at(button), scaledPosition);
+        Action action = m_workWindow->clicked(*usedToolPtr, m_mouse.getPressPosition(button), scaledPosition);
         handleAction(action);
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
@@ -345,7 +331,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         Action action = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
         handleAction(action);
     }
-    m_isMouseButtonPressedMap.at(button) = false;
+    m_mouse.release(button);
 }
 
 void MainWindow::keyPress(const sf::Keyboard::Key& keyboardKey){
@@ -380,10 +366,8 @@ void MainWindow::mouseMove(const sf::Vector2i& position){
         sf::Mouse::Button buttons[5] = {sf::Mouse::Button::Left, sf::Mouse::Button::Right, sf::Mouse::Button::Middle, sf::Mouse::Button::Extra1, sf::Mouse::Button::Extra2};
         for(int i = 0; i < 5; i++){
             sigrid::Tool* usedToolPtr = &m_tools.at(buttons[i]);
-            if(m_isMouseButtonPressedMap.at(buttons[i])){
-                
-                m_workWindow->dragMouse(*usedToolPtr, m_mouseButtonPressedPositionMap.at(buttons[i]), scaledPosition);
-                
+            if(m_mouse.isPressed(buttons[i])){
+                m_workWindow->dragMouse(*usedToolPtr, m_mouse.getPressPosition(buttons[i]), scaledPosition);
             }
         }
     }
