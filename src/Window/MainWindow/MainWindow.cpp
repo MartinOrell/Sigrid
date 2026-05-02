@@ -28,15 +28,15 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
 
     sigrid::Tool leftClickTool{config.leftClickTool};
-    m_tools.insert({sf::Mouse::Button::Left,std::move(leftClickTool)});
+    m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
     sigrid::Tool rightClickTool{config.rightClickTool};
-    m_tools.insert({sf::Mouse::Button::Right, std::move(rightClickTool)});
+    m_inputHandler.addTool(sf::Mouse::Button::Right, std::move(rightClickTool));
     sigrid::Tool middleClickTool{config.middleClickTool};
-    m_tools.insert({sf::Mouse::Button::Middle, std::move(middleClickTool)});
+    m_inputHandler.addTool(sf::Mouse::Button::Middle, std::move(middleClickTool));
     sigrid::Tool extra1ClickTool{config.extra1ClickTool};
-    m_tools.insert({sf::Mouse::Button::Extra1, std::move(extra1ClickTool)});
+    m_inputHandler.addTool(sf::Mouse::Button::Extra1, std::move(extra1ClickTool));
     sigrid::Tool extra2ClickTool{config.extra2ClickTool};
-    m_tools.insert({sf::Mouse::Button::Extra2, std::move(extra2ClickTool)});
+    m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
@@ -317,17 +317,17 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         handleAction(action);
     }
     else if(m_workWindow && m_workWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = &m_tools.at(button);
+        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
         Action action = m_workWindow->clicked(*usedToolPtr, m_mouse.getPressPosition(button), scaledPosition);
         handleAction(action);
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = &m_tools.at(button);
+        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
         Action action = m_toolWindow->clicked(*usedToolPtr, scaledPosition);
         handleAction(action);
     }
     else if(m_toolPickerWindow && m_toolPickerWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = &m_tools.at(button);
+        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
         Action action = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
         handleAction(action);
     }
@@ -383,7 +383,7 @@ void MainWindow::mouseMove(const sf::Vector2i& position){
     if(m_workWindow && m_workWindow->contains(scaledPosition)){
         sf::Mouse::Button buttons[5] = {sf::Mouse::Button::Left, sf::Mouse::Button::Right, sf::Mouse::Button::Middle, sf::Mouse::Button::Extra1, sf::Mouse::Button::Extra2};
         for(int i = 0; i < 5; i++){
-            sigrid::Tool* usedToolPtr = &m_tools.at(buttons[i]);
+            sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(buttons[i]);
             if(m_mouse.isPressed(buttons[i])){
                 m_workWindow->dragMouse(*usedToolPtr, m_mouse.getPressPosition(buttons[i]), scaledPosition);
             }
@@ -671,8 +671,8 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid
         std::cout << "Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setEntity(logicEntity);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, logicEntity);
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     if(std::holds_alternative<GraphicPiece>(graphicEntity)){
         m_toolWindow->setSetPieceTool(std::get<GraphicPiece>(graphicEntity));
     }
@@ -697,8 +697,8 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigr
         return;
     }
 
-    m_tools.at(sf::Mouse::Button::Left).setEntity(logicPiece);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, logicPiece);
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     m_toolWindow->setSetPieceTool(graphicPiece);
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
 }
@@ -712,8 +712,8 @@ void MainWindow::pickArrow(const int colorId){
         std::cout << "Unable to pick arrow color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setArrow(colorId);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::DrawArrow);
+    m_inputHandler.setArrow(sf::Mouse::Button::Left, colorId);
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::DrawArrow);
     m_toolWindow->setAddArrowTool(colorId);
     m_toolPickerWindow->setArrowColors();
 }
@@ -727,8 +727,8 @@ void MainWindow::pickArrowColor(const int colorId){
         std::cout << "Unable to pick arrow color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setArrow(colorId);
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::DrawArrow);
+    m_inputHandler.setArrow(sf::Mouse::Button::Left, colorId);
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::DrawArrow);
     m_toolWindow->setAddArrowTool(colorId);
     m_toolPickerWindow->setAddArrowTool(colorId);
 }
@@ -742,8 +742,8 @@ void MainWindow::pickCircle(const int colorId){
         std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setCircleColors();
 }
@@ -757,8 +757,8 @@ void MainWindow::pickCircleColor(const int colorId){
         std::cout << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_tools.at(sf::Mouse::Button::Left).setEntity(LogicCircle(colorId));
-    m_tools.at(sf::Mouse::Button::Left).setSelection(ToolSelection::EntityAdder);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
+    m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setAddCircleTool(colorId);
 }
@@ -768,10 +768,10 @@ void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse
         std::cout << "Unable to set tool, toolWindow does not exist" << std::endl;
         return;
     }
-    m_tools.at(button).setSelection(selection);
+    m_inputHandler.setSelection(button, selection);
     m_toolWindow->setSelectTool(button, selection);
     if(selection == ToolSelection::Select){
-        m_tools.at(button).setArrow(0);
+        m_inputHandler.setArrow(button,0);
     }
 }
 

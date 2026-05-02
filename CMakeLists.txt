@@ -4,6 +4,7 @@ project(MyEditTool LANGUAGES CXX)
 set(SRC_FILES
     src/main.cpp
     src/Input/Mouse/Mouse.cpp
+    src/Input/InputHandler.cpp
     src/Window/MainWindow/MainWindow.cpp
     src/Window/MainWindow/MainWindowConfigContainer.cpp
     src/Menu/Menu.cpp

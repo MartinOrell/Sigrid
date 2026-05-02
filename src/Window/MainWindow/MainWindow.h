@@ -8,6 +8,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include "../../Tool/Tool.h"
 
+#include "../../Input/InputHandler.h"
 #include "../../Input/Mouse/Mouse.h"
 
 #include "../../Menu/Menu.h"
@@ -94,7 +95,7 @@ namespace sigrid{
             std::unique_ptr<ToolWindow> m_toolWindow;
             std::unique_ptr<ToolPickerWindow> m_toolPickerWindow;
 
-            std::map<sf::Mouse::Button, sigrid::Tool> m_tools;
+            sigrid::InputHandler m_inputHandler;
 
             sigrid::Mouse m_mouse;
 
