@@ -348,11 +348,32 @@ void MainWindow::keyPress(const sf::Keyboard::Key& keyboardKey){
 
 void MainWindow::textEnter(const char32_t& unicode){
 
-    sf::String text{unicode};
-
-    if(m_workWindow){
-        m_workWindow->textEntered(text);
+    if(!m_workWindow){
+        return;
     }
+    if(!m_pieceManagerPtr){
+        return;
+    }
+
+    sf::String text{unicode};
+    std::string pieceNotation{text};
+
+    int colorId;
+    if(std::isupper(pieceNotation.back())){
+        colorId = 0;
+    }
+    else{
+        colorId = 1;
+        pieceNotation.back() = std::toupper(pieceNotation.back());
+    }
+
+    LogicPiece logicPiece{pieceNotation, colorId};
+
+    if(m_pieceManagerPtr->getGraphicPiece(logicPiece) == std::nullopt){
+        return;
+    }
+
+    m_workWindow->useAddEntityAtSelectionTool(logicPiece);
 }
 
 void MainWindow::mouseMove(const sf::Vector2i& position){

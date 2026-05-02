@@ -227,32 +227,6 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     return;
 }
 
-void WorkWindow::keyPressed(const sf::Event::KeyPressed& event){
-
-}
-
-void WorkWindow::textEntered(const std::string& text){
-    int colorId;
-    std::string pieceNotation(text);
-    if(std::isupper(pieceNotation.back())){
-        colorId = 0;
-    }
-    else{
-        colorId = 1;
-        pieceNotation.back() = std::toupper(pieceNotation.back());
-    }
-
-    LogicPiece logicPiece{pieceNotation, colorId};
-
-    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-
-    if(graphicPiece_o == std::nullopt){
-        return;
-    }
-
-    m_boardPtrs.at(m_activeBoardId)->addEntityAtSelection(logicPiece);
-}
-
 void WorkWindow::reset(){
     std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"};
     m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
@@ -434,6 +408,10 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
     m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
     m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
+}
+
+void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
+    m_boardPtrs.at(m_activeBoardId)->addEntityAtSelection(newEntity);
 }
 
 void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){

@@ -40,9 +40,6 @@ namespace sigrid{
 
             Action clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
             void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
-            
-            void keyPressed(const sf::Event::KeyPressed& event);
-            void textEntered(const std::string& text);
 
             void reset();
 
@@ -93,11 +90,13 @@ namespace sigrid{
 
             void removeTurnToken();
 
+            void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
+            void useAddEntityAtSelectionTool(const LogicEntity& newEntity);
+
         private:
 
             std::string getUniqueName(const std::string& name);
 
-            void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
             void useAddTileHighlightTool(const Coord& coord, const int& colorId);
             void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
