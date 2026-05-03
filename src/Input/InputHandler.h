@@ -17,6 +17,8 @@ namespace sigrid{
 
             void addTool(const sf::Keyboard::Key& button, sigrid::Action action);
 
+            void addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action);
+
             void setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity);
 
             void setArrow(const sf::Mouse::Button& button, const int& colorId);
@@ -27,10 +29,13 @@ namespace sigrid{
 
             std::optional<sigrid::Action> getAction(const sf::Keyboard::Key& key);
 
+            std::optional<sigrid::Action> getCtrlAction(const sf::Keyboard::Key& key);
+
         private:
 
             std::map<sf::Mouse::Button, sigrid::Tool> m_tools;
             std::map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
+            std::map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
 
     };
 

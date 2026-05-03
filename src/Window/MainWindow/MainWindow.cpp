@@ -45,6 +45,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Action rightKeyTool(ActionType::OpenRightBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Right, std::move(rightKeyTool));
 
+    sigrid::Action ctrlSTool(ActionType::SaveBoard{});
+    m_inputHandler.addCtrlTool(sf::Keyboard::Key::S, std::move(ctrlSTool));
+
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
     m_pieceManagerPtr->loadImages(config.pieces);
@@ -341,9 +344,19 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
     m_mouse.release(button);
 }
 
-void MainWindow::keyPress(const sf::Keyboard::Key& keyboardKey){
+void MainWindow::keyPress(const sf::Event::KeyPressed& keyboardKeyPressed){
 
-    auto action_o = m_inputHandler.getAction(keyboardKey);
+    if(keyboardKeyPressed.control){
+        auto action_o = m_inputHandler.getCtrlAction(keyboardKeyPressed.code);
+
+        if(action_o == std::nullopt){
+            return;
+        }
+        handleAction(action_o.value());
+        return;
+    }
+
+    auto action_o = m_inputHandler.getAction(keyboardKeyPressed.code);
 
     if(action_o == std::nullopt){
         return;
@@ -418,7 +431,7 @@ void MainWindow::handleEvents(){
         }
 
         if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()){
-            keyPress(keyPressed->code);
+            keyPress(*keyPressed);
         }
 
         if(const auto* textEntered = event->getIf<sf::Event::TextEntered>()){

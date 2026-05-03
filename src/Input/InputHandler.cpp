@@ -12,6 +12,10 @@ void InputHandler::addTool(const sf::Keyboard::Key& button, sigrid::Action actio
     m_keyboardActions.insert({button, std::move(action)});
 }
 
+void InputHandler::addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action){
+    m_ctrlKeyboardActions.insert({button, std::move(action)});
+}
+
 void InputHandler::setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity){
     m_tools.at(button).setEntity(logicEntity);
 }
@@ -31,6 +35,15 @@ sigrid::Tool* InputHandler::getToolPtr(const sf::Mouse::Button& button){
 std::optional<sigrid::Action> InputHandler::getAction(const sf::Keyboard::Key& key){
     auto it = m_keyboardActions.find(key);
     if(it == m_keyboardActions.end()){
+        return std::nullopt;
+    }
+    
+    return it->second;
+}
+
+std::optional<sigrid::Action> InputHandler::getCtrlAction(const sf::Keyboard::Key& key){
+    auto it = m_ctrlKeyboardActions.find(key);
+    if(it == m_ctrlKeyboardActions.end()){
         return std::nullopt;
     }
     

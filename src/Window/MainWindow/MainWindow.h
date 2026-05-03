@@ -34,7 +34,7 @@ namespace sigrid{
             void resize(const sf::Vector2u& size);
             void mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button);
             void mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button);
-            void keyPress(const sf::Keyboard::Key& keyboardKey);
+            void keyPress(const sf::Event::KeyPressed& keyboardKeyPressed);
             void textEnter(const char32_t& unicode);
             void mouseMove(const sf::Vector2i& position);
 
