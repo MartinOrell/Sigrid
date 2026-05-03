@@ -5,6 +5,6 @@
 namespace sigrid{
     struct ToolContainer{
         std::string selection = "Select";
-        int colorId;
+        int colorId = 0;
     };
 }

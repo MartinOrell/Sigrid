@@ -39,7 +39,12 @@ namespace sigrid{
             
             GraphicBoard();
             
-            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config, PieceManager* const pieceManagerPtr, ColorManager* const tileColorManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr);
+            void addPieceManagerPtr(PieceManager* const managerPtr);
+            void addTileColorManagerPtr(ColorManager* const managerPtr);
+            void addArrowColorManagerPtr(ColorManager* const managerPtr);
+            void addFontManagerPtr(FontManager* const managerPtr);
+
+            void init(const LogicBoard& logicBoard, const BoardDesignContainer& config);
 
             GraphicBoard& operator=(const GraphicBoard& rhs);
 
@@ -177,7 +182,10 @@ namespace sigrid{
 
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
+            PieceManager* m_pieceManagerPtr;
+            ColorManager* m_tileColorManagerPtr;
             ColorManager* m_arrowColorManagerPtr;
+            FontManager* m_fontManagerPtr;
 
             unsigned int m_borderWidth;
 

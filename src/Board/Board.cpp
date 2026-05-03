@@ -21,7 +21,11 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
 
     if(m_logicBoard->init(boardData)){
         m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
-        m_graphicBoard->init(*m_logicBoard, graphicData, pieceManagerPtr, tileColorManagerPtr, arrowColorManagerPtr, fontManagerPtr);
+        m_graphicBoard->addPieceManagerPtr(pieceManagerPtr);
+        m_graphicBoard->addTileColorManagerPtr(tileColorManagerPtr);
+        m_graphicBoard->addArrowColorManagerPtr(arrowColorManagerPtr);
+        m_graphicBoard->addFontManagerPtr(fontManagerPtr);
+        m_graphicBoard->init(*m_logicBoard, graphicData);
     }
 }
 
