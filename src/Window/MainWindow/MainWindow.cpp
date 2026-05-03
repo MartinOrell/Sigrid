@@ -40,6 +40,10 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     sigrid::Action spaceBarTool(ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
     m_inputHandler.addTool(sf::Keyboard::Key::Space, std::move(spaceBarTool));
+    sigrid::Action leftKeyTool(ActionType::OpenLeftBoard{});
+    m_inputHandler.addTool(sf::Keyboard::Key::Left, std::move(leftKeyTool));
+    sigrid::Action rightKeyTool(ActionType::OpenRightBoard{});
+    m_inputHandler.addTool(sf::Keyboard::Key::Right, std::move(rightKeyTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
