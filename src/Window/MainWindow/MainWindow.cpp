@@ -45,6 +45,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Action rightKeyTool(ActionType::OpenRightBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Right, std::move(rightKeyTool));
 
+    sigrid::Action ctrlNTool(ActionType::NewBoard{});
+    m_inputHandler.addCtrlTool(sf::Keyboard::Key::N, std::move(ctrlNTool));
     sigrid::Action ctrlSTool(ActionType::SaveBoard{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::S, std::move(ctrlSTool));
     sigrid::Action ctrlCTool(ActionType::CopyFen{});
