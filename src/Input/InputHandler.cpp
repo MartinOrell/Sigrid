@@ -2,12 +2,14 @@
 
 using namespace sigrid;
 
-InputHandler::InputHandler(){
-    m_keyboardActions.insert({sf::Keyboard::Key::Space, ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select}});
-}
+InputHandler::InputHandler(){}
 
 void InputHandler::addTool(const sf::Mouse::Button& button, sigrid::Tool tool){
     m_tools.insert({button,std::move(tool)});
+}
+
+void InputHandler::addTool(const sf::Keyboard::Key& button, sigrid::Action action){
+    m_keyboardActions.insert({button, std::move(action)});
 }
 
 void InputHandler::setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity){

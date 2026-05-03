@@ -15,6 +15,8 @@ namespace sigrid{
 
             void addTool(const sf::Mouse::Button& button, sigrid::Tool tool);
 
+            void addTool(const sf::Keyboard::Key& button, sigrid::Action action);
+
             void setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity);
 
             void setArrow(const sf::Mouse::Button& button, const int& colorId);

@@ -38,6 +38,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Tool extra2ClickTool{config.extra2ClickTool};
     m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
 
+    sigrid::Action spaceBarTool(ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
+    m_inputHandler.addTool(sf::Keyboard::Key::Space, std::move(spaceBarTool));
+
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
     m_pieceManagerPtr->loadImages(config.pieces);
