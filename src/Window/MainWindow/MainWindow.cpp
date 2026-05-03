@@ -49,6 +49,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::S, std::move(ctrlSTool));
     sigrid::Action ctrlCTool(ActionType::CopyFen{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::C, std::move(ctrlCTool));
+    sigrid::Action ctrlVTool(ActionType::PasteFen{});
+    m_inputHandler.addCtrlTool(sf::Keyboard::Key::V, std::move(ctrlVTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
