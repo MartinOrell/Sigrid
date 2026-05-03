@@ -62,6 +62,15 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Action ctrlDownKeyTool(ActionType::AddSquareRowDown{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Down, std::move(ctrlDownKeyTool));
 
+    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveSquareColumnRight{});
+    m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Left, std::move(ctrlShiftLeftKeyTool));
+    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveSquareColumnLeft{});
+    m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Right, std::move(ctrlShiftRightKeyTool));
+    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveSquareRowDown{});
+    m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Up, std::move(ctrlShiftUpKeyTool));
+    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveSquareRowUp{});
+    m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
+
     m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
 
     m_pieceManagerPtr->loadImages(config.pieces);
@@ -359,6 +368,16 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
 }
 
 void MainWindow::keyPress(const sf::Event::KeyPressed& keyboardKeyPressed){
+
+    if(keyboardKeyPressed.control && keyboardKeyPressed.shift){
+        auto action_o = m_inputHandler.getCtrlShiftAction(keyboardKeyPressed.code);
+
+        if(action_o == std::nullopt){
+            return;
+        }
+        handleAction(action_o.value());
+        return;
+    }
 
     if(keyboardKeyPressed.control){
         auto action_o = m_inputHandler.getCtrlAction(keyboardKeyPressed.code);
