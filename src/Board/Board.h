@@ -18,7 +18,12 @@ namespace sigrid{
 
             Board();
 
-            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr);
+            void addPieceManagerPtr(PieceManager* const managerPtr);
+            void addTileColorManagerPtr(ColorManager* const managerPtr);
+            void addArrowColorManagerPtr(ColorManager* const managerPtr);
+            void addFontManagerPtr(FontManager* const managerPtr);
+
+            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
             Board& operator=(const Board& rhs);
 

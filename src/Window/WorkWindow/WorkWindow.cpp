@@ -22,7 +22,11 @@ void WorkWindow::init(const std::string& boardFilename, const std::string& defau
 
     auto board = std::make_unique<Board>();
 
-    board->init(boardData, graphicData, tileColorManagerPtr, pieceManagerPtr, arrowColorManagerPtr, fontManagerPtr);
+    board->addPieceManagerPtr(pieceManagerPtr);
+    board->addTileColorManagerPtr(tileColorManagerPtr);
+    board->addArrowColorManagerPtr(arrowColorManagerPtr);
+    board->addFontManagerPtr(fontManagerPtr);
+    board->init(boardData, graphicData);
 
     std::cout << "Save location: " << boardFilename << std::endl;
 

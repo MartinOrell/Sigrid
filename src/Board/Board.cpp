@@ -13,18 +13,44 @@ using namespace sigrid;
 
 Board::Board(){}
 
-void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr){
+void Board::addPieceManagerPtr(PieceManager* const managerPtr){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->addPieceManagerPtr(managerPtr);
+}
+
+void Board::addTileColorManagerPtr(ColorManager* const managerPtr){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->addTileColorManagerPtr(managerPtr);
+}
+
+void Board::addArrowColorManagerPtr(ColorManager* const managerPtr){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->addArrowColorManagerPtr(managerPtr);
+}
+
+void Board::addFontManagerPtr(FontManager* const managerPtr){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->addFontManagerPtr(managerPtr);
+}
+
+void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
     m_filename = boardData.filename;
 
     m_logicBoard = std::make_unique<sigrid::LogicBoard>();
 
     if(m_logicBoard->init(boardData)){
-        m_graphicBoard = std::make_unique<sigrid::GraphicBoard>();
-        m_graphicBoard->addPieceManagerPtr(pieceManagerPtr);
-        m_graphicBoard->addTileColorManagerPtr(tileColorManagerPtr);
-        m_graphicBoard->addArrowColorManagerPtr(arrowColorManagerPtr);
-        m_graphicBoard->addFontManagerPtr(fontManagerPtr);
+        if(!m_graphicBoard){
+            m_graphicBoard = std::make_unique<GraphicBoard>();
+        }
         m_graphicBoard->init(*m_logicBoard, graphicData);
     }
 }
