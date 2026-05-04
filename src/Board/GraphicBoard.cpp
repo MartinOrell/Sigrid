@@ -82,7 +82,16 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
 
     if(m_fontManagerPtr){
         m_labelsPtr = std::make_unique<BoardLabels>();
-        m_labelsPtr->init(config.labelsInside, config.labelsOutside, config.insideLabelSize, config.outsideLabelSize, config.labelFont, m_fontManagerPtr);
+        if(config.labelsInside){
+            m_labelsPtr->setInside();
+        }
+        if(config.labelsOutside){
+            m_labelsPtr->setOutside();
+        }
+        m_labelsPtr->setInsideLabelSizeFactor(config.insideLabelSize);
+        m_labelsPtr->setOutsideLabelSizeFactor(config.outsideLabelSize);
+        m_labelsPtr->setFont(config.labelFont);
+        m_labelsPtr->setFontManagerPtr(m_fontManagerPtr);
     }    
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){

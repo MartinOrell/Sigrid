@@ -9,16 +9,30 @@ using namespace sigrid;
 
 BoardLabels::BoardLabels(){}
 
-void BoardLabels::init(const bool& isInside, const bool& isOutside, const float& insideLabelSizeFactor, const float& outsideLabelSizeFactor, const std::string& fontFilename, FontManager* const fontManagerPtr){
+void BoardLabels::setInside(){
+    m_isInside = true;
+    m_isVisible = true;
+}
 
-    m_fontManagerPtr = fontManagerPtr;
+void BoardLabels::setOutside(){
+    m_isInside = false;
+    m_isVisible = true;
+}
+
+void BoardLabels::setInsideLabelSizeFactor(const float& size){
+    m_insideLabelSizeFactor = size;
+}
+
+void BoardLabels::setOutsideLabelSizeFactor(const float& size){
+    m_outsideLabelSizeFactor = size;
+}
+
+void BoardLabels::setFont(const std::string& fontFilename){
     m_fontFilename = fontFilename;
+}
 
-    m_isInside = isInside;
-    m_isVisible = isInside || isOutside;
-
-    m_insideLabelSizeFactor = insideLabelSizeFactor;
-    m_outsideLabelSizeFactor = outsideLabelSizeFactor;
+void BoardLabels::setFontManagerPtr(FontManager* const fontManagerPtr){
+    m_fontManagerPtr = fontManagerPtr;
 }
 
 bool BoardLabels::isVisible() const{
@@ -43,10 +57,28 @@ float BoardLabels::getOutsideLabelSizeFactor() const{
 
 bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
+    if(m_insideLabelSizeFactor == 0.f){
+        std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
+        std::cerr << "Inside label size factor is 0" << std::endl;
+        return false;
+    }
+
+    if(m_fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
+        std::cerr << "Font file name not set" << std::endl;
+        return false;
+    }
+
+    if(!m_fontManagerPtr){
+        std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
+        std::cerr << "Font Manager is nullptr" << std::endl;
+        return false;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
     if(fontPtr_o == std::nullopt){
-        std::cout << "BoardLabels: Failed to add inside bottom label" << std::endl;
-        std::cout << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
+        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
         return false;
     }
 
@@ -79,10 +111,28 @@ bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const s
 
 bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
+    if(m_insideLabelSizeFactor == 0.f){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Inside label size factor is 0" << std::endl;
+        return false;
+    }
+
+    if(m_fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font file name not set" << std::endl;
+        return false;
+    }
+
+    if(!m_fontManagerPtr){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font Manager is nullptr" << std::endl;
+        return false;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
     if(fontPtr_o == std::nullopt){
-        std::cout << "BoardLabels: Failed to add inside left label" << std::endl;
-        std::cout << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
         return false;
     }
 
@@ -112,10 +162,28 @@ bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf:
 
 bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
+    if(m_outsideLabelSizeFactor == 0.f){
+        std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
+        std::cerr << "Outside label size factor is 0" << std::endl;
+        return false;
+    }
+
+    if(m_fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
+        std::cerr << "Font file name not set" << std::endl;
+        return false;
+    }
+
+    if(!m_fontManagerPtr){
+        std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
+        std::cerr << "Font Manager is nullptr" << std::endl;
+        return false;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
     if(fontPtr_o == std::nullopt){
-        std::cout << "BoardLabels: Failed to add outside bottom label" << std::endl;
-        std::cout << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
+        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
         return false;
     }
 
@@ -146,10 +214,28 @@ bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const 
 
 bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
 
+    if(m_outsideLabelSizeFactor == 0.f){
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Outside label size factor is 0" << std::endl;
+        return false;
+    }
+
+    if(m_fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Font file name not set" << std::endl;
+        return false;
+    }
+
+    if(!m_fontManagerPtr){
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Font Manager is nullptr" << std::endl;
+        return false;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
     if(fontPtr_o == std::nullopt){
-        std::cout << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cout << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
         return false;
     }
 
@@ -296,10 +382,6 @@ void BoardLabels::hideOutsideLabels(){
     if(!m_isInside){
         m_isVisible = false;
     }
-}
-
-void BoardLabels::setOutsideLabelSizeFactor(const float& size){
-    m_outsideLabelSizeFactor = size;
 }
 
 void BoardLabels::moveLeftInsideCoordinateLabels(const sf::Vector2f& offset){
