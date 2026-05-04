@@ -10,29 +10,46 @@ using namespace sigrid;
 
 GraphicEntities::GraphicEntities(){}
 
-void GraphicEntities::init(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr){
-
-    m_pieceSize = pieceSize;
-    m_circleDiameter = circleDiameter;
+void GraphicEntities::addPieceManager(PieceManager* const pieceManagerPtr){
     m_pieceManagerPtr = pieceManagerPtr;
-    m_arrowColorManagerPtr = arrowColorManagerPtr;
+}
 
+void GraphicEntities::addColorManager(ColorManager* const colorManagerPtr){
+    m_arrowColorManagerPtr = colorManagerPtr;
+}
+
+void GraphicEntities::setPieceSize(const sf::Vector2f& pieceSize){
+    m_pieceSize = pieceSize;
+}
+
+void GraphicEntities::setCircleDiameter(const float& diameter){
+    m_circleDiameter = diameter;
 }
 
 void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         if(m_pieceManagerPtr == nullptr){
-            std::cout << "GraphicEntities: Failed to add piece" << std::endl;
-            std::cout << "PieceManagerPtr is null" << std::endl;
+            std::cerr << "GraphicEntities: Failed to add piece" << std::endl;
+            std::cerr << "PieceManagerPtr is null" << std::endl;
+            return;
+        }
+        if(m_pieceSize.x == 0.f){
+            std::cerr << "GraphicEntities: Failed to add piece" << std::endl;
+            std::cerr << "Piece width is 0" << std::endl;
+            return;
+        }
+        if(m_pieceSize.y == 0.f){
+            std::cerr << "GraphicEntities: Failed to add piece" << std::endl;
+            std::cerr << "Piece height is 0" << std::endl;
             return;
         }
 
         auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(std::get<LogicPiece>(entity));
 
         if(graphicPiece_o == std::nullopt){
-            std::cout << "GraphicEntities: Failed to add piece \""
+            std::cerr << "GraphicEntities: Failed to add piece \""
                 << std::get<LogicPiece>(entity).getNotation() << "\"" << std::endl;
-            std::cout << "Piece not found in pieceManager" << std::endl;
+            std::cerr << "Piece not found in pieceManager" << std::endl;
             return;
         }
 
@@ -43,16 +60,21 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
     }
     else if(std::holds_alternative<LogicCircle>(entity)){
         if(m_arrowColorManagerPtr == nullptr){
-            std::cout << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
-            std::cout << "ColorManager does not exist to assign color" << std::endl;
+            std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
+            std::cerr << "ColorManager does not exist to assign color" << std::endl;
+            return;
+        }
+        if(m_circleDiameter == 0.f){
+            std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
+            std::cerr << "circle diameter is 0" << std::endl;
             return;
         }
 
         int colorId = std::get<LogicCircle>(entity).getColorId();
         auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
         if(color_o == std::nullopt){
-            std::cout << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
-            std::cout << "Color of colorId " << colorId << " not found" << std::endl;
+            std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
+            std::cerr << "Color of colorId " << colorId << " not found" << std::endl;
             return;
         }
 

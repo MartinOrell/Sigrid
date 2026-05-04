@@ -17,7 +17,10 @@ namespace sigrid{
         public:
             GraphicEntities();
 
-            void init(const sf::Vector2f& pieceSize, const float& circleDiameter, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr);
+            void addPieceManager(PieceManager* const pieceManagerPtr);
+            void addColorManager(ColorManager* const colorManagerPtr);
+            void setPieceSize(const sf::Vector2f& pieceSize);
+            void setCircleDiameter(const float& diameter);
 
             void addEntity(const Coord& coord, const sf::Vector2f position, const LogicEntity& entity);
             void removeEntity(const Coord& coord);
@@ -44,10 +47,10 @@ namespace sigrid{
             std::map<Coord, GraphicPiece> m_pieces;
             std::map<Coord, GraphicCircle> m_circles;
 
-            sf::Vector2f m_pieceSize;
-            float m_circleDiameter;
+            sf::Vector2f m_pieceSize = {0.f, 0.f};
+            float m_circleDiameter = 0.f;
             
-            PieceManager* m_pieceManagerPtr;
-            ColorManager* m_arrowColorManagerPtr;
+            PieceManager* m_pieceManagerPtr = nullptr;
+            ColorManager* m_arrowColorManagerPtr = nullptr;
     };
 }

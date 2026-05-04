@@ -48,38 +48,35 @@ void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
 
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
 
-    if(m_pieceManagerPtr == nullptr){
-        std::cerr << "Failed to init graphicBoard: pieceManager not set" << std::endl;
-        return;
-    }
-
-    if(m_tileColorManagerPtr == nullptr){
-        std::cerr << "Failed to init graphicBoard: tileColorManager not set" << std::endl;
-        return;
-    }
-
-    if(m_arrowColorManagerPtr == nullptr){
-        std::cerr << "Failed to init graphicBoard: arrowColorManager not set" << std::endl;
-        return;
-    }
-
-    if(m_fontManagerPtr == nullptr){
-        std::cerr << "Failed to init graphicBoard: fontManager not set" << std::endl;
-        return;
-    }
-
     m_borderWidth = config.borderWidth;
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
-    m_tileLayerPtr->addColorManager(m_tileColorManagerPtr);
-    m_tileLayerPtr->addHighlightColorManager(m_arrowColorManagerPtr);
+    if(m_tileColorManagerPtr){
+        m_tileLayerPtr->addColorManager(m_tileColorManagerPtr);
+    }
+    if(m_arrowColorManagerPtr){
+        m_tileLayerPtr->addHighlightColorManager(m_arrowColorManagerPtr);
+    }
     m_tileLayerPtr->init(logicBoard.getNumColumns(), logicBoard.getNumRows(), {config.tileWidth, config.tileHeight}, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
+    
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-    m_pieceLayerPtr->init({config.tileWidth, config.tileHeight}, config.circleDiameter, m_pieceManagerPtr, m_arrowColorManagerPtr);
-    m_arrowLayerPtr = std::make_unique<GraphicArrows>();
-    m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize, m_arrowColorManagerPtr);
+    if(m_pieceManagerPtr){
+        m_pieceLayerPtr->addPieceManager(m_pieceManagerPtr);
+    }
+    if(m_arrowColorManagerPtr){
+        m_pieceLayerPtr->addColorManager(m_arrowColorManagerPtr);
+    }
+    m_pieceLayerPtr->setPieceSize({config.tileWidth, config.tileHeight});
+    m_pieceLayerPtr->setCircleDiameter(config.circleDiameter);
 
-    m_labelsPtr = std::make_unique<BoardLabels>();
-    m_labelsPtr->init(config.labelsInside, config.labelsOutside, config.insideLabelSize, config.outsideLabelSize, config.labelFont, m_fontManagerPtr);
+    if(m_arrowColorManagerPtr){
+        m_arrowLayerPtr = std::make_unique<GraphicArrows>();
+        m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize, m_arrowColorManagerPtr);
+    }
+
+    if(m_fontManagerPtr){
+        m_labelsPtr = std::make_unique<BoardLabels>();
+        m_labelsPtr->init(config.labelsInside, config.labelsOutside, config.insideLabelSize, config.outsideLabelSize, config.labelFont, m_fontManagerPtr);
+    }    
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){
         for(int x = 0; x < logicBoard.getNumColumns(); x++){
