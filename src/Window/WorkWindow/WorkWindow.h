@@ -109,6 +109,6 @@ namespace sigrid{
 
             sf::Color m_backgroundColor;
 
-            PieceManager* m_pieceManagerPtr;
+            PieceManager* m_pieceManagerPtr = nullptr;
     };
 }
