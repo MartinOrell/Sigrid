@@ -538,7 +538,12 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         }
 
         m_dragArrowPtr = std::make_unique<GraphicArrow>();
-        m_dragArrowPtr->init(fromPosition_o.value(), toPosition_o.value(), color_o.value(), m_arrowLayerPtr->getThickness(), m_arrowLayerPtr->getHeadSize());
+        m_dragArrowPtr->setFromPosition(fromPosition_o.value());
+        m_dragArrowPtr->setToPosition(toPosition_o.value());
+        m_dragArrowPtr->setColor(color_o.value());
+        m_dragArrowPtr->setThickness(m_arrowLayerPtr->getThickness());
+        m_dragArrowPtr->setHeadSize(m_arrowLayerPtr->getHeadSize());
+        m_dragArrowPtr->init();
     }
     else{
         m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());

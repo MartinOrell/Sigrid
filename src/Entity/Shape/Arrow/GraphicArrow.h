@@ -15,12 +15,21 @@ namespace sigrid{
         public:
             GraphicArrow();
 
-            void init(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const sf::Color& color, const float& thickness, const float& headSize);
+            void setFromPosition(const sf::Vector2f& fromPosition);
+
+            void setToPosition(const sf::Vector2f& toPosition);
+
+            void setColor(const sf::Color& color);
+
+            void setThickness(const float& thickness);
+
+            void setHeadSize(const float& size);
+
+            void init();
 
             GraphicArrow& operator =(const GraphicArrow&);
 
             void set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
-            void setColor(const sf::Color& color);
 
             void move(const sf::Vector2f& offset);
 
@@ -32,8 +41,10 @@ namespace sigrid{
             sf::ConvexShape m_line;
             sf::CircleShape m_head;
 
-            float m_thickness;
-            float m_headSize;
+            float m_thickness = 0.f;
+            float m_headSize = 0.f;
+
+            sf::Vector2f m_toPosition = {0.f, 0.f};
     };
 
 }
