@@ -3,16 +3,24 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../../Color/ColorManager.h"
 
+#include <iostream>
+
 using namespace sigrid;
 
 GraphicTiles::GraphicTiles(){}
 
-void GraphicTiles::init(const int& columns, const int& rows, const sf::Vector2f& tileSize, ColorManager* const tileColorManagerPtr, ColorManager* const highlightColorManagerPtr, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom){
+void GraphicTiles::addColorManager(ColorManager* const tileColorManagerPtr){
+    m_tileColorManagerPtr = tileColorManagerPtr;
+}
+
+void GraphicTiles::addHighlightColorManager(ColorManager* const highlightColorManagerPtr){
+    m_highlightColorManagerPtr = highlightColorManagerPtr;
+}
+
+void GraphicTiles::init(const int& columns, const int& rows, const sf::Vector2f& tileSize, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom){
     m_columns = columns;
     m_rows = rows;
     m_tileSize = tileSize;
-    m_tileColorManagerPtr = tileColorManagerPtr;
-    m_highlightColorManagerPtr = highlightColorManagerPtr;
 
     for(int y = 0; y < m_rows; y++){
         for(int x = 0; x < m_columns; x++){
@@ -47,6 +55,12 @@ void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& posit
 
 void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
     
+    if(!m_tileColorManagerPtr){
+        std::cerr << "GraphicTiles: Unable to set tile color" << std::endl;
+        std::cerr << "TileColorManager is not set" << std::endl;
+        return;
+    }
+
     auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
 
     if(color_o != std::nullopt){
@@ -55,6 +69,12 @@ void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
 }
 
 void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){
+
+    if(!m_highlightColorManagerPtr){
+        std::cerr << "GraphicTiles: Unable to set highlight color" << std::endl;
+        std::cerr << "Highlight ColorManager is not set" << std::endl;
+        return;
+    }
 
     auto color_o = m_highlightColorManagerPtr->getTransparentColor(colorId);
 

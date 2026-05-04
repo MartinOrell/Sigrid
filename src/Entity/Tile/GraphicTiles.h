@@ -14,7 +14,10 @@ namespace sigrid{
         public:
             GraphicTiles();
 
-            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize, ColorManager* const tileColorManagerPtr, ColorManager* const highlightColorManagerPtr, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom);
+            void addColorManager(ColorManager* const tileColorManagerPtr);
+            void addHighlightColorManager(ColorManager* const highlightColorManagerPtr);
+
+            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom);
 
             void setTilePosition(const Coord& coord, const sf::Vector2f& position);
 
