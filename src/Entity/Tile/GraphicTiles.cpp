@@ -17,29 +17,49 @@ void GraphicTiles::addHighlightColorManager(ColorManager* const highlightColorMa
     m_highlightColorManagerPtr = highlightColorManagerPtr;
 }
 
-void GraphicTiles::init(const int& columns, const int& rows, const sf::Vector2f& tileSize, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom){
+void GraphicTiles::setNumColumns(const int& columns){
     m_columns = columns;
+}
+
+void GraphicTiles::setNumRows(const int& rows){
     m_rows = rows;
+}
+
+void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
     m_tileSize = tileSize;
+}
+
+void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+    m_topLeftPosition = topLeftPosition;
+}
+
+void GraphicTiles::init(const bool& isLeftToRight, const bool& isTopToBottom){
+
+    if(m_tileSize.x == 0.f){
+        std::cerr << "GraphicTiles: Failed to init, tile width is 0" << std::endl;
+        return;
+    }
+    if(m_tileSize.y == 0.f){
+        std::cerr << "GraphicTiles: Failed to init, tile height is 0" << std::endl;
+        return;
+    }
 
     for(int y = 0; y < m_rows; y++){
         for(int x = 0; x < m_columns; x++){
             
-            sf::Vector2f position;
+            sf::Vector2f position = m_topLeftPosition;
             if(isLeftToRight){
-                position.x = (float)(x*m_tileSize.x);
+                position.x += (float)(x*m_tileSize.x);
             }
             else{
-                position.x = (float)((m_columns-x-1)*m_tileSize.x);
+                position.x += (float)((m_columns-x-1)*m_tileSize.x);
             }
-            position.x += topLeftPosition.x;
             if(isTopToBottom){
-                position.y = (float)(y*m_tileSize.y);
+                position.y += (float)(y*m_tileSize.y);
             }
             else{
-                position.y = (float)((m_rows-y-1)*m_tileSize.y);
+                position.y += (float)((m_rows-y-1)*m_tileSize.y);
             }
-            position.y += topLeftPosition.y;
 
             GraphicTile newTile;
             newTile.init(m_tileSize, sf::Color::White);

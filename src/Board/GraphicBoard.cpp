@@ -49,14 +49,19 @@ void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
 
     m_borderWidth = config.borderWidth;
+    
     m_tileLayerPtr = std::make_unique<GraphicTiles>();
+    m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
+    m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
+    m_tileLayerPtr->setTileSize({config.tileWidth, config.tileHeight});
+    m_tileLayerPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
     if(m_tileColorManagerPtr){
         m_tileLayerPtr->addColorManager(m_tileColorManagerPtr);
     }
     if(m_arrowColorManagerPtr){
         m_tileLayerPtr->addHighlightColorManager(m_arrowColorManagerPtr);
     }
-    m_tileLayerPtr->init(logicBoard.getNumColumns(), logicBoard.getNumRows(), {config.tileWidth, config.tileHeight}, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},m_isLeftToRight,m_isTopToBottom);
+    m_tileLayerPtr->init(m_isLeftToRight,m_isTopToBottom);
     
     m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     if(m_pieceManagerPtr){

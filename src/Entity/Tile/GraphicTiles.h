@@ -17,7 +17,12 @@ namespace sigrid{
             void addColorManager(ColorManager* const tileColorManagerPtr);
             void addHighlightColorManager(ColorManager* const highlightColorManagerPtr);
 
-            void init(const int& columns, const int& rows, const sf::Vector2f& tileSize, const sf::Vector2f& topLeftPosition, const bool& isLeftToRight, const bool& isTopToBottom);
+            void setNumColumns(const int& columns);
+            void setNumRows(const int& rows);
+            void setTileSize(const sf::Vector2f& tileSize);
+            void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
+
+            void init(const bool& isLeftToRight, const bool& isTopToBottom);
 
             void setTilePosition(const Coord& coord, const sf::Vector2f& position);
 
@@ -54,13 +59,14 @@ namespace sigrid{
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            ColorManager* m_tileColorManagerPtr;
-            ColorManager* m_highlightColorManagerPtr;
+            ColorManager* m_tileColorManagerPtr = nullptr;
+            ColorManager* m_highlightColorManagerPtr = nullptr;
 
-            int m_columns;
-            int m_rows;
+            int m_columns = 0;
+            int m_rows = 0;
 
-            sf::Vector2f m_tileSize;
+            sf::Vector2f m_tileSize = {0.f, 0.f};
+            sf::Vector2f m_topLeftPosition = {0.f, 0.f};
 
             std::map<Coord, GraphicTile> m_tiles;
     };
