@@ -136,7 +136,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         sf::Vector2f boardArea;
         boardArea.x = config.tileWidth* logicBoard.getNumColumns();
         boardArea.y = config.tileHeight* logicBoard.getNumRows();
-        m_borderPtr->init(config.border, config.borderWidth, {(float)m_leftEdgeWidth, (float)m_topEdgeWidth},boardArea);
+        m_borderPtr->setWidth(config.borderWidth);
+        m_borderPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
+        m_borderPtr->setEnclosedArea(boardArea);
+        m_borderPtr->init(config.border);
     }
 
     if(m_borderPtr && m_borderPtr->isVisible()){
@@ -1020,7 +1023,10 @@ void GraphicBoard::addBorder(){
         sf::Vector2f boardArea;
         boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
         boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
-        m_borderPtr->init(isVisible, (float)m_borderWidth, topLeftPosition, boardArea);
+        m_borderPtr->setWidth((float)m_borderWidth);
+        m_borderPtr->setTopLeftPosition(topLeftPosition);
+        m_borderPtr->setEnclosedArea(boardArea);
+        m_borderPtr->init(isVisible);
     }
     else if(m_borderPtr->isVisible()){
         return;

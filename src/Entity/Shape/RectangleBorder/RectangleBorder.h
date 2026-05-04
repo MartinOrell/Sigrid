@@ -12,7 +12,13 @@ namespace sigrid{
         public:
             RectangleBorder();
 
-            void init(const bool& isVisible, const unsigned int& width, const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
+            void setWidth(const unsigned int& width);
+
+            void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
+
+            void setEnclosedArea(const sf::Vector2f& enclosedArea);
+
+            void init(const bool& isVisible);
 
             RectangleBorder& operator =(const RectangleBorder& rhs);
 
@@ -33,13 +39,17 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            void initLeft(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
-            void initRight(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
-            void initTop(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
-            void initBottom(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
+            void initLeft();
+            void initRight();
+            void initTop();
+            void initBottom();
 
-            bool m_isVisible;
-            unsigned int m_width;
+            bool m_isVisible = true;
+            unsigned int m_width = 0;
+
+            sf::Vector2f m_topLeftPosition = {0.f,0.f};
+            sf::Vector2f m_enclosedArea = {0.f,0.f};
+
             std::unique_ptr<sf::RectangleShape> m_left;
             std::unique_ptr<sf::RectangleShape> m_right;
             std::unique_ptr<sf::RectangleShape> m_top;
