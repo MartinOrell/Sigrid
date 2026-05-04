@@ -73,9 +73,11 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_pieceLayerPtr->setPieceSize({config.tileWidth, config.tileHeight});
     m_pieceLayerPtr->setCircleDiameter(config.circleDiameter);
 
+    m_arrowLayerPtr = std::make_unique<GraphicArrows>();
+    m_arrowLayerPtr->setThickness(config.arrowThickness);
+    m_arrowLayerPtr->setHeadSize(config.arrowHeadSize);
     if(m_arrowColorManagerPtr){
-        m_arrowLayerPtr = std::make_unique<GraphicArrows>();
-        m_arrowLayerPtr->init(config.arrowThickness, config.arrowHeadSize, m_arrowColorManagerPtr);
+        m_arrowLayerPtr->setColorManagerPtr(m_arrowColorManagerPtr);
     }
 
     if(m_fontManagerPtr){

@@ -16,8 +16,10 @@ namespace sigrid{
         public:
             GraphicArrows();
 
-            void init(const float& arrowThickness, const float& arrowHeadSize, ColorManager* const colorManagerPtr);
-
+            void setThickness(const float& thickness);
+            void setHeadSize(const float& headSize);
+            void setColorManagerPtr(ColorManager* const colorManagerPtr);
+            
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator begin();
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator end();
 
@@ -44,12 +46,12 @@ namespace sigrid{
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            ColorManager* m_colorManagerPtr;
+            ColorManager* m_colorManagerPtr = nullptr;
 
             std::map<CoordPair, GraphicArrow> m_arrows;
             std::vector<CoordPair> m_drawOrder;
 
-            float m_arrowThickness;
-            float m_arrowHeadSize;
+            float m_arrowThickness = 0.f;
+            float m_arrowHeadSize = 0.f;
     };
 }

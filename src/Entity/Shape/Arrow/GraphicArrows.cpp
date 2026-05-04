@@ -10,11 +10,16 @@ using namespace sigrid;
 
 GraphicArrows::GraphicArrows(){}
 
-void GraphicArrows::init(const float& arrowThickness, const float& arrowHeadSize, ColorManager* const colorManagerPtr){
+void GraphicArrows::setThickness(const float& thickness){
+    m_arrowThickness = thickness;
+}
 
+void GraphicArrows::setHeadSize(const float& headSize){
+    m_arrowHeadSize = headSize;
+}
+
+void GraphicArrows::setColorManagerPtr(ColorManager* const colorManagerPtr){
     m_colorManagerPtr = colorManagerPtr;
-    m_arrowThickness = arrowThickness;
-    m_arrowHeadSize = arrowHeadSize;
 }
 
 std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator GraphicArrows::begin(){
@@ -29,11 +34,27 @@ std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator GraphicArrows::end()
 
 void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
 
-    auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
+    if(m_arrowThickness == 0.f){
+        std::cerr << "GraphicArrows: Failed to add arrow, arrow thickness is 0" << std::endl;
+        return;
+    }
+    if(m_arrowHeadSize == 0.f){
+        std::cerr << "GraphicArrows: Failed to add arrow, arrow head size is 0" << std::endl;
+        return;
+    }
 
     sf::Color color;
-    if(color_o != std::nullopt){
-        color = color_o.value();
+    if(m_colorManagerPtr){
+        auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
+        if(color_o != std::nullopt){
+            color = color_o.value();
+        }
+        else{
+            color = sf::Color::Black;
+        }
+    }
+    else{
+        color = sf::Color::Black;
     }
 
     GraphicArrow graphicArrow;
