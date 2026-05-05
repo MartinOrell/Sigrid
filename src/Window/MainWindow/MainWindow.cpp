@@ -75,7 +75,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     m_pieceManagerPtr->loadImages(config.pieces);
 
-    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get());
+    m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get(), m_arrowColorManagerPtr.get());
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){

@@ -7,6 +7,7 @@
 #include "../Action/Action.h"
 #include "../Coord/CoordBlock.h"
 #include "../Color/ColorManager.h"
+#include "../Board/Board.h"
 namespace sf{
     class RenderTexture;
 }
@@ -17,13 +18,12 @@ namespace sigrid{
     class PieceManager;
     class ToolManager;
 
-    class GraphicToolPicker;
     class Tool;
 
     class ToolPickerWindow: public sf::Drawable{
         public:
 
-            ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ToolManager* const toolManagerPtr);
+            ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ToolManager* const toolManagerPtr, ColorManager* arrowColorManagerPtr);
             
             void createGraphic(const sf::Vector2u& size);
 
@@ -96,7 +96,7 @@ namespace sigrid{
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
-            std::unique_ptr<sigrid::GraphicToolPicker> m_boardPtr;
+            std::unique_ptr<Board> m_boardPtr;
 
             PieceManager* m_pieceManagerPtr;
             ToolManager* m_toolManagerPtr;

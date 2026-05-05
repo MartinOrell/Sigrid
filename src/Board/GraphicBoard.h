@@ -43,6 +43,10 @@ namespace sigrid{
             void addTileColorManagerPtr(ColorManager* const managerPtr);
             void addArrowColorManagerPtr(ColorManager* const managerPtr);
             void addFontManagerPtr(FontManager* const managerPtr);
+            void setLeftToRight();
+            void setRightToLeft();
+            void setTopToBottom();
+            void setBottomToTop();
 
             void init(const LogicBoard& logicBoard, const BoardDesignContainer& config);
 

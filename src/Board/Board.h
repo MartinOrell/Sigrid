@@ -22,6 +22,10 @@ namespace sigrid{
             void addTileColorManagerPtr(ColorManager* const managerPtr);
             void addArrowColorManagerPtr(ColorManager* const managerPtr);
             void addFontManagerPtr(FontManager* const managerPtr);
+            void setLeftToRight();
+            void setRightToLeft();
+            void setTopToBottom();
+            void setBottomToTop();
 
             void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
@@ -64,6 +68,8 @@ namespace sigrid{
             bool isImageFilenameSet() const;
 
             std::optional<Coord> getTileCoord(const sf::Vector2f& point);
+
+            Coord getTileCoord2(const sf::Vector2f& point);
 
             std::optional<LogicTile> getTile(const Coord& coord);
 

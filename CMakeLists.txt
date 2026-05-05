@@ -26,7 +26,6 @@ set(SRC_FILES
     src/Entity/Piece/PieceManager.cpp
     src/Tool/Tool.cpp
     src/Tool/ToolManager.cpp
-    src/ToolPicker/GraphicToolPicker.cpp
     src/ToolPicker/ToolPickerWindow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
@@ -34,6 +33,7 @@ set(SRC_FILES
     src/Entity/Tile/GraphicTile.cpp
     src/Entity/Tile/LogicTiles.cpp
     src/Entity/Tile/GraphicTiles.cpp
+    src/Entity/Icon/LogicIcon.cpp
     src/Entity/Icon/Icon.cpp
     src/Entity/Shape/Circle/LogicCircle.cpp
     src/Entity/Shape/Circle/GraphicCircle.cpp

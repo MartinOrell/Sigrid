@@ -41,6 +41,34 @@ void Board::addFontManagerPtr(FontManager* const managerPtr){
     m_graphicBoard->addFontManagerPtr(managerPtr);
 }
 
+void Board::setLeftToRight(){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->setLeftToRight();
+}
+
+void Board::setRightToLeft(){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->setRightToLeft();
+}
+
+void Board::setTopToBottom(){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->setTopToBottom();
+}
+
+void Board::setBottomToTop(){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->setBottomToTop();
+}
+
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
     m_filename = boardData.filename;
@@ -52,6 +80,9 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
             m_graphicBoard = std::make_unique<GraphicBoard>();
         }
         m_graphicBoard->init(*m_logicBoard, graphicData);
+    }
+    else{
+        std::cerr << "Board: Failed to init logicBoard" << std::endl;
     }
 }
 
@@ -170,6 +201,15 @@ bool Board::isImageFilenameSet() const{
 
 std::optional<Coord> Board::getTileCoord(const sf::Vector2f& point){
     return m_graphicBoard->getTileCoord(point);
+}
+
+//Temporary function. TODO: Replace with getTileCoord
+Coord Board::getTileCoord2(const sf::Vector2f& point){
+    auto coord_o = m_graphicBoard->getTileCoord(point);
+    if(coord_o == std::nullopt){
+        return {-1,-1};
+    }
+    return coord_o.value();
 }
 
 std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){

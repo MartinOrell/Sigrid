@@ -147,6 +147,11 @@ void GraphicArrow::set(const sf::Vector2f& fromPosition, const sf::Vector2f& toP
     m_head.setPosition(headPosition);
 }
 
+void GraphicArrow::setPosition(const sf::Vector2f& position){
+    sf::Vector2f offset = position - m_line.getPosition();
+    move(offset);
+}
+
 void GraphicArrow::move(const sf::Vector2f& offset){
     m_line.move(offset);
     m_head.move(offset);

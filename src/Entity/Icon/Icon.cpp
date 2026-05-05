@@ -18,6 +18,10 @@ void Icon::setTexture(const sf::Texture* texturePtr){
     m_shape.setTexture(texturePtr);
 }
 
+void Icon::move(const sf::Vector2f& offset){
+    m_shape.move(offset);
+}
+
 void Icon::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_shape);
 }

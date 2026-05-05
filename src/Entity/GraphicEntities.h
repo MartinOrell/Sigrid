@@ -2,6 +2,7 @@
 
 #include <map>
 #include <optional>
+#include <memory>
 #include "../Coord/Coord.h"
 #include "LogicEntity.h"
 #include "GraphicEntity.h"
@@ -16,6 +17,8 @@ namespace sigrid{
     class GraphicEntities: public sf::Drawable{
         public:
             GraphicEntities();
+
+            GraphicEntities& operator =(const GraphicEntities& rhs);
 
             void addPieceManager(PieceManager* const pieceManagerPtr);
             void addColorManager(ColorManager* const colorManagerPtr);
@@ -46,6 +49,10 @@ namespace sigrid{
 
             std::map<Coord, GraphicPiece> m_pieces;
             std::map<Coord, GraphicCircle> m_circles;
+            std::map<Coord, GraphicArrow> m_arrows;
+            std::map<Coord, Icon> m_icons;
+
+            std::unique_ptr<sf::Texture> m_selectTexturePtr;
 
             sf::Vector2f m_pieceSize = {0.f, 0.f};
             float m_circleDiameter = 0.f;

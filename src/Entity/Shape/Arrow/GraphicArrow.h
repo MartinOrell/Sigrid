@@ -31,6 +31,8 @@ namespace sigrid{
 
             void set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
 
+            void setPosition(const sf::Vector2f& position);
+
             void move(const sf::Vector2f& offset);
 
         private:

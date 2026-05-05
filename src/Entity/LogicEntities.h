@@ -34,5 +34,7 @@ namespace sigrid{
         private:
             std::map<Coord, LogicPiece> m_pieces;
             std::map<Coord, LogicCircle> m_circles;
+            std::map<Coord, LogicArrow> m_arrows;
+            std::map<Coord, LogicIcon> m_icons;
     };
 }

@@ -46,6 +46,22 @@ void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
+void GraphicBoard::setLeftToRight(){
+    m_isLeftToRight = true;
+}
+
+void GraphicBoard::setRightToLeft(){
+    m_isLeftToRight = false;
+}
+
+void GraphicBoard::setTopToBottom(){
+    m_isTopToBottom = true;
+}
+
+void GraphicBoard::setBottomToTop(){
+    m_isTopToBottom = false;
+}
+
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
 
     m_borderWidth = config.borderWidth;

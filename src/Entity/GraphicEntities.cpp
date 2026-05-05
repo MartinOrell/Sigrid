@@ -10,6 +10,22 @@ using namespace sigrid;
 
 GraphicEntities::GraphicEntities(){}
 
+GraphicEntities& GraphicEntities::operator =(const GraphicEntities& rhs){
+    m_pieces = rhs.m_pieces;
+    m_circles = rhs.m_circles;
+    m_arrows = rhs.m_arrows;
+
+    m_icons.clear();//Temp fix since texture is saved in this class (should be saved elsewhere)
+
+    m_pieceSize = rhs.m_pieceSize;
+    m_circleDiameter = rhs.m_circleDiameter;
+    
+    m_pieceManagerPtr = rhs.m_pieceManagerPtr;
+    m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
+
+    return *this;
+}
+
 void GraphicEntities::addPieceManager(PieceManager* const pieceManagerPtr){
     m_pieceManagerPtr = pieceManagerPtr;
 }
@@ -82,11 +98,60 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         newCircle.setPosition(position);
         m_circles.insert({coord, newCircle});
     }
+    else if(std::holds_alternative<LogicArrow>(entity)){
+
+        sf::Color color;
+        int colorId = std::get<LogicArrow>(entity).getColorId();
+        auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
+        if(color_o == std::nullopt){
+            color = sf::Color::Black;
+        }
+        else{
+            color = color_o.value();
+        }
+
+        sf::Vector2f from = position;
+        from.y += m_pieceSize.y*0.3f;
+        sf::Vector2f to = position;
+        to.y -= m_pieceSize.y*0.4f;
+
+        GraphicArrow newArrow{};
+        newArrow.setFromPosition(from);
+        newArrow.setToPosition(to);
+        newArrow.setColor(color);
+        newArrow.setThickness(30);
+        newArrow.setHeadSize(60);
+        newArrow.init();
+        m_arrows.insert({coord, newArrow});
+
+    }
+    else if(std::holds_alternative<LogicIcon>(entity)){
+
+        if(!m_selectTexturePtr){
+            m_selectTexturePtr = std::make_unique<sf::Texture>("res/icons/select_object.png");
+        }
+
+        sf::Vector2f iconPosition = position;
+        iconPosition.x -= m_pieceSize.x/2.f;
+        iconPosition.y -= m_pieceSize.y/2.f;
+
+        Icon newIcon;
+        newIcon.setSize(m_pieceSize);
+        newIcon.setPosition(iconPosition);
+        newIcon.setTexture(m_selectTexturePtr.get());
+        m_icons.insert({coord, newIcon});
+    }
+    else{
+        std::cerr << "GraphicEntities: Unable to add unknown entity" << std::endl;
+        return;
+    }
 }
 
 void GraphicEntities::removeEntity(const Coord& coord){
     m_pieces.erase(coord);
     m_circles.erase(coord);
+    m_arrows.erase(coord);
+    m_icons.erase(coord);
 }
 
 template<typename T> bool moveEntity_h(T& list, const Coord& fromCoord, const Coord& toCoord, const sf::Vector2f& newPosition){
@@ -106,12 +171,22 @@ void GraphicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord, c
     if(moveEntity_h<std::map<Coord, GraphicPiece>>(m_pieces, fromCoord, toCoord, newPosition)){
         return;
     }
-    moveEntity_h<std::map<Coord, GraphicCircle>>(m_circles, fromCoord, toCoord, newPosition);
+    else if(moveEntity_h<std::map<Coord, GraphicCircle>>(m_circles, fromCoord, toCoord, newPosition)){
+        return;
+    }
+    else if(moveEntity_h<std::map<Coord, GraphicArrow>>(m_arrows, fromCoord, toCoord, newPosition)){
+        return;
+    }
+    else{
+        moveEntity_h<std::map<Coord, Icon>>(m_icons, fromCoord, toCoord, newPosition);
+    }
 }
 
 void GraphicEntities::clear(){
     m_pieces.clear();
     m_circles.clear();
+    m_arrows.clear();
+    m_icons.clear();
 }
 
 std::optional<GraphicEntity> GraphicEntities::getEntityAt(const Coord& coord) const{
@@ -124,6 +199,18 @@ std::optional<GraphicEntity> GraphicEntities::getEntityAt(const Coord& coord) co
     {
         auto it = m_circles.find(coord);
         if(it != m_circles.end()){
+            return it->second;
+        }
+    }
+    {
+        auto it = m_arrows.find(coord);
+        if(it != m_arrows.end()){
+            return it->second;
+        }
+    }
+    {
+        auto it = m_icons.find(coord);
+        if(it != m_icons.end()){
             return it->second;
         }
     }
@@ -145,6 +232,8 @@ template <typename T> void removeColumn_h(T& list, const int& columnId){
 void GraphicEntities::removeColumn(const int& columnId){
     removeColumn_h<std::map<Coord, GraphicPiece>>(m_pieces, columnId);
     removeColumn_h<std::map<Coord, GraphicCircle>>(m_circles, columnId);
+    removeColumn_h<std::map<Coord, GraphicArrow>>(m_arrows, columnId);
+    removeColumn_h<std::map<Coord, Icon>>(m_icons, columnId);
 }
 
 template <typename T> void removeRow_h(T& list, const int& rowId){
@@ -162,6 +251,8 @@ template <typename T> void removeRow_h(T& list, const int& rowId){
 void GraphicEntities::removeRow(const int& rowId){
     removeRow_h<std::map<Coord, GraphicPiece>>(m_pieces, rowId);
     removeRow_h<std::map<Coord, GraphicCircle>>(m_circles, rowId);
+    removeRow_h<std::map<Coord, GraphicArrow>>(m_arrows, rowId);
+    removeRow_h<std::map<Coord, Icon>>(m_icons, rowId);
 }
 
 template <typename T> void moveEntitiesRight_h(T& list, const float& tileWidth, const bool& isLeftToRight){
@@ -203,6 +294,8 @@ template <typename T> void moveEntitiesRight_h(T& list, const float& tileWidth, 
 void GraphicEntities::moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight){
     moveEntitiesRight_h<std::map<Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
     moveEntitiesRight_h<std::map<Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
+    moveEntitiesRight_h<std::map<Coord, GraphicArrow>>(m_arrows, tileWidth, isLeftToRight);
+    moveEntitiesRight_h<std::map<Coord, Icon>>(m_icons, tileWidth, isLeftToRight);
 }
 
 template<typename T> void moveEntitiesLeft_h(T& list, const float& tileWidth, const bool& isLeftToRight){
@@ -244,6 +337,8 @@ template<typename T> void moveEntitiesLeft_h(T& list, const float& tileWidth, co
 void GraphicEntities::moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight){
     moveEntitiesLeft_h<std::map<Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
     moveEntitiesLeft_h<std::map<Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
+    moveEntitiesLeft_h<std::map<Coord, GraphicArrow>>(m_arrows, tileWidth, isLeftToRight);
+    moveEntitiesLeft_h<std::map<Coord, Icon>>(m_icons, tileWidth, isLeftToRight);
 }
 
 template <typename T> void moveEntitiesUp_h(T& list, const float& tileHeight, const bool& isTopToBottom){
@@ -285,6 +380,8 @@ template <typename T> void moveEntitiesUp_h(T& list, const float& tileHeight, co
 void GraphicEntities::moveEntitiesUp(const float& tileHeight, const bool& isTopToBottom){
     moveEntitiesUp_h<std::map<Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
     moveEntitiesUp_h<std::map<Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
+    moveEntitiesUp_h<std::map<Coord, GraphicArrow>>(m_arrows, tileHeight, isTopToBottom);
+    moveEntitiesUp_h<std::map<Coord, Icon>>(m_icons, tileHeight, isTopToBottom);
 }
 
 template <typename T> void moveEntitiesDown_h(T& list, const float& tileHeight, const bool& isTopToBottom){
@@ -325,6 +422,8 @@ template <typename T> void moveEntitiesDown_h(T& list, const float& tileHeight, 
 void GraphicEntities::moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom){
     moveEntitiesDown_h<std::map<Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
     moveEntitiesDown_h<std::map<Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
+    moveEntitiesDown_h<std::map<Coord, GraphicArrow>>(m_arrows, tileHeight, isTopToBottom);
+    moveEntitiesDown_h<std::map<Coord, Icon>>(m_icons, tileHeight, isTopToBottom);
 }
 
 void GraphicEntities::move(const sf::Vector2f& offset){
@@ -334,6 +433,14 @@ void GraphicEntities::move(const sf::Vector2f& offset){
 
     for(auto& circle : m_circles){
         circle.second.move(offset);
+    }
+
+    for(auto& arrow : m_arrows){
+        arrow.second.move(offset);
+    }
+
+    for(auto& icon : m_arrows){
+        icon.second.move(offset);
     }
 }
 
@@ -352,6 +459,20 @@ void GraphicEntities::setEntityPosition(const Coord& coord, const sf::Vector2f& 
             return;
         }
     }
+    {
+        auto it = m_arrows.find(coord);
+        if(it != m_arrows.end()){
+            it->second.setPosition(position);
+            return;
+        }
+    }
+    {
+        auto it = m_icons.find(coord);
+        if(it != m_icons.end()){
+            it->second.setPosition(position);
+            return;
+        }
+    }
 }
 
 void GraphicEntities::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -361,5 +482,13 @@ void GraphicEntities::draw(sf::RenderTarget& target, sf::RenderStates states) co
 
     for(auto& circle : m_circles){
         target.draw(circle.second);
+    }
+
+    for(auto& arrow : m_arrows){
+        target.draw(arrow.second);
+    }
+
+    for(auto& icon : m_icons){
+        target.draw(icon.second);
     }
 }
