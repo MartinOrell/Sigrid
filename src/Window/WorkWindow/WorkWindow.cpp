@@ -13,29 +13,88 @@ using namespace sigrid;
 
 
 WorkWindow::WorkWindow()
-: m_backgroundColor{255,255,255,0}{}
+: m_backgroundColor{255,255,255,0}
+, m_activeBoardId{0}{}
 
-void WorkWindow::init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr){
-    
-    m_activeBoardId = 0;
-    m_pieceManagerPtr = pieceManagerPtr;
-
-    auto board = std::make_unique<Board>();
-
-    board->addPieceManagerPtr(pieceManagerPtr);
-    board->addTileColorManagerPtr(tileColorManagerPtr);
-    board->addArrowColorManagerPtr(arrowColorManagerPtr);
-    board->addFontManagerPtr(fontManagerPtr);
-    board->init(boardData, graphicData);
-
-    std::cout << "Save location: " << boardFilename << std::endl;
-
-    board->setFilename(boardFilename);
-
-    if(!board->isImageFilenameSet()){
-        board->setImageFilename(defaultBoardImageFilename);
+void WorkWindow::setBoardFilename(const std::string& filename){
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
     }
-    m_boardPtrs.push_back(std::move(board));
+    if(m_boardPtrs.size() < m_activeBoardId){
+        std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
+        return;
+    }
+    m_boardPtrs.at(m_activeBoardId)->setFilename(filename);
+}
+
+void WorkWindow::setDefaultBoardImageFilename(const std::string& filename){
+    m_defaultBoardImageFilename = filename;
+}
+
+void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
+    }
+    if(m_boardPtrs.size() < m_activeBoardId){
+        std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
+        return;
+    }
+    m_boardPtrs.at(m_activeBoardId)->addTileColorManagerPtr(managerPtr);
+}
+
+void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
+    }
+    if(m_boardPtrs.size() < m_activeBoardId){
+        std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
+        return;
+    }
+    m_boardPtrs.at(m_activeBoardId)->addPieceManagerPtr(managerPtr);
+}
+
+void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
+    }
+    if(m_boardPtrs.size() < m_activeBoardId){
+        std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
+        return;
+    }
+    m_boardPtrs.at(m_activeBoardId)->addArrowColorManagerPtr(managerPtr);
+}
+
+void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
+    }
+    if(m_boardPtrs.size() < m_activeBoardId){
+        std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
+        return;
+    }
+    m_boardPtrs.at(m_activeBoardId)->addFontManagerPtr(managerPtr);
+}
+
+void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
+
+    if(m_boardPtrs.size() == 0){
+        auto board = std::make_unique<Board>();
+        m_boardPtrs.push_back(std::move(board));
+    }
+    m_activeBoardId = 0;
+
+    m_boardPtrs.at(0)->init(boardData, graphicData);
+
+    std::cout << "Save location: " << m_boardPtrs.at(0)->getFilename() << std::endl;
+
+    if(!m_boardPtrs.at(0)->isImageFilenameSet()){
+        m_boardPtrs.at(0)->setImageFilename(m_defaultBoardImageFilename);
+    }
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)

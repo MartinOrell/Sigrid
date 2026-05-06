@@ -107,7 +107,13 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->init(config.boardFilename, config.defaultBoardImageFilename, boardData, config.boardData,  m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_arrowColorManagerPtr.get(), m_fontManagerPtr.get());
+    m_workWindow->setBoardFilename(config.boardFilename);
+    m_workWindow->setDefaultBoardImageFilename(config.defaultBoardImageFilename);
+    m_workWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
+    m_workWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
+    m_workWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
+    m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
+    m_workWindow->init(boardData, config.boardData);
 
     m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData, m_fontManagerPtr.get());
     

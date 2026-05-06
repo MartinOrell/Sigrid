@@ -20,7 +20,19 @@ namespace sigrid{
         public:
             WorkWindow();
 
-            void init(const std::string& boardFilename, const std::string& defaultBoardImageFilename, const BoardDataContainer& boardData, const BoardDesignContainer& graphicData, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ColorManager* const arrowColorManagerPtr, FontManager* const fontManagerPtr);
+            void setBoardFilename(const std::string& filename);
+
+            void setDefaultBoardImageFilename(const std::string& filename);
+
+            void setTileColorManagerPtr(ColorManager* const managerPtr);
+
+            void setPieceManagerPtr(PieceManager* const managerPtr);
+
+            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+
+            void setFontManagerPtr(FontManager* const managerPtr);
+
+            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -109,6 +121,6 @@ namespace sigrid{
 
             sf::Color m_backgroundColor;
 
-            PieceManager* m_pieceManagerPtr = nullptr;
+            std::string m_defaultBoardImageFilename = "";
     };
 }
