@@ -189,10 +189,7 @@ namespace sigrid{
 
             std::unique_ptr<GraphicTile> m_selectHighlight;
 
-            PieceManager* m_pieceManagerPtr = nullptr;
-            ColorManager* m_tileColorManagerPtr = nullptr;
             ColorManager* m_arrowColorManagerPtr = nullptr;
-            FontManager* m_fontManagerPtr = nullptr;
 
             unsigned int m_borderWidth;
 

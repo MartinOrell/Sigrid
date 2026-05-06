@@ -31,11 +31,17 @@ GraphicBoard::GraphicBoard()
 , m_isTopToBottom{false}{}
 
 void GraphicBoard::addPieceManagerPtr(PieceManager* const managerPtr){
-    m_pieceManagerPtr = managerPtr;
+    if(!m_pieceLayerPtr){
+        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+    }
+    m_pieceLayerPtr->addPieceManager(managerPtr);
 }
 
 void GraphicBoard::addTileColorManagerPtr(ColorManager* const managerPtr){
-    m_tileColorManagerPtr = managerPtr;
+    if(!m_tileLayerPtr){
+        m_tileLayerPtr = std::make_unique<GraphicTiles>();
+    }
+    m_tileLayerPtr->addColorManager(managerPtr);
 }
 
 void GraphicBoard::addArrowColorManagerPtr(ColorManager* const managerPtr){
@@ -43,7 +49,10 @@ void GraphicBoard::addArrowColorManagerPtr(ColorManager* const managerPtr){
 }
 
 void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
-    m_fontManagerPtr = managerPtr;
+    if(!m_labelsPtr){
+        m_labelsPtr = std::make_unique<BoardLabels>();
+    }
+    m_labelsPtr->setFontManagerPtr(managerPtr);
 }
 
 void GraphicBoard::addIconManagerPtr(IconManager* const managerPtr){
@@ -73,14 +82,14 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
 
     m_borderWidth = config.borderWidth;
     
-    m_tileLayerPtr = std::make_unique<GraphicTiles>();
+    if(!m_tileLayerPtr){
+        m_tileLayerPtr = std::make_unique<GraphicTiles>();
+    }
+    
     m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
     m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
     m_tileLayerPtr->setTileSize({config.tileWidth, config.tileHeight});
     m_tileLayerPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
-    if(m_tileColorManagerPtr){
-        m_tileLayerPtr->addColorManager(m_tileColorManagerPtr);
-    }
     if(m_arrowColorManagerPtr){
         m_tileLayerPtr->addHighlightColorManager(m_arrowColorManagerPtr);
     }
@@ -90,9 +99,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     }
     
-    if(m_pieceManagerPtr){
-        m_pieceLayerPtr->addPieceManager(m_pieceManagerPtr);
-    }
     if(m_arrowColorManagerPtr){
         m_pieceLayerPtr->addColorManager(m_arrowColorManagerPtr);
     }
@@ -106,8 +112,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         m_arrowLayerPtr->setColorManagerPtr(m_arrowColorManagerPtr);
     }
 
-    if(m_fontManagerPtr){
-        m_labelsPtr = std::make_unique<BoardLabels>();
+    if(m_labelsPtr){
         if(config.labelsInside){
             m_labelsPtr->setInside();
         }
@@ -117,8 +122,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         m_labelsPtr->setInsideLabelSizeFactor(config.insideLabelSize);
         m_labelsPtr->setOutsideLabelSizeFactor(config.outsideLabelSize);
         m_labelsPtr->setFont(config.labelFont);
-        m_labelsPtr->setFontManagerPtr(m_fontManagerPtr);
-    }    
+    }
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){
         for(int x = 0; x < logicBoard.getNumColumns(); x++){
