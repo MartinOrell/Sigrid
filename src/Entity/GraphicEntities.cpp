@@ -122,7 +122,9 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
             return;
         }
 
-        auto texturePtr_o = m_iconManagerPtr->getTexturePtr("res/icons/select_object.png");
+        std::string filename = std::get<LogicIcon>(entity).getFilename();
+
+        auto texturePtr_o = m_iconManagerPtr->getTexturePtr(filename);
 
         if(texturePtr_o == std::nullopt){
             std::cerr << "GraphicEntities: Unable to add LogicIcon, " 

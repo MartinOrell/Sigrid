@@ -371,7 +371,7 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entitie
             << " " << arrow.first.getNotation();
     }
     for(const auto& icon: entities.m_icons){
-        out << "\nIcon: " << icon.second.getName()
+        out << "\nIcon: " << icon.second.getFilename()
             << " " << icon.first.getNotation();
     }
     return out;

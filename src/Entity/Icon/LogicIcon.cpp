@@ -4,16 +4,16 @@ using namespace sigrid;
 
 LogicIcon::LogicIcon(){}
 
-void LogicIcon::setName(const std::string& name){
-    m_name = name;
+void LogicIcon::setFilename(const std::string& filename){
+    m_filename = filename;
 }
 
-std::string LogicIcon::getName() const{
-    return m_name;
+std::string LogicIcon::getFilename() const{
+    return m_filename;
 }
 
 bool LogicIcon::operator==(const LogicIcon& rhs) const{
-    return m_name == rhs.m_name;
+    return m_filename == rhs.m_filename;
 }
 
 bool LogicIcon::operator!=(const LogicIcon& rhs) const{

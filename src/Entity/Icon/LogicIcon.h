@@ -9,14 +9,14 @@ namespace sigrid{
         public:
 
             LogicIcon();
-            void setName(const std::string& name);
-            std::string getName() const;
+            void setFilename(const std::string& name);
+            std::string getFilename() const;
 
             bool operator==(const LogicIcon& rhs) const;
             bool operator!=(const LogicIcon& rhs) const;
 
         private:
-            std::string m_name;
+            std::string m_filename;
     };
 
 }

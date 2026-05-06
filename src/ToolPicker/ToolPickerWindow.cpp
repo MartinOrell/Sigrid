@@ -137,20 +137,13 @@ void ToolPickerWindow::createGraphic(const sf::Vector2u& size){
 
 void ToolPickerWindow::addSelectTool(){
 
-    if(m_toolManagerPtr == nullptr){
-        std::cout << "Unable to add select tool, toolManager is missing" << std::endl;
-        return;
-    }
-
-    auto selectTexture_o = m_toolManagerPtr->getTexturePtr(ToolSelection::Select);
-    if(selectTexture_o != std::nullopt){
-        ToolStruct tool;
-        tool.texturePtr = selectTexture_o.value();
-        ActionType::SetTool action{sf::Mouse::Button::Left, ToolSelection::Select};
-        tool.action = action;
-
-        m_miscTools.push_back(tool);
-    }
+    ToolStruct tool;
+    LogicIcon icon;
+    icon.setFilename("res/icons/select_object.png");
+    tool.icon = icon;
+    ActionType::SetTool action{sf::Mouse::Button::Left, ToolSelection::Select};
+    tool.action = action;
+    m_miscTools.push_back(tool);
 }
 
 void ToolPickerWindow::addArrowTool(const int colorId){
@@ -383,9 +376,7 @@ void ToolPickerWindow::redrawTexture(){
     int i;
     for(i = 0; i < m_miscTools.size(); i++){
 
-        LogicIcon logicIcon;
-        logicIcon.setName("Select");
-        m_boardPtr->addEntity({x,y}, logicIcon);
+        m_boardPtr->addEntity({x,y}, m_miscTools.at(i).icon);
 
         m_clickActions.insert_or_assign({x,y}, m_miscTools.at(i).action);
         if((i+1)%m_miscBlock.columns == 0){

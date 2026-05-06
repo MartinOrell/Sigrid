@@ -96,7 +96,7 @@ namespace sigrid{
             };
 
             struct ToolStruct{
-                sf::Texture* texturePtr = nullptr;
+                LogicIcon icon;
                 Action action;
             };
 
