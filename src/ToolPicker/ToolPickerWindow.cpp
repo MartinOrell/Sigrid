@@ -13,29 +13,63 @@
 using namespace sigrid;
 
 
-ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const tileColorManagerPtr, PieceManager* pieceManagerPtr, ToolManager* toolManagerPtr, ColorManager* arrowColorManagerPtr)
-: m_pieceManagerPtr{pieceManagerPtr}
-, m_toolManagerPtr{toolManagerPtr}
-, m_columns{data.columns}
-, m_rows{data.rows}
-, m_colorDisplay{ColorDisplay::Piece}
-, m_showColors{data.showColors}
-, m_show{data.show}
+ToolPickerWindow::ToolPickerWindow()
+: m_colorDisplay{ColorDisplay::Piece}
 , m_backgroundColor{255,255,255,0}
 , m_arrowColorId{-1}
-, m_circleColorId{-1}
-, m_colorIds{data.colorToolIds}
-, m_pieceNotation{data.defaultPieceNotation}
-, m_miscBlock{data.miscToolBlock}
-, m_colorBlock{data.colorBlock}
-, m_pieceBlocks{data.pieceBlocks}
-, m_defaultArrowColorId{data.defaultArrowColorId}
-, m_defaultCircleColorId{data.defaultCircleColorId}{
+, m_circleColorId{-1}{}
 
-    m_boardPtr = std::make_unique<Board>();
-    m_boardPtr->addTileColorManagerPtr(tileColorManagerPtr);
-    m_boardPtr->addArrowColorManagerPtr(arrowColorManagerPtr);
-    m_boardPtr->addPieceManagerPtr(pieceManagerPtr);
+void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+    if(!m_boardPtr){
+        m_boardPtr = std::make_unique<Board>();
+    }
+    m_boardPtr->addTileColorManagerPtr(managerPtr);
+}
+
+void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+    m_pieceManagerPtr = managerPtr;
+    if(!m_boardPtr){
+        m_boardPtr = std::make_unique<Board>();
+    }
+    m_boardPtr->addPieceManagerPtr(managerPtr);
+}
+
+void ToolPickerWindow::setToolManagerPtr(ToolManager* const managerPtr){
+    m_toolManagerPtr = managerPtr;
+}
+
+void ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+    if(!m_boardPtr){
+        m_boardPtr = std::make_unique<Board>();
+    }
+    m_boardPtr->addArrowColorManagerPtr(managerPtr);
+}
+
+void ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
+    if(!m_boardPtr){
+        m_boardPtr = std::make_unique<Board>();
+    }
+    m_boardPtr->addIconManagerPtr(managerPtr); 
+}
+
+void ToolPickerWindow::init(const ToolPickerContainer& data){
+
+    if(!m_boardPtr){
+        m_boardPtr = std::make_unique<Board>();
+    }
+
+    m_columns = data.columns;
+    m_rows = data.rows;
+    m_showColors = data.showColors;
+    m_show = data.show;
+    m_colorIds = data.colorToolIds;
+    m_pieceNotation = data.defaultPieceNotation;
+    m_miscBlock = data.miscToolBlock;
+    m_colorBlock = data.colorBlock;
+    m_pieceBlocks = data.pieceBlocks;
+    m_defaultArrowColorId = data.defaultArrowColorId;
+    m_defaultCircleColorId = data.defaultCircleColorId;
+
     m_boardPtr->setLeftToRight();
     m_boardPtr->setTopToBottom();
 
@@ -88,13 +122,6 @@ ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, ColorManager
     }
     for(const auto& pieceNotation: data.pieceNotations){
         addPieceTool(pieceNotation);
-    }
-
-}
-
-void ToolPickerWindow::addIconManager(IconManager* const managerPtr){
-    if(m_boardPtr){
-        m_boardPtr->addIconManagerPtr(managerPtr); 
     }
 }
 

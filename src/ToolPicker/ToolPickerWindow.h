@@ -24,9 +24,19 @@ namespace sigrid{
     class ToolPickerWindow: public sf::Drawable{
         public:
 
-            ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ToolManager* const toolManagerPtr, ColorManager* arrowColorManagerPtr);
+            ToolPickerWindow();
 
-            void addIconManager(IconManager* const managerPtr);
+            void setTileColorManagerPtr(ColorManager* const managerPtr);
+
+            void setPieceManagerPtr(PieceManager* const managerPtr);
+
+            void setToolManagerPtr(ToolManager* const managerPtr);
+
+            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+
+            void setIconManagerPtr(IconManager* const managerPtr);
+
+            void init(const ToolPickerContainer& data);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -86,12 +96,12 @@ namespace sigrid{
             };
 
             struct ToolStruct{
-                sf::Texture* texturePtr;
+                sf::Texture* texturePtr = nullptr;
                 Action action;
             };
 
-            int m_columns;
-            int m_rows;
+            int m_columns = 1;
+            int m_rows = 1;
 
             std::vector<ToolStruct> m_miscTools;
 
@@ -101,21 +111,21 @@ namespace sigrid{
             sf::Vector2f m_position;
             std::unique_ptr<Board> m_boardPtr;
 
-            PieceManager* m_pieceManagerPtr;
-            ToolManager* m_toolManagerPtr;
+            PieceManager* m_pieceManagerPtr = nullptr;
+            ToolManager* m_toolManagerPtr = nullptr;
 
             std::map<Coord, Action> m_clickActions;
 
             std::vector<int> m_displayedPieceColorIds;
-            int m_arrowColorId;
-            int m_circleColorId;
-            std::string m_pieceNotation;
+            int m_arrowColorId = 0;
+            int m_circleColorId = 0;
+            std::string m_pieceNotation = "";
 
             std::vector<std::string> m_pieceNotations;
 
-            bool m_show;
+            bool m_show = true;
 
-            bool m_showColors;
+            bool m_showColors = false;
 
             sf::Color m_backgroundColor;
 
@@ -125,7 +135,7 @@ namespace sigrid{
             CoordBlock m_colorBlock;
             std::vector<CoordBlock> m_pieceBlocks;
 
-            int m_defaultArrowColorId;
-            int m_defaultCircleColorId;
+            int m_defaultArrowColorId = 0;
+            int m_defaultCircleColorId = 0;
     };
 }
