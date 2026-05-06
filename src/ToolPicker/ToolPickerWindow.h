@@ -16,7 +16,6 @@ namespace sigrid{
 
     class ToolPickerContainer;
     class PieceManager;
-    class ToolManager;
     class IconManager;
 
     class Tool;
@@ -29,8 +28,6 @@ namespace sigrid{
             void setTileColorManagerPtr(ColorManager* const managerPtr);
 
             void setPieceManagerPtr(PieceManager* const managerPtr);
-
-            void setToolManagerPtr(ToolManager* const managerPtr);
 
             void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
@@ -112,7 +109,6 @@ namespace sigrid{
             std::unique_ptr<Board> m_boardPtr;
 
             PieceManager* m_pieceManagerPtr = nullptr;
-            ToolManager* m_toolManagerPtr = nullptr;
 
             std::map<Coord, Action> m_clickActions;
 

@@ -2,7 +2,6 @@
 
 #include "ToolPickerContainer.h"
 #include "../Entity/Piece/PieceManager.h"
-#include "../Tool/ToolManager.h"
 #include "../Board/BoardDataContainer.h"
 #include "../Board/BoardDesignContainer.h"
 
@@ -32,10 +31,6 @@ void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
         m_boardPtr = std::make_unique<Board>();
     }
     m_boardPtr->addPieceManagerPtr(managerPtr);
-}
-
-void ToolPickerWindow::setToolManagerPtr(ToolManager* const managerPtr){
-    m_toolManagerPtr = managerPtr;
 }
 
 void ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
@@ -390,42 +385,36 @@ void ToolPickerWindow::redrawTexture(){
 
     //Arrow tool
     if(m_arrowColorId >= 0){
-        auto drawArrowTexture_o = m_toolManagerPtr->getArrowTexturePtr(m_arrowColorId);
-        if(drawArrowTexture_o != std::nullopt){
 
-            sigrid::LogicArrow logicArrow{m_arrowColorId};
-            m_boardPtr->addEntity({x,y}, logicArrow);
+        sigrid::LogicArrow logicArrow{m_arrowColorId};
+        m_boardPtr->addEntity({x,y}, logicArrow);
 
-            ActionType::PickArrow action{m_arrowColorId};
-            m_clickActions.insert_or_assign({x,y}, action);
-            if((i+1)%m_miscBlock.columns == 0){
-                x = m_miscBlock.coord.x;
-                y++;
-            }
-            else{
-                x++;
-            }
-            i++;
+        ActionType::PickArrow action{m_arrowColorId};
+        m_clickActions.insert_or_assign({x,y}, action);
+        if((i+1)%m_miscBlock.columns == 0){
+            x = m_miscBlock.coord.x;
+            y++;
         }
+        else{
+            x++;
+        }
+        i++;
     }
     
     //Circle tool
     if(m_circleColorId >= 0){
-        auto drawCircleTexture_o = m_toolManagerPtr->getCircleTexturePtr(m_circleColorId);
-        if(drawCircleTexture_o != std::nullopt){
-            sigrid::LogicCircle logicCircle{m_circleColorId};
-            m_boardPtr->addEntity({x,y}, logicCircle);
-            ActionType::PickCircle action{m_circleColorId};
-            m_clickActions.insert_or_assign({x,y}, action);
-            if((i+1)%m_miscBlock.columns == 0){
-                x = m_miscBlock.coord.x;
-                y++;
-            }
-            else{
-                x++;
-            }
-            i++;
+        sigrid::LogicCircle logicCircle{m_circleColorId};
+        m_boardPtr->addEntity({x,y}, logicCircle);
+        ActionType::PickCircle action{m_circleColorId};
+        m_clickActions.insert_or_assign({x,y}, action);
+        if((i+1)%m_miscBlock.columns == 0){
+            x = m_miscBlock.coord.x;
+            y++;
         }
+        else{
+            x++;
+        }
+        i++;
     }
 
     //Colors
@@ -461,11 +450,6 @@ void ToolPickerWindow::redrawTexture(){
                 break;
             case ColorDisplay::Arrow:
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
-                    auto arrowPtr_o = m_toolManagerPtr->getArrowTexturePtr(colorId);
-
-                    if(arrowPtr_o == std::nullopt){
-                        continue;
-                    }
 
                     sigrid::LogicArrow logicArrow{colorId};
                     m_boardPtr->addEntity({x,y}, logicArrow);
@@ -484,11 +468,6 @@ void ToolPickerWindow::redrawTexture(){
                 break;
             case ColorDisplay::Circle:
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
-                    auto circlePtr_o = m_toolManagerPtr->getCircleTexturePtr(colorId);
-
-                    if(circlePtr_o == std::nullopt){
-                        continue;
-                    }
 
                     sigrid::LogicCircle logicCircle{colorId};
                     m_boardPtr->addEntity({x,y}, logicCircle);

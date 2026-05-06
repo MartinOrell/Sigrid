@@ -79,7 +79,6 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>();
     m_toolPickerWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
     m_toolPickerWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
-    m_toolPickerWindow->setToolManagerPtr(m_toolManagerPtr.get());
     m_toolPickerWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_toolPickerWindow->setIconManagerPtr(m_iconManagerPtr.get());
     m_toolPickerWindow->init(config.toolPickerData);
