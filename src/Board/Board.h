@@ -12,6 +12,7 @@ namespace sigrid{
 
     class BoardDataContainer;
     class LogicTile;
+    class IconManager;
 
     class Board: public sf::Drawable{
         public:            
@@ -22,6 +23,7 @@ namespace sigrid{
             void addTileColorManagerPtr(ColorManager* const managerPtr);
             void addArrowColorManagerPtr(ColorManager* const managerPtr);
             void addFontManagerPtr(FontManager* const managerPtr);
+            void addIconManagerPtr(IconManager* const managerPtr);
             void setLeftToRight();
             void setRightToLeft();
             void setTopToBottom();

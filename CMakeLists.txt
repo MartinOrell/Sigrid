@@ -35,6 +35,7 @@ set(SRC_FILES
     src/Entity/Tile/GraphicTiles.cpp
     src/Entity/Icon/LogicIcon.cpp
     src/Entity/Icon/Icon.cpp
+    src/Entity/Icon/IconManager.cpp
     src/Entity/Shape/Circle/LogicCircle.cpp
     src/Entity/Shape/Circle/GraphicCircle.cpp
     src/Entity/Shape/Arrow/LogicArrow.cpp

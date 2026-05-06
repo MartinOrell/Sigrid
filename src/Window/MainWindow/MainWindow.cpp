@@ -26,6 +26,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
     m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
+    m_iconManagerPtr = std::make_unique<IconManager>();
 
     sigrid::Tool leftClickTool{config.leftClickTool};
     m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
@@ -76,6 +77,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_pieceManagerPtr->loadImages(config.pieces);
 
     m_toolPickerWindow = std::make_unique<sigrid::ToolPickerWindow>(config.toolPickerData, m_tileColorManagerPtr.get(), m_pieceManagerPtr.get(), m_toolManagerPtr.get(), m_arrowColorManagerPtr.get());
+
+    m_toolPickerWindow->addIconManager(m_iconManagerPtr.get());
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){

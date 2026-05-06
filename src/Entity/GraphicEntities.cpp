@@ -5,26 +5,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Piece/PieceManager.h"
 #include "../Color/ColorManager.h"
+#include "Icon/IconManager.h"
 
 using namespace sigrid;
 
 GraphicEntities::GraphicEntities(){}
-
-GraphicEntities& GraphicEntities::operator =(const GraphicEntities& rhs){
-    m_pieces = rhs.m_pieces;
-    m_circles = rhs.m_circles;
-    m_arrows = rhs.m_arrows;
-
-    m_icons.clear();//Temp fix since texture is saved in this class (should be saved elsewhere)
-
-    m_pieceSize = rhs.m_pieceSize;
-    m_circleDiameter = rhs.m_circleDiameter;
-    
-    m_pieceManagerPtr = rhs.m_pieceManagerPtr;
-    m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
-
-    return *this;
-}
 
 void GraphicEntities::addPieceManager(PieceManager* const pieceManagerPtr){
     m_pieceManagerPtr = pieceManagerPtr;
@@ -32,6 +17,10 @@ void GraphicEntities::addPieceManager(PieceManager* const pieceManagerPtr){
 
 void GraphicEntities::addColorManager(ColorManager* const colorManagerPtr){
     m_arrowColorManagerPtr = colorManagerPtr;
+}
+
+void GraphicEntities::addIconManager(IconManager* const iconManagerPtr){
+    m_iconManagerPtr = iconManagerPtr;
 }
 
 void GraphicEntities::setPieceSize(const sf::Vector2f& pieceSize){
@@ -127,8 +116,18 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
     }
     else if(std::holds_alternative<LogicIcon>(entity)){
 
-        if(!m_selectTexturePtr){
-            m_selectTexturePtr = std::make_unique<sf::Texture>("res/icons/select_object.png");
+        if(!m_iconManagerPtr){
+            std::cerr << "GraphicEntities: Unable to add LogicIcon, "
+            << "iconManagerPtr is nullptr" << std::endl;
+            return;
+        }
+
+        auto texturePtr_o = m_iconManagerPtr->getTexturePtr("res/icons/select_object.png");
+
+        if(texturePtr_o == std::nullopt){
+            std::cerr << "GraphicEntities: Unable to add LogicIcon, " 
+            << "texture not found" << std::endl;
+            return;
         }
 
         sf::Vector2f iconPosition = position;
@@ -138,7 +137,7 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         Icon newIcon;
         newIcon.setSize(m_pieceSize);
         newIcon.setPosition(iconPosition);
-        newIcon.setTexture(m_selectTexturePtr.get());
+        newIcon.setTexture(texturePtr_o.value());
         m_icons.insert({coord, newIcon});
     }
     else{

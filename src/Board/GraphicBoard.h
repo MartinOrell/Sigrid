@@ -23,6 +23,7 @@ namespace sigrid{
     class BoardDesignContainer;
     class PieceManager;
     class ColorManager;
+    class IconManager;
     
     class CoordPair;
 
@@ -44,6 +45,7 @@ namespace sigrid{
             void addTileColorManagerPtr(ColorManager* const managerPtr);
             void addArrowColorManagerPtr(ColorManager* const managerPtr);
             void addFontManagerPtr(FontManager* const managerPtr);
+            void addIconManagerPtr(IconManager* const managerPtr);
             void setLeftToRight();
             void setRightToLeft();
             void setTopToBottom();

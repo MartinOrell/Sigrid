@@ -41,6 +41,13 @@ void Board::addFontManagerPtr(FontManager* const managerPtr){
     m_graphicBoard->addFontManagerPtr(managerPtr);
 }
 
+void Board::addIconManagerPtr(IconManager* const managerPtr){
+    if(!m_graphicBoard){
+        m_graphicBoard = std::make_unique<GraphicBoard>();
+    }
+    m_graphicBoard->addIconManagerPtr(managerPtr);
+}
+
 void Board::setLeftToRight(){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();

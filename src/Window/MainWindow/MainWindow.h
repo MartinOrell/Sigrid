@@ -17,6 +17,7 @@
 #include "../../ToolPicker/ToolPickerWindow.h"
 
 #include "../../Tool/ToolManager.h"
+#include "../../Entity/Icon/IconManager.h"
 
 namespace sigrid{
 
@@ -104,5 +105,6 @@ namespace sigrid{
             std::unique_ptr<ColorManager> m_arrowColorManagerPtr;
             std::unique_ptr<ToolManager> m_toolManagerPtr;
             std::unique_ptr<PieceManager> m_pieceManagerPtr;
+            std::unique_ptr<IconManager> m_iconManagerPtr;
     };
 }

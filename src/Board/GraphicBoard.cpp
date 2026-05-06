@@ -46,6 +46,13 @@ void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
+void GraphicBoard::addIconManagerPtr(IconManager* const managerPtr){
+    if(!m_pieceLayerPtr){
+        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+    }
+    m_pieceLayerPtr->addIconManager(managerPtr);
+}
+
 void GraphicBoard::setLeftToRight(){
     m_isLeftToRight = true;
 }
@@ -79,7 +86,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
     m_tileLayerPtr->init(m_isLeftToRight,m_isTopToBottom);
     
-    m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+    if(!m_pieceLayerPtr){
+        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+    }
+    
     if(m_pieceManagerPtr){
         m_pieceLayerPtr->addPieceManager(m_pieceManagerPtr);
     }

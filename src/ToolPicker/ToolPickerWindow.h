@@ -17,6 +17,7 @@ namespace sigrid{
     class ToolPickerContainer;
     class PieceManager;
     class ToolManager;
+    class IconManager;
 
     class Tool;
 
@@ -24,7 +25,9 @@ namespace sigrid{
         public:
 
             ToolPickerWindow(const ToolPickerContainer& data, ColorManager* const tileColorManagerPtr, PieceManager* const pieceManagerPtr, ToolManager* const toolManagerPtr, ColorManager* arrowColorManagerPtr);
-            
+
+            void addIconManager(IconManager* const managerPtr);
+
             void createGraphic(const sf::Vector2u& size);
 
             void addSelectTool();

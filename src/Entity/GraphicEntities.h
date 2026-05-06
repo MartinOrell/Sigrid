@@ -13,15 +13,15 @@ namespace sigrid{
 
     class PieceManager;
     class ColorManager;
+    class IconManager;
 
     class GraphicEntities: public sf::Drawable{
         public:
             GraphicEntities();
 
-            GraphicEntities& operator =(const GraphicEntities& rhs);
-
             void addPieceManager(PieceManager* const pieceManagerPtr);
             void addColorManager(ColorManager* const colorManagerPtr);
+            void addIconManager(IconManager* const iconManagerPtr);
             void setPieceSize(const sf::Vector2f& pieceSize);
             void setCircleDiameter(const float& diameter);
 
@@ -52,12 +52,11 @@ namespace sigrid{
             std::map<Coord, GraphicArrow> m_arrows;
             std::map<Coord, Icon> m_icons;
 
-            std::unique_ptr<sf::Texture> m_selectTexturePtr;
-
             sf::Vector2f m_pieceSize = {0.f, 0.f};
             float m_circleDiameter = 0.f;
             
             PieceManager* m_pieceManagerPtr = nullptr;
             ColorManager* m_arrowColorManagerPtr = nullptr;
+            IconManager* m_iconManagerPtr = nullptr;
     };
 }

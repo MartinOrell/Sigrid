@@ -92,6 +92,12 @@ ToolPickerWindow::ToolPickerWindow(const ToolPickerContainer& data, ColorManager
 
 }
 
+void ToolPickerWindow::addIconManager(IconManager* const managerPtr){
+    if(m_boardPtr){
+        m_boardPtr->addIconManagerPtr(managerPtr); 
+    }
+}
+
 void ToolPickerWindow::createGraphic(const sf::Vector2u& size){
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
