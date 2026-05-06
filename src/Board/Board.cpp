@@ -203,15 +203,6 @@ std::optional<Coord> Board::getTileCoord(const sf::Vector2f& point){
     return m_graphicBoard->getTileCoord(point);
 }
 
-//Temporary function. TODO: Replace with getTileCoord
-Coord Board::getTileCoord2(const sf::Vector2f& point){
-    auto coord_o = m_graphicBoard->getTileCoord(point);
-    if(coord_o == std::nullopt){
-        return {-1,-1};
-    }
-    return coord_o.value();
-}
-
 std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
     auto entity_o = m_logicBoard->getEntityAt(coord);
     if(entity_o == std::nullopt){

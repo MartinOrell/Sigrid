@@ -3,6 +3,8 @@
 #include <memory>
 #include <optional>
 
+#include "../Coord/Coord.h"
+
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
 
@@ -22,7 +24,6 @@ namespace sigrid{
     class PieceManager;
     class ColorManager;
     
-    class Coord;
     class CoordPair;
 
     class GraphicTile;

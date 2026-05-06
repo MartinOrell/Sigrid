@@ -186,13 +186,14 @@ Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& p
 
     sf::Vector2f point = position - m_position;
 
-    auto coord = m_boardPtr->getTileCoord2(point);
-    if(coord == Coord{-1,-1}){
+    auto coord_o = m_boardPtr->getTileCoord(point);
+
+    if(coord_o == std::nullopt){
         return ActionType::None();
     }
 
-    if(m_clickActions.find(coord) != m_clickActions.end()){
-        return m_clickActions.at(coord);
+    if(m_clickActions.find(coord_o.value()) != m_clickActions.end()){
+        return m_clickActions.at(coord_o.value());
     }
 
     return ActionType::None();

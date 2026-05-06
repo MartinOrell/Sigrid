@@ -69,8 +69,6 @@ namespace sigrid{
 
             std::optional<Coord> getTileCoord(const sf::Vector2f& point);
 
-            Coord getTileCoord2(const sf::Vector2f& point);
-
             std::optional<LogicTile> getTile(const Coord& coord);
 
             std::optional<LogicEntity> getLogicEntity(const Coord& coord);
