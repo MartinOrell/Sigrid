@@ -22,28 +22,28 @@ void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     if(!m_boardPtr){
         m_boardPtr = std::make_unique<Board>();
     }
-    m_boardPtr->addTileColorManagerPtr(managerPtr);
+    m_boardPtr->setTileColorManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_boardPtr){
         m_boardPtr = std::make_unique<Board>();
     }
-    m_boardPtr->addPieceManagerPtr(managerPtr);
+    m_boardPtr->setPieceManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
     if(!m_boardPtr){
         m_boardPtr = std::make_unique<Board>();
     }
-    m_boardPtr->addArrowColorManagerPtr(managerPtr);
+    m_boardPtr->setArrowColorManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
     if(!m_boardPtr){
         m_boardPtr = std::make_unique<Board>();
     }
-    m_boardPtr->addIconManagerPtr(managerPtr); 
+    m_boardPtr->setIconManagerPtr(managerPtr); 
 }
 
 void ToolPickerWindow::init(const ToolPickerContainer& data){

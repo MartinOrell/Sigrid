@@ -41,7 +41,7 @@ void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->addTileColorManagerPtr(managerPtr);
+    m_boardPtrs.at(m_activeBoardId)->setTileColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
@@ -53,7 +53,7 @@ void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->addPieceManagerPtr(managerPtr);
+    m_boardPtrs.at(m_activeBoardId)->setPieceManagerPtr(managerPtr);
 }
 
 void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
@@ -65,7 +65,7 @@ void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->addArrowColorManagerPtr(managerPtr);
+    m_boardPtrs.at(m_activeBoardId)->setArrowColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
@@ -77,7 +77,7 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->addFontManagerPtr(managerPtr);
+    m_boardPtrs.at(m_activeBoardId)->setFontManagerPtr(managerPtr);
 }
 
 void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){

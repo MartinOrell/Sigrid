@@ -13,35 +13,35 @@ using namespace sigrid;
 
 Board::Board(){}
 
-void Board::addPieceManagerPtr(PieceManager* const managerPtr){
+void Board::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
     m_graphicBoard->addPieceManagerPtr(managerPtr);
 }
 
-void Board::addTileColorManagerPtr(ColorManager* const managerPtr){
+void Board::setTileColorManagerPtr(ColorManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
     m_graphicBoard->addTileColorManagerPtr(managerPtr);
 }
 
-void Board::addArrowColorManagerPtr(ColorManager* const managerPtr){
+void Board::setArrowColorManagerPtr(ColorManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
     m_graphicBoard->addArrowColorManagerPtr(managerPtr);
 }
 
-void Board::addFontManagerPtr(FontManager* const managerPtr){
+void Board::setFontManagerPtr(FontManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
     m_graphicBoard->addFontManagerPtr(managerPtr);
 }
 
-void Board::addIconManagerPtr(IconManager* const managerPtr){
+void Board::setIconManagerPtr(IconManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }

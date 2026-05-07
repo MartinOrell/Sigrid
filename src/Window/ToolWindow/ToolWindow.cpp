@@ -15,19 +15,19 @@ ToolWindow::ToolWindow()
 , m_backgroundColor{255,255,255,0}{}
 
 void ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
-    m_board.addTileColorManagerPtr(managerPtr);
+    m_board.setTileColorManagerPtr(managerPtr);
 }
 
 void ToolWindow::setIconManagerPtr(IconManager* const managerPtr){
-    m_board.addIconManagerPtr(managerPtr);
+    m_board.setIconManagerPtr(managerPtr);
 }
 
 void ToolWindow::setPieceManagerPtr(PieceManager* const managerPtr){
-    m_board.addPieceManagerPtr(managerPtr);
+    m_board.setPieceManagerPtr(managerPtr);
 }
 
 void ToolWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
-    m_board.addArrowColorManagerPtr(managerPtr);
+    m_board.setArrowColorManagerPtr(managerPtr);
 }
 
 void ToolWindow::init(){
