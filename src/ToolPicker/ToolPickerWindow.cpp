@@ -111,7 +111,7 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
             addCircleTool(m_defaultCircleColorId);
         }
         else{
-            std::cout << "ToolPickerWindow: Unknown tool: " << toolName << std::endl;
+            std::cerr << "ToolPickerWindow: Unknown tool: " << toolName << std::endl;
         }
     }
     for(const auto& pieceNotation: data.pieceNotations){
