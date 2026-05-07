@@ -72,7 +72,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveSquareRowUp{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
 
-    m_toolWindow = std::make_unique<sigrid::ToolWindow>(m_toolManagerPtr.get());
+    m_toolWindow = std::make_unique<sigrid::ToolWindow>();
+    m_toolWindow->setToolManagerPtr(m_toolManagerPtr.get());
+    m_toolWindow->init();
 
     m_pieceManagerPtr->loadImages(config.pieces);
 

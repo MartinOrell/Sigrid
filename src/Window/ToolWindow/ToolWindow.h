@@ -24,7 +24,11 @@ namespace sigrid{
 
     class ToolWindow: public sf::Drawable{
         public:
-            ToolWindow(ToolManager* const toolManagerPtr);
+            ToolWindow();
+
+            void setToolManagerPtr(ToolManager* const managerPtr);
+
+            void init();
 
             void createGraphic(const sf::Vector2u& size);
 

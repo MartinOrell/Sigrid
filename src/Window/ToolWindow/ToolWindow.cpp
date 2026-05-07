@@ -11,19 +11,25 @@
 
 using namespace sigrid;
 
-ToolWindow::ToolWindow(ToolManager* const toolManagerPtr)
-: m_toolManagerPtr(toolManagerPtr)
-, m_show{true}
-, m_backgroundColor{255,255,255,0}{
+ToolWindow::ToolWindow()
+: m_show{true}
+, m_backgroundColor{255,255,255,0}{}
 
+void ToolWindow::setToolManagerPtr(ToolManager* const managerPtr){
+    m_toolManagerPtr = managerPtr;
+}
+
+void ToolWindow::init(){
     bool loadFont = m_font.openFromFile("res/fonts/calibri.ttf");
     assert(loadFont);
 
     auto leftClickItem = std::make_unique<ToolItem>(ActionType::None());
 
-    auto texturePtr_o = m_toolManagerPtr->getTexturePtr(ToolSelection::Select);
-    if(texturePtr_o != std::nullopt){
-        leftClickItem->setTexture(texturePtr_o.value());
+    if(m_toolManagerPtr){
+        auto texturePtr_o = m_toolManagerPtr->getTexturePtr(ToolSelection::Select);
+        if(texturePtr_o != std::nullopt){
+            leftClickItem->setTexture(texturePtr_o.value());
+        }
     }
 
     m_items.push_back(std::move(leftClickItem));
