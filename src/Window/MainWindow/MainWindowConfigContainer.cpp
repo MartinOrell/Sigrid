@@ -63,8 +63,8 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
                 is >> windowName;
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"";
-                std::cout << " read in Window object" << std::endl;
+                std::cerr << "Unknown key: \"" << s << "\"";
+                std::cerr << " read in Window object" << std::endl;
             }
         }
     }
@@ -111,8 +111,8 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
                         pieceColor.darkModifier = readColor(is);
                     }
                     else{
-                        std::cout << "Unknown key: \"" << s2 << "\"";
-                        std::cout << " read in PieceColor object" << std::endl;
+                        std::cerr << "Unknown key: \"" << s2 << "\"";
+                        std::cerr << " read in PieceColor object" << std::endl;
                     }
                 }
                 pieceColors.push_back(pieceColor);
@@ -138,8 +138,8 @@ void MainWindowConfigContainer::loadPieces(std::istream& is){
                         piece.filename = readString(is);
                     }
                     else{
-                        std::cout << "Unknown key: \"" << s2 << "\"";
-                        std::cout << " read in Piece object" << std::endl;
+                        std::cerr << "Unknown key: \"" << s2 << "\"";
+                        std::cerr << " read in Piece object" << std::endl;
                     }
                 }
                 pieces.push_back(piece);
@@ -197,8 +197,8 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
                 }
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"";
-                std::cout << " read in Menu object" << std::endl;
+                std::cerr << "Unknown key: \"" << s << "\"";
+                std::cerr << " read in Menu object" << std::endl;
             }
         }
     }
@@ -241,8 +241,8 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                             is >> toolPickerData.miscToolBlock.rows;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in MiscBlock object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in MiscBlock object" << std::endl;
                         }
                     }
                 }
@@ -269,8 +269,8 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                             is >> toolPickerData.colorBlock.rows;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in ColorBlock object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in ColorBlock object" << std::endl;
                         }
                     }
                 }
@@ -300,8 +300,8 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                                     is >> pieceBlock.rows;
                                 }
                                 else{
-                                    std::cout << "Unknown key: \"" << s3 << "\"";
-                                    std::cout << " read in PieceBlock object" << std::endl;
+                                    std::cerr << "Unknown key: \"" << s3 << "\"";
+                                    std::cerr << " read in PieceBlock object" << std::endl;
                                 }
                             }
                             toolPickerData.pieceBlocks.push_back(pieceBlock);
@@ -347,8 +347,8 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 }
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"";
-                std::cout << " read in ToolPicker object" << std::endl;
+                std::cerr << "Unknown key: \"" << s << "\"";
+                std::cerr << " read in ToolPicker object" << std::endl;
             }
         }
     }
@@ -369,8 +369,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             is >> boardData.tileHeight;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in Square object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in Square object" << std::endl;
                         }
                     }
                 }
@@ -389,8 +389,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             is >> toolPickerData.defaultArrowColorId;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in Arrow object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in Arrow object" << std::endl;
                         }
                     }
                 }
@@ -406,8 +406,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             is >> toolPickerData.defaultCircleColorId;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in Circle object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in Circle object" << std::endl;
                         }
                     }
                 }
@@ -431,8 +431,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             boardData.labelFont = readString(is);
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in InsideCoordLabel object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in InsideCoordLabel object" << std::endl;
                         }
                     }
                 }
@@ -457,8 +457,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             boardData.labelFont = readString(is);
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in OutsideCoordLabel object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in OutsideCoordLabel object" << std::endl;
                         }
                     }
                 }
@@ -475,8 +475,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             is >> boardData.borderWidth;
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in Border object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in Border object" << std::endl;
                         }
                     }
                 }
@@ -490,8 +490,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             boardData.turnToken = visibilityString == "Visible";
                         }
                         else{
-                            std::cout << "Unknown key: \"" << s2 << "\"";
-                            std::cout << " read in TurnToken object" << std::endl;
+                            std::cerr << "Unknown key: \"" << s2 << "\"";
+                            std::cerr << " read in TurnToken object" << std::endl;
                         }
                     }
                 }
@@ -503,8 +503,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                 defaultBoardImageFilename = readString(is);
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"";
-                std::cout << " read in BoardStyle object" << std::endl;
+                std::cerr << "Unknown key: \"" << s << "\"";
+                std::cerr << " read in BoardStyle object" << std::endl;
             }
         }
     }
@@ -521,8 +521,8 @@ void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
                 is >> tool.colorId;
             }
             else{
-                std::cout << "Unknown key: \"" << s << "\"";
-                std::cout << " read in ClickTool object" << std::endl;
+                std::cerr << "Unknown key: \"" << s << "\"";
+                std::cerr << " read in ClickTool object" << std::endl;
             }
         }
     }
@@ -574,8 +574,8 @@ bool MainWindowConfigContainer::load(const std::string& filename){
             loadTool(ifs, middleClickTool);
         }
         else{
-            std::cout << "Unknown key: \"" << key << "\"" << std::endl;
-            std::cout << "read from startup file: \"" << filename << "\"" << std::endl;
+            std::cerr << "Unknown key: \"" << key << "\"" << std::endl;
+            std::cerr << "read from startup file: \"" << filename << "\"" << std::endl;
         }
     }
     return true;
