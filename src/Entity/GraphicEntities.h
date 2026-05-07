@@ -19,9 +19,9 @@ namespace sigrid{
         public:
             GraphicEntities();
 
-            void addPieceManager(PieceManager* const pieceManagerPtr);
-            void addColorManager(ColorManager* const colorManagerPtr);
-            void addIconManager(IconManager* const iconManagerPtr);
+            void setPieceManagerPtr(PieceManager* const managerPtr);
+            void setColorManagerPtr(ColorManager* const managerPtr);
+            void setIconManagerPtr(IconManager* const managerPtr);
             void setPieceSize(const sf::Vector2f& pieceSize);
             void setCircleDiameter(const float& diameter);
 

@@ -34,7 +34,7 @@ void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_pieceLayerPtr){
         m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     }
-    m_pieceLayerPtr->addPieceManager(managerPtr);
+    m_pieceLayerPtr->setPieceManagerPtr(managerPtr);
 }
 
 void GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
@@ -59,7 +59,7 @@ void GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
     if(!m_pieceLayerPtr){
         m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     }
-    m_pieceLayerPtr->addIconManager(managerPtr);
+    m_pieceLayerPtr->setIconManagerPtr(managerPtr);
 }
 
 void GraphicBoard::setLeftToRight(){
@@ -100,7 +100,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
     
     if(m_arrowColorManagerPtr){
-        m_pieceLayerPtr->addColorManager(m_arrowColorManagerPtr);
+        m_pieceLayerPtr->setColorManagerPtr(m_arrowColorManagerPtr);
     }
     m_pieceLayerPtr->setPieceSize({config.tileWidth, config.tileHeight});
     m_pieceLayerPtr->setCircleDiameter(config.circleDiameter);

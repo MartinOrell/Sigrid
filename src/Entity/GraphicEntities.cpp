@@ -11,16 +11,16 @@ using namespace sigrid;
 
 GraphicEntities::GraphicEntities(){}
 
-void GraphicEntities::addPieceManager(PieceManager* const pieceManagerPtr){
-    m_pieceManagerPtr = pieceManagerPtr;
+void GraphicEntities::setPieceManagerPtr(PieceManager* const managerPtr){
+    m_pieceManagerPtr = managerPtr;
 }
 
-void GraphicEntities::addColorManager(ColorManager* const colorManagerPtr){
-    m_arrowColorManagerPtr = colorManagerPtr;
+void GraphicEntities::setColorManagerPtr(ColorManager* const managerPtr){
+    m_arrowColorManagerPtr = managerPtr;
 }
 
-void GraphicEntities::addIconManager(IconManager* const iconManagerPtr){
-    m_iconManagerPtr = iconManagerPtr;
+void GraphicEntities::setIconManagerPtr(IconManager* const managerPtr){
+    m_iconManagerPtr = managerPtr;
 }
 
 void GraphicEntities::setPieceSize(const sf::Vector2f& pieceSize){
