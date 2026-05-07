@@ -18,7 +18,7 @@ namespace sigrid{
             void setInsideLabelSizeFactor(const float& size);
             void setOutsideLabelSizeFactor(const float& size);
             void setFont(const std::string& fontFilename);
-            void setFontManagerPtr(FontManager* const fontManagerPtr);
+            void setFontManagerPtr(FontManager* const managerPtr);
 
             bool isVisible() const;
             bool isInsideLabelsVisible() const;

@@ -31,8 +31,8 @@ void BoardLabels::setFont(const std::string& fontFilename){
     m_fontFilename = fontFilename;
 }
 
-void BoardLabels::setFontManagerPtr(FontManager* const fontManagerPtr){
-    m_fontManagerPtr = fontManagerPtr;
+void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
+    m_fontManagerPtr = managerPtr;
 }
 
 bool BoardLabels::isVisible() const{
