@@ -120,6 +120,6 @@ Action sigrid::getAction(const std::string& s){
         return ActionType::Print{};
     }
 
-    std::cout << "Action.cpp: Unidentified Action: " << s << std::endl;
+    std::cerr << "Action.cpp: Unidentified Action: " << s << std::endl;
     return ActionType::None{};
 }
