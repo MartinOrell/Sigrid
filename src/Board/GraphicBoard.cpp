@@ -41,7 +41,7 @@ void GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
     if(!m_tileLayerPtr){
         m_tileLayerPtr = std::make_unique<GraphicTiles>();
     }
-    m_tileLayerPtr->addColorManager(managerPtr);
+    m_tileLayerPtr->setColorManagerPtr(managerPtr);
 }
 
 void GraphicBoard::setArrowColorManagerPtr(ColorManager* const managerPtr){
@@ -91,7 +91,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_tileLayerPtr->setTileSize({config.tileWidth, config.tileHeight});
     m_tileLayerPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
     if(m_arrowColorManagerPtr){
-        m_tileLayerPtr->addHighlightColorManager(m_arrowColorManagerPtr);
+        m_tileLayerPtr->setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
     m_tileLayerPtr->init(m_isLeftToRight,m_isTopToBottom);
     

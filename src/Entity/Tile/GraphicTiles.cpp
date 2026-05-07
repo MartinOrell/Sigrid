@@ -9,12 +9,12 @@ using namespace sigrid;
 
 GraphicTiles::GraphicTiles(){}
 
-void GraphicTiles::addColorManager(ColorManager* const tileColorManagerPtr){
-    m_tileColorManagerPtr = tileColorManagerPtr;
+void GraphicTiles::setColorManagerPtr(ColorManager* const managerPtr){
+    m_tileColorManagerPtr = managerPtr;
 }
 
-void GraphicTiles::addHighlightColorManager(ColorManager* const highlightColorManagerPtr){
-    m_highlightColorManagerPtr = highlightColorManagerPtr;
+void GraphicTiles::setHighlightColorManagerPtr(ColorManager* const managerPtr){
+    m_highlightColorManagerPtr = managerPtr;
 }
 
 void GraphicTiles::setNumColumns(const int& columns){

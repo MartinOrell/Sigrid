@@ -14,8 +14,8 @@ namespace sigrid{
         public:
             GraphicTiles();
 
-            void addColorManager(ColorManager* const tileColorManagerPtr);
-            void addHighlightColorManager(ColorManager* const highlightColorManagerPtr);
+            void setColorManagerPtr(ColorManager* const managerPtr);
+            void setHighlightColorManagerPtr(ColorManager* const managerPtr);
 
             void setNumColumns(const int& columns);
             void setNumRows(const int& rows);
