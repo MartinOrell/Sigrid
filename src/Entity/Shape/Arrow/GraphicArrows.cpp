@@ -18,8 +18,8 @@ void GraphicArrows::setHeadSize(const float& headSize){
     m_arrowHeadSize = headSize;
 }
 
-void GraphicArrows::setColorManagerPtr(ColorManager* const colorManagerPtr){
-    m_colorManagerPtr = colorManagerPtr;
+void GraphicArrows::setColorManagerPtr(ColorManager* const managerPtr){
+    m_colorManagerPtr = managerPtr;
 }
 
 std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator GraphicArrows::begin(){

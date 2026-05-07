@@ -18,7 +18,7 @@ namespace sigrid{
 
             void setThickness(const float& thickness);
             void setHeadSize(const float& headSize);
-            void setColorManagerPtr(ColorManager* const colorManagerPtr);
+            void setColorManagerPtr(ColorManager* const managerPtr);
             
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator begin();
             std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator end();
