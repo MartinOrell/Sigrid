@@ -10,7 +10,7 @@ bool BoardDataContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
     if(!ifs.is_open()){
-        std::cout << "Failed to open board from file: " << filename;
+        std::cerr << "Failed to open board from file: " << filename;
         return false;
     }
 
@@ -50,13 +50,13 @@ bool BoardDataContainer::load(const std::string& filename){
                 ifs >> imageFilename;
             }
             else{
-                std::cout << "Unknown key: " << key << std::endl;
-                std::cout << "found in board file: " << filename << std::endl;
+                std::cerr << "Unknown key: " << key << std::endl;
+                std::cerr << "found in board file: " << filename << std::endl;
             }
         }
     }
     catch(...){
-        std::cout << "Failed reading board from file: " << filename << std::endl;
+        std::cerr << "Failed reading board from file: " << filename << std::endl;
         return false;
     }
     return true;
