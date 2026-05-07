@@ -228,11 +228,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
                 if(logicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
-                auto graphicEntity_o = m_boardPtrs.at(m_activeBoardId)->getGraphicEntity(toCoord);
-                if(graphicEntity_o == std::nullopt){
-                    return ActionType::None();
-                }
-                ActionType::PickEntity action{logicEntity_o.value(), graphicEntity_o.value()};
+                ActionType::PickEntity action{logicEntity_o.value()};
                 return action;
             }
         case ToolSelection::DrawArrow:

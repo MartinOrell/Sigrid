@@ -218,13 +218,6 @@ std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
     return entity_o.value();
 }
 
-std::optional<GraphicEntity> Board::getGraphicEntity(const Coord& coord){
-    auto entity_o = m_graphicBoard->getEntityAt(coord);
-    if(entity_o == std::nullopt){
-        return std::nullopt;
-    }
-    return entity_o.value();
-}
 
 std::optional<LogicTile> Board::getTile(const Coord& coord){
     auto tile_o = m_logicBoard->getTile(coord);

@@ -306,9 +306,6 @@ float GraphicBoard::getDisplayHeight() const{
     return (float)m_texturePtr->getSize().y*m_scale;
 }
 
-std::optional<GraphicEntity> GraphicBoard::getEntityAt(const Coord& coord) const{
-    return m_pieceLayerPtr->getEntityAt(coord);
-}
 
 bool GraphicBoard::contains(const sf::Vector2f& point) const{
     sf::Sprite sprite(m_texturePtr->getTexture());

@@ -520,17 +520,15 @@ void MainWindow::handleAction(const sigrid::Action action){
     else if(std::holds_alternative<ActionType::PickEntity>(action)){
         
         sigrid::LogicEntity logicEntity = std::get<ActionType::PickEntity>(action).logicEntity;
-        sigrid::GraphicEntity graphicEntity = std::get<ActionType::PickEntity>(action).graphicEntity;
         
-        pickEntity(logicEntity, graphicEntity);
+        pickEntity(logicEntity);
         return;
     }
     else if(std::holds_alternative<ActionType::PickPieceColor>(action)){
 
         sigrid::LogicPiece logicPiece = std::get<ActionType::PickPieceColor>(action).logicPiece;
-        sigrid::GraphicPiece graphicPiece = std::get<ActionType::PickPieceColor>(action).graphicPiece;
    
-        pickPieceColor(logicPiece, graphicPiece);
+        pickPieceColor(logicPiece);
         return;
     }
     else if(std::holds_alternative<ActionType::PickArrow>(action)){
@@ -728,7 +726,7 @@ void MainWindow::print(){
     m_workWindow->print();
 }
 
-void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid::GraphicEntity& graphicEntity){
+void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
     if(!m_toolWindow){
         std::cout << "Unable to pick piece, toolwindow does not exist" << std::endl;
         return;
@@ -741,8 +739,6 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid
     m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     if(std::holds_alternative<LogicPiece>(logicEntity)){
         m_toolWindow->setSetPieceTool(std::get<LogicPiece>(logicEntity));
-    }
-    if(std::holds_alternative<LogicPiece>(logicEntity)){
         m_toolPickerWindow->setPieceColorTools(std::get<LogicPiece>(logicEntity).getNotation());
     }
     else if(std::holds_alternative<LogicCircle>(logicEntity)){
@@ -752,7 +748,7 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid
     }
 }
 
-void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece){
+void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
 
     if(!m_toolWindow){
         std::cout << "Unable to pick piece color, toolwindow does not exist" << std::endl;

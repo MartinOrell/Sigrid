@@ -108,8 +108,6 @@ namespace sigrid{
             sf::Vector2f m_position;
             std::unique_ptr<Board> m_boardPtr;
 
-            PieceManager* m_pieceManagerPtr = nullptr;
-
             std::map<Coord, Action> m_clickActions;
 
             std::vector<int> m_displayedPieceColorIds;

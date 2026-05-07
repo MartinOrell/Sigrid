@@ -74,7 +74,6 @@ namespace sigrid{
             std::optional<LogicTile> getTile(const Coord& coord);
 
             std::optional<LogicEntity> getLogicEntity(const Coord& coord);
-            std::optional<GraphicEntity> getGraphicEntity(const Coord& coord);
 
             std::optional<LogicArrow> getLogicArrow(const CoordPair& coordPair);
 

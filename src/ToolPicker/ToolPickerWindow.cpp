@@ -26,7 +26,6 @@ void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
 }
 
 void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
-    m_pieceManagerPtr = managerPtr;
     if(!m_boardPtr){
         m_boardPtr = std::make_unique<Board>();
     }
@@ -427,15 +426,10 @@ void ToolPickerWindow::redrawTexture(){
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
                     LogicPiece logicPiece{m_pieceNotation, colorId};
-                    auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-
-                    if(graphicPiece_o == std::nullopt){
-                        continue;
-                    }
 
                     m_boardPtr->addEntity({x,y}, logicPiece);
 
-                    ActionType::PickPieceColor action{logicPiece, graphicPiece_o.value()};
+                    ActionType::PickPieceColor action{logicPiece};
 
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -495,15 +489,10 @@ void ToolPickerWindow::redrawTexture(){
     for(int notationId = 0; notationId < m_pieceNotations.size(); notationId++){
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
             LogicPiece logicPiece{m_pieceNotations.at(notationId), m_displayedPieceColorIds.at(i)};
-            auto graphicPiece_o = m_pieceManagerPtr->getGraphicPiece(logicPiece);
-
-            if(graphicPiece_o == std::nullopt){
-                continue;
-            }
 
             m_boardPtr->addEntity({x,y}, logicPiece);
 
-            ActionType::PickEntity action{logicPiece, graphicPiece_o.value()};
+            ActionType::PickEntity action{logicPiece};
 
             m_clickActions.insert_or_assign({x,y}, action);
 

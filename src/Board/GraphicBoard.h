@@ -71,8 +71,6 @@ namespace sigrid{
 
             float getDisplayHeight() const;
 
-            std::optional<GraphicEntity> getEntityAt(const Coord& coord) const;
-
             bool contains(const sf::Vector2f& point) const;
 
             bool isLeftToRight() const;

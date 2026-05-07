@@ -46,8 +46,8 @@ namespace sigrid{
             void reset();
             void clear();
             void print();
-            void pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid::GraphicEntity& graphicEntity);
-            void pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigrid::GraphicPiece& graphicPiece);
+            void pickEntity(const sigrid::LogicEntity& logicEntity);
+            void pickPieceColor(const sigrid::LogicPiece& logicPiece);
             void pickArrow(const int colorId);
             void pickArrowColor(const int colorId);
             void pickCircle(const int colorId);

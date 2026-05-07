@@ -22,11 +22,9 @@ namespace sigrid{
         struct Print{};
         struct PickEntity{
             LogicEntity logicEntity;
-            GraphicEntity graphicEntity;
         };
         struct PickPieceColor{
             LogicPiece logicPiece;
-            GraphicPiece graphicPiece;
         };
         struct PickArrow{
             int colorId;
