@@ -20,8 +20,8 @@ void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
         m_icons.insert({coord, std::get<LogicIcon>(entity)});
     }
     else{
-        std::cout << "LogicEntities: Unable to add Entity" << std::endl;
-        std::cout << "Unknown index of variant: " << entity.index() << std::endl;
+        std::cerr << "LogicEntities: Unable to add Entity" << std::endl;
+        std::cerr << "Unknown index of variant: " << entity.index() << std::endl;
     }
 }
 
