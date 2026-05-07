@@ -11,13 +11,18 @@
 using namespace sigrid;
 
 
-Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData, FontManager* const fontManagerPtr)
-: m_isPinned(menuData.isPinned)
-, m_showItems(menuData.showItems)
-, m_showHeaderIndex(-1)
-, m_backgroundColor{255,255,255,0}
-, m_fontManagerPtr{fontManagerPtr}
-, m_fontFilename{menuData.fontName}{
+Menu::Menu()
+: m_showHeaderIndex(-1)
+, m_backgroundColor{255,255,255,0}{}
+
+void Menu::setFontManagerPtr(FontManager* const managerPtr){
+    m_fontManagerPtr = managerPtr;
+}
+
+void Menu::init(const MenuContainer& menuData, const BoardDesignContainer& boardData){
+    m_isPinned = menuData.isPinned;
+    m_showItems = menuData.showItems;
+    m_fontFilename = menuData.fontName;
 
     addSuperHeader(menuData.title);
     for(const auto& headerName : menuData.headerNames){
@@ -39,7 +44,7 @@ Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData,
             );
         }
         else{
-            std::cout << "Menu: Unable to handle menuItem with "
+            std::cerr << "Menu: Unable to handle menuItem with "
                 << menuItem.displayNames.size() << " states" << std::endl;
         }
     }
@@ -79,17 +84,16 @@ Menu::Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData,
     if(menuData.showColorTools){
         toggleItem("ShowColorTools");
     }
-    
 }
 
 void Menu::createGraphic(const sf::Vector2u& size){
 
     if(size.x == 0){
-        std::cout << "Unable to create menu graphic with 0 width" << std::endl;
+        std::cerr << "Unable to create menu graphic with 0 width" << std::endl;
         return;
     }
     if(size.y == 0){
-        std::cout << "Unable to create menu graphic with 0 height" << std::endl;
+        std::cerr << "Unable to create menu graphic with 0 height" << std::endl;
         return;
     }
 
@@ -106,7 +110,7 @@ void Menu::createGraphic(const sf::Vector2u& size){
         }
     }
 
-    reDrawTexture();
+    redrawTexture();
 }
 
 void Menu::setPosition(const sf::Vector2f& position){
@@ -138,7 +142,7 @@ Action Menu::clicked(const sf::Vector2f& position){
     if(o_itemId == std::nullopt){
         if(m_showHeaderIndex != -1){
             m_showHeaderIndex = -1;
-            reDrawTexture();
+            redrawTexture();
         }
         return ActionType::None();
     }
@@ -152,7 +156,7 @@ Action Menu::clicked(const sf::Vector2f& position){
 
     if(id.y > 0){
         m_showHeaderIndex = -1;
-        reDrawTexture();
+        redrawTexture();
     }
 
     return m_items.at(m_itemKeys.at(id.x).at(id.y))->getAction();
@@ -160,7 +164,7 @@ Action Menu::clicked(const sf::Vector2f& position){
 
 void Menu::pinMenu(){
     m_isPinned = !m_isPinned;
-    reDrawTexture();
+    redrawTexture();
 }
 
 void Menu::showMenu(){
@@ -175,7 +179,7 @@ void Menu::showMenu(){
     }
     
     m_showHeaderIndex = -1;
-    reDrawTexture();
+    redrawTexture();
 }
 
 void Menu::toggleHeader(const int headerId){
@@ -186,16 +190,22 @@ void Menu::toggleHeader(const int headerId){
     else{
         m_showHeaderIndex = -1;
     }
-    reDrawTexture();
+    redrawTexture();
 }
 
 void Menu::addSuperHeader(const std::string& name){
     
+    if(!m_fontManagerPtr){
+        std::cerr << "Menu: Failed to add superHeader " << name << std::endl;
+        std::cerr << "fontManager is nullptr" << std::endl;
+        return;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
 
     if(fontPtr_o == std::nullopt){
-        std::cout << "Menu: Failed to add superHeader" << name << std::endl;
-        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Menu: Failed to add superHeader " << name << std::endl;
+        std::cerr << "font " << m_fontFilename << " not found" << std::endl;
         return;
     }
 
@@ -209,11 +219,17 @@ void Menu::addSuperHeader(const std::string& name){
 
 void Menu::addHeader(const std::string& name){
 
+    if(!m_fontManagerPtr){
+        std::cerr << "Menu: Failed to add header " << name << std::endl;
+        std::cerr << "fontManager is nullptr" << std::endl;
+        return;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
 
     if(fontPtr_o == std::nullopt){
-        std::cout << "Menu: Failed to add header" << name << std::endl;
-        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Menu: Failed to add header " << name << std::endl;
+        std::cerr << "font " << m_fontFilename << " not found" << std::endl;
         return;
     }
 
@@ -240,11 +256,17 @@ void Menu::addHeader(const std::string& name){
 
 void Menu::addItem(const std::string& name, const int headerIndex, const Action action){
 
+    if(!m_fontManagerPtr){
+        std::cerr << "Menu: Failed to add item " << name << std::endl;
+        std::cerr << "fontManager is nullptr" << std::endl;
+        return;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
 
     if(fontPtr_o == std::nullopt){
-        std::cout << "Menu: Failed to menu item " << name << std::endl;
-        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Menu: Failed to menu item " << name << std::endl;
+        std::cerr << "font " << m_fontFilename << " not found" << std::endl;
         return;
     }
 
@@ -270,11 +292,17 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
 
 void Menu::addToggleItem(const std::string& key, const int headerIndex, const std::string& text0, const Action action0, const std::string& text1, const Action action1){
 
+    if(!m_fontManagerPtr){
+        std::cerr << "Menu: Failed to add toggle item " << key << std::endl;
+        std::cerr << "fontManager is nullptr" << std::endl;
+        return;
+    }
+
     auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
 
     if(fontPtr_o == std::nullopt){
-        std::cout << "Menu: Failed to menu toggle item " << key << std::endl;
-        std::cout << "font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Menu: Failed to menu toggle item " << key << std::endl;
+        std::cerr << "font " << m_fontFilename << " not found" << std::endl;
         return;
     }
 
@@ -306,13 +334,13 @@ void Menu::toggleItem(const std::string& key){
 
     auto it = m_items.find(key);
     if(it == m_items.end()){
-        std::cout << "Unable to toggle menu item. " << key << " not found" << std::endl;
+        std::cerr << "Unable to toggle menu item. " << key << " not found" << std::endl;
         return;
     }
 
     it->second->toggle();
 
-    reDrawTexture();
+    redrawTexture();
 }
 
 void Menu::hideItem(const std::string& key){
@@ -320,7 +348,7 @@ void Menu::hideItem(const std::string& key){
     auto it = m_items.find(key);
 
     if(it == m_items.end()){
-        std::cout << "Unable to hide menu item. " << key << " not found" << std::endl;
+        std::cerr << "Unable to hide menu item. " << key << " not found" << std::endl;
         return;
     }
 
@@ -339,7 +367,7 @@ void Menu::showItem(const std::string& key){
     auto it = m_items.find(key);
 
     if(it == m_items.end()){
-        std::cout << "Unable to show menu item. " << key << " not found" << std::endl;
+        std::cerr << "Unable to show menu item. " << key << " not found" << std::endl;
         return;
     }
 
@@ -363,17 +391,17 @@ void Menu::showItem(const std::string& key){
             }
         }
     }
-    std::cout << "Menu: Unable to find position to show item " << key << std::endl;
+    std::cerr << "Menu: Unable to find position to show item " << key << std::endl;
 }
 
 void Menu::addSuperHeaderGraphic(){
     if(!m_texture){
-        std::cout << "Unable to add super header graphic, menu texture does not exist" << std::endl;
+        std::cerr << "Unable to add super header graphic, menu texture does not exist" << std::endl;
         return;
     }
 
     if(!m_superHeaderPtr){
-        std::cout << "Unable to add super header graphic, super header does not exist" << std::endl;
+        std::cerr << "Unable to add super header graphic, super header does not exist" << std::endl;
         return;
     }
     
@@ -387,7 +415,7 @@ void Menu::addSuperHeaderGraphic(){
 void Menu::addHeaderGraphic(const unsigned int id){
 
     if(m_lineHeight <= 0){
-        std::cout << "Height not set, unable to add header graphic" << std::endl;
+        std::cerr << "Menu: Height not set, unable to add header graphic" << std::endl;
         return;
     }
 
@@ -436,14 +464,14 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(sprite,newStates);
 }
 
-void sigrid::Menu::reDrawTexture(){
+void sigrid::Menu::redrawTexture(){
 
     if(!m_texture){
         return;
     }
 
     unsigned int numRows;
-    if(m_showHeaderIndex >= 0){
+    if(m_showHeaderIndex >= 0 && m_showHeaderIndex < m_itemKeys.size()){
         numRows = m_itemKeys.at(m_showHeaderIndex).size();
     }
     else{
@@ -459,7 +487,7 @@ void sigrid::Menu::reDrawTexture(){
 
     m_texture->clear(m_backgroundColor);
 
-    if(!m_isPinned){
+    if(!m_isPinned && m_superHeaderPtr){
         float posX = m_superHeaderPtr->getPositionLeft();
         float posY = (float)textureSizeY - m_lineHeight/2.f;
         m_superHeaderPtr->setPosition({posX,posY});

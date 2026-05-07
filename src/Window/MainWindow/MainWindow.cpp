@@ -122,8 +122,10 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
     m_workWindow->init(boardData, config.boardData);
 
-    m_menu = std::make_unique<sigrid::Menu>(config.menuData, config.boardData, m_fontManagerPtr.get());
-    
+    m_menu = std::make_unique<sigrid::Menu>();
+    m_menu->setFontManagerPtr(m_fontManagerPtr.get());
+    m_menu->init(config.menuData, config.boardData);
+
     if(m_workWindow){
         std::string title = m_workWindow->getName();
         if(title.size() > 0){

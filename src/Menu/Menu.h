@@ -22,7 +22,11 @@ namespace sigrid{
 
     class Menu: public sf::Drawable{
         public:
-            Menu(const MenuContainer& menuData, const BoardDesignContainer& boardData, FontManager* const fontManagerPtr);
+            Menu();
+
+            void setFontManagerPtr(FontManager* const managerPtr);
+
+            void init(const MenuContainer& menuData, const BoardDesignContainer& boardData);
 
             void createGraphic(const sf::Vector2u& size);
 
@@ -58,13 +62,13 @@ namespace sigrid{
         private:
 
             struct PosIndex{
-                int x;
-                int y;
+                int x = -1;
+                int y = -1;
             };
 
             struct LayoutItem{
-                unsigned int headerIndex;
-                unsigned int priority;
+                unsigned int headerIndex = -1;
+                unsigned int priority = -1;
             };
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -73,13 +77,13 @@ namespace sigrid{
             void addHeaderGraphic(const unsigned int id);
             void addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex);
 
-            void reDrawTexture();
+            void redrawTexture();
 
             float getTopPos();
             float getBottomPos();
             std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
 
-            FontManager* m_fontManagerPtr;
+            FontManager* m_fontManagerPtr = nullptr;
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
@@ -92,14 +96,14 @@ namespace sigrid{
 
             std::map<std::string, LayoutItem> m_layoutItems;
 
-            float m_lineHeight;
-            float m_itemOffsetX;
+            float m_lineHeight = 0.f;
+            float m_itemOffsetX = 0.f;
 
             sf::Color m_backgroundColor;
-            std::string m_fontFilename;
+            std::string m_fontFilename = "";
 
-            bool m_isPinned;
-            bool m_showItems;
-            int m_showHeaderIndex;
+            bool m_isPinned = false;
+            bool m_showItems = true;
+            int m_showHeaderIndex = -1;
     };
 }
