@@ -320,7 +320,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
 
         auto endPos = newName.rfind('.');
         if(endPos == newName.npos){
-            std::cout << "WorkWindow: No . in getUniqueName";
+            std::cerr << "WorkWindow: No . in getUniqueName";
             return newName;
         }
         auto startPos = endPos;
@@ -478,7 +478,7 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
     auto tile_o = m_boardPtrs.at(m_activeBoardId)->getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "WorkWindow: unable to find logic tile "
+        std::cerr << "WorkWindow: unable to find logic tile "
             << coord.getNotation() << " on board with id "
             << m_activeBoardId
             << " when adding highlight" << std::endl;
