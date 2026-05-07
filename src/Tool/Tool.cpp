@@ -17,7 +17,7 @@ sigrid::ToolSelection getTool(const std::string& toolname){
         return sigrid::EntityPicker;
     }
     else{
-        std::cout << "Tool: Unknown tool name: " << toolname <<std::endl;
+        std::cerr << "Tool: Unknown tool name: " << toolname <<std::endl;
         return sigrid::ToolSelection::Select;
     }
 }
