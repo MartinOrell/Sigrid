@@ -11,7 +11,7 @@ std::optional<sf::Font*> FontManager::getFontPtr(const std::string& filename){
     if(it == m_fonts.end()){
         sf::Font newFont;
         if(!newFont.openFromFile(filename)){
-            std::cout << "FontManager: Failed to load font: "
+            std::cerr << "FontManager: Failed to load font: "
                 << filename << std::endl;
             return std::nullopt;
         }
