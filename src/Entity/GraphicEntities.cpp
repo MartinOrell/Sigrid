@@ -64,39 +64,47 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         m_pieces.insert({coord, newPiece});
     }
     else if(std::holds_alternative<LogicCircle>(entity)){
-        if(m_arrowColorManagerPtr == nullptr){
-            std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
-            std::cerr << "ColorManager does not exist to assign color" << std::endl;
-            return;
-        }
+        
         if(m_circleDiameter == 0.f){
             std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
             std::cerr << "circle diameter is 0" << std::endl;
             return;
         }
 
-        int colorId = std::get<LogicCircle>(entity).getColorId();
-        auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
-        if(color_o == std::nullopt){
-            std::cerr << "GraphicEntities: Unable to add circle at " << coord.getNotation() << std::endl;
-            std::cerr << "Color of colorId " << colorId << " not found" << std::endl;
-            return;
+        sf::Color color;
+        if(!m_arrowColorManagerPtr){
+            color = sf::Color::White;
+        }
+        else{
+            int colorId = std::get<LogicCircle>(entity).getColorId();
+            auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
+            if(color_o == std::nullopt){
+                color = sf::Color::White;
+            }
+            else{
+                color = color_o.value();
+            }
         }
 
-        GraphicCircle newCircle(color_o.value(), m_circleDiameter);
+        GraphicCircle newCircle(color, m_circleDiameter);
         newCircle.setPosition(position);
         m_circles.insert({coord, newCircle});
     }
     else if(std::holds_alternative<LogicArrow>(entity)){
 
         sf::Color color;
-        int colorId = std::get<LogicArrow>(entity).getColorId();
-        auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
-        if(color_o == std::nullopt){
+        if(!m_arrowColorManagerPtr){
             color = sf::Color::Black;
         }
         else{
-            color = color_o.value();
+            int colorId = std::get<LogicArrow>(entity).getColorId();
+            auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
+            if(color_o == std::nullopt){
+                color = sf::Color::Black;
+            }
+            else{
+                color = color_o.value();
+            }
         }
 
         sf::Vector2f from = position;

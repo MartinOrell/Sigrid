@@ -25,7 +25,6 @@ set(SRC_FILES
     src/Entity/Piece/PieceIdentifier.cpp
     src/Entity/Piece/PieceManager.cpp
     src/Tool/Tool.cpp
-    src/Tool/ToolManager.cpp
     src/ToolPicker/ToolPickerWindow.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp

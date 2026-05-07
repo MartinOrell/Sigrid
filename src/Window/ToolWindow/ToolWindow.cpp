@@ -2,12 +2,11 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "../../Tool/Tool.h"
-#include "ToolItem.h"
-#include "../../Tool/ToolManager.h"
-
 #include <SFML/Graphics/Sprite.hpp>
 #include <iostream>
+
+#include "../../Board/BoardDataContainer.h"
+#include "../../Board/BoardDesignContainer.h"
 
 using namespace sigrid;
 
@@ -15,56 +14,80 @@ ToolWindow::ToolWindow()
 : m_show{true}
 , m_backgroundColor{255,255,255,0}{}
 
-void ToolWindow::setToolManagerPtr(ToolManager* const managerPtr){
-    m_toolManagerPtr = managerPtr;
+void ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+    m_board.addTileColorManagerPtr(managerPtr);
+}
+
+void ToolWindow::setIconManagerPtr(IconManager* const managerPtr){
+    m_board.addIconManagerPtr(managerPtr);
+}
+
+void ToolWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+    m_board.addPieceManagerPtr(managerPtr);
+}
+
+void ToolWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+    m_board.addArrowColorManagerPtr(managerPtr);
 }
 
 void ToolWindow::init(){
-    bool loadFont = m_font.openFromFile("res/fonts/calibri.ttf");
-    assert(loadFont);
 
-    auto leftClickItem = std::make_unique<ToolItem>(ActionType::None());
+    m_board.setLeftToRight();
+    m_board.setTopToBottom();
 
-    if(m_toolManagerPtr){
-        auto texturePtr_o = m_toolManagerPtr->getTexturePtr(ToolSelection::Select);
-        if(texturePtr_o != std::nullopt){
-            leftClickItem->setTexture(texturePtr_o.value());
+    BoardDataContainer boardData;
+    boardData.columns = 1;
+    boardData.rows = 1;
+    boardData.repeatTileColorIds = std::vector<int>{0};
+
+    BoardDesignContainer boardDesign;
+    {
+        int tileWidth = 255;
+        int tileHeight = 255;
+        if(tileWidth < tileHeight){
+            tileHeight = tileWidth;
         }
+        else{
+            tileWidth = tileHeight;
+        }
+        boardDesign.tileWidth = tileWidth;
+        boardDesign.tileHeight = tileHeight;
     }
+    boardDesign.arrowThickness = 40;
+    boardDesign.arrowHeadSize = 80;
+    boardDesign.circleDiameter = 100;
+    boardDesign.labelsInside = false;
+    boardDesign.labelsOutside = false;
+    boardDesign.border = false;
+    boardDesign.turnToken = false;
 
-    m_items.push_back(std::move(leftClickItem));
+    m_board.init(boardData, boardDesign);
+
+    LogicIcon selectIcon;
+    selectIcon.setFilename("res/icons/select_object.png");
+    m_board.addEntity({0,0}, selectIcon);
 }
 
 void ToolWindow::createGraphic(const sf::Vector2u& size){
     m_texture = std::make_unique<sf::RenderTexture>(size);
-    m_texture->clear(m_backgroundColor);
-    m_itemOffsetX = 5.f;
 
     float itemWidth = (float)size.y;
     float itemHeight = (float)size.y;
 
-    for(int i = 0; i < m_items.size(); i++){
-        m_items.at(i)->setSize({itemWidth, itemHeight});
+    int imageHeight = m_board.getImageHeight();
+    int imageWidth = m_board.getImageWidth();
 
-        float posX;
-        if(i == 0){
-            posX = m_itemOffsetX;
-        }
-        else{
-            posX = m_items.at(i-1)->getPositionRight() + m_itemOffsetX;
-        }
-        m_items.at(i)->setPosition({posX, 0.f});
+    float scale = itemHeight/imageHeight;
+    float x = itemWidth/2.f;
 
-        m_texture->draw(*m_items.at(i));
-    }
+    m_board.setScale(scale);
+    m_board.setPosition({x,0.f});
+
+    redrawTexture();
 }
 
 void ToolWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
-}
-
-void ToolWindow::setItemTexture(const unsigned int id, const sf::Texture* const texturePtr, bool resetRect){
-    m_items.at(id)->setTexture(texturePtr,resetRect);
 }
 
 bool ToolWindow::isHidden() const{
@@ -82,65 +105,45 @@ bool ToolWindow::contains(const sf::Vector2f& point) const{
     return rect.contains(point);
 }
 
-
-
-Action ToolWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
-
-    std::optional<int> o_itemId = getToolItemId(position);
-    if(o_itemId == std::nullopt){
-        return ActionType::None();
-    }
-
-    return m_items.at(o_itemId.value())->getAction();
-}
-
-
-void ToolWindow::setSetPieceTool(const GraphicPiece& graphicPiece){
-    m_items.at(0)->setTexture(graphicPiece.getTexturePtr());
+void ToolWindow::setSetPieceTool(const LogicPiece& logicPiece){
+    m_board.removeEntity({0,0});
+    m_board.addEntity({0,0},logicPiece);
     redrawTexture();
 }
 
 void ToolWindow::setSelectTool(const sf::Mouse::Button button, const ToolSelection selection){
 
-    auto texturePtr_o = m_toolManagerPtr->getTexturePtr(selection);
-    if(texturePtr_o != std::nullopt){
-        m_items.at(0)->setTexture(texturePtr_o.value());
-        redrawTexture();
-        return;
+    m_board.removeEntity({0,0});
+    switch(selection){
+        case ToolSelection::Select:
+        {
+            LogicIcon selectIcon;
+            selectIcon.setFilename("res/icons/select_object.png");
+            m_board.addEntity({0,0}, selectIcon);
+            break;
+        }
+        default:
+            std::cerr << "ToolWindow: failed to set select Tool" << std::endl;
+            break;
     }
-
-    if(selection == ToolSelection::Select){
-        std::cout << "Toolwindow: Failed to load toolSelection texture" << std::endl;
-    }
-    else if(selection == ToolSelection::DrawArrow){
-        std::cout << "ToolWindow: Failed to load arrow texture" << std::endl;
-    }
-    else{
-        std::cout << "ToolWindow: Failed to load texture for tool" << std::endl;
-    }
+    redrawTexture();
 }
 
 void ToolWindow::setAddArrowTool(const int colorId){
-    auto texturePtr_o = m_toolManagerPtr->getArrowTexturePtr(colorId);
 
-    if(texturePtr_o == std::nullopt){
-        std::cout << "ToolWindow: Failed to load arrow texture" << std::endl;
-        return;
-    }
+    LogicArrow arrow{colorId};
+    m_board.removeEntity({0,0});
+    m_board.addEntity({0,0}, arrow);
 
-    m_items.at(0)->setTexture(texturePtr_o.value());
     redrawTexture();
 }
 
 void ToolWindow::setAddCircleTool(const int colorId){
-    auto texturePtr_o = m_toolManagerPtr->getCircleTexturePtr(colorId);
 
-    if(texturePtr_o == std::nullopt){
-        std::cout << "ToolWindow: Failed to load circle texture" << std::endl;
-        return;
-    }
+    LogicCircle circle{colorId};
+    m_board.removeEntity({0,0});
+    m_board.addEntity({0,0}, circle);
 
-    m_items.at(0)->setTexture(texturePtr_o.value());
     redrawTexture();
 }
 
@@ -169,18 +172,5 @@ void ToolWindow::redrawTexture(){
     }
 
     m_texture->clear(m_backgroundColor);
-    for(auto& itemPtr : m_items){
-        m_texture->draw(*itemPtr);
-    }
-}
-
-std::optional<int> ToolWindow::getToolItemId(const sf::Vector2f& point){
-    int i{0};
-    for(const auto& item: m_items){
-        if(item->isWithin(point)){
-            return i;
-        }
-        i++;
-    }
-    return std::nullopt;
+    m_texture->draw(m_board);
 }

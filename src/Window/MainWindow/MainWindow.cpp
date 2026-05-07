@@ -24,7 +24,6 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
     m_tileColorManagerPtr = std::make_unique<ColorManager>(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
-    m_toolManagerPtr = std::make_unique<ToolManager>(m_arrowColorManagerPtr.get());
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
     m_iconManagerPtr = std::make_unique<IconManager>();
 
@@ -73,7 +72,10 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>();
-    m_toolWindow->setToolManagerPtr(m_toolManagerPtr.get());
+    m_toolWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
+    m_toolWindow->setIconManagerPtr(m_iconManagerPtr.get());
+    m_toolWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
+    m_toolWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_toolWindow->init();
 
     m_pieceManagerPtr->loadImages(config.pieces);
@@ -369,9 +371,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         handleAction(action);
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
-        Action action = m_toolWindow->clicked(*usedToolPtr, scaledPosition);
-        handleAction(action);
+        //Currently clicking inside toolWindow does nothing
     }
     else if(m_toolPickerWindow && m_toolPickerWindow->contains(scaledPosition)){
         sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
@@ -739,8 +739,8 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity, const sigrid
     }
     m_inputHandler.setEntity(sf::Mouse::Button::Left, logicEntity);
     m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
-    if(std::holds_alternative<GraphicPiece>(graphicEntity)){
-        m_toolWindow->setSetPieceTool(std::get<GraphicPiece>(graphicEntity));
+    if(std::holds_alternative<LogicPiece>(logicEntity)){
+        m_toolWindow->setSetPieceTool(std::get<LogicPiece>(logicEntity));
     }
     if(std::holds_alternative<LogicPiece>(logicEntity)){
         m_toolPickerWindow->setPieceColorTools(std::get<LogicPiece>(logicEntity).getNotation());
@@ -765,7 +765,7 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece, const sigr
 
     m_inputHandler.setEntity(sf::Mouse::Button::Left, logicPiece);
     m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
-    m_toolWindow->setSetPieceTool(graphicPiece);
+    m_toolWindow->setSetPieceTool(logicPiece);
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
 }
 
