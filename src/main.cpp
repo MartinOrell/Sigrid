@@ -11,12 +11,12 @@ int main()
     std::string setupFilename = "saveData/startup.txt";
 
     if(!std::filesystem::exists(setupFilename)){
-        std::cout << "Running program with default settings" << std::endl;
+        std::cerr << "Running program with default settings" << std::endl;
         setupFilename = "res/config/defaultStartup.txt";
     }
 
     if(!config.load(setupFilename)){
-        std::cout << "failed to load startup file: \"" << setupFilename
+        std::cerr << "failed to load startup file: \"" << setupFilename
             << "\", exiting program" << std::endl;
         return -1;
     }
