@@ -17,7 +17,7 @@ LogicBoard::~LogicBoard(){}
 bool LogicBoard::init(const BoardDataContainer& data){
 
     if(data.repeatTileColorIds.size() == 0){
-        std::cout << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
+        std::cerr << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
 
@@ -28,19 +28,19 @@ bool LogicBoard::init(const BoardDataContainer& data){
         Coord coord{pieceContainer.position};
 
         if(coord.y < 0){
-            std::cout << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.y >= getNumRows()){
-            std::cout << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.x < 0){
-            std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         if(coord.x >= getNumColumns()){
-            std::cout << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         m_pieceLayer.addEntity(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
@@ -51,8 +51,8 @@ bool LogicBoard::init(const BoardDataContainer& data){
         Coord coord{cData.position};
 
         if(!isWithinBoard(coord)){
-            std::cout << "LogicBoard constructor: Failed to set circle at " << coord.getNotation() << std::endl;
-            std::cout << "coordinate is outside of board" << std::endl;
+            std::cerr << "LogicBoard constructor: Failed to set circle at " << coord.getNotation() << std::endl;
+            std::cerr << "coordinate is outside of board" << std::endl;
             continue;
         }
 
@@ -185,14 +185,14 @@ void LogicBoard::setTurnToMove(const int& turnToMove){
 bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
 
     if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
-        std::cout << "The tile is outside of the board" << std::endl;
+        std::cerr << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
+        std::cerr << "The tile is outside of the board" << std::endl;
         return false;
     }
 
     if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
-        std::cout << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
-        std::cout << "The tile is already occupied" << std::endl;
+        std::cerr << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
+        std::cerr << "The tile is already occupied" << std::endl;
         return false;
     }
 
@@ -203,14 +203,14 @@ bool LogicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
 bool LogicBoard::removeEntity(const Coord& coord){
 
     if(!isWithinBoard(coord)){
-        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
-        std::cout << "The tile is outside of the board" << std::endl;
+        std::cerr << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cerr << "The tile is outside of the board" << std::endl;
         return false;
     }
 
     if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
-        std::cout << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
-        std::cout << "There is no entity there" << std::endl;
+        std::cerr << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cerr << "There is no entity there" << std::endl;
         return false;
     }
 
@@ -221,29 +221,29 @@ bool LogicBoard::removeEntity(const Coord& coord){
 bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 
     if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
-        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
-        std::cout << "both coordinates are the same" << std::endl;
+        std::cerr << "both coordinates are the same" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(fromCoord)){
-        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
-        std::cout << "starting tile is out of bounds" << std::endl;
+        std::cerr << "starting tile is out of bounds" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(toCoord)){
-        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
-        std::cout << "destination tile is out of bounds" << std::endl;
+        std::cerr << "destination tile is out of bounds" << std::endl;
         return false;
     }
 
     if(isEmptyTile(fromCoord)){
-        std::cout << "LogicBoard: Unable to move entity from " << fromCoord.getNotation() << std::endl;
-        std::cout << "No piece is standing there" << std::endl;
+        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation() << std::endl;
+        std::cerr << "No piece is standing there" << std::endl;
         return false;
     }
 
@@ -258,16 +258,16 @@ bool LogicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
 bool LogicBoard::addTileHighlight(const Coord& coord, const int& highlightColorId){
 
     if(highlightColorId < 0){
-        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
-        std::cout << "ColorId is not set (value: " << highlightColorId << ")" << std::endl;
+        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "ColorId is not set (value: " << highlightColorId << ")" << std::endl;
         return false;
     }
 
     auto tile_o = m_tileLayer.getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
-        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
+        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
 
@@ -280,8 +280,8 @@ bool LogicBoard::removeTileHighlight(const Coord& coord){
     auto tile_o = m_tileLayer.getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "LogicBoard: Unable to add highlight." << std::endl;
-        std::cout << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
+        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
 
@@ -292,29 +292,29 @@ bool LogicBoard::removeTileHighlight(const Coord& coord){
 bool LogicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
 
     if(!isWithinBoard(coordPair.from)){
-        std::cout << "LogicBoard: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
-        std::cout << "Starting tile is outside of the board" << std::endl;
+        std::cerr << "LogicBoard: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
+        std::cerr << "Starting tile is outside of the board" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(coordPair.to)){
-        std::cout << "LogicBoard: Unable to add arrow to tile: " << coordPair.to.getNotation() << std::endl;
-        std::cout << "Destination tile is outside of the board" << std::endl;
+        std::cerr << "LogicBoard: Unable to add arrow to tile: " << coordPair.to.getNotation() << std::endl;
+        std::cerr << "Destination tile is outside of the board" << std::endl;
         return false;
     }
 
     if(arrow.getColorId() < 0){
-        std::cout << "LogicBoard: Unable to add arrow" << std::endl;
-        std::cout << "ColorId is not set (value: " << arrow.getColorId() << ")" << std::endl;
+        std::cerr << "LogicBoard: Unable to add arrow" << std::endl;
+        std::cerr << "ColorId is not set (value: " << arrow.getColorId() << ")" << std::endl;
         return false;
     }
 
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o != std::nullopt){
-        std::cout << "LogicBoard: Unable to add arrow at "
+        std::cerr << "LogicBoard: Unable to add arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "There is already an arrow there" << std::endl;
+        std::cerr << "There is already an arrow there" << std::endl;
         return false;
     }
 
@@ -328,9 +328,9 @@ bool LogicBoard::removeArrow(const CoordPair& coordPair){
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o == std::nullopt){
-        std::cout << "LogicBoard: Unable to remove arrow at "
+        std::cerr << "LogicBoard: Unable to remove arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "There is no arrow there" << std::endl;
+        std::cerr << "There is no arrow there" << std::endl;
         return false;
     }
 
