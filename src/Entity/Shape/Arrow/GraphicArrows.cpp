@@ -350,7 +350,7 @@ void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     for(auto& coordPair: m_drawOrder){
         auto it = m_arrows.find(coordPair);
         if(it == m_arrows.end()){
-            std::cout << "Failed to draw arrow at " << coordPair.getNotation() << std::endl;
+            std::cerr << "Failed to draw arrow at " << coordPair.getNotation() << std::endl;
             continue;
         }
         target.draw(it->second);
