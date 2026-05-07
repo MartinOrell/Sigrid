@@ -189,7 +189,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
             m_texturePtr = std::make_unique<sf::RenderTexture>();
         }
         if(!(m_texturePtr->resize(rhs.m_texturePtr->getSize()))){
-            std::cout << "GraphicBoard: Failed to resize texture during assignment operation" << std::endl;
+            std::cerr << "GraphicBoard: Failed to resize texture during assignment operation" << std::endl;
         }
     }
 
@@ -382,16 +382,16 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     auto position_o = m_tileLayerPtr->getTileCentrePosition(coord);
 
     if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to add entity at "
+        std::cerr << "GraphicBoard: Failed to add entity at "
             << coord.getNotation() << std::endl;
-        std::cout << "Position for coordinate not found" << std::endl;
+        std::cerr << "Position for coordinate not found" << std::endl;
         return;
     }
 
     if(m_pieceLayerPtr->getEntityAt(coord) != std::nullopt){
-        std::cout << "GraphicBoard: Failed to add entity at "
+        std::cerr << "GraphicBoard: Failed to add entity at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is already an entity there" << std::endl;
+        std::cerr << "There is already an entity there" << std::endl;
         return;
     }
 
@@ -402,9 +402,9 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
 void GraphicBoard::removeEntity(const Coord& coord){
 
     if(m_pieceLayerPtr->getEntityAt(coord) == std::nullopt){
-        std::cout << "GraphicBoard: Failed to remove entity at "
+        std::cerr << "GraphicBoard: Failed to remove entity at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no entity there" << std::endl;
+        std::cerr << "There is no entity there" << std::endl;
         return;
     }
 
@@ -415,20 +415,20 @@ void GraphicBoard::removeEntity(const Coord& coord){
 void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     
     if(fromCoord == toCoord){
-        std::cout << "GraphicBoard: Failed to move entity from "
+        std::cerr << "GraphicBoard: Failed to move entity from "
             << fromCoord.getNotation() << " to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting tile and destination tile are the same" << std::endl;
+        std::cerr << "Starting tile and destination tile are the same" << std::endl;
         return; 
     }
 
     auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(toCoord);
 
     if(toPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to move entity from "
+        std::cerr << "GraphicBoard: Failed to move entity from "
             << fromCoord.getNotation() << " to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination tile position not found" << std::endl;
+        std::cerr << "Destination tile position not found" << std::endl;
         return;
     }
 
@@ -462,34 +462,34 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
     auto fromPosition_o = m_tileLayerPtr->getTileCentrePosition(coordPair.from);
 
     if(fromPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to add arrow from "
+        std::cerr << "GraphicBoard: Failed to add arrow from "
             << coordPair.from.getNotation() << std::endl;
-        std::cout << "Starting tile position not found" << std::endl;
+        std::cerr << "Starting tile position not found" << std::endl;
         return;
     }
 
     auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(coordPair.to);
 
     if(toPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to add arrow to "
+        std::cerr << "GraphicBoard: Failed to add arrow to "
             << coordPair.to.getNotation() << std::endl;
-        std::cout << "Destination tile position not found" << std::endl;
+        std::cerr << "Destination tile position not found" << std::endl;
         return;
     }
 
     if(!m_arrowLayerPtr){
-        std::cout << "GraphicBoard: Failed to add arrow at "
+        std::cerr << "GraphicBoard: Failed to add arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "arrow layer not found" << std::endl;
+        std::cerr << "arrow layer not found" << std::endl;
         return;
     }
 
     auto occupyingArrow_o = m_arrowLayerPtr->getArrow(coordPair);
 
     if(occupyingArrow_o != std::nullopt){
-        std::cout << "GraphicBoard: Failed to add arrow at "
+        std::cerr << "GraphicBoard: Failed to add arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "There is already an arrow there" << std::endl;
+        std::cerr << "There is already an arrow there" << std::endl;
         return;
     }
 
@@ -501,18 +501,18 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
 void GraphicBoard::removeArrow(const CoordPair& coordPair){
 
     if(!m_arrowLayerPtr){
-        std::cout << "GraphicBoard: Failed to remove arrow at "
+        std::cerr << "GraphicBoard: Failed to remove arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "ArrowLayer not found" << std::endl;
+        std::cerr << "ArrowLayer not found" << std::endl;
         return;
     }
 
     auto occupyingArrow_o = m_arrowLayerPtr->getArrow(coordPair);
 
     if(occupyingArrow_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to remove arrow at "
+        std::cerr << "GraphicBoard: Failed to remove arrow at "
             << coordPair.getNotation() << std::endl;
-        std::cout << "There is no arrow there" << std::endl;
+        std::cerr << "There is no arrow there" << std::endl;
         return;
     }
 
@@ -532,26 +532,26 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
     auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
 
     if(color_o == std::nullopt){
-        std::cout << "GraphicBoard: Failed to update drag arrow" << std::endl;
-        std::cout << "Failed to receive color with id " << colorId << std::endl;
+        std::cerr << "GraphicBoard: Failed to update drag arrow" << std::endl;
+        std::cerr << "Failed to receive color with id " << colorId << std::endl;
         return;
     }
 
     auto fromPosition_o = m_tileLayerPtr->getTileCentrePosition(fromCoord);
         
     if(fromPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to update dragArrow position from "
+        std::cerr << "GraphicBoard: Unable to update dragArrow position from "
             << fromCoord.getNotation() << std::endl;
-        std::cout << "Starting tile position not found" << std::endl;
+        std::cerr << "Starting tile position not found" << std::endl;
         return;
     }
 
     auto toPosition_o = m_tileLayerPtr->getTileCentrePosition(toCoord);
 
     if(toPosition_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to update dragArrow position to "
+        std::cerr << "GraphicBoard: Unable to update dragArrow position to "
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination tile position not found" << std::endl;
+        std::cerr << "Destination tile position not found" << std::endl;
         return;
     }
 
@@ -592,9 +592,9 @@ void GraphicBoard::highlightTile(const Coord& coord){
     auto position_o = m_tileLayerPtr->getTileTopLeftPosition(coord);
 
     if(position_o == std::nullopt){
-        std::cout << "GraphicBoard: Unable to highlight tile at "
+        std::cerr << "GraphicBoard: Unable to highlight tile at "
             << coord.getNotation() << std::endl;
-        std::cout << "Tile position not found" << std::endl;
+        std::cerr << "Tile position not found" << std::endl;
     }
 
     if(!m_selectHighlight){
@@ -618,13 +618,13 @@ void GraphicBoard::unhighlight(){
 void GraphicBoard::saveImage(const std::string& fileName){
     auto image = m_texturePtr->getTexture().copyToImage();
     image.flipVertically();
-    std::cout << "Saving board image: " << fileName << std::endl;
+    std::cerr << "Saving board image: " << fileName << std::endl;
     auto success = image.saveToFile(fileName);
     if(success && std::filesystem::exists(fileName)){
-        std::cout << "board image: " << fileName << " saved" << std::endl;
+        std::cerr << "board image: " << fileName << " saved" << std::endl;
     }
     else{
-        std::cout << "Failed to save board image: " << fileName << std::endl;
+        std::cerr << "Failed to save board image: " << fileName << std::endl;
     }
 }
 
@@ -1192,7 +1192,7 @@ void GraphicBoard::resizeTexture(){
     bool success;
     success = m_texturePtr->resize({getTextureWidth(), getTextureHeight()});
     if(!success){
-        std::cout << "GraphicWindow: Failed to resize texture" << std::endl;
+        std::cerr << "GraphicWindow: Failed to resize texture" << std::endl;
         return;
     }
 }
@@ -1271,7 +1271,7 @@ void GraphicBoard::addOutsideLabels(){
         }
         auto tilePosition_o = m_tileLayerPtr->getTileTopLeftPosition(coord);
         if(tilePosition_o == std::nullopt){
-            std::cout << "GraphicBoard: Tile "
+            std::cerr << "GraphicBoard: Tile "
                 << coord.getNotation() << " not found for label" << std::endl;
             continue;
         }
@@ -1287,7 +1287,7 @@ void GraphicBoard::addOutsideLabels(){
         coord.y = i;
         auto tilePosition_o = m_tileLayerPtr->getTileTopLeftPosition(coord);
         if(tilePosition_o == std::nullopt){
-            std::cout << "GraphicBoard: Tile "
+            std::cerr << "GraphicBoard: Tile "
                 << coord.getNotation() << " not found for label" << std::endl;
             continue;
         }
