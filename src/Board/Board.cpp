@@ -17,35 +17,35 @@ void Board::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
-    m_graphicBoard->addPieceManagerPtr(managerPtr);
+    m_graphicBoard->setPieceManagerPtr(managerPtr);
 }
 
 void Board::setTileColorManagerPtr(ColorManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
-    m_graphicBoard->addTileColorManagerPtr(managerPtr);
+    m_graphicBoard->setTileColorManagerPtr(managerPtr);
 }
 
 void Board::setArrowColorManagerPtr(ColorManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
-    m_graphicBoard->addArrowColorManagerPtr(managerPtr);
+    m_graphicBoard->setArrowColorManagerPtr(managerPtr);
 }
 
 void Board::setFontManagerPtr(FontManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
-    m_graphicBoard->addFontManagerPtr(managerPtr);
+    m_graphicBoard->setFontManagerPtr(managerPtr);
 }
 
 void Board::setIconManagerPtr(IconManager* const managerPtr){
     if(!m_graphicBoard){
         m_graphicBoard = std::make_unique<GraphicBoard>();
     }
-    m_graphicBoard->addIconManagerPtr(managerPtr);
+    m_graphicBoard->setIconManagerPtr(managerPtr);
 }
 
 void Board::setLeftToRight(){

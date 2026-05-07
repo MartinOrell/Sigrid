@@ -41,11 +41,11 @@ namespace sigrid{
             
             GraphicBoard();
             
-            void addPieceManagerPtr(PieceManager* const managerPtr);
-            void addTileColorManagerPtr(ColorManager* const managerPtr);
-            void addArrowColorManagerPtr(ColorManager* const managerPtr);
-            void addFontManagerPtr(FontManager* const managerPtr);
-            void addIconManagerPtr(IconManager* const managerPtr);
+            void setPieceManagerPtr(PieceManager* const managerPtr);
+            void setTileColorManagerPtr(ColorManager* const managerPtr);
+            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+            void setFontManagerPtr(FontManager* const managerPtr);
+            void setIconManagerPtr(IconManager* const managerPtr);
             void setLeftToRight();
             void setRightToLeft();
             void setTopToBottom();

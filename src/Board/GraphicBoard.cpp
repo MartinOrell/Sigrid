@@ -30,32 +30,32 @@ GraphicBoard::GraphicBoard()
 , m_isLeftToRight{true}
 , m_isTopToBottom{false}{}
 
-void GraphicBoard::addPieceManagerPtr(PieceManager* const managerPtr){
+void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_pieceLayerPtr){
         m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     }
     m_pieceLayerPtr->addPieceManager(managerPtr);
 }
 
-void GraphicBoard::addTileColorManagerPtr(ColorManager* const managerPtr){
+void GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
     if(!m_tileLayerPtr){
         m_tileLayerPtr = std::make_unique<GraphicTiles>();
     }
     m_tileLayerPtr->addColorManager(managerPtr);
 }
 
-void GraphicBoard::addArrowColorManagerPtr(ColorManager* const managerPtr){
+void GraphicBoard::setArrowColorManagerPtr(ColorManager* const managerPtr){
     m_arrowColorManagerPtr = managerPtr;
 }
 
-void GraphicBoard::addFontManagerPtr(FontManager* const managerPtr){
+void GraphicBoard::setFontManagerPtr(FontManager* const managerPtr){
     if(!m_labelsPtr){
         m_labelsPtr = std::make_unique<BoardLabels>();
     }
     m_labelsPtr->setFontManagerPtr(managerPtr);
 }
 
-void GraphicBoard::addIconManagerPtr(IconManager* const managerPtr){
+void GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
     if(!m_pieceLayerPtr){
         m_pieceLayerPtr = std::make_unique<GraphicEntities>();
     }
