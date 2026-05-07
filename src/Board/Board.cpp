@@ -276,16 +276,16 @@ void Board::deselect(){
 void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
-        std::cout << "because it is out of bounds" << std::endl;
+        std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
+        std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
     auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
 
     if(occupyingEntity_o != std::nullopt){
-        std::cout << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
-        std::cout << "because the tile is already occupied" << std::endl;
+        std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
+        std::cerr << "because the tile is already occupied" << std::endl;
         return;
     }
 
@@ -297,16 +297,16 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 void Board::removeEntity(const Coord& coord){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
-        std::cout << "because it is out of bounds" << std::endl;
+        std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
+        std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
     auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
 
     if(occupyingEntity_o == std::nullopt){
-        std::cout << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
-        std::cout << "because there is no entity there" << std::endl;
+        std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
+        std::cerr << "because there is no entity there" << std::endl;
         return;
     }
 
@@ -327,27 +327,27 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
 void Board::addTileHighlight(const Coord& coord, const int& colorId){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to add highlight at "
+        std::cerr << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "because it is out of bounds" << std::endl;
+        std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
     auto tile_o = m_logicBoard->getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "Board: Failed to add highlight at "
+        std::cerr << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no tile there" << std::endl;
+        std::cerr << "There is no tile there" << std::endl;
         return;
     }
 
     auto highlightColor_o = tile_o.value().getHighlightColorId();
 
     if(highlightColor_o != std::nullopt){
-        std::cout << "Board: Failed to add highlight at "
+        std::cerr << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is already a highlight there" << std::endl;
+        std::cerr << "There is already a highlight there" << std::endl;
         return;
     }
 
@@ -359,27 +359,27 @@ void Board::addTileHighlight(const Coord& coord, const int& colorId){
 void Board::removeTileHighlight(const Coord& coord){
 
     if(!m_logicBoard->isWithinBoard(coord)){
-        std::cout << "Board: Failed to remove highlight at "
+        std::cerr << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "because it is out of bounds" << std::endl;
+        std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
     auto tile_o = m_logicBoard->getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cout << "Board: Failed to remove highlight at "
+        std::cerr << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no tile there" << std::endl;
+        std::cerr << "There is no tile there" << std::endl;
         return;
     }
 
     auto highlightColor_o = tile_o.value().getHighlightColorId();
 
     if(highlightColor_o == std::nullopt){
-        std::cout << "Board: Failed to remove highlight at "
+        std::cerr << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
-        std::cout << "There is no highlight there" << std::endl;
+        std::cerr << "There is no highlight there" << std::endl;
         return;
     }
 
@@ -404,28 +404,28 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
 void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow){
 
     if(!m_logicBoard->isWithinBoard(fromCoord)){
-        std::cout << "Board: Unable to add arrow "
+        std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting tile is out of bounds" << std::endl;
+        std::cerr << "Starting tile is out of bounds" << std::endl;
         return;
     }
 
     if(!m_logicBoard->isWithinBoard(toCoord)){
-        std::cout << "Board: Unable to add arrow "
+        std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination tile is out of bounds" << std::endl;
+        std::cerr << "Destination tile is out of bounds" << std::endl;
         return;
     }
 
     auto occupyingArrow_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
 
     if(occupyingArrow_o != std::nullopt){
-        std::cout << "Board: Unable to remove arrow "
+        std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "There is already an arrow there" << std::endl;
+        std::cerr << "There is already an arrow there" << std::endl;
         return;
     }
 
@@ -437,28 +437,28 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
 void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
 
     if(!m_logicBoard->isWithinBoard(fromCoord)){
-        std::cout << "Board: Unable to remove arrow "
+        std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Starting tile is out of bounds" << std::endl;
+        std::cerr << "Starting tile is out of bounds" << std::endl;
         return;
     }
 
     if(!m_logicBoard->isWithinBoard(toCoord)){
-        std::cout << "Board: Unable to remove arrow "
+        std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "Destination tile is out of bounds" << std::endl;
+        std::cerr << "Destination tile is out of bounds" << std::endl;
         return;
     }
 
     auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
 
     if(occupyingEntity_o == std::nullopt){
-        std::cout << "Board: Unable to remove arrow "
+        std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
-        std::cout << "There is no arrow there" << std::endl;
+        std::cerr << "There is no arrow there" << std::endl;
         return;
     }
 
@@ -536,7 +536,7 @@ bool createFolderForFile(const std::string filename){
                 std::cout << "Created folder: " << folder << std::endl;
             }
             else{
-                std::cout << "Failed to create folder: " << folder << std::endl;
+                std::cerr << "Failed to create folder: " << folder << std::endl;
                 return false;
             }
         }
@@ -549,22 +549,22 @@ bool createFolderForFile(const std::string filename){
 void Board::save(){
 
     if(m_filename.length() == 0){
-        std::cout << "Unable to save board, filename is not set" << std::endl;
+        std::cerr << "Unable to save board, filename is not set" << std::endl;
         return; 
     }
 
     std::cout << "Saving " << m_filename << std::endl;
 
     if(!createFolderForFile(m_filename)){
-        std::cout << "Saving failed" << std::endl;
+        std::cerr << "Saving failed" << std::endl;
         return;
     }
 
     std::ofstream out(m_filename);
 
     if(!out.is_open()){
-        std::cout << "Failed to open " << m_filename << std::endl;
-        std::cout << "Saving failed" << std::endl;
+        std::cerr << "Failed to open " << m_filename << std::endl;
+        std::cerr << "Saving failed" << std::endl;
         return;
     }
 
@@ -573,14 +573,14 @@ void Board::save(){
     std::cout << "Saved " << m_filename << std::endl;
 
     if(m_imageFilename.length() == 0){
-        std::cout << "Unable to save board image, filename is not set" << std::endl;
+        std::cerr << "Unable to save board image, filename is not set" << std::endl;
         return;
     }
 
     out << "\nImageFilename: " << m_imageFilename;
 
     if(!(createFolderForFile(m_imageFilename))){
-        std::cout << "Saving board image failed" << std::endl;
+        std::cerr << "Saving board image failed" << std::endl;
         return;
     }
 
