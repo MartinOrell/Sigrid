@@ -1,13 +1,16 @@
 #include "WorkWindow.h"
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include "../../Tool/Tool.h"
-
-#include <SFML/Graphics/Sprite.hpp>
-#include "../../Coord/Coord.h"
-#include "../../Entity/Shape/Arrow/LogicArrow.h"
-
 #include <iostream>
+
+#include <SFML/Graphics/RenderTexture.hpp>
+
+#include "../../Tool/Tool.h"
+#include "../../Entity/Tile/GraphicTiles.h"
+#include "../../Entity/GraphicEntities.h"
+#include "../../Entity/Shape/Arrow/GraphicArrows.h"
+#include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "../../Board/BoardLabels.h"
+#include "../../Entity/TurnToken/TurnToken.h"
 
 using namespace sigrid;
 
@@ -17,15 +20,15 @@ WorkWindow::WorkWindow()
 , m_activeBoardId{0}{}
 
 void WorkWindow::setBoardFilename(const std::string& filename){
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
-    if(m_boardPtrs.size() < m_activeBoardId){
+    if(m_boards.size() < m_activeBoardId){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->setFilename(filename);
+    m_boards.at(m_activeBoardId).setFilename(filename);
 }
 
 void WorkWindow::setDefaultBoardImageFilename(const std::string& filename){
@@ -33,67 +36,67 @@ void WorkWindow::setDefaultBoardImageFilename(const std::string& filename){
 }
 
 void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
-    if(m_boardPtrs.size() < m_activeBoardId){
+    if(m_boards.size() < m_activeBoardId){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->setTileColorManagerPtr(managerPtr);
+    m_boards.at(m_activeBoardId).setTileColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
-    if(m_boardPtrs.size() < m_activeBoardId){
+    if(m_boards.size() < m_activeBoardId){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->setPieceManagerPtr(managerPtr);
+    m_boards.at(m_activeBoardId).setPieceManagerPtr(managerPtr);
 }
 
 void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
-    if(m_boardPtrs.size() < m_activeBoardId){
+    if(m_boards.size() < m_activeBoardId){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->setArrowColorManagerPtr(managerPtr);
+    m_boards.at(m_activeBoardId).setArrowColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
-    if(m_boardPtrs.size() < m_activeBoardId){
+    if(m_boards.size() < m_activeBoardId){
         std::cerr << "Invalid board id: " << m_activeBoardId << std::endl;
         return;
     }
-    m_boardPtrs.at(m_activeBoardId)->setFontManagerPtr(managerPtr);
+    m_boards.at(m_activeBoardId).setFontManagerPtr(managerPtr);
 }
 
 void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
-    if(m_boardPtrs.size() == 0){
-        auto board = std::make_unique<Board>();
-        m_boardPtrs.push_back(std::move(board));
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
     }
     m_activeBoardId = 0;
 
-    m_boardPtrs.at(0)->init(boardData, graphicData);
+    m_boards.at(0).init(boardData, graphicData);
 
-    std::cout << "Save location: " << m_boardPtrs.at(0)->getFilename() << std::endl;
+    std::cout << "Save location: " << m_boards.at(0).getFilename() << std::endl;
 
-    if(!m_boardPtrs.at(0)->isImageFilenameSet()){
-        m_boardPtrs.at(0)->setImageFilename(m_defaultBoardImageFilename);
+    if(!m_boards.at(0).isImageFilenameSet()){
+        m_boards.at(0).setImageFilename(m_defaultBoardImageFilename);
     }
 }
 
@@ -101,9 +104,9 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    for(auto& board: m_boardPtrs){
-        unsigned int boardWidth = board->getImageWidth();
-        unsigned int boardHeight = board->getImageHeight();
+    for(auto& board: m_boards){
+        unsigned int boardWidth = board.getImageWidth();
+        unsigned int boardHeight = board.getImageHeight();
         float widthRatio = (float)size.x/(float)boardWidth;
         float heightRatio = (float)size.y/(float)boardHeight;
         float boardScale;
@@ -113,24 +116,24 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         else{
             boardScale = heightRatio;
         }
-        board->setScale(boardScale);
+        board.setScale(boardScale);
 
-        float posX = ((float)(size.x)-float(board->getDisplayWidth()))/2.f;
-        float posY = ((float)(size.y)-float(board->getDisplayHeight()))/2.f;
-        board->setPosition({posX, posY});
+        float posX = ((float)(size.x)-float(board.getDisplayWidth()))/2.f;
+        float posY = ((float)(size.y)-float(board.getDisplayHeight()))/2.f;
+        board.setPosition({posX, posY});
     }
 }
 
 void WorkWindow::loadFen(const std::string& fen){
-    m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
+    m_boards.at(m_activeBoardId).loadFen(fen);
 }
 
 std::string WorkWindow::getName() const{
-    return m_boardPtrs.at(m_activeBoardId)->getName();
+    return m_boards.at(m_activeBoardId).getName();
 }
 
 std::string WorkWindow::getFen() const{
-    return m_boardPtrs.at(m_activeBoardId)->getFen();
+    return m_boards.at(m_activeBoardId).getFen();
 }
 
 void WorkWindow::setPosition(const sf::Vector2f& position){
@@ -138,10 +141,10 @@ void WorkWindow::setPosition(const sf::Vector2f& position){
 }
 
 unsigned int WorkWindow::getNumColumns() const{
-    if(m_boardPtrs.size() <= m_activeBoardId){
+    if(m_boards.size() <= m_activeBoardId){
         return 0;
     }
-    return m_boardPtrs.at(m_activeBoardId)->getNumColumns();
+    return m_boards.at(m_activeBoardId).getNumColumns();
 }
 
 bool WorkWindow::contains(const sf::Vector2f& point) const{
@@ -157,7 +160,7 @@ bool WorkWindow::contains(const sf::Vector2f& point) const{
 }
 
 bool WorkWindow::isCoordinatesOutside() const{
-    return m_boardPtrs.at(m_activeBoardId)->isCoordinatesOutside();
+    return m_boards.at(m_activeBoardId).isCoordinatesOutside();
 }
 
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -168,7 +171,7 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     sf::RenderTexture texture(m_texture->getSize());
     texture.clear(m_backgroundColor);
-    texture.draw(*m_boardPtrs.at(m_activeBoardId));
+    texture.draw(m_boards.at(m_activeBoardId));
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
     target.draw(sprite);
@@ -178,18 +181,18 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
 Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
-    m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
+    m_boards.at(m_activeBoardId).removeDragArrow();
 
     sf::Vector2f from = pressPosition - m_position;
     sf::Vector2f to = releasePosition - m_position;
 
-    if(m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken(from) &&
-    m_boardPtrs.at(m_activeBoardId)->isWithinTurnToken(to)){
-        m_boardPtrs.at(m_activeBoardId)->toggleTurnToken();
+    if(m_boards.at(m_activeBoardId).isWithinTurnToken(from) &&
+    m_boards.at(m_activeBoardId).isWithinTurnToken(to)){
+        m_boards.at(m_activeBoardId).toggleTurnToken();
     }
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(from);
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(to);
+    auto fromCoord_o = m_boards.at(m_activeBoardId).getTileCoord(from);
+    auto toCoord_o = m_boards.at(m_activeBoardId).getTileCoord(to);
 
     
     if(fromCoord_o == std::nullopt){
@@ -199,7 +202,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
     if(toCoord_o == std::nullopt){
         switch(tool.selection()){
             case ToolSelection::Select:
-                m_boardPtrs.at(m_activeBoardId)->deselect();
+                m_boards.at(m_activeBoardId).deselect();
                 break;
             default:
                 break;
@@ -213,10 +216,10 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
     switch(tool.selection()){
         case ToolSelection::Select:
             if(fromCoord == toCoord){
-                m_boardPtrs.at(m_activeBoardId)->select(toCoord);
+                m_boards.at(m_activeBoardId).select(toCoord);
             }
             else{
-                m_boardPtrs.at(m_activeBoardId)->dragAndDrop(fromCoord_o.value(), toCoord_o.value());
+                m_boards.at(m_activeBoardId).dragAndDrop(fromCoord_o.value(), toCoord_o.value());
             }
             return ActionType::None();
         case ToolSelection::EntityAdder:
@@ -224,7 +227,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
             return ActionType::None();
         case ToolSelection::EntityPicker:
             {
-                auto logicEntity_o = m_boardPtrs.at(m_activeBoardId)->getLogicEntity(toCoord);
+                auto logicEntity_o = m_boards.at(m_activeBoardId).getLogicEntity(toCoord);
                 if(logicEntity_o == std::nullopt){
                     return ActionType::None();
                 }
@@ -248,7 +251,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     
     sf::Vector2f from = pressPosition - m_position;
 
-    auto fromCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(from);
+    auto fromCoord_o = m_boards.at(m_activeBoardId).getTileCoord(from);
 
     if(fromCoord_o == std::nullopt){
         return;
@@ -256,10 +259,10 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
 
     sf::Vector2f to = currentPosition - m_position;
 
-    auto toCoord_o = m_boardPtrs.at(m_activeBoardId)->getTileCoord(to);
+    auto toCoord_o = m_boards.at(m_activeBoardId).getTileCoord(to);
 
     if(toCoord_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
+        m_boards.at(m_activeBoardId).removeDragArrow();
         return;
     }
 
@@ -267,18 +270,18 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     auto toCoord = toCoord_o.value();
 
     if(fromCoord == toCoord){
-        m_boardPtrs.at(m_activeBoardId)->removeDragArrow();
+        m_boards.at(m_activeBoardId).removeDragArrow();
         return;
     }
 
     switch(tool.selection()){
         case ToolSelection::Select:
-            if(!m_boardPtrs.at(m_activeBoardId)->isEmptyTile(fromCoord)){
-                m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
+            if(!m_boards.at(m_activeBoardId).isEmptyTile(fromCoord)){
+                m_boards.at(m_activeBoardId).updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
             }
             return;
         case ToolSelection::DrawArrow:
-            m_boardPtrs.at(m_activeBoardId)->updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
+            m_boards.at(m_activeBoardId).updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
             return;
         default:
             return;
@@ -288,17 +291,17 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
 
 void WorkWindow::reset(){
     std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"};
-    m_boardPtrs.at(m_activeBoardId)->loadFen(fen);
-    m_boardPtrs.at(m_activeBoardId)->clearArrows();
+    m_boards.at(m_activeBoardId).loadFen(fen);
+    m_boards.at(m_activeBoardId).clearArrows();
 }
 
 void WorkWindow::clear(){
-    m_boardPtrs.at(m_activeBoardId)->clearEntities();
-    m_boardPtrs.at(m_activeBoardId)->clearArrows();
+    m_boards.at(m_activeBoardId).clearEntities();
+    m_boards.at(m_activeBoardId).clearArrows();
 }
 
 void WorkWindow::print(){
-    m_boardPtrs.at(m_activeBoardId)->print();
+    m_boards.at(m_activeBoardId).print();
 }
 
 std::string WorkWindow::getUniqueName(const std::string& name){
@@ -306,8 +309,8 @@ std::string WorkWindow::getUniqueName(const std::string& name){
     while(true){
         
         bool exists = false;
-        for(const auto& board: m_boardPtrs){
-            if(board->getFilename() == newName || board->getImageFilename() == newName){
+        for(const auto& board: m_boards){
+            if(board.getFilename() == newName || board.getImageFilename() == newName){
                 exists = true;
                 break;
             }
@@ -344,27 +347,27 @@ std::string WorkWindow::getUniqueName(const std::string& name){
 
 void WorkWindow::newBoard(){
 
-    auto newBoard = std::make_unique<Board>();
-    *newBoard = *m_boardPtrs.at(m_activeBoardId);
+    Board newBoard;
+    newBoard = m_boards.at(m_activeBoardId);
 
-    std::string newName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getFilename());
-    std::string newImageName = getUniqueName(m_boardPtrs.at(m_activeBoardId)->getImageFilename());
+    std::string newName = getUniqueName(m_boards.at(m_activeBoardId).getFilename());
+    std::string newImageName = getUniqueName(m_boards.at(m_activeBoardId).getImageFilename());
 
     std::cout << "New board name " << newName << std::endl;
     std::cout << "New image name " << newImageName << std::endl;    
     
-    newBoard->setFilename(newName);
-    newBoard->setImageFilename(newImageName);
+    newBoard.setFilename(newName);
+    newBoard.setImageFilename(newImageName);
 
-    m_boardPtrs.push_back(std::move(newBoard));
-    m_activeBoardId = m_boardPtrs.size()-1;
+    m_boards.push_back(std::move(newBoard));
+    m_activeBoardId = m_boards.size()-1;
     reset();
 }
 
 void WorkWindow::openLeftBoard(){
 
     if(m_activeBoardId == 0){
-        m_activeBoardId = m_boardPtrs.size()-1;
+        m_activeBoardId = m_boards.size()-1;
     }
     else{
         m_activeBoardId--;
@@ -372,110 +375,110 @@ void WorkWindow::openLeftBoard(){
 }
 
 void WorkWindow::openRightBoard(){
-    m_activeBoardId = (m_activeBoardId+1)%m_boardPtrs.size();
+    m_activeBoardId = (m_activeBoardId+1)%m_boards.size();
 }
 
 void WorkWindow::saveBoard(){
-    m_boardPtrs.at(m_activeBoardId)->save();
+    m_boards.at(m_activeBoardId).save();
 }
 
 void WorkWindow::flipBoard(){
-    m_boardPtrs.at(m_activeBoardId)->flipBoard();
+    m_boards.at(m_activeBoardId).flipBoard();
 }
 
 void WorkWindow::addCoordinates(){
-    m_boardPtrs.at(m_activeBoardId)->addCoordinates();
+    m_boards.at(m_activeBoardId).addCoordinates();
 }
 
 void WorkWindow::removeCoordinates(){
-    m_boardPtrs.at(m_activeBoardId)->removeCoordinates();
+    m_boards.at(m_activeBoardId).removeCoordinates();
 }
 
 void WorkWindow::moveCoordinatesOutside(){
-    m_boardPtrs.at(m_activeBoardId)->moveCoordinatesOutside();
+    m_boards.at(m_activeBoardId).moveCoordinatesOutside();
 }
 
 void WorkWindow::moveCoordinatesInside(){
-    m_boardPtrs.at(m_activeBoardId)->moveCoordinatesInside();
+    m_boards.at(m_activeBoardId).moveCoordinatesInside();
 }
 
 void WorkWindow::setCoordinateSize(const float& size){
-    m_boardPtrs.at(m_activeBoardId)->setCoordinateSize(size);    
+    m_boards.at(m_activeBoardId).setCoordinateSize(size);    
 }
 
 void WorkWindow::addSquareColumnRight(){
-    m_boardPtrs.at(m_activeBoardId)->addSquareColumnRight();
+    m_boards.at(m_activeBoardId).addSquareColumnRight();
 }
 
 void WorkWindow::addSquareColumnLeft(){
-    m_boardPtrs.at(m_activeBoardId)->addSquareColumnLeft();
+    m_boards.at(m_activeBoardId).addSquareColumnLeft();
 }
 
 void WorkWindow::removeSquareColumnRight(){
-    m_boardPtrs.at(m_activeBoardId)->removeSquareColumnRight();
+    m_boards.at(m_activeBoardId).removeSquareColumnRight();
 }
 
 void WorkWindow::removeSquareColumnLeft(){
-    m_boardPtrs.at(m_activeBoardId)->removeSquareColumnLeft();
+    m_boards.at(m_activeBoardId).removeSquareColumnLeft();
 }
 
 void WorkWindow::addSquareRowUp(){
-    m_boardPtrs.at(m_activeBoardId)->addSquareRowUp();
+    m_boards.at(m_activeBoardId).addSquareRowUp();
 }
 
 void WorkWindow::addSquareRowDown(){
-    m_boardPtrs.at(m_activeBoardId)->addSquareRowDown();
+    m_boards.at(m_activeBoardId).addSquareRowDown();
 }
 
 void WorkWindow::removeSquareRowUp(){
-    m_boardPtrs.at(m_activeBoardId)->removeSquareRowUp();
+    m_boards.at(m_activeBoardId).removeSquareRowUp();
 }
 
 void WorkWindow::removeSquareRowDown(){
-    m_boardPtrs.at(m_activeBoardId)->removeSquareRowDown();
+    m_boards.at(m_activeBoardId).removeSquareRowDown();
 }
 
 void WorkWindow::addBoardBorder(){
-    m_boardPtrs.at(m_activeBoardId)->addBorder();
+    m_boards.at(m_activeBoardId).addBorder();
 }
 
 void WorkWindow::removeBoardBorder(){
-    m_boardPtrs.at(m_activeBoardId)->removeBorder();
+    m_boards.at(m_activeBoardId).removeBorder();
 }
 
 void WorkWindow::addTurnToken(){
-    m_boardPtrs.at(m_activeBoardId)->addTurnToken();
+    m_boards.at(m_activeBoardId).addTurnToken();
 }
 
 void WorkWindow::removeTurnToken(){
-    m_boardPtrs.at(m_activeBoardId)->removeTurnToken();
+    m_boards.at(m_activeBoardId).removeTurnToken();
 }
 
 void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){
 
-    auto occupying_entity_o = m_boardPtrs.at(m_activeBoardId)->getLogicEntity(coord);
+    auto occupying_entity_o = m_boards.at(m_activeBoardId).getLogicEntity(coord);
 
     if(occupying_entity_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
+        m_boards.at(m_activeBoardId).addEntity(coord, newEntity);
         return;
     }
 
     if(occupying_entity_o.value() == newEntity){
-        m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
+        m_boards.at(m_activeBoardId).removeEntity(coord);
         return;
     }
 
-    m_boardPtrs.at(m_activeBoardId)->removeEntity(coord);
-    m_boardPtrs.at(m_activeBoardId)->addEntity(coord, newEntity);
+    m_boards.at(m_activeBoardId).removeEntity(coord);
+    m_boards.at(m_activeBoardId).addEntity(coord, newEntity);
 }
 
 void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
-    m_boardPtrs.at(m_activeBoardId)->addEntityAtSelection(newEntity);
+    m_boards.at(m_activeBoardId).addEntityAtSelection(newEntity);
 }
 
 void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
 
-    auto tile_o = m_boardPtrs.at(m_activeBoardId)->getTile(coord);
+    auto tile_o = m_boards.at(m_activeBoardId).getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "WorkWindow: unable to find logic tile "
@@ -488,33 +491,33 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
     auto occupyingColor_o = tile_o.value().getHighlightColorId();
 
     if(occupyingColor_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addTileHighlight(coord, colorId);
+        m_boards.at(m_activeBoardId).addTileHighlight(coord, colorId);
         return;
     }
 
     if(occupyingColor_o.value() == colorId){
-        m_boardPtrs.at(m_activeBoardId)->removeTileHighlight(coord);
+        m_boards.at(m_activeBoardId).removeTileHighlight(coord);
         return;
     }
 
-    m_boardPtrs.at(m_activeBoardId)->removeTileHighlight(coord);
-    m_boardPtrs.at(m_activeBoardId)->addTileHighlight(coord, colorId);
+    m_boards.at(m_activeBoardId).removeTileHighlight(coord);
+    m_boards.at(m_activeBoardId).addTileHighlight(coord, colorId);
 }
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
 
-    auto occupyingArrow_o = m_boardPtrs.at(m_activeBoardId)->getLogicArrow({fromCoord, toCoord});
+    auto occupyingArrow_o = m_boards.at(m_activeBoardId).getLogicArrow({fromCoord, toCoord});
 
     if(occupyingArrow_o == std::nullopt){
-        m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, LogicArrow{colorId});
+        m_boards.at(m_activeBoardId).addArrow(fromCoord, toCoord, LogicArrow{colorId});
         return;
     }
 
     if(occupyingArrow_o.value().getColorId() == colorId){
-        m_boardPtrs.at(m_activeBoardId)->removeArrow(fromCoord, toCoord);
+        m_boards.at(m_activeBoardId).removeArrow(fromCoord, toCoord);
         return;
     }
 
-    m_boardPtrs.at(m_activeBoardId)->removeArrow(fromCoord, toCoord);
-    m_boardPtrs.at(m_activeBoardId)->addArrow(fromCoord, toCoord, LogicArrow{colorId});
+    m_boards.at(m_activeBoardId).removeArrow(fromCoord, toCoord);
+    m_boards.at(m_activeBoardId).addArrow(fromCoord, toCoord, LogicArrow{colorId});
 }

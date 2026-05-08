@@ -116,7 +116,7 @@ namespace sigrid{
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
-            std::vector<std::unique_ptr<sigrid::Board>> m_boardPtrs;
+            std::vector<sigrid::Board> m_boards;
             int m_activeBoardId;
 
             sf::Color m_backgroundColor;

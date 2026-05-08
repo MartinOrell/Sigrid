@@ -18,6 +18,7 @@ namespace sigrid{
         public:            
 
             Board();
+            Board(const Board& src);
 
             void setPieceManagerPtr(PieceManager* const managerPtr);
             void setTileColorManagerPtr(ColorManager* const managerPtr);

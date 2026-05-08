@@ -1198,6 +1198,10 @@ void GraphicBoard::resizeTexture(){
 }
 
 void GraphicBoard::redrawTexture(){
+    if(!m_texturePtr){
+        return;
+    }
+
     m_texturePtr->clear(m_backgroundColor);
 
     if(m_tileLayerPtr){
