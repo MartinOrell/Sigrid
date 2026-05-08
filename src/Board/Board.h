@@ -147,9 +147,9 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            std::unique_ptr<LogicBoard> m_logicBoard;
+            LogicBoard m_logicBoard;
 
-            std::unique_ptr<GraphicBoard> m_graphicBoard;
+            GraphicBoard m_graphicBoard;
 
             std::unique_ptr<Coord> m_selection;
 

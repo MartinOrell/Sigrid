@@ -4,89 +4,62 @@
 #include <fstream>
 #include <cctype> //isdigit
 
-#include "../Entity/Shape/Circle/LogicCircle.h"
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 
 #include "BoardDataContainer.h"
+#include "../Entity/Tile/GraphicTiles.h"
+#include "../Entity/GraphicEntities.h"
+#include "../Entity/Shape/Arrow/GraphicArrows.h"
+#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "../Board/BoardLabels.h"
+#include "../Entity/TurnToken/TurnToken.h"
 
 using namespace sigrid;
 
 Board::Board(){}
 
 void Board::setPieceManagerPtr(PieceManager* const managerPtr){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setPieceManagerPtr(managerPtr);
+    m_graphicBoard.setPieceManagerPtr(managerPtr);
 }
 
 void Board::setTileColorManagerPtr(ColorManager* const managerPtr){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setTileColorManagerPtr(managerPtr);
+    m_graphicBoard.setTileColorManagerPtr(managerPtr);
 }
 
 void Board::setArrowColorManagerPtr(ColorManager* const managerPtr){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setArrowColorManagerPtr(managerPtr);
+    m_graphicBoard.setArrowColorManagerPtr(managerPtr);
 }
 
 void Board::setFontManagerPtr(FontManager* const managerPtr){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setFontManagerPtr(managerPtr);
+    m_graphicBoard.setFontManagerPtr(managerPtr);
 }
 
 void Board::setIconManagerPtr(IconManager* const managerPtr){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setIconManagerPtr(managerPtr);
+    m_graphicBoard.setIconManagerPtr(managerPtr);
 }
 
 void Board::setLeftToRight(){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setLeftToRight();
+    m_graphicBoard.setLeftToRight();
 }
 
 void Board::setRightToLeft(){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setRightToLeft();
+    m_graphicBoard.setRightToLeft();
 }
 
 void Board::setTopToBottom(){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setTopToBottom();
+    m_graphicBoard.setTopToBottom();
 }
 
 void Board::setBottomToTop(){
-    if(!m_graphicBoard){
-        m_graphicBoard = std::make_unique<GraphicBoard>();
-    }
-    m_graphicBoard->setBottomToTop();
+    m_graphicBoard.setBottomToTop();
 }
 
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
     m_filename = boardData.filename;
 
-    m_logicBoard = std::make_unique<sigrid::LogicBoard>();
-
-    if(m_logicBoard->init(boardData)){
-        if(!m_graphicBoard){
-            m_graphicBoard = std::make_unique<GraphicBoard>();
-        }
-        m_graphicBoard->init(*m_logicBoard, graphicData);
+    if(m_logicBoard.init(boardData)){
+        m_graphicBoard.init(m_logicBoard, graphicData);
     }
     else{
         std::cerr << "Board: Failed to init logicBoard" << std::endl;
@@ -96,19 +69,8 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
 Board& Board::operator=(const Board& rhs){
     m_filename = rhs.m_filename;
     m_imageFilename = rhs.m_imageFilename;
-    if(rhs.m_logicBoard){
-        if(!m_logicBoard){
-            m_logicBoard = std::make_unique<LogicBoard>();
-        }
-        *m_logicBoard = *(rhs.m_logicBoard);
-    }
-    
-    if(rhs.m_graphicBoard){
-        if(!m_graphicBoard){
-            m_graphicBoard = std::make_unique<GraphicBoard>();
-        }
-        *m_graphicBoard = *(rhs.m_graphicBoard);
-    }
+    m_logicBoard = rhs.m_logicBoard;
+    m_graphicBoard = rhs.m_graphicBoard;
     
     if(rhs.m_selection){
         if(!m_selection){
@@ -121,15 +83,15 @@ Board& Board::operator=(const Board& rhs){
 }
 
 void Board::setPosition(const sf::Vector2f& position){
-    m_graphicBoard->setPosition(position);
+    m_graphicBoard.setPosition(position);
 }
 
 void Board::setPositionX(const float x){
-    m_graphicBoard->setPositionX(x);
+    m_graphicBoard.setPositionX(x);
 }
 
 void Board::setScale(const float scale){
-    m_graphicBoard->setScale(scale);
+    m_graphicBoard.setScale(scale);
 }
 
 void Board::setFilename(const std::string& filename){
@@ -141,23 +103,23 @@ void Board::setImageFilename(const std::string& filename){
 }
 
 unsigned int Board::getNumColumns() const{
-    return m_logicBoard->getNumColumns();
+    return m_logicBoard.getNumColumns();
 }
 
 unsigned int Board::getImageWidth() const{
-    return m_graphicBoard->getImageWidth();
+    return m_graphicBoard.getImageWidth();
 }
 
 unsigned int Board::getImageHeight() const{
-    return m_graphicBoard->getImageHeight();
+    return m_graphicBoard.getImageHeight();
 }
 
 float Board::getDisplayWidth() const{
-    return m_graphicBoard->getDisplayWidth();
+    return m_graphicBoard.getDisplayWidth();
 }
 
 float Board::getDisplayHeight() const{
-    return m_graphicBoard->getDisplayHeight();
+    return m_graphicBoard.getDisplayHeight();
 }
 
 std::string Board::getName() const{
@@ -187,19 +149,19 @@ std::string Board::getImageFilename() const{
 }
 
 bool Board::contains(const sf::Vector2f& point) const{
-    return m_graphicBoard->contains(point);
+    return m_graphicBoard.contains(point);
 }
 
 bool Board::isEmptyTile(const Coord& coord) const{
-    return m_logicBoard->isEmptyTile(coord);
+    return m_logicBoard.isEmptyTile(coord);
 }
 
 bool Board::isCoordinatesOutside() const{
-    return m_graphicBoard->isCoordinatesOutside();
+    return m_graphicBoard.isCoordinatesOutside();
 }
 
 bool Board::isWithinTurnToken(const sf::Vector2f& point) const{
-    return m_graphicBoard->isWithinTurnToken(point);
+    return m_graphicBoard.isWithinTurnToken(point);
 }
 
 bool Board::isImageFilenameSet() const{
@@ -207,11 +169,11 @@ bool Board::isImageFilenameSet() const{
 }
 
 std::optional<Coord> Board::getTileCoord(const sf::Vector2f& point){
-    return m_graphicBoard->getTileCoord(point);
+    return m_graphicBoard.getTileCoord(point);
 }
 
 std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
-    auto entity_o = m_logicBoard->getEntityAt(coord);
+    auto entity_o = m_logicBoard.getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
     }
@@ -220,7 +182,7 @@ std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
 
 
 std::optional<LogicTile> Board::getTile(const Coord& coord){
-    auto tile_o = m_logicBoard->getTile(coord);
+    auto tile_o = m_logicBoard.getTile(coord);
     if(tile_o == std::nullopt){
         return std::nullopt;
     }
@@ -228,7 +190,7 @@ std::optional<LogicTile> Board::getTile(const Coord& coord){
 }
 
 std::optional<LogicArrow> Board::getLogicArrow(const CoordPair& coordPair){
-    auto arrow_o = m_logicBoard->getArrowAt(coordPair);
+    auto arrow_o = m_logicBoard.getArrowAt(coordPair);
     if(arrow_o == std::nullopt){
         return std::nullopt;
     }
@@ -236,13 +198,13 @@ std::optional<LogicArrow> Board::getLogicArrow(const CoordPair& coordPair){
 }
 
 std::string Board::getFen() const{
-    return m_logicBoard->getFen();
+    return m_logicBoard.getFen();
 }
 
 void Board::select(const Coord& newCoord){
     if(!m_selection){
         m_selection = std::make_unique<Coord>(newCoord);
-        m_graphicBoard->highlightTile(newCoord);
+        m_graphicBoard.highlightTile(newCoord);
         return;
     }
 
@@ -250,38 +212,38 @@ void Board::select(const Coord& newCoord){
     
     if(oldCoord == newCoord){
         m_selection = nullptr;
-        m_graphicBoard->unhighlight();
+        m_graphicBoard.unhighlight();
         return;
     }
 
-    if(m_logicBoard->isEmptyTile(oldCoord)){
+    if(m_logicBoard.isEmptyTile(oldCoord)){
         m_selection = std::make_unique<Coord>(newCoord);
-        m_graphicBoard->highlightTile(newCoord);
+        m_graphicBoard.highlightTile(newCoord);
         return;
     }
 
-    if(m_logicBoard->moveEntity(oldCoord, newCoord)){
-        m_graphicBoard->moveEntity(oldCoord, newCoord);
+    if(m_logicBoard.moveEntity(oldCoord, newCoord)){
+        m_graphicBoard.moveEntity(oldCoord, newCoord);
     }
 
     m_selection = nullptr;
-    m_graphicBoard->unhighlight();
+    m_graphicBoard.unhighlight();
 }
 
 void Board::deselect(){
     m_selection = nullptr;
-    m_graphicBoard->unhighlight();
+    m_graphicBoard.unhighlight();
 }
 
 void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
 
-    if(!m_logicBoard->isWithinBoard(coord)){
+    if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
+    auto occupyingEntity_o = m_logicBoard.getEntityAt(coord);
 
     if(occupyingEntity_o != std::nullopt){
         std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
@@ -289,20 +251,20 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
         return;
     }
 
-    if(m_logicBoard->addEntity(coord, newEntity)){
-        m_graphicBoard->addEntity(coord, newEntity);
+    if(m_logicBoard.addEntity(coord, newEntity)){
+        m_graphicBoard.addEntity(coord, newEntity);
     }
 }
 
 void Board::removeEntity(const Coord& coord){
 
-    if(!m_logicBoard->isWithinBoard(coord)){
+    if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard->getEntityAt(coord);
+    auto occupyingEntity_o = m_logicBoard.getEntityAt(coord);
 
     if(occupyingEntity_o == std::nullopt){
         std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
@@ -310,8 +272,8 @@ void Board::removeEntity(const Coord& coord){
         return;
     }
 
-    if(m_logicBoard->removeEntity(coord)){
-        m_graphicBoard->removeEntity(coord);
+    if(m_logicBoard.removeEntity(coord)){
+        m_graphicBoard.removeEntity(coord);
     }
 }
 
@@ -321,19 +283,19 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
     }
     addEntity(*m_selection, newEntity);
     m_selection = nullptr;
-    m_graphicBoard->unhighlight();
+    m_graphicBoard.unhighlight();
 }
 
 void Board::addTileHighlight(const Coord& coord, const int& colorId){
 
-    if(!m_logicBoard->isWithinBoard(coord)){
+    if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto tile_o = m_logicBoard->getTile(coord);
+    auto tile_o = m_logicBoard.getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "Board: Failed to add highlight at "
@@ -351,21 +313,21 @@ void Board::addTileHighlight(const Coord& coord, const int& colorId){
         return;
     }
 
-    if(m_logicBoard->addTileHighlight(coord, colorId)){
-        m_graphicBoard->addTileHighlight(coord, colorId);
+    if(m_logicBoard.addTileHighlight(coord, colorId)){
+        m_graphicBoard.addTileHighlight(coord, colorId);
     }
 }
 
 void Board::removeTileHighlight(const Coord& coord){
 
-    if(!m_logicBoard->isWithinBoard(coord)){
+    if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto tile_o = m_logicBoard->getTile(coord);
+    auto tile_o = m_logicBoard.getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "Board: Failed to remove highlight at "
@@ -383,27 +345,27 @@ void Board::removeTileHighlight(const Coord& coord){
         return;
     }
 
-    if(m_logicBoard->removeTileHighlight(coord)){
-        m_graphicBoard->removeTileHighlight(coord);
+    if(m_logicBoard.removeTileHighlight(coord)){
+        m_graphicBoard.removeTileHighlight(coord);
     }
 }
 
 void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     assert(fromCoord != toCoord);
 
-    if(m_logicBoard->isEmptyTile(fromCoord)){
+    if(m_logicBoard.isEmptyTile(fromCoord)){
         return;
     }
 
-    if(m_logicBoard->moveEntity(fromCoord, toCoord)){
-        m_graphicBoard->moveEntity(fromCoord, toCoord);
+    if(m_logicBoard.moveEntity(fromCoord, toCoord)){
+        m_graphicBoard.moveEntity(fromCoord, toCoord);
     }
     
 }
 
 void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow){
 
-    if(!m_logicBoard->isWithinBoard(fromCoord)){
+    if(!m_logicBoard.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -411,7 +373,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
         return;
     }
 
-    if(!m_logicBoard->isWithinBoard(toCoord)){
+    if(!m_logicBoard.isWithinBoard(toCoord)){
         std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -419,7 +381,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
         return;
     }
 
-    auto occupyingArrow_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
+    auto occupyingArrow_o = m_logicBoard.getArrowAt({fromCoord, toCoord});
 
     if(occupyingArrow_o != std::nullopt){
         std::cerr << "Board: Unable to remove arrow "
@@ -429,14 +391,14 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
         return;
     }
 
-    if(m_logicBoard->addArrow({fromCoord, toCoord}, newArrow)){
-        m_graphicBoard->addArrow({fromCoord, toCoord}, newArrow);
+    if(m_logicBoard.addArrow({fromCoord, toCoord}, newArrow)){
+        m_graphicBoard.addArrow({fromCoord, toCoord}, newArrow);
     }
 }
 
 void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
 
-    if(!m_logicBoard->isWithinBoard(fromCoord)){
+    if(!m_logicBoard.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -444,7 +406,7 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    if(!m_logicBoard->isWithinBoard(toCoord)){
+    if(!m_logicBoard.isWithinBoard(toCoord)){
         std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -452,7 +414,7 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard->getArrowAt({fromCoord, toCoord});
+    auto occupyingEntity_o = m_logicBoard.getArrowAt({fromCoord, toCoord});
 
     if(occupyingEntity_o == std::nullopt){
         std::cerr << "Board: Unable to remove arrow "
@@ -462,17 +424,17 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    if(m_logicBoard->removeArrow({fromCoord, toCoord})){
-        m_graphicBoard->removeArrow({fromCoord, toCoord});
+    if(m_logicBoard.removeArrow({fromCoord, toCoord})){
+        m_graphicBoard.removeArrow({fromCoord, toCoord});
     }
 }
 
 void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
-    m_graphicBoard->updateDragArrow(fromCoord, toCoord, colorId);
+    m_graphicBoard.updateDragArrow(fromCoord, toCoord, colorId);
 }
 
 void Board::removeDragArrow(){
-    m_graphicBoard->removeDragArrow();
+    m_graphicBoard.removeDragArrow();
 }
 
 void Board::loadFen(const std::string& fen){
@@ -481,7 +443,7 @@ void Board::loadFen(const std::string& fen){
 
     clearEntities();
     int x = 0;
-    int y = m_logicBoard->getNumRows()-1;
+    int y = m_logicBoard.getNumRows()-1;
     int i;
     for(i = 0; i < fen.size(); i++){
         std::string s = fen.substr(i, 1);
@@ -513,12 +475,12 @@ void Board::loadFen(const std::string& fen){
     if(fen.length() >= i+1){
         char activeColorChar = fen.at(i+1);
         if(activeColorChar == 'b'){
-            m_logicBoard->setTurnToMove(1);
-            m_graphicBoard->setTurnToMove(1);
+            m_logicBoard.setTurnToMove(1);
+            m_graphicBoard.setTurnToMove(1);
         }
         else{
-            m_logicBoard->setTurnToMove(0);
-            m_graphicBoard->setTurnToMove(0);
+            m_logicBoard.setTurnToMove(0);
+            m_graphicBoard.setTurnToMove(0);
         }
     }
 }
@@ -568,7 +530,7 @@ void Board::save(){
         return;
     }
 
-    out << *m_logicBoard;    
+    out << m_logicBoard;    
 
     std::cout << "Saved " << m_filename << std::endl;
 
@@ -584,57 +546,57 @@ void Board::save(){
         return;
     }
 
-    m_graphicBoard->saveImage(m_imageFilename);
+    m_graphicBoard.saveImage(m_imageFilename);
 }
 
 void Board::clearEntities(){
-    m_logicBoard->clearEntities();
-    m_graphicBoard->clearEntities();
+    m_logicBoard.clearEntities();
+    m_graphicBoard.clearEntities();
 }
 
 void Board::clearArrows(){
-    m_logicBoard->clearArrows();
-    m_graphicBoard->clearArrows();
+    m_logicBoard.clearArrows();
+    m_graphicBoard.clearArrows();
 }
 
 void Board::print(){
-    m_logicBoard->print();
+    m_logicBoard.print();
 }
 
 void Board::flipBoard(){
-    m_graphicBoard->flip();
+    m_graphicBoard.flip();
 }
 
 void Board::addCoordinates(){
-    m_graphicBoard->addCoordinates();
+    m_graphicBoard.addCoordinates();
 }
 
 void Board::removeCoordinates(){
-    m_graphicBoard->removeCoordinates();
+    m_graphicBoard.removeCoordinates();
 }
 
 void Board::moveCoordinatesOutside(){
-    m_graphicBoard->moveCoordinatesOutside();
+    m_graphicBoard.moveCoordinatesOutside();
 }
 
 void Board::moveCoordinatesInside(){
-    m_graphicBoard->moveCoordinatesInside();
+    m_graphicBoard.moveCoordinatesInside();
 }
 
 void Board::setCoordinateSize(const float& size){
-    m_graphicBoard->setCoordinateSize(size);
+    m_graphicBoard.setCoordinateSize(size);
 }
 
 void Board::addSquareColumnRight(){
 
-    if(m_graphicBoard->isLeftToRight()){
-        if(m_logicBoard->addSquareColumnRight()){
-            m_graphicBoard->addSquareColumnRight(m_logicBoard->getRepeatColorIds());
+    if(m_graphicBoard.isLeftToRight()){
+        if(m_logicBoard.addSquareColumnRight()){
+            m_graphicBoard.addSquareColumnRight(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard->addSquareColumnLeft()){
-            m_graphicBoard->addSquareColumnLeft(m_logicBoard->getRepeatColorIds());
+        if(m_logicBoard.addSquareColumnLeft()){
+            m_graphicBoard.addSquareColumnLeft(m_logicBoard.getRepeatColorIds());
         }
     }
     
@@ -643,14 +605,14 @@ void Board::addSquareColumnRight(){
 
 void Board::addSquareColumnLeft(){
 
-    if(m_graphicBoard->isLeftToRight()){
-        if(m_logicBoard->addSquareColumnLeft()){
-            m_graphicBoard->addSquareColumnLeft(m_logicBoard->getRepeatColorIds());
+    if(m_graphicBoard.isLeftToRight()){
+        if(m_logicBoard.addSquareColumnLeft()){
+            m_graphicBoard.addSquareColumnLeft(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard->addSquareColumnRight()){
-            m_graphicBoard->addSquareColumnRight(m_logicBoard->getRepeatColorIds());
+        if(m_logicBoard.addSquareColumnRight()){
+            m_graphicBoard.addSquareColumnRight(m_logicBoard.getRepeatColorIds());
         }
     }
     
@@ -659,14 +621,14 @@ void Board::addSquareColumnLeft(){
 
 void Board::removeSquareColumnRight(){
 
-    if(m_graphicBoard->isLeftToRight()){
-        if(m_logicBoard->removeSquareColumnRight()){
-            m_graphicBoard->removeSquareColumnRight();
+    if(m_graphicBoard.isLeftToRight()){
+        if(m_logicBoard.removeSquareColumnRight()){
+            m_graphicBoard.removeSquareColumnRight();
         }
     }
     else{
-        if(m_logicBoard->removeSquareColumnLeft()){
-            m_graphicBoard->removeSquareColumnLeft();
+        if(m_logicBoard.removeSquareColumnLeft()){
+            m_graphicBoard.removeSquareColumnLeft();
         }
     }
 
@@ -675,14 +637,14 @@ void Board::removeSquareColumnRight(){
 
 void Board::removeSquareColumnLeft(){
 
-    if(m_graphicBoard->isLeftToRight()){
-        if(m_logicBoard->removeSquareColumnLeft()){
-            m_graphicBoard->removeSquareColumnLeft();
+    if(m_graphicBoard.isLeftToRight()){
+        if(m_logicBoard.removeSquareColumnLeft()){
+            m_graphicBoard.removeSquareColumnLeft();
         }
     }
     else{
-        if(m_logicBoard->removeSquareColumnRight()){
-            m_graphicBoard->removeSquareColumnRight();
+        if(m_logicBoard.removeSquareColumnRight()){
+            m_graphicBoard.removeSquareColumnRight();
         }
     }
     
@@ -691,14 +653,14 @@ void Board::removeSquareColumnLeft(){
 
 void Board::addSquareRowUp(){
 
-    if(m_graphicBoard->isTopToBottom()){
-        if(m_logicBoard->addSquareRowUp()){
-            m_graphicBoard->addSquareRowUp(m_logicBoard->getRepeatColorIds());
+    if(m_graphicBoard.isTopToBottom()){
+        if(m_logicBoard.addSquareRowUp()){
+            m_graphicBoard.addSquareRowUp(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard->addSquareRowDown()){
-            m_graphicBoard->addSquareRowDown(m_logicBoard->getRepeatColorIds());
+        if(m_logicBoard.addSquareRowDown()){
+            m_graphicBoard.addSquareRowDown(m_logicBoard.getRepeatColorIds());
         }
     }
     
@@ -707,14 +669,14 @@ void Board::addSquareRowUp(){
 
 void Board::addSquareRowDown(){
 
-    if(m_graphicBoard->isTopToBottom()){
-        if(m_logicBoard->addSquareRowDown()){
-            m_graphicBoard->addSquareRowDown(m_logicBoard->getRepeatColorIds());
+    if(m_graphicBoard.isTopToBottom()){
+        if(m_logicBoard.addSquareRowDown()){
+            m_graphicBoard.addSquareRowDown(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard->addSquareRowUp()){
-            m_graphicBoard->addSquareRowUp(m_logicBoard->getRepeatColorIds());
+        if(m_logicBoard.addSquareRowUp()){
+            m_graphicBoard.addSquareRowUp(m_logicBoard.getRepeatColorIds());
         }
     }
     
@@ -723,14 +685,14 @@ void Board::addSquareRowDown(){
 
 void Board::removeSquareRowUp(){
 
-    if(m_graphicBoard->isTopToBottom()){
-        if(m_logicBoard->removeSquareRowUp()){
-            m_graphicBoard->removeSquareRowUp();
+    if(m_graphicBoard.isTopToBottom()){
+        if(m_logicBoard.removeSquareRowUp()){
+            m_graphicBoard.removeSquareRowUp();
         }
     }
     else{
-        if(m_logicBoard->removeSquareRowDown()){
-            m_graphicBoard->removeSquareRowDown();
+        if(m_logicBoard.removeSquareRowDown()){
+            m_graphicBoard.removeSquareRowDown();
         }
     }
 
@@ -739,14 +701,14 @@ void Board::removeSquareRowUp(){
 
 void Board::removeSquareRowDown(){
 
-    if(m_graphicBoard->isTopToBottom()){
-        if(m_logicBoard->removeSquareRowDown()){
-            m_graphicBoard->removeSquareRowDown();
+    if(m_graphicBoard.isTopToBottom()){
+        if(m_logicBoard.removeSquareRowDown()){
+            m_graphicBoard.removeSquareRowDown();
         }
     }
     else{
-        if(m_logicBoard->removeSquareRowUp()){
-            m_graphicBoard->removeSquareRowUp();
+        if(m_logicBoard.removeSquareRowUp()){
+            m_graphicBoard.removeSquareRowUp();
         }
     }
     
@@ -754,33 +716,33 @@ void Board::removeSquareRowDown(){
 }
 
 void Board::addBorder(){
-    m_graphicBoard->addBorder();
+    m_graphicBoard.addBorder();
 }
 
 void Board::removeBorder(){
-    m_graphicBoard->removeBorder();
+    m_graphicBoard.removeBorder();
 }
 
 void Board::addTurnToken(){
-    m_graphicBoard->addTurnToken(m_logicBoard->getTurnToMove());
+    m_graphicBoard.addTurnToken(m_logicBoard.getTurnToMove());
 }
 
 void Board::removeTurnToken(){
-    m_graphicBoard->removeTurnToken();
+    m_graphicBoard.removeTurnToken();
 }
 
 void Board::toggleTurnToken(){
-    int turnToMove = m_logicBoard->getTurnToMove();
+    int turnToMove = m_logicBoard.getTurnToMove();
     if(turnToMove == 0){
-        m_logicBoard->setTurnToMove(1);
-        m_graphicBoard->setTurnToMove(1);
+        m_logicBoard.setTurnToMove(1);
+        m_graphicBoard.setTurnToMove(1);
     }
     else if(turnToMove == 1){
-        m_logicBoard->setTurnToMove(0);
-        m_graphicBoard->setTurnToMove(0);
+        m_logicBoard.setTurnToMove(0);
+        m_graphicBoard.setTurnToMove(0);
     }
 }
 
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    target.draw(*m_graphicBoard);
+    target.draw(m_graphicBoard);
 }
