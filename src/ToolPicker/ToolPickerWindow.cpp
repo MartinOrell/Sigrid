@@ -1,13 +1,18 @@
 #include "ToolPickerWindow.h"
 
-#include "ToolPickerContainer.h"
-#include "../Entity/Piece/PieceManager.h"
-#include "../Board/BoardDataContainer.h"
-#include "../Board/BoardDesignContainer.h"
+#include <iostream>
 
 #include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <iostream>
+
+#include "ToolPickerContainer.h"
+#include "../Board/BoardDataContainer.h"
+#include "../Board/BoardDesignContainer.h"
+#include "../Entity/Tile/GraphicTiles.h"
+#include "../Entity/GraphicEntities.h"
+#include "../Entity/Shape/Arrow/GraphicArrows.h"
+#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "../Board/BoardLabels.h"
+#include "../Entity/TurnToken/TurnToken.h"
 
 using namespace sigrid;
 
@@ -19,38 +24,22 @@ ToolPickerWindow::ToolPickerWindow()
 , m_circleColorId{-1}{}
 
 void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
-    if(!m_boardPtr){
-        m_boardPtr = std::make_unique<Board>();
-    }
-    m_boardPtr->setTileColorManagerPtr(managerPtr);
+    m_board.setTileColorManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
-    if(!m_boardPtr){
-        m_boardPtr = std::make_unique<Board>();
-    }
-    m_boardPtr->setPieceManagerPtr(managerPtr);
+    m_board.setPieceManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
-    if(!m_boardPtr){
-        m_boardPtr = std::make_unique<Board>();
-    }
-    m_boardPtr->setArrowColorManagerPtr(managerPtr);
+    m_board.setArrowColorManagerPtr(managerPtr);
 }
 
 void ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
-    if(!m_boardPtr){
-        m_boardPtr = std::make_unique<Board>();
-    }
-    m_boardPtr->setIconManagerPtr(managerPtr); 
+    m_board.setIconManagerPtr(managerPtr); 
 }
 
 void ToolPickerWindow::init(const ToolPickerContainer& data){
-
-    if(!m_boardPtr){
-        m_boardPtr = std::make_unique<Board>();
-    }
 
     m_columns = data.columns;
     m_rows = data.rows;
@@ -64,8 +53,8 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     m_defaultArrowColorId = data.defaultArrowColorId;
     m_defaultCircleColorId = data.defaultCircleColorId;
 
-    m_boardPtr->setLeftToRight();
-    m_boardPtr->setTopToBottom();
+    m_board.setLeftToRight();
+    m_board.setTopToBottom();
 
     BoardDataContainer boardData;
     boardData.columns = data.columns;
@@ -93,9 +82,9 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     boardDesign.border = false;
     boardDesign.turnToken = false;
 
-    m_boardPtr->init(boardData, boardDesign);
+    m_board.init(boardData, boardDesign);
 
-    m_boardPtr->setPosition({0.f,0.f});
+    m_board.setPosition({0.f,0.f});
 
     m_displayedPieceColorIds.push_back(0);
     m_displayedPieceColorIds.push_back(1);
@@ -122,9 +111,9 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
 void ToolPickerWindow::createGraphic(const sf::Vector2u& size){
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    int imageWidth = m_boardPtr->getImageWidth();
+    int imageWidth = m_board.getImageWidth();
     float scale = (float)size.x/(float)imageWidth;
-    m_boardPtr->setScale(scale);
+    m_board.setScale(scale);
 
     redrawTexture();
 }
@@ -206,7 +195,7 @@ Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& p
 
     sf::Vector2f point = position - m_position;
 
-    auto coord_o = m_boardPtr->getTileCoord(point);
+    auto coord_o = m_board.getTileCoord(point);
 
     if(coord_o == std::nullopt){
         return ActionType::None();
@@ -293,12 +282,12 @@ void ToolPickerWindow::hideColorTools(){
     m_columns -= m_colorBlock.columns;
 
     for(int i = 0; i < m_colorBlock.columns; i++){
-        m_boardPtr->removeSquareColumnLeft();
+        m_board.removeSquareColumnLeft();
     }
 
-    int imageWidth = m_boardPtr->getImageWidth();
+    int imageWidth = m_board.getImageWidth();
     float scale = (float)m_texture->getSize().x/(float)imageWidth;
-    m_boardPtr->setScale(scale);
+    m_board.setScale(scale);
 
     for(auto& pieceBlock : m_pieceBlocks){
         pieceBlock.coord.x -= m_colorBlock.columns;
@@ -321,12 +310,12 @@ void ToolPickerWindow::showColorTools(){
 
     m_columns += m_colorBlock.columns;
     for(int i = 0; i < m_colorBlock.columns; i++){
-        m_boardPtr->addSquareColumnLeft();
+        m_board.addSquareColumnLeft();
     }
 
-    int imageWidth = m_boardPtr->getImageWidth();
+    int imageWidth = m_board.getImageWidth();
     float scale = (float)m_texture->getSize().x/(float)imageWidth;
-    m_boardPtr->setScale(scale);
+    m_board.setScale(scale);
 
     for(auto& pieceBlock : m_pieceBlocks){
         pieceBlock.coord.x += m_colorBlock.columns;
@@ -362,7 +351,7 @@ void ToolPickerWindow::show(){
 
 void ToolPickerWindow::redrawTexture(){
 
-    m_boardPtr->clearEntities();
+    m_board.clearEntities();
 
     //Tools
     int x = m_miscBlock.coord.x;
@@ -370,7 +359,7 @@ void ToolPickerWindow::redrawTexture(){
     int i;
     for(i = 0; i < m_miscTools.size(); i++){
 
-        m_boardPtr->addEntity({x,y}, m_miscTools.at(i).icon);
+        m_board.addEntity({x,y}, m_miscTools.at(i).icon);
 
         m_clickActions.insert_or_assign({x,y}, m_miscTools.at(i).action);
         if((i+1)%m_miscBlock.columns == 0){
@@ -386,7 +375,7 @@ void ToolPickerWindow::redrawTexture(){
     if(m_arrowColorId >= 0){
 
         sigrid::LogicArrow logicArrow{m_arrowColorId};
-        m_boardPtr->addEntity({x,y}, logicArrow);
+        m_board.addEntity({x,y}, logicArrow);
 
         ActionType::PickArrow action{m_arrowColorId};
         m_clickActions.insert_or_assign({x,y}, action);
@@ -403,7 +392,7 @@ void ToolPickerWindow::redrawTexture(){
     //Circle tool
     if(m_circleColorId >= 0){
         sigrid::LogicCircle logicCircle{m_circleColorId};
-        m_boardPtr->addEntity({x,y}, logicCircle);
+        m_board.addEntity({x,y}, logicCircle);
         ActionType::PickCircle action{m_circleColorId};
         m_clickActions.insert_or_assign({x,y}, action);
         if((i+1)%m_miscBlock.columns == 0){
@@ -427,7 +416,7 @@ void ToolPickerWindow::redrawTexture(){
 
                     LogicPiece logicPiece{m_pieceNotation, colorId};
 
-                    m_boardPtr->addEntity({x,y}, logicPiece);
+                    m_board.addEntity({x,y}, logicPiece);
 
                     ActionType::PickPieceColor action{logicPiece};
 
@@ -446,7 +435,7 @@ void ToolPickerWindow::redrawTexture(){
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
                     sigrid::LogicArrow logicArrow{colorId};
-                    m_boardPtr->addEntity({x,y}, logicArrow);
+                    m_board.addEntity({x,y}, logicArrow);
 
                     ActionType::PickArrowColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
@@ -464,7 +453,7 @@ void ToolPickerWindow::redrawTexture(){
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
                     sigrid::LogicCircle logicCircle{colorId};
-                    m_boardPtr->addEntity({x,y}, logicCircle);
+                    m_board.addEntity({x,y}, logicCircle);
                     ActionType::PickCircleColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -490,7 +479,7 @@ void ToolPickerWindow::redrawTexture(){
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
             LogicPiece logicPiece{m_pieceNotations.at(notationId), m_displayedPieceColorIds.at(i)};
 
-            m_boardPtr->addEntity({x,y}, logicPiece);
+            m_board.addEntity({x,y}, logicPiece);
 
             ActionType::PickEntity action{logicPiece};
 
@@ -525,9 +514,7 @@ void ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) c
 
     sf::RenderTexture texture(textureSize);
     texture.clear(m_backgroundColor);
-    if(m_boardPtr != nullptr){
-        texture.draw(*m_boardPtr);
-    }
+    texture.draw(m_board);
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
     target.draw(sprite);

@@ -106,7 +106,7 @@ namespace sigrid{
 
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
-            std::unique_ptr<Board> m_boardPtr;
+            Board m_board;
 
             std::map<Coord, Action> m_clickActions;
 
