@@ -77,8 +77,6 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     boardDesign.arrowThickness = 40;
     boardDesign.arrowHeadSize = 80;
     boardDesign.circleDiameter = 100;
-    boardDesign.labelsInside = false;
-    boardDesign.labelsOutside = false;
     boardDesign.border = false;
     boardDesign.turnToken = false;
 

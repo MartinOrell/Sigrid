@@ -183,12 +183,12 @@ Menu: [
       Clear clear
       "Flip Board" flipBoard
       Coordinates [
-        "Add Coordinates" addCoordinates
         "Remove Coordinates" removeCoordinates
+        "Add Coordinates" addCoordinates
       ]
       MoveCoordinates [
-        "Move Coordinates outside" moveCoordinatesOutside
         "Move Coordinates inside" moveCoordinatesInside
+        "Move Coordinates outside" moveCoordinatesOutside
       ]
       SetCoordinateSize [
         "Set Big Coordinates" setCoordinateSize(60%)
@@ -311,15 +311,31 @@ BoardStyle: [
     diameter: 100
     defaultColorId: 7
   ]
-  InsideCoordLabels: [
-    visibility: Hidden
-    size: 40%
-    font: res/fonts/arial.ttf
-  ]
-  OutsideCoordLabels: [
-    visibility: Visible
-    size: 40%
-    font: res/fonts/arial.ttf
+  CoordLabels: [
+    [
+      position: "outside left"
+      visibility: Visible
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
+    [
+      position: "outside bottom"
+      visibility: Visible
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
+    [
+      position: "inside left"
+      visibility: Hidden
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
+    [
+      position: "inside bottom"
+      visibility: Hidden
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
   ]
   Border: [
     visibility: Visible

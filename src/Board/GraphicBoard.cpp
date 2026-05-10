@@ -113,15 +113,22 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     if(m_labelsPtr){
-        if(config.labelsInside){
-            m_labelsPtr->setInside();
+        for(auto& label: config.labels){
+            if(label.isInside){
+                if(label.isVisible){
+                    m_labelsPtr->setInside();
+                }
+                m_labelsPtr->setInsideLabelSizeFactor(label.size);
+                m_labelsPtr->setFont(label.font);
+            }
+            else{ // outside
+                if(label.isVisible){
+                    m_labelsPtr->setOutside();
+                }
+                m_labelsPtr->setOutsideLabelSizeFactor(label.size);
+                m_labelsPtr->setFont(label.font);
+            }
         }
-        if(config.labelsOutside){
-            m_labelsPtr->setOutside();
-        }
-        m_labelsPtr->setInsideLabelSizeFactor(config.insideLabelSize);
-        m_labelsPtr->setOutsideLabelSizeFactor(config.outsideLabelSize);
-        m_labelsPtr->setFont(config.labelFont);
     }
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){

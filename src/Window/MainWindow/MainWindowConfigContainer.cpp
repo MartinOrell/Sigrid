@@ -412,53 +412,56 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                     }
                 }
             }
-            else if(s == "InsideCoordLabels:"){
+            else if(s == "CoordLabels:"){
                 std::string s2 = readString(is);
-                if(s2 == "["){
+                if( s2 == "["){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            boardData.labelsInside = visibilityString == "Visible";
-                        }
-                        else if(s2 == "size:"){
-                            float size;
-                            is >> size;
-                            is.ignore(1);// ignore % sign
-                            size = size/100.f;
-                            boardData.insideLabelSize = size;
-                        }
-                        else if(s2 == "font:"){
-                            boardData.labelFont = readString(is);
-                        }
-                        else{
-                            std::cerr << "Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in InsideCoordLabel object" << std::endl;
-                        }
-                    }
-                }
-            }
-            else if(s == "OutsideCoordLabels:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            boardData.labelsOutside = visibilityString == "Visible";
-                        }
-                        else if(s2 == "size:"){
-                            float size;
-                            is >> size;
-                            is.ignore(1);// ignore % sign
-                            size = size/100.f;
-                            boardData.outsideLabelSize = size;
-                        }
-                        else if(s2 == "font:"){
-                            //Currently use same font for both inside and outside coordinates
-                            boardData.labelFont = readString(is);
-                        }
-                        else{
-                            std::cerr << "Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in OutsideCoordLabel object" << std::endl;
+                        if(s2 == "["){
+                            BoardLabelContainer label;
+                            for(std::string s3 = readString(is);s3 != "]"; s3 = readString(is)){
+                                if(s3 == "position:"){
+                                    std::string positionString = readString(is);
+                                    label.isInside = positionString.substr(0,6) == "inside";
+                                    auto spacePos = positionString.find(' ');
+                                    if(spacePos != std::string::npos){
+                                        std::string positionString2 = positionString.substr(spacePos+1);
+                                        if(positionString2 == "left"){
+                                            label.position = 0;
+                                        }
+                                        else if(positionString2 == "right"){
+                                            label.position = 1;
+                                        }
+                                        else if(positionString2 == "top"){
+                                            label.position = 2;
+                                        }
+                                        else if(positionString2 == "bottom"){
+                                            label.position = 3;
+                                        }
+                                        else{
+                                            std::cerr << "MainWindow config: Unknown label position: " << positionString2 << std::endl;
+                                        }
+                                    }
+                                }
+                                else if(s3 == "visibility:"){
+                                    std::string visibilityString = readString(is);
+                                    label.isVisible = visibilityString == "Visible";
+                                }
+                                else if(s3 == "size:"){
+                                    float size;
+                                    is >> size;
+                                    is.ignore(1);// ignore % sign
+                                    size = size/100.f;
+                                    label.size = size;
+                                }
+                                else if(s3 == "font:"){
+                                    label.font = readString(is);
+                                }
+                                else{
+                                    std::cerr << "Unknown key: \"" << s3 << "\"";
+                                    std::cerr << " read in CoordLabel object" << std::endl;
+                                }
+                            }
+                            boardData.labels.push_back(label);
                         }
                     }
                 }

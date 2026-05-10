@@ -49,19 +49,6 @@ void Menu::init(const MenuContainer& menuData, const BoardDesignContainer& board
         }
     }
 
-    if(boardData.labelsInside){
-        toggleItem("Coordinates");
-        hideItem("SetCoordinateSize");
-    }
-    else if(boardData.labelsOutside){
-        toggleItem("Coordinates");
-        toggleItem("MoveCoordinates");
-    }
-    else{
-        hideItem("MoveCoordinates");
-        hideItem("SetCoordinateSize");
-    }
-
     if(boardData.border){
         toggleItem("ToggleBoardBorder");
     }

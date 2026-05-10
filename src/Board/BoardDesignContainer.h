@@ -1,8 +1,18 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace sigrid{
+
+    struct BoardLabelContainer{
+        bool isInside;
+        int position; // 0 = Left, 1 = right, 2 = top, 3 = bottom
+        bool isVisible;
+        float size;
+        std::string font;
+    };
+
     struct BoardDesignContainer{
 
         float tileWidth;
@@ -10,11 +20,7 @@ namespace sigrid{
         float arrowThickness;
         float arrowHeadSize;
         float circleDiameter;
-        bool labelsInside;
-        bool labelsOutside;
-        std::string labelFont;
-        float insideLabelSize;
-        float outsideLabelSize;
+        std::vector<BoardLabelContainer> labels;
         bool border;
         unsigned int borderWidth;
         bool turnToken;
