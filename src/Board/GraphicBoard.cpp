@@ -115,18 +115,51 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     if(m_labelsPtr){
         for(auto& label: config.labels){
             if(label.isInside){
-                if(label.isVisible){
-                    m_labelsPtr->setInside();
+                if(label.position == 0){
+                    if(label.isVisible){
+                        m_labelsPtr->showLeftInside();
+                    }
+                    else{
+                        m_labelsPtr->hideLeftInside();
+                    }
+                    m_labelsPtr->setLeftInsideSize(label.size);
+                    m_labelsPtr->setLeftInsideFont(label.font);
                 }
-                m_labelsPtr->setInsideLabelSizeFactor(label.size);
-                m_labelsPtr->setFont(label.font);
+                else if(label.position == 3){
+                    if(label.isVisible){
+                        m_labelsPtr->showBottomInside();
+                    }
+                    else{
+                        m_labelsPtr->hideBottomInside();
+                    }
+                    m_labelsPtr->setBottomInsideSize(label.size);
+                    m_labelsPtr->setBottomInsideFont(label.font);
+                }
+                else{
+                    std::cerr << "Unhandled label position: " << label.position << std::endl;
+                }
             }
             else{ // outside
-                if(label.isVisible){
-                    m_labelsPtr->setOutside();
+                if(label.position == 0){
+                    if(label.isVisible){
+                        m_labelsPtr->showLeftOutside();
+                    }
+                    else{
+                        m_labelsPtr->hideLeftOutside();
+                    }
+                    m_labelsPtr->setLeftOutsideSize(label.size);
+                    m_labelsPtr->setLeftOutsideFont(label.font);
                 }
-                m_labelsPtr->setOutsideLabelSizeFactor(label.size);
-                m_labelsPtr->setFont(label.font);
+                else if(label.position == 3){
+                    if(label.isVisible){
+                        m_labelsPtr->showBottomOutside();
+                    }
+                    else{
+                        m_labelsPtr->hideBottomOutside();
+                    }
+                    m_labelsPtr->setBottomOutsideSize(label.size);
+                    m_labelsPtr->setBottomOutsideFont(label.font);
+                }
             }
         }
     }
@@ -957,7 +990,10 @@ void GraphicBoard::addCoordinates(){
     if(!m_labelsPtr){
         return;
     }
-    m_labelsPtr->show();
+
+    m_labelsPtr->showLeftOutside();
+    m_labelsPtr->showBottomOutside();
+
     if(m_labelsPtr->isInsideLabelsVisible()){
         addInsideLabels();
     }
@@ -990,7 +1026,10 @@ void GraphicBoard::removeCoordinates(){
         m_labelsPtr->removeOutsideLabels();
     }
 
-    m_labelsPtr->hide();
+    m_labelsPtr->hideLeftInside();
+    m_labelsPtr->hideBottomInside();
+    m_labelsPtr->hideLeftOutside();
+    m_labelsPtr->hideBottomOutside();
     
     redrawTexture();
 }
@@ -1005,8 +1044,10 @@ void GraphicBoard::moveCoordinatesOutside(){
         return;
     }
 
-    m_labelsPtr->hideInsideLabels();
-    m_labelsPtr->showOutsideLabels();
+    m_labelsPtr->hideLeftInside();
+    m_labelsPtr->hideBottomInside();
+    m_labelsPtr->showLeftOutside();
+    m_labelsPtr->showBottomOutside();
 
     unsigned int leftEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileWidth();
     unsigned int leftEdgeHeight = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileHeight();
@@ -1029,8 +1070,10 @@ void GraphicBoard::moveCoordinatesInside(){
         return;
     }
 
-    m_labelsPtr->hideOutsideLabels();
-    m_labelsPtr->showInsideLabels();
+    m_labelsPtr->hideLeftOutside();
+    m_labelsPtr->hideBottomOutside();
+    m_labelsPtr->showLeftInside();
+    m_labelsPtr->showBottomInside();
 
     setLeftEdgeWidth(0);
     setBottomEdgeWidth(0);
@@ -1046,7 +1089,8 @@ void GraphicBoard::setCoordinateSize(const float& size){
         return;
     }
 
-    m_labelsPtr->setOutsideLabelSizeFactor(size);
+    m_labelsPtr->setLeftOutsideSize(size);
+    m_labelsPtr->setBottomOutsideSize(size);
 
     unsigned int leftEdgeWidth = size* m_tileLayerPtr->getTileWidth();
     unsigned int leftEdgeHeight = size* m_tileLayerPtr->getTileHeight();

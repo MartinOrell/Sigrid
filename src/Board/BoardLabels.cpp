@@ -9,34 +9,67 @@ using namespace sigrid;
 
 BoardLabels::BoardLabels(){}
 
-void BoardLabels::setInside(){
+void BoardLabels::showLeftInside(){
     m_leftInsideCoordLabels.isVisible = true;
-    m_bottomInsideCoordLabels.isVisible = true;
-    m_leftOutsideCoordLabels.isVisible = false;
-    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::setOutside(){
-    m_leftInsideCoordLabels.isVisible = false;
-    m_bottomInsideCoordLabels.isVisible = false;
+void BoardLabels::showBottomInside(){
+    m_bottomInsideCoordLabels.isVisible = true;
+}
+
+void BoardLabels::showLeftOutside(){
     m_leftOutsideCoordLabels.isVisible = true;
+}
+
+void BoardLabels::showBottomOutside(){
     m_bottomOutsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::setInsideLabelSizeFactor(const float& size){
+void BoardLabels::hideLeftInside(){
+    m_leftInsideCoordLabels.isVisible = false;
+}
+
+void BoardLabels::hideBottomInside(){
+    m_bottomInsideCoordLabels.isVisible = false;
+}
+
+void BoardLabels::hideLeftOutside(){
+    m_leftOutsideCoordLabels.isVisible = false;
+}
+
+void BoardLabels::hideBottomOutside(){
+    m_bottomOutsideCoordLabels.isVisible = false;
+}
+
+void BoardLabels::setLeftInsideSize(const float& size){
     m_leftInsideCoordLabels.size = size;
+}
+
+void BoardLabels::setBottomInsideSize(const float& size){
     m_bottomInsideCoordLabels.size = size;
 }
 
-void BoardLabels::setOutsideLabelSizeFactor(const float& size){
+void BoardLabels::setLeftOutsideSize(const float& size){
     m_leftOutsideCoordLabels.size = size;
+}
+
+void BoardLabels::setBottomOutsideSize(const float& size){
     m_bottomOutsideCoordLabels.size = size;
 }
 
-void BoardLabels::setFont(const std::string& fontFilename){
+void BoardLabels::setLeftInsideFont(const std::string& fontFilename){
     m_leftInsideCoordLabels.fontFilename = fontFilename;
+}
+
+void BoardLabels::setBottomInsideFont(const std::string& fontFilename){
     m_bottomInsideCoordLabels.fontFilename = fontFilename;
+}
+
+void BoardLabels::setLeftOutsideFont(const std::string& fontFilename){
     m_leftOutsideCoordLabels.fontFilename = fontFilename;
+}
+
+void BoardLabels::setBottomOutsideFont(const std::string& fontFilename){
     m_bottomOutsideCoordLabels.fontFilename = fontFilename;
 }
 
@@ -369,41 +402,6 @@ void BoardLabels::removeVerticalLabel(){
     if(m_leftOutsideCoordLabels.labels.size() > 0){
         m_leftOutsideCoordLabels.labels.pop_back();
     }
-}
-
-void BoardLabels::show(){
-    showOutsideLabels();
-}
-
-void BoardLabels::hide(){
-    m_leftInsideCoordLabels.isVisible = false;
-    m_bottomInsideCoordLabels.isVisible = false;
-    m_leftOutsideCoordLabels.isVisible = false;
-    m_bottomOutsideCoordLabels.isVisible = false;
-}
-
-void BoardLabels::showInsideLabels(){
-    m_leftInsideCoordLabels.isVisible = true;
-    m_bottomInsideCoordLabels.isVisible = true;
-    m_leftOutsideCoordLabels.isVisible = false;
-    m_bottomOutsideCoordLabels.isVisible = false;
-}
-
-void BoardLabels::showOutsideLabels(){
-    m_leftInsideCoordLabels.isVisible = false;
-    m_bottomInsideCoordLabels.isVisible = false;
-    m_leftOutsideCoordLabels.isVisible = true;
-    m_bottomOutsideCoordLabels.isVisible = true;
-}
-
-void BoardLabels::hideInsideLabels(){
-    m_leftInsideCoordLabels.isVisible = false;
-    m_bottomInsideCoordLabels.isVisible = false;
-}
-
-void BoardLabels::hideOutsideLabels(){
-    m_leftOutsideCoordLabels.isVisible = false;
-    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::moveLeftInsideCoordinateLabels(const sf::Vector2f& offset){

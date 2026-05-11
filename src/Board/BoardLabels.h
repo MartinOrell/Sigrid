@@ -13,11 +13,26 @@ namespace sigrid{
         public:
             BoardLabels();
 
-            void setInside();
-            void setOutside();
-            void setInsideLabelSizeFactor(const float& size);
-            void setOutsideLabelSizeFactor(const float& size);
-            void setFont(const std::string& fontFilename);
+            void showLeftInside();
+            void showBottomInside();
+            void showLeftOutside();
+            void showBottomOutside();
+
+            void hideLeftInside();
+            void hideBottomInside();
+            void hideLeftOutside();
+            void hideBottomOutside();
+
+            void setLeftInsideSize(const float& size);
+            void setBottomInsideSize(const float& size);
+            void setLeftOutsideSize(const float& size);
+            void setBottomOutsideSize(const float& size);
+
+            void setLeftInsideFont(const std::string& fontFilename);
+            void setBottomInsideFont(const std::string& fontFilename);
+            void setLeftOutsideFont(const std::string& fontFilename);
+            void setBottomOutsideFont(const std::string& fontFilename);
+
             void setFontManagerPtr(FontManager* const managerPtr);
 
             bool isVisible() const;
@@ -39,14 +54,6 @@ namespace sigrid{
             void removeHorizontalLabel();
             void addVerticalLabel(const float& tileHeight, const bool& isTopToBottom);
             void removeVerticalLabel();
-
-            void show();
-            void hide();
-
-            void showInsideLabels();
-            void showOutsideLabels();
-            void hideInsideLabels();
-            void hideOutsideLabels();
 
             void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
