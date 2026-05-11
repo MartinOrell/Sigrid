@@ -150,7 +150,8 @@ namespace sigrid{
 
             void redrawTexture();
 
-            void setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const unsigned int bottomWidth);
+            void setLeftEdgeWidth(const unsigned int& width);
+            void setBottomEdgeWidth(const unsigned int& width);
 
             void addOutsideLabels();
             void addInsideLabels();
