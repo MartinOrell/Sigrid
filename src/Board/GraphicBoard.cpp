@@ -978,8 +978,6 @@ void GraphicBoard::removeCoordinates(){
         return;
     }
 
-    m_labelsPtr->hide();
-
     if(m_labelsPtr->isInsideLabelsVisible()){
         m_labelsPtr->removeInsideLabels();
     }
@@ -988,6 +986,8 @@ void GraphicBoard::removeCoordinates(){
         setLeftAndBottomEdgeWidth(0,0);
         m_labelsPtr->removeOutsideLabels();
     }
+
+    m_labelsPtr->hide();
     
     redrawTexture();
 }
@@ -1245,7 +1245,7 @@ void GraphicBoard::redrawTexture(){
 }
 
 void GraphicBoard::setLeftAndBottomEdgeWidth(const unsigned int leftWidth, const unsigned int bottomWidth){
-    
+
     float moveX = (float)leftWidth - (float)m_leftEdgeWidth;
     m_leftEdgeWidth = leftWidth;
     m_bottomEdgeWidth = bottomWidth;
