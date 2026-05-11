@@ -118,9 +118,15 @@ namespace sigrid{
 
             void flip();
 
-            void addCoordinates();
+            void addLeftInsideCoordinates();
+            void addBottomInsideCoordinates();
+            void addLeftOutsideCoordinates();
+            void addBottomOutsideCoordinates();
 
-            void removeCoordinates();
+            void removeLeftInsideCoordinates();
+            void removeBottomInsideCoordinates();
+            void removeLeftOutsideCoordinates();
+            void removeBottomOutsideCoordinates();
 
             void moveCoordinatesOutside();
 
@@ -153,8 +159,10 @@ namespace sigrid{
             void setLeftEdgeWidth(const unsigned int& width);
             void setBottomEdgeWidth(const unsigned int& width);
 
-            void addOutsideLabels();
-            void addInsideLabels();
+            void addLeftInsideLabels_h();
+            void addBottomInsideLabels_h();
+            void addLeftOutsideLabels_h();
+            void addBottomOutsideLabels_h();
 
             void moveTiles(const sf::Vector2f& offset);
             void moveTurnToken(const sf::Vector2f& offset);

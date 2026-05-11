@@ -77,24 +77,20 @@ void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-bool BoardLabels::isVisible() const{
-    return
-        m_leftInsideCoordLabels.isVisible ||
-        m_bottomInsideCoordLabels.isVisible ||
-        m_leftOutsideCoordLabels.isVisible ||
-        m_bottomOutsideCoordLabels.isVisible;
+bool BoardLabels::isLeftInsideVisible() const{
+    return m_leftInsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isInsideLabelsVisible() const{
-    return
-        m_leftInsideCoordLabels.isVisible ||
-        m_bottomInsideCoordLabels.isVisible;
+bool BoardLabels::isBottomInsideVisible() const{
+    return m_bottomInsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isOutsideLabelsVisible() const{
-    return
-        m_leftOutsideCoordLabels.isVisible ||
-        m_bottomOutsideCoordLabels.isVisible;
+bool BoardLabels::isLeftOutsideVisible() const{
+    return m_leftOutsideCoordLabels.isVisible;
+}
+
+bool BoardLabels::isBottomOutsideVisible() const{
+    return m_bottomOutsideCoordLabels.isVisible;
 }
 
 float BoardLabels::getInsideLabelSizeFactor() const{
@@ -309,14 +305,20 @@ bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf
     return true;
 }
 
-void BoardLabels::removeInsideLabels(){
-    m_bottomInsideCoordLabels.labels.clear();
+void BoardLabels::removeLeftInsideLabels(){
     m_leftInsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeOutsideLabels(){
-    m_bottomOutsideCoordLabels.labels.clear();
+void BoardLabels::removeBottomInsideLabels(){
+    m_bottomInsideCoordLabels.labels.clear();
+}
+
+void BoardLabels::removeLeftOutsideLabels(){
     m_leftOutsideCoordLabels.labels.clear();
+}
+
+void BoardLabels::removeBottomOutsideLabels(){
+    m_bottomOutsideCoordLabels.labels.clear();
 }
 
 void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight){

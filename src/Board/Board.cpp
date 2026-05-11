@@ -572,11 +572,15 @@ void Board::flipBoard(){
 }
 
 void Board::addCoordinates(){
-    m_graphicBoard.addCoordinates();
+    m_graphicBoard.addLeftOutsideCoordinates();
+    m_graphicBoard.addBottomOutsideCoordinates();
 }
 
 void Board::removeCoordinates(){
-    m_graphicBoard.removeCoordinates();
+    m_graphicBoard.removeLeftInsideCoordinates();
+    m_graphicBoard.removeBottomInsideCoordinates();
+    m_graphicBoard.removeLeftOutsideCoordinates();
+    m_graphicBoard.removeBottomOutsideCoordinates();
 }
 
 void Board::moveCoordinatesOutside(){

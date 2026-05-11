@@ -35,9 +35,10 @@ namespace sigrid{
 
             void setFontManagerPtr(FontManager* const managerPtr);
 
-            bool isVisible() const;
-            bool isInsideLabelsVisible() const;
-            bool isOutsideLabelsVisible() const;
+            bool isLeftInsideVisible() const;
+            bool isBottomInsideVisible() const;
+            bool isLeftOutsideVisible() const;
+            bool isBottomOutsideVisible() const;
 
             float getInsideLabelSizeFactor() const;
             float getOutsideLabelSizeFactor() const;
@@ -47,8 +48,10 @@ namespace sigrid{
             bool addOutsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
             bool addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
 
-            void removeInsideLabels();
-            void removeOutsideLabels();
+            void removeLeftInsideLabels();
+            void removeBottomInsideLabels();
+            void removeLeftOutsideLabels();
+            void removeBottomOutsideLabels();
 
             void addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight);
             void removeHorizontalLabel();
