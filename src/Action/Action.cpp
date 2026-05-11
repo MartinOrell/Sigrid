@@ -35,17 +35,29 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "clear"){
         return ActionType::Clear{};
     }
-    else if(name == "addCoordinates"){
-        return ActionType::AddCoordinates{};
+    else if(name == "addLeftInsideLabels"){
+        return ActionType::AddLeftInsideLabels{};
     }
-    else if(name == "removeCoordinates"){
-        return ActionType::RemoveCoordinates{};
+    else if(name == "addBottomInsideLabels"){
+        return ActionType::AddBottomInsideLabels{};
     }
-    else if(name == "moveCoordinatesOutside"){
-        return ActionType::MoveCoordinatesOutside{};
+    else if(name == "addLeftOutsideLabels"){
+        return ActionType::AddLeftOutsideLabels{};
     }
-    else if(name == "moveCoordinatesInside"){
-        return ActionType::MoveCoordinatesInside{};
+    else if(name == "addBottomOutsideLabels"){
+        return ActionType::AddBottomOutsideLabels{};
+    }
+    else if(name == "removeLeftInsideLabels"){
+        return ActionType::RemoveLeftInsideLabels{};
+    }
+    else if(name == "removeBottomInsideLabels"){
+        return ActionType::RemoveBottomInsideLabels{};
+    }
+    else if(name == "removeLeftOutsideLabels"){
+        return ActionType::RemoveLeftOutsideLabels{};
+    }
+    else if(name == "removeBottomOutsideLabels"){
+        return ActionType::RemoveBottomOutsideLabels{};
     }
     else if(name == "setCoordinateSize"){
         std::string number = content;

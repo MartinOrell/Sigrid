@@ -386,20 +386,36 @@ void WorkWindow::flipBoard(){
     m_boards.at(m_activeBoardId).flipBoard();
 }
 
-void WorkWindow::addCoordinates(){
-    m_boards.at(m_activeBoardId).addCoordinates();
+void WorkWindow::addLeftInsideLabels(){
+    m_boards.at(m_activeBoardId).addLeftInsideLabels();
 }
 
-void WorkWindow::removeCoordinates(){
-    m_boards.at(m_activeBoardId).removeCoordinates();
+void WorkWindow::addBottomInsideLabels(){
+    m_boards.at(m_activeBoardId).addBottomInsideLabels();
 }
 
-void WorkWindow::moveCoordinatesOutside(){
-    m_boards.at(m_activeBoardId).moveCoordinatesOutside();
+void WorkWindow::addLeftOutsideLabels(){
+    m_boards.at(m_activeBoardId).addLeftOutsideLabels();
 }
 
-void WorkWindow::moveCoordinatesInside(){
-    m_boards.at(m_activeBoardId).moveCoordinatesInside();
+void WorkWindow::addBottomOutsideLabels(){
+    m_boards.at(m_activeBoardId).addBottomOutsideLabels();
+}
+
+void WorkWindow::removeLeftInsideLabels(){
+    m_boards.at(m_activeBoardId).removeLeftInsideLabels();
+}
+
+void WorkWindow::removeBottomInsideLabels(){
+    m_boards.at(m_activeBoardId).removeBottomInsideLabels();
+}
+
+void WorkWindow::removeLeftOutsideLabels(){
+    m_boards.at(m_activeBoardId).removeLeftOutsideLabels();
+}
+
+void WorkWindow::removeBottomOutsideLabels(){
+    m_boards.at(m_activeBoardId).removeBottomOutsideLabels();
 }
 
 void WorkWindow::setCoordinateSize(const float& size){

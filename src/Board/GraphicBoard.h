@@ -128,10 +128,6 @@ namespace sigrid{
             void removeLeftOutsideCoordinates();
             void removeBottomOutsideCoordinates();
 
-            void moveCoordinatesOutside();
-
-            void moveCoordinatesInside();
-
             void setCoordinateSize(const float& size);
 
             void addBorder();

@@ -605,20 +605,36 @@ void MainWindow::handleAction(const sigrid::Action action){
         flipBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddCoordinates>(action)){
-        addCoordinates();
+    else if(std::holds_alternative<ActionType::AddLeftInsideLabels>(action)){
+        addLeftInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveCoordinates>(action)){
-        removeCoordinates();
+    else if(std::holds_alternative<ActionType::AddBottomInsideLabels>(action)){
+        addBottomInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::MoveCoordinatesOutside>(action)){
-        moveCoordinatesOutside();
+    else if(std::holds_alternative<ActionType::AddLeftOutsideLabels>(action)){
+        addLeftOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::MoveCoordinatesInside>(action)){
-        moveCoordinatesInside();
+    else if(std::holds_alternative<ActionType::AddBottomOutsideLabels>(action)){
+        addBottomOutsideLabels();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveLeftInsideLabels>(action)){
+        removeLeftInsideLabels();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveBottomInsideLabels>(action)){
+        removeBottomInsideLabels();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveLeftOutsideLabels>(action)){
+        removeLeftOutsideLabels();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveBottomOutsideLabels>(action)){
+        removeBottomOutsideLabels();
         return;
     }
     else if(std::holds_alternative<ActionType::SetCoordinateSize>(action)){
@@ -990,70 +1006,129 @@ void MainWindow::flipBoard(){
     m_workWindow->flipBoard();
 }
 
-void MainWindow::addCoordinates(){
+void MainWindow::addLeftInsideLabels(){
+
     if(!m_workWindow){
-        std::cerr << "Unable to show coordinates, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add left inside labels, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->addCoordinates();
+    m_workWindow->addLeftInsideLabels();
 
     if(m_menu){
-        m_menu->toggleItem("Coordinates");
-        m_menu->showItem("MoveCoordinates");
-        if(m_workWindow->isCoordinatesOutside()){
-            m_menu->showItem("SetCoordinateSize");
-        }
+        m_menu->toggleItem("LeftInsideLabels");
     }
 
     createGraphic();
 }
 
-void MainWindow::removeCoordinates(){
+void MainWindow::addBottomInsideLabels(){
+
     if(!m_workWindow){
-        std::cerr << "Unable to hide coordinates, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add bottom inside labels, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->removeCoordinates();
+    m_workWindow->addBottomInsideLabels();
 
     if(m_menu){
-        m_menu->toggleItem("Coordinates");
-        m_menu->hideItem("MoveCoordinates");
-        m_menu->hideItem("SetCoordinateSize");
+        m_menu->toggleItem("BottomInsideLabels");
     }
 
     createGraphic();
 }
 
-void MainWindow::moveCoordinatesOutside(){
+void MainWindow::addLeftOutsideLabels(){
+
     if(!m_workWindow){
-        std::cerr << "Unable to move coordinates, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add left outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->moveCoordinatesOutside();
+    m_workWindow->addLeftOutsideLabels();
 
     if(m_menu){
-        m_menu->toggleItem("MoveCoordinates");
-        m_menu->showItem("SetCoordinateSize");
+        m_menu->toggleItem("LeftOutsideLabels");
     }
 
     createGraphic();
 }
 
-void MainWindow::moveCoordinatesInside(){
+void MainWindow::addBottomOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to move coordinates, workWindow does not exist" << std::endl;
+        std::cerr << "Unable to add bottom outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
-    m_workWindow->moveCoordinatesInside();
+    m_workWindow->addBottomOutsideLabels();
 
     if(m_menu){
-        m_menu->toggleItem("MoveCoordinates");
-        m_menu->hideItem("SetCoordinateSize");
+        m_menu->toggleItem("BottomOutsideLabels");
+    }
+
+    createGraphic();
+}
+
+void MainWindow::removeLeftInsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to remove left inside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeLeftInsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("LeftInsideLabels");
+    }
+
+    createGraphic();
+}
+
+void MainWindow::removeBottomInsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to remove bottom inside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeBottomInsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("BottomInsideLabels");
+    }
+
+    createGraphic();
+}
+
+void MainWindow::removeLeftOutsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to remove left outside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeLeftOutsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("LeftOutsideLabels");
+    }
+
+    createGraphic();
+}
+
+void MainWindow::removeBottomOutsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to remove bottom outside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeBottomOutsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("BottomOutsideLabels");
     }
 
     createGraphic();

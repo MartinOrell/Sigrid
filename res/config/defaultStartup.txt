@@ -182,13 +182,21 @@ Menu: [
       Reset reset
       Clear clear
       "Flip Board" flipBoard
-      Coordinates [
-        "Remove Coordinates" removeCoordinates
-        "Add Coordinates" addCoordinates
+      LeftInsideLabels [
+        "Add left inside labels" addLeftInsideLabels
+        "Remove left inside labels" removeLeftInsideLabels
       ]
-      MoveCoordinates [
-        "Move Coordinates inside" moveCoordinatesInside
-        "Move Coordinates outside" moveCoordinatesOutside
+      BottomInsideLabels [
+        "Add bottom inside labels" addBottomInsideLabels
+        "Remove bottom inside labels" removeBottomInsideLabels
+      ]
+      LeftOutsideLabels [
+        "Remove left outside labels" removeLeftOutsideLabels
+        "Add left outside labels" addLeftOutsideLabels
+      ]
+      BottomOutsideLabels [
+        "Remove bottom outside labels" removeBottomOutsideLabels
+        "Add bottom outside labels" addBottomOutsideLabels
       ]
       SetCoordinateSize [
         "Set Big Coordinates" setCoordinateSize(60%)

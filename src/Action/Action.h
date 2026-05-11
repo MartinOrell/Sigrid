@@ -54,10 +54,14 @@ namespace sigrid{
         struct CopyFen{};
 
         struct FlipBoard{};
-        struct AddCoordinates{};
-        struct RemoveCoordinates{};
-        struct MoveCoordinatesOutside{};
-        struct MoveCoordinatesInside{};
+        struct AddLeftInsideLabels{};
+        struct AddBottomInsideLabels{};
+        struct AddLeftOutsideLabels{};
+        struct AddBottomOutsideLabels{};
+        struct RemoveLeftInsideLabels{};
+        struct RemoveBottomInsideLabels{};
+        struct RemoveLeftOutsideLabels{};
+        struct RemoveBottomOutsideLabels{};
         struct SetCoordinateSize{
             float size;
         };
@@ -101,10 +105,14 @@ namespace sigrid{
         ActionType::PasteFen,
         ActionType::CopyFen,
         ActionType::FlipBoard,
-        ActionType::AddCoordinates,
-        ActionType::RemoveCoordinates,
-        ActionType::MoveCoordinatesOutside,
-        ActionType::MoveCoordinatesInside,
+        ActionType::AddLeftInsideLabels,
+        ActionType::AddBottomInsideLabels,
+        ActionType::AddLeftOutsideLabels,
+        ActionType::AddBottomOutsideLabels,
+        ActionType::RemoveLeftInsideLabels,
+        ActionType::RemoveBottomInsideLabels,
+        ActionType::RemoveLeftOutsideLabels,
+        ActionType::RemoveBottomOutsideLabels,
         ActionType::SetCoordinateSize,
         ActionType::AddSquareColumnRight,
         ActionType::AddSquareColumnLeft,

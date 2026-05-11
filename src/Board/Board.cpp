@@ -571,24 +571,36 @@ void Board::flipBoard(){
     m_graphicBoard.flip();
 }
 
-void Board::addCoordinates(){
+void Board::addLeftInsideLabels(){
+    m_graphicBoard.addLeftInsideCoordinates();
+}
+
+void Board::addBottomInsideLabels(){
+    m_graphicBoard.addBottomInsideCoordinates();
+}
+
+void Board::addLeftOutsideLabels(){
     m_graphicBoard.addLeftOutsideCoordinates();
+}
+
+void Board::addBottomOutsideLabels(){
     m_graphicBoard.addBottomOutsideCoordinates();
 }
 
-void Board::removeCoordinates(){
+void Board::removeLeftInsideLabels(){
     m_graphicBoard.removeLeftInsideCoordinates();
+}
+
+void Board::removeBottomInsideLabels(){
     m_graphicBoard.removeBottomInsideCoordinates();
+}
+
+void Board::removeLeftOutsideLabels(){
     m_graphicBoard.removeLeftOutsideCoordinates();
+}
+
+void Board::removeBottomOutsideLabels(){
     m_graphicBoard.removeBottomOutsideCoordinates();
-}
-
-void Board::moveCoordinatesOutside(){
-    m_graphicBoard.moveCoordinatesOutside();
-}
-
-void Board::moveCoordinatesInside(){
-    m_graphicBoard.moveCoordinatesInside();
 }
 
 void Board::setCoordinateSize(const float& size){

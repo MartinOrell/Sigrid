@@ -109,13 +109,14 @@ namespace sigrid{
 
             void flipBoard();
 
-            void addCoordinates();
-
-            void removeCoordinates();
-
-            void moveCoordinatesOutside();
-
-            void moveCoordinatesInside();
+            void addLeftInsideLabels();
+            void addBottomInsideLabels();
+            void addLeftOutsideLabels();
+            void addBottomOutsideLabels();
+            void removeLeftInsideLabels();
+            void removeBottomInsideLabels();
+            void removeLeftOutsideLabels();
+            void removeBottomOutsideLabels();
 
             void setCoordinateSize(const float& size);
 

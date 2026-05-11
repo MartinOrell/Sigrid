@@ -1135,51 +1135,6 @@ void GraphicBoard::removeBottomOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::moveCoordinatesOutside(){
-
-    if(!m_labelsPtr){
-        return;
-    }
-
-    m_labelsPtr->hideLeftInside();
-    m_labelsPtr->hideBottomInside();
-    m_labelsPtr->showLeftOutside();
-    m_labelsPtr->showBottomOutside();
-
-    unsigned int leftEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileHeight();
-
-    setLeftEdgeWidth(leftEdgeWidth);
-    setBottomEdgeWidth(leftEdgeHeight);
-
-    m_labelsPtr->removeLeftInsideLabels();
-    m_labelsPtr->removeBottomInsideLabels();
-    addLeftOutsideLabels_h();
-    addBottomOutsideLabels_h();
-    redrawTexture();
-}
-
-void GraphicBoard::moveCoordinatesInside(){
-
-    if(!m_labelsPtr){
-        return;
-    }
-
-    m_labelsPtr->hideLeftOutside();
-    m_labelsPtr->hideBottomOutside();
-    m_labelsPtr->showLeftInside();
-    m_labelsPtr->showBottomInside();
-
-    setLeftEdgeWidth(0);
-    setBottomEdgeWidth(0);
-
-    m_labelsPtr->removeLeftOutsideLabels();
-    m_labelsPtr->removeBottomOutsideLabels();
-    addLeftInsideLabels_h();
-    addBottomInsideLabels_h();
-    redrawTexture();
-}
-
 void GraphicBoard::setCoordinateSize(const float& size){
 
     if(!m_labelsPtr){
