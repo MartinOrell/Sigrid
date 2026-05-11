@@ -57,16 +57,17 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            FontManager* m_fontManagerPtr = nullptr;
-            bool m_isVisible = false;
-            bool m_isInside = false;
-            std::string m_fontFilename = "";
-            float m_insideLabelSizeFactor = 0.f;
-            float m_outsideLabelSizeFactor = 0.f;
+            struct SideLabels{
+                std::vector<sf::Text> labels;
+                bool isVisible = false;
+                std::string fontFilename = "";
+                float size = 0.f;
+            };
 
-            std::vector<sf::Text> m_leftOutsideCoordinateLabels;
-            std::vector<sf::Text> m_bottomOutsideCoordinateLabels;
-            std::vector<sf::Text> m_bottomInsideCoordinateLabels;
-            std::vector<sf::Text> m_leftInsideCoordinateLabels;
+            FontManager* m_fontManagerPtr = nullptr;
+            SideLabels m_leftOutsideCoordLabels;
+            SideLabels m_bottomOutsideCoordLabels;
+            SideLabels m_leftInsideCoordLabels;
+            SideLabels m_bottomInsideCoordLabels;
     };
 }

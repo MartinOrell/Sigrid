@@ -10,25 +10,34 @@ using namespace sigrid;
 BoardLabels::BoardLabels(){}
 
 void BoardLabels::setInside(){
-    m_isInside = true;
-    m_isVisible = true;
+    m_leftInsideCoordLabels.isVisible = true;
+    m_bottomInsideCoordLabels.isVisible = true;
+    m_leftOutsideCoordLabels.isVisible = false;
+    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::setOutside(){
-    m_isInside = false;
-    m_isVisible = true;
+    m_leftInsideCoordLabels.isVisible = false;
+    m_bottomInsideCoordLabels.isVisible = false;
+    m_leftOutsideCoordLabels.isVisible = true;
+    m_bottomOutsideCoordLabels.isVisible = true;
 }
 
 void BoardLabels::setInsideLabelSizeFactor(const float& size){
-    m_insideLabelSizeFactor = size;
+    m_leftInsideCoordLabels.size = size;
+    m_bottomInsideCoordLabels.size = size;
 }
 
 void BoardLabels::setOutsideLabelSizeFactor(const float& size){
-    m_outsideLabelSizeFactor = size;
+    m_leftOutsideCoordLabels.size = size;
+    m_bottomOutsideCoordLabels.size = size;
 }
 
 void BoardLabels::setFont(const std::string& fontFilename){
-    m_fontFilename = fontFilename;
+    m_leftInsideCoordLabels.fontFilename = fontFilename;
+    m_bottomInsideCoordLabels.fontFilename = fontFilename;
+    m_leftOutsideCoordLabels.fontFilename = fontFilename;
+    m_bottomOutsideCoordLabels.fontFilename = fontFilename;
 }
 
 void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
@@ -36,34 +45,42 @@ void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
 }
 
 bool BoardLabels::isVisible() const{
-    return m_isVisible;
+    return
+        m_leftInsideCoordLabels.isVisible ||
+        m_bottomInsideCoordLabels.isVisible ||
+        m_leftOutsideCoordLabels.isVisible ||
+        m_bottomOutsideCoordLabels.isVisible;
 }
 
 bool BoardLabels::isInsideLabelsVisible() const{
-    return m_isVisible && m_isInside;
+    return
+        m_leftInsideCoordLabels.isVisible ||
+        m_bottomInsideCoordLabels.isVisible;
 }
 
 bool BoardLabels::isOutsideLabelsVisible() const{
-    return m_isVisible && !m_isInside;
+    return
+        m_leftOutsideCoordLabels.isVisible ||
+        m_bottomOutsideCoordLabels.isVisible;
 }
 
 float BoardLabels::getInsideLabelSizeFactor() const{
-    return m_insideLabelSizeFactor;
+    return m_leftInsideCoordLabels.size;
 }
 
 float BoardLabels::getOutsideLabelSizeFactor() const{
-    return m_outsideLabelSizeFactor;
+    return m_leftOutsideCoordLabels.size;
 }
 
 bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
-    if(m_insideLabelSizeFactor == 0.f){
+    if(m_bottomInsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
         std::cerr << "Inside label size factor is 0" << std::endl;
         return false;
     }
 
-    if(m_fontFilename.size() == 0){
+    if(m_bottomInsideCoordLabels.fontFilename.size() == 0){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -75,17 +92,17 @@ bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const s
         return false;
     }
 
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_bottomInsideCoordLabels.fontFilename);
     if(fontPtr_o == std::nullopt){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
-        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Font " << m_bottomInsideCoordLabels.fontFilename << " not found" << std::endl;
         return false;
     }
 
-    int i = m_bottomInsideCoordinateLabels.size();
+    int i = m_bottomInsideCoordLabels.labels.size();
     std::string s = std::to_string(i);
     s[0] = s[0] + 'a' - '0';
-    unsigned int labelSize = m_insideLabelSizeFactor* tileSize.x;
+    unsigned int labelSize = m_bottomInsideCoordLabels.size * tileSize.x;
     sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
     sf::Vector2f position;
@@ -105,19 +122,19 @@ bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const s
     label.setOutlineColor(tileColor);
     label.setOutlineThickness(2);
 
-    m_bottomInsideCoordinateLabels.push_back(label);
+    m_bottomInsideCoordLabels.labels.push_back(label);
     return true;
 }
 
 bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
-    if(m_insideLabelSizeFactor == 0.f){
+    if(m_leftInsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
         std::cerr << "Inside label size factor is 0" << std::endl;
         return false;
     }
 
-    if(m_fontFilename.size() == 0){
+    if(m_leftInsideCoordLabels.fontFilename.size() == 0){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -129,16 +146,16 @@ bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf:
         return false;
     }
 
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftInsideCoordLabels.fontFilename);
     if(fontPtr_o == std::nullopt){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
-        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Font " << m_leftInsideCoordLabels.fontFilename << " not found" << std::endl;
         return false;
     }
 
-    int i = m_leftInsideCoordinateLabels.size() + 1;
+    int i = m_leftInsideCoordLabels.labels.size() + 1;
     std::string s = std::to_string(i);
-    unsigned int labelSize = m_insideLabelSizeFactor* tileSize.y;
+    unsigned int labelSize = m_leftInsideCoordLabels.size * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
     label.setOrigin({0.f,0.f});
@@ -156,19 +173,19 @@ bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf:
     
     label.setOutlineThickness(2);
 
-    m_leftInsideCoordinateLabels.push_back(label);
+    m_leftInsideCoordLabels.labels.push_back(label);
     return true;
 }
 
 bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
-    if(m_outsideLabelSizeFactor == 0.f){
+    if(m_bottomOutsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
         std::cerr << "Outside label size factor is 0" << std::endl;
         return false;
     }
 
-    if(m_fontFilename.size() == 0){
+    if(m_bottomOutsideCoordLabels.fontFilename.size() == 0){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -180,17 +197,17 @@ bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const 
         return false;
     }
 
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_bottomOutsideCoordLabels.fontFilename);
     if(fontPtr_o == std::nullopt){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
-        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Font " << m_bottomOutsideCoordLabels.fontFilename << " not found" << std::endl;
         return false;
     }
 
-    int i = m_bottomOutsideCoordinateLabels.size();
+    int i = m_bottomOutsideCoordLabels.labels.size();
     std::string s = std::to_string(i);
     s[0] = s[0] + 'a' - '0';
-    unsigned int labelSize = m_outsideLabelSizeFactor*tileSize.x;
+    unsigned int labelSize = m_bottomOutsideCoordLabels.size * tileSize.x;
     sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
     sf::Vector2f position;
@@ -208,19 +225,19 @@ bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const 
     label.setPosition(position);
     label.setFillColor(sf::Color::Black);
 
-    m_bottomOutsideCoordinateLabels.push_back(label);
+    m_bottomOutsideCoordLabels.labels.push_back(label);
     return true;
 }
 
 bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
 
-    if(m_outsideLabelSizeFactor == 0.f){
+    if(m_leftOutsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
         std::cerr << "Outside label size factor is 0" << std::endl;
         return false;
     }
 
-    if(m_fontFilename.size() == 0){
+    if(m_leftOutsideCoordLabels.fontFilename.size() == 0){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -232,16 +249,16 @@ bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf
         return false;
     }
 
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_fontFilename);
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftOutsideCoordLabels.fontFilename);
     if(fontPtr_o == std::nullopt){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cerr << "Font " << m_fontFilename << " not found" << std::endl;
+        std::cerr << "Font " << m_leftOutsideCoordLabels.fontFilename << " not found" << std::endl;
         return false;
     }
 
-    int i = m_leftOutsideCoordinateLabels.size() + 1;
+    int i = m_leftOutsideCoordLabels.labels.size() + 1;
     std::string s = std::to_string(i);
-    unsigned int labelSize = m_outsideLabelSizeFactor* tileSize.y;
+    unsigned int labelSize = m_leftOutsideCoordLabels.size * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), s, labelSize};
 
     label.setOrigin({0.f,0.f});
@@ -255,25 +272,25 @@ bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf
     label.setPosition(position);
     label.setFillColor(sf::Color::Black);
 
-    m_leftOutsideCoordinateLabels.push_back(label);
+    m_leftOutsideCoordLabels.labels.push_back(label);
     return true;
 }
 
 void BoardLabels::removeInsideLabels(){
-    m_bottomInsideCoordinateLabels.clear();
-    m_leftInsideCoordinateLabels.clear();
+    m_bottomInsideCoordLabels.labels.clear();
+    m_leftInsideCoordLabels.labels.clear();
 }
 
 void BoardLabels::removeOutsideLabels(){
-    m_bottomOutsideCoordinateLabels.clear();
-    m_leftOutsideCoordinateLabels.clear();
+    m_bottomOutsideCoordLabels.labels.clear();
+    m_leftOutsideCoordLabels.labels.clear();
 }
 
 void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight){
     //currently not taking textWidth into consideration
     //currently not taking coordinates after z into consideration
-    if(m_bottomInsideCoordinateLabels.size() > 0){
-        sf::Text label{m_bottomInsideCoordinateLabels.back()};
+    if(m_bottomInsideCoordLabels.labels.size() > 0){
+        sf::Text label{m_bottomInsideCoordLabels.labels.back()};
         if(isLeftToRight){
             label.move({tileWidth, 0.f});
         }
@@ -283,10 +300,10 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
         std::string s = label.getString();
         s.at(0)++;
         label.setString(s);
-        m_bottomInsideCoordinateLabels.push_back(label);
+        m_bottomInsideCoordLabels.labels.push_back(label);
     }
-    if(m_bottomOutsideCoordinateLabels.size() > 0){
-        sf::Text label{m_bottomOutsideCoordinateLabels.back()};
+    if(m_bottomOutsideCoordLabels.labels.size() > 0){
+        sf::Text label{m_bottomOutsideCoordLabels.labels.back()};
         if(isLeftToRight){
             label.move({tileWidth, 0.f});
         }
@@ -296,24 +313,24 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
         std::string s = label.getString();
         s.at(0)++;
         label.setString(s);
-        m_bottomOutsideCoordinateLabels.push_back(label);
+        m_bottomOutsideCoordLabels.labels.push_back(label);
     }
 }
 
 void BoardLabels::removeHorizontalLabel(){
-    if(m_bottomInsideCoordinateLabels.size() > 0){
-        m_bottomInsideCoordinateLabels.pop_back();
+    if(m_bottomInsideCoordLabels.labels.size() > 0){
+        m_bottomInsideCoordLabels.labels.pop_back();
     }
-    if(m_bottomOutsideCoordinateLabels.size() > 0){
-        m_bottomOutsideCoordinateLabels.pop_back();
+    if(m_bottomOutsideCoordLabels.labels.size() > 0){
+        m_bottomOutsideCoordLabels.labels.pop_back();
     }
 }
 
 void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToBottom){
     //currently not taking textWidth into consideration
 
-    if(m_leftInsideCoordinateLabels.size() > 0){
-        sf::Text label{m_leftInsideCoordinateLabels.back()};
+    if(m_leftInsideCoordLabels.labels.size() > 0){
+        sf::Text label{m_leftInsideCoordLabels.labels.back()};
         if(isTopToBottom){
             label.move({0.f, tileHeight});
         }
@@ -325,10 +342,10 @@ void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToB
         i++;
         s = std::to_string(i);
         label.setString(s);
-        m_leftInsideCoordinateLabels.push_back(label);
+        m_leftInsideCoordLabels.labels.push_back(label);
     }
-    if(m_leftOutsideCoordinateLabels.size() > 0){
-        sf::Text label{m_leftOutsideCoordinateLabels.back()};
+    if(m_leftOutsideCoordLabels.labels.size() > 0){
+        sf::Text label{m_leftOutsideCoordLabels.labels.back()};
         if(isTopToBottom){
             label.move({0.f, tileHeight});
         }
@@ -340,96 +357,101 @@ void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToB
         i++;
         s = std::to_string(i);
         label.setString(s);
-        m_leftOutsideCoordinateLabels.push_back(label);
+        m_leftOutsideCoordLabels.labels.push_back(label);
     }
 }
 
 void BoardLabels::removeVerticalLabel(){
 
-    if(m_leftInsideCoordinateLabels.size() > 0){
-        m_leftInsideCoordinateLabels.pop_back();
+    if(m_leftInsideCoordLabels.labels.size() > 0){
+        m_leftInsideCoordLabels.labels.pop_back();
     }
-    if(m_leftOutsideCoordinateLabels.size() > 0){
-        m_leftOutsideCoordinateLabels.pop_back();
+    if(m_leftOutsideCoordLabels.labels.size() > 0){
+        m_leftOutsideCoordLabels.labels.pop_back();
     }
 }
 
 void BoardLabels::show(){
-    m_isVisible = true;
+    showOutsideLabels();
 }
 
 void BoardLabels::hide(){
-    m_isVisible = false;
+    m_leftInsideCoordLabels.isVisible = false;
+    m_bottomInsideCoordLabels.isVisible = false;
+    m_leftOutsideCoordLabels.isVisible = false;
+    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::showInsideLabels(){
-    m_isInside = true;
-    m_isVisible = true;
+    m_leftInsideCoordLabels.isVisible = true;
+    m_bottomInsideCoordLabels.isVisible = true;
+    m_leftOutsideCoordLabels.isVisible = false;
+    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::showOutsideLabels(){
-    m_isInside = false;
-    m_isVisible = true;
+    m_leftInsideCoordLabels.isVisible = false;
+    m_bottomInsideCoordLabels.isVisible = false;
+    m_leftOutsideCoordLabels.isVisible = true;
+    m_bottomOutsideCoordLabels.isVisible = true;
 }
 
 void BoardLabels::hideInsideLabels(){
-    if(m_isInside){
-        m_isVisible = false;
-    }
+    m_leftInsideCoordLabels.isVisible = false;
+    m_bottomInsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::hideOutsideLabels(){
-    if(!m_isInside){
-        m_isVisible = false;
-    }
+    m_leftOutsideCoordLabels.isVisible = false;
+    m_bottomOutsideCoordLabels.isVisible = false;
 }
 
 void BoardLabels::moveLeftInsideCoordinateLabels(const sf::Vector2f& offset){
-    for(auto& label : m_leftInsideCoordinateLabels){
+    for(auto& label : m_leftInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
 void BoardLabels::moveBottomInsideCoordinateLabels(const sf::Vector2f& offset){
-    for(auto& label : m_bottomInsideCoordinateLabels){
+    for(auto& label : m_bottomInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
 void BoardLabels::moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset){
-    for(auto& label : m_leftOutsideCoordinateLabels){
+    for(auto& label : m_leftOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
 void BoardLabels::moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset){
-    for(auto& label : m_bottomOutsideCoordinateLabels){
+    for(auto& label : m_bottomOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
 void BoardLabels::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    if(!m_isVisible){
-        return;
-    }
 
-    if(m_isInside){
-
-        for(auto& label : m_bottomInsideCoordinateLabels){
-            target.draw(label);
-        }
-        
-        for(auto& label : m_leftInsideCoordinateLabels){
+    if(m_leftInsideCoordLabels.isVisible){
+        for(auto& label : m_leftInsideCoordLabels.labels){
             target.draw(label);
         }
     }
-    else{
 
-        for(auto& label : m_bottomOutsideCoordinateLabels){
+    if(m_bottomInsideCoordLabels.isVisible){
+        for(auto& label : m_bottomInsideCoordLabels.labels){
             target.draw(label);
         }
-        
-        for(auto& label : m_leftOutsideCoordinateLabels){
+    }
+
+    if(m_leftOutsideCoordLabels.isVisible){
+        for(auto& label : m_leftOutsideCoordLabels.labels){
+            target.draw(label);
+        }
+    }
+
+    if(m_bottomOutsideCoordLabels.isVisible){
+        for(auto& label : m_bottomOutsideCoordLabels.labels){
             target.draw(label);
         }
     }
