@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include "MenuContainer.h"
-#include "../Board/BoardDesignContainer.h"
 #include "../Font/FontManager.h"
 #include "MenuItem.h"
 
@@ -19,7 +18,7 @@ void Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-void Menu::init(const MenuContainer& menuData, const BoardDesignContainer& boardData){
+void Menu::init(const MenuContainer& menuData){
     m_isPinned = menuData.isPinned;
     m_showItems = menuData.showItems;
     m_fontFilename = menuData.fontName;
@@ -47,14 +46,6 @@ void Menu::init(const MenuContainer& menuData, const BoardDesignContainer& board
             std::cerr << "Menu: Unable to handle menuItem with "
                 << menuItem.displayNames.size() << " states" << std::endl;
         }
-    }
-
-    if(boardData.border){
-        toggleItem("ToggleBoardBorder");
-    }
-    
-    if(boardData.turnToken){
-        toggleItem("ToggleTurnToken");
     }
     
     if(menuData.isPinned){

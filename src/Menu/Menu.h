@@ -16,7 +16,6 @@ namespace sf{
 namespace sigrid{
 
     class MenuContainer;
-    class BoardDesignContainer;
     class FontManager;
     class MenuItem;
 
@@ -26,7 +25,7 @@ namespace sigrid{
 
             void setFontManagerPtr(FontManager* const managerPtr);
 
-            void init(const MenuContainer& menuData, const BoardDesignContainer& boardData);
+            void init(const MenuContainer& menuData);
 
             void createGraphic(const sf::Vector2u& size);
 
