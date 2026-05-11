@@ -219,8 +219,8 @@ Menu: [
         "Unpin Menu" unpinMenu
       ]
       ShowToolWindow [
-        "Show Tool Window" showToolWindow
         "Hide Tool Window" hideToolWindow
+        "Show Tool Window" showToolWindow
       ]
       ShowColorTools [
         "Show Color Tools" showColorTools

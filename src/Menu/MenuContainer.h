@@ -20,7 +20,5 @@ namespace sigrid{
         std::vector<MenuItemContainer> menuItems;
         bool isPinned;
         bool showItems;
-        bool showToolWindow;
-        bool showColorTools;
     };
 }

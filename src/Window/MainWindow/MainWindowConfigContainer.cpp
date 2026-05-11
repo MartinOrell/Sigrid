@@ -212,7 +212,6 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 std::string visibilityString = readString(is);
                 bool isVisible = visibilityString == "Visible";
                 toolPickerData.show = isVisible;
-                menuData.showToolWindow = isVisible;
             }
             else if(s == "columns:"){
                 is >> toolPickerData.columns;
@@ -256,7 +255,6 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                             std::string visibilityString = readString(is);
                             bool isVisible = visibilityString == "Visible";
                             toolPickerData.showColors = isVisible;
-                            menuData.showColorTools = isVisible;
                         }
                         else if(s2 == "position:"){
                             std::string position = readString(is);

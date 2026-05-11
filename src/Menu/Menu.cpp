@@ -47,21 +47,6 @@ void Menu::init(const MenuContainer& menuData){
                 << menuItem.displayNames.size() << " states" << std::endl;
         }
     }
-    
-    if(menuData.isPinned){
-        toggleItem("PinMenu");
-    }
-    
-    if(menuData.showToolWindow){
-        toggleItem("ShowToolWindow");
-    }
-    else{
-        hideItem("ShowColorTools");
-    }
-    
-    if(menuData.showColorTools){
-        toggleItem("ShowColorTools");
-    }
 }
 
 void Menu::createGraphic(const sf::Vector2u& size){
