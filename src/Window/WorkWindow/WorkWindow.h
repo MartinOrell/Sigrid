@@ -40,6 +40,8 @@ namespace sigrid{
 
             std::string getName() const;
 
+            std::string getSaveFilename() const;
+
             std::string getFen() const;
             
             void setPosition(const sf::Vector2f& position);

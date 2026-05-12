@@ -93,8 +93,6 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
 
     m_boards.at(0).init(boardData, graphicData);
 
-    std::cout << "Save location: " << m_boards.at(0).getFilename() << std::endl;
-
     if(!m_boards.at(0).isImageFilenameSet()){
         m_boards.at(0).setImageFilename(m_defaultBoardImageFilename);
     }
@@ -130,6 +128,10 @@ void WorkWindow::loadFen(const std::string& fen){
 
 std::string WorkWindow::getName() const{
     return m_boards.at(m_activeBoardId).getName();
+}
+
+std::string WorkWindow::getSaveFilename() const{
+    return m_boards.at(m_activeBoardId).getFilename();
 }
 
 std::string WorkWindow::getFen() const{

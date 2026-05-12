@@ -60,8 +60,6 @@ void Board::setBottomToTop(){
 
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
-    m_filename = boardData.filename;
-
     if(m_logicBoard.init(boardData)){
         m_graphicBoard.init(m_logicBoard, graphicData);
     }

@@ -11,7 +11,7 @@ int main()
     std::string setupFilename = "saveData/startup.txt";
 
     if(!std::filesystem::exists(setupFilename)){
-        std::cerr << "Running program with default settings" << std::endl;
+        std::cout << "Running program with default settings" << std::endl;
         setupFilename = "res/config/defaultStartup.txt";
     }
 
@@ -26,5 +26,5 @@ int main()
         mainWindow.run();
     }
 
-    std::cout << "End" << std::endl;
+    std::cout << "exit program" << std::endl;
 }
