@@ -156,8 +156,10 @@ namespace sigrid{
             void setBottomEdgeWidth(const unsigned int& width);
 
             void addLeftInsideLabels_h();
+            void addBottomInsideLabel_h(const int& column);
             void addBottomInsideLabels_h();
             void addLeftOutsideLabels_h();
+            void addBottomOutsideLabel_h(const int& column);
             void addBottomOutsideLabels_h();
 
             void moveTiles(const sf::Vector2f& offset);
