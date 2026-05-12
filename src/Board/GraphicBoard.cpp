@@ -1494,6 +1494,13 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
     if(m_arrowLayerPtr){
         m_arrowLayerPtr->move(offset);
     }
+
+    if(m_labelsPtr){
+        m_labelsPtr->moveLeftInsideCoordinateLabels(offset);
+        m_labelsPtr->moveBottomInsideCoordinateLabels(offset);
+        m_labelsPtr->moveLeftOutsideCoordinateLabels(offset);
+        m_labelsPtr->moveBottomOutsideCoordinateLabels(offset);
+    }
 }
 
 void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
