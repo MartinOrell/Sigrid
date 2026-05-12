@@ -189,12 +189,12 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             addBottomInsideLabels_h();
         }
         if(m_labelsPtr->isLeftOutsideVisible()){
-            unsigned int leftEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileWidth();
+            unsigned int leftEdgeWidth = m_labelsPtr->getLeftOutsideLabelSize()* m_tileLayerPtr->getTileWidth();
             setLeftEdgeWidth(leftEdgeWidth);
             addLeftOutsideLabels_h();
         }
         if(m_labelsPtr->isBottomOutsideVisible()){
-            unsigned int bottomEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileHeight();
+            unsigned int bottomEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
             setBottomEdgeWidth(bottomEdgeWidth);
             addBottomOutsideLabels_h();
         }
@@ -1046,8 +1046,8 @@ void GraphicBoard::addLeftOutsideCoordinates(){
 
     m_labelsPtr->showLeftOutside();
 
-    unsigned int leftEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileHeight();
+    unsigned int leftEdgeWidth = m_labelsPtr->getLeftOutsideLabelSize()* m_tileLayerPtr->getTileWidth();
+    unsigned int leftEdgeHeight = m_labelsPtr->getLeftOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
 
     setLeftEdgeWidth(leftEdgeWidth);
     setBottomEdgeWidth(leftEdgeHeight);
@@ -1067,8 +1067,8 @@ void GraphicBoard::addBottomOutsideCoordinates(){
 
     m_labelsPtr->showBottomOutside();
 
-    unsigned int leftEdgeWidth = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = m_labelsPtr->getOutsideLabelSizeFactor()* m_tileLayerPtr->getTileHeight();
+    unsigned int leftEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileWidth();
+    unsigned int leftEdgeHeight = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
 
     setLeftEdgeWidth(leftEdgeWidth);
     setBottomEdgeWidth(leftEdgeHeight);

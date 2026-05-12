@@ -40,8 +40,10 @@ namespace sigrid{
             bool isLeftOutsideVisible() const;
             bool isBottomOutsideVisible() const;
 
-            float getInsideLabelSizeFactor() const;
-            float getOutsideLabelSizeFactor() const;
+            float getLeftInsideLabelSize() const;
+            float getBottomInsideLabelSize() const;
+            float getLeftOutsideLabelSize() const;
+            float getBottomOutsideLabelSize() const;
 
             bool addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);

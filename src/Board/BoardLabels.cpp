@@ -94,12 +94,20 @@ bool BoardLabels::isBottomOutsideVisible() const{
     return m_bottomOutsideCoordLabels.isVisible;
 }
 
-float BoardLabels::getInsideLabelSizeFactor() const{
+float BoardLabels::getLeftInsideLabelSize() const{
     return m_leftInsideCoordLabels.size;
 }
 
-float BoardLabels::getOutsideLabelSizeFactor() const{
+float BoardLabels::getBottomInsideLabelSize() const{
+    return m_bottomInsideCoordLabels.size;
+}
+
+float BoardLabels::getLeftOutsideLabelSize() const{
     return m_leftOutsideCoordLabels.size;
+}
+
+float BoardLabels::getBottomOutsideLabelSize() const{
+    return m_bottomOutsideCoordLabels.size;
 }
 
 bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
