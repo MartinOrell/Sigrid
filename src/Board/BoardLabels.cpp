@@ -303,9 +303,10 @@ bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-
-    //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
-    position.x = (edgeWidth-(float)labelSize/2.f)/2.f;
+    position.x = (edgeWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
+    if(notation == "1"){
+        position.x -= (float)label.getLocalBounds().size.x/2.f;
+    }
     position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
     label.setPosition(position);
@@ -337,37 +338,6 @@ void BoardLabels::removeHorizontalLabel(){
     }
     if(m_bottomOutsideCoordLabels.labels.size() > 0){
         m_bottomOutsideCoordLabels.labels.pop_back();
-    }
-}
-
-void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToBottom){
-    //currently not taking textWidth into consideration
-
-    if(m_leftInsideCoordLabels.labels.size() > 0){
-        sf::Text label{m_leftInsideCoordLabels.labels.back()};
-        if(isTopToBottom){
-            label.move({0.f, tileHeight});
-        }
-        else{
-            label.move({0.f, -tileHeight});
-        }
-        int i = m_leftInsideCoordLabels.labels.size();
-        std::string notation = notation::getRowNotation(i);
-        label.setString(notation);
-        m_leftInsideCoordLabels.labels.push_back(label);
-    }
-    if(m_leftOutsideCoordLabels.labels.size() > 0){
-        sf::Text label{m_leftOutsideCoordLabels.labels.back()};
-        if(isTopToBottom){
-            label.move({0.f, tileHeight});
-        }
-        else{
-            label.move({0.f, -tileHeight});
-        }
-        int i = m_leftOutsideCoordLabels.labels.size();
-        std::string notation = notation::getRowNotation(i);
-        label.setString(notation);
-        m_leftOutsideCoordLabels.labels.push_back(label);
     }
 }
 

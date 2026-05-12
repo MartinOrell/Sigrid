@@ -56,7 +56,6 @@ namespace sigrid{
             void removeBottomOutsideLabels();
 
             void removeHorizontalLabel();
-            void addVerticalLabel(const float& tileHeight, const bool& isTopToBottom);
             void removeVerticalLabel();
 
             void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);

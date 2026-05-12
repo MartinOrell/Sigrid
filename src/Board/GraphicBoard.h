@@ -155,9 +155,11 @@ namespace sigrid{
             void setLeftEdgeWidth(const unsigned int& width);
             void setBottomEdgeWidth(const unsigned int& width);
 
+            void addLeftInsideLabel_h(const int& row);
             void addLeftInsideLabels_h();
             void addBottomInsideLabel_h(const int& column);
             void addBottomInsideLabels_h();
+            void addLeftOutsideLabel_h(const int& row);
             void addLeftOutsideLabels_h();
             void addBottomOutsideLabel_h(const int& column);
             void addBottomOutsideLabels_h();
