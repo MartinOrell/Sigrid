@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../Font/FontManager.h"
+#include "../Coord/Coord.h"
 
 #include <iostream>
 
@@ -129,10 +130,9 @@ bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const s
     }
 
     int i = m_bottomInsideCoordLabels.labels.size();
-    std::string s = std::to_string(i);
-    s[0] = s[0] + 'a' - '0';
+    std::string notation = notation::getColumnNotation(i);
     unsigned int labelSize = m_bottomInsideCoordLabels.size * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), s, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
     sf::Vector2f position;
     position.x =
@@ -182,10 +182,10 @@ bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf:
         return false;
     }
 
-    int i = m_leftInsideCoordLabels.labels.size() + 1;
-    std::string s = std::to_string(i);
+    int i = m_leftInsideCoordLabels.labels.size();
+    std::string notation = notation::getRowNotation(i);
     unsigned int labelSize = m_leftInsideCoordLabels.size * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), s, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -234,10 +234,9 @@ bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const 
     }
 
     int i = m_bottomOutsideCoordLabels.labels.size();
-    std::string s = std::to_string(i);
-    s[0] = s[0] + 'a' - '0';
+    std::string notation = notation::getColumnNotation(i);
     unsigned int labelSize = m_bottomOutsideCoordLabels.size * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), s, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
     sf::Vector2f position;
     position.x =
@@ -285,10 +284,10 @@ bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf
         return false;
     }
 
-    int i = m_leftOutsideCoordLabels.labels.size() + 1;
-    std::string s = std::to_string(i);
+    int i = m_leftOutsideCoordLabels.labels.size();
+    std::string notation = notation::getRowNotation(i);
     unsigned int labelSize = m_leftOutsideCoordLabels.size * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), s, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -323,7 +322,6 @@ void BoardLabels::removeBottomOutsideLabels(){
 
 void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftToRight){
     //currently not taking textWidth into consideration
-    //currently not taking coordinates after z into consideration
     if(m_bottomInsideCoordLabels.labels.size() > 0){
         sf::Text label{m_bottomInsideCoordLabels.labels.back()};
         if(isLeftToRight){
@@ -332,9 +330,9 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
         else{
             label.move({-tileWidth, 0.f});
         }
-        std::string s = label.getString();
-        s.at(0)++;
-        label.setString(s);
+        int i = m_bottomInsideCoordLabels.labels.size();
+        std::string notation = notation::getColumnNotation(i);
+        label.setString(notation);
         m_bottomInsideCoordLabels.labels.push_back(label);
     }
     if(m_bottomOutsideCoordLabels.labels.size() > 0){
@@ -345,9 +343,9 @@ void BoardLabels::addHorizontalLabel(const float& tileWidth, const bool& isLeftT
         else{
             label.move({-tileWidth, 0.f});
         }
-        std::string s = label.getString();
-        s.at(0)++;
-        label.setString(s);
+        int i = m_bottomOutsideCoordLabels.labels.size();
+        std::string notation = notation::getColumnNotation(i);
+        label.setString(notation);
         m_bottomOutsideCoordLabels.labels.push_back(label);
     }
 }
@@ -372,11 +370,9 @@ void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToB
         else{
             label.move({0.f, -tileHeight});
         }
-        std::string s = label.getString();
-        int i = stoi(s);
-        i++;
-        s = std::to_string(i);
-        label.setString(s);
+        int i = m_leftInsideCoordLabels.labels.size();
+        std::string notation = notation::getRowNotation(i);
+        label.setString(notation);
         m_leftInsideCoordLabels.labels.push_back(label);
     }
     if(m_leftOutsideCoordLabels.labels.size() > 0){
@@ -387,11 +383,9 @@ void BoardLabels::addVerticalLabel(const float& tileHeight, const bool& isTopToB
         else{
             label.move({0.f, -tileHeight});
         }
-        std::string s = label.getString();
-        int i = stoi(s);
-        i++;
-        s = std::to_string(i);
-        label.setString(s);
+        int i = m_leftOutsideCoordLabels.labels.size();
+        std::string notation = notation::getRowNotation(i);
+        label.setString(notation);
         m_leftOutsideCoordLabels.labels.push_back(label);
     }
 }

@@ -4,6 +4,20 @@
 
 using namespace sigrid;
 
+std::string notation::getColumnNotation(const int& x){
+    std::string notation = "";
+
+    int base = 'z' - 'a'+1;
+    for(int i{x}; i>=0; i = i / base-1){
+        notation.insert(0,1,(i%base + 'a'));
+    }
+    return notation;
+}
+
+std::string notation::getRowNotation(const int& y){
+    return std::to_string(y+1);
+}
+
 Coord::Coord()
 : x(0)
 , y(0){}
@@ -83,13 +97,8 @@ bool Coord::operator!=(const Coord& rhs) const{
 std::string Coord::getNotation() const{
 
     std::string notation;
-
-    int base = 'z' - 'a'+1;
-    for(int i{x}; i>=0; i = i / base-1){
-        notation.insert(0,1,(i%base + 'a'));
-    }
-
-    notation.append(std::to_string(y+1));
+    notation.append(notation::getColumnNotation(x));
+    notation.append(notation::getRowNotation(y));
     
     return notation;
 }
