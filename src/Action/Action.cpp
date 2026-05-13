@@ -44,6 +44,9 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "addLeftOutsideLabels"){
         return ActionType::AddLeftOutsideLabels{};
     }
+    else if(name == "addTopOutsideLabels"){
+        return ActionType::AddTopOutsideLabels{};
+    }
     else if(name == "addBottomOutsideLabels"){
         return ActionType::AddBottomOutsideLabels{};
     }
@@ -55,6 +58,9 @@ Action sigrid::getAction(const std::string& s){
     }
     else if(name == "removeLeftOutsideLabels"){
         return ActionType::RemoveLeftOutsideLabels{};
+    }
+    else if(name == "removeTopOutsideLabels"){
+        return ActionType::RemoveTopOutsideLabels{};
     }
     else if(name == "removeBottomOutsideLabels"){
         return ActionType::RemoveBottomOutsideLabels{};

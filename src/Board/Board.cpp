@@ -581,6 +581,10 @@ void Board::addLeftOutsideLabels(){
     m_graphicBoard.addLeftOutsideCoordinates();
 }
 
+void Board::addTopOutsideLabels(){
+    m_graphicBoard.addTopOutsideCoordinates();
+}
+
 void Board::addBottomOutsideLabels(){
     m_graphicBoard.addBottomOutsideCoordinates();
 }
@@ -595,6 +599,10 @@ void Board::removeBottomInsideLabels(){
 
 void Board::removeLeftOutsideLabels(){
     m_graphicBoard.removeLeftOutsideCoordinates();
+}
+
+void Board::removeTopOutsideLabels(){
+    m_graphicBoard.removeTopOutsideCoordinates();
 }
 
 void Board::removeBottomOutsideLabels(){

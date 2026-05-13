@@ -16,21 +16,25 @@ namespace sigrid{
             void showLeftInside();
             void showBottomInside();
             void showLeftOutside();
+            void showTopOutside();
             void showBottomOutside();
 
             void hideLeftInside();
             void hideBottomInside();
             void hideLeftOutside();
+            void hideTopOutside();
             void hideBottomOutside();
 
             void setLeftInsideSize(const float& size);
             void setBottomInsideSize(const float& size);
             void setLeftOutsideSize(const float& size);
+            void setTopOutsideSize(const float& size);
             void setBottomOutsideSize(const float& size);
 
             void setLeftInsideFont(const std::string& fontFilename);
             void setBottomInsideFont(const std::string& fontFilename);
             void setLeftOutsideFont(const std::string& fontFilename);
+            void setTopOutsideFont(const std::string& fontFilename);
             void setBottomOutsideFont(const std::string& fontFilename);
 
             void setFontManagerPtr(FontManager* const managerPtr);
@@ -38,21 +42,25 @@ namespace sigrid{
             bool isLeftInsideVisible() const;
             bool isBottomInsideVisible() const;
             bool isLeftOutsideVisible() const;
+            bool isTopOutsideVisible() const;
             bool isBottomOutsideVisible() const;
 
             float getLeftInsideLabelSize() const;
             float getBottomInsideLabelSize() const;
             float getLeftOutsideLabelSize() const;
+            float getTopOutsideLabelSize() const;
             float getBottomOutsideLabelSize() const;
 
             bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
+            bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
             bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
 
             void removeLeftInsideLabels();
             void removeBottomInsideLabels();
             void removeLeftOutsideLabels();
+            void removeTopOutsideLabels();
             void removeBottomOutsideLabels();
 
             void removeHorizontalLabel();
@@ -61,6 +69,7 @@ namespace sigrid{
             void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
             void moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset);
+            void moveTopOutsideCoordinateLabels(const sf::Vector2f& offset);
             void moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset);
 
         private:
@@ -78,6 +87,7 @@ namespace sigrid{
             SideLabels m_leftInsideCoordLabels;
             SideLabels m_bottomInsideCoordLabels;
             SideLabels m_leftOutsideCoordLabels;
+            SideLabels m_topOutsideCoordLabels;
             SideLabels m_bottomOutsideCoordLabels;
     };
 }

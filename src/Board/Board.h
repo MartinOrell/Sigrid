@@ -112,10 +112,12 @@ namespace sigrid{
             void addLeftInsideLabels();
             void addBottomInsideLabels();
             void addLeftOutsideLabels();
+            void addTopOutsideLabels();
             void addBottomOutsideLabels();
             void removeLeftInsideLabels();
             void removeBottomInsideLabels();
             void removeLeftOutsideLabels();
+            void removeTopOutsideLabels();
             void removeBottomOutsideLabels();
 
             void setCoordinateSize(const float& size);

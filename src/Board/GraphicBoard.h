@@ -121,11 +121,13 @@ namespace sigrid{
             void addLeftInsideCoordinates();
             void addBottomInsideCoordinates();
             void addLeftOutsideCoordinates();
+            void addTopOutsideCoordinates();
             void addBottomOutsideCoordinates();
 
             void removeLeftInsideCoordinates();
             void removeBottomInsideCoordinates();
             void removeLeftOutsideCoordinates();
+            void removeTopOutsideCoordinates();
             void removeBottomOutsideCoordinates();
 
             void setCoordinateSize(const float& size);
@@ -154,6 +156,7 @@ namespace sigrid{
 
             void updateLeftEdgeWidth();
             void updateRightEdgeWidth();
+            void updateTopEdgeWidth();
             void updateBottomEdgeWidth();
 
             void addLeftInsideLabel_h(const int& row);
@@ -162,6 +165,8 @@ namespace sigrid{
             void addBottomInsideLabels_h();
             void addLeftOutsideLabel_h(const int& row);
             void addLeftOutsideLabels_h();
+            void addTopOutsideLabel_h(const int& column);
+            void addTopOutsideLabels_h();
             void addBottomOutsideLabel_h(const int& column);
             void addBottomOutsideLabels_h();
 

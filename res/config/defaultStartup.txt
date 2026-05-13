@@ -194,6 +194,10 @@ Menu: [
         "Remove left outside labels" removeLeftOutsideLabels
         "Add left outside labels" addLeftOutsideLabels
       ]
+      TopOutsideLabels [
+        "Add top outside labels" addTopOutsideLabels
+        "Remove top outside labels" removeTopOutsideLabels
+      ]
       BottomOutsideLabels [
         "Remove bottom outside labels" removeBottomOutsideLabels
         "Add bottom outside labels" addBottomOutsideLabels
@@ -322,6 +326,12 @@ BoardStyle: [
   CoordLabels: [
     [
       position: "outside left"
+      visibility: Visible
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
+    [
+      position: "outside top"
       visibility: Visible
       size: 40%
       font: res/fonts/arial.ttf
