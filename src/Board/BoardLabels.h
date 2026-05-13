@@ -45,10 +45,10 @@ namespace sigrid{
             float getLeftOutsideLabelSize() const;
             float getBottomOutsideLabelSize() const;
 
-            bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+            bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
+            bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
 
             void removeLeftInsideLabels();
             void removeBottomInsideLabels();
@@ -75,9 +75,9 @@ namespace sigrid{
             };
 
             FontManager* m_fontManagerPtr = nullptr;
-            SideLabels m_leftOutsideCoordLabels;
-            SideLabels m_bottomOutsideCoordLabels;
             SideLabels m_leftInsideCoordLabels;
             SideLabels m_bottomInsideCoordLabels;
+            SideLabels m_leftOutsideCoordLabels;
+            SideLabels m_bottomOutsideCoordLabels;
     };
 }

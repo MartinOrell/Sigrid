@@ -110,6 +110,57 @@ float BoardLabels::getBottomOutsideLabelSize() const{
     return m_bottomOutsideCoordLabels.size;
 }
 
+bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+
+    if(m_leftInsideCoordLabels.size == 0.f){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Inside label size factor is 0" << std::endl;
+        return false;
+    }
+
+    if(m_leftInsideCoordLabels.fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font file name not set" << std::endl;
+        return false;
+    }
+
+    if(!m_fontManagerPtr){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font Manager is nullptr" << std::endl;
+        return false;
+    }
+
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftInsideCoordLabels.fontFilename);
+    if(fontPtr_o == std::nullopt){
+        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "Font " << m_leftInsideCoordLabels.fontFilename << " not found" << std::endl;
+        return false;
+    }
+
+    int i = m_leftInsideCoordLabels.labels.size();
+    std::string notation = notation::getRowNotation(i);
+    unsigned int labelSize = m_leftInsideCoordLabels.size * tileSize.y;
+    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+
+    label.setOrigin({0.f,0.f});
+
+    sf::Vector2f position;
+
+    //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
+    position.x += tilePosition.x + (float)labelSize/16.f;
+    position.y = tilePosition.y - (float)labelSize/4.f;
+    
+    label.setPosition(position);
+
+    label.setFillColor(sf::Color(100,100,100,255));
+    label.setOutlineColor(tileColor);
+    
+    label.setOutlineThickness(2);
+
+    m_leftInsideCoordLabels.labels.push_back(label);
+    return true;
+}
+
 bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_bottomInsideCoordLabels.size == 0.f){
@@ -166,54 +217,51 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
 
-    if(m_leftInsideCoordLabels.size == 0.f){
-        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
-        std::cerr << "Inside label size factor is 0" << std::endl;
+    if(m_leftOutsideCoordLabels.size == 0.f){
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Outside label size factor is 0" << std::endl;
         return false;
     }
 
-    if(m_leftInsideCoordLabels.fontFilename.size() == 0){
-        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+    if(m_leftOutsideCoordLabels.fontFilename.size() == 0){
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
     }
 
     if(!m_fontManagerPtr){
-        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
         std::cerr << "Font Manager is nullptr" << std::endl;
         return false;
     }
 
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftInsideCoordLabels.fontFilename);
+    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftOutsideCoordLabels.fontFilename);
     if(fontPtr_o == std::nullopt){
-        std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
-        std::cerr << "Font " << m_leftInsideCoordLabels.fontFilename << " not found" << std::endl;
+        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
+        std::cerr << "Font " << m_leftOutsideCoordLabels.fontFilename << " not found" << std::endl;
         return false;
     }
 
-    int i = m_leftInsideCoordLabels.labels.size();
+    int i = m_leftOutsideCoordLabels.labels.size();
     std::string notation = notation::getRowNotation(i);
-    unsigned int labelSize = m_leftInsideCoordLabels.size * tileSize.y;
+    unsigned int labelSize = m_leftOutsideCoordLabels.size * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-
-    //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
-    position.x += tilePosition.x + (float)labelSize/16.f;
-    position.y = tilePosition.y - (float)labelSize/4.f;
+    position.x = (edgeWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
+    if(notation == "1"){
+        position.x -= (float)label.getLocalBounds().size.x/2.f;
+    }
+    position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
     label.setPosition(position);
+    label.setFillColor(sf::Color::Black);
 
-    label.setFillColor(sf::Color(100,100,100,255));
-    label.setOutlineColor(tileColor);
-    
-    label.setOutlineThickness(2);
-
-    m_leftInsideCoordLabels.labels.push_back(label);
+    m_leftOutsideCoordLabels.labels.push_back(label);
     return true;
 }
 
@@ -265,54 +313,6 @@ bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const 
     label.setFillColor(sf::Color::Black);
 
     m_bottomOutsideCoordLabels.labels.push_back(label);
-    return true;
-}
-
-bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
-
-    if(m_leftOutsideCoordLabels.size == 0.f){
-        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cerr << "Outside label size factor is 0" << std::endl;
-        return false;
-    }
-
-    if(m_leftOutsideCoordLabels.fontFilename.size() == 0){
-        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cerr << "Font file name not set" << std::endl;
-        return false;
-    }
-
-    if(!m_fontManagerPtr){
-        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cerr << "Font Manager is nullptr" << std::endl;
-        return false;
-    }
-
-    auto fontPtr_o = m_fontManagerPtr->getFontPtr(m_leftOutsideCoordLabels.fontFilename);
-    if(fontPtr_o == std::nullopt){
-        std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
-        std::cerr << "Font " << m_leftOutsideCoordLabels.fontFilename << " not found" << std::endl;
-        return false;
-    }
-
-    int i = m_leftOutsideCoordLabels.labels.size();
-    std::string notation = notation::getRowNotation(i);
-    unsigned int labelSize = m_leftOutsideCoordLabels.size * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
-
-    label.setOrigin({0.f,0.f});
-
-    sf::Vector2f position;
-    position.x = (edgeWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
-    if(notation == "1"){
-        position.x -= (float)label.getLocalBounds().size.x/2.f;
-    }
-    position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
-    
-    label.setPosition(position);
-    label.setFillColor(sf::Color::Black);
-
-    m_leftOutsideCoordLabels.labels.push_back(label);
     return true;
 }
 
