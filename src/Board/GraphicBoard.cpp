@@ -912,9 +912,6 @@ void GraphicBoard::removeSquareRowUp(){
         m_arrowLayerPtr->removeRow(0);
         m_arrowLayerPtr->moveArrowsUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
     }
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move({0.f, -m_tileLayerPtr->getTileSize().y});
-    }
     if(m_borderPtr){
         m_borderPtr->addHeight(-m_tileLayerPtr->getTileSize().y);
     }
