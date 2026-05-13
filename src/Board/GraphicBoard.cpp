@@ -193,8 +193,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             addLeftOutsideLabels_h();
         }
         if(m_labelsPtr->isBottomOutsideVisible()){
-            unsigned int bottomEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
-            setBottomEdgeWidth(bottomEdgeWidth);
+            updateBottomEdgeWidth();
             addBottomOutsideLabels_h();
         }
     }
@@ -1089,12 +1088,8 @@ void GraphicBoard::addBottomOutsideCoordinates(){
     }
 
     m_labelsPtr->showBottomOutside();
-
-    unsigned int bottomEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
-
-    setBottomEdgeWidth(bottomEdgeWidth);
+    updateBottomEdgeWidth();
     addBottomOutsideLabels_h();
-
     redrawTexture();
 }
 
@@ -1148,10 +1143,10 @@ void GraphicBoard::removeBottomOutsideCoordinates(){
     }
 
     if(m_labelsPtr->isBottomOutsideVisible()){
-        setBottomEdgeWidth(0);
+        m_labelsPtr->hideBottomOutside();
+        updateBottomEdgeWidth();
         m_labelsPtr->removeBottomOutsideLabels();
     }
-    m_labelsPtr->hideBottomOutside();
 
     redrawTexture();
 }
@@ -1170,7 +1165,8 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
     m_labelsPtr->showLeftOutside();
     updateLeftEdgeWidth();
-    setBottomEdgeWidth(leftEdgeHeight);
+    m_labelsPtr->showBottomOutside();
+    updateBottomEdgeWidth();
 
     addLeftOutsideLabels_h();
     addBottomOutsideLabels_h();
@@ -1401,9 +1397,18 @@ void GraphicBoard::updateLeftEdgeWidth(){
     }
 }
 
-void GraphicBoard::setBottomEdgeWidth(const unsigned int& width){
+void GraphicBoard::updateBottomEdgeWidth(){
 
-    m_bottomEdgeWidth = width;
+    unsigned int newEdgeWidth = 0;
+    if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isBottomOutsideVisible()){
+        newEdgeWidth =  m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
+    }
+
+    if(newEdgeWidth == m_bottomEdgeWidth){
+        return;
+    }
+
+    m_bottomEdgeWidth = newEdgeWidth;
 
     if(m_texturePtr){
         resizeTexture();
