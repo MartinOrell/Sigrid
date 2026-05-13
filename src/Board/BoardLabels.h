@@ -45,10 +45,10 @@ namespace sigrid{
             float getLeftOutsideLabelSize() const;
             float getBottomOutsideLabelSize() const;
 
-            bool addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addOutsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-            bool addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
+            bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
+            bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
+            bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+            bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
 
             void removeLeftInsideLabels();
             void removeBottomInsideLabels();

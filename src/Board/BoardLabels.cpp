@@ -110,7 +110,7 @@ float BoardLabels::getBottomOutsideLabelSize() const{
     return m_bottomOutsideCoordLabels.size;
 }
 
-bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_bottomInsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
@@ -166,7 +166,7 @@ bool BoardLabels::addInsideBottomLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_leftInsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
@@ -217,7 +217,7 @@ bool BoardLabels::addInsideLeftLabel(const sf::Vector2f& tilePosition, const sf:
     return true;
 }
 
-bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_bottomOutsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
@@ -268,7 +268,7 @@ bool BoardLabels::addOutsideBottomLabel(const sf::Vector2f& tilePosition, const 
     return true;
 }
 
-bool BoardLabels::addOutsideLeftLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
+bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
 
     if(m_leftOutsideCoordLabels.size == 0.f){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
