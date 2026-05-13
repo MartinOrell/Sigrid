@@ -199,8 +199,9 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     if(config.turnToken){
-        m_rightEdgeWidth = (unsigned int)(0.5*m_tileLayerPtr->getTileHeight());
         m_turnTokenPtr = std::make_unique<TurnToken>();
+        m_turnTokenPtr->show();
+        updateRightEdgeWidth();
         initTurnToken(logicBoard.getTurnToMove());
     }
 
@@ -1239,14 +1240,15 @@ void GraphicBoard::addTurnToken(const int& turnToMove){
         return;
     }
 
-    m_rightEdgeWidth = (unsigned int)(0.5* m_tileLayerPtr->getTileWidth());
-
     if(!m_turnTokenPtr){
         m_turnTokenPtr = std::make_unique<TurnToken>();
+        m_turnTokenPtr->show();
+        updateRightEdgeWidth();
         initTurnToken(turnToMove);
     }
     else{
         m_turnTokenPtr->show();
+        updateRightEdgeWidth();
     }
 
     resizeTexture();
@@ -1260,8 +1262,7 @@ void GraphicBoard::removeTurnToken(){
     }
 
     m_turnTokenPtr->hide();
-
-    m_rightEdgeWidth = 0;
+    updateRightEdgeWidth();
 
     resizeTexture();
     redrawTexture();
@@ -1391,6 +1392,25 @@ void GraphicBoard::updateLeftEdgeWidth(){
     if(m_labelsPtr&& m_labelsPtr->isLeftOutsideVisible()){
         m_labelsPtr->moveLeftOutsideCoordinateLabels({-moveX/2.f, 0.f});
     }
+
+    if(m_texturePtr){
+        resizeTexture();
+    }
+}
+
+void GraphicBoard::updateRightEdgeWidth(){
+
+    unsigned int newEdgeWidth = 0;
+
+    if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
+        newEdgeWidth = (unsigned int)(m_tileLayerPtr->getTileWidth()/2.f);
+    }
+
+    if(newEdgeWidth == m_rightEdgeWidth){
+        return;
+    }
+
+    m_rightEdgeWidth = newEdgeWidth;
 
     if(m_texturePtr){
         resizeTexture();

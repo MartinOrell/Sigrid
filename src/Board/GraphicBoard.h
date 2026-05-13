@@ -153,6 +153,7 @@ namespace sigrid{
             void redrawTexture();
 
             void updateLeftEdgeWidth();
+            void updateRightEdgeWidth();
             void updateBottomEdgeWidth();
 
             void addLeftInsideLabel_h(const int& row);
