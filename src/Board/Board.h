@@ -120,21 +120,21 @@ namespace sigrid{
 
             void setCoordinateSize(const float& size);
 
-            void addSquareColumnRight();
+            void addTileColumnRight();
 
-            void addSquareColumnLeft();
+            void addTileColumnLeft();
 
-            void removeSquareColumnRight();
+            void removeTileColumnRight();
 
-            void removeSquareColumnLeft();
+            void removeTileColumnLeft();
 
-            void addSquareRowUp();
+            void addTileRowUp();
 
-            void addSquareRowDown();
+            void addTileRowDown();
 
-            void removeSquareRowUp();
+            void removeTileRowUp();
 
-            void removeSquareRowDown();
+            void removeTileRowDown();
 
             void addBorder();
 

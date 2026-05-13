@@ -106,15 +106,15 @@ namespace sigrid{
             void clearEntities();
             void clearArrows();
 
-            void addSquareColumnRight(const std::vector<int>& repeatTileColorIds);
-            void addSquareColumnLeft(const std::vector<int>& repeatTileColorIds);
-            void removeSquareColumnRight();
-            void removeSquareColumnLeft();
+            void addTileColumnRight(const std::vector<int>& repeatTileColorIds);
+            void addTileColumnLeft(const std::vector<int>& repeatTileColorIds);
+            void removeTileColumnRight();
+            void removeTileColumnLeft();
 
-            void addSquareRowUp(const std::vector<int>& repeatTileColorIds);
-            void addSquareRowDown(const std::vector<int>& repeatTileColorIds);
-            void removeSquareRowUp();
-            void removeSquareRowDown();
+            void addTileRowUp(const std::vector<int>& repeatTileColorIds);
+            void addTileRowDown(const std::vector<int>& repeatTileColorIds);
+            void removeTileRowUp();
+            void removeTileRowDown();
 
             void flip();
 

@@ -65,29 +65,29 @@ Action sigrid::getAction(const std::string& s){
         float size = std::stof(number)/100.f;
         return ActionType::SetCoordinateSize{size};
     }
-    else if(name == "addSquareColumnRight"){
-        return ActionType::AddSquareColumnRight{};
+    else if(name == "addTileColumnRight"){
+        return ActionType::AddTileColumnRight{};
     }
-    else if(name == "addSquareColumnLeft"){
-        return ActionType::AddSquareColumnLeft{};
+    else if(name == "addTileColumnLeft"){
+        return ActionType::AddTileColumnLeft{};
     }
-    else if(name == "removeSquareColumnRight"){
-        return ActionType::RemoveSquareColumnRight{};
+    else if(name == "removeTileColumnRight"){
+        return ActionType::RemoveTileColumnRight{};
     }
-    else if(name == "removeSquareColumnLeft"){
-        return ActionType::RemoveSquareColumnLeft{};
+    else if(name == "removeTileColumnLeft"){
+        return ActionType::RemoveTileColumnLeft{};
     }
-    else if(name == "addSquareRowUp"){
-        return ActionType::AddSquareRowUp{};
+    else if(name == "addTileRowUp"){
+        return ActionType::AddTileRowUp{};
     }
-    else if(name == "addSquareRowDown"){
-        return ActionType::AddSquareRowDown{};
+    else if(name == "addTileRowDown"){
+        return ActionType::AddTileRowDown{};
     }
-    else if(name == "removeSquareRowUp"){
-        return ActionType::RemoveSquareRowUp{};
+    else if(name == "removeTileRowUp"){
+        return ActionType::RemoveTileRowUp{};
     }
-    else if(name == "removeSquareRowDown"){
-        return ActionType::RemoveSquareRowDown{};
+    else if(name == "removeTileRowDown"){
+        return ActionType::RemoveTileRowDown{};
     }
     else if(name == "addBoardBorder"){
         return ActionType::AddBoardBorder{};

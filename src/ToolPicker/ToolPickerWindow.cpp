@@ -280,7 +280,7 @@ void ToolPickerWindow::hideColorTools(){
     m_columns -= m_colorBlock.columns;
 
     for(int i = 0; i < m_colorBlock.columns; i++){
-        m_board.removeSquareColumnLeft();
+        m_board.removeTileColumnLeft();
     }
 
     int imageWidth = m_board.getImageWidth();
@@ -308,7 +308,7 @@ void ToolPickerWindow::showColorTools(){
 
     m_columns += m_colorBlock.columns;
     for(int i = 0; i < m_colorBlock.columns; i++){
-        m_board.addSquareColumnLeft();
+        m_board.addTileColumnLeft();
     }
 
     int imageWidth = m_board.getImageWidth();

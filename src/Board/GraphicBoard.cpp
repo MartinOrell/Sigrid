@@ -683,7 +683,7 @@ void GraphicBoard::clearArrows(){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareColumnRight(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds){
     if(!m_tileLayerPtr){
         return;
     }
@@ -721,7 +721,7 @@ void GraphicBoard::addSquareColumnRight(const std::vector<int>& repeatTileColorI
     redrawTexture();
 }
 
-void GraphicBoard::addSquareColumnLeft(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds){
     if(!m_tileLayerPtr){
         return;
     }
@@ -755,7 +755,7 @@ void GraphicBoard::addSquareColumnLeft(const std::vector<int>& repeatTileColorId
     redrawTexture();
 }
 
-void GraphicBoard::removeSquareColumnRight(){
+void GraphicBoard::removeTileColumnRight(){
     if(!m_tileLayerPtr){
         return;
     }
@@ -791,7 +791,7 @@ void GraphicBoard::removeSquareColumnRight(){
     redrawTexture();
 }
 
-void GraphicBoard::removeSquareColumnLeft(){
+void GraphicBoard::removeTileColumnLeft(){
     if(!m_tileLayerPtr){
         return;
     }
@@ -821,7 +821,7 @@ void GraphicBoard::removeSquareColumnLeft(){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareRowUp(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
 
     if(!m_tileLayerPtr){
         return;
@@ -858,7 +858,7 @@ void GraphicBoard::addSquareRowUp(const std::vector<int>& repeatTileColorIds){
     redrawTexture();
 }
 
-void GraphicBoard::addSquareRowDown(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
 
     if(!m_tileLayerPtr){
         return;
@@ -898,7 +898,7 @@ void GraphicBoard::addSquareRowDown(const std::vector<int>& repeatTileColorIds){
     redrawTexture();
 }
 
-void GraphicBoard::removeSquareRowUp(){
+void GraphicBoard::removeTileRowUp(){
 
     if(!m_tileLayerPtr){
         return;
@@ -929,7 +929,7 @@ void GraphicBoard::removeSquareRowUp(){
     redrawTexture();
 }
 
-void GraphicBoard::removeSquareRowDown(){
+void GraphicBoard::removeTileRowDown(){
 
     if(!m_tileLayerPtr){
         return;

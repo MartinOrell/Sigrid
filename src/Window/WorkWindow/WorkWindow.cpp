@@ -424,36 +424,36 @@ void WorkWindow::setCoordinateSize(const float& size){
     m_boards.at(m_activeBoardId).setCoordinateSize(size);    
 }
 
-void WorkWindow::addSquareColumnRight(){
-    m_boards.at(m_activeBoardId).addSquareColumnRight();
+void WorkWindow::addTileColumnRight(){
+    m_boards.at(m_activeBoardId).addTileColumnRight();
 }
 
-void WorkWindow::addSquareColumnLeft(){
-    m_boards.at(m_activeBoardId).addSquareColumnLeft();
+void WorkWindow::addTileColumnLeft(){
+    m_boards.at(m_activeBoardId).addTileColumnLeft();
 }
 
-void WorkWindow::removeSquareColumnRight(){
-    m_boards.at(m_activeBoardId).removeSquareColumnRight();
+void WorkWindow::removeTileColumnRight(){
+    m_boards.at(m_activeBoardId).removeTileColumnRight();
 }
 
-void WorkWindow::removeSquareColumnLeft(){
-    m_boards.at(m_activeBoardId).removeSquareColumnLeft();
+void WorkWindow::removeTileColumnLeft(){
+    m_boards.at(m_activeBoardId).removeTileColumnLeft();
 }
 
-void WorkWindow::addSquareRowUp(){
-    m_boards.at(m_activeBoardId).addSquareRowUp();
+void WorkWindow::addTileRowUp(){
+    m_boards.at(m_activeBoardId).addTileRowUp();
 }
 
-void WorkWindow::addSquareRowDown(){
-    m_boards.at(m_activeBoardId).addSquareRowDown();
+void WorkWindow::addTileRowDown(){
+    m_boards.at(m_activeBoardId).addTileRowDown();
 }
 
-void WorkWindow::removeSquareRowUp(){
-    m_boards.at(m_activeBoardId).removeSquareRowUp();
+void WorkWindow::removeTileRowUp(){
+    m_boards.at(m_activeBoardId).removeTileRowUp();
 }
 
-void WorkWindow::removeSquareRowDown(){
-    m_boards.at(m_activeBoardId).removeSquareRowDown();
+void WorkWindow::removeTileRowDown(){
+    m_boards.at(m_activeBoardId).removeTileRowDown();
 }
 
 void WorkWindow::addBoardBorder(){

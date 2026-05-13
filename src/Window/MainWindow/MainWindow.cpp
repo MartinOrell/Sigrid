@@ -53,22 +53,22 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::C, std::move(ctrlCTool));
     sigrid::Action ctrlVTool(ActionType::PasteFen{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::V, std::move(ctrlVTool));
-    sigrid::Action ctrlLeftKeyTool(ActionType::AddSquareColumnLeft{});
+    sigrid::Action ctrlLeftKeyTool(ActionType::AddTileColumnLeft{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Left, std::move(ctrlLeftKeyTool));
-    sigrid::Action ctrlRightKeyTool(ActionType::AddSquareColumnRight{});
+    sigrid::Action ctrlRightKeyTool(ActionType::AddTileColumnRight{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Right, std::move(ctrlRightKeyTool));
-    sigrid::Action ctrlUpKeyTool(ActionType::AddSquareRowUp{});
+    sigrid::Action ctrlUpKeyTool(ActionType::AddTileRowUp{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Up, std::move(ctrlUpKeyTool));
-    sigrid::Action ctrlDownKeyTool(ActionType::AddSquareRowDown{});
+    sigrid::Action ctrlDownKeyTool(ActionType::AddTileRowDown{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Down, std::move(ctrlDownKeyTool));
 
-    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveSquareColumnRight{});
+    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveTileColumnRight{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Left, std::move(ctrlShiftLeftKeyTool));
-    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveSquareColumnLeft{});
+    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveTileColumnLeft{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Right, std::move(ctrlShiftRightKeyTool));
-    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveSquareRowDown{});
+    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveTileRowDown{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Up, std::move(ctrlShiftUpKeyTool));
-    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveSquareRowUp{});
+    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveTileRowUp{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>();
@@ -643,36 +643,36 @@ void MainWindow::handleAction(const sigrid::Action action){
         setCoordinateSize(size);
         return;
     }
-    else if(std::holds_alternative<ActionType::AddSquareColumnRight>(action)){
-        addSquareColumnRight();
+    else if(std::holds_alternative<ActionType::AddTileColumnRight>(action)){
+        addTileColumnRight();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddSquareColumnLeft>(action)){
-        addSquareColumnLeft();
+    else if(std::holds_alternative<ActionType::AddTileColumnLeft>(action)){
+        addTileColumnLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveSquareColumnRight>(action)){
-        removeSquareColumnRight();
+    else if(std::holds_alternative<ActionType::RemoveTileColumnRight>(action)){
+        removeTileColumnRight();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveSquareColumnLeft>(action)){
-        removeSquareColumnLeft();
+    else if(std::holds_alternative<ActionType::RemoveTileColumnLeft>(action)){
+        removeTileColumnLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddSquareRowUp>(action)){
-        addSquareRowUp();
+    else if(std::holds_alternative<ActionType::AddTileRowUp>(action)){
+        addTileRowUp();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddSquareRowDown>(action)){
-        addSquareRowDown();
+    else if(std::holds_alternative<ActionType::AddTileRowDown>(action)){
+        addTileRowDown();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveSquareRowUp>(action)){
-        removeSquareRowUp();
+    else if(std::holds_alternative<ActionType::RemoveTileRowUp>(action)){
+        removeTileRowUp();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveSquareRowDown>(action)){
-        removeSquareRowDown();
+    else if(std::holds_alternative<ActionType::RemoveTileRowDown>(action)){
+        removeTileRowDown();
         return;
     }
     else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
@@ -1151,75 +1151,75 @@ void MainWindow::setCoordinateSize(const float& size){
     createGraphic();
 }
 
-void MainWindow::addSquareColumnRight(){
+void MainWindow::addTileColumnRight(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->addSquareColumnRight();
+    m_workWindow->addTileColumnRight();
     createGraphic();
 }
 
-void MainWindow::addSquareColumnLeft(){
+void MainWindow::addTileColumnLeft(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->addSquareColumnLeft();
+    m_workWindow->addTileColumnLeft();
     createGraphic();
 }
 
-void MainWindow::removeSquareColumnRight(){
+void MainWindow::removeTileColumnRight(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeSquareColumnRight();
+    m_workWindow->removeTileColumnRight();
     createGraphic();
 }
 
-void MainWindow::removeSquareColumnLeft(){
+void MainWindow::removeTileColumnLeft(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeSquareColumnLeft();
+    m_workWindow->removeTileColumnLeft();
     createGraphic();
 }
 
-void MainWindow::addSquareRowUp(){
+void MainWindow::addTileRowUp(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->addSquareRowUp();
+    m_workWindow->addTileRowUp();
     createGraphic();
 }
 
-void MainWindow::addSquareRowDown(){
+void MainWindow::addTileRowDown(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->addSquareRowDown();
+    m_workWindow->addTileRowDown();
     createGraphic();
 }
 
-void MainWindow::removeSquareRowUp(){
+void MainWindow::removeTileRowUp(){
     if(!m_workWindow){
         return;
     }
     
-    m_workWindow->removeSquareRowUp();
+    m_workWindow->removeTileRowUp();
     createGraphic();
 }
 
-void MainWindow::removeSquareRowDown(){
+void MainWindow::removeTileRowDown(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeSquareRowDown();
+    m_workWindow->removeTileRowDown();
     createGraphic();
 }
 

@@ -605,128 +605,128 @@ void Board::setCoordinateSize(const float& size){
     m_graphicBoard.setCoordinateSize(size);
 }
 
-void Board::addSquareColumnRight(){
+void Board::addTileColumnRight(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.addSquareColumnRight()){
-            m_graphicBoard.addSquareColumnRight(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileColumnRight()){
+            m_graphicBoard.addTileColumnRight(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addSquareColumnLeft()){
-            m_graphicBoard.addSquareColumnLeft(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileColumnLeft()){
+            m_graphicBoard.addTileColumnLeft(m_logicBoard.getRepeatColorIds());
         }
     }
     
     deselect();
 }
 
-void Board::addSquareColumnLeft(){
+void Board::addTileColumnLeft(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.addSquareColumnLeft()){
-            m_graphicBoard.addSquareColumnLeft(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileColumnLeft()){
+            m_graphicBoard.addTileColumnLeft(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addSquareColumnRight()){
-            m_graphicBoard.addSquareColumnRight(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileColumnRight()){
+            m_graphicBoard.addTileColumnRight(m_logicBoard.getRepeatColorIds());
         }
     }
     
     deselect();
 }
 
-void Board::removeSquareColumnRight(){
+void Board::removeTileColumnRight(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeSquareColumnRight()){
-            m_graphicBoard.removeSquareColumnRight();
+        if(m_logicBoard.removeTileColumnRight()){
+            m_graphicBoard.removeTileColumnRight();
         }
     }
     else{
-        if(m_logicBoard.removeSquareColumnLeft()){
-            m_graphicBoard.removeSquareColumnLeft();
+        if(m_logicBoard.removeTileColumnLeft()){
+            m_graphicBoard.removeTileColumnLeft();
         }
     }
 
     deselect();
 }
 
-void Board::removeSquareColumnLeft(){
+void Board::removeTileColumnLeft(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeSquareColumnLeft()){
-            m_graphicBoard.removeSquareColumnLeft();
+        if(m_logicBoard.removeTileColumnLeft()){
+            m_graphicBoard.removeTileColumnLeft();
         }
     }
     else{
-        if(m_logicBoard.removeSquareColumnRight()){
-            m_graphicBoard.removeSquareColumnRight();
+        if(m_logicBoard.removeTileColumnRight()){
+            m_graphicBoard.removeTileColumnRight();
         }
     }
     
     deselect();
 }
 
-void Board::addSquareRowUp(){
+void Board::addTileRowUp(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.addSquareRowUp()){
-            m_graphicBoard.addSquareRowUp(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileRowUp()){
+            m_graphicBoard.addTileRowUp(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addSquareRowDown()){
-            m_graphicBoard.addSquareRowDown(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileRowDown()){
+            m_graphicBoard.addTileRowDown(m_logicBoard.getRepeatColorIds());
         }
     }
     
     deselect();
 }
 
-void Board::addSquareRowDown(){
+void Board::addTileRowDown(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.addSquareRowDown()){
-            m_graphicBoard.addSquareRowDown(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileRowDown()){
+            m_graphicBoard.addTileRowDown(m_logicBoard.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addSquareRowUp()){
-            m_graphicBoard.addSquareRowUp(m_logicBoard.getRepeatColorIds());
+        if(m_logicBoard.addTileRowUp()){
+            m_graphicBoard.addTileRowUp(m_logicBoard.getRepeatColorIds());
         }
     }
     
     deselect();
 }
 
-void Board::removeSquareRowUp(){
+void Board::removeTileRowUp(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeSquareRowUp()){
-            m_graphicBoard.removeSquareRowUp();
+        if(m_logicBoard.removeTileRowUp()){
+            m_graphicBoard.removeTileRowUp();
         }
     }
     else{
-        if(m_logicBoard.removeSquareRowDown()){
-            m_graphicBoard.removeSquareRowDown();
+        if(m_logicBoard.removeTileRowDown()){
+            m_graphicBoard.removeTileRowDown();
         }
     }
 
     deselect();
 }
 
-void Board::removeSquareRowDown(){
+void Board::removeTileRowDown(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeSquareRowDown()){
-            m_graphicBoard.removeSquareRowDown();
+        if(m_logicBoard.removeTileRowDown()){
+            m_graphicBoard.removeTileRowDown();
         }
     }
     else{
-        if(m_logicBoard.removeSquareRowUp()){
-            m_graphicBoard.removeSquareRowUp();
+        if(m_logicBoard.removeTileRowUp()){
+            m_graphicBoard.removeTileRowUp();
         }
     }
     

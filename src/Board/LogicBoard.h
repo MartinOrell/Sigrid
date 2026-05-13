@@ -45,14 +45,14 @@ namespace sigrid{
             bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
             bool removeArrow(const CoordPair& coordPair);
 
-            bool addSquareColumnRight();
-            bool addSquareColumnLeft();
-            bool removeSquareColumnRight();
-            bool removeSquareColumnLeft();
-            bool addSquareRowUp();
-            bool addSquareRowDown();
-            bool removeSquareRowUp();
-            bool removeSquareRowDown();
+            bool addTileColumnRight();
+            bool addTileColumnLeft();
+            bool removeTileColumnRight();
+            bool removeTileColumnLeft();
+            bool addTileRowUp();
+            bool addTileRowDown();
+            bool removeTileRowUp();
+            bool removeTileRowDown();
 
             void print();
             void clearEntities();

@@ -338,11 +338,11 @@ bool LogicBoard::removeArrow(const CoordPair& coordPair){
     return true;
 }
 
-bool LogicBoard::addSquareColumnRight(){
+bool LogicBoard::addTileColumnRight(){
     return m_tileLayer.addColumnRight();
 }
 
-bool LogicBoard::addSquareColumnLeft(){
+bool LogicBoard::addTileColumnLeft(){
     if(!m_tileLayer.addColumnLeft()){
         return false;
     }
@@ -351,7 +351,7 @@ bool LogicBoard::addSquareColumnLeft(){
     return true;
 }
 
-bool LogicBoard::removeSquareColumnRight(){
+bool LogicBoard::removeTileColumnRight(){
     if(!m_tileLayer.removeColumnRight()){
         return false;
     }
@@ -361,7 +361,7 @@ bool LogicBoard::removeSquareColumnRight(){
     return true;
 }
 
-bool LogicBoard::removeSquareColumnLeft(){
+bool LogicBoard::removeTileColumnLeft(){
     if(!m_tileLayer.removeColumnLeft()){
         return false;
     }
@@ -372,7 +372,7 @@ bool LogicBoard::removeSquareColumnLeft(){
     return true;
 }
 
-bool LogicBoard::addSquareRowUp(){
+bool LogicBoard::addTileRowUp(){
     if(!m_tileLayer.addRowUp()){
         return false;
     }
@@ -381,11 +381,11 @@ bool LogicBoard::addSquareRowUp(){
     return true;
 }
 
-bool LogicBoard::addSquareRowDown(){
+bool LogicBoard::addTileRowDown(){
     return m_tileLayer.addRowDown();
 }
 
-bool LogicBoard::removeSquareRowUp(){
+bool LogicBoard::removeTileRowUp(){
     if(!m_tileLayer.removeRowUp()){
         return false;
     }
@@ -396,7 +396,7 @@ bool LogicBoard::removeSquareRowUp(){
     return true;
 }
 
-bool LogicBoard::removeSquareRowDown(){
+bool LogicBoard::removeTileRowDown(){
     if(!m_tileLayer.removeRowDown()){
         return false;
     }

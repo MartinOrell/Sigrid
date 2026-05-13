@@ -202,14 +202,14 @@ Menu: [
         "Set Big Coordinates" setCoordinateSize(60%)
         "Set Small Coordinates" setCoordinateSize(40%)
       ]
-      "Insert Column Right" addSquareColumnRight
-      "Insert Column Left" addSquareColumnLeft
-      "Remove Column Right" removeSquareColumnRight
-      "Remove Column Left" removeSquareColumnLeft
-      "Insert Row Up" addSquareRowUp
-      "Insert Row Down" addSquareRowDown
-      "Remove Row Up" removeSquareRowUp
-      "Remove Row Down" removeSquareRowDown
+      "Insert Column Right" addTileColumnRight
+      "Insert Column Left" addTileColumnLeft
+      "Remove Column Right" removeTileColumnRight
+      "Remove Column Left" removeTileColumnLeft
+      "Insert Row Up" addTileRowUp
+      "Insert Row Down" addTileRowDown
+      "Remove Row Up" removeTileRowUp
+      "Remove Row Down" removeTileRowDown
       ToggleBoardBorder [
         "Remove Border" removeBoardBorder
         "Add Border" addBoardBorder
