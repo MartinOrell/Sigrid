@@ -1073,10 +1073,8 @@ void GraphicBoard::addLeftOutsideCoordinates(){
     m_labelsPtr->showLeftOutside();
 
     unsigned int leftEdgeWidth = m_labelsPtr->getLeftOutsideLabelSize()* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = m_labelsPtr->getLeftOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
 
     setLeftEdgeWidth(leftEdgeWidth);
-    setBottomEdgeWidth(leftEdgeHeight);
     addLeftOutsideLabels_h();
 
     redrawTexture();
@@ -1093,11 +1091,9 @@ void GraphicBoard::addBottomOutsideCoordinates(){
 
     m_labelsPtr->showBottomOutside();
 
-    unsigned int leftEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
+    unsigned int bottomEdgeWidth = m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
 
-    setLeftEdgeWidth(leftEdgeWidth);
-    setBottomEdgeWidth(leftEdgeHeight);
+    setBottomEdgeWidth(bottomEdgeWidth);
     addBottomOutsideLabels_h();
 
     redrawTexture();
