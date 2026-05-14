@@ -6,23 +6,23 @@
 namespace sigrid{
 
     struct BoardLabelContainer{
-        bool isInside;
-        int position; // 0 = Left, 1 = right, 2 = top, 3 = bottom
-        bool isVisible;
-        float size;
-        std::string font;
+        bool isInside = true;
+        int position = -1; // 0 = Left, 1 = right, 2 = top, 3 = bottom
+        bool isVisible = false;
+        float size = 0.f;
+        std::string font = "";
     };
 
     struct BoardDesignContainer{
 
-        float tileWidth;
-        float tileHeight;
-        float arrowThickness;
-        float arrowHeadSize;
-        float circleDiameter;
+        float tileWidth = 0.f;
+        float tileHeight = 0.f;
+        float arrowThickness = 0.f;
+        float arrowHeadSize = 0.f;
+        float circleDiameter = 0.f;
         std::vector<BoardLabelContainer> labels;
-        bool border;
-        unsigned int borderWidth;
-        bool turnToken;
+        bool border = false;
+        unsigned int borderWidth = 0.f;
+        bool turnToken = false;
     };
 }

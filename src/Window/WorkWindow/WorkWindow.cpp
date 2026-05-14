@@ -400,6 +400,10 @@ void WorkWindow::addLeftOutsideLabels(){
     m_boards.at(m_activeBoardId).addLeftOutsideLabels();
 }
 
+void WorkWindow::addRightOutsideLabels(){
+    m_boards.at(m_activeBoardId).addRightOutsideLabels();
+}
+
 void WorkWindow::addTopOutsideLabels(){
     m_boards.at(m_activeBoardId).addTopOutsideLabels();
 }
@@ -418,6 +422,10 @@ void WorkWindow::removeBottomInsideLabels(){
 
 void WorkWindow::removeLeftOutsideLabels(){
     m_boards.at(m_activeBoardId).removeLeftOutsideLabels();
+}
+
+void WorkWindow::removeRightOutsideLabels(){
+    m_boards.at(m_activeBoardId).removeRightOutsideLabels();
 }
 
 void WorkWindow::removeTopOutsideLabels(){

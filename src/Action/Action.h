@@ -57,11 +57,13 @@ namespace sigrid{
         struct AddLeftInsideLabels{};
         struct AddBottomInsideLabels{};
         struct AddLeftOutsideLabels{};
+        struct AddRightOutsideLabels{};
         struct AddTopOutsideLabels{};
         struct AddBottomOutsideLabels{};
         struct RemoveLeftInsideLabels{};
         struct RemoveBottomInsideLabels{};
         struct RemoveLeftOutsideLabels{};
+        struct RemoveRightOutsideLabels{};
         struct RemoveTopOutsideLabels{};
         struct RemoveBottomOutsideLabels{};
         struct SetCoordinateSize{
@@ -110,11 +112,13 @@ namespace sigrid{
         ActionType::AddLeftInsideLabels,
         ActionType::AddBottomInsideLabels,
         ActionType::AddLeftOutsideLabels,
+        ActionType::AddRightOutsideLabels,
         ActionType::AddTopOutsideLabels,
         ActionType::AddBottomOutsideLabels,
         ActionType::RemoveLeftInsideLabels,
         ActionType::RemoveBottomInsideLabels,
         ActionType::RemoveLeftOutsideLabels,
+        ActionType::RemoveRightOutsideLabels,
         ActionType::RemoveTopOutsideLabels,
         ActionType::RemoveBottomOutsideLabels,
         ActionType::SetCoordinateSize,

@@ -618,6 +618,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         addLeftOutsideLabels();
         return;
     }
+    else if(std::holds_alternative<ActionType::AddRightOutsideLabels>(action)){
+        addRightOutsideLabels();
+        return;
+    }
     else if(std::holds_alternative<ActionType::AddTopOutsideLabels>(action)){
         addTopOutsideLabels();
         return;
@@ -636,6 +640,10 @@ void MainWindow::handleAction(const sigrid::Action action){
     }
     else if(std::holds_alternative<ActionType::RemoveLeftOutsideLabels>(action)){
         removeLeftOutsideLabels();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveRightOutsideLabels>(action)){
+        removeRightOutsideLabels();
         return;
     }
     else if(std::holds_alternative<ActionType::RemoveTopOutsideLabels>(action)){
@@ -1063,6 +1071,22 @@ void MainWindow::addLeftOutsideLabels(){
     createGraphic();
 }
 
+void MainWindow::addRightOutsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to add right outside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->addRightOutsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("RightOutsideLabels");
+    }
+
+    createGraphic();
+}
+
 void MainWindow::addTopOutsideLabels(){
 
     if(!m_workWindow){
@@ -1138,6 +1162,22 @@ void MainWindow::removeLeftOutsideLabels(){
 
     if(m_menu){
         m_menu->toggleItem("LeftOutsideLabels");
+    }
+
+    createGraphic();
+}
+
+void MainWindow::removeRightOutsideLabels(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to remove right outside labels, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeRightOutsideLabels();
+
+    if(m_menu){
+        m_menu->toggleItem("RightOutsideLabels");
     }
 
     createGraphic();

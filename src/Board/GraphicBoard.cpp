@@ -150,6 +150,16 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                     m_labelsPtr->setLeftOutsideSize(label.size);
                     m_labelsPtr->setLeftOutsideFont(label.font);
                 }
+                else if(label.position == 1){
+                    if(label.isVisible){
+                        m_labelsPtr->showRightOutside();
+                    }
+                    else{
+                        m_labelsPtr->hideRightOutside();
+                    }
+                    m_labelsPtr->setRightOutsideSize(label.size);
+                    m_labelsPtr->setRightOutsideFont(label.font);
+                }
                 else if(label.position == 2){
                     if(label.isVisible){
                         m_labelsPtr->showTopOutside();
@@ -201,6 +211,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         if(m_labelsPtr->isLeftOutsideVisible()){
             updateLeftEdgeWidth();
             addLeftOutsideLabels_h();
+        }
+        if(m_labelsPtr->isRightOutsideVisible()){
+            updateRightEdgeWidth();
+            addRightOutsideLabels_h();
         }
         if(m_labelsPtr->isBottomOutsideVisible()){
             updateBottomEdgeWidth();
@@ -719,6 +733,7 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
             m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
             m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         }
+        m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         int column = m_tileLayerPtr->getNumColumns()-1;
         if(m_labelsPtr->isBottomInsideVisible()){
             addBottomInsideLabel_h(column);
@@ -756,6 +771,7 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
             m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
             m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         }
+        m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         int column = m_tileLayerPtr->getNumColumns()-1;
         if(m_labelsPtr->isBottomInsideVisible()){
             addBottomInsideLabel_h(column);
@@ -801,7 +817,7 @@ void GraphicBoard::removeTileColumnRight(){
             m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
             m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
         }
-        
+        m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
     }
     resizeTexture();
     redrawTexture();
@@ -832,6 +848,7 @@ void GraphicBoard::removeTileColumnLeft(){
             m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
             m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
         }
+        m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{-m_tileLayerPtr->getTileSize().x,0.f});
     }
     resizeTexture();
     redrawTexture();
@@ -857,6 +874,7 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
             m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         }
         m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
@@ -868,8 +886,12 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
         if(m_labelsPtr->isLeftOutsideVisible()){
             addLeftOutsideLabel_h(row);
         }
+        if(m_labelsPtr->isRightOutsideVisible()){
+            addRightOutsideLabel_h(row);
+        }
     }
     updateLeftEdgeWidth();
+    updateRightEdgeWidth();
     resizeTexture();
     redrawTexture();
 }
@@ -897,6 +919,7 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
             m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         }
         m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
@@ -908,8 +931,12 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
         if(m_labelsPtr->isLeftOutsideVisible()){
             addLeftOutsideLabel_h(row);
         }
+        if(m_labelsPtr->isRightOutsideVisible()){
+            addRightOutsideLabel_h(row);
+        }
     }
     updateLeftEdgeWidth();
+    updateRightEdgeWidth();
     resizeTexture();
     redrawTexture();
 }
@@ -936,11 +963,13 @@ void GraphicBoard::removeTileRowUp(){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
             m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         }
         m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
     }
     updateLeftEdgeWidth();
+    updateRightEdgeWidth();
     resizeTexture();
     redrawTexture();
 }
@@ -972,11 +1001,13 @@ void GraphicBoard::removeTileRowDown(){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
             m_labelsPtr->moveLeftOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
+            m_labelsPtr->moveRightOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         }
         m_labelsPtr->moveBottomInsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         m_labelsPtr->moveBottomOutsideCoordinateLabels(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
     }
     updateLeftEdgeWidth();
+    updateRightEdgeWidth();
     resizeTexture();
     redrawTexture();
 }
@@ -1034,6 +1065,9 @@ void GraphicBoard::flip(){
         if(m_labelsPtr->isLeftOutsideVisible()){
             addLeftOutsideCoordinates();
         }
+        if(m_labelsPtr->isRightOutsideVisible()){
+            addRightOutsideCoordinates();
+        }
         if(m_labelsPtr->isBottomOutsideVisible()){
             addBottomOutsideCoordinates();
         }
@@ -1089,6 +1123,22 @@ void GraphicBoard::addLeftOutsideCoordinates(){
     m_labelsPtr->showLeftOutside();
     updateLeftEdgeWidth();
     addLeftOutsideLabels_h();
+    redrawTexture();
+}
+
+void GraphicBoard::addRightOutsideCoordinates(){
+
+    if(!m_labelsPtr){
+        return;
+    }
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+
+    m_labelsPtr->showRightOutside();
+    updateRightEdgeWidth();
+    addRightOutsideLabels_h();
     redrawTexture();
 }
 
@@ -1167,6 +1217,21 @@ void GraphicBoard::removeLeftOutsideCoordinates(){
     redrawTexture();
 }
 
+void GraphicBoard::removeRightOutsideCoordinates(){
+
+    if(!m_labelsPtr){
+        return;
+    }
+
+    if(m_labelsPtr->isRightOutsideVisible()){
+        m_labelsPtr->hideRightOutside();
+        updateRightEdgeWidth();
+        m_labelsPtr->removeRightOutsideLabels();
+    }
+
+    redrawTexture();
+}
+
 void GraphicBoard::removeTopOutsideCoordinates(){
 
     if(!m_labelsPtr){
@@ -1204,6 +1269,7 @@ void GraphicBoard::setCoordinateSize(const float& size){
     }
 
     m_labelsPtr->setLeftOutsideSize(size);
+    m_labelsPtr->setRightOutsideSize(size);
     m_labelsPtr->setTopOutsideSize(size);
     m_labelsPtr->setBottomOutsideSize(size);
 
@@ -1212,12 +1278,15 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
     m_labelsPtr->showLeftOutside();
     updateLeftEdgeWidth();
+    m_labelsPtr->showRightOutside();
+    updateRightEdgeWidth();
     m_labelsPtr->showTopOutside();
     updateTopEdgeWidth();
     m_labelsPtr->showBottomOutside();
     updateBottomEdgeWidth();
 
     addLeftOutsideLabels_h();
+    addRightOutsideLabels_h();
     addTopOutsideLabels_h();
     addBottomOutsideLabels_h();
     redrawTexture();
@@ -1451,15 +1520,28 @@ void GraphicBoard::updateRightEdgeWidth(){
 
     unsigned int newEdgeWidth = 0;
 
+    if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isRightOutsideVisible()){
+        int numDigits = notation::getRowNotation(m_tileLayerPtr->getNumRows()-1).length();
+        float labelSize = m_labelsPtr->getRightOutsideLabelSize();
+        float tileWidth = m_tileLayerPtr->getTileWidth();
+
+        newEdgeWidth += (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
+    }
+
     if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
-        newEdgeWidth = (unsigned int)(m_tileLayerPtr->getTileWidth()/2.f);
+        newEdgeWidth += (unsigned int)(m_tileLayerPtr->getTileWidth()/2.f);
     }
 
     if(newEdgeWidth == m_rightEdgeWidth){
         return;
     }
 
+    float moveX = (float)newEdgeWidth - (float)m_rightEdgeWidth;
     m_rightEdgeWidth = newEdgeWidth;
+
+    if(m_labelsPtr&& m_labelsPtr->isRightOutsideVisible()){
+        m_labelsPtr->moveRightOutsideCoordinateLabels({moveX/2.f, 0.f});
+    }
 
     if(m_texturePtr){
         resizeTexture();
@@ -1643,6 +1725,48 @@ void GraphicBoard::addLeftOutsideLabels_h(){
     }
 }
 
+void GraphicBoard::addRightOutsideLabel_h(const int& row){
+
+    if(!m_labelsPtr){
+        return;
+    }
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+
+    Coord coord;
+    if(m_isLeftToRight){
+        coord.x = m_tileLayerPtr->getNumColumns()-1;
+    }
+    coord.y = row;
+    auto tilePosition_o = m_tileLayerPtr->getTileTopLeftPosition(coord);
+    if(tilePosition_o == std::nullopt){
+        std::cerr << "GraphicBoard: Tile "
+            << coord.getNotation() << " not found for label" << std::endl;
+        return;
+    }
+    sf::Vector2f tileSize = m_tileLayerPtr->getTileSize();
+    m_labelsPtr->addRightOutsideLabel(tilePosition_o.value(), tileSize, (float)m_rightEdgeWidth);
+}
+
+void GraphicBoard::addRightOutsideLabels_h(){
+
+    if(!m_labelsPtr){
+        return;
+    }
+
+    if(!m_tileLayerPtr){
+        return;
+    }
+
+    m_labelsPtr->removeRightOutsideLabels();
+
+    for(int i = 0; i < m_tileLayerPtr->getNumRows(); i++){
+        addRightOutsideLabel_h(i);
+    }
+}
+
 void GraphicBoard::addTopOutsideLabel_h(const int& column){
 
     if(!m_labelsPtr){
@@ -1737,6 +1861,7 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
         m_labelsPtr->moveLeftInsideCoordinateLabels(offset);
         m_labelsPtr->moveBottomInsideCoordinateLabels(offset);
         m_labelsPtr->moveLeftOutsideCoordinateLabels(offset);
+        m_labelsPtr->moveRightOutsideCoordinateLabels(offset);
         m_labelsPtr->moveTopOutsideCoordinateLabels(offset);
         m_labelsPtr->moveBottomOutsideCoordinateLabels(offset);
     }

@@ -194,6 +194,10 @@ Menu: [
         "Remove left outside labels" removeLeftOutsideLabels
         "Add left outside labels" addLeftOutsideLabels
       ]
+      RightOutsideLabels [
+        "Add right outside labels" addRightOutsideLabels
+        "Remove right outside labels" removeRightOutsideLabels
+      ]
       TopOutsideLabels [
         "Add top outside labels" addTopOutsideLabels
         "Remove top outside labels" removeTopOutsideLabels
@@ -331,8 +335,14 @@ BoardStyle: [
       font: res/fonts/arial.ttf
     ]
     [
+      position: "outside right"
+      visibility: Hidden
+      size: 40%
+      font: res/fonts/arial.ttf
+    ]
+    [
       position: "outside top"
-      visibility: Visible
+      visibility: Hidden
       size: 40%
       font: res/fonts/arial.ttf
     ]

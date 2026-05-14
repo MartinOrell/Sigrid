@@ -67,11 +67,13 @@ namespace sigrid{
             void addLeftInsideLabels();
             void addBottomInsideLabels();
             void addLeftOutsideLabels();
+            void addRightOutsideLabels();
             void addTopOutsideLabels();
             void addBottomOutsideLabels();
             void removeLeftInsideLabels();
             void removeBottomInsideLabels();
             void removeLeftOutsideLabels();
+            void removeRightOutsideLabels();
             void removeTopOutsideLabels();
             void removeBottomOutsideLabels();
             void setCoordinateSize(const float& size);
