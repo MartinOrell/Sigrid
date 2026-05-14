@@ -1057,26 +1057,26 @@ void GraphicBoard::flip(){
     
     if(m_labelsPtr){
         if(m_labelsPtr->isLeftInsideVisible()){
-            addLeftInsideCoordinates();
+            addLeftInsideLabels();
         }
         if(m_labelsPtr->isBottomInsideVisible()){
-            addBottomInsideCoordinates();
+            addBottomInsideLabels();
         }
         if(m_labelsPtr->isLeftOutsideVisible()){
-            addLeftOutsideCoordinates();
+            addLeftOutsideLabels();
         }
         if(m_labelsPtr->isRightOutsideVisible()){
-            addRightOutsideCoordinates();
+            addRightOutsideLabels();
         }
         if(m_labelsPtr->isBottomOutsideVisible()){
-            addBottomOutsideCoordinates();
+            addBottomOutsideLabels();
         }
     }
 
     redrawTexture();//also called by addCoordinates
 }
 
-void GraphicBoard::addLeftInsideCoordinates(){
+void GraphicBoard::addLeftInsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1093,7 +1093,7 @@ void GraphicBoard::addLeftInsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::addBottomInsideCoordinates(){
+void GraphicBoard::addBottomInsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1110,7 +1110,7 @@ void GraphicBoard::addBottomInsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::addLeftOutsideCoordinates(){
+void GraphicBoard::addLeftOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1126,7 +1126,7 @@ void GraphicBoard::addLeftOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::addRightOutsideCoordinates(){
+void GraphicBoard::addRightOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1142,7 +1142,7 @@ void GraphicBoard::addRightOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::addTopOutsideCoordinates(){
+void GraphicBoard::addTopOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1158,7 +1158,7 @@ void GraphicBoard::addTopOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::addBottomOutsideCoordinates(){
+void GraphicBoard::addBottomOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1174,7 +1174,7 @@ void GraphicBoard::addBottomOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeLeftInsideCoordinates(){
+void GraphicBoard::removeLeftInsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1188,7 +1188,7 @@ void GraphicBoard::removeLeftInsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBottomInsideCoordinates(){
+void GraphicBoard::removeBottomInsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1202,7 +1202,7 @@ void GraphicBoard::removeBottomInsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeLeftOutsideCoordinates(){
+void GraphicBoard::removeLeftOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1217,7 +1217,7 @@ void GraphicBoard::removeLeftOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeRightOutsideCoordinates(){
+void GraphicBoard::removeRightOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1232,7 +1232,7 @@ void GraphicBoard::removeRightOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeTopOutsideCoordinates(){
+void GraphicBoard::removeTopOutsideLabels(){
 
     if(!m_labelsPtr){
         return;
@@ -1247,7 +1247,7 @@ void GraphicBoard::removeTopOutsideCoordinates(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBottomOutsideCoordinates(){
+void GraphicBoard::removeBottomOutsideLabels(){
 
     if(!m_labelsPtr){
         return;

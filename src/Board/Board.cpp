@@ -570,51 +570,51 @@ void Board::flipBoard(){
 }
 
 void Board::addLeftInsideLabels(){
-    m_graphicBoard.addLeftInsideCoordinates();
+    m_graphicBoard.addLeftInsideLabels();
 }
 
 void Board::addBottomInsideLabels(){
-    m_graphicBoard.addBottomInsideCoordinates();
+    m_graphicBoard.addBottomInsideLabels();
 }
 
 void Board::addLeftOutsideLabels(){
-    m_graphicBoard.addLeftOutsideCoordinates();
+    m_graphicBoard.addLeftOutsideLabels();
 }
 
 void Board::addRightOutsideLabels(){
-    m_graphicBoard.addRightOutsideCoordinates();
+    m_graphicBoard.addRightOutsideLabels();
 }
 
 void Board::addTopOutsideLabels(){
-    m_graphicBoard.addTopOutsideCoordinates();
+    m_graphicBoard.addTopOutsideLabels();
 }
 
 void Board::addBottomOutsideLabels(){
-    m_graphicBoard.addBottomOutsideCoordinates();
+    m_graphicBoard.addBottomOutsideLabels();
 }
 
 void Board::removeLeftInsideLabels(){
-    m_graphicBoard.removeLeftInsideCoordinates();
+    m_graphicBoard.removeLeftInsideLabels();
 }
 
 void Board::removeBottomInsideLabels(){
-    m_graphicBoard.removeBottomInsideCoordinates();
+    m_graphicBoard.removeBottomInsideLabels();
 }
 
 void Board::removeLeftOutsideLabels(){
-    m_graphicBoard.removeLeftOutsideCoordinates();
+    m_graphicBoard.removeLeftOutsideLabels();
 }
 
 void Board::removeRightOutsideLabels(){
-    m_graphicBoard.removeRightOutsideCoordinates();
+    m_graphicBoard.removeRightOutsideLabels();
 }
 
 void Board::removeTopOutsideLabels(){
-    m_graphicBoard.removeTopOutsideCoordinates();
+    m_graphicBoard.removeTopOutsideLabels();
 }
 
 void Board::removeBottomOutsideLabels(){
-    m_graphicBoard.removeBottomOutsideCoordinates();
+    m_graphicBoard.removeBottomOutsideLabels();
 }
 
 void Board::setCoordinateSize(const float& size){

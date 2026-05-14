@@ -118,19 +118,19 @@ namespace sigrid{
 
             void flip();
 
-            void addLeftInsideCoordinates();
-            void addBottomInsideCoordinates();
-            void addLeftOutsideCoordinates();
-            void addRightOutsideCoordinates();
-            void addTopOutsideCoordinates();
-            void addBottomOutsideCoordinates();
+            void addLeftInsideLabels();
+            void addBottomInsideLabels();
+            void addLeftOutsideLabels();
+            void addRightOutsideLabels();
+            void addTopOutsideLabels();
+            void addBottomOutsideLabels();
 
-            void removeLeftInsideCoordinates();
-            void removeBottomInsideCoordinates();
-            void removeLeftOutsideCoordinates();
-            void removeRightOutsideCoordinates();
-            void removeTopOutsideCoordinates();
-            void removeBottomOutsideCoordinates();
+            void removeLeftInsideLabels();
+            void removeBottomInsideLabels();
+            void removeLeftOutsideLabels();
+            void removeRightOutsideLabels();
+            void removeTopOutsideLabels();
+            void removeBottomOutsideLabels();
 
             void setCoordinateSize(const float& size);
 
