@@ -89,7 +89,7 @@ namespace sigrid{
                 std::vector<sf::Text> labels;
                 bool isVisible = false;
                 std::string fontFilename = "";
-                float size = 0.f;
+                float labelSizeFactor = 0.f; //fraction of tileHeight
             };
 
             FontManager* m_fontManagerPtr = nullptr;
