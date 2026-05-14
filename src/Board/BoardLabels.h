@@ -41,6 +41,11 @@ namespace sigrid{
             void setTopOutsideFont(const std::string& fontFilename);
             void setBottomOutsideFont(const std::string& fontFilename);
 
+            void setLeftOutsideWorkWidth(const float& width);
+            void setRightOutsideWorkWidth(const float& width);
+            void setTopOutsideWorkHeight(const float& height);
+            void setBottomOutsideWorkHeight(const float& height);
+
             void setFontManagerPtr(FontManager* const managerPtr);
 
             bool isLeftInsideVisible() const;
@@ -59,9 +64,9 @@ namespace sigrid{
 
             bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
             bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
-            bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
-            bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth);
+            bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+            bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+            bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
             bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
 
             void removeLeftInsideLabels();
@@ -99,5 +104,9 @@ namespace sigrid{
             SideLabels m_rightOutsideCoordLabels;
             SideLabels m_topOutsideCoordLabels;
             SideLabels m_bottomOutsideCoordLabels;
+            float m_leftWorkWidth = 0.f;
+            float m_rightWorkWidth = 0.f;
+            float m_topWorkHeight = 0.f;
+            float m_bottomWorkHeight = 0.f;
     };
 }

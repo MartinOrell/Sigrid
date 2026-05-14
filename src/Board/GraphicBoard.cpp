@@ -1492,6 +1492,7 @@ void GraphicBoard::updateLeftEdgeWidth(){
         float tileWidth = m_tileLayerPtr->getTileWidth();
 
         newEdgeWidth = (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
+        m_labelsPtr->setLeftOutsideWorkWidth((float)newEdgeWidth);
     }
 
     if(newEdgeWidth == m_leftEdgeWidth){
@@ -1525,7 +1526,9 @@ void GraphicBoard::updateRightEdgeWidth(){
         float labelSize = m_labelsPtr->getRightOutsideLabelSize();
         float tileWidth = m_tileLayerPtr->getTileWidth();
 
-        newEdgeWidth += (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
+        float rightLabelWorkWidth = (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
+        m_labelsPtr->setRightOutsideWorkWidth(rightLabelWorkWidth);
+        newEdgeWidth += rightLabelWorkWidth;
     }
 
     if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
@@ -1553,7 +1556,8 @@ void GraphicBoard::updateTopEdgeWidth(){
     unsigned int newEdgeWidth = 0;
 
     if(m_labelsPtr && m_labelsPtr->isTopOutsideVisible()){
-        newEdgeWidth =  m_labelsPtr->getTopOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
+        newEdgeWidth = m_labelsPtr->getTopOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
+        m_labelsPtr->setTopOutsideWorkHeight((float)newEdgeWidth);
     }
 
     if(newEdgeWidth == m_topEdgeWidth){
@@ -1580,6 +1584,7 @@ void GraphicBoard::updateBottomEdgeWidth(){
     unsigned int newEdgeWidth = 0;
     if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isBottomOutsideVisible()){
         newEdgeWidth =  m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
+        m_labelsPtr->setBottomOutsideWorkHeight((float)newEdgeWidth);
     }
 
     if(newEdgeWidth == m_bottomEdgeWidth){
@@ -1705,7 +1710,7 @@ void GraphicBoard::addLeftOutsideLabel_h(const int& row){
         return;
     }
     sf::Vector2f tileSize = m_tileLayerPtr->getTileSize();
-    m_labelsPtr->addLeftOutsideLabel(tilePosition_o.value(), tileSize, (float)m_leftEdgeWidth);
+    m_labelsPtr->addLeftOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
 void GraphicBoard::addLeftOutsideLabels_h(){
@@ -1747,7 +1752,7 @@ void GraphicBoard::addRightOutsideLabel_h(const int& row){
         return;
     }
     sf::Vector2f tileSize = m_tileLayerPtr->getTileSize();
-    m_labelsPtr->addRightOutsideLabel(tilePosition_o.value(), tileSize, (float)m_rightEdgeWidth);
+    m_labelsPtr->addRightOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
 void GraphicBoard::addRightOutsideLabels_h(){
@@ -1789,7 +1794,7 @@ void GraphicBoard::addTopOutsideLabel_h(const int& column){
         return;
     }
     sf::Vector2f tileSize = m_tileLayerPtr->getTileSize();
-    m_labelsPtr->addTopOutsideLabel(tilePosition_o.value(), tileSize, (float)m_topEdgeWidth);
+    m_labelsPtr->addTopOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
 void GraphicBoard::addTopOutsideLabels_h(){

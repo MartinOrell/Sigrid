@@ -106,6 +106,22 @@ void BoardLabels::setBottomOutsideFont(const std::string& fontFilename){
     m_bottomOutsideCoordLabels.fontFilename = fontFilename;
 }
 
+void BoardLabels::setLeftOutsideWorkWidth(const float& width){
+    m_leftWorkWidth = width;
+}
+
+void BoardLabels::setRightOutsideWorkWidth(const float& width){
+    m_rightWorkWidth = width;
+}
+
+void BoardLabels::setTopOutsideWorkHeight(const float& height){
+    m_topWorkHeight = height;
+}
+
+void BoardLabels::setBottomOutsideWorkHeight(const float& height){
+    m_bottomWorkHeight = height;
+}
+
 void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
@@ -265,7 +281,7 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
+bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_leftOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
@@ -300,7 +316,7 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-    position.x = (edgeWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
+    position.x = (m_leftWorkWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
     if(notation == "1"){
         position.x -= (float)label.getLocalBounds().size.x/2.f;
     }
@@ -313,7 +329,7 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
     return true;
 }
 
-bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
+bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_rightOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add right outside label" << std::endl;
@@ -348,7 +364,7 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-    position.x = tilePosition.x + tileSize.x + (edgeWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f + 5.f;
+    position.x = tilePosition.x + tileSize.x + (m_rightWorkWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f + 5.f;
     if(notation == "1"){
         position.x -= (float)label.getLocalBounds().size.x/2.f;
     }
@@ -361,7 +377,7 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const float& edgeWidth){
+bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_topOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add top outside label" << std::endl;
@@ -403,7 +419,7 @@ bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf:
 
     position.y =
         tilePosition.y -
-        edgeWidth -
+        m_topWorkHeight -
         labelSize/4.f;
     
     label.setPosition(position);
