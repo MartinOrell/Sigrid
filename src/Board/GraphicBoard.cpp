@@ -1404,7 +1404,14 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
         x+= 2*m_borderWidth;
     }
     x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
-    x += m_rightEdgeWidth/2.f;
+
+    float workWidth = m_rightEdgeWidth;
+    if(m_labelsPtr && m_labelsPtr->isRightOutsideVisible()){
+        workWidth -= m_labelsPtr->getRightOutsideWorkWidth();
+        x += m_labelsPtr->getRightOutsideWorkWidth();
+    }
+
+    x += workWidth/2.f;
     float y = m_topEdgeWidth;
     y += m_tileLayerPtr->getTileHeight()/2.f;
 
@@ -1534,8 +1541,12 @@ void GraphicBoard::updateRightEdgeWidth(){
 
         if(newWorkWidth != oldWorkWidth){
             m_labelsPtr->setRightOutsideWorkWidth(newWorkWidth);
-            float moveX = (newWorkWidth - oldWorkWidth)/2.f;
-            m_labelsPtr->moveRightOutsideLabels({moveX, 0.f});
+
+            float moveX = newWorkWidth - oldWorkWidth;
+            m_labelsPtr->moveRightOutsideLabels({moveX/2.f, 0.f});
+            if(m_turnTokenPtr){
+                m_turnTokenPtr->move({moveX, 0.f});
+            }
         }
 
         newEdgeWidth += newWorkWidth;
@@ -1550,6 +1561,30 @@ void GraphicBoard::updateRightEdgeWidth(){
     }
 
     m_rightEdgeWidth = newEdgeWidth;
+
+    if(m_turnTokenPtr){   
+        float x = m_leftEdgeWidth;
+        if(m_borderPtr && m_borderPtr->isVisible()){
+            x+= 2*m_borderWidth;
+        }
+        x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
+
+        float workWidth = m_rightEdgeWidth;
+        if(m_labelsPtr && m_labelsPtr->isRightOutsideVisible()){
+            workWidth -= m_labelsPtr->getRightOutsideWorkWidth();
+            x += m_labelsPtr->getRightOutsideWorkWidth();
+        }
+
+        x += workWidth/2.f;
+        float y = m_topEdgeWidth;
+        y += m_tileLayerPtr->getTileHeight()/2.f;
+
+        sf::Vector2f oldPosition = m_turnTokenPtr->getCenterPosition();
+        sf::Vector2f newPosition{x,y};
+        if(oldPosition != newPosition){
+            m_turnTokenPtr->setCenterPosition({x,y});
+        }
+    }
 
     if(m_texturePtr){
         resizeTexture();
