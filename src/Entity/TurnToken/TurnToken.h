@@ -18,7 +18,13 @@ namespace sigrid{
         public:
             TurnToken();
 
-            void init(const float& radius, const sf::Vector2f& centerPosition, const int& turnToMove);
+            void setRadius(const float& radius);
+
+            void setCenterPosition(const sf::Vector2f& centerPosition);
+
+            void setTurnToMove(const int& turnToMove);
+
+            void init();
 
             TurnToken& operator =(const TurnToken& rhs);
 
@@ -34,8 +40,6 @@ namespace sigrid{
 
             void hide();
 
-            void setTurnToMove(const int& turnToMove);
-
             void move(const sf::Vector2f& offset);
 
         private:
@@ -44,7 +48,7 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            bool m_isVisible;
+            bool m_isVisible = false;
             std::unique_ptr<sf::CircleShape> m_shapePtr;
     };
 }

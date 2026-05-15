@@ -1408,7 +1408,10 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     float y = m_topEdgeWidth;
     y += m_tileLayerPtr->getTileHeight()/2.f;
 
-    m_turnTokenPtr->init(radius, {x,y}, turnToMove);
+    m_turnTokenPtr->setRadius(radius);
+    m_turnTokenPtr->setCenterPosition({x,y});
+    m_turnTokenPtr->setTurnToMove(turnToMove);
+    m_turnTokenPtr->init();
 }
 
 unsigned int GraphicBoard::getTextureWidth() const{

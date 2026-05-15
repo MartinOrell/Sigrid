@@ -5,18 +5,46 @@
 
 using namespace sigrid;
 
-TurnToken::TurnToken()
-: m_isVisible(true){}
+TurnToken::TurnToken(){}
 
-void TurnToken::init(const float& radius, const sf::Vector2f& centerPosition, const int& turnToMove){
+void TurnToken::setRadius(const float& radius){
 
-    std::size_t pointCount = 30;
-    m_shapePtr = std::make_unique<sf::CircleShape>(radius, pointCount);
-    m_shapePtr->setPosition(centerPosition - sf::Vector2f{radius, radius});
+    if(!m_shapePtr){
+        m_shapePtr = std::make_unique<sf::CircleShape>();
+    }
+
+    m_shapePtr->setRadius(radius);
+    m_shapePtr->setOrigin({radius, radius});
+}
+
+void TurnToken::setCenterPosition(const sf::Vector2f& centerPosition){
+    
+    if(!m_shapePtr){
+        m_shapePtr = std::make_unique<sf::CircleShape>();
+    }
+
+    m_shapePtr->setPosition(centerPosition);
+}
+
+void TurnToken::setTurnToMove(const int& turnToMove){
+    
+    if(!m_shapePtr){
+        m_shapePtr = std::make_unique<sf::CircleShape>();
+    }
 
     m_shapePtr->setFillColor(getColor(turnToMove));
+}
+
+void TurnToken::init(){
+
+    if(!m_shapePtr){
+        m_shapePtr = std::make_unique<sf::CircleShape>();
+    }
+
+    m_shapePtr->setPointCount(30);
     m_shapePtr->setOutlineColor(sf::Color{0,0,0,255});
     m_shapePtr->setOutlineThickness(-6.f);
+    m_isVisible = true;
 }
 
 TurnToken& TurnToken::operator =(const TurnToken& rhs){
@@ -70,8 +98,7 @@ sf::Vector2f TurnToken::getCenterPosition() const{
     if(!m_shapePtr){
         return {0.f,0.f};
     }
-    float radius = m_shapePtr->getRadius();
-    return m_shapePtr->getPosition()+sf::Vector2f{radius,radius};
+    return m_shapePtr->getPosition();
 }
 
 void TurnToken::show(){
@@ -80,14 +107,6 @@ void TurnToken::show(){
 
 void TurnToken::hide(){
     m_isVisible = false;
-}
-
-void TurnToken::setTurnToMove(const int& turnToMove){
-    if(!m_shapePtr){
-        return;
-    }
-
-    m_shapePtr->setFillColor(getColor(turnToMove));
 }
 
 void TurnToken::move(const sf::Vector2f& offset){
