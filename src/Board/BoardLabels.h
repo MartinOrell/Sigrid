@@ -81,12 +81,12 @@ namespace sigrid{
             void removeHorizontalLabel();
             void removeVerticalLabel();
 
-            void moveLeftInsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveBottomInsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveRightOutsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveTopOutsideCoordinateLabels(const sf::Vector2f& offset);
-            void moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset);
+            void moveLeftInsideLabels(const sf::Vector2f& offset);
+            void moveBottomInsideLabels(const sf::Vector2f& offset);
+            void moveLeftOutsideLabels(const sf::Vector2f& offset);
+            void moveRightOutsideLabels(const sf::Vector2f& offset);
+            void moveTopOutsideLabels(const sf::Vector2f& offset);
+            void moveBottomOutsideLabels(const sf::Vector2f& offset);
 
         private:
 

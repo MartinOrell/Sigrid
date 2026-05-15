@@ -533,37 +533,37 @@ void BoardLabels::removeVerticalLabel(){
     }
 }
 
-void BoardLabels::moveLeftInsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveLeftInsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_leftInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveBottomInsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveBottomInsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_bottomInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveLeftOutsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveLeftOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_leftOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveRightOutsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveRightOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_rightOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveTopOutsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveTopOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_topOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveBottomOutsideCoordinateLabels(const sf::Vector2f& offset){
+void BoardLabels::moveBottomOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_bottomOutsideCoordLabels.labels){
         label.move(offset);
     }
