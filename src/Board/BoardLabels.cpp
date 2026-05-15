@@ -174,6 +174,10 @@ float BoardLabels::getBottomOutsideLabelSize() const{
     return m_bottomOutsideCoordLabels.labelSizeFactor;
 }
 
+float BoardLabels::getRightOutsideWorkWidth() const{
+    return m_rightWorkWidth;
+}
+
 bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_leftInsideCoordLabels.labelSizeFactor == 0.f){

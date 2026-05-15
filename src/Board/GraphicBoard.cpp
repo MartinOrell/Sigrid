@@ -1526,9 +1526,16 @@ void GraphicBoard::updateRightEdgeWidth(){
         float labelSize = m_labelsPtr->getRightOutsideLabelSize();
         float tileWidth = m_tileLayerPtr->getTileWidth();
 
-        float rightLabelWorkWidth = (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
-        m_labelsPtr->setRightOutsideWorkWidth(rightLabelWorkWidth);
-        newEdgeWidth += rightLabelWorkWidth;
+        float newWorkWidth = (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
+        float oldWorkWidth = m_labelsPtr->getRightOutsideWorkWidth();
+
+        if(newWorkWidth != oldWorkWidth){
+            m_labelsPtr->setRightOutsideWorkWidth(newWorkWidth);
+            float moveX = (newWorkWidth - oldWorkWidth)/2.f;
+            m_labelsPtr->moveRightOutsideCoordinateLabels({moveX, 0.f});
+        }
+
+        newEdgeWidth += newWorkWidth;
     }
 
     if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
@@ -1539,12 +1546,7 @@ void GraphicBoard::updateRightEdgeWidth(){
         return;
     }
 
-    float moveX = (float)newEdgeWidth - (float)m_rightEdgeWidth;
     m_rightEdgeWidth = newEdgeWidth;
-
-    if(m_labelsPtr&& m_labelsPtr->isRightOutsideVisible()){
-        m_labelsPtr->moveRightOutsideCoordinateLabels({moveX/2.f, 0.f});
-    }
 
     if(m_texturePtr){
         resizeTexture();
