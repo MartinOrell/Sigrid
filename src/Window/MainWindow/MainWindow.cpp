@@ -141,6 +141,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     else{
         m_layout.setToXCoord(LayoutItem::MENU, 3);
     }
+    m_layout.setFromYCoord(LayoutItem::MENU, 0);
+    m_layout.setToYCoord(LayoutItem::MENU, 1);
 
     m_layout.setFromXCoord(LayoutItem::TOOLPICKER, 0);
     m_layout.setToXCoord(LayoutItem::TOOLPICKER, 1);
@@ -176,8 +178,6 @@ void MainWindow::createGraphic(){
 
     {
         //Left column y id coordinates
-        m_layout.setFromYCoord(LayoutItem::MENU, 0);
-        m_layout.setToYCoord(LayoutItem::MENU, 1);
         if(!m_menu){
             m_layout.setFromYCoord(LayoutItem::TOOLPICKER, 0);
         }
