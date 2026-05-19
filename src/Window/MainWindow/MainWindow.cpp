@@ -438,6 +438,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         showMenu();
         return;
     }
+    else if(std::holds_alternative<ActionType::HideMenu>(action)){
+        hideMenu();
+        return;
+    }
     else if(std::holds_alternative<ActionType::ToggleHeader>(action)){
         int headerId = std::get<ActionType::ToggleHeader>(action).headerId;
         toggleHeader(headerId);
@@ -677,14 +681,22 @@ void MainWindow::showMenu(){
         std::cerr << "Unable to show menu, Menu does not exist" << std::endl;
         return;
     }
-    if(m_menu->showMenu()){
-        m_layout.setToXCoord(LayoutItem::MENU, 3);
-        m_layout.setFromYCoord(LayoutItem::WORK, 1);
+
+    m_menu->showMenu();
+    m_layout.setToXCoord(LayoutItem::MENU, 3);
+    m_layout.setFromYCoord(LayoutItem::WORK, 1);
+    createGraphic();
+}
+
+void MainWindow::hideMenu(){
+    if(!m_menu){
+        std::cerr << "Unable to hide menu, Menu does not exist" << std::endl;
+        return;
     }
-    else{
-        m_layout.setToXCoord(LayoutItem::MENU, 1);
-        m_layout.setFromYCoord(LayoutItem::WORK, 0);
-    }
+
+    m_menu->hideMenu();
+    m_layout.setToXCoord(LayoutItem::MENU, 1);
+    m_layout.setFromYCoord(LayoutItem::WORK, 0);
     createGraphic();
 }
 

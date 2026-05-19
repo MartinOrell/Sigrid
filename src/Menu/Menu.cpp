@@ -135,21 +135,26 @@ void Menu::unPinMenu(){
     redrawTexture();
 }
 
-bool Menu::showMenu(){
+void Menu::showMenu(){
 
-    assert(m_superHeaderPtr);
-
-    if(!m_showItems || m_showHeaderIndex != -1){
-        m_showItems = true;
-    }
-    else{
-        m_showItems = false;
+    m_showItems = true;
+    m_showHeaderIndex = -1;
+    if(m_superHeaderPtr){
+        m_superHeaderPtr->toggle();
     }
     
-    m_showHeaderIndex = -1;
     redrawTexture();
+}
 
-    return m_showItems;
+void Menu::hideMenu(){
+    
+    m_showItems = false;
+    m_showHeaderIndex = -1;
+    if(m_superHeaderPtr){
+        m_superHeaderPtr->toggle();
+    }
+
+    redrawTexture();
 }
 
 void Menu::toggleHeader(const int headerId){
@@ -179,8 +184,10 @@ void Menu::addSuperHeader(const std::string& name){
         return;
     }
 
-    sigrid::ActionType::ShowMenu action;
-    m_superHeaderPtr = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
+    sigrid::ActionType::ShowMenu action0;
+    sigrid::ActionType::HideMenu action1;
+    m_superHeaderPtr = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action0);
+    m_superHeaderPtr->addToggle(name, action1);
 
     if(m_texture){
         addSuperHeaderGraphic();

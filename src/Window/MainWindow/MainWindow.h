@@ -44,6 +44,7 @@ namespace sigrid{
             void pinMenu();
             void unPinMenu();
             void showMenu();
+            void hideMenu();
             void toggleHeader(const int headerId);
             void reset();
             void clear();

@@ -15,6 +15,7 @@ namespace sigrid{
         struct PinMenu{};
         struct UnPinMenu{};
         struct ShowMenu{};
+        struct HideMenu{};
         struct ToggleHeader{
             int headerId;
         };
@@ -89,6 +90,7 @@ namespace sigrid{
         ActionType::PinMenu,
         ActionType::UnPinMenu,
         ActionType::ShowMenu,
+        ActionType::HideMenu,
         ActionType::ToggleHeader,
         ActionType::Reset,
         ActionType::Clear,
