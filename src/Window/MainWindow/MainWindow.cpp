@@ -149,197 +149,146 @@ void MainWindow::run(){
 
 void MainWindow::createGraphic(){
 
-    struct WindowCoordId{
-        unsigned int fromX;
-        unsigned int toX;
-        unsigned int fromY;
-        unsigned int toY;
-    };
-
-    WindowCoordId menuCoordId;
-    WindowCoordId toolPickerCoordId;
-    WindowCoordId toolWindowCoordId;
-    WindowCoordId workWindowCoordId;
-
     {
         //Top row x id coordinates
 
-        menuCoordId.fromX = 0;
+        m_layout.setFromXCoord(LayoutItem::MENU, 0);
         if(m_menu && m_menu->isCollapsed()){
-            menuCoordId.toX = 1;
+            m_layout.setToXCoord(LayoutItem::MENU, 1);
         }
         else{
-            menuCoordId.toX = 3;
+            m_layout.setToXCoord(LayoutItem::MENU, 3);
         }
     }
 
     {
         //second row x id coordinates
 
-        toolPickerCoordId.fromX = 0;
-        toolPickerCoordId.toX = 1;
+        m_layout.setFromXCoord(LayoutItem::TOOLPICKER, 0);
+        m_layout.setToXCoord(LayoutItem::TOOLPICKER, 1);
 
         if(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
         m_toolWindow && !m_toolWindow->isHidden() ||
         m_menu && !m_menu->isPinned()){
-
-            workWindowCoordId.fromX = 2;
+            m_layout.setFromXCoord(LayoutItem::WORK, 2);
         }
         else{
-            workWindowCoordId.fromX = 0;
+            m_layout.setFromXCoord(LayoutItem::WORK, 0);
         }
-        workWindowCoordId.toX = 3;
+        m_layout.setToXCoord(LayoutItem::WORK, 3);
     }
 
     {
         //Third row x id coordinates
-        toolWindowCoordId.fromX = 0;
-        toolWindowCoordId.toX = 1;
+        m_layout.setFromXCoord(LayoutItem::TOOLINDICATOR, 0);
+        m_layout.setToXCoord(LayoutItem::TOOLINDICATOR, 1);
     }
 
     {
         //Left column y id coordinates
-        unsigned int y = 0;
-        menuCoordId.fromY = 0;
-        menuCoordId.toY = 1;
-        if(m_menu){
-            y = 1;
-        }
-        toolPickerCoordId.fromY = y;
-        if(m_toolWindow){
-            toolPickerCoordId.toY = 2;
+        m_layout.setFromYCoord(LayoutItem::MENU, 0);
+        m_layout.setToYCoord(LayoutItem::MENU, 1);
+        if(!m_menu){
+            m_layout.setFromYCoord(LayoutItem::TOOLPICKER, 0);
         }
         else{
-            toolPickerCoordId.toY = 3;
+            m_layout.setFromYCoord(LayoutItem::TOOLPICKER, 1);
         }
-        toolWindowCoordId.fromY = 2;
-        toolWindowCoordId.toY = 3;
+        if(m_toolWindow){
+            m_layout.setToYCoord(LayoutItem::TOOLPICKER, 2);
+        }
+        else{
+            m_layout.setToYCoord(LayoutItem::TOOLPICKER, 3);
+        }
+        m_layout.setFromYCoord(LayoutItem::TOOLINDICATOR, 2);
+        m_layout.setToYCoord(LayoutItem::TOOLINDICATOR, 3);
     }
 
     {
         //second column y id coordinates
 
         if(!m_menu || m_menu->isCollapsed()){
-            workWindowCoordId.fromY = 0;
+            m_layout.setFromYCoord(LayoutItem::WORK, 0);
         }
         else{
-            workWindowCoordId.fromY = 1;
+            m_layout.setFromYCoord(LayoutItem::WORK, 1);
         }
 
-        workWindowCoordId.toY = 3;
+        m_layout.setToYCoord(LayoutItem::WORK, 3);
     }
 
-    float x[4];
-    float y[4];
+    m_layout.setPx(0, 0.f);
+    m_layout.setPx(3, m_size.x);
+    m_layout.setPy(0, 0.f);
+    m_layout.setPy(3, m_size.y);
 
-    x[0] = 0.f;
-    x[3] = m_size.x;
-    y[0] = 0.f;
-    y[3] = m_size.y;
+    m_layout.setPy(1, 40.f);
+    m_layout.setPyIfLess(1, (float)m_size.y/10.f);
 
-    float menuHeightCandidate1 = 40;
-    float menuHeightCandidate2 = (float)m_size.y/10.f;
-    float menuHeight;
-    if(menuHeightCandidate1 < menuHeightCandidate2){
-        menuHeight = menuHeightCandidate1;
-    }
-    else{
-        menuHeight = menuHeightCandidate2;
-    }
-    y[1] = menuHeight;
-
-    float toolHeightCandidate1 = 150;
-    float toolHeightCandidate2 = (float)m_size.y/10.f;
-    float toolHeight;
-    if(toolHeightCandidate1 < toolHeightCandidate2){
-        toolHeight = toolHeightCandidate1;
-    }
-    else{
-        toolHeight = toolHeightCandidate2;
-    }
-    y[2] = m_size.y - toolHeight;    
+    m_layout.setPy(2, m_size.y - 150.f);
+    m_layout.setPyIfGreater(2, (float)m_size.y - (float)m_size.y/10.f);
 
     if(!m_toolPickerWindow || m_toolPickerWindow->isHidden()){
-        x[1] = 120.f;
+        m_layout.setPx(1, 120.f);
     }
     else{
         unsigned int toolPickerColumns = m_toolPickerWindow->getNumColumns();
         unsigned int toolPickerRows = m_toolPickerWindow->getNumRows();
         unsigned int boardColumns = m_workWindow->getNumColumns();
 
-        float xCandidate1 = (x[3] - x[0])*((float)toolPickerColumns/(float)(toolPickerColumns+boardColumns));
-
-        float toolPickerHeight = y[2]-y[1];
-        unsigned int toolPickerTileHeight = toolPickerHeight/toolPickerRows;
-        unsigned int toolPickerTileWidth = toolPickerTileHeight;
-
-        float xCandidate2 = toolPickerTileWidth*toolPickerColumns;
-
-        if(xCandidate2 < xCandidate1){
-            x[1] = xCandidate2;
-        }
-        else{
-            x[1] = xCandidate1;
+        auto toolAndWorkWidth_o = m_layout.getWidth(0,3);
+        if(toolAndWorkWidth_o != std::nullopt){
+            float toolAndWorkWidth = toolAndWorkWidth_o.value();
+            float toolRatio = (float)toolPickerColumns/(float)(toolPickerColumns+boardColumns);
+            float toolWidth = toolAndWorkWidth * toolRatio;
+            m_layout.setPx(1, toolWidth);
         }
 
-        if(x[1] < 120.f){
-            x[1] = 120.f;
+        auto toolPickerHeight_o = m_layout.getHeight(1,2);
+        if(toolPickerHeight_o != std::nullopt){
+            float toolPickerHeight = toolPickerHeight_o.value();
+            unsigned int toolPickerTileHeight = toolPickerHeight/toolPickerRows;
+            unsigned int toolPickerTileWidth = toolPickerTileHeight;
+            m_layout.setPxIfLess(1, toolPickerTileWidth*toolPickerColumns);
+            m_layout.setPxIfGreater(1, 120.f);
         }
     }
-    x[2] = x[1]+m_piecePickerToBoardGap;
+    m_layout.setPx(2, m_layout.getPx(1) + m_piecePickerToBoardGap);
 
     if(m_menu){
-        unsigned int menuWidth = (unsigned int)(x[menuCoordId.toX]-x[menuCoordId.fromX]);
-        assert(menuWidth > 0);
-        unsigned int menuHeight = (unsigned int)(y[menuCoordId.toY]-y[menuCoordId.fromY]);
-        assert(menuHeight > 0);
-
-        float menuXPos = x[menuCoordId.fromX];
-        float menuYPos = y[menuCoordId.fromY];
-
-        m_menu->createGraphic({menuWidth, menuHeight});
-        m_menu->setPosition({menuXPos,menuYPos});
+        auto size_o = m_layout.getSizeU(LayoutItem::MENU);
+        auto position_o = m_layout.getPosition(LayoutItem::MENU);
+        if(size_o != std::nullopt && position_o != std::nullopt){
+            m_menu->createGraphic(size_o.value());
+            m_menu->setPosition(position_o.value());
+        }
     }
 
     if(m_toolWindow){
-        unsigned int toolWidth = (unsigned int)(x[toolWindowCoordId.toX]-x[toolWindowCoordId.fromX]);
-        assert(toolWidth > 0);
-        unsigned int toolHeight = (unsigned int)(y[toolWindowCoordId.toY]-y[toolWindowCoordId.fromY]);
-        assert(toolHeight > 0);
-
-        float toolXPos = x[toolWindowCoordId.fromX];
-        float toolYPos = y[toolWindowCoordId.fromY];
-
-        m_toolWindow->createGraphic({toolWidth, toolHeight});
-        m_toolWindow->setPosition({toolXPos, toolYPos});
+        auto size_o = m_layout.getSizeU(LayoutItem::TOOLINDICATOR);
+        auto position_o = m_layout.getPosition(LayoutItem::TOOLINDICATOR);
+        if(size_o != std::nullopt && position_o != std::nullopt){
+            m_toolWindow->createGraphic(size_o.value());
+            m_toolWindow->setPosition(position_o.value());
+        }
     }
 
     if(m_toolPickerWindow && !(m_toolPickerWindow->isHidden())){
-
-        unsigned int toolPickerWidth = (unsigned int)(x[toolPickerCoordId.toX]-x[toolPickerCoordId.fromX]);
-        assert(toolPickerWidth > 0);
-        unsigned int toolPickerHeight = (unsigned int)(y[toolPickerCoordId.toY]-y[toolPickerCoordId.fromY]);
-        assert(toolPickerHeight > 0);
-
-        float toolPickerXPos = x[toolPickerCoordId.fromX];
-        float toolPickerYPos = y[toolPickerCoordId.fromY];
-
-        m_toolPickerWindow->createGraphic({toolPickerWidth, toolPickerHeight});
-        m_toolPickerWindow->setPosition({toolPickerXPos, toolPickerYPos});
+        auto size_o = m_layout.getSizeU(LayoutItem::TOOLPICKER);
+        auto position_o = m_layout.getPosition(LayoutItem::TOOLPICKER);
+        if(size_o != std::nullopt && position_o != std::nullopt){
+            m_toolPickerWindow->createGraphic(size_o.value());
+            m_toolPickerWindow->setPosition(position_o.value());
+        }
     }
 
     if(m_workWindow){
-
-        unsigned int workWidth = (unsigned int)(x[workWindowCoordId.toX]-x[workWindowCoordId.fromX]);
-        assert(workWidth > 0);
-        unsigned int workHeight = (unsigned int)(y[workWindowCoordId.toY]-y[workWindowCoordId.fromY]);
-        assert(workHeight > 0);
-
-        float workXPos = x[workWindowCoordId.fromX];
-        float workYPos = y[workWindowCoordId.fromY];
-
-        m_workWindow->createGraphic({workWidth, workHeight});
-        m_workWindow->setPosition({workXPos, workYPos});
+        auto size_o = m_layout.getSizeU(LayoutItem::WORK);
+        auto position_o = m_layout.getPosition(LayoutItem::WORK);
+        if(size_o != std::nullopt && position_o != std::nullopt){
+            m_workWindow->createGraphic(size_o.value());
+            m_workWindow->setPosition(position_o.value());
+        }
     }
 }
 

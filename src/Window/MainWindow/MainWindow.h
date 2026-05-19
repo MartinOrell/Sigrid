@@ -11,6 +11,7 @@
 #include "../../Input/InputHandler.h"
 #include "../../Input/Mouse/Mouse.h"
 
+#include "../../Layout/LayoutGrid.h"
 #include "../../Menu/Menu.h"
 #include "../WorkWindow/WorkWindow.h"
 #include "../ToolWindow/ToolWindow.h"
@@ -92,12 +93,20 @@ namespace sigrid{
 
             void redraw();
 
+            enum LayoutItem{
+                MENU,
+                WORK,
+                TOOLINDICATOR,
+                TOOLPICKER,
+            };
+
             sf::RenderWindow m_window;
             sf::Color m_backgroundColor;
             sf::Vector2u m_size;
             sf::Vector2f m_scale;
             float m_piecePickerToBoardGap;
 
+            LayoutGrid m_layout;
             std::unique_ptr<Menu> m_menu;
             std::unique_ptr<WorkWindow> m_workWindow;
             std::unique_ptr<ToolWindow> m_toolWindow;

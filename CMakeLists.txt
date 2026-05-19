@@ -19,6 +19,7 @@ set(SRC_FILES
     src/Board/BoardLabels.cpp
     src/Coord/Coord.cpp
     src/Coord/CoordPair.cpp
+    src/Layout/LayoutGrid.cpp
     src/Font/FontManager.cpp
     src/Entity/Piece/LogicPiece.cpp
     src/Entity/Piece/GraphicPiece.cpp
