@@ -23,6 +23,7 @@ namespace sigrid{
             RectangleBorder& operator =(const RectangleBorder& rhs);
 
             bool isVisible() const;
+            bool isHidden() const;
 
             float getWidth() const;
 

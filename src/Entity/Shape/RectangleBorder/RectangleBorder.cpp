@@ -52,6 +52,10 @@ bool RectangleBorder::isVisible() const{
     return m_isVisible;
 }
 
+bool RectangleBorder::isHidden() const{
+    return !m_isVisible;
+}
+
 float RectangleBorder::getWidth() const{
     return (float)m_width;
 }

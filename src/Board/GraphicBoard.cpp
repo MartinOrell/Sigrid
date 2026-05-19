@@ -1333,7 +1333,7 @@ void GraphicBoard::addBorder(){
 
 void GraphicBoard::removeBorder(){
 
-    if(!m_borderPtr || !m_borderPtr->isVisible()){
+    if(!m_borderPtr || m_borderPtr->isHidden()){
         return;
     }
 
