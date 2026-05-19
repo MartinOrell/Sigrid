@@ -155,6 +155,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
     m_layout.setToXCoord(LayoutItem::WORK, 3);
 
+    m_layout.setFromXCoord(LayoutItem::TOOLINDICATOR, 0);
+    m_layout.setToXCoord(LayoutItem::TOOLINDICATOR, 1);
+
     return true;
 }
 
@@ -170,12 +173,6 @@ void MainWindow::run(){
 }
 
 void MainWindow::createGraphic(){
-
-    {
-        //Third row x id coordinates
-        m_layout.setFromXCoord(LayoutItem::TOOLINDICATOR, 0);
-        m_layout.setToXCoord(LayoutItem::TOOLINDICATOR, 1);
-    }
 
     {
         //Left column y id coordinates
