@@ -142,6 +142,9 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
         m_layout.setToXCoord(LayoutItem::MENU, 3);
     }
 
+    m_layout.setFromXCoord(LayoutItem::TOOLPICKER, 0);
+    m_layout.setToXCoord(LayoutItem::TOOLPICKER, 1);
+
     return true;
 }
 
@@ -160,9 +163,6 @@ void MainWindow::createGraphic(){
 
     {
         //second row x id coordinates
-
-        m_layout.setFromXCoord(LayoutItem::TOOLPICKER, 0);
-        m_layout.setToXCoord(LayoutItem::TOOLPICKER, 1);
 
         if(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
         m_toolWindow && !m_toolWindow->isHidden() ||
