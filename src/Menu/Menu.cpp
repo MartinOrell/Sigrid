@@ -125,10 +125,14 @@ Action Menu::clicked(const sf::Vector2f& position){
     return m_items.at(m_itemKeys.at(id.x).at(id.y))->getAction();
 }
 
-bool Menu::pinMenu(){
-    m_isPinned = !m_isPinned;
+void Menu::pinMenu(){
+    m_isPinned = true;
     redrawTexture();
-    return m_isPinned;
+}
+
+void Menu::unPinMenu(){
+    m_isPinned = false;
+    redrawTexture();
 }
 
 bool Menu::showMenu(){

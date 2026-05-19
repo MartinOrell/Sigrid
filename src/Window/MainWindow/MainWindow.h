@@ -42,6 +42,7 @@ namespace sigrid{
             void handleAction(const sigrid::Action action);
 
             void pinMenu();
+            void unPinMenu();
             void showMenu();
             void toggleHeader(const int headerId);
             void reset();

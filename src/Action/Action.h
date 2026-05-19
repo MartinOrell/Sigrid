@@ -13,6 +13,7 @@ namespace sigrid{
     namespace ActionType{
         struct None{};
         struct PinMenu{};
+        struct UnPinMenu{};
         struct ShowMenu{};
         struct ToggleHeader{
             int headerId;
@@ -86,6 +87,7 @@ namespace sigrid{
     typedef std::variant<
         ActionType::None,
         ActionType::PinMenu,
+        ActionType::UnPinMenu,
         ActionType::ShowMenu,
         ActionType::ToggleHeader,
         ActionType::Reset,

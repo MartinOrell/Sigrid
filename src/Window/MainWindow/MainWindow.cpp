@@ -430,6 +430,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         pinMenu();
         return;
     }
+    else if(std::holds_alternative<ActionType::UnPinMenu>(action)){
+        unPinMenu();
+        return;
+    }
     else if(std::holds_alternative<ActionType::ShowMenu>(action)){
         showMenu();
         return;
@@ -645,15 +649,24 @@ void MainWindow::pinMenu(){
         return;
     }
 
-    if(m_menu->pinMenu()){
-        if(!(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
-        m_toolWindow && !m_toolWindow->isHidden())){
-            m_layout.setFromXCoord(LayoutItem::WORK, 0);
-        }
+    m_menu->pinMenu();
+    if(!(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
+    m_toolWindow && !m_toolWindow->isHidden())){
+        m_layout.setFromXCoord(LayoutItem::WORK, 0);
     }
-    else{
-        m_layout.setFromXCoord(LayoutItem::WORK, 2);
+
+    m_menu->toggleItem("PinMenu");
+    createGraphic();
+}
+
+void MainWindow::unPinMenu(){
+    if(!m_menu){
+        std::cerr << "Unable to unpin menu, Menu does not exist" << std::endl;
+        return;
     }
+
+    m_menu->unPinMenu();
+    m_layout.setFromXCoord(LayoutItem::WORK, 2);
 
     m_menu->toggleItem("PinMenu");
     createGraphic();

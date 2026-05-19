@@ -126,7 +126,7 @@ Action sigrid::getAction(const std::string& s){
         return ActionType::PinMenu{};
     }
     else if(name == "unpinMenu"){
-        return ActionType::PinMenu{};
+        return ActionType::UnPinMenu{};
     }
     else if(name == "showToolWindow"){
         return ActionType::ShowTools{};
