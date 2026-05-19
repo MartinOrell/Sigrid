@@ -145,6 +145,16 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_layout.setFromXCoord(LayoutItem::TOOLPICKER, 0);
     m_layout.setToXCoord(LayoutItem::TOOLPICKER, 1);
 
+    if(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
+    m_toolWindow && !m_toolWindow->isHidden() ||
+    m_menu && !m_menu->isPinned()){
+        m_layout.setFromXCoord(LayoutItem::WORK, 2);
+    }
+    else{
+        m_layout.setFromXCoord(LayoutItem::WORK, 0);
+    }
+    m_layout.setToXCoord(LayoutItem::WORK, 3);
+
     return true;
 }
 
@@ -160,20 +170,6 @@ void MainWindow::run(){
 }
 
 void MainWindow::createGraphic(){
-
-    {
-        //second row x id coordinates
-
-        if(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
-        m_toolWindow && !m_toolWindow->isHidden() ||
-        m_menu && !m_menu->isPinned()){
-            m_layout.setFromXCoord(LayoutItem::WORK, 2);
-        }
-        else{
-            m_layout.setFromXCoord(LayoutItem::WORK, 0);
-        }
-        m_layout.setToXCoord(LayoutItem::WORK, 3);
-    }
 
     {
         //Third row x id coordinates
@@ -661,7 +657,16 @@ void MainWindow::pinMenu(){
         return;
     }
 
-    m_menu->pinMenu();
+    if(m_menu->pinMenu()){
+        if(!(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
+        m_toolWindow && !m_toolWindow->isHidden())){
+            m_layout.setFromXCoord(LayoutItem::WORK, 0);
+        }
+    }
+    else{
+        m_layout.setFromXCoord(LayoutItem::WORK, 2);
+    }
+
     m_menu->toggleItem("PinMenu");
     createGraphic();
 }
@@ -871,6 +876,8 @@ void MainWindow::showTools(){
         m_menu->toggleItem("ShowToolWindow");
         m_menu->showItem("ShowColorTools");
     }
+
+    m_layout.setFromXCoord(LayoutItem::WORK, 2);
     
     createGraphic();
 }
@@ -890,6 +897,10 @@ void MainWindow::hideTools(){
     if(m_menu){
         m_menu->toggleItem("ShowToolWindow");
         m_menu->hideItem("ShowColorTools");
+
+        if(m_menu->isPinned()){
+            m_layout.setFromXCoord(LayoutItem::WORK, 0);
+        }
     }
     
     createGraphic();

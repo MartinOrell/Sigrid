@@ -38,7 +38,7 @@ namespace sigrid{
 
             Action clicked(const sf::Vector2f& position);
 
-            void pinMenu();
+            bool pinMenu();
 
             bool showMenu();
 
