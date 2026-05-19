@@ -160,7 +160,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
 
     if(m_toolPickerWindow && m_toolPickerWindow->isVisible() ||
-    m_toolWindow && !m_toolWindow->isHidden() ||
+    m_toolWindow && m_toolWindow->isVisible() ||
     m_menu && !m_menu->isPinned()){
         m_layout.setFromXCoord(LayoutItem::WORK, 2);
     }
@@ -655,7 +655,7 @@ void MainWindow::pinMenu(){
 
     m_menu->pinMenu();
     if(!(m_toolPickerWindow && m_toolPickerWindow->isVisible() ||
-    m_toolWindow && !m_toolWindow->isHidden())){
+    m_toolWindow && m_toolWindow->isVisible())){
         m_layout.setFromXCoord(LayoutItem::WORK, 0);
     }
 

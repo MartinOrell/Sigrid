@@ -93,6 +93,10 @@ void ToolWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
+bool ToolWindow::isVisible() const{
+    return m_show;
+}
+
 bool ToolWindow::isHidden() const{
     return !m_show;
 }

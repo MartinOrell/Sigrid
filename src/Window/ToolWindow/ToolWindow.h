@@ -36,6 +36,7 @@ namespace sigrid{
 
             virtual void setPosition(const sf::Vector2f& position);
 
+            bool isVisible() const;
             bool isHidden() const;
 
             bool contains(const sf::Vector2f& point) const;
