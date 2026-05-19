@@ -143,6 +143,10 @@ void ToolPickerWindow::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
+bool ToolPickerWindow::isVisible() const{
+    return m_show;
+}
+
 bool ToolPickerWindow::isHidden() const{
     return !m_show;
 }

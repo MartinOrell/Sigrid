@@ -47,6 +47,7 @@ namespace sigrid{
 
             virtual void setPosition(const sf::Vector2f& position);
 
+            bool isVisible() const;
             bool isHidden() const;
 
             sf::Vector2u getSize() const;

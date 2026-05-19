@@ -159,7 +159,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
         m_layout.setToYCoord(LayoutItem::TOOLPICKER, 3);
     }
 
-    if(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
+    if(m_toolPickerWindow && m_toolPickerWindow->isVisible() ||
     m_toolWindow && !m_toolWindow->isHidden() ||
     m_menu && !m_menu->isPinned()){
         m_layout.setFromXCoord(LayoutItem::WORK, 2);
@@ -254,7 +254,7 @@ void MainWindow::createGraphic(){
         }
     }
 
-    if(m_toolPickerWindow && !(m_toolPickerWindow->isHidden())){
+    if(m_toolPickerWindow && m_toolPickerWindow->isVisible()){
         auto size_o = m_layout.getSizeU(LayoutItem::TOOLPICKER);
         auto position_o = m_layout.getPosition(LayoutItem::TOOLPICKER);
         if(size_o != std::nullopt && position_o != std::nullopt){
@@ -654,7 +654,7 @@ void MainWindow::pinMenu(){
     }
 
     m_menu->pinMenu();
-    if(!(m_toolPickerWindow && !m_toolPickerWindow->isHidden() ||
+    if(!(m_toolPickerWindow && m_toolPickerWindow->isVisible() ||
     m_toolWindow && !m_toolWindow->isHidden())){
         m_layout.setFromXCoord(LayoutItem::WORK, 0);
     }
