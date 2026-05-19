@@ -3,7 +3,7 @@
 #include <optional>
 #include <vector>
 #include <map>
-#include "../Coord/CoordBlock.h"
+#include "../Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
 namespace sigrid{
@@ -38,7 +38,7 @@ namespace sigrid{
         private:
             std::vector<float> m_xCoords;
             std::vector<float> m_yCoords;
-            std::map<unsigned int, CoordBlock> m_objects;
+            std::map<unsigned int, CoordPair> m_objects;
     };
 
 }
