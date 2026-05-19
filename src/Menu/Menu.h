@@ -40,7 +40,7 @@ namespace sigrid{
 
             void pinMenu();
 
-            void showMenu();
+            bool showMenu();
 
             void toggleHeader(const int headerId);
 

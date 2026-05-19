@@ -130,7 +130,7 @@ void Menu::pinMenu(){
     redrawTexture();
 }
 
-void Menu::showMenu(){
+bool Menu::showMenu(){
 
     assert(m_superHeaderPtr);
 
@@ -143,6 +143,8 @@ void Menu::showMenu(){
     
     m_showHeaderIndex = -1;
     redrawTexture();
+
+    return m_showItems;
 }
 
 void Menu::toggleHeader(const int headerId){

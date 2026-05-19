@@ -133,6 +133,15 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
             m_window.setTitle(title);
         }
     }
+
+    m_layout.setFromXCoord(LayoutItem::MENU, 0);
+    if(m_menu && m_menu->isCollapsed()){
+        m_layout.setToXCoord(LayoutItem::MENU, 1);
+    }
+    else{
+        m_layout.setToXCoord(LayoutItem::MENU, 3);
+    }
+
     return true;
 }
 
@@ -148,18 +157,6 @@ void MainWindow::run(){
 }
 
 void MainWindow::createGraphic(){
-
-    {
-        //Top row x id coordinates
-
-        m_layout.setFromXCoord(LayoutItem::MENU, 0);
-        if(m_menu && m_menu->isCollapsed()){
-            m_layout.setToXCoord(LayoutItem::MENU, 1);
-        }
-        else{
-            m_layout.setToXCoord(LayoutItem::MENU, 3);
-        }
-    }
 
     {
         //second row x id coordinates
@@ -674,7 +671,12 @@ void MainWindow::showMenu(){
         std::cerr << "Unable to show menu, Menu does not exist" << std::endl;
         return;
     }
-    m_menu->showMenu();
+    if(m_menu->showMenu()){
+        m_layout.setToXCoord(LayoutItem::MENU, 3);
+    }
+    else{
+        m_layout.setToXCoord(LayoutItem::MENU, 1);
+    }
     createGraphic();
 }
 
