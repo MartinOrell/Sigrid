@@ -169,6 +169,14 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     }
     m_layout.setToXCoord(LayoutItem::WORK, 3);
 
+    if(!m_menu || m_menu->isCollapsed()){
+        m_layout.setFromYCoord(LayoutItem::WORK, 0);
+    }
+    else{
+        m_layout.setFromYCoord(LayoutItem::WORK, 1);
+    }
+    m_layout.setToYCoord(LayoutItem::WORK, 3);
+
     m_layout.setFromXCoord(LayoutItem::TOOLINDICATOR, 0);
     m_layout.setToXCoord(LayoutItem::TOOLINDICATOR, 1);
     m_layout.setFromYCoord(LayoutItem::TOOLINDICATOR, 2);
@@ -189,19 +197,6 @@ void MainWindow::run(){
 }
 
 void MainWindow::createGraphic(){
-
-    {
-        //second column y id coordinates
-
-        if(!m_menu || m_menu->isCollapsed()){
-            m_layout.setFromYCoord(LayoutItem::WORK, 0);
-        }
-        else{
-            m_layout.setFromYCoord(LayoutItem::WORK, 1);
-        }
-
-        m_layout.setToYCoord(LayoutItem::WORK, 3);
-    }
 
     m_layout.setPx(0, 0.f);
     m_layout.setPx(3, m_size.x);
@@ -671,9 +666,11 @@ void MainWindow::showMenu(){
     }
     if(m_menu->showMenu()){
         m_layout.setToXCoord(LayoutItem::MENU, 3);
+        m_layout.setFromYCoord(LayoutItem::WORK, 1);
     }
     else{
         m_layout.setToXCoord(LayoutItem::MENU, 1);
+        m_layout.setFromYCoord(LayoutItem::WORK, 0);
     }
     createGraphic();
 }
