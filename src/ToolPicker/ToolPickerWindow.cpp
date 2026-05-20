@@ -109,9 +109,22 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
 void ToolPickerWindow::createGraphic(const sf::Vector2u& size){
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    int imageWidth = m_board.getImageWidth();
-    float scale = (float)size.x/(float)imageWidth;
-    m_board.setScale(scale);
+    unsigned int boardWidth = m_board.getImageWidth();
+    unsigned int boardHeight = m_board.getImageHeight();
+    float widthRatio = (float)size.x/(float)boardWidth;
+    float heightRatio = (float)size.y/(float)boardHeight;
+    float boardScale;
+    if(widthRatio < heightRatio){
+        boardScale = widthRatio;
+    }
+    else{
+        boardScale = heightRatio;
+    }
+    m_board.setScale(boardScale);
+
+    float posX = ((float)(size.x)-float(m_board.getDisplayWidth()))/2.f;
+    float posY = ((float)(size.y)-float(m_board.getDisplayHeight()))/2.f;
+    m_board.setPosition({posX, posY});
 
     redrawTexture();
 }
