@@ -74,17 +74,22 @@ void ToolWindow::init(){
 void ToolWindow::createGraphic(const sf::Vector2u& size){
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    float itemWidth = (float)size.y;
-    float itemHeight = (float)size.y;
+    unsigned int boardWidth = m_board.getImageWidth();
+    unsigned int boardHeight = m_board.getImageHeight();
+    float widthRatio = (float)size.x/(float)boardWidth;
+    float heightRatio = (float)size.y/(float)boardHeight;
+    float boardScale;
+    if(widthRatio < heightRatio){
+        boardScale = widthRatio;
+    }
+    else{
+        boardScale = heightRatio;
+    }
+    m_board.setScale(boardScale);
 
-    int imageHeight = m_board.getImageHeight();
-    int imageWidth = m_board.getImageWidth();
-
-    float scale = itemHeight/imageHeight;
-    float x = itemWidth/2.f;
-
-    m_board.setScale(scale);
-    m_board.setPosition({x,0.f});
+    float posX = ((float)(size.x)-float(m_board.getDisplayWidth()))/2.f;
+    float posY = ((float)(size.y)-float(m_board.getDisplayHeight()))/2.f;
+    m_board.setPosition({posX, posY});
 
     redrawTexture();
 }
