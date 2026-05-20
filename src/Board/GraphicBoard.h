@@ -51,6 +51,8 @@ namespace sigrid{
             void setTopToBottom();
             void setBottomToTop();
 
+            void load(const LogicBoard& logicBoard);
+
             void init(const LogicBoard& logicBoard, const BoardDesignContainer& config);
 
             GraphicBoard& operator=(const GraphicBoard& rhs);

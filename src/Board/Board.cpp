@@ -58,6 +58,16 @@ void Board::setBottomToTop(){
     m_graphicBoard.setBottomToTop();
 }
 
+void Board::loadBoardData(const BoardDataContainer& boardData){
+
+    if(m_logicBoard.init(boardData)){
+        m_graphicBoard.load(m_logicBoard);
+    }
+    else{
+        std::cerr << "Board: Failed to load logicBoard" << std::endl;
+    }
+}
+
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
     if(m_logicBoard.init(boardData)){

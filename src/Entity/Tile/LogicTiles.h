@@ -32,14 +32,16 @@ namespace sigrid{
             bool removeRowUp();
             bool removeRowDown();
 
+            void clear();
+
             std::optional<LogicTile> getTile(const Coord& coord) const;
 
             friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
 
         private:
 
-            int m_columns;
-            int m_rows;
+            int m_columns = 0;
+            int m_rows = 0;
             std::vector<int> m_repeatTileColorIds;
 
             std::map<Coord, LogicTile> m_tiles;

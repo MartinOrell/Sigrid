@@ -78,6 +78,93 @@ void GraphicBoard::setBottomToTop(){
     m_isTopToBottom = false;
 }
 
+void GraphicBoard::load(const LogicBoard& logicBoard){
+
+    if(!m_tileLayerPtr){
+        m_tileLayerPtr = std::make_unique<GraphicTiles>();
+    }
+
+    m_tileLayerPtr->clear();
+
+    if(m_pieceLayerPtr){
+        m_pieceLayerPtr->clear();
+    }
+
+    if(m_arrowLayerPtr){
+        m_arrowLayerPtr->clear();
+    }
+    
+    m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
+    m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
+    m_tileLayerPtr->init(m_isLeftToRight, m_isTopToBottom);
+    m_tileLayerPtr->move({float(m_leftEdgeWidth), (float)m_topEdgeWidth});
+    if(m_borderPtr && m_borderPtr->isVisible()){
+        m_tileLayerPtr->move({m_borderPtr->getWidth(), m_borderPtr->getWidth()});
+    }
+
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+
+            auto tile_o = logicBoard.getTile({x,y});
+            if(tile_o.has_value()){
+                int colorId = tile_o->getColorId();
+                m_tileLayerPtr->setTileColor({x,y},colorId);
+            }
+
+            auto entity_o = logicBoard.getEntityAt({x,y});
+            if(entity_o != std::nullopt){
+                if(!m_pieceLayerPtr){
+                    m_pieceLayerPtr = std::make_unique<GraphicEntities>();
+                }
+                auto position_o = m_tileLayerPtr->getTileCentrePosition({x,y});
+                if(position_o != std::nullopt){
+                    m_pieceLayerPtr->addEntity({x,y},position_o.value(),entity_o.value());
+                }
+            }
+        }
+    }
+
+    if(m_turnTokenPtr){
+        m_turnTokenPtr->setTurnToMove(logicBoard.getTurnToMove());
+    }
+
+    if(m_borderPtr){;
+        sf::Vector2f boardArea;
+        boardArea.x = m_tileLayerPtr->getTileWidth() * logicBoard.getNumColumns();
+        boardArea.y = m_tileLayerPtr->getTileHeight() * logicBoard.getNumRows();
+        m_borderPtr->setEnclosedArea(boardArea);
+        m_borderPtr->init(m_borderPtr->isVisible());
+    }
+
+    if(m_labelsPtr){
+        if(m_labelsPtr->isLeftInsideVisible()){
+            addLeftInsideLabels_h();
+        }
+        if(m_labelsPtr->isBottomInsideVisible()){
+            addBottomInsideLabels_h();
+        }
+        if(m_labelsPtr->isLeftOutsideVisible()){
+            updateLeftEdgeWidth();
+            addLeftOutsideLabels_h();
+        }
+        if(m_labelsPtr->isRightOutsideVisible()){
+            updateRightEdgeWidth();
+            addRightOutsideLabels_h();
+        }
+        if(m_labelsPtr->isTopOutsideVisible()){
+            updateTopEdgeWidth();
+            addTopOutsideLabels_h();
+        }
+        if(m_labelsPtr->isBottomOutsideVisible()){
+            updateBottomEdgeWidth();
+            addBottomOutsideLabels_h();
+        }
+    }
+
+    resizeTexture();
+    redrawTexture();
+}
+
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
 
     m_borderWidth = config.borderWidth;
@@ -215,6 +302,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         if(m_labelsPtr->isRightOutsideVisible()){
             updateRightEdgeWidth();
             addRightOutsideLabels_h();
+        }
+        if(m_labelsPtr->isTopOutsideVisible()){
+            updateTopEdgeWidth();
+            addTopOutsideLabels_h();
         }
         if(m_labelsPtr->isBottomOutsideVisible()){
             updateBottomEdgeWidth();

@@ -30,6 +30,7 @@ namespace sigrid{
             void setTopToBottom();
             void setBottomToTop();
 
+            void loadBoardData(const BoardDataContainer& boardData);
             void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
             Board& operator=(const Board& rhs);

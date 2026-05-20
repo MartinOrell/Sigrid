@@ -16,6 +16,11 @@ LogicBoard::~LogicBoard(){}
 
 bool LogicBoard::init(const BoardDataContainer& data){
 
+    m_tileLayer.clear();
+    m_pieceLayer.clear();
+    m_arrowLayer.clear();
+    m_turnToMove = 0;
+
     if(data.repeatTileColorIds.size() == 0){
         std::cerr << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
@@ -58,8 +63,6 @@ bool LogicBoard::init(const BoardDataContainer& data){
 
         m_pieceLayer.addEntity(coord, LogicCircle{cData.colorId});
     }
-
-    m_turnToMove = 0;
 
     return true;
 }

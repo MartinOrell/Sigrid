@@ -295,6 +295,12 @@ bool LogicTiles::removeRowDown(){
     return true;
 }
 
+void LogicTiles::clear(){
+    m_columns = 0;
+    m_rows = 0;
+    m_tiles.clear();
+}
+
 std::optional<LogicTile> LogicTiles::getTile(const Coord& coord) const{
     
     auto it = m_tiles.find(coord);

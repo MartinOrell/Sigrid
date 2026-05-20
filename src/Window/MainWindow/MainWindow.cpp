@@ -115,6 +115,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
     m_workWindow->setBoardFilename(config.boardFilename);
+    m_workWindow->setResetBoardFilename(config.resetBoardFilename);
     m_workWindow->setDefaultBoardImageFilename(config.defaultBoardImageFilename);
     m_workWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
     m_workWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
@@ -714,6 +715,7 @@ void MainWindow::reset(){
         return;
     }
     m_workWindow->reset();
+    createGraphic();
 }
 
 void MainWindow::clear(){

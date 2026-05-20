@@ -22,6 +22,8 @@ namespace sigrid{
 
             void setBoardFilename(const std::string& filename);
 
+            void setResetBoardFilename(const std::string& filename);
+
             void setDefaultBoardImageFilename(const std::string& filename);
 
             void setTileColorManagerPtr(ColorManager* const managerPtr);
@@ -129,6 +131,7 @@ namespace sigrid{
 
             sf::Color m_backgroundColor;
 
+            std::string m_resetBoardFilename = "";
             std::string m_defaultBoardImageFilename = "";
     };
 }

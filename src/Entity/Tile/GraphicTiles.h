@@ -40,6 +40,8 @@ namespace sigrid{
             void removeRowUp(const bool& isTopToBottom);
             void removeRowDown(const bool& isTopToBottom);
 
+            void clear();
+
             int getNumColumns() const;
             int getNumRows() const;
 

@@ -9,6 +9,7 @@
 #include "../../Entity/GraphicEntities.h"
 #include "../../Entity/Shape/Arrow/GraphicArrows.h"
 #include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "../../Board/BoardDataContainer.h"
 #include "../../Board/BoardLabels.h"
 #include "../../Entity/TurnToken/TurnToken.h"
 
@@ -29,6 +30,10 @@ void WorkWindow::setBoardFilename(const std::string& filename){
         return;
     }
     m_boards.at(m_activeBoardId).setFilename(filename);
+}
+
+void WorkWindow::setResetBoardFilename(const std::string& filename){
+    m_resetBoardFilename = filename;
 }
 
 void WorkWindow::setDefaultBoardImageFilename(const std::string& filename){
@@ -292,9 +297,10 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
 }
 
 void WorkWindow::reset(){
-    std::string fen{"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"};
-    m_boards.at(m_activeBoardId).loadFen(fen);
-    m_boards.at(m_activeBoardId).clearArrows();
+
+    BoardDataContainer boardData;
+    boardData.load(m_resetBoardFilename);
+    m_boards.at(m_activeBoardId).loadBoardData(boardData);
 }
 
 void WorkWindow::clear(){

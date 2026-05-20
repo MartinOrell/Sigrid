@@ -64,7 +64,7 @@ namespace sigrid{
             LogicTiles m_tileLayer;
             LogicEntities m_pieceLayer;
             LogicArrows m_arrowLayer;
-            int m_turnToMove; //0 = white to move, 1 = black to move
+            int m_turnToMove = 0; //0 = white to move, 1 = black to move
 
     };
 }

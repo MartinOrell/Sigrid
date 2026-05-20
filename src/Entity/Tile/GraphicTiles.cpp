@@ -84,7 +84,10 @@ void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
     auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
 
     if(color_o != std::nullopt){
-        m_tiles.at(coord).setTileColor(color_o.value());
+        auto it = m_tiles.find(coord);
+        if(it != m_tiles.end()){
+            it->second.setTileColor(color_o.value());
+        }
     }
 }
 
@@ -441,6 +444,12 @@ void GraphicTiles::removeRowDown(const bool& isTopToBottom){
             tile.second.move(sf::Vector2f{0.f, -m_tileSize.y});
         }
     }
+}
+
+void GraphicTiles::clear(){
+    m_columns = 0;
+    m_rows = 0;
+    m_tiles.clear();
 }
 
 int GraphicTiles::getNumColumns() const{
