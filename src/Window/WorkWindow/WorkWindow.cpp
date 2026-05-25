@@ -101,17 +101,52 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
     if(!m_boards.at(0).isImageFilenameSet()){
         m_boards.at(0).setImageFilename(m_defaultBoardImageFilename);
     }
+
+    m_layout.setFromXCoord(LayoutItem::BOARD, 1);
+    m_layout.setToXCoord(LayoutItem::BOARD, 2);
+    m_layout.setFromYCoord(LayoutItem::BOARD, 1);
+    m_layout.setToYCoord(LayoutItem::BOARD, 2);
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
+
+    m_layout.setPx(0, 0.f);
+    m_layout.setPx(3, (float)size.x);
+    m_layout.setPy(0, 0.f);
+    m_layout.setPy(3, (float)size.y);
+
+    float padding_left = 0.f;
+    float padding_right = 0.f;
+    float padding_top = 0.f;
+    float padding_bottom = 0.f;
+
+    m_layout.setPx(1, padding_left);
+    m_layout.setPx(2, (float)size.x - padding_right);
+    m_layout.setPy(1, padding_bottom);
+    m_layout.setPy(2, (float)size.y - padding_top);
+
     m_texture = std::make_unique<sf::RenderTexture>(size);
+
+    auto layoutBoardSize_o = m_layout.getSize(LayoutItem::BOARD);
+    if(layoutBoardSize_o == std::nullopt){
+        std::cerr << "WorkWindow: createGraphic failed, failed getting boardLayoutSize" << std::endl;
+        return;
+    }
+    float layoutBoardWidth = layoutBoardSize_o.value().x;
+    float layoutBoardHeight = layoutBoardSize_o.value().y;
+    auto boardTopLeftPosition_o = m_layout.getTopLeftPosition(LayoutItem::BOARD);
+    if(boardTopLeftPosition_o == std::nullopt){
+        std::cerr << "WorkWindow: createGraphic failed, failed getting boardLayoutPosition" << std::endl;
+        return;
+    }
+    sf::Vector2f boardTopLeftPosition = boardTopLeftPosition_o.value();
 
     for(auto& board: m_boards){
         unsigned int boardWidth = board.getImageWidth();
         unsigned int boardHeight = board.getImageHeight();
-        float widthRatio = (float)size.x/(float)boardWidth;
-        float heightRatio = (float)size.y/(float)boardHeight;
+        float widthRatio = layoutBoardWidth/(float)boardWidth;
+        float heightRatio = layoutBoardHeight/(float)boardHeight;
         float boardScale;
         if(widthRatio < heightRatio){
             boardScale = widthRatio;
@@ -121,8 +156,9 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         }
         board.setScale(boardScale);
 
-        float posX = ((float)(size.x)-float(board.getDisplayWidth()))/2.f;
-        float posY = ((float)(size.y)-float(board.getDisplayHeight()))/2.f;
+        float posX = boardTopLeftPosition.x + (layoutBoardWidth - board.getDisplayWidth())/2.f;
+        float posY = boardTopLeftPosition.y + (layoutBoardHeight - board.getDisplayHeight())/2.f;
+
         board.setPosition({posX, posY});
     }
 }

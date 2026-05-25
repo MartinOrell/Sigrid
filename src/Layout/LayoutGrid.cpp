@@ -128,7 +128,7 @@ float LayoutGrid::getPy(const int& y){
     return m_yCoords.at(y);
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getPosition(const unsigned int& id){
+std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& id){
 
     auto it = m_objects.find(id);
     if(it == m_objects.end()){
@@ -150,7 +150,44 @@ std::optional<sf::Vector2f> LayoutGrid::getPosition(const unsigned int& id){
     return sf::Vector2f{fromPx, fromPy};
 }
 
-std::optional<sf::Vector2u> LayoutGrid::getSizeU(const unsigned int& id){
+std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id){
+    auto it = m_objects.find(id);
+    if(it == m_objects.end()){
+        return std::nullopt;
+    }
+
+    int fromX = it->second.from.x;
+    if(fromX >= m_xCoords.size()){
+        return std::nullopt;
+    }
+    float fromPx = m_xCoords.at(fromX);
+
+    int toX = it->second.to.x;
+    if(toX >= m_xCoords.size()){
+        return std::nullopt;
+    }
+    float toPx = m_xCoords.at(toX);
+
+    int fromY = it->second.from.y;
+    if(fromY >= m_yCoords.size()){
+        return std::nullopt;
+    }
+    float fromPy = m_yCoords.at(fromY);
+
+    int toY = it->second.to.y;
+    if(toY >= m_yCoords.size()){
+        return std::nullopt;
+    }
+    float toPy = m_yCoords.at(toY);
+
+    float px = fromPx + (toPx - fromPx)/2.f;
+
+    float py = fromPy + (toPy - fromPy)/2.f;
+
+    return sf::Vector2f{px, py};
+}
+
+std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id){
 
     auto it = m_objects.find(id);
     if(it == m_objects.end()){
@@ -193,7 +230,16 @@ std::optional<sf::Vector2u> LayoutGrid::getSizeU(const unsigned int& id){
         return std::nullopt;
     }
 
-    return sf::Vector2u{(unsigned int)width, (unsigned int)height};
+    return sf::Vector2f{width, height};
+}
+
+std::optional<sf::Vector2u> LayoutGrid::getSizeU(const unsigned int& id){
+
+    auto size_o = getSize(id);
+    if(size_o == std::nullopt){
+        return std::nullopt;
+    }
+    return sf::Vector2u{(unsigned int)size_o.value().x, (unsigned int)size_o.value().y};
 }
 
 std::optional<float> LayoutGrid::getWidth(const int& fromX, const int& toX){

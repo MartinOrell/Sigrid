@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 
+#include "../../Layout/LayoutGrid.h"
 #include "../../Board/Board.h"
 #include "../../Action/Action.h"
 #include <SFML/Window/Event.hpp>
@@ -124,8 +125,13 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+            enum LayoutItem{
+                BOARD
+            };
+
             std::unique_ptr<sf::RenderTexture> m_texture;
             sf::Vector2f m_position;
+            LayoutGrid m_layout;
             std::vector<sigrid::Board> m_boards;
             int m_activeBoardId;
 

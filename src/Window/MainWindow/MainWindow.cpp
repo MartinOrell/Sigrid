@@ -239,7 +239,7 @@ void MainWindow::createGraphic(){
 
     if(m_menu){
         auto size_o = m_layout.getSizeU(LayoutItem::MENU);
-        auto position_o = m_layout.getPosition(LayoutItem::MENU);
+        auto position_o = m_layout.getTopLeftPosition(LayoutItem::MENU);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_menu->createGraphic(size_o.value());
             m_menu->setPosition(position_o.value());
@@ -248,7 +248,7 @@ void MainWindow::createGraphic(){
 
     if(m_toolWindow){
         auto size_o = m_layout.getSizeU(LayoutItem::TOOLINDICATOR);
-        auto position_o = m_layout.getPosition(LayoutItem::TOOLINDICATOR);
+        auto position_o = m_layout.getTopLeftPosition(LayoutItem::TOOLINDICATOR);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_toolWindow->createGraphic(size_o.value());
             m_toolWindow->setPosition(position_o.value());
@@ -257,7 +257,7 @@ void MainWindow::createGraphic(){
 
     if(m_toolPickerWindow && m_toolPickerWindow->isVisible()){
         auto size_o = m_layout.getSizeU(LayoutItem::TOOLPICKER);
-        auto position_o = m_layout.getPosition(LayoutItem::TOOLPICKER);
+        auto position_o = m_layout.getTopLeftPosition(LayoutItem::TOOLPICKER);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_toolPickerWindow->createGraphic(size_o.value());
             m_toolPickerWindow->setPosition(position_o.value());
@@ -266,7 +266,7 @@ void MainWindow::createGraphic(){
 
     if(m_workWindow){
         auto size_o = m_layout.getSizeU(LayoutItem::WORK);
-        auto position_o = m_layout.getPosition(LayoutItem::WORK);
+        auto position_o = m_layout.getTopLeftPosition(LayoutItem::WORK);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_workWindow->createGraphic(size_o.value());
             m_workWindow->setPosition(position_o.value());

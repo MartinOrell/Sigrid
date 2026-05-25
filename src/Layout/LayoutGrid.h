@@ -29,7 +29,9 @@ namespace sigrid{
             float getPx(const int& x);
             float getPy(const int& y);
 
-            std::optional<sf::Vector2f> getPosition(const unsigned int& id);
+            std::optional<sf::Vector2f> getTopLeftPosition(const unsigned int& id);
+            std::optional<sf::Vector2f> getCenterPosition(const unsigned int& id);
+            std::optional<sf::Vector2f> getSize(const unsigned int& id);
             std::optional<sf::Vector2u> getSizeU(const unsigned int& id);
 
             std::optional<float> getWidth(const int& fromX, const int& toX);
