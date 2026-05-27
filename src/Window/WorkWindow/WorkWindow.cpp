@@ -434,6 +434,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
 
 void WorkWindow::newBoard(){
 
+    activeBoard().deselect();
     Board newBoard;
     newBoard = activeBoard();
 
