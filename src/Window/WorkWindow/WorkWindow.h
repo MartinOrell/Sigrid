@@ -118,6 +118,9 @@ namespace sigrid{
 
         private:
 
+            sigrid::Board& activeBoard();
+            const sigrid::Board& activeBoard() const;
+
             int& activeId();
             const int& activeId() const;
 
