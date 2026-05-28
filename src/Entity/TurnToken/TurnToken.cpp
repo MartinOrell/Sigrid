@@ -55,6 +55,7 @@ TurnToken& TurnToken::operator =(const TurnToken& rhs){
             m_shapePtr = std::make_unique<sf::CircleShape>();
         }
         m_shapePtr->setRadius(rhs.m_shapePtr->getRadius());
+        m_shapePtr->setOrigin({rhs.m_shapePtr->getRadius(),rhs.m_shapePtr->getRadius()});
         m_shapePtr->setPointCount(rhs.m_shapePtr->getPointCount());
         m_shapePtr->setPosition(rhs.m_shapePtr->getPosition());
         m_shapePtr->setFillColor(rhs.m_shapePtr->getFillColor());
