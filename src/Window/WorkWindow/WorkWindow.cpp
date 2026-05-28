@@ -256,63 +256,70 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
     sf::Vector2f from = pressPosition - m_position;
     sf::Vector2f to = releasePosition - m_position;
 
-    if(activeBoard().isWithinTurnToken(from) &&
-    activeBoard().isWithinTurnToken(to)){
-        activeBoard().toggleTurnToken();
-    }
+    for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
+        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
 
-    auto fromCoord_o = activeBoard().getTileCoord(from);
-    auto toCoord_o = activeBoard().getTileCoord(to);
+        if(board.isWithinTurnToken(from) &&
+        board.isWithinTurnToken(to)){
+            board.toggleTurnToken();
+            return ActionType::None();
+        }
 
-    
-    if(fromCoord_o == std::nullopt){
-        return ActionType::None();
-    }
+        auto fromCoord_o = board.getTileCoord(from);
 
-    if(toCoord_o == std::nullopt){
+        if(fromCoord_o == std::nullopt){
+            continue;
+        }
+
+        auto toCoord_o = board.getTileCoord(to);
+
+        if(toCoord_o == std::nullopt){
+            switch(tool.selection()){
+                case ToolSelection::Select:
+                    board.deselect();
+                    break;
+                default:
+                    break;
+            }
+            return ActionType::None();
+        }
+
+        m_activeBoardIndex = displayIndex;
+
+        auto fromCoord = fromCoord_o.value();
+        auto toCoord = toCoord_o.value();
+
         switch(tool.selection()){
             case ToolSelection::Select:
-                activeBoard().deselect();
-                break;
-            default:
-                break;
-        }
-        return ActionType::None();
-    }
-
-    auto fromCoord = fromCoord_o.value();
-    auto toCoord = toCoord_o.value();
-
-    switch(tool.selection()){
-        case ToolSelection::Select:
-            if(fromCoord == toCoord){
-                activeBoard().select(toCoord);
-            }
-            else{
-                activeBoard().dragAndDrop(fromCoord_o.value(), toCoord_o.value());
-            }
-            return ActionType::None();
-        case ToolSelection::EntityAdder:
-            useAddEntityTool(toCoord,tool.getEntity());
-            return ActionType::None();
-        case ToolSelection::EntityPicker:
-            {
-                auto logicEntity_o = activeBoard().getLogicEntity(toCoord);
-                if(logicEntity_o == std::nullopt){
+                if(fromCoord == toCoord){
+                    board.select(toCoord);
+                }
+                else{
+                    board.dragAndDrop(fromCoord_o.value(), toCoord_o.value());
+                }
+                return ActionType::None();
+            case ToolSelection::EntityAdder:
+                useAddEntityTool(toCoord,tool.getEntity());
+                return ActionType::None();
+            case ToolSelection::EntityPicker:
+                {
+                    auto logicEntity_o = board.getLogicEntity(toCoord);
+                    if(logicEntity_o == std::nullopt){
+                        return ActionType::None();
+                    }
+                    ActionType::PickEntity action{logicEntity_o.value()};
+                    return action;
+                }
+            case ToolSelection::DrawArrow:
+                if(fromCoord == toCoord){
+                    useAddTileHighlightTool(toCoord, tool.getArrowColorId());
                     return ActionType::None();
                 }
-                ActionType::PickEntity action{logicEntity_o.value()};
-                return action;
-            }
-        case ToolSelection::DrawArrow:
-            if(fromCoord == toCoord){
-                useAddTileHighlightTool(toCoord, tool.getArrowColorId());
+                useAddArrowTool(fromCoord, toCoord, tool.getArrowColorId());
                 return ActionType::None();
-            }
-            useAddArrowTool(fromCoord, toCoord, tool.getArrowColorId());
-            return ActionType::None();
-        default:
-            return ActionType::None();
+            default:
+                return ActionType::None();
+        }
     }
     return ActionType::None();
 }
@@ -320,43 +327,48 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
 void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
     
     sf::Vector2f from = pressPosition - m_position;
-
-    auto fromCoord_o = activeBoard().getTileCoord(from);
-
-    if(fromCoord_o == std::nullopt){
-        return;
-    }
-
     sf::Vector2f to = currentPosition - m_position;
 
-    auto toCoord_o = activeBoard().getTileCoord(to);
+    for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
+        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
 
-    if(toCoord_o == std::nullopt){
-        activeBoard().removeDragArrow();
+        auto fromCoord_o = board.getTileCoord(from);
+
+        if(fromCoord_o == std::nullopt){
+            continue;
+        }
+
+        m_activeBoardIndex = displayIndex;
+
+        auto toCoord_o = board.getTileCoord(to);
+
+        if(toCoord_o == std::nullopt){
+            board.removeDragArrow();
+            return;
+        }
+
+        auto fromCoord = fromCoord_o.value();
+        auto toCoord = toCoord_o.value();
+
+        if(fromCoord == toCoord){
+            board.removeDragArrow();
+            return;
+        }
+
+        switch(tool.selection()){
+            case ToolSelection::Select:
+                if(!board.isEmptyTile(fromCoord)){
+                    board.updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
+                }
+                return;
+            case ToolSelection::DrawArrow:
+                board.updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
+                return;
+            default:
+                return;
+        }
         return;
     }
-
-    auto fromCoord = fromCoord_o.value();
-    auto toCoord = toCoord_o.value();
-
-    if(fromCoord == toCoord){
-        activeBoard().removeDragArrow();
-        return;
-    }
-
-    switch(tool.selection()){
-        case ToolSelection::Select:
-            if(!activeBoard().isEmptyTile(fromCoord)){
-                activeBoard().updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
-            }
-            return;
-        case ToolSelection::DrawArrow:
-            activeBoard().updateDragArrow(fromCoord, toCoord, tool.getArrowColorId());
-            return;
-        default:
-            return;
-    }
-    return;
 }
 
 void WorkWindow::reset(){
