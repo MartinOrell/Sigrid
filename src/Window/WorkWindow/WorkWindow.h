@@ -138,6 +138,7 @@ namespace sigrid{
             LayoutGrid m_layout;
             std::vector<sigrid::Board> m_boards;
             unsigned int m_maxBoardColumns = 2;
+            unsigned int m_maxBoardRows = 2;
             std::vector<int> m_displayBoardIds;
             int m_activeBoardIndex = 0;
 

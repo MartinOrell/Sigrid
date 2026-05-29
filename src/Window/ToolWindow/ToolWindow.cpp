@@ -175,6 +175,8 @@ void ToolWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     sf::Sprite sprite(m_texture->getTexture());
     sprite.setPosition(m_position);
+    sprite.move({0.f, (float)m_texture->getTexture().getSize().y});
+    sprite.setScale({1.f, -1.f});
     target.draw(sprite);
 }
 

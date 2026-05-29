@@ -532,5 +532,7 @@ void ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) c
     texture.draw(m_board);
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
+    sprite.move({0.f, (float)textureSize.y});
+    sprite.setScale({1.f, -1.f});
     target.draw(sprite);
 }

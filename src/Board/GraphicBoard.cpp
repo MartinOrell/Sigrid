@@ -2012,6 +2012,7 @@ void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
 void GraphicBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     sf::Sprite sprite(m_texturePtr->getTexture());
     sprite.setPosition(m_position);
-    sprite.setScale({m_scale,m_scale});
+    sprite.move({0.f, m_scale*(float)m_texturePtr->getTexture().getSize().y});
+    sprite.setScale({m_scale,-m_scale});
     target.draw(sprite);
 }

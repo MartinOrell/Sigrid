@@ -106,11 +106,17 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
         activeBoard().setImageFilename(m_defaultBoardImageFilename);
     }
 
-    for(unsigned int i = 0; i < m_maxBoardColumns; i++){
-        m_layout.setFromXCoord(LayoutItem{i}, 1+2*i);
-        m_layout.setToXCoord(LayoutItem{i}, 2+2*i);
-        m_layout.setFromYCoord(LayoutItem{i}, 1);
-        m_layout.setToYCoord(LayoutItem{i}, 2);
+    {
+        unsigned int i = 0;
+        for(unsigned int y = 0; y < m_maxBoardRows; y++){
+            for(unsigned int x = 0; x < m_maxBoardColumns; x++){
+                m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
+                m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
+                m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
+                m_layout.setToYCoord(LayoutItem{i}, 2 + 2*y);
+                i++;
+            }
+        }
     }
 }
 
@@ -118,6 +124,10 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
 
     int boardColumns = m_displayBoardIds.size();
+    if(boardColumns > m_maxBoardColumns){
+        boardColumns = m_maxBoardColumns;
+    }
+    int boardRows = (m_displayBoardIds.size() + boardColumns - 1)/boardColumns;
 
     m_layout.setPx(0, 0.f);
     m_layout.setPy(0, 0.f);
@@ -125,19 +135,22 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
     int maxX = 1+2*boardColumns;
 
     m_layout.setPx(maxX, (float)size.x);
-    m_layout.setPy(3, (float)size.y);
+
+    int maxY = 1+2*boardRows;
+    m_layout.setPy(maxY, (float)size.y);
 
     float padding_left = 0.f;
     float padding_right = 0.f;
     float padding_top = 0.f;
     float padding_bottom = 0.f;
     float padding_betweenX = 20.f;
+    float padding_betweenY = 20.f;
 
     m_layout.setPx(1, padding_left);
     m_layout.setPy(1, padding_bottom);
 
     m_layout.setPx(maxX-1, (float)size.x - padding_right);
-    m_layout.setPy(2, (float)size.y - padding_top);
+    m_layout.setPy(maxY-1, (float)size.y - padding_top);
 
     for(int i = 1; i < boardColumns; i++){
         float middleX = padding_left + i*m_layout.getWidth(1,maxX-1).value()/(float)boardColumns;
@@ -145,9 +158,15 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         m_layout.setPx(2*i+1, middleX + padding_betweenX/2.f);
     }
 
+    for(int i = 1; i < boardRows; i++){
+        float middleY = padding_bottom + i*m_layout.getHeight(1,maxY-1).value()/(float)boardRows;
+        m_layout.setPy(2*i, middleY - padding_betweenY/2.f);
+        m_layout.setPy(2*i+1, middleY + padding_betweenY/2.f);
+    }
+
     m_texture = std::make_unique<sf::RenderTexture>(size);
 
-    for(LayoutItem i = 0; i < boardColumns; i++){
+    for(LayoutItem i = 0; i < m_displayBoardIds.size(); i++){
         auto layoutBoardSize_o = m_layout.getSize(LayoutItem{i});
         if(layoutBoardSize_o == std::nullopt){
             std::cerr << "WorkWindow: createGraphic failed, failed getting boardLayoutSize" << std::endl;
@@ -162,27 +181,24 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         }
         sf::Vector2f boardTopLeftPosition = boardTopLeftPosition_o.value();
 
-        if(i < m_displayBoardIds.size())
-        {
-            auto& board = m_boards.at(m_displayBoardIds.at(i));
-            unsigned int boardWidth = board.getImageWidth();
-            unsigned int boardHeight = board.getImageHeight();
-            float widthRatio = layoutBoardWidth/(float)boardWidth;
-            float heightRatio = layoutBoardHeight/(float)boardHeight;
-            float boardScale;
-            if(widthRatio < heightRatio){
-                boardScale = widthRatio;
-            }
-            else{
-                boardScale = heightRatio;
-            }
-            board.setScale(boardScale);
-
-            float posX = boardTopLeftPosition.x + (layoutBoardWidth - board.getDisplayWidth())/2.f;
-            float posY = boardTopLeftPosition.y + (layoutBoardHeight - board.getDisplayHeight())/2.f;
-
-            board.setPosition({posX, posY});
+        auto& board = m_boards.at(m_displayBoardIds.at(i));
+        unsigned int boardWidth = board.getImageWidth();
+        unsigned int boardHeight = board.getImageHeight();
+        float widthRatio = layoutBoardWidth/(float)boardWidth;
+        float heightRatio = layoutBoardHeight/(float)boardHeight;
+        float boardScale;
+        if(widthRatio < heightRatio){
+            boardScale = widthRatio;
         }
+        else{
+            boardScale = heightRatio;
+        }
+        board.setScale(boardScale);
+
+        float posX = boardTopLeftPosition.x + (layoutBoardWidth - board.getDisplayWidth())/2.f;
+        float posY = boardTopLeftPosition.y + (layoutBoardHeight - board.getDisplayHeight())/2.f;
+
+        board.setPosition({posX, posY});
     }
 }
 
@@ -244,6 +260,8 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     }
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
+    sprite.move({0.f, (float)texture.getTexture().getSize().y});
+    sprite.setScale({1.f, -1.f});
     target.draw(sprite);
 }
 
@@ -461,7 +479,7 @@ void WorkWindow::newBoard(){
 
     m_boards.push_back(std::move(newBoard));
 
-    if(m_displayBoardIds.size() < m_maxBoardColumns){
+    if(m_displayBoardIds.size() < m_maxBoardColumns*m_maxBoardRows){
         m_displayBoardIds.push_back(m_boards.size()-1);
     }
     else{
