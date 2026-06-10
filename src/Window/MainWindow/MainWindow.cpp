@@ -533,6 +533,10 @@ void MainWindow::handleAction(const sigrid::Action action){
         saveBoard();
         return;
     }
+    else if(std::holds_alternative<ActionType::SavePdf>(action)){
+        savePdf();
+        return;
+    }
     else if(std::holds_alternative<ActionType::PasteFen>(action)){
         pasteFen();
         return;
@@ -967,6 +971,16 @@ void MainWindow::saveBoard(){
 
     m_workWindow->saveBoard();
 
+}
+
+void MainWindow::savePdf(){
+
+    if(!m_workWindow){
+        std::cerr << "Unable to save pdf, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->savePdf();
 }
 
 void MainWindow::pasteFen(){

@@ -17,6 +17,8 @@
 #include <SFML/Graphics/Image.hpp>
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 using namespace sigrid;
 
@@ -456,6 +458,29 @@ unsigned int GraphicBoard::getImageWidth() const{
 
 unsigned int GraphicBoard::getImageHeight() const{
     return m_texturePtr->getSize().y;
+}
+
+std::string GraphicBoard::getHexStream() const{
+
+    auto image = m_texturePtr->getTexture().copyToImage();
+    image.flipVertically();
+
+    std::stringstream ss;
+    ss << std::hex << std::setfill('0');
+    for(unsigned int y = 0; y < image.getSize().y; y++){
+        for(unsigned int x = 0; x < image.getSize().x; x++){
+            const auto& pixel = image.getPixel({x,y});
+            const auto& red = pixel.r;
+            const auto& green = pixel.g;
+            const auto& blue = pixel.b;
+
+            ss << std::hex << std::setw(2) << static_cast<int>(red);
+            ss << std::hex << std::setw(2) << static_cast<int>(red);
+            ss << std::hex << std::setw(2) << static_cast<int>(red);
+        }
+    }
+
+    return ss.str();
 }
 
 float GraphicBoard::getDisplayWidth() const{

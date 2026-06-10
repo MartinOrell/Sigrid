@@ -46,6 +46,18 @@ set(SRC_FILES
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
     src/Entity/TurnToken/TurnToken.cpp
+    src/Pdf/Pdf.cpp
+    src/Pdf/Object.cpp
+    src/Pdf/Catalog.cpp
+    src/Pdf/Pages.cpp
+    src/Pdf/Page.cpp
+    src/Pdf/ProcedureSet.cpp
+    src/Pdf/MediaBox.cpp
+    src/Pdf/PageResources.cpp
+    src/Pdf/ExternalObject.cpp
+    src/Pdf/ExternalObjects.cpp
+    src/Pdf/ContentStream.cpp
+    src/Pdf/ContentStreams.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

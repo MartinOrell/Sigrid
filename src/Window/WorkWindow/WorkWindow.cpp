@@ -13,6 +13,9 @@
 #include "../../Board/BoardLabels.h"
 #include "../../Entity/TurnToken/TurnToken.h"
 
+#include "../../Pdf/Pdf.h"
+#include "../../Pdf/Image.h"
+
 using namespace sigrid;
 
 
@@ -587,6 +590,59 @@ void WorkWindow::openRightBoard(){
 
 void WorkWindow::saveBoard(){
     activeBoard().save();
+}
+
+void WorkWindow::savePdf(){
+
+    std::cout << "Preparing to save pdf" << std::endl;
+    myPdf::Pdf pdf;
+
+    for(unsigned int i = 0; i < m_boards.size(); i++){
+        unsigned int pageId = i/12;
+        unsigned int boardId = i%12;
+        unsigned int y = boardId/3;
+        unsigned int x = boardId%3;
+
+        myPdf::Image image;
+
+        image.displayWidth = 150;
+
+        if(x == 0){
+            image.xPos = 35;
+        }
+        else if(x == 1){
+            image.xPos = 220;
+        }
+        else if(x == 2){
+            image.xPos = 405;
+        }
+
+        image.displayHeight = 150;
+        
+        if(y == 0){
+            image.yPos = 627;
+        }
+        else if(y == 1){
+            image.yPos = 442;
+        }
+        else if(y == 2){
+            image.yPos = 257;
+        }
+        else if(y == 3){
+            image.yPos = 72;
+        }
+
+        image.dataWidth = m_boards.at(i).getImageWidth();
+        image.dataHeight = m_boards.at(i).getImageHeight();
+
+        std::cout << "receive data for board: " << i << std::endl;
+        image.asciiHexStream = m_boards.at(i).getHexStream();
+        std::cout << "data received" << std::endl;
+
+        pdf.addImage(pageId, std::move(image));
+    }
+
+    pdf.save("saveData/boards/pdf/boards.pdf");
 }
 
 void WorkWindow::flipBoard(){

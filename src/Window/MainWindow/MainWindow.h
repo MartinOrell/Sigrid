@@ -64,6 +64,7 @@ namespace sigrid{
             void openLeftBoard();
             void openRightBoard();
             void saveBoard();
+            void savePdf();
             void pasteFen();
             void copyFen();
             void flipBoard();

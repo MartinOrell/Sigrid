@@ -126,6 +126,10 @@ unsigned int Board::getImageHeight() const{
     return m_graphicBoard.getImageHeight();
 }
 
+std::string Board::getHexStream() const{
+    return m_graphicBoard.getHexStream();
+}
+
 float Board::getDisplayWidth() const{
     return m_graphicBoard.getDisplayWidth();
 }

@@ -70,6 +70,7 @@ namespace sigrid{
             void openRightBoard();
 
             void saveBoard();
+            void savePdf();
 
             void flipBoard();
 

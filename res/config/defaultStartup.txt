@@ -177,6 +177,7 @@ Menu: [
       "Open Left" openLeft
       "Open Right" openRight
       Save save
+      "Save Pdf" savePdf
     ]
     Edit [
       Reset reset
