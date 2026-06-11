@@ -1,8 +1,11 @@
 #include "WorkWindow.h"
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Image.hpp>
 
 #include "../../Tool/Tool.h"
 #include "../../Entity/Tile/GraphicTiles.h"
@@ -603,43 +606,63 @@ void WorkWindow::savePdf(){
         unsigned int y = boardId/3;
         unsigned int x = boardId%3;
 
-        myPdf::Image image;
-
-        image.displayWidth = 150;
+        myPdf::Image pdImage;
 
         if(x == 0){
-            image.xPos = 35;
+            pdImage.xPos = 35;
         }
         else if(x == 1){
-            image.xPos = 220;
+            pdImage.xPos = 220;
         }
         else if(x == 2){
-            image.xPos = 405;
+            pdImage.xPos = 405;
         }
-
-        image.displayHeight = 150;
         
         if(y == 0){
-            image.yPos = 627;
+            pdImage.yPos = 627;
         }
         else if(y == 1){
-            image.yPos = 442;
+            pdImage.yPos = 442;
         }
         else if(y == 2){
-            image.yPos = 257;
+            pdImage.yPos = 257;
         }
         else if(y == 3){
-            image.yPos = 72;
+            pdImage.yPos = 72;
         }
 
-        image.dataWidth = m_boards.at(i).getImageWidth();
-        image.dataHeight = m_boards.at(i).getImageHeight();
+        unsigned int entitledWidth = 150;
+        unsigned int entitledHeight = 150;
 
-        std::cout << "receive data for board: " << i << std::endl;
-        image.asciiHexStream = m_boards.at(i).getHexStream();
-        std::cout << "data received" << std::endl;
+        float quality = 4;
 
-        pdf.addImage(pageId, std::move(image));
+        sf::Image sfImage = m_boards.at(i).getImage(entitledWidth*quality, entitledHeight*quality);
+        
+        pdImage.displayWidth = sfImage.getSize().x/quality;
+        pdImage.displayHeight = sfImage.getSize().y/quality;
+        pdImage.dataWidth = sfImage.getSize().x;
+        pdImage.dataHeight = sfImage.getSize().y;
+        
+        std::cout << "loading data from " << m_boards.at(i).getName()
+            << " (" << i+1 << "/" << m_boards.size() << ")" << std::endl;
+        std::stringstream ss;
+        ss << std::hex << std::setfill('0');
+        for(unsigned int y = 0; y < sfImage.getSize().y; y++){
+            for(unsigned int x = 0; x < sfImage.getSize().x; x++){
+                const auto& pixel = sfImage.getPixel({x,y});
+                const auto& red = pixel.r;
+                const auto& green = pixel.g;
+                const auto& blue = pixel.b;
+
+                ss << std::hex << std::setw(2) << static_cast<int>(red);
+                ss << std::hex << std::setw(2) << static_cast<int>(red);
+                ss << std::hex << std::setw(2) << static_cast<int>(red);
+            }
+        }
+        pdImage.asciiHexStream = ss.str();
+        std::cout << "data loaded" << std::endl;
+
+        pdf.addImage(pageId, std::move(pdImage));
     }
 
     pdf.save("saveData/boards/pdf/boards.pdf");

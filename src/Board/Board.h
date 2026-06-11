@@ -51,7 +51,7 @@ namespace sigrid{
 
             unsigned int getImageHeight() const;
 
-            std::string getHexStream() const;
+            sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
 
             float getDisplayWidth() const;
 

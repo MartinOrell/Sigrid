@@ -17,8 +17,6 @@
 #include <SFML/Graphics/Image.hpp>
 
 #include <iostream>
-#include <sstream>
-#include <iomanip>
 
 using namespace sigrid;
 
@@ -460,27 +458,40 @@ unsigned int GraphicBoard::getImageHeight() const{
     return m_texturePtr->getSize().y;
 }
 
-std::string GraphicBoard::getHexStream() const{
+sf::Image GraphicBoard::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
 
-    auto image = m_texturePtr->getTexture().copyToImage();
-    image.flipVertically();
+    const auto& size = m_texturePtr->getTexture().getSize();
+    unsigned int oldWidth = size.x;
+    unsigned int oldHeight = size.y;
 
-    std::stringstream ss;
-    ss << std::hex << std::setfill('0');
-    for(unsigned int y = 0; y < image.getSize().y; y++){
-        for(unsigned int x = 0; x < image.getSize().x; x++){
-            const auto& pixel = image.getPixel({x,y});
-            const auto& red = pixel.r;
-            const auto& green = pixel.g;
-            const auto& blue = pixel.b;
-
-            ss << std::hex << std::setw(2) << static_cast<int>(red);
-            ss << std::hex << std::setw(2) << static_cast<int>(red);
-            ss << std::hex << std::setw(2) << static_cast<int>(red);
-        }
+    float widthRatio = 1.f;
+    if(oldWidth > maxWidth){
+        widthRatio = (float)maxWidth/(float)oldWidth;
+    }
+    float heightRatio = 1.f;
+    if(oldHeight > maxHeight){
+        heightRatio = (float)maxHeight/(float)oldHeight;
     }
 
-    return ss.str();
+    float ratio;
+    if(widthRatio < heightRatio){
+        ratio = widthRatio;
+    }
+    else{
+        ratio = heightRatio;
+    }
+
+    unsigned int newWidth = oldWidth * ratio;
+    unsigned int newHeight = oldHeight * ratio;
+
+    sf::Sprite sprite(m_texturePtr->getTexture());
+    sprite.setPosition({0.f,0.f});
+    sprite.setScale({ratio,ratio});
+
+    sf::RenderTexture newRenderTexture{sf::Vector2u{newWidth, newHeight}};
+    newRenderTexture.clear(sf::Color::White);
+    newRenderTexture.draw(sprite);
+    return newRenderTexture.getTexture().copyToImage();
 }
 
 float GraphicBoard::getDisplayWidth() const{

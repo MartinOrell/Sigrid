@@ -5,6 +5,7 @@
 #include <cctype> //isdigit
 
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Image.hpp>
 
 #include "BoardDataContainer.h"
 #include "../Entity/Tile/GraphicTiles.h"
@@ -126,8 +127,8 @@ unsigned int Board::getImageHeight() const{
     return m_graphicBoard.getImageHeight();
 }
 
-std::string Board::getHexStream() const{
-    return m_graphicBoard.getHexStream();
+sf::Image Board::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
+    return m_graphicBoard.getImage(maxWidth, maxHeight);
 }
 
 float Board::getDisplayWidth() const{
