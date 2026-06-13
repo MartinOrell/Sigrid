@@ -289,6 +289,10 @@ void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse:
 
     m_mouse.press(button, scaledPosition);
 
+    if(m_workWindow && m_workWindow->contains(scaledPosition)){
+        m_workWindow->mousePress(scaledPosition);
+        m_window.setTitle(m_workWindow->getName());
+    }
 }
 
 void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button){
@@ -303,6 +307,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
         Action action = m_workWindow->clicked(*usedToolPtr, m_mouse.getPressPosition(button), scaledPosition);
         handleAction(action);
+        m_window.setTitle(m_workWindow->getName());
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
         //Currently clicking inside toolWindow does nothing

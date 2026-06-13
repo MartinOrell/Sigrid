@@ -213,7 +213,15 @@ void WorkWindow::loadFen(const std::string& fen){
 }
 
 std::string WorkWindow::getName() const{
-    return activeBoard().getName();
+    if(m_boards.size() == 0){
+        return "";
+    }
+    if(m_boards.size() == 1){
+        return m_boards.at(0).getName();
+    }
+    return activeBoard().getName() + " (" +
+        std::to_string(activeId()+1) + "/" +
+        std::to_string(m_boards.size()) + ")";
 }
 
 std::string WorkWindow::getSaveFilename() const{
@@ -271,7 +279,21 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(sprite);
 }
 
+void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
+    activeBoard().removeDragArrow();
+
+    sf::Vector2f position = windowPosition - m_position;
+
+    for(unsigned int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
+        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
+        if(!board.contains(position)){
+            continue;
+        }
+        m_activeBoardIndex = displayIndex;
+        return;
+    }
+}
 
 Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     

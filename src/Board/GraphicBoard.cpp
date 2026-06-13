@@ -505,9 +505,8 @@ float GraphicBoard::getDisplayHeight() const{
 
 bool GraphicBoard::contains(const sf::Vector2f& point) const{
     sf::Sprite sprite(m_texturePtr->getTexture());
-    sprite.setPosition(m_position);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return rect.contains((point-m_position)/m_scale);
 }
 
 bool GraphicBoard::isLeftToRight() const{

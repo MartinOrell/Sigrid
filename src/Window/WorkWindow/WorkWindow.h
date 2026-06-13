@@ -55,6 +55,7 @@ namespace sigrid{
 
             bool isCoordinatesOutside() const;
 
+            void mousePress(const sf::Vector2f& position);
             Action clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
             void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
 
