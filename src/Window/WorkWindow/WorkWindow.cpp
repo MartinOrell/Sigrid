@@ -28,6 +28,7 @@ WorkWindow::WorkWindow()
 , m_displayBoardIds{{0}}{
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
+    m_boardSelectHighlight.setColor(sf::Color{100,100,255});
 }
 
 void WorkWindow::setBoardFilename(const std::string& filename){
@@ -278,12 +279,18 @@ bool WorkWindow::isCoordinatesOutside() const{
 }
 
 void WorkWindow::updateSelectionHighlight(){
-    if(m_boards.size() > 1){
-        m_boardSelectHighlight.setTopLeftPosition(activeBoard().getTopLeftPosition() - sf::Vector2f{10.f, 10.f});
-        m_boardSelectHighlight.setEnclosedArea(activeBoard().getDisplaySize());
-        m_boardSelectHighlight.show();
-        m_boardSelectHighlight.setColor(sf::Color{100,100,255});
+
+    if(m_boards.size() < 2){
+        return;
     }
+
+    const auto& board = activeBoard();
+    const float& thickness = m_boardSelectHighlight.getThickness();
+    sf::Vector2f position = board.getTopLeftPosition();
+    position -= sf::Vector2f{thickness, thickness};
+    m_boardSelectHighlight.setTopLeftPosition(position);
+    m_boardSelectHighlight.setEnclosedArea(board.getDisplaySize());
+    m_boardSelectHighlight.show();
 }
 
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
