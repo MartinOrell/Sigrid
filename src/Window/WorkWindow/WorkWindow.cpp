@@ -132,11 +132,10 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
 void WorkWindow::createGraphic(const sf::Vector2u& size)
 {
 
-    int boardColumns = m_displayBoardIds.size();
-    if(boardColumns > m_maxBoardColumns){
-        boardColumns = m_maxBoardColumns;
-    }
-    int boardRows = (m_displayBoardIds.size() + boardColumns - 1)/boardColumns;
+    int numBoards = m_displayBoardIds.size();
+
+    int boardColumns = (numBoards > m_maxBoardColumns) ? m_maxBoardColumns : numBoards;
+    int boardRows = (numBoards + boardColumns - 1)/boardColumns;
 
     m_layout.setPx(0, 0.f);
     m_layout.setPy(0, 0.f);
@@ -148,10 +147,24 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
     int maxY = 1+2*boardRows;
     m_layout.setPy(maxY, (float)size.y);
 
+    bool hasSelectHighlight = numBoards > 1;
+
     float padding_left = 0.f;
+    if(hasSelectHighlight){
+        padding_left += m_boardSelectHighlight.getThickness();
+    }
     float padding_right = 0.f;
+    if(hasSelectHighlight){
+        padding_right += m_boardSelectHighlight.getThickness();
+    }
     float padding_top = 0.f;
+    if(hasSelectHighlight){
+        padding_top += m_boardSelectHighlight.getThickness();
+    }
     float padding_bottom = 0.f;
+    if(hasSelectHighlight){
+        padding_bottom += m_boardSelectHighlight.getThickness();
+    }
     float padding_betweenX = 20.f;
     float padding_betweenY = 20.f;
 
