@@ -83,10 +83,8 @@ float RectangleBorder::getWidth() const{
     return (float)m_width;
 }
 
-void RectangleBorder::show(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea){
+void RectangleBorder::show(){
     m_isVisible = true;
-    m_topLeftPosition = topLeftPosition;
-    m_enclosedArea = enclosedArea;
 
     initLeft();
     initRight();

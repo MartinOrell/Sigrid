@@ -1459,7 +1459,9 @@ void GraphicBoard::addBorder(){
     boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
     boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
 
-    m_borderPtr->show(topLeftPosition, boardArea);
+    m_borderPtr->setEnclosedArea(boardArea);
+    m_borderPtr->setTopLeftPosition(topLeftPosition);
+    m_borderPtr->show();
 
     moveTiles({(float)m_borderWidth, (float)m_borderWidth});
     if(m_labelsPtr){

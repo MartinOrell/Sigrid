@@ -29,7 +29,7 @@ namespace sigrid{
 
             float getWidth() const;
 
-            void show(const sf::Vector2f& topLeftPosition, const sf::Vector2f& enclosedArea);
+            void show();
 
             void hide();
 

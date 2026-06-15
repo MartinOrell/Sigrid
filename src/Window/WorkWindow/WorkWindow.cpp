@@ -266,7 +266,9 @@ bool WorkWindow::isCoordinatesOutside() const{
 
 void WorkWindow::updateSelectionHighlight(){
     if(m_boards.size() > 1){
-        m_boardSelectHighlight.show(activeBoard().getTopLeftPosition() - sf::Vector2f{10.f, 10.f}, activeBoard().getDisplaySize());
+        m_boardSelectHighlight.setTopLeftPosition(activeBoard().getTopLeftPosition() - sf::Vector2f{10.f, 10.f});
+        m_boardSelectHighlight.setEnclosedArea(activeBoard().getDisplaySize());
+        m_boardSelectHighlight.show();
         m_boardSelectHighlight.setColor(sf::Color{100,100,255});
     }
 }
