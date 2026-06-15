@@ -8,6 +8,8 @@
 #include "../../Action/Action.h"
 #include <SFML/Window/Event.hpp>
 
+#include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
+
 namespace sf{
     class RenderTexture;
 }
@@ -131,6 +133,8 @@ namespace sigrid{
             void useAddTileHighlightTool(const Coord& coord, const int& colorId);
             void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
+            void updateSelectionHighlight();
+
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             typedef unsigned int LayoutItem;
@@ -143,6 +147,8 @@ namespace sigrid{
             unsigned int m_maxBoardRows = 2;
             std::vector<int> m_displayBoardIds;
             int m_activeBoardIndex = 0;
+
+            RectangleBorder m_boardSelectHighlight;
 
             sf::Color m_backgroundColor;
 

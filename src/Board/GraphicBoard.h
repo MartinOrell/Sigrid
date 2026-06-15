@@ -71,8 +71,10 @@ namespace sigrid{
 
             sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
 
-            float getDisplayWidth() const;
+            const sf::Vector2f& getTopLeftPosition() const;
 
+            sf::Vector2f getDisplaySize() const;
+            float getDisplayWidth() const;
             float getDisplayHeight() const;
 
             bool contains(const sf::Vector2f& point) const;

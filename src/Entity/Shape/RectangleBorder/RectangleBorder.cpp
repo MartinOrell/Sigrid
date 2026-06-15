@@ -20,6 +20,29 @@ void RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
     m_enclosedArea = enclosedArea;
 }
 
+void RectangleBorder::setColor(const sf::Color& color){
+
+    if(!m_left){
+        m_left = std::make_unique<sf::RectangleShape>();
+    }
+    m_left->setFillColor(color);
+
+    if(!m_right){
+        m_right = std::make_unique<sf::RectangleShape>();
+    }
+    m_right->setFillColor(color);
+    
+    if(!m_top){
+        m_top = std::make_unique<sf::RectangleShape>();
+    }
+    m_top->setFillColor(color);
+    
+    if(!m_bottom){
+        m_bottom = std::make_unique<sf::RectangleShape>();
+    }
+    m_bottom->setFillColor(color);
+}
+
 void RectangleBorder::init(const bool& isVisible){
 
     m_isVisible = isVisible;
@@ -65,21 +88,10 @@ void RectangleBorder::show(const sf::Vector2f& topLeftPosition, const sf::Vector
     m_topLeftPosition = topLeftPosition;
     m_enclosedArea = enclosedArea;
 
-    if(!m_left){
-        initLeft();
-    }
-
-    if(!m_right){
-        initRight();
-    }
-
-    if(!m_top){
-        initTop();
-    }
-
-    if(!m_bottom){
-        initBottom();
-    }
+    initLeft();
+    initRight();
+    initTop();
+    initBottom();
 }
 
 void RectangleBorder::hide(){

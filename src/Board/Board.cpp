@@ -131,6 +131,14 @@ sf::Image Board::getImage(const unsigned int maxWidth, const unsigned int maxHei
     return m_graphicBoard.getImage(maxWidth, maxHeight);
 }
 
+const sf::Vector2f& Board::getTopLeftPosition() const{
+    return m_graphicBoard.getTopLeftPosition();
+}
+
+sf::Vector2f Board::getDisplaySize() const{
+    return m_graphicBoard.getDisplaySize();
+}
+
 float Board::getDisplayWidth() const{
     return m_graphicBoard.getDisplayWidth();
 }

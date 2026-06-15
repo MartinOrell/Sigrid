@@ -25,7 +25,10 @@ using namespace sigrid;
 WorkWindow::WorkWindow()
 : m_backgroundColor{255,255,255,0}
 , m_activeBoardIndex{0}
-, m_displayBoardIds{{0}}{}
+, m_displayBoardIds{{0}}{
+    m_boardSelectHighlight.hide();
+    m_boardSelectHighlight.setWidth(10);
+}
 
 void WorkWindow::setBoardFilename(const std::string& filename){
     if(m_boards.size() == 0){
@@ -206,6 +209,8 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
 
         board.setPosition({posX, posY});
     }
+
+    updateSelectionHighlight();
 }
 
 void WorkWindow::loadFen(const std::string& fen){
@@ -259,6 +264,13 @@ bool WorkWindow::isCoordinatesOutside() const{
     return activeBoard().isCoordinatesOutside();
 }
 
+void WorkWindow::updateSelectionHighlight(){
+    if(m_boards.size() > 1){
+        m_boardSelectHighlight.show(activeBoard().getTopLeftPosition() - sf::Vector2f{10.f, 10.f}, activeBoard().getDisplaySize());
+        m_boardSelectHighlight.setColor(sf::Color{100,100,255});
+    }
+}
+
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_texture){
@@ -272,6 +284,7 @@ void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
             texture.draw(m_boards.at(id));
         }
     }
+    texture.draw(m_boardSelectHighlight);
     sf::Sprite sprite(texture.getTexture());
     sprite.setPosition(m_position);
     sprite.move({0.f, (float)texture.getTexture().getSize().y});
@@ -291,6 +304,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
             continue;
         }
         m_activeBoardIndex = displayIndex;
+        updateSelectionHighlight();
         return;
     }
 }

@@ -18,6 +18,8 @@ namespace sigrid{
 
             void setEnclosedArea(const sf::Vector2f& enclosedArea);
 
+            void setColor(const sf::Color& color);
+
             void init(const bool& isVisible);
 
             RectangleBorder& operator =(const RectangleBorder& rhs);

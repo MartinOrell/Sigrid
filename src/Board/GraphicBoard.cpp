@@ -494,6 +494,24 @@ sf::Image GraphicBoard::getImage(const unsigned int maxWidth, const unsigned int
     return newRenderTexture.getTexture().copyToImage();
 }
 
+const sf::Vector2f& GraphicBoard::getTopLeftPosition() const{
+    return m_position;
+}
+
+sf::Vector2f GraphicBoard::getDisplaySize() const{
+
+    if(!m_texturePtr){
+        std::cerr << "GraphicBoard: Unable to get display size" << std::endl;
+        std::cerr << "TexturePtr is null";
+        return sf::Vector2f{0.f,0.f};
+    }
+
+    const auto& textureSize = m_texturePtr->getSize();
+    const float& x = (float)textureSize.x * m_scale;
+    const float& y = (float)textureSize.y * m_scale;
+    return sf::Vector2f{x, y};
+}
+
 float GraphicBoard::getDisplayWidth() const{
     return (float)m_texturePtr->getSize().x*m_scale;
 }
