@@ -18,8 +18,6 @@ namespace sigrid{
 
             void setColor(const sf::Color& color);
 
-            void init(const bool& isVisible);
-
             RectangleBorder& operator =(const RectangleBorder& rhs);
 
             bool isVisible() const;
@@ -39,11 +37,6 @@ namespace sigrid{
         private:
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-            void initLeft();
-            void initRight();
-            void initTop();
-            void initBottom();
 
             bool m_isVisible = true;
             unsigned int m_thickness = 0;

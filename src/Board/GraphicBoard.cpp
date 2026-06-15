@@ -133,7 +133,6 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
         boardArea.x = m_tileLayerPtr->getTileWidth() * logicBoard.getNumColumns();
         boardArea.y = m_tileLayerPtr->getTileHeight() * logicBoard.getNumRows();
         m_borderPtr->setEnclosedArea(boardArea);
-        m_borderPtr->init(m_borderPtr->isVisible());
     }
 
     if(m_labelsPtr){
@@ -329,7 +328,8 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         m_borderPtr->setThickness(config.borderThickness);
         m_borderPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
         m_borderPtr->setEnclosedArea(boardArea);
-        m_borderPtr->init(config.border);
+        m_borderPtr->setColor(sf::Color{0,0,0});
+        m_borderPtr->show();
     }
 
     if(m_borderPtr && m_borderPtr->isVisible()){
@@ -1448,7 +1448,7 @@ void GraphicBoard::addBorder(){
         m_borderPtr->setThickness((float)m_borderThickness);
         m_borderPtr->setTopLeftPosition(topLeftPosition);
         m_borderPtr->setEnclosedArea(boardArea);
-        m_borderPtr->init(isVisible);
+        m_borderPtr->show();
     }
     else if(m_borderPtr->isVisible()){
         return;

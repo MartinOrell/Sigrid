@@ -9,15 +9,106 @@ using namespace sigrid;
 RectangleBorder::RectangleBorder(){}
 
 void RectangleBorder::setThickness(const unsigned int& thickness){
+
     m_thickness = thickness;
+
+    //Left
+    {
+        float width = (float)m_thickness;
+        float height = m_enclosedArea.y + 2*m_thickness;
+        m_left.setSize(sf::Vector2f{width, height});
+    }
+
+    //Right
+    {
+        float width = (float)m_thickness;
+        float height = m_enclosedArea.y + 2*m_thickness;
+        m_right.setSize(sf::Vector2f{width, height});
+        float x = m_topLeftPosition.x + m_enclosedArea.x + m_thickness;
+        float y = m_topLeftPosition.y;
+        m_right.setPosition({x,y});
+    }
+
+    //Top
+    {
+        float width = m_enclosedArea.x + 2*m_thickness;
+        float height = (float)m_thickness;
+        m_top.setSize(sf::Vector2f{width, height});
+    }
+
+    //Bottom
+    {
+        float width = m_enclosedArea.x + 2*m_thickness;
+        float height = (float)m_thickness;
+        m_bottom.setSize(sf::Vector2f{width, height});
+        float x = m_topLeftPosition.x;
+        float y = m_topLeftPosition.y + m_enclosedArea.y + m_thickness;
+        m_bottom.setPosition({x,y});
+    }
 }
 
 void RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+
     m_topLeftPosition = topLeftPosition;
+
+    //Left
+    m_left.setPosition(topLeftPosition);
+
+    //Right
+    {
+        float x = m_topLeftPosition.x + m_enclosedArea.x + m_thickness;
+        float y = m_topLeftPosition.y;
+        m_right.setPosition({x,y});
+    }
+
+    //Top
+    m_top.setPosition(m_topLeftPosition);
+
+    //Bottom
+    {
+        float x = m_topLeftPosition.x;
+        float y = m_topLeftPosition.y + m_enclosedArea.y + m_thickness;
+        m_bottom.setPosition({x,y});
+    }
 }
 
 void RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
+    
     m_enclosedArea = enclosedArea;
+
+    //Left
+    {
+        float width = (float)m_thickness;
+        float height = m_enclosedArea.y + 2*m_thickness;
+        m_left.setSize(sf::Vector2f{width, height});
+    }
+
+    //Right
+    {
+        float width = (float)m_thickness;
+        float height = m_enclosedArea.y + 2*m_thickness;
+        m_right.setSize(sf::Vector2f{width, height});
+        float x = m_topLeftPosition.x + m_enclosedArea.x + m_thickness;
+        float y = m_topLeftPosition.y;
+        m_right.setPosition({x,y});
+    }
+
+    //Top
+    {
+        float width = m_enclosedArea.x + 2*m_thickness;
+        float height = (float)m_thickness;
+        m_top.setSize(sf::Vector2f{width, height});
+    }
+
+    //Bottom
+    {
+        float width = m_enclosedArea.x + 2*m_thickness;
+        float height = (float)m_thickness;
+        m_bottom.setSize(sf::Vector2f{width, height});
+        float x = m_topLeftPosition.x;
+        float y = m_topLeftPosition.y + m_enclosedArea.y + m_thickness;
+        m_bottom.setPosition({x,y});
+    }
 }
 
 void RectangleBorder::setColor(const sf::Color& color){
@@ -28,18 +119,6 @@ void RectangleBorder::setColor(const sf::Color& color){
     m_bottom.setFillColor(color);
 }
 
-void RectangleBorder::init(const bool& isVisible){
-
-    m_isVisible = isVisible;
-
-    if(m_isVisible){
-        initLeft();
-        initRight();
-        initTop();
-        initBottom();
-    }
-}
-
 RectangleBorder& RectangleBorder::operator =(const RectangleBorder& rhs){
 
     m_isVisible = rhs.m_isVisible;
@@ -47,12 +126,22 @@ RectangleBorder& RectangleBorder::operator =(const RectangleBorder& rhs){
     m_topLeftPosition = rhs.m_topLeftPosition;
     m_enclosedArea = rhs.m_enclosedArea;
 
-    if(m_isVisible){
-        initLeft();
-        initRight();
-        initTop();
-        initBottom();
-    }
+    m_left.setSize(rhs.m_left.getSize());
+    m_left.setPosition(rhs.m_left.getPosition());
+    m_left.setFillColor(rhs.m_left.getFillColor());
+
+    m_right.setSize(rhs.m_right.getSize());
+    m_right.setPosition(rhs.m_right.getPosition());
+    m_right.setFillColor(rhs.m_right.getFillColor());
+
+    m_top.setSize(rhs.m_top.getSize());
+    m_top.setPosition(rhs.m_top.getPosition());
+    m_top.setFillColor(rhs.m_top.getFillColor());
+
+    m_bottom.setSize(rhs.m_bottom.getSize());
+    m_bottom.setPosition(rhs.m_bottom.getPosition());
+    m_bottom.setFillColor(rhs.m_bottom.getFillColor());
+
     return *this;
 }
 
@@ -70,11 +159,6 @@ float RectangleBorder::getThickness() const{
 
 void RectangleBorder::show(){
     m_isVisible = true;
-
-    initLeft();
-    initRight();
-    initTop();
-    initBottom();
 }
 
 void RectangleBorder::hide(){
@@ -117,104 +201,3 @@ void RectangleBorder::draw(sf::RenderTarget& target, sf::RenderStates states) co
     target.draw(m_top);
     target.draw(m_bottom);
 }
-
-void RectangleBorder::initLeft(){
-
-    if(m_thickness == 0){
-        std::cerr << "RectangleBorder: Failed to init left border, border width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.x == 0.f){
-        std::cerr << "RectangleBorder: Failed to init left border, enclosed area width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.y == 0.f){
-        std::cerr << "RectangleBorder: Failed to init left border, enclosed area height is 0" << std::endl;
-        return;
-    }
-
-    float width = (float)m_thickness;
-    float height = m_enclosedArea.y + 2*m_thickness;
-    m_left.setSize(sf::Vector2f{width, height});
-    m_left.setPosition(m_topLeftPosition);
-    m_left.setFillColor(sf::Color{0,0,0,255});
-}
-
-void RectangleBorder::initRight(){
-
-    if(m_thickness == 0){
-        std::cerr << "RectangleBorder: Failed to init right border, border width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.x == 0.f){
-        std::cerr << "RectangleBorder: Failed to init right border, enclosed area width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.y == 0.f){
-        std::cerr << "RectangleBorder: Failed to init right border, enclosed area height is 0" << std::endl;
-        return;
-    }
-
-    float width = (float)m_thickness;
-    float height = m_enclosedArea.y + 2*m_thickness;
-    m_right.setSize(sf::Vector2f{width, height});
-    float x = m_topLeftPosition.x + m_enclosedArea.x + m_thickness;
-    float y = m_topLeftPosition.y;
-    m_right.setPosition({x,y});
-    m_right.setFillColor(sf::Color{0,0,0,255});
-}
-
-void RectangleBorder::initTop(){
-
-    if(m_thickness == 0){
-        std::cerr << "RectangleBorder: Failed to init top border, border width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.x == 0.f){
-        std::cerr << "RectangleBorder: Failed to init top border, enclosed area width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.y == 0.f){
-        std::cerr << "RectangleBorder: Failed to init top border, enclosed area height is 0" << std::endl;
-        return;
-    }
-
-    float width = m_enclosedArea.x + 2*m_thickness;
-    float height = (float)m_thickness;
-    m_top.setSize(sf::Vector2f{width, height});
-    m_top.setPosition(m_topLeftPosition);
-    m_top.setFillColor(sf::Color{0,0,0,255});
-}
-
-void RectangleBorder::initBottom(){
-
-    if(m_thickness == 0){
-        std::cerr << "RectangleBorder: Failed to init bottom border, border width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.x == 0.f){
-        std::cerr << "RectangleBorder: Failed to init bottom border, enclosed area width is 0" << std::endl;
-        return;
-    }
-
-    if(m_enclosedArea.y == 0.f){
-        std::cerr << "RectangleBorder: Failed to init bottom border, enclosed area height is 0" << std::endl;
-        return;
-    }
-
-    float width = m_enclosedArea.x + 2*m_thickness;
-    float height = (float)m_thickness;
-    m_bottom.setSize(sf::Vector2f{width, height});
-    float x = m_topLeftPosition.x;
-    float y = m_topLeftPosition.y + m_enclosedArea.y + m_thickness;
-    m_bottom.setPosition({x,y});
-    m_bottom.setFillColor(sf::Color{0,0,0,255});
-}
-
