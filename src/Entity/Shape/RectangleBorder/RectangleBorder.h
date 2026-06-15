@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -53,10 +51,10 @@ namespace sigrid{
             sf::Vector2f m_topLeftPosition = {0.f,0.f};
             sf::Vector2f m_enclosedArea = {0.f,0.f};
 
-            std::unique_ptr<sf::RectangleShape> m_left;
-            std::unique_ptr<sf::RectangleShape> m_right;
-            std::unique_ptr<sf::RectangleShape> m_top;
-            std::unique_ptr<sf::RectangleShape> m_bottom;
+            sf::RectangleShape m_left;
+            sf::RectangleShape m_right;
+            sf::RectangleShape m_top;
+            sf::RectangleShape m_bottom;
 
     };
 }
