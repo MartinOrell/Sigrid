@@ -128,6 +128,39 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
             }
         }
     }
+
+    {
+        unsigned int i = 0;
+        for(int y = 7; y > 0; y-=2){
+            for(unsigned int x = 1; x < 7; x+=2){
+                m_pdfLayout.setFromXCoord(LayoutItem{i}, x);
+                m_pdfLayout.setToXCoord(LayoutItem{i}, x+1);
+                m_pdfLayout.setFromYCoord(LayoutItem{i}, y);
+                m_pdfLayout.setToYCoord(LayoutItem{i}, y+1);
+                i++;
+            }
+        }
+    }
+    m_pdfLayout.setPx(0, 0.f);
+    m_pdfLayout.setPx(1, 35.f);
+    m_pdfLayout.setPx(2, 185.f);
+    m_pdfLayout.setPx(3, 220.f);
+    m_pdfLayout.setPx(4, 370.f);
+    m_pdfLayout.setPx(5, 405.f);
+    m_pdfLayout.setPx(6, 555.f);
+    m_pdfLayout.setPx(7, 595.f);
+
+    m_pdfLayout.setPy(0, 0.f);
+    m_pdfLayout.setPy(1, 72.f);
+    m_pdfLayout.setPy(2, 222.f);
+    m_pdfLayout.setPy(3, 257.f);
+    m_pdfLayout.setPy(4, 407.f);
+    m_pdfLayout.setPy(5, 442.f);
+    m_pdfLayout.setPy(6, 592.f);
+    m_pdfLayout.setPy(7, 627.f);
+    m_pdfLayout.setPy(8, 777.f);
+    m_pdfLayout.setPy(9, 842.f);
+
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)
@@ -661,36 +694,29 @@ void WorkWindow::savePdf(){
     for(unsigned int i = 0; i < m_boards.size(); i++){
         unsigned int pageId = i/12;
         unsigned int boardId = i%12;
-        unsigned int y = boardId/3;
-        unsigned int x = boardId%3;
 
         myPdf::Image pdImage;
 
-        if(x == 0){
-            pdImage.xPos = 35;
+        auto position_o = m_pdfLayout.getTopLeftPosition(boardId);
+
+        if(position_o == std::nullopt){
+            std::cerr << "WorkWindow: Failed getting position for board "
+                << boardId << std::endl;
+            return;
         }
-        else if(x == 1){
-            pdImage.xPos = 220;
-        }
-        else if(x == 2){
-            pdImage.xPos = 405;
-        }
-        
-        if(y == 0){
-            pdImage.yPos = 627;
-        }
-        else if(y == 1){
-            pdImage.yPos = 442;
-        }
-        else if(y == 2){
-            pdImage.yPos = 257;
-        }
-        else if(y == 3){
-            pdImage.yPos = 72;
+        pdImage.xPos = position_o.value().x;
+        pdImage.yPos = position_o.value().y;
+
+        auto size_o = m_pdfLayout.getSize(boardId);
+
+        if(size_o == std::nullopt){
+            std::cerr << "WorkWindow: Failed getting size for board "
+                << boardId << std::endl;
+            return;
         }
 
-        unsigned int entitledWidth = 150;
-        unsigned int entitledHeight = 150;
+        unsigned int entitledWidth = size_o.value().x;
+        unsigned int entitledHeight = size_o.value().y;
 
         float quality = 4;
 

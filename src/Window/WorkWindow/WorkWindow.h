@@ -150,6 +150,8 @@ namespace sigrid{
 
             RectangleBorder m_boardSelectHighlight;
 
+            LayoutGrid m_pdfLayout;
+
             sf::Color m_backgroundColor;
 
             std::string m_resetBoardFilename = "";
