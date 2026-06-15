@@ -8,8 +8,8 @@ using namespace sigrid;
 
 RectangleBorder::RectangleBorder(){}
 
-void RectangleBorder::setWidth(const unsigned int& width){
-    m_width = width;
+void RectangleBorder::setThickness(const unsigned int& thickness){
+    m_thickness = thickness;
 }
 
 void RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
@@ -58,7 +58,7 @@ void RectangleBorder::init(const bool& isVisible){
 RectangleBorder& RectangleBorder::operator =(const RectangleBorder& rhs){
 
     m_isVisible = rhs.m_isVisible;
-    m_width = rhs.m_width;
+    m_thickness = rhs.m_thickness;
     m_topLeftPosition = rhs.m_topLeftPosition;
     m_enclosedArea = rhs.m_enclosedArea;
 
@@ -79,8 +79,8 @@ bool RectangleBorder::isHidden() const{
     return !m_isVisible;
 }
 
-float RectangleBorder::getWidth() const{
-    return (float)m_width;
+float RectangleBorder::getThickness() const{
+    return (float)m_thickness;
 }
 
 void RectangleBorder::show(){
@@ -170,7 +170,7 @@ void RectangleBorder::draw(sf::RenderTarget& target, sf::RenderStates states) co
 
 void RectangleBorder::initLeft(){
 
-    if(m_width == 0){
+    if(m_thickness == 0){
         std::cerr << "RectangleBorder: Failed to init left border, border width is 0" << std::endl;
         return;
     }
@@ -185,8 +185,8 @@ void RectangleBorder::initLeft(){
         return;
     }
 
-    float width = (float)m_width;
-    float height = m_enclosedArea.y + 2*m_width;
+    float width = (float)m_thickness;
+    float height = m_enclosedArea.y + 2*m_thickness;
     m_left = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     m_left->setPosition(m_topLeftPosition);
     m_left->setFillColor(sf::Color{0,0,0,255});
@@ -195,7 +195,7 @@ void RectangleBorder::initLeft(){
 
 void RectangleBorder::initRight(){
 
-    if(m_width == 0){
+    if(m_thickness == 0){
         std::cerr << "RectangleBorder: Failed to init right border, border width is 0" << std::endl;
         return;
     }
@@ -210,10 +210,10 @@ void RectangleBorder::initRight(){
         return;
     }
 
-    float width = (float)m_width;
-    float height = m_enclosedArea.y + 2*m_width;
+    float width = (float)m_thickness;
+    float height = m_enclosedArea.y + 2*m_thickness;
     m_right = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
-    float x = m_topLeftPosition.x + m_enclosedArea.x + m_width;
+    float x = m_topLeftPosition.x + m_enclosedArea.x + m_thickness;
     float y = m_topLeftPosition.y;
     m_right->setPosition({x,y});
     m_right->setFillColor(sf::Color{0,0,0,255});
@@ -221,7 +221,7 @@ void RectangleBorder::initRight(){
 
 void RectangleBorder::initTop(){
 
-    if(m_width == 0){
+    if(m_thickness == 0){
         std::cerr << "RectangleBorder: Failed to init top border, border width is 0" << std::endl;
         return;
     }
@@ -236,8 +236,8 @@ void RectangleBorder::initTop(){
         return;
     }
 
-    float width = m_enclosedArea.x + 2*m_width;
-    float height = (float)m_width;
+    float width = m_enclosedArea.x + 2*m_thickness;
+    float height = (float)m_thickness;
     m_top = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     m_top->setPosition(m_topLeftPosition);
     m_top->setFillColor(sf::Color{0,0,0,255});
@@ -245,7 +245,7 @@ void RectangleBorder::initTop(){
 
 void RectangleBorder::initBottom(){
 
-    if(m_width == 0){
+    if(m_thickness == 0){
         std::cerr << "RectangleBorder: Failed to init bottom border, border width is 0" << std::endl;
         return;
     }
@@ -260,11 +260,11 @@ void RectangleBorder::initBottom(){
         return;
     }
 
-    float width = m_enclosedArea.x + 2*m_width;
-    float height = (float)m_width;
+    float width = m_enclosedArea.x + 2*m_thickness;
+    float height = (float)m_thickness;
     m_bottom = std::make_unique<sf::RectangleShape>(sf::Vector2f{width, height});
     float x = m_topLeftPosition.x;
-    float y = m_topLeftPosition.y + m_enclosedArea.y + m_width;
+    float y = m_topLeftPosition.y + m_enclosedArea.y + m_thickness;
     m_bottom->setPosition({x,y});
     m_bottom->setFillColor(sf::Color{0,0,0,255});
 }

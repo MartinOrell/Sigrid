@@ -27,7 +27,7 @@ WorkWindow::WorkWindow()
 , m_activeBoardIndex{0}
 , m_displayBoardIds{{0}}{
     m_boardSelectHighlight.hide();
-    m_boardSelectHighlight.setWidth(10);
+    m_boardSelectHighlight.setThickness(10);
 }
 
 void WorkWindow::setBoardFilename(const std::string& filename){

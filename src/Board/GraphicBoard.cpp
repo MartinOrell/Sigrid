@@ -99,7 +99,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
     m_tileLayerPtr->init(m_isLeftToRight, m_isTopToBottom);
     m_tileLayerPtr->move({float(m_leftEdgeWidth), (float)m_topEdgeWidth});
     if(m_borderPtr && m_borderPtr->isVisible()){
-        m_tileLayerPtr->move({m_borderPtr->getWidth(), m_borderPtr->getWidth()});
+        m_tileLayerPtr->move({m_borderPtr->getThickness(), m_borderPtr->getThickness()});
     }
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){
@@ -167,7 +167,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
 
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
 
-    m_borderWidth = config.borderWidth;
+    m_borderThickness = config.borderThickness;
     
     if(!m_tileLayerPtr){
         m_tileLayerPtr = std::make_unique<GraphicTiles>();
@@ -326,14 +326,14 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         sf::Vector2f boardArea;
         boardArea.x = config.tileWidth* logicBoard.getNumColumns();
         boardArea.y = config.tileHeight* logicBoard.getNumRows();
-        m_borderPtr->setWidth(config.borderWidth);
+        m_borderPtr->setThickness(config.borderThickness);
         m_borderPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
         m_borderPtr->setEnclosedArea(boardArea);
         m_borderPtr->init(config.border);
     }
 
     if(m_borderPtr && m_borderPtr->isVisible()){
-        moveTiles({m_borderPtr->getWidth(), m_borderPtr->getWidth()});
+        moveTiles({m_borderPtr->getThickness(), m_borderPtr->getThickness()});
     }
     
     m_texturePtr = std::make_unique<sf::RenderTexture>();
@@ -407,7 +407,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_labelsPtr = *(rhs.m_labelsPtr);
     }
 
-    m_borderWidth = rhs.m_borderWidth;
+    m_borderThickness = rhs.m_borderThickness;
 
     if(rhs.m_borderPtr){
         if(!m_borderPtr){
@@ -1445,7 +1445,7 @@ void GraphicBoard::addBorder(){
         sf::Vector2f boardArea;
         boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
         boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
-        m_borderPtr->setWidth((float)m_borderWidth);
+        m_borderPtr->setThickness((float)m_borderThickness);
         m_borderPtr->setTopLeftPosition(topLeftPosition);
         m_borderPtr->setEnclosedArea(boardArea);
         m_borderPtr->init(isVisible);
@@ -1463,15 +1463,15 @@ void GraphicBoard::addBorder(){
     m_borderPtr->setTopLeftPosition(topLeftPosition);
     m_borderPtr->show();
 
-    moveTiles({(float)m_borderWidth, (float)m_borderWidth});
+    moveTiles({(float)m_borderThickness, (float)m_borderThickness});
     if(m_labelsPtr){
-        m_labelsPtr->moveLeftInsideLabels({(float)m_borderWidth, (float)m_borderWidth});
-        m_labelsPtr->moveBottomInsideLabels({(float)m_borderWidth, (float)m_borderWidth});
-        m_labelsPtr->moveLeftOutsideLabels({0.f, (float)m_borderWidth});
-        m_labelsPtr->moveBottomOutsideLabels({(float)m_borderWidth, 2.f*(float)m_borderWidth});
+        m_labelsPtr->moveLeftInsideLabels({(float)m_borderThickness, (float)m_borderThickness});
+        m_labelsPtr->moveBottomInsideLabels({(float)m_borderThickness, (float)m_borderThickness});
+        m_labelsPtr->moveLeftOutsideLabels({0.f, (float)m_borderThickness});
+        m_labelsPtr->moveBottomOutsideLabels({(float)m_borderThickness, 2.f*(float)m_borderThickness});
     }
     
-    moveTurnToken({2.f*(float)m_borderWidth, (float)m_borderWidth});
+    moveTurnToken({2.f*(float)m_borderThickness, (float)m_borderThickness});
 
     resizeTexture();
     redrawTexture();
@@ -1485,13 +1485,13 @@ void GraphicBoard::removeBorder(){
 
     m_borderPtr->hide();
 
-    moveTiles({-(float)m_borderWidth, -(float)m_borderWidth});
-    moveTurnToken({-2.f*(float)m_borderWidth, -(float)m_borderWidth});
+    moveTiles({-(float)m_borderThickness, -(float)m_borderThickness});
+    moveTurnToken({-2.f*(float)m_borderThickness, -(float)m_borderThickness});
     if(m_labelsPtr){
-        m_labelsPtr->moveLeftInsideLabels({-(float)m_borderWidth, -(float)m_borderWidth});
-        m_labelsPtr->moveBottomInsideLabels({-(float)m_borderWidth, -(float)m_borderWidth});
-        m_labelsPtr->moveLeftOutsideLabels({0.f, -(float)m_borderWidth});
-        m_labelsPtr->moveBottomOutsideLabels({-(float)m_borderWidth, -2.f*(float)m_borderWidth});
+        m_labelsPtr->moveLeftInsideLabels({-(float)m_borderThickness, -(float)m_borderThickness});
+        m_labelsPtr->moveBottomInsideLabels({-(float)m_borderThickness, -(float)m_borderThickness});
+        m_labelsPtr->moveLeftOutsideLabels({0.f, -(float)m_borderThickness});
+        m_labelsPtr->moveBottomOutsideLabels({-(float)m_borderThickness, -2.f*(float)m_borderThickness});
     }
 
     resizeTexture();
@@ -1547,7 +1547,7 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     
     float x = m_leftEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
-        x+= 2*m_borderWidth;
+        x+= 2*m_borderThickness;
     }
     x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
 
@@ -1572,7 +1572,7 @@ unsigned int GraphicBoard::getTextureWidth() const{
     unsigned int boardWidth = (unsigned int)(m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns());
     boardWidth += m_leftEdgeWidth+m_rightEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
-        boardWidth += 2*m_borderWidth;
+        boardWidth += 2*m_borderThickness;
     }
 
     return boardWidth;
@@ -1583,7 +1583,7 @@ unsigned int GraphicBoard::getTextureHeight() const{
     unsigned int boardHeight = (unsigned int)(m_tileLayerPtr->getTileHeight()*(unsigned int)m_tileLayerPtr->getNumRows());
     boardHeight += m_topEdgeWidth+m_bottomEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
-        boardHeight += 2*m_borderWidth;
+        boardHeight += 2*m_borderThickness;
     }
 
     return boardHeight;
@@ -1711,7 +1711,7 @@ void GraphicBoard::updateRightEdgeWidth(){
     if(m_turnTokenPtr){   
         float x = m_leftEdgeWidth;
         if(m_borderPtr && m_borderPtr->isVisible()){
-            x+= 2*m_borderWidth;
+            x+= 2*m_borderThickness;
         }
         x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
 

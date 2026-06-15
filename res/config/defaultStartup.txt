@@ -368,7 +368,7 @@ BoardStyle: [
   ]
   Border: [
     visibility: Visible
-    width: 2
+    thickness: 2
   ]
   TurnToken: [
     visibility: Hidden

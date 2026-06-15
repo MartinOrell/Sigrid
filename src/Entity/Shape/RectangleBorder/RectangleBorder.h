@@ -12,7 +12,7 @@ namespace sigrid{
         public:
             RectangleBorder();
 
-            void setWidth(const unsigned int& width);
+            void setThickness(const unsigned int& thickness);
 
             void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
 
@@ -27,7 +27,7 @@ namespace sigrid{
             bool isVisible() const;
             bool isHidden() const;
 
-            float getWidth() const;
+            float getThickness() const;
 
             void show();
 
@@ -48,7 +48,7 @@ namespace sigrid{
             void initBottom();
 
             bool m_isVisible = true;
-            unsigned int m_width = 0;
+            unsigned int m_thickness = 0;
 
             sf::Vector2f m_topLeftPosition = {0.f,0.f};
             sf::Vector2f m_enclosedArea = {0.f,0.f};

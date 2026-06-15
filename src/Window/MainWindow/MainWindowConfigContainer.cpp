@@ -472,8 +472,8 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
                             std::string visibilityString = readString(is);
                             boardData.border = visibilityString == "Visible";
                         }
-                        else if(s2 == "width:"){
-                            is >> boardData.borderWidth;
+                        else if(s2 == "thickness:"){
+                            is >> boardData.borderThickness;
                         }
                         else{
                             std::cerr << "Unknown key: \"" << s2 << "\"";
