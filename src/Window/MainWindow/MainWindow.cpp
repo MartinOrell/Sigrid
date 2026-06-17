@@ -40,10 +40,14 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
 
     sigrid::Action spaceBarTool(ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
     m_inputHandler.addTool(sf::Keyboard::Key::Space, std::move(spaceBarTool));
-    sigrid::Action leftKeyTool(ActionType::OpenLeftBoard{});
+    sigrid::Action leftKeyTool(ActionType::GotoLeftBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Left, std::move(leftKeyTool));
-    sigrid::Action rightKeyTool(ActionType::OpenRightBoard{});
+    sigrid::Action rightKeyTool(ActionType::GotoRightBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Right, std::move(rightKeyTool));
+    sigrid::Action upKeyTool(ActionType::GotoUpBoard{});
+    m_inputHandler.addTool(sf::Keyboard::Key::Up, std::move(upKeyTool));
+    sigrid::Action downKeyTool(ActionType::GotoDownBoard{});
+    m_inputHandler.addTool(sf::Keyboard::Key::Down, std::move(downKeyTool));
 
     sigrid::Action ctrlNTool(ActionType::NewBoard{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::N, std::move(ctrlNTool));
@@ -534,6 +538,22 @@ void MainWindow::handleAction(const sigrid::Action action){
         openRightBoard();
         return;
     }
+    else if(std::holds_alternative<ActionType::GotoLeftBoard>(action)){
+        gotoLeftBoard();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::GotoRightBoard>(action)){
+        gotoRightBoard();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::GotoUpBoard>(action)){
+        gotoUpBoard();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::GotoDownBoard>(action)){
+        gotoDownBoard();
+        return;
+    }
     else if(std::holds_alternative<ActionType::SaveBoard>(action)){
         saveBoard();
         return;
@@ -963,6 +983,50 @@ void MainWindow::openRightBoard(){
     }
 
     m_workWindow->openRightBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::gotoRightBoard(){
+
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->gotoRightBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::gotoLeftBoard(){
+
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->gotoLeftBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::gotoUpBoard(){
+
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->gotoUpBoard();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::gotoDownBoard(){
+
+    if(!m_workWindow){
+        return;
+    }
+
+    m_workWindow->gotoDownBoard();
     std::string title = m_workWindow->getName();
     m_window.setTitle(title);
 }

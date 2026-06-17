@@ -326,6 +326,59 @@ void WorkWindow::updateSelectionHighlight(){
     m_boardSelectHighlight.show();
 }
 
+void WorkWindow::displayFirstBoards(){
+
+    m_displayBoardIds.clear();
+    for(int id = 0; id < m_maxBoardColumns * m_maxBoardRows; id++){
+        if(id >= m_boards.size()){
+            break;
+        }
+        m_displayBoardIds.push_back(id);
+    }
+}
+
+void WorkWindow::displayLastBoards(){
+
+    m_displayBoardIds.clear();
+
+    if(m_maxBoardRows == 1){
+        int lastId = m_boards.size()-1;
+        int firstDisplayId = lastId - m_maxBoardColumns + 1;
+        if(firstDisplayId < 0){
+            firstDisplayId = 0;
+        }
+        for(int id = firstDisplayId; id < m_boards.size(); id++){
+            m_displayBoardIds.push_back(id);
+        }
+        return;
+    }
+    
+    int numColumns = m_maxBoardColumns;
+    if(numColumns > m_boards.size()){
+        numColumns = m_boards.size();
+    }
+    int lastId = m_boards.size()-1;
+    int lastX = (m_boards.size()-1)%numColumns;
+    int maxDisplayBoards = numColumns*m_maxBoardRows;
+    if(maxDisplayBoards > m_boards.size()){
+        maxDisplayBoards = m_boards.size();
+    }
+    int offsetX = numColumns - 1 - lastX;
+    if(maxDisplayBoards == m_boards.size()){
+        offsetX = 0;
+    }
+    int numDisplayBoards = maxDisplayBoards - offsetX;
+
+    int topLeftId = lastId - numDisplayBoards + 1;
+
+    if(topLeftId < 0){
+        topLeftId = 0;
+    }
+    for(int id = topLeftId; id < m_boards.size(); id++){
+        m_displayBoardIds.push_back(id);
+    }
+}
+
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_texture){
@@ -580,12 +633,7 @@ void WorkWindow::newBoard(){
         m_displayBoardIds.push_back(m_boards.size()-1);
     }
     else{
-        for(int i = 0; i < m_displayBoardIds.size()-1; i++){
-            if(m_displayBoardIds.at(i+1) != -1){
-                m_displayBoardIds.at(i) = m_displayBoardIds.at(i+1);
-            }
-        }
-        m_displayBoardIds.back() = m_boards.size()-1;
+        displayLastBoards();
     }
     
     m_activeBoardIndex = m_displayBoardIds.size()-1;
@@ -599,7 +647,18 @@ void WorkWindow::newBoard(){
 
 void WorkWindow::openLeftBoard(){
 
-    if(m_displayBoardIds.size() < 2){
+    if(m_boards.size() < 2){
+        return;
+    }
+
+    if(m_displayBoardIds.size() == m_boards.size()
+    || m_activeBoardIndex % m_maxBoardColumns != 0){
+
+        m_activeBoardIndex = (m_displayBoardIds.size() + m_activeBoardIndex - 1)%m_displayBoardIds.size();
+
+        if(m_texture){
+            createGraphic(m_texture->getSize());
+        }
         return;
     }
 
@@ -646,7 +705,18 @@ void WorkWindow::openLeftBoard(){
 
 void WorkWindow::openRightBoard(){
 
-    if(m_displayBoardIds.size() < 2){
+    if(m_boards.size() < 2){
+        return;
+    }
+
+    if(m_displayBoardIds.size() == m_boards.size()
+    || m_activeBoardIndex % m_maxBoardColumns != m_maxBoardColumns - 1){
+
+        m_activeBoardIndex = (m_activeBoardIndex + 1)%m_displayBoardIds.size();
+
+        if(m_texture){
+            createGraphic(m_texture->getSize());
+        }
         return;
     }
 
@@ -674,6 +744,152 @@ void WorkWindow::openRightBoard(){
             }
 
             frontId = (frontId+1)%m_boards.size();
+        }
+    }
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::gotoRightBoard(){
+
+    if(m_maxBoardRows == 1){
+        openRightBoard();
+        return;
+    }
+
+    if(m_displayBoardIds.size() < 2){
+        int& id = m_displayBoardIds.at(0);
+        id = (id + 1)%m_boards.size();
+    }
+    else if(m_activeBoardIndex < m_displayBoardIds.size()-1){
+        m_activeBoardIndex++;
+    }
+    else if(m_displayBoardIds.back() == m_boards.size()-1){
+        displayFirstBoards();
+        m_activeBoardIndex = 0;
+    }
+    else{
+        for(auto it = m_displayBoardIds.begin(); it != m_displayBoardIds.end();it++){
+            int newId = *it + m_maxBoardColumns;
+            if(newId >= m_boards.size()){
+                m_displayBoardIds.erase(it, m_displayBoardIds.end());
+                break;
+            }
+            *it = newId;
+        }
+        m_activeBoardIndex += 1 - m_maxBoardColumns;
+    }
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::gotoLeftBoard(){
+
+    if(m_maxBoardRows == 1){
+        openLeftBoard();
+        return;
+    }
+
+    if(m_displayBoardIds.size() < 2){
+        int& id = m_displayBoardIds.at(0);
+        id = (m_boards.size() + id - 1)%m_boards.size();
+    }
+    else if(m_activeBoardIndex > 0){
+        m_activeBoardIndex--;
+    }
+    else if(m_displayBoardIds.at(0) == 0){
+        displayLastBoards();
+        m_activeBoardIndex = m_displayBoardIds.size()-1;
+    }
+    else{
+        for(auto& id : m_displayBoardIds){
+            id -= m_maxBoardColumns;
+        }
+        for(int i = m_displayBoardIds.size(); i < m_maxBoardRows*m_maxBoardColumns; i++){
+            int id = m_displayBoardIds.back()+1;
+            m_displayBoardIds.push_back(id);
+        }
+        m_activeBoardIndex = m_maxBoardColumns-1;
+    }
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::gotoUpBoard(){
+
+    if(m_maxBoardRows < 2){
+        return;
+    }
+
+    if(m_displayBoardIds.size() <= m_maxBoardColumns){
+        return;
+    }
+
+    if(m_activeBoardIndex > m_maxBoardColumns-1){
+        m_activeBoardIndex -= m_maxBoardColumns;
+    }
+    else if(m_displayBoardIds.at(m_activeBoardIndex) < m_maxBoardColumns){
+        displayLastBoards();
+        
+        int oldX = m_activeBoardIndex % m_maxBoardColumns;
+        int lastX = (m_boards.size() - 1) % m_maxBoardColumns;
+
+        m_activeBoardIndex = m_displayBoardIds.size() - 1;
+        if(oldX < lastX){
+            m_activeBoardIndex += oldX - lastX;
+        }
+    }
+    else{
+        for(auto& id : m_displayBoardIds){
+            id -= m_maxBoardColumns;
+        }
+        for(int i = m_displayBoardIds.size(); i < m_maxBoardRows*m_maxBoardColumns; i++){
+            int id = m_displayBoardIds.back()+1;
+            m_displayBoardIds.push_back(id);
+        }
+    }
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::gotoDownBoard(){
+
+    if(m_maxBoardRows < 2){
+        return;
+    }
+
+    if(m_displayBoardIds.size() <= m_maxBoardColumns){
+        return;
+    }
+
+    if(m_activeBoardIndex/m_maxBoardColumns < (m_displayBoardIds.size()-1)/m_maxBoardColumns){
+        int newId = m_activeBoardIndex + m_maxBoardColumns;
+        if(newId > m_displayBoardIds.size() - 1){
+            newId = m_displayBoardIds.size() - 1;
+        }
+        m_activeBoardIndex = newId;
+    }
+    else if(m_displayBoardIds.at(m_activeBoardIndex)/m_maxBoardColumns >= (m_boards.size()-1)/m_maxBoardColumns){
+        displayFirstBoards();
+        m_activeBoardIndex = m_activeBoardIndex % m_maxBoardColumns;
+    }
+    else{
+        for(auto it = m_displayBoardIds.begin(); it != m_displayBoardIds.end(); it++){
+            int newId = *it + m_maxBoardColumns;
+            if(newId >= m_boards.size()){
+                m_displayBoardIds.erase(it, m_displayBoardIds.end());
+                m_activeBoardIndex = m_displayBoardIds.size() - 1;
+                break;
+            }
+            *it = newId;
         }
     }
 

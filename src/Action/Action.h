@@ -51,6 +51,10 @@ namespace sigrid{
         struct NewBoard{};
         struct OpenLeftBoard{};
         struct OpenRightBoard{};
+        struct GotoLeftBoard{};
+        struct GotoRightBoard{};
+        struct GotoUpBoard{};
+        struct GotoDownBoard{};
         struct SaveBoard{};
         struct SavePdf{};
         struct PasteFen{};
@@ -110,6 +114,10 @@ namespace sigrid{
         ActionType::NewBoard,
         ActionType::OpenLeftBoard,
         ActionType::OpenRightBoard,
+        ActionType::GotoLeftBoard,
+        ActionType::GotoRightBoard,
+        ActionType::GotoUpBoard,
+        ActionType::GotoDownBoard,
         ActionType::SaveBoard,
         ActionType::SavePdf,
         ActionType::PasteFen,

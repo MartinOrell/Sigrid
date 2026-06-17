@@ -72,6 +72,11 @@ namespace sigrid{
             void openLeftBoard();
             void openRightBoard();
 
+            void gotoRightBoard();
+            void gotoLeftBoard();
+            void gotoUpBoard();
+            void gotoDownBoard();
+
             void saveBoard();
             void savePdf();
 
@@ -134,6 +139,10 @@ namespace sigrid{
             void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
             void updateSelectionHighlight();
+
+            void displayFirstBoards();
+
+            void displayLastBoards();
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

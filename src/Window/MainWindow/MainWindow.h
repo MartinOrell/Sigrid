@@ -63,6 +63,10 @@ namespace sigrid{
             void newBoard();
             void openLeftBoard();
             void openRightBoard();
+            void gotoRightBoard();
+            void gotoLeftBoard();
+            void gotoUpBoard();
+            void gotoDownBoard();
             void saveBoard();
             void savePdf();
             void pasteFen();
