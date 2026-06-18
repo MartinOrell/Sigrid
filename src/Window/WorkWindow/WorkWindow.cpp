@@ -116,51 +116,8 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
         activeBoard().setImageFilename(m_defaultBoardImageFilename);
     }
 
-    {
-        unsigned int i = 0;
-        for(unsigned int y = 0; y < m_maxBoardRows; y++){
-            for(unsigned int x = 0; x < m_maxBoardColumns; x++){
-                m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
-                m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
-                m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
-                m_layout.setToYCoord(LayoutItem{i}, 2 + 2*y);
-                i++;
-            }
-        }
-    }
-
-    {
-        unsigned int i = 0;
-        for(int y = 7; y > 0; y-=2){
-            for(unsigned int x = 1; x < 7; x+=2){
-                m_pdfLayout.setFromXCoord(LayoutItem{i}, x);
-                m_pdfLayout.setToXCoord(LayoutItem{i}, x+1);
-                m_pdfLayout.setFromYCoord(LayoutItem{i}, y);
-                m_pdfLayout.setToYCoord(LayoutItem{i}, y+1);
-                i++;
-            }
-        }
-    }
-    m_pdfLayout.setPx(0, 0.f);
-    m_pdfLayout.setPx(1, 35.f);
-    m_pdfLayout.setPx(2, 185.f);
-    m_pdfLayout.setPx(3, 220.f);
-    m_pdfLayout.setPx(4, 370.f);
-    m_pdfLayout.setPx(5, 405.f);
-    m_pdfLayout.setPx(6, 555.f);
-    m_pdfLayout.setPx(7, 595.f);
-
-    m_pdfLayout.setPy(0, 0.f);
-    m_pdfLayout.setPy(1, 72.f);
-    m_pdfLayout.setPy(2, 222.f);
-    m_pdfLayout.setPy(3, 257.f);
-    m_pdfLayout.setPy(4, 407.f);
-    m_pdfLayout.setPy(5, 442.f);
-    m_pdfLayout.setPy(6, 592.f);
-    m_pdfLayout.setPy(7, 627.f);
-    m_pdfLayout.setPy(8, 777.f);
-    m_pdfLayout.setPy(9, 842.f);
-
+    updateBoardLayout();
+    updatePdfLayout();
 }
 
 void WorkWindow::createGraphic(const sf::Vector2u& size)
@@ -311,9 +268,58 @@ bool WorkWindow::isCoordinatesOutside() const{
     return activeBoard().isCoordinatesOutside();
 }
 
+void WorkWindow::updateBoardLayout(){
+
+    unsigned int i = 0;
+    for(unsigned int y = 0; y < m_maxBoardRows; y++){
+        for(unsigned int x = 0; x < m_maxBoardColumns; x++){
+            m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
+            m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
+            m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
+            m_layout.setToYCoord(LayoutItem{i}, 2 + 2*y);
+            i++;
+        }
+    }
+}
+
+void WorkWindow::updatePdfLayout(){
+
+    unsigned int i = 0;
+    for(int y = 7; y > 0; y-=2){
+        for(unsigned int x = 1; x < 7; x+=2){
+            m_pdfLayout.setFromXCoord(LayoutItem{i}, x);
+            m_pdfLayout.setToXCoord(LayoutItem{i}, x+1);
+            m_pdfLayout.setFromYCoord(LayoutItem{i}, y);
+            m_pdfLayout.setToYCoord(LayoutItem{i}, y+1);
+            i++;
+        }
+    }
+
+    m_pdfLayout.setPx(0, 0.f);
+    m_pdfLayout.setPx(1, 35.f);
+    m_pdfLayout.setPx(2, 185.f);
+    m_pdfLayout.setPx(3, 220.f);
+    m_pdfLayout.setPx(4, 370.f);
+    m_pdfLayout.setPx(5, 405.f);
+    m_pdfLayout.setPx(6, 555.f);
+    m_pdfLayout.setPx(7, 595.f);
+
+    m_pdfLayout.setPy(0, 0.f);
+    m_pdfLayout.setPy(1, 72.f);
+    m_pdfLayout.setPy(2, 222.f);
+    m_pdfLayout.setPy(3, 257.f);
+    m_pdfLayout.setPy(4, 407.f);
+    m_pdfLayout.setPy(5, 442.f);
+    m_pdfLayout.setPy(6, 592.f);
+    m_pdfLayout.setPy(7, 627.f);
+    m_pdfLayout.setPy(8, 777.f);
+    m_pdfLayout.setPy(9, 842.f);
+}
+
 void WorkWindow::updateSelectionHighlight(){
 
-    if(m_boards.size() < 2){
+    if(m_displayBoardIds.size() < 2){
+        m_boardSelectHighlight.hide();
         return;
     }
 
@@ -639,6 +645,70 @@ void WorkWindow::newBoard(){
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     reset();
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::addBoardColumn(){
+
+    m_maxBoardColumns++;
+
+    updateBoardLayout();
+    displayLastBoards();
+
+    m_activeBoardIndex = m_displayBoardIds.size()-1;
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::removeBoardColumn(){
+    
+    if(m_maxBoardColumns < 2){
+        return;
+    }
+
+    m_maxBoardColumns--;
+
+    updateBoardLayout();
+    displayLastBoards();
+
+    m_activeBoardIndex = m_displayBoardIds.size()-1;
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::addBoardRow(){
+
+    m_maxBoardRows++;
+
+    updateBoardLayout();
+    displayLastBoards();
+
+    m_activeBoardIndex = m_displayBoardIds.size()-1;
+
+    if(m_texture){
+        createGraphic(m_texture->getSize());
+    }
+}
+
+void WorkWindow::removeBoardRow(){
+
+    if(m_maxBoardRows < 2){
+        return;
+    }
+
+    m_maxBoardRows--;
+
+    updateBoardLayout();
+    displayLastBoards();
+
+    m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     if(m_texture){
         createGraphic(m_texture->getSize());

@@ -530,6 +530,22 @@ void MainWindow::handleAction(const sigrid::Action action){
         newBoard();
         return;
     }
+    else if(std::holds_alternative<ActionType::AddBoardColumn>(action)){
+        addBoardColumn();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveBoardColumn>(action)){
+        removeBoardColumn();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::AddBoardRow>(action)){
+        addBoardRow();
+        return;
+    }
+    else if(std::holds_alternative<ActionType::RemoveBoardRow>(action)){
+        removeBoardRow();
+        return;
+    }
     else if(std::holds_alternative<ActionType::ShiftBoardsLeft>(action)){
         shiftBoardsLeft();
         return;
@@ -963,6 +979,54 @@ void MainWindow::newBoard(){
     std::string title = m_workWindow->getName();
     m_window.setTitle(title);
 
+}
+
+void MainWindow::addBoardColumn(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to add board column, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->addBoardColumn();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::removeBoardColumn(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to remove board column, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeBoardColumn();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::addBoardRow(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to add board row, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->addBoardRow();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
+}
+
+void MainWindow::removeBoardRow(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to remove board row, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->removeBoardRow();
+    std::string title = m_workWindow->getName();
+    m_window.setTitle(title);
 }
 
 void MainWindow::shiftBoardsLeft(){

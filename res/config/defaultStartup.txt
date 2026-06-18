@@ -241,6 +241,10 @@ Menu: [
         "Show Color Tools" showColorTools
         "Hide Color Tools" hideColorTools
       ]
+      "Add Column" addBoardColumn
+      "Remove Column" removeBoardColumn
+      "Add Row" addBoardRow
+      "Remove Row" removeBoardRow
     ]
     Settings [
     ]

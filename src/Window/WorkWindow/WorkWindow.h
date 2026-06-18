@@ -69,6 +69,11 @@ namespace sigrid{
 
             void newBoard();
 
+            void addBoardColumn();
+            void removeBoardColumn();
+            void addBoardRow();
+            void removeBoardRow();
+
             void shiftBoardsLeft();
             void shiftBoardsRight();
 
@@ -138,6 +143,10 @@ namespace sigrid{
             void useAddTileHighlightTool(const Coord& coord, const int& colorId);
             void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
+            void updateBoardLayout();
+
+            void updatePdfLayout();
+
             void updateSelectionHighlight();
 
             void displayFirstBoards();
@@ -152,8 +161,8 @@ namespace sigrid{
             sf::Vector2f m_position;
             LayoutGrid m_layout;
             std::vector<sigrid::Board> m_boards;
-            unsigned int m_maxBoardColumns = 2;
-            unsigned int m_maxBoardRows = 2;
+            unsigned int m_maxBoardColumns = 1;
+            unsigned int m_maxBoardRows = 1;
             std::vector<int> m_displayBoardIds;
             int m_activeBoardIndex = 0;
 

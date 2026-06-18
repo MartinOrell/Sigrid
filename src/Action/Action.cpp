@@ -26,6 +26,18 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "new"){
         return ActionType::NewBoard{};
     }
+    else if(name == "addBoardColumn"){
+        return ActionType::AddBoardColumn{};
+    }
+    else if(name == "removeBoardColumn"){
+        return ActionType::RemoveBoardColumn{};
+    }
+    else if(name == "addBoardRow"){
+        return ActionType::AddBoardRow{};
+    }
+    else if(name == "removeBoardRow"){
+        return ActionType::RemoveBoardRow{};
+    }
     else if(name == "reset"){
         return ActionType::Reset{};
     }
