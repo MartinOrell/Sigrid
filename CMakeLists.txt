@@ -10,6 +10,7 @@ set(SRC_FILES
     src/Menu/Menu.cpp
     src/Menu/MenuItem.cpp
     src/Window/WorkWindow/WorkWindow.cpp
+    src/Window/WorkWindow/PdfHandler.cpp
     src/Window/ToolWindow/ToolWindow.cpp
     src/Window/ToolWindow/ToolItem.cpp
     src/Board/BoardDataContainer.cpp

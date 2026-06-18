@@ -10,6 +10,8 @@
 
 #include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
 
+#include "PdfHandler.h"
+
 namespace sf{
     class RenderTexture;
 }
@@ -145,8 +147,6 @@ namespace sigrid{
 
             void updateBoardLayout();
 
-            void updatePdfLayout();
-
             void updateSelectionHighlight();
 
             void displayFirstBoards();
@@ -168,7 +168,7 @@ namespace sigrid{
 
             RectangleBorder m_boardSelectHighlight;
 
-            LayoutGrid m_pdfLayout;
+            PdfHandler m_pdfHandler;
 
             sf::Color m_backgroundColor;
 
