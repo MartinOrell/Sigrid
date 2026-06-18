@@ -174,8 +174,6 @@ Menu: [
   headers: [
     File [
       New new
-      "Open Left" openLeft
-      "Open Right" openRight
       Save save
       "Save Pdf" savePdf
     ]

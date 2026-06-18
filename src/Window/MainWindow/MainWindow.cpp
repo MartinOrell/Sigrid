@@ -530,12 +530,12 @@ void MainWindow::handleAction(const sigrid::Action action){
         newBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::OpenLeftBoard>(action)){
-        openLeftBoard();
+    else if(std::holds_alternative<ActionType::ShiftBoardsLeft>(action)){
+        shiftBoardsLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::OpenRightBoard>(action)){
-        openRightBoard();
+    else if(std::holds_alternative<ActionType::ShiftBoardsRight>(action)){
+        shiftBoardsRight();
         return;
     }
     else if(std::holds_alternative<ActionType::GotoLeftBoard>(action)){
@@ -965,24 +965,24 @@ void MainWindow::newBoard(){
 
 }
 
-void MainWindow::openLeftBoard(){
+void MainWindow::shiftBoardsLeft(){
     
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->openLeftBoard();
+    m_workWindow->shiftBoardsLeft();
     std::string title = m_workWindow->getName();
     m_window.setTitle(title);
 }
 
-void MainWindow::openRightBoard(){
+void MainWindow::shiftBoardsRight(){
 
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->openRightBoard();
+    m_workWindow->shiftBoardsRight();
     std::string title = m_workWindow->getName();
     m_window.setTitle(title);
 }

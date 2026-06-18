@@ -61,8 +61,8 @@ namespace sigrid{
             void showTools();
             void hideTools();
             void newBoard();
-            void openLeftBoard();
-            void openRightBoard();
+            void shiftBoardsLeft();
+            void shiftBoardsRight();
             void gotoRightBoard();
             void gotoLeftBoard();
             void gotoUpBoard();

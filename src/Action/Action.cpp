@@ -23,12 +23,6 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "savePdf"){
         return ActionType::SavePdf{};
     }
-    else if(name == "openLeft"){
-        return ActionType::OpenLeftBoard{};
-    }
-    else if(name == "openRight"){
-        return ActionType::OpenRightBoard{};
-    }
     else if(name == "new"){
         return ActionType::NewBoard{};
     }

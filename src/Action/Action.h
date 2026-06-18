@@ -49,8 +49,8 @@ namespace sigrid{
         struct ShowTools{};
         struct HideTools{};
         struct NewBoard{};
-        struct OpenLeftBoard{};
-        struct OpenRightBoard{};
+        struct ShiftBoardsLeft{};
+        struct ShiftBoardsRight{};
         struct GotoLeftBoard{};
         struct GotoRightBoard{};
         struct GotoUpBoard{};
@@ -112,8 +112,8 @@ namespace sigrid{
         ActionType::ShowTools,
         ActionType::HideTools,
         ActionType::NewBoard,
-        ActionType::OpenLeftBoard,
-        ActionType::OpenRightBoard,
+        ActionType::ShiftBoardsLeft,
+        ActionType::ShiftBoardsRight,
         ActionType::GotoLeftBoard,
         ActionType::GotoRightBoard,
         ActionType::GotoUpBoard,

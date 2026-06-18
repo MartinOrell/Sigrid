@@ -645,7 +645,7 @@ void WorkWindow::newBoard(){
     }
 }
 
-void WorkWindow::openLeftBoard(){
+void WorkWindow::shiftBoardsLeft(){
 
     if(m_boards.size() < 2){
         return;
@@ -703,7 +703,7 @@ void WorkWindow::openLeftBoard(){
     }
 }
 
-void WorkWindow::openRightBoard(){
+void WorkWindow::shiftBoardsRight(){
 
     if(m_boards.size() < 2){
         return;
@@ -755,7 +755,7 @@ void WorkWindow::openRightBoard(){
 void WorkWindow::gotoRightBoard(){
 
     if(m_maxBoardRows == 1){
-        openRightBoard();
+        shiftBoardsRight();
         return;
     }
 
@@ -790,7 +790,7 @@ void WorkWindow::gotoRightBoard(){
 void WorkWindow::gotoLeftBoard(){
 
     if(m_maxBoardRows == 1){
-        openLeftBoard();
+        shiftBoardsLeft();
         return;
     }
 
