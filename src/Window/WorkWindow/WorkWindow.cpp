@@ -279,8 +279,11 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
         if(!board.contains(position)){
             continue;
         }
-        m_activeBoardIndex = displayIndex;
-        updateSelectionHighlight();
+        if(m_activeBoardIndex != displayIndex){
+            activeBoard().deselect();
+            m_activeBoardIndex = displayIndex;
+            updateSelectionHighlight();
+        }
         return;
     }
 }
@@ -319,8 +322,6 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
             }
             return ActionType::None();
         }
-
-        m_activeBoardIndex = displayIndex;
 
         auto fromCoord = fromCoord_o.value();
         auto toCoord = toCoord_o.value();
@@ -373,8 +374,6 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
         if(fromCoord_o == std::nullopt){
             continue;
         }
-
-        m_activeBoardIndex = displayIndex;
 
         auto toCoord_o = board.getTileCoord(to);
 
@@ -458,6 +457,8 @@ void WorkWindow::newBoard(){
 
 void WorkWindow::addBoardColumn(){
 
+    activeBoard().deselect();
+
     m_maxBoardColumns++;
 
     updateBoardLayout();
@@ -476,6 +477,8 @@ void WorkWindow::removeBoardColumn(){
         return;
     }
 
+    activeBoard().deselect();
+
     m_maxBoardColumns--;
 
     updateBoardLayout();
@@ -489,6 +492,8 @@ void WorkWindow::removeBoardColumn(){
 }
 
 void WorkWindow::addBoardRow(){
+
+    activeBoard().deselect();
 
     m_maxBoardRows++;
 
@@ -508,6 +513,8 @@ void WorkWindow::removeBoardRow(){
         return;
     }
 
+    activeBoard().deselect();
+
     m_maxBoardRows--;
 
     updateBoardLayout();
@@ -525,6 +532,8 @@ void WorkWindow::shiftBoardsLeft(){
     if(m_boards.size() < 2){
         return;
     }
+
+    activeBoard().deselect();
 
     if(m_displayBoardIds.size() == m_boards.size()
     || m_activeBoardIndex % m_maxBoardColumns != 0){
@@ -584,6 +593,8 @@ void WorkWindow::shiftBoardsRight(){
         return;
     }
 
+    activeBoard().deselect();
+
     if(m_displayBoardIds.size() == m_boards.size()
     || m_activeBoardIndex % m_maxBoardColumns != m_maxBoardColumns - 1){
 
@@ -634,6 +645,8 @@ void WorkWindow::gotoRightBoard(){
         return;
     }
 
+    activeBoard().deselect();
+
     if(m_displayBoardIds.size() < 2){
         int& id = m_displayBoardIds.at(0);
         id = (id + 1)%m_boards.size();
@@ -668,6 +681,8 @@ void WorkWindow::gotoLeftBoard(){
         shiftBoardsLeft();
         return;
     }
+
+    activeBoard().deselect();
 
     if(m_displayBoardIds.size() < 2){
         int& id = m_displayBoardIds.at(0);
@@ -705,6 +720,8 @@ void WorkWindow::gotoUpBoard(){
     if(m_displayBoardIds.size() <= m_maxBoardColumns){
         return;
     }
+
+    activeBoard().deselect();
 
     if(m_activeBoardIndex > m_maxBoardColumns-1){
         m_activeBoardIndex -= m_maxBoardColumns;
@@ -744,6 +761,8 @@ void WorkWindow::gotoDownBoard(){
     if(m_displayBoardIds.size() <= m_maxBoardColumns){
         return;
     }
+
+    activeBoard().deselect();
 
     if(m_activeBoardIndex/m_maxBoardColumns < (m_displayBoardIds.size()-1)/m_maxBoardColumns){
         int newId = m_activeBoardIndex + m_maxBoardColumns;
