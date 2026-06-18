@@ -98,11 +98,11 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
             std:: cout << "Board data: " << config.boardFilename << " loaded" << std::endl;
         }
         else if (boardData.load(config.resetBoardFilename)){
-            std::cerr << "Failed reading Board data: " << config.boardFilename << std::endl;
+            std::cerr << "MainWindow: Failed reading Board data: " << config.boardFilename << std::endl;
             std::cerr << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
         }
         else{
-            std::cerr << "Main Window failed reading both " << config.boardFilename
+            std::cerr << "MainWindow: Failed reading both " << config.boardFilename
             << " and " << config.resetBoardFilename << "." << std::endl;
             std::cerr << "Main Window failed creating board." << std::endl;
             return false;
@@ -112,8 +112,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
         std::cout << "Board data: " << config.resetBoardFilename << " loaded" << std::endl;
     }
     else{
-        std::cerr << "Main Window failed reading " << config.resetBoardFilename << std::endl;
-        std::cerr << "Main Window failed creating board." << std::endl;
+        std::cerr << "MainWindow: Failed reading " << config.resetBoardFilename << std::endl;
+        std::cerr << "MainWindow: Failed creating board." << std::endl;
         return false;
     }
 
@@ -695,7 +695,7 @@ void MainWindow::handleAction(const sigrid::Action action){
 
 void MainWindow::pinMenu(){
     if(!m_menu){
-        std::cerr << "Unable to pin menu, Menu does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pin menu, Menu does not exist" << std::endl;
         return;
     }
 
@@ -711,7 +711,7 @@ void MainWindow::pinMenu(){
 
 void MainWindow::unPinMenu(){
     if(!m_menu){
-        std::cerr << "Unable to unpin menu, Menu does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to unpin menu, Menu does not exist" << std::endl;
         return;
     }
 
@@ -724,7 +724,7 @@ void MainWindow::unPinMenu(){
 
 void MainWindow::showMenu(){
     if(!m_menu){
-        std::cerr << "Unable to show menu, Menu does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to show menu, Menu does not exist" << std::endl;
         return;
     }
 
@@ -736,7 +736,7 @@ void MainWindow::showMenu(){
 
 void MainWindow::hideMenu(){
     if(!m_menu){
-        std::cerr << "Unable to hide menu, Menu does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to hide menu, Menu does not exist" << std::endl;
         return;
     }
 
@@ -748,7 +748,7 @@ void MainWindow::hideMenu(){
 
 void MainWindow::toggleHeader(const int headerId){
     if(!m_menu){
-        std::cerr << "Unable to toggle header, Menu does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to toggle header, Menu does not exist" << std::endl;
         return;
     }
     m_menu->toggleHeader(headerId);
@@ -756,7 +756,7 @@ void MainWindow::toggleHeader(const int headerId){
 
 void MainWindow::reset(){
     if(!m_workWindow){
-        std::cerr << "Unable to reset board, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to reset board, workWindow does not exist" << std::endl;
         return;
     }
     m_workWindow->reset();
@@ -765,7 +765,7 @@ void MainWindow::reset(){
 
 void MainWindow::clear(){
     if(!m_workWindow){
-        std::cerr << "Unable to clear board, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to clear board, workWindow does not exist" << std::endl;
         return;
     }
     m_workWindow->clear();
@@ -773,7 +773,7 @@ void MainWindow::clear(){
 
 void MainWindow::print(){
     if(!m_workWindow){
-        std::cerr << "Unable to print board, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to print board, workWindow does not exist" << std::endl;
         return;
     }
     m_workWindow->print();
@@ -781,11 +781,11 @@ void MainWindow::print(){
 
 void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
     if(!m_toolWindow){
-        std::cerr << "Unable to pick piece, toolwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick piece, toolwindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick piece, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick piece, toolpicker window does not exist" << std::endl;
         return;
     }
     m_inputHandler.setEntity(sf::Mouse::Button::Left, logicEntity);
@@ -804,11 +804,11 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
 void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
 
     if(!m_toolWindow){
-        std::cerr << "Unable to pick piece color, toolwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick piece color, toolwindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick piece color, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick piece color, toolpicker window does not exist" << std::endl;
         return;
     }
 
@@ -820,11 +820,11 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
 
 void MainWindow::pickArrow(const int colorId){
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick arrow, toolwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick arrow, toolwindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick arrow color, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick arrow color, toolpicker window does not exist" << std::endl;
         return;
     }
     m_inputHandler.setArrow(sf::Mouse::Button::Left, colorId);
@@ -835,11 +835,11 @@ void MainWindow::pickArrow(const int colorId){
 
 void MainWindow::pickArrowColor(const int colorId){
     if(!m_toolWindow){
-        std::cerr << "Unable to pick arrow color, toolWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick arrow color, toolWindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick arrow color, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick arrow color, toolpicker window does not exist" << std::endl;
         return;
     }
     m_inputHandler.setArrow(sf::Mouse::Button::Left, colorId);
@@ -850,11 +850,11 @@ void MainWindow::pickArrowColor(const int colorId){
 
 void MainWindow::pickCircle(const int colorId){
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick circle, toolwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick circle, toolwindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
     m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
@@ -865,11 +865,11 @@ void MainWindow::pickCircle(const int colorId){
 
 void MainWindow::pickCircleColor(const int colorId){
     if(!m_toolWindow){
-        std::cerr << "Unable to pick circle color, toolWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick circle color, toolWindow does not exist" << std::endl;
         return;
     }
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to pick circle color, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
     m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
@@ -880,7 +880,7 @@ void MainWindow::pickCircleColor(const int colorId){
 
 void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse::Button& button){
     if(!m_toolWindow){
-        std::cerr << "Unable to set tool, toolWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to set tool, toolWindow does not exist" << std::endl;
         return;
     }
     m_inputHandler.setSelection(button, selection);
@@ -893,7 +893,7 @@ void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse
 void MainWindow::showColorTools(){
 
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to show color tools, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to show color tools, toolpicker window does not exist" << std::endl;
         return;
     }
 
@@ -909,7 +909,7 @@ void MainWindow::showColorTools(){
 void MainWindow::hideColorTools(){
 
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to hide color tools, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to hide color tools, toolpicker window does not exist" << std::endl;
         return;
     }
 
@@ -924,12 +924,12 @@ void MainWindow::hideColorTools(){
 void MainWindow::showTools(){
 
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to show tools, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to show tools, toolpicker window does not exist" << std::endl;
         return;
     }
 
     if(!m_toolWindow){
-        std::cerr << "Unable to show tools, tool window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to show tools, tool window does not exist" << std::endl;
     }
 
     m_toolPickerWindow->show();
@@ -946,12 +946,12 @@ void MainWindow::showTools(){
 
 void MainWindow::hideTools(){
     if(!m_toolPickerWindow){
-        std::cerr << "Unable to toggle tools, toolpicker window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to toggle tools, toolpicker window does not exist" << std::endl;
         return;
     }
 
     if(!m_toolWindow){
-        std::cerr << "Unable to toggle tools, tool window does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to toggle tools, tool window does not exist" << std::endl;
     }
 
     m_toolPickerWindow->hide();
@@ -971,7 +971,7 @@ void MainWindow::hideTools(){
 void MainWindow::newBoard(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to add new board, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add new board, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1098,7 +1098,7 @@ void MainWindow::gotoDownBoard(){
 void MainWindow::saveBoard(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to save board, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to save board, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1109,7 +1109,7 @@ void MainWindow::saveBoard(){
 void MainWindow::savePdf(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to save pdf, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to save pdf, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1119,7 +1119,7 @@ void MainWindow::savePdf(){
 void MainWindow::pasteFen(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to paste FEN string, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to paste FEN string, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1130,7 +1130,7 @@ void MainWindow::pasteFen(){
 void MainWindow::copyFen(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to copy FEN string, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to copy FEN string, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1142,7 +1142,7 @@ void MainWindow::copyFen(){
 void MainWindow::flipBoard(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to flip board, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to flip board, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1232,7 +1232,7 @@ void MainWindow::addTopOutsideLabels(){
 void MainWindow::addBottomOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to add bottom outside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add bottom outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1248,7 +1248,7 @@ void MainWindow::addBottomOutsideLabels(){
 void MainWindow::removeLeftInsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove left inside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove left inside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1264,7 +1264,7 @@ void MainWindow::removeLeftInsideLabels(){
 void MainWindow::removeBottomInsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove bottom inside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove bottom inside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1280,7 +1280,7 @@ void MainWindow::removeBottomInsideLabels(){
 void MainWindow::removeLeftOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove left outside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove left outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1296,7 +1296,7 @@ void MainWindow::removeLeftOutsideLabels(){
 void MainWindow::removeRightOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove right outside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove right outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1312,7 +1312,7 @@ void MainWindow::removeRightOutsideLabels(){
 void MainWindow::removeTopOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove top outside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove top outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1328,7 +1328,7 @@ void MainWindow::removeTopOutsideLabels(){
 void MainWindow::removeBottomOutsideLabels(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove bottom outside labels, workwindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove bottom outside labels, workwindow does not exist" << std::endl;
         return;
     }
 
@@ -1344,7 +1344,7 @@ void MainWindow::removeBottomOutsideLabels(){
 void MainWindow::setCoordinateSize(const float& size){
 
     if(!m_workWindow){
-        std::cerr << "Unable to set coordinate size, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to set coordinate size, workWindow does not exist" << std::endl;
         return;
     }
 
@@ -1432,7 +1432,7 @@ void MainWindow::removeTileRowDown(){
 void MainWindow::addBoardBorder(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to add border to board, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add border to board, workWindow does not exist" << std::endl;
         return;
     }
 
@@ -1448,7 +1448,7 @@ void MainWindow::addBoardBorder(){
 void MainWindow::removeBoardBorder(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove border to board, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove border to board, workWindow does not exist" << std::endl;
         return;
     }
 
@@ -1464,7 +1464,7 @@ void MainWindow::removeBoardBorder(){
 void MainWindow::addTurnToken(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to add turn token, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to add turn token, workWindow does not exist" << std::endl;
         return;
     }
 
@@ -1480,7 +1480,7 @@ void MainWindow::addTurnToken(){
 void MainWindow::removeTurnToken(){
 
     if(!m_workWindow){
-        std::cerr << "Unable to remove turn token, workWindow does not exist" << std::endl;
+        std::cerr << "MainWindow: Unable to remove turn token, workWindow does not exist" << std::endl;
         return;
     }
 

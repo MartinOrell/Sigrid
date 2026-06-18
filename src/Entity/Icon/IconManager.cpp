@@ -20,6 +20,6 @@ std::optional<sf::Texture*> IconManager::getTexturePtr(const std::string& filena
         return &(m_textures.at(filename));
     }
 
-    std::cerr << "IconManager failed to load from file: " << filename << std::endl;
+    std::cerr << "IconManager: failed to load from file: " << filename << std::endl;
     return std::nullopt;
 }

@@ -222,7 +222,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
                     m_labelsPtr->setBottomInsideFont(label.font);
                 }
                 else{
-                    std::cerr << "Unhandled label position: " << label.position << std::endl;
+                    std::cerr << "GraphicBoard: Unhandled label position: " << label.position << std::endl;
                 }
             }
             else{ // outside
@@ -831,13 +831,13 @@ void GraphicBoard::unhighlight(){
 void GraphicBoard::saveImage(const std::string& fileName){
     auto image = m_texturePtr->getTexture().copyToImage();
     image.flipVertically();
-    std::cerr << "Saving board image: " << fileName << std::endl;
+    std::cout << "Saving board image: " << fileName << std::endl;
     auto success = image.saveToFile(fileName);
     if(success && std::filesystem::exists(fileName)){
-        std::cerr << "board image: " << fileName << " saved" << std::endl;
+        std::cout << "board image: " << fileName << " saved" << std::endl;
     }
     else{
-        std::cerr << "Failed to save board image: " << fileName << std::endl;
+        std::cerr << "GraphicBoard: Failed to save board image: " << fileName << std::endl;
     }
 }
 
@@ -1594,7 +1594,7 @@ void GraphicBoard::resizeTexture(){
     bool success;
     success = m_texturePtr->resize({getTextureWidth(), getTextureHeight()});
     if(!success){
-        std::cerr << "GraphicWindow: Failed to resize texture" << std::endl;
+        std::cerr << "GraphicBoard: Failed to resize texture" << std::endl;
         return;
     }
 }

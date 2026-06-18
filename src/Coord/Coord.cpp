@@ -40,11 +40,11 @@ Coord::Coord(const std::string& notation){
     }
     
     if(i == 0){
-        std::cerr << "Invalid coordinate: " << notation << std::endl;
+        std::cerr << "Coord: Invalid coordinate: " << notation << std::endl;
         return;
     }
     if(i == notation.length()){
-        std::cerr << "Invalid coordinate: " << notation << std::endl;
+        std::cerr << "Coord: Invalid coordinate: " << notation << std::endl;
         return;
     }
 

@@ -16,7 +16,7 @@ int main()
     }
 
     if(!config.load(setupFilename)){
-        std::cerr << "failed to load startup file: \"" << setupFilename
+        std::cerr << "main: failed to load startup file: \"" << setupFilename
             << "\", exiting program" << std::endl;
         return -1;
     }

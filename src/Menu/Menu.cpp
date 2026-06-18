@@ -52,11 +52,11 @@ void Menu::init(const MenuContainer& menuData){
 void Menu::createGraphic(const sf::Vector2u& size){
 
     if(size.x == 0){
-        std::cerr << "Unable to create menu graphic with 0 width" << std::endl;
+        std::cerr << "Menu: Unable to create menu graphic with 0 width" << std::endl;
         return;
     }
     if(size.y == 0){
-        std::cerr << "Unable to create menu graphic with 0 height" << std::endl;
+        std::cerr << "Menu: Unable to create menu graphic with 0 height" << std::endl;
         return;
     }
 
@@ -311,7 +311,7 @@ void Menu::toggleItem(const std::string& key){
 
     auto it = m_items.find(key);
     if(it == m_items.end()){
-        std::cerr << "Unable to toggle menu item. " << key << " not found" << std::endl;
+        std::cerr << "Menu: Unable to toggle menu item. " << key << " not found" << std::endl;
         return;
     }
 
@@ -325,7 +325,7 @@ void Menu::hideItem(const std::string& key){
     auto it = m_items.find(key);
 
     if(it == m_items.end()){
-        std::cerr << "Unable to hide menu item. " << key << " not found" << std::endl;
+        std::cerr << "Menu: Unable to hide menu item. " << key << " not found" << std::endl;
         return;
     }
 
@@ -344,7 +344,7 @@ void Menu::showItem(const std::string& key){
     auto it = m_items.find(key);
 
     if(it == m_items.end()){
-        std::cerr << "Unable to show menu item. " << key << " not found" << std::endl;
+        std::cerr << "Menu: Unable to show menu item. " << key << " not found" << std::endl;
         return;
     }
 
@@ -373,12 +373,12 @@ void Menu::showItem(const std::string& key){
 
 void Menu::addSuperHeaderGraphic(){
     if(!m_texture){
-        std::cerr << "Unable to add super header graphic, menu texture does not exist" << std::endl;
+        std::cerr << "Menu: Unable to add super header graphic, menu texture does not exist" << std::endl;
         return;
     }
 
     if(!m_superHeaderPtr){
-        std::cerr << "Unable to add super header graphic, super header does not exist" << std::endl;
+        std::cerr << "Menu: Unable to add super header graphic, super header does not exist" << std::endl;
         return;
     }
     

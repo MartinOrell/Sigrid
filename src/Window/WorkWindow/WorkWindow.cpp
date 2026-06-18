@@ -37,7 +37,7 @@ void WorkWindow::setBoardFilename(const std::string& filename){
         m_boards.push_back(std::move(board));
     }
     if(m_boards.size() < activeId()){
-        std::cerr << "Invalid board id: " << activeId() << std::endl;
+        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
         return;
     }
     activeBoard().setFilename(filename);
@@ -57,7 +57,7 @@ void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
     if(m_boards.size() < activeId()){
-        std::cerr << "Invalid board id: " << activeId() << std::endl;
+        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
         return;
     }
     activeBoard().setTileColorManagerPtr(managerPtr);
@@ -69,7 +69,7 @@ void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
     if(m_boards.size() < activeId()){
-        std::cerr << "Invalid board id: " << activeId() << std::endl;
+        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
         return;
     }
     activeBoard().setPieceManagerPtr(managerPtr);
@@ -81,7 +81,7 @@ void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
     if(m_boards.size() < activeId()){
-        std::cerr << "Invalid board id: " << activeId() << std::endl;
+        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
         return;
     }
     activeBoard().setArrowColorManagerPtr(managerPtr);
@@ -93,7 +93,7 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
     if(m_boards.size() < activeId()){
-        std::cerr << "Invalid board id: " << activeId() << std::endl;
+        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
         return;
     }
     activeBoard().setFontManagerPtr(managerPtr);

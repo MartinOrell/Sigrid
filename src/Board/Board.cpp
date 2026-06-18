@@ -523,7 +523,7 @@ bool createFolderForFile(const std::string filename){
                 std::cout << "Created folder: " << folder << std::endl;
             }
             else{
-                std::cerr << "Failed to create folder: " << folder << std::endl;
+                std::cerr << "Board: Failed to create folder: " << folder << std::endl;
                 return false;
             }
         }
@@ -536,21 +536,21 @@ bool createFolderForFile(const std::string filename){
 void Board::save(){
 
     if(m_filename.length() == 0){
-        std::cerr << "Unable to save board, filename is not set" << std::endl;
+        std::cerr << "Board: Unable to save board, filename is not set" << std::endl;
         return; 
     }
 
     std::cout << "Saving " << m_filename << std::endl;
 
     if(!createFolderForFile(m_filename)){
-        std::cerr << "Saving failed" << std::endl;
+        std::cerr << "Board: Saving failed" << std::endl;
         return;
     }
 
     std::ofstream out(m_filename);
 
     if(!out.is_open()){
-        std::cerr << "Failed to open " << m_filename << std::endl;
+        std::cerr << "Board: Failed to open " << m_filename << std::endl;
         std::cerr << "Saving failed" << std::endl;
         return;
     }
@@ -560,14 +560,14 @@ void Board::save(){
     std::cout << "Saved " << m_filename << std::endl;
 
     if(m_imageFilename.length() == 0){
-        std::cerr << "Unable to save board image, filename is not set" << std::endl;
+        std::cerr << "Board: Unable to save board image, filename is not set" << std::endl;
         return;
     }
 
     out << "\nImageFilename: " << m_imageFilename;
 
     if(!(createFolderForFile(m_imageFilename))){
-        std::cerr << "Saving board image failed" << std::endl;
+        std::cerr << "Board: Saving board image failed" << std::endl;
         return;
     }
 

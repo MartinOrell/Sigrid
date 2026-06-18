@@ -22,7 +22,7 @@ bool LogicBoard::init(const BoardDataContainer& data){
     m_turnToMove = 0;
 
     if(data.repeatTileColorIds.size() == 0){
-        std::cerr << "Failed to setup LogicBoard: Default tile colors not set" << std::endl;
+        std::cerr << "LogicBoard: Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
 
@@ -33,19 +33,19 @@ bool LogicBoard::init(const BoardDataContainer& data){
         Coord coord{pieceContainer.position};
 
         if(coord.y < 0){
-            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.y >= getNumRows()){
-            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.x < 0){
-            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         if(coord.x >= getNumColumns()){
-            std::cerr << "Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         m_pieceLayer.addEntity(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
