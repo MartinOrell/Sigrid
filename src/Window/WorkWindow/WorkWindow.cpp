@@ -268,144 +268,6 @@ bool WorkWindow::isCoordinatesOutside() const{
     return activeBoard().isCoordinatesOutside();
 }
 
-void WorkWindow::updateBoardLayout(){
-
-    unsigned int i = 0;
-    for(unsigned int y = 0; y < m_maxBoardRows; y++){
-        for(unsigned int x = 0; x < m_maxBoardColumns; x++){
-            m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
-            m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
-            m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
-            m_layout.setToYCoord(LayoutItem{i}, 2 + 2*y);
-            i++;
-        }
-    }
-}
-
-void WorkWindow::updatePdfLayout(){
-
-    unsigned int i = 0;
-    for(int y = 7; y > 0; y-=2){
-        for(unsigned int x = 1; x < 7; x+=2){
-            m_pdfLayout.setFromXCoord(LayoutItem{i}, x);
-            m_pdfLayout.setToXCoord(LayoutItem{i}, x+1);
-            m_pdfLayout.setFromYCoord(LayoutItem{i}, y);
-            m_pdfLayout.setToYCoord(LayoutItem{i}, y+1);
-            i++;
-        }
-    }
-
-    m_pdfLayout.setPx(0, 0.f);
-    m_pdfLayout.setPx(1, 35.f);
-    m_pdfLayout.setPx(2, 185.f);
-    m_pdfLayout.setPx(3, 220.f);
-    m_pdfLayout.setPx(4, 370.f);
-    m_pdfLayout.setPx(5, 405.f);
-    m_pdfLayout.setPx(6, 555.f);
-    m_pdfLayout.setPx(7, 595.f);
-
-    m_pdfLayout.setPy(0, 0.f);
-    m_pdfLayout.setPy(1, 72.f);
-    m_pdfLayout.setPy(2, 222.f);
-    m_pdfLayout.setPy(3, 257.f);
-    m_pdfLayout.setPy(4, 407.f);
-    m_pdfLayout.setPy(5, 442.f);
-    m_pdfLayout.setPy(6, 592.f);
-    m_pdfLayout.setPy(7, 627.f);
-    m_pdfLayout.setPy(8, 777.f);
-    m_pdfLayout.setPy(9, 842.f);
-}
-
-void WorkWindow::updateSelectionHighlight(){
-
-    if(m_displayBoardIds.size() < 2){
-        m_boardSelectHighlight.hide();
-        return;
-    }
-
-    const auto& board = activeBoard();
-    const float& thickness = m_boardSelectHighlight.getThickness();
-    sf::Vector2f position = board.getTopLeftPosition();
-    position -= sf::Vector2f{thickness, thickness};
-    m_boardSelectHighlight.setTopLeftPosition(position);
-    m_boardSelectHighlight.setEnclosedArea(board.getDisplaySize());
-    m_boardSelectHighlight.show();
-}
-
-void WorkWindow::displayFirstBoards(){
-
-    m_displayBoardIds.clear();
-    for(int id = 0; id < m_maxBoardColumns * m_maxBoardRows; id++){
-        if(id >= m_boards.size()){
-            break;
-        }
-        m_displayBoardIds.push_back(id);
-    }
-}
-
-void WorkWindow::displayLastBoards(){
-
-    m_displayBoardIds.clear();
-
-    if(m_maxBoardRows == 1){
-        int lastId = m_boards.size()-1;
-        int firstDisplayId = lastId - m_maxBoardColumns + 1;
-        if(firstDisplayId < 0){
-            firstDisplayId = 0;
-        }
-        for(int id = firstDisplayId; id < m_boards.size(); id++){
-            m_displayBoardIds.push_back(id);
-        }
-        return;
-    }
-    
-    int numColumns = m_maxBoardColumns;
-    if(numColumns > m_boards.size()){
-        numColumns = m_boards.size();
-    }
-    int lastId = m_boards.size()-1;
-    int lastX = (m_boards.size()-1)%numColumns;
-    int maxDisplayBoards = numColumns*m_maxBoardRows;
-    if(maxDisplayBoards > m_boards.size()){
-        maxDisplayBoards = m_boards.size();
-    }
-    int offsetX = numColumns - 1 - lastX;
-    if(maxDisplayBoards == m_boards.size()){
-        offsetX = 0;
-    }
-    int numDisplayBoards = maxDisplayBoards - offsetX;
-
-    int topLeftId = lastId - numDisplayBoards + 1;
-
-    if(topLeftId < 0){
-        topLeftId = 0;
-    }
-    for(int id = topLeftId; id < m_boards.size(); id++){
-        m_displayBoardIds.push_back(id);
-    }
-}
-
-void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-
-    if(!m_texture){
-        return;
-    }
-
-    sf::RenderTexture texture(m_texture->getSize());
-    texture.clear(m_backgroundColor);
-    for(int id : m_displayBoardIds){
-        if(id < m_boards.size()){
-            texture.draw(m_boards.at(id));
-        }
-    }
-    texture.draw(m_boardSelectHighlight);
-    sf::Sprite sprite(texture.getTexture());
-    sprite.setPosition(m_position);
-    sprite.move({0.f, (float)texture.getTexture().getSize().y});
-    sprite.setScale({1.f, -1.f});
-    target.draw(sprite);
-}
-
 void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
     activeBoard().removeDragArrow();
@@ -559,63 +421,6 @@ void WorkWindow::clear(){
 
 void WorkWindow::print(){
     activeBoard().print();
-}
-
-sigrid::Board& WorkWindow::activeBoard(){
-    return m_boards.at(activeId());
-}
-
-const sigrid::Board& WorkWindow::activeBoard() const{
-    return m_boards.at(activeId());
-}
-
-int& WorkWindow::activeId() {
-    return m_displayBoardIds.at(m_activeBoardIndex);
-}
-
-const int& WorkWindow::activeId() const{
-    return m_displayBoardIds.at(m_activeBoardIndex);
-}
-
-std::string WorkWindow::getUniqueName(const std::string& name){
-    std::string newName(name);
-    while(true){
-        
-        bool exists = false;
-        for(const auto& board: m_boards){
-            if(board.getFilename() == newName || board.getImageFilename() == newName){
-                exists = true;
-                break;
-            }
-        }
-        if(!exists){
-            if(!std::filesystem::exists(newName)){
-                break;
-            }
-        }
-
-        auto endPos = newName.rfind('.');
-        if(endPos == newName.npos){
-            std::cerr << "WorkWindow: No . in getUniqueName";
-            return newName;
-        }
-        auto startPos = endPos;
-        while(std::isdigit(newName.at(startPos-1))){
-            startPos--;
-        }
-        if(startPos == endPos){
-            newName.insert(startPos, "2");
-        }
-        else{
-            std::string digitString = newName.substr(startPos,endPos-startPos);
-            int digit = std::stoi(digitString);
-            digit++;
-            digitString = std::to_string(digit);
-            newName.erase(startPos,endPos-startPos);
-            newName.insert(startPos, digitString);
-        }
-    }
-    return newName;
 }
 
 void WorkWindow::newBoard(){
@@ -1164,6 +969,63 @@ void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
     activeBoard().addEntityAtSelection(newEntity);
 }
 
+sigrid::Board& WorkWindow::activeBoard(){
+    return m_boards.at(activeId());
+}
+
+const sigrid::Board& WorkWindow::activeBoard() const{
+    return m_boards.at(activeId());
+}
+
+int& WorkWindow::activeId() {
+    return m_displayBoardIds.at(m_activeBoardIndex);
+}
+
+const int& WorkWindow::activeId() const{
+    return m_displayBoardIds.at(m_activeBoardIndex);
+}
+
+std::string WorkWindow::getUniqueName(const std::string& name){
+    std::string newName(name);
+    while(true){
+        
+        bool exists = false;
+        for(const auto& board: m_boards){
+            if(board.getFilename() == newName || board.getImageFilename() == newName){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            if(!std::filesystem::exists(newName)){
+                break;
+            }
+        }
+
+        auto endPos = newName.rfind('.');
+        if(endPos == newName.npos){
+            std::cerr << "WorkWindow: No . in getUniqueName";
+            return newName;
+        }
+        auto startPos = endPos;
+        while(std::isdigit(newName.at(startPos-1))){
+            startPos--;
+        }
+        if(startPos == endPos){
+            newName.insert(startPos, "2");
+        }
+        else{
+            std::string digitString = newName.substr(startPos,endPos-startPos);
+            int digit = std::stoi(digitString);
+            digit++;
+            digitString = std::to_string(digit);
+            newName.erase(startPos,endPos-startPos);
+            newName.insert(startPos, digitString);
+        }
+    }
+    return newName;
+}
+
 void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
 
     auto tile_o = activeBoard().getTile(coord);
@@ -1208,4 +1070,142 @@ void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, c
 
     activeBoard().removeArrow(fromCoord, toCoord);
     activeBoard().addArrow(fromCoord, toCoord, LogicArrow{colorId});
+}
+
+void WorkWindow::updateBoardLayout(){
+
+    unsigned int i = 0;
+    for(unsigned int y = 0; y < m_maxBoardRows; y++){
+        for(unsigned int x = 0; x < m_maxBoardColumns; x++){
+            m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
+            m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
+            m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
+            m_layout.setToYCoord(LayoutItem{i}, 2 + 2*y);
+            i++;
+        }
+    }
+}
+
+void WorkWindow::updatePdfLayout(){
+
+    unsigned int i = 0;
+    for(int y = 7; y > 0; y-=2){
+        for(unsigned int x = 1; x < 7; x+=2){
+            m_pdfLayout.setFromXCoord(LayoutItem{i}, x);
+            m_pdfLayout.setToXCoord(LayoutItem{i}, x+1);
+            m_pdfLayout.setFromYCoord(LayoutItem{i}, y);
+            m_pdfLayout.setToYCoord(LayoutItem{i}, y+1);
+            i++;
+        }
+    }
+
+    m_pdfLayout.setPx(0, 0.f);
+    m_pdfLayout.setPx(1, 35.f);
+    m_pdfLayout.setPx(2, 185.f);
+    m_pdfLayout.setPx(3, 220.f);
+    m_pdfLayout.setPx(4, 370.f);
+    m_pdfLayout.setPx(5, 405.f);
+    m_pdfLayout.setPx(6, 555.f);
+    m_pdfLayout.setPx(7, 595.f);
+
+    m_pdfLayout.setPy(0, 0.f);
+    m_pdfLayout.setPy(1, 72.f);
+    m_pdfLayout.setPy(2, 222.f);
+    m_pdfLayout.setPy(3, 257.f);
+    m_pdfLayout.setPy(4, 407.f);
+    m_pdfLayout.setPy(5, 442.f);
+    m_pdfLayout.setPy(6, 592.f);
+    m_pdfLayout.setPy(7, 627.f);
+    m_pdfLayout.setPy(8, 777.f);
+    m_pdfLayout.setPy(9, 842.f);
+}
+
+void WorkWindow::updateSelectionHighlight(){
+
+    if(m_displayBoardIds.size() < 2){
+        m_boardSelectHighlight.hide();
+        return;
+    }
+
+    const auto& board = activeBoard();
+    const float& thickness = m_boardSelectHighlight.getThickness();
+    sf::Vector2f position = board.getTopLeftPosition();
+    position -= sf::Vector2f{thickness, thickness};
+    m_boardSelectHighlight.setTopLeftPosition(position);
+    m_boardSelectHighlight.setEnclosedArea(board.getDisplaySize());
+    m_boardSelectHighlight.show();
+}
+
+void WorkWindow::displayFirstBoards(){
+
+    m_displayBoardIds.clear();
+    for(int id = 0; id < m_maxBoardColumns * m_maxBoardRows; id++){
+        if(id >= m_boards.size()){
+            break;
+        }
+        m_displayBoardIds.push_back(id);
+    }
+}
+
+void WorkWindow::displayLastBoards(){
+
+    m_displayBoardIds.clear();
+
+    if(m_maxBoardRows == 1){
+        int lastId = m_boards.size()-1;
+        int firstDisplayId = lastId - m_maxBoardColumns + 1;
+        if(firstDisplayId < 0){
+            firstDisplayId = 0;
+        }
+        for(int id = firstDisplayId; id < m_boards.size(); id++){
+            m_displayBoardIds.push_back(id);
+        }
+        return;
+    }
+    
+    int numColumns = m_maxBoardColumns;
+    if(numColumns > m_boards.size()){
+        numColumns = m_boards.size();
+    }
+    int lastId = m_boards.size()-1;
+    int lastX = (m_boards.size()-1)%numColumns;
+    int maxDisplayBoards = numColumns*m_maxBoardRows;
+    if(maxDisplayBoards > m_boards.size()){
+        maxDisplayBoards = m_boards.size();
+    }
+    int offsetX = numColumns - 1 - lastX;
+    if(maxDisplayBoards == m_boards.size()){
+        offsetX = 0;
+    }
+    int numDisplayBoards = maxDisplayBoards - offsetX;
+
+    int topLeftId = lastId - numDisplayBoards + 1;
+
+    if(topLeftId < 0){
+        topLeftId = 0;
+    }
+    for(int id = topLeftId; id < m_boards.size(); id++){
+        m_displayBoardIds.push_back(id);
+    }
+}
+
+void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+
+    if(!m_texture){
+        return;
+    }
+
+    sf::RenderTexture texture(m_texture->getSize());
+    texture.clear(m_backgroundColor);
+    for(int id : m_displayBoardIds){
+        if(id < m_boards.size()){
+            texture.draw(m_boards.at(id));
+        }
+    }
+    texture.draw(m_boardSelectHighlight);
+    sf::Sprite sprite(texture.getTexture());
+    sprite.setPosition(m_position);
+    sprite.move({0.f, (float)texture.getTexture().getSize().y});
+    sprite.setScale({1.f, -1.f});
+    target.draw(sprite);
 }
