@@ -8,7 +8,6 @@
 #include "../../Entity/Tile/GraphicTiles.h"
 #include "../../Entity/GraphicEntities.h"
 #include "../../Entity/Shape/Arrow/GraphicArrows.h"
-#include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "../../Board/BoardDataContainer.h"
 #include "../../Board/BoardLabels.h"
 #include "../../Entity/TurnToken/TurnToken.h"
@@ -17,8 +16,7 @@ using namespace sigrid;
 
 
 WorkWindow::WorkWindow()
-: m_backgroundColor{255,255,255,0}
-, m_activeBoardIndex{0}
+: m_activeBoardIndex{0}
 , m_displayBoardIds{{0}}{
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
@@ -114,7 +112,7 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
     m_pdfHandler.updateLayout();
 }
 
-void WorkWindow::createGraphic(const sf::Vector2u& size)
+void WorkWindow::createGraphic(const sf::Vector2f& size)
 {
 
     int numBoards = m_displayBoardIds.size();
@@ -127,10 +125,10 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
 
     int maxX = 1+2*boardColumns;
 
-    m_layout.setPx(maxX, (float)size.x);
+    m_layout.setPx(maxX, size.x);
 
     int maxY = 1+2*boardRows;
-    m_layout.setPy(maxY, (float)size.y);
+    m_layout.setPy(maxY, size.y);
 
     bool hasSelectHighlight = numBoards > 1;
 
@@ -156,8 +154,8 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
     m_layout.setPx(1, padding_left);
     m_layout.setPy(1, padding_bottom);
 
-    m_layout.setPx(maxX-1, (float)size.x - padding_right);
-    m_layout.setPy(maxY-1, (float)size.y - padding_top);
+    m_layout.setPx(maxX-1, size.x - padding_right);
+    m_layout.setPy(maxY-1, size.y - padding_top);
 
     for(int i = 1; i < boardColumns; i++){
         float middleX = padding_left + i*m_layout.getWidth(1,maxX-1).value()/(float)boardColumns;
@@ -171,7 +169,7 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
         m_layout.setPy(2*i+1, middleY + padding_betweenY/2.f);
     }
 
-    m_texture = std::make_unique<sf::RenderTexture>(size);
+    m_texture.setSize(size);
 
     for(LayoutItem i = 0; i < m_displayBoardIds.size(); i++){
         auto layoutBoardSize_o = m_layout.getSize(LayoutItem{i});
@@ -209,6 +207,7 @@ void WorkWindow::createGraphic(const sf::Vector2u& size)
     }
 
     updateSelectionHighlight();
+    updateTexture();
 }
 
 void WorkWindow::loadFen(const std::string& fen){
@@ -236,7 +235,7 @@ std::string WorkWindow::getFen() const{
 }
 
 void WorkWindow::setPosition(const sf::Vector2f& position){
-    m_position = position;
+    m_texture.setPosition(position);
 }
 
 unsigned int WorkWindow::getNumColumns() const{
@@ -247,15 +246,7 @@ unsigned int WorkWindow::getNumColumns() const{
 }
 
 bool WorkWindow::contains(const sf::Vector2f& point) const{
-
-    if(!m_texture){
-        return false;
-    }
-
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return m_texture.contains(point);
 }
 
 bool WorkWindow::isCoordinatesOutside() const{
@@ -266,7 +257,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
     activeBoard().removeDragArrow();
 
-    sf::Vector2f position = windowPosition - m_position;
+    sf::Vector2f position = windowPosition - m_texture.getPosition();
 
     for(unsigned int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
         auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
@@ -286,8 +277,8 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
     
     activeBoard().removeDragArrow();
 
-    sf::Vector2f from = pressPosition - m_position;
-    sf::Vector2f to = releasePosition - m_position;
+    sf::Vector2f from = pressPosition - m_texture.getPosition();
+    sf::Vector2f to = releasePosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
         auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
@@ -357,8 +348,8 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
 
 void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
     
-    sf::Vector2f from = pressPosition - m_position;
-    sf::Vector2f to = currentPosition - m_position;
+    sf::Vector2f from = pressPosition - m_texture.getPosition();
+    sf::Vector2f to = currentPosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
         auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
@@ -444,8 +435,8 @@ void WorkWindow::newBoard(){
 
     reset();
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -460,8 +451,8 @@ void WorkWindow::addBoardColumn(){
 
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -480,8 +471,8 @@ void WorkWindow::removeBoardColumn(){
 
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -496,8 +487,8 @@ void WorkWindow::addBoardRow(){
 
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -516,8 +507,8 @@ void WorkWindow::removeBoardRow(){
 
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -534,8 +525,8 @@ void WorkWindow::shiftBoardsLeft(){
 
         m_activeBoardIndex = (m_displayBoardIds.size() + m_activeBoardIndex - 1)%m_displayBoardIds.size();
 
-        if(m_texture){
-            createGraphic(m_texture->getSize());
+        if(m_texture.isInitialized()){
+            createGraphic(m_texture.getSize());
         }
         return;
     }
@@ -576,8 +567,8 @@ void WorkWindow::shiftBoardsLeft(){
         }
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -594,8 +585,8 @@ void WorkWindow::shiftBoardsRight(){
 
         m_activeBoardIndex = (m_activeBoardIndex + 1)%m_displayBoardIds.size();
 
-        if(m_texture){
-            createGraphic(m_texture->getSize());
+        if(m_texture.isInitialized()){
+            createGraphic(m_texture.getSize());
         }
         return;
     }
@@ -627,8 +618,8 @@ void WorkWindow::shiftBoardsRight(){
         }
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -664,8 +655,8 @@ void WorkWindow::gotoRightBoard(){
         m_activeBoardIndex += 1 - m_maxBoardColumns;
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -700,8 +691,8 @@ void WorkWindow::gotoLeftBoard(){
         m_activeBoardIndex = m_maxBoardColumns-1;
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -741,8 +732,8 @@ void WorkWindow::gotoUpBoard(){
         }
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -781,8 +772,8 @@ void WorkWindow::gotoDownBoard(){
         }
     }
 
-    if(m_texture){
-        createGraphic(m_texture->getSize());
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getSize());
     }
 }
 
@@ -918,6 +909,24 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
 void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
     activeBoard().addEntityAtSelection(newEntity);
+}
+
+void WorkWindow::updateTexture(){
+
+    if(!m_texture.isInitialized()){
+        return;
+    }
+
+    m_texture.clear();
+
+    for(int id : m_displayBoardIds){
+        if(id < m_boards.size()){
+            m_texture.draw(m_boards.at(id));
+        }
+    }
+    m_texture.draw(m_boardSelectHighlight);
+
+    m_texture.display();
 }
 
 sigrid::Board& WorkWindow::activeBoard(){
@@ -1108,21 +1117,9 @@ void WorkWindow::displayLastBoards(){
 
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
-    if(!m_texture){
+    if(!m_texture.isInitialized()){
         return;
     }
 
-    sf::RenderTexture texture(m_texture->getSize());
-    texture.clear(m_backgroundColor);
-    for(int id : m_displayBoardIds){
-        if(id < m_boards.size()){
-            texture.draw(m_boards.at(id));
-        }
-    }
-    texture.draw(m_boardSelectHighlight);
-    sf::Sprite sprite(texture.getTexture());
-    sprite.setPosition(m_position);
-    sprite.move({0.f, (float)texture.getTexture().getSize().y});
-    sprite.setScale({1.f, -1.f});
-    target.draw(sprite);
+    target.draw(m_texture);
 }

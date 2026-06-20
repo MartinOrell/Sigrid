@@ -1,20 +1,15 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 
+#include "../../SigridRenderTexture/SigridRenderTexture.h"
 #include "../../Layout/LayoutGrid.h"
 #include "../../Board/Board.h"
 #include "../../Action/Action.h"
-#include <SFML/Window/Event.hpp>
 
 #include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
 
 #include "PdfHandler.h"
-
-namespace sf{
-    class RenderTexture;
-}
 
 namespace sigrid{
 
@@ -41,7 +36,7 @@ namespace sigrid{
 
             void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
-            void createGraphic(const sf::Vector2u& size);
+            void createGraphic(const sf::Vector2f& size);
 
             void loadFen(const std::string& fen);
 
@@ -132,6 +127,8 @@ namespace sigrid{
             void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
             void useAddEntityAtSelectionTool(const LogicEntity& newEntity);
 
+            void updateTexture();
+
         private:
 
             sigrid::Board& activeBoard();
@@ -157,8 +154,7 @@ namespace sigrid{
 
             typedef unsigned int LayoutItem;
 
-            std::unique_ptr<sf::RenderTexture> m_texture;
-            sf::Vector2f m_position;
+            SigridRenderTexture m_texture;
             LayoutGrid m_layout;
             std::vector<sigrid::Board> m_boards;
             unsigned int m_maxBoardColumns = 1;
@@ -169,8 +165,6 @@ namespace sigrid{
             RectangleBorder m_boardSelectHighlight;
 
             PdfHandler m_pdfHandler;
-
-            sf::Color m_backgroundColor;
 
             std::string m_resetBoardFilename = "";
             std::string m_defaultBoardImageFilename = "";

@@ -269,7 +269,7 @@ void MainWindow::createGraphic(){
     }
 
     if(m_workWindow){
-        auto size_o = m_layout.getSizeU(LayoutItem::WORK);
+        auto size_o = m_layout.getSize(LayoutItem::WORK);
         auto position_o = m_layout.getTopLeftPosition(LayoutItem::WORK);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_workWindow->createGraphic(size_o.value());
@@ -1498,6 +1498,7 @@ void MainWindow::redraw(){
     m_window.clear(m_backgroundColor);
     
     if(m_workWindow){
+        m_workWindow->updateTexture();
         m_window.draw(*m_workWindow);
     }
     if(m_toolWindow){
