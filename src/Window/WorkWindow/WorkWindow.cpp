@@ -436,7 +436,7 @@ void WorkWindow::newBoard(){
     reset();
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -452,7 +452,7 @@ void WorkWindow::addBoardColumn(){
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -472,7 +472,7 @@ void WorkWindow::removeBoardColumn(){
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -488,7 +488,7 @@ void WorkWindow::addBoardRow(){
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -508,7 +508,7 @@ void WorkWindow::removeBoardRow(){
     m_activeBoardIndex = m_displayBoardIds.size()-1;
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -526,7 +526,7 @@ void WorkWindow::shiftBoardsLeft(){
         m_activeBoardIndex = (m_displayBoardIds.size() + m_activeBoardIndex - 1)%m_displayBoardIds.size();
 
         if(m_texture.isInitialized()){
-            createGraphic(m_texture.getSize());
+            createGraphic(m_texture.getTextureSize());
         }
         return;
     }
@@ -568,7 +568,7 @@ void WorkWindow::shiftBoardsLeft(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -586,7 +586,7 @@ void WorkWindow::shiftBoardsRight(){
         m_activeBoardIndex = (m_activeBoardIndex + 1)%m_displayBoardIds.size();
 
         if(m_texture.isInitialized()){
-            createGraphic(m_texture.getSize());
+            createGraphic(m_texture.getTextureSize());
         }
         return;
     }
@@ -619,7 +619,7 @@ void WorkWindow::shiftBoardsRight(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -656,7 +656,7 @@ void WorkWindow::gotoRightBoard(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -692,7 +692,7 @@ void WorkWindow::gotoLeftBoard(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -733,7 +733,7 @@ void WorkWindow::gotoUpBoard(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 
@@ -773,7 +773,7 @@ void WorkWindow::gotoDownBoard(){
     }
 
     if(m_texture.isInitialized()){
-        createGraphic(m_texture.getSize());
+        createGraphic(m_texture.getTextureSize());
     }
 }
 

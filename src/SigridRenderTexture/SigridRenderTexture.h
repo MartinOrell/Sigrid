@@ -5,6 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Image.hpp>
 
 namespace sf{
     class RenderTexture;
@@ -21,9 +22,15 @@ namespace sigrid{
             void setBackgroundColor(const sf::Color& color);
             bool setSize(const sf::Vector2f& size);
             void setPosition(const sf::Vector2f& position);
+            void setScale(const float& scale);
 
-            sf::Vector2f getPosition() const;
-            sf::Vector2f getSize() const;
+            const sf::Color& getBackgroundColor() const;
+            const sf::Vector2f& getPosition() const;
+            const float& getScale() const;
+            sf::Vector2f getTextureSize() const;
+            sf::Vector2f getDisplaySize() const;
+            sf::Image getImage() const;
+            sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
 
             bool isInitialized() const;
             bool contains(const sf::Vector2f& point) const;
@@ -40,6 +47,7 @@ namespace sigrid{
             std::unique_ptr<sf::Sprite> m_sprite;
             sf::Color m_backgroundColor = sf::Color{255,255,255,0};
             sf::Vector2f m_position;
+            float m_scale = 1.f;
 
     };
 }

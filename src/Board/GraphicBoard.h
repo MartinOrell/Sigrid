@@ -13,9 +13,7 @@
 
 #include "../Font/FontManager.h"
 
-namespace sf{
-    class RenderTexture;
-}
+#include "../SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 
@@ -65,9 +63,9 @@ namespace sigrid{
 
             void setScale(const float scale);
 
-            unsigned int getImageWidth() const;
+            float getImageWidth() const;
 
-            unsigned int getImageHeight() const;
+            float getImageHeight() const;
 
             sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
 
@@ -154,9 +152,13 @@ namespace sigrid{
 
             void initTurnToken(const int& turnToMove);
 
-            unsigned int getTextureWidth() const;
+            const sf::Color& getBackgroundColor() const;
+            sf::Vector2f getTextureSize() const;
+            const float& getScale() const;
 
-            unsigned int getTextureHeight() const;
+            float calcTextureWidth() const;
+            float calcTextureHeight() const;
+            sf::Vector2f calcTextureSize() const;
 
             void resizeTexture();
 
@@ -185,16 +187,12 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            std::unique_ptr<sf::RenderTexture> m_texturePtr;
-            sf::Vector2f m_position;
-            float m_scale;
+            SigridRenderTexture m_texture;
 
-            unsigned int m_leftEdgeWidth;
-            unsigned int m_rightEdgeWidth;
-            unsigned int m_topEdgeWidth;
-            unsigned int m_bottomEdgeWidth;
-
-            sf::Color m_backgroundColor;
+            float m_leftEdgeWidth;
+            float m_rightEdgeWidth;
+            float m_topEdgeWidth;
+            float m_bottomEdgeWidth;
 
             std::unique_ptr<RectangleBorder> m_borderPtr;
 

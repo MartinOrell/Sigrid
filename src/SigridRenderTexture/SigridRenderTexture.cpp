@@ -1,7 +1,6 @@
 #include "SigridRenderTexture.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 
 using namespace sigrid;
 
@@ -27,11 +26,23 @@ void SigridRenderTexture::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
-sf::Vector2f SigridRenderTexture::getPosition() const{
+void SigridRenderTexture::setScale(const float& scale){
+    m_scale = scale;
+}
+
+const sf::Color& SigridRenderTexture::getBackgroundColor() const{
+    return m_backgroundColor;
+}
+
+const sf::Vector2f& SigridRenderTexture::getPosition() const{
     return m_position;
 }
 
-sf::Vector2f SigridRenderTexture::getSize() const{
+const float& SigridRenderTexture::getScale() const{
+    return m_scale;
+}
+
+sf::Vector2f SigridRenderTexture::getTextureSize() const{
     
     if(!m_texture){
         return {0.f, 0.f};
@@ -39,6 +50,54 @@ sf::Vector2f SigridRenderTexture::getSize() const{
 
     const auto size = m_texture->getSize();
     return sf::Vector2f{(float)size.x, (float)size.y};
+}
+
+sf::Vector2f SigridRenderTexture::getDisplaySize() const{
+    
+    return m_scale*getTextureSize();
+}
+
+sf::Image SigridRenderTexture::getImage() const{
+
+    auto image = m_texture->getTexture().copyToImage();
+    image.flipVertically();
+    return image;
+}
+
+sf::Image SigridRenderTexture::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
+
+    const auto& size = m_texture->getSize();
+    float oldWidth = size.x;
+    float oldHeight = size.y;
+
+    float widthRatio = 1.f;
+    if(oldWidth > maxWidth){
+        widthRatio = (float)maxWidth/(float)oldWidth;
+    }
+    float heightRatio = 1.f;
+    if(oldHeight > maxHeight){
+        heightRatio = (float)maxHeight/(float)oldHeight;
+    }
+
+    float ratio;
+    if(widthRatio < heightRatio){
+        ratio = widthRatio;
+    }
+    else{
+        ratio = heightRatio;
+    }
+
+    unsigned int newWidth = oldWidth * ratio;
+    unsigned int newHeight = oldHeight * ratio;
+
+    sf::Sprite sprite(m_texture->getTexture());
+    sprite.setPosition({0.f,0.f});
+    sprite.setScale({ratio,ratio});
+
+    sf::RenderTexture newRenderTexture{sf::Vector2u{newWidth, newHeight}};
+    newRenderTexture.clear(sf::Color::White);
+    newRenderTexture.draw(sprite);
+    return newRenderTexture.getTexture().copyToImage();
 }
 
 bool SigridRenderTexture::isInitialized() const{
@@ -52,9 +111,9 @@ bool SigridRenderTexture::contains(const sf::Vector2f& point) const{
     }
 
     sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
+    sprite.setPosition(m_position/m_scale);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return rect.contains(point/m_scale);
 }
 
 void SigridRenderTexture::clear(){
@@ -83,8 +142,8 @@ void SigridRenderTexture::display(){
 
     m_sprite = std::make_unique<sf::Sprite>(m_texture->getTexture());
     m_sprite->setPosition(m_position);
-    m_sprite->move({0.f, (float)m_texture->getTexture().getSize().y});
-    m_sprite->setScale({1.f, -1.f});
+    m_sprite->move({0.f, m_scale*(float)m_texture->getTexture().getSize().y});
+    m_sprite->setScale({m_scale, -m_scale});
 }
 
 void SigridRenderTexture::draw(sf::RenderTarget& target, sf::RenderStates states) const{

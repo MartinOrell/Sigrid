@@ -21,14 +21,14 @@
 using namespace sigrid;
 
 GraphicBoard::GraphicBoard()
-: m_scale{1.f}
-, m_backgroundColor{sf::Color{255,255,255,255}}
-, m_leftEdgeWidth{0}
-, m_rightEdgeWidth{0}
-, m_topEdgeWidth{0}
-, m_bottomEdgeWidth{0}
+: m_leftEdgeWidth{0.f}
+, m_rightEdgeWidth{0.f}
+, m_topEdgeWidth{0.f}
+, m_bottomEdgeWidth{0.f}
 , m_isLeftToRight{true}
-, m_isTopToBottom{false}{}
+, m_isTopToBottom{false}{
+    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
+}
 
 void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
     if(!m_pieceLayerPtr){
@@ -97,7 +97,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
     m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
     m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
     m_tileLayerPtr->init(m_isLeftToRight, m_isTopToBottom);
-    m_tileLayerPtr->move({float(m_leftEdgeWidth), (float)m_topEdgeWidth});
+    m_tileLayerPtr->move({m_leftEdgeWidth, m_topEdgeWidth});
     if(m_borderPtr && m_borderPtr->isVisible()){
         m_tileLayerPtr->move({m_borderPtr->getThickness(), m_borderPtr->getThickness()});
     }
@@ -175,7 +175,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
     m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
     m_tileLayerPtr->setTileSize({config.tileWidth, config.tileHeight});
-    m_tileLayerPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
+    m_tileLayerPtr->setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
     if(m_arrowColorManagerPtr){
         m_tileLayerPtr->setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
@@ -326,7 +326,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         boardArea.x = config.tileWidth* logicBoard.getNumColumns();
         boardArea.y = config.tileHeight* logicBoard.getNumRows();
         m_borderPtr->setThickness(config.borderThickness);
-        m_borderPtr->setTopLeftPosition({(float)m_leftEdgeWidth, (float)m_topEdgeWidth});
+        m_borderPtr->setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
         m_borderPtr->setEnclosedArea(boardArea);
         m_borderPtr->setColor(sf::Color{0,0,0});
         m_borderPtr->show();
@@ -336,32 +336,24 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         moveTiles({m_borderPtr->getThickness(), m_borderPtr->getThickness()});
     }
     
-    m_texturePtr = std::make_unique<sf::RenderTexture>();
     resizeTexture();
     redrawTexture();
-
 }
 
 GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
-    
-    if(rhs.m_texturePtr){
-        if(!m_texturePtr){
-            m_texturePtr = std::make_unique<sf::RenderTexture>();
-        }
-        if(!(m_texturePtr->resize(rhs.m_texturePtr->getSize()))){
-            std::cerr << "GraphicBoard: Failed to resize texture during assignment operation" << std::endl;
-        }
+
+    if(rhs.m_texture.isInitialized()){
+        m_texture.setSize(rhs.getTextureSize());
     }
 
-    m_position = rhs.m_position;
-    m_scale = rhs.m_scale;
+    m_texture.setPosition(rhs.getTopLeftPosition());
+    m_texture.setBackgroundColor(rhs.getBackgroundColor());
+    m_texture.setScale(rhs.getScale());
 
     m_leftEdgeWidth = rhs.m_leftEdgeWidth;
     m_rightEdgeWidth = rhs.m_rightEdgeWidth;
     m_topEdgeWidth = rhs.m_topEdgeWidth;
     m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
-
-    m_backgroundColor = rhs.m_backgroundColor;
 
     if(rhs.m_tileLayerPtr){
         if(!m_tileLayerPtr){
@@ -439,92 +431,52 @@ sf::Vector2f GraphicBoard::getTileSize() const{
 }
 
 void GraphicBoard::setPosition(const sf::Vector2f& position){
-    m_position = position;
+    m_texture.setPosition(position);
+    m_texture.display();
 }
 
 void GraphicBoard::setPositionX(float x){
-    m_position.x = x;
+    sf::Vector2f position = m_texture.getPosition();
+    position.x = x;
+    m_texture.setPosition(position);
+    m_texture.display();
 }
 
 void GraphicBoard::setScale(const float scale){
-    m_scale = scale;
+    m_texture.setScale(scale);
+    m_texture.display();
 }
 
-unsigned int GraphicBoard::getImageWidth() const{
-    return m_texturePtr->getSize().x;
+float GraphicBoard::getImageWidth() const{
+    return m_texture.getTextureSize().x;
 }
 
-unsigned int GraphicBoard::getImageHeight() const{
-    return m_texturePtr->getSize().y;
+float GraphicBoard::getImageHeight() const{
+    return m_texture.getTextureSize().y;
 }
 
 sf::Image GraphicBoard::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
-
-    const auto& size = m_texturePtr->getTexture().getSize();
-    unsigned int oldWidth = size.x;
-    unsigned int oldHeight = size.y;
-
-    float widthRatio = 1.f;
-    if(oldWidth > maxWidth){
-        widthRatio = (float)maxWidth/(float)oldWidth;
-    }
-    float heightRatio = 1.f;
-    if(oldHeight > maxHeight){
-        heightRatio = (float)maxHeight/(float)oldHeight;
-    }
-
-    float ratio;
-    if(widthRatio < heightRatio){
-        ratio = widthRatio;
-    }
-    else{
-        ratio = heightRatio;
-    }
-
-    unsigned int newWidth = oldWidth * ratio;
-    unsigned int newHeight = oldHeight * ratio;
-
-    sf::Sprite sprite(m_texturePtr->getTexture());
-    sprite.setPosition({0.f,0.f});
-    sprite.setScale({ratio,ratio});
-
-    sf::RenderTexture newRenderTexture{sf::Vector2u{newWidth, newHeight}};
-    newRenderTexture.clear(sf::Color::White);
-    newRenderTexture.draw(sprite);
-    return newRenderTexture.getTexture().copyToImage();
+    return m_texture.getImage(maxWidth, maxHeight);
 }
 
 const sf::Vector2f& GraphicBoard::getTopLeftPosition() const{
-    return m_position;
+    return m_texture.getPosition();
 }
 
 sf::Vector2f GraphicBoard::getDisplaySize() const{
-
-    if(!m_texturePtr){
-        std::cerr << "GraphicBoard: Unable to get display size" << std::endl;
-        std::cerr << "TexturePtr is null";
-        return sf::Vector2f{0.f,0.f};
-    }
-
-    const auto& textureSize = m_texturePtr->getSize();
-    const float& x = (float)textureSize.x * m_scale;
-    const float& y = (float)textureSize.y * m_scale;
-    return sf::Vector2f{x, y};
+    return m_texture.getDisplaySize();
 }
 
 float GraphicBoard::getDisplayWidth() const{
-    return (float)m_texturePtr->getSize().x*m_scale;
+    return m_texture.getDisplaySize().x;
 }
 
 float GraphicBoard::getDisplayHeight() const{
-    return (float)m_texturePtr->getSize().y*m_scale;
+    return m_texture.getDisplaySize().y;
 }
 
-
 bool GraphicBoard::contains(const sf::Vector2f& point) const{
-    sf::Sprite sprite(m_texturePtr->getTexture());
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains((point-m_position)/m_scale);
+    return m_texture.contains(point);
 }
 
 bool GraphicBoard::isLeftToRight() const{
@@ -548,24 +500,27 @@ bool GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
         return false;
     }
 
-    return m_turnTokenPtr->isWithin((point-m_position)/m_scale);
+    return m_turnTokenPtr->isWithin((point-m_texture.getPosition())/m_texture.getScale());
 }
 
 std::optional<Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
 
-    sf::Vector2f rect = (sf::Vector2f)m_texturePtr->getSize();
-    rect.x = rect.x - (float)m_leftEdgeWidth - (float)m_rightEdgeWidth;
-    rect.x *= m_scale;
+    const float& scale = m_texture.getScale();
+    const sf::Vector2f& position = m_texture.getPosition();
 
-    rect.y = rect.y - (float)m_topEdgeWidth - (float)m_bottomEdgeWidth;
-    rect.y *= m_scale;
+    sf::Vector2f rect = m_texture.getTextureSize();
+    rect.x = rect.x - m_leftEdgeWidth - m_rightEdgeWidth;
+    rect.x *= scale;
 
-    float x = point.x - m_position.x;
-    x = x - (float)m_leftEdgeWidth*m_scale;
+    rect.y = rect.y - m_topEdgeWidth - m_bottomEdgeWidth;
+    rect.y *= scale;
+
+    float x = point.x - position.x;
+    x = x - m_leftEdgeWidth*scale;
     x = x *(float)m_tileLayerPtr->getNumColumns()/rect.x;
 
-    float y = point.y - m_position.y;
-    y = y - (float)m_topEdgeWidth*m_scale;
+    float y = point.y - position.y;
+    y = y - m_topEdgeWidth*scale;
     y = y * (float)m_tileLayerPtr->getNumRows() /rect.y;
 
     if(x < 0.f){
@@ -829,10 +784,8 @@ void GraphicBoard::unhighlight(){
 }
 
 void GraphicBoard::saveImage(const std::string& fileName){
-    auto image = m_texturePtr->getTexture().copyToImage();
-    image.flipVertically();
     std::cout << "Saving board image: " << fileName << std::endl;
-    auto success = image.saveToFile(fileName);
+    auto success = m_texture.getImage().saveToFile(fileName);
     if(success && std::filesystem::exists(fileName)){
         std::cout << "board image: " << fileName << " saved" << std::endl;
     }
@@ -1417,9 +1370,6 @@ void GraphicBoard::setCoordinateSize(const float& size){
     m_labelsPtr->setTopOutsideSize(size);
     m_labelsPtr->setBottomOutsideSize(size);
 
-    unsigned int leftEdgeWidth = size* m_tileLayerPtr->getTileWidth();
-    unsigned int leftEdgeHeight = size* m_tileLayerPtr->getTileHeight();
-
     m_labelsPtr->showLeftOutside();
     updateLeftEdgeWidth();
     m_labelsPtr->showRightOutside();
@@ -1441,7 +1391,7 @@ void GraphicBoard::addBorder(){
     if(!m_borderPtr){
         m_borderPtr = std::make_unique<RectangleBorder>();
         bool isVisible = true;
-        sf::Vector2f topLeftPosition{(float)m_leftEdgeWidth, (float)m_topEdgeWidth};
+        sf::Vector2f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
         sf::Vector2f boardArea;
         boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
         boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
@@ -1454,7 +1404,7 @@ void GraphicBoard::addBorder(){
         return;
     }
 
-    sf::Vector2f topLeftPosition{(float)m_leftEdgeWidth, (float)m_topEdgeWidth};
+    sf::Vector2f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
     sf::Vector2f boardArea;
     boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
     boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
@@ -1539,7 +1489,7 @@ void GraphicBoard::setTurnToMove(const int& turnToMove){
 
     m_turnTokenPtr->setTurnToMove(turnToMove);
 
-    m_texturePtr->draw(*m_turnTokenPtr);
+    redrawTexture();
 }
 
 void GraphicBoard::initTurnToken(const int& turnToMove){
@@ -1567,32 +1517,48 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     m_turnTokenPtr->init();
 }
 
-unsigned int GraphicBoard::getTextureWidth() const{
+sf::Vector2f GraphicBoard::getTextureSize() const{
+    return m_texture.getTextureSize();
+}
 
-    unsigned int boardWidth = (unsigned int)(m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns());
-    boardWidth += m_leftEdgeWidth+m_rightEdgeWidth;
+const float& GraphicBoard::getScale() const{
+    return m_texture.getScale();
+}
+
+float GraphicBoard::calcTextureWidth() const{
+
+    float boardWidth = (m_tileLayerPtr->getTileWidth()* (float)m_tileLayerPtr->getNumColumns());
+    boardWidth += m_leftEdgeWidth + m_rightEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
-        boardWidth += 2*m_borderThickness;
+        boardWidth += 2.f*(float)m_borderThickness;
     }
 
     return boardWidth;
-
 }
 
-unsigned int GraphicBoard::getTextureHeight() const{
-    unsigned int boardHeight = (unsigned int)(m_tileLayerPtr->getTileHeight()*(unsigned int)m_tileLayerPtr->getNumRows());
-    boardHeight += m_topEdgeWidth+m_bottomEdgeWidth;
+float GraphicBoard::calcTextureHeight() const{
+
+    float boardHeight = (m_tileLayerPtr->getTileHeight()*(float)m_tileLayerPtr->getNumRows());
+    boardHeight += m_topEdgeWidth + m_bottomEdgeWidth;
     if(m_borderPtr && m_borderPtr->isVisible()){
-        boardHeight += 2*m_borderThickness;
+        boardHeight += 2.f*(float)m_borderThickness;
     }
 
     return boardHeight;
 }
 
+sf::Vector2f GraphicBoard::calcTextureSize() const{
+    return sf::Vector2f{calcTextureWidth(), calcTextureHeight()};
+}
+
+const sf::Color& GraphicBoard::getBackgroundColor() const{
+    return m_texture.getBackgroundColor();
+}
+
 void GraphicBoard::resizeTexture(){
 
     bool success;
-    success = m_texturePtr->resize({getTextureWidth(), getTextureHeight()});
+    success = m_texture.setSize(calcTextureSize());
     if(!success){
         std::cerr << "GraphicBoard: Failed to resize texture" << std::endl;
         return;
@@ -1600,62 +1566,64 @@ void GraphicBoard::resizeTexture(){
 }
 
 void GraphicBoard::redrawTexture(){
-    if(!m_texturePtr){
+    if(!m_texture.isInitialized()){
         return;
     }
 
-    m_texturePtr->clear(m_backgroundColor);
+    m_texture.clear();
 
     if(m_tileLayerPtr){
-        m_texturePtr->draw(*m_tileLayerPtr);
+        m_texture.draw(*m_tileLayerPtr);
     }
 
     if(m_selectHighlight){
-        m_texturePtr->draw(*m_selectHighlight);
+        m_texture.draw(*m_selectHighlight);
     }
 
     if(m_pieceLayerPtr){
-        m_texturePtr->draw(*m_pieceLayerPtr);
+        m_texture.draw(*m_pieceLayerPtr);
     }
 
     if(m_arrowLayerPtr){
-        m_texturePtr->draw(*m_arrowLayerPtr);
+        m_texture.draw(*m_arrowLayerPtr);
     }
 
     if(m_dragArrowPtr){
-        m_texturePtr->draw(*m_dragArrowPtr);
+        m_texture.draw(*m_dragArrowPtr);
     }
 
     if(m_labelsPtr){
-        m_texturePtr->draw(*m_labelsPtr);
+        m_texture.draw(*m_labelsPtr);
     }
 
     if(m_borderPtr){
-        m_texturePtr->draw(*m_borderPtr);
+        m_texture.draw(*m_borderPtr);
     }
 
     if(m_turnTokenPtr){
-        m_texturePtr->draw(*m_turnTokenPtr);
+        m_texture.draw(*m_turnTokenPtr);
     }
+
+    m_texture.display();
 }
 
 void GraphicBoard::updateLeftEdgeWidth(){
 
-    unsigned int newEdgeWidth = 0;
+    float newEdgeWidth = 0.f;
     if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isLeftOutsideVisible()){
         int numDigits = notation::getRowNotation(m_tileLayerPtr->getNumRows()-1).length();
         float labelSize = m_labelsPtr->getLeftOutsideLabelSize();
         float tileWidth = m_tileLayerPtr->getTileWidth();
 
         newEdgeWidth = (float)numDigits*labelSize*tileWidth/2.f + tileWidth/5.f;
-        m_labelsPtr->setLeftOutsideWorkWidth((float)newEdgeWidth);
+        m_labelsPtr->setLeftOutsideWorkWidth(newEdgeWidth);
     }
 
     if(newEdgeWidth == m_leftEdgeWidth){
         return;
     }
 
-    float moveX = (float)newEdgeWidth - (float)m_leftEdgeWidth;
+    float moveX = newEdgeWidth - m_leftEdgeWidth;
     m_leftEdgeWidth = newEdgeWidth;
 
     moveTiles({moveX, 0.f});
@@ -1668,14 +1636,14 @@ void GraphicBoard::updateLeftEdgeWidth(){
         m_labelsPtr->moveLeftOutsideLabels({-moveX/2.f, 0.f});
     }
 
-    if(m_texturePtr){
+    if(m_texture.isInitialized()){
         resizeTexture();
     }
 }
 
 void GraphicBoard::updateRightEdgeWidth(){
 
-    unsigned int newEdgeWidth = 0;
+    float newEdgeWidth = 0.f;
 
     if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isRightOutsideVisible()){
         int numDigits = notation::getRowNotation(m_tileLayerPtr->getNumRows()-1).length();
@@ -1699,7 +1667,7 @@ void GraphicBoard::updateRightEdgeWidth(){
     }
 
     if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
-        newEdgeWidth += (unsigned int)(m_tileLayerPtr->getTileWidth()/2.f);
+        newEdgeWidth += m_tileLayerPtr->getTileWidth()/2.f;
     }
 
     if(newEdgeWidth == m_rightEdgeWidth){
@@ -1732,25 +1700,25 @@ void GraphicBoard::updateRightEdgeWidth(){
         }
     }
 
-    if(m_texturePtr){
+    if(m_texture.isInitialized()){
         resizeTexture();
     }
 }
 
 void GraphicBoard::updateTopEdgeWidth(){
 
-    unsigned int newEdgeWidth = 0;
+    float newEdgeWidth = 0.f;
 
     if(m_labelsPtr && m_labelsPtr->isTopOutsideVisible()){
         newEdgeWidth = m_labelsPtr->getTopOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
-        m_labelsPtr->setTopOutsideWorkHeight((float)newEdgeWidth);
+        m_labelsPtr->setTopOutsideWorkHeight(newEdgeWidth);
     }
 
     if(newEdgeWidth == m_topEdgeWidth){
         return;
     }
 
-    float moveY = (float)newEdgeWidth - (float)m_topEdgeWidth;
+    float moveY = newEdgeWidth - m_topEdgeWidth;
     m_topEdgeWidth = newEdgeWidth;
     
 
@@ -1760,17 +1728,17 @@ void GraphicBoard::updateTopEdgeWidth(){
     }
     moveTurnToken({0.f, moveY});
 
-    if(m_texturePtr){
+    if(m_texture.isInitialized()){
         resizeTexture();
     }
 }
 
 void GraphicBoard::updateBottomEdgeWidth(){
 
-    unsigned int newEdgeWidth = 0;
+    float newEdgeWidth = 0.f;
     if(m_labelsPtr && m_tileLayerPtr && m_labelsPtr->isBottomOutsideVisible()){
         newEdgeWidth =  m_labelsPtr->getBottomOutsideLabelSize()* m_tileLayerPtr->getTileHeight();
-        m_labelsPtr->setBottomOutsideWorkHeight((float)newEdgeWidth);
+        m_labelsPtr->setBottomOutsideWorkHeight(newEdgeWidth);
     }
 
     if(newEdgeWidth == m_bottomEdgeWidth){
@@ -1779,7 +1747,7 @@ void GraphicBoard::updateBottomEdgeWidth(){
 
     m_bottomEdgeWidth = newEdgeWidth;
 
-    if(m_texturePtr){
+    if(m_texture.isInitialized()){
         resizeTexture();
     }
 }
@@ -2065,9 +2033,5 @@ void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
 }
 
 void GraphicBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    sf::Sprite sprite(m_texturePtr->getTexture());
-    sprite.setPosition(m_position);
-    sprite.move({0.f, m_scale*(float)m_texturePtr->getTexture().getSize().y});
-    sprite.setScale({m_scale,-m_scale});
-    target.draw(sprite);
+    target.draw(m_texture);
 }
