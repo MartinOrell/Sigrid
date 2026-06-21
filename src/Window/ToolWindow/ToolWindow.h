@@ -12,9 +12,7 @@
 #include "../../Action/Action.h"
 #include "../../Board/Board.h"
 
-namespace sf{
-    class RenderTexture;
-}
+#include "../../SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 
@@ -32,7 +30,7 @@ namespace sigrid{
 
             void init();
 
-            void createGraphic(const sf::Vector2u& size);
+            void createGraphic(const sf::Vector2f& size);
 
             virtual void setPosition(const sf::Vector2f& position);
 
@@ -62,11 +60,8 @@ namespace sigrid{
 
             bool m_show;
 
-            std::unique_ptr<sf::RenderTexture> m_texture;
-            sf::Vector2f m_position;
+            SigridRenderTexture m_texture;
 
             Board m_board;
-
-            sf::Color m_backgroundColor;
     };
 }

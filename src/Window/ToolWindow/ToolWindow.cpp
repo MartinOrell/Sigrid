@@ -16,8 +16,7 @@
 using namespace sigrid;
 
 ToolWindow::ToolWindow()
-: m_show{true}
-, m_backgroundColor{255,255,255,0}{}
+: m_show{true}{}
 
 void ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
@@ -71,13 +70,14 @@ void ToolWindow::init(){
     m_board.addEntity({0,0}, selectIcon);
 }
 
-void ToolWindow::createGraphic(const sf::Vector2u& size){
-    m_texture = std::make_unique<sf::RenderTexture>(size);
+void ToolWindow::createGraphic(const sf::Vector2f& size){
+
+    m_texture.setSize(size);
 
     unsigned int boardWidth = m_board.getImageWidth();
     unsigned int boardHeight = m_board.getImageHeight();
-    float widthRatio = (float)size.x/(float)boardWidth;
-    float heightRatio = (float)size.y/(float)boardHeight;
+    float widthRatio = size.x/(float)boardWidth;
+    float heightRatio = size.y/(float)boardHeight;
     float boardScale;
     if(widthRatio < heightRatio){
         boardScale = widthRatio;
@@ -87,15 +87,16 @@ void ToolWindow::createGraphic(const sf::Vector2u& size){
     }
     m_board.setScale(boardScale);
 
-    float posX = ((float)(size.x)-float(m_board.getDisplayWidth()))/2.f;
-    float posY = ((float)(size.y)-float(m_board.getDisplayHeight()))/2.f;
+    float posX = (size.x-m_board.getDisplayWidth())/2.f;
+    float posY = (size.y-m_board.getDisplayHeight())/2.f;
     m_board.setPosition({posX, posY});
 
     redrawTexture();
 }
 
 void ToolWindow::setPosition(const sf::Vector2f& position){
-    m_position = position;
+    m_texture.setPosition(position);
+    m_texture.display();
 }
 
 bool ToolWindow::isVisible() const{
@@ -107,14 +108,7 @@ bool ToolWindow::isHidden() const{
 }
 
 bool ToolWindow::contains(const sf::Vector2f& point) const{
-    if(!m_texture){
-        return false;
-    }
-
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return m_texture.contains(point);
 }
 
 void ToolWindow::setSetPieceTool(const LogicPiece& logicPiece){
@@ -169,22 +163,20 @@ void ToolWindow::hide(){
 
 void ToolWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     
-    if(!m_texture || !m_show){
+    if(!m_show){
         return;
     }
 
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sprite.move({0.f, (float)m_texture->getTexture().getSize().y});
-    sprite.setScale({1.f, -1.f});
-    target.draw(sprite);
+    target.draw(m_texture);
 }
 
 void ToolWindow::redrawTexture(){
-    if(!m_texture){
+
+    if(!m_texture.isInitialized()){
         return;
     }
 
-    m_texture->clear(m_backgroundColor);
-    m_texture->draw(m_board);
+    m_texture.clear();
+    m_texture.draw(m_board);
+    m_texture.display();
 }

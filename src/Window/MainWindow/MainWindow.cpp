@@ -251,7 +251,7 @@ void MainWindow::createGraphic(){
     }
 
     if(m_toolWindow){
-        auto size_o = m_layout.getSizeU(LayoutItem::TOOLINDICATOR);
+        auto size_o = m_layout.getSize(LayoutItem::TOOLINDICATOR);
         auto position_o = m_layout.getTopLeftPosition(LayoutItem::TOOLINDICATOR);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_toolWindow->createGraphic(size_o.value());
