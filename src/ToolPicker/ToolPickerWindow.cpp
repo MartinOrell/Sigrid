@@ -19,7 +19,6 @@ using namespace sigrid;
 
 ToolPickerWindow::ToolPickerWindow()
 : m_colorDisplay{ColorDisplay::Piece}
-, m_backgroundColor{255,255,255,0}
 , m_arrowColorId{-1}
 , m_circleColorId{-1}{}
 
@@ -106,8 +105,9 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     }
 }
 
-void ToolPickerWindow::createGraphic(const sf::Vector2u& size){
-    m_texture = std::make_unique<sf::RenderTexture>(size);
+void ToolPickerWindow::createGraphic(const sf::Vector2f& size){
+
+    m_texture.setSize(size);
 
     unsigned int boardWidth = m_board.getImageWidth();
     unsigned int boardHeight = m_board.getImageHeight();
@@ -153,7 +153,8 @@ void ToolPickerWindow::addPieceTool(const std::string& notation){
 }
 
 void ToolPickerWindow::setPosition(const sf::Vector2f& position){
-    m_position = position;
+    m_texture.setPosition(position);
+    m_texture.display();
 }
 
 bool ToolPickerWindow::isVisible() const{
@@ -164,17 +165,17 @@ bool ToolPickerWindow::isHidden() const{
     return !m_show;
 }
 
-sf::Vector2u ToolPickerWindow::getSize() const{
+sf::Vector2f ToolPickerWindow::getSize() const{
 
     if(!m_show){
-        return {0,0};
+        return {0.f,0.f};
     }
 
-    if(!m_texture){
-        return {0,0};
+    if(!m_texture.isInitialized()){
+        return {0.f,0.f};
     }
 
-    return m_texture->getSize();
+    return m_texture.getTextureSize();
 }
 
 unsigned int ToolPickerWindow::getNumColumns() const{
@@ -191,14 +192,7 @@ bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
         return false;
     }
 
-    if(!m_texture){
-        return false;
-    }
-
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return m_texture.contains(point);
 }
 
 
@@ -208,7 +202,7 @@ Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& p
         return ActionType::None();
     }
 
-    sf::Vector2f point = position - m_position;
+    sf::Vector2f point = position - m_texture.getPosition();
 
     auto coord_o = m_board.getTileCoord(point);
 
@@ -286,7 +280,7 @@ void ToolPickerWindow::setAddCircleTool(const int colorId){
 
 void ToolPickerWindow::hideColorTools(){
 
-    if(!m_texture){
+    if(!m_texture.isInitialized()){
         return;
     }
 
@@ -301,7 +295,7 @@ void ToolPickerWindow::hideColorTools(){
     }
 
     int imageWidth = m_board.getImageWidth();
-    float scale = (float)m_texture->getSize().x/(float)imageWidth;
+    float scale = m_texture.getDisplaySize().x/(float)imageWidth;
     m_board.setScale(scale);
 
     for(auto& pieceBlock : m_pieceBlocks){
@@ -315,7 +309,7 @@ void ToolPickerWindow::hideColorTools(){
 
 void ToolPickerWindow::showColorTools(){
 
-    if(!m_texture){
+    if(!m_texture.isInitialized()){
         return;
     }
 
@@ -329,7 +323,7 @@ void ToolPickerWindow::showColorTools(){
     }
 
     int imageWidth = m_board.getImageWidth();
-    float scale = (float)m_texture->getSize().x/(float)imageWidth;
+    float scale = m_texture.getDisplaySize().x/(float)imageWidth;
     m_board.setScale(scale);
 
     for(auto& pieceBlock : m_pieceBlocks){
@@ -509,30 +503,17 @@ void ToolPickerWindow::redrawTexture(){
             }
         }
     }
+
+    m_texture.clear();
+    m_texture.draw(m_board);
+    m_texture.display();
 }
 
 void ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-
-    if(!m_texture){
-        return;
-    }
 
     if(!m_show){
         return;
     }
     
-    sf::Vector2u textureSize = m_texture->getSize();
-
-    if(textureSize == sf::Vector2u{0,0}){
-        return;
-    }
-
-    sf::RenderTexture texture(textureSize);
-    texture.clear(m_backgroundColor);
-    texture.draw(m_board);
-    sf::Sprite sprite(texture.getTexture());
-    sprite.setPosition(m_position);
-    sprite.move({0.f, (float)textureSize.y});
-    sprite.setScale({1.f, -1.f});
-    target.draw(sprite);
+    target.draw(m_texture);
 }

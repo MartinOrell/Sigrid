@@ -8,9 +8,8 @@
 #include "../Coord/CoordBlock.h"
 #include "../Color/ColorManager.h"
 #include "../Board/Board.h"
-namespace sf{
-    class RenderTexture;
-}
+
+#include "../SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 
@@ -35,7 +34,7 @@ namespace sigrid{
 
             void init(const ToolPickerContainer& data);
 
-            void createGraphic(const sf::Vector2u& size);
+            void createGraphic(const sf::Vector2f& size);
 
             void addSelectTool();
 
@@ -50,7 +49,7 @@ namespace sigrid{
             bool isVisible() const;
             bool isHidden() const;
 
-            sf::Vector2u getSize() const;
+            sf::Vector2f getSize() const;
 
             unsigned int getNumColumns() const;
 
@@ -105,8 +104,8 @@ namespace sigrid{
 
             ColorDisplay m_colorDisplay;
 
-            std::unique_ptr<sf::RenderTexture> m_texture;
-            sf::Vector2f m_position;
+            SigridRenderTexture m_texture;
+
             Board m_board;
 
             std::map<Coord, Action> m_clickActions;
@@ -121,8 +120,6 @@ namespace sigrid{
             bool m_show = true;
 
             bool m_showColors = false;
-
-            sf::Color m_backgroundColor;
 
             std::vector<int> m_colorIds;
 

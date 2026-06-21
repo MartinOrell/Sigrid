@@ -260,7 +260,7 @@ void MainWindow::createGraphic(){
     }
 
     if(m_toolPickerWindow && m_toolPickerWindow->isVisible()){
-        auto size_o = m_layout.getSizeU(LayoutItem::TOOLPICKER);
+        auto size_o = m_layout.getSize(LayoutItem::TOOLPICKER);
         auto position_o = m_layout.getTopLeftPosition(LayoutItem::TOOLPICKER);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_toolPickerWindow->createGraphic(size_o.value());
