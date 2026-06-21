@@ -58,8 +58,6 @@ namespace sigrid{
 
             void redrawTexture();
 
-            bool m_show;
-
             SigridRenderTexture m_texture;
 
             Board m_board;

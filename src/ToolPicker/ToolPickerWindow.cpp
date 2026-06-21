@@ -43,7 +43,6 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     m_columns = data.columns;
     m_rows = data.rows;
     m_showColors = data.showColors;
-    m_show = data.show;
     m_colorIds = data.colorToolIds;
     m_pieceNotation = data.defaultPieceNotation;
     m_miscBlock = data.miscToolBlock;
@@ -51,6 +50,13 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     m_pieceBlocks = data.pieceBlocks;
     m_defaultArrowColorId = data.defaultArrowColorId;
     m_defaultCircleColorId = data.defaultCircleColorId;
+
+    if(data.show){
+        m_texture.show();
+    }
+    else{
+        m_texture.hide();
+    }
 
     m_board.setLeftToRight();
     m_board.setTopToBottom();
@@ -158,23 +164,14 @@ void ToolPickerWindow::setPosition(const sf::Vector2f& position){
 }
 
 bool ToolPickerWindow::isVisible() const{
-    return m_show;
+    return m_texture.isVisible();
 }
 
 bool ToolPickerWindow::isHidden() const{
-    return !m_show;
+    return m_texture.isHidden();
 }
 
 sf::Vector2f ToolPickerWindow::getSize() const{
-
-    if(!m_show){
-        return {0.f,0.f};
-    }
-
-    if(!m_texture.isInitialized()){
-        return {0.f,0.f};
-    }
-
     return m_texture.getTextureSize();
 }
 
@@ -187,18 +184,13 @@ unsigned int ToolPickerWindow::getNumRows() const{
 }
 
 bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
-    
-    if(!m_show){
-        return false;
-    }
-
     return m_texture.contains(point);
 }
 
 
 Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
-    if(!m_show){
+    if(m_texture.isHidden()){
         return ActionType::None();
     }
 
@@ -351,11 +343,11 @@ void ToolPickerWindow::showColorTools(){
 
 
 void ToolPickerWindow::hide(){
-    m_show = false;
+    m_texture.hide();
 }
 
 void ToolPickerWindow::show(){
-    m_show = true;
+    m_texture.show();
 }
 
 void ToolPickerWindow::redrawTexture(){
@@ -510,10 +502,5 @@ void ToolPickerWindow::redrawTexture(){
 }
 
 void ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-
-    if(!m_show){
-        return;
-    }
-    
     target.draw(m_texture);
 }

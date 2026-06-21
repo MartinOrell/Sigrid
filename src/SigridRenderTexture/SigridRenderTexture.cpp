@@ -30,6 +30,14 @@ void SigridRenderTexture::setScale(const float& scale){
     m_scale = scale;
 }
 
+void SigridRenderTexture::show(){
+    m_show = true;
+}
+
+void SigridRenderTexture::hide(){
+    m_show = false;
+}
+
 const sf::Color& SigridRenderTexture::getBackgroundColor() const{
     return m_backgroundColor;
 }
@@ -57,6 +65,10 @@ const float& SigridRenderTexture::getScale() const{
 sf::Vector2f SigridRenderTexture::getTextureSize() const{
     
     if(!m_texture){
+        return {0.f, 0.f};
+    }
+
+    if(!m_show){
         return {0.f, 0.f};
     }
 
@@ -116,9 +128,21 @@ bool SigridRenderTexture::isInitialized() const{
     return !(!m_texture);
 }
 
+bool SigridRenderTexture::isVisible() const{
+    return m_show;
+}
+
+bool SigridRenderTexture::isHidden() const{
+    return !m_show;
+}
+
 bool SigridRenderTexture::contains(const sf::Vector2f& point) const{
 
     if(!m_texture){
+        return false;
+    }
+
+    if(!m_show){
         return false;
     }
 
@@ -165,6 +189,10 @@ void SigridRenderTexture::draw(sf::RenderTarget& target, sf::RenderStates states
     }
 
     if(!m_texture){
+        return;
+    }
+
+    if(!m_show){
         return;
     }
 

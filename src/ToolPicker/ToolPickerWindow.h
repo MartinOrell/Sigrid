@@ -117,8 +117,6 @@ namespace sigrid{
 
             std::vector<std::string> m_pieceNotations;
 
-            bool m_show = true;
-
             bool m_showColors = false;
 
             std::vector<int> m_colorIds;

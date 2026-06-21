@@ -15,8 +15,7 @@
 
 using namespace sigrid;
 
-ToolWindow::ToolWindow()
-: m_show{true}{}
+ToolWindow::ToolWindow(){}
 
 void ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
@@ -100,11 +99,11 @@ void ToolWindow::setPosition(const sf::Vector2f& position){
 }
 
 bool ToolWindow::isVisible() const{
-    return m_show;
+    return m_texture.isVisible();
 }
 
 bool ToolWindow::isHidden() const{
-    return !m_show;
+    return m_texture.isHidden();
 }
 
 bool ToolWindow::contains(const sf::Vector2f& point) const{
@@ -154,19 +153,14 @@ void ToolWindow::setAddCircleTool(const int colorId){
 }
 
 void ToolWindow::show(){
-    m_show = true;
+    m_texture.show();
 }
 
 void ToolWindow::hide(){
-    m_show = false;
+    m_texture.hide();
 }
 
 void ToolWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    
-    if(!m_show){
-        return;
-    }
-
     target.draw(m_texture);
 }
 

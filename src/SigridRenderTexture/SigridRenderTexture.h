@@ -23,6 +23,8 @@ namespace sigrid{
             bool setSize(const sf::Vector2f& size);
             void setPosition(const sf::Vector2f& position);
             void setScale(const float& scale);
+            void show();
+            void hide();
 
             const sf::Color& getBackgroundColor() const;
             const sf::Vector2f& getPosition() const;
@@ -35,6 +37,8 @@ namespace sigrid{
             sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
 
             bool isInitialized() const;
+            bool isVisible() const;
+            bool isHidden() const;
             bool contains(const sf::Vector2f& point) const;
 
             void clear();
@@ -50,6 +54,7 @@ namespace sigrid{
             sf::Color m_backgroundColor = sf::Color{255,255,255,0};
             sf::Vector2f m_position;
             float m_scale = 1.f;
+            bool m_show = true;
 
     };
 }
