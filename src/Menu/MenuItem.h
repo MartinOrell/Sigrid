@@ -38,7 +38,7 @@ namespace sigrid{
             Action m_action;
 
             sf::Text m_text;
-            sf::Vector2u m_textOffset;
+            sf::Vector2f m_textOffset;
 
             bool m_isToggled;
             std::string m_toggledName;

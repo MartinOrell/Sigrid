@@ -9,9 +9,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "../Action/Action.h"
 
-namespace sf{
-    class RenderTexture;
-}
+#include "../SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 
@@ -27,7 +25,7 @@ namespace sigrid{
 
             void init(const MenuContainer& menuData);
 
-            void createGraphic(const sf::Vector2u& size);
+            void createGraphic(const sf::Vector2f& size);
 
             void setPosition(const sf::Vector2f& position);
             bool contains(const sf::Vector2f& point) const;
@@ -88,8 +86,7 @@ namespace sigrid{
 
             FontManager* m_fontManagerPtr = nullptr;
 
-            std::unique_ptr<sf::RenderTexture> m_texture;
-            sf::Vector2f m_position;
+            SigridRenderTexture m_texture;
 
             std::unique_ptr<MenuItem> m_superHeaderPtr;
 
@@ -102,7 +99,6 @@ namespace sigrid{
             float m_lineHeight = 0.f;
             float m_itemOffsetX = 0.f;
 
-            sf::Color m_backgroundColor;
             std::string m_fontFilename = "";
 
             bool m_isPinned = false;

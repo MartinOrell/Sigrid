@@ -26,6 +26,8 @@ namespace sigrid{
 
             const sf::Color& getBackgroundColor() const;
             const sf::Vector2f& getPosition() const;
+            const float& getTopPosition() const;
+            float getBottomPosition() const;
             const float& getScale() const;
             sf::Vector2f getTextureSize() const;
             sf::Vector2f getDisplaySize() const;

@@ -38,6 +38,18 @@ const sf::Vector2f& SigridRenderTexture::getPosition() const{
     return m_position;
 }
 
+const float& SigridRenderTexture::getTopPosition() const{
+    return m_position.y;
+}
+
+float SigridRenderTexture::getBottomPosition() const{
+    float y = m_position.y;
+    if(m_texture){
+        y += m_scale*(float)m_texture->getSize().y;
+    }
+    return y;
+}
+
 const float& SigridRenderTexture::getScale() const{
     return m_scale;
 }

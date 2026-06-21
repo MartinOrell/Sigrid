@@ -242,7 +242,7 @@ void MainWindow::createGraphic(){
     m_layout.setPx(2, m_layout.getPx(1) + m_piecePickerToBoardGap);
 
     if(m_menu){
-        auto size_o = m_layout.getSizeU(LayoutItem::MENU);
+        auto size_o = m_layout.getSize(LayoutItem::MENU);
         auto position_o = m_layout.getTopLeftPosition(LayoutItem::MENU);
         if(size_o != std::nullopt && position_o != std::nullopt){
             m_menu->createGraphic(size_o.value());

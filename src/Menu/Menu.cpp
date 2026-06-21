@@ -11,8 +11,7 @@ using namespace sigrid;
 
 
 Menu::Menu()
-: m_showHeaderIndex(-1)
-, m_backgroundColor{255,255,255,0}{}
+: m_showHeaderIndex(-1){}
 
 void Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
@@ -49,19 +48,19 @@ void Menu::init(const MenuContainer& menuData){
     }
 }
 
-void Menu::createGraphic(const sf::Vector2u& size){
+void Menu::createGraphic(const sf::Vector2f& size){
 
-    if(size.x == 0){
+    if(size.x == 0.f){
         std::cerr << "Menu: Unable to create menu graphic with 0 width" << std::endl;
         return;
     }
-    if(size.y == 0){
+    if(size.y == 0.f){
         std::cerr << "Menu: Unable to create menu graphic with 0 height" << std::endl;
         return;
     }
 
-    m_texture = std::make_unique<sf::RenderTexture>(size);
-    m_lineHeight = float(size.y);
+    m_texture.setSize(size);
+    m_lineHeight = size.y;
     m_itemOffsetX = 5.f;
 
     addSuperHeaderGraphic();
@@ -77,18 +76,12 @@ void Menu::createGraphic(const sf::Vector2u& size){
 }
 
 void Menu::setPosition(const sf::Vector2f& position){
-    m_position = position;
+    m_texture.setPosition(position);
+    m_texture.display();
 }
 
 bool Menu::contains(const sf::Vector2f& point) const{
-    if(!m_texture){
-        return false;
-    }
-
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point);
+    return m_texture.contains(point);
 }
 
 bool Menu::isPinned() const{
@@ -101,15 +94,15 @@ bool Menu::isCollapsed() const{
 
 Action Menu::clicked(const sf::Vector2f& position){
 
-    std::optional<sigrid::Menu::PosIndex> o_itemId = getMenuItemPosIndex(position);
-    if(o_itemId == std::nullopt){
+    std::optional<sigrid::Menu::PosIndex> itemId_o = getMenuItemPosIndex(position);
+    if(itemId_o == std::nullopt){
         if(m_showHeaderIndex != -1){
             m_showHeaderIndex = -1;
             redrawTexture();
         }
         return ActionType::None();
     }
-    sigrid::Menu::PosIndex id = o_itemId.value();
+    sigrid::Menu::PosIndex id = itemId_o.value();
     if(id.x == -1){
         if(!m_superHeaderPtr || m_isPinned){
             return ActionType::None();
@@ -189,7 +182,7 @@ void Menu::addSuperHeader(const std::string& name){
     m_superHeaderPtr = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action0);
     m_superHeaderPtr->addToggle(name, action1);
 
-    if(m_texture){
+    if(m_texture.isInitialized()){
         addSuperHeaderGraphic();
     }
 }
@@ -226,7 +219,7 @@ void Menu::addHeader(const std::string& name){
     layoutItem.priority = 0;
     m_layoutItems.insert(std::pair{name, layoutItem});
 
-    if(m_texture){
+    if(m_texture.isInitialized()){
         addHeaderGraphic(id);
     }
 }
@@ -261,7 +254,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     layoutItem.priority = m_layoutItems.size();
     m_layoutItems.insert(std::pair{name, layoutItem});
 
-    if(m_texture){
+    if(m_texture.isInitialized()){
         unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
         addItemGraphic(headerIndex, itemIndex);
     }
@@ -299,7 +292,7 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     layoutItem.priority = m_layoutItems.size();
     m_layoutItems.insert(std::pair{key, layoutItem});
 
-    if(m_texture){
+    if(m_texture.isInitialized()){
         unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
         addItemGraphic(headerIndex, itemIndex);
     }
@@ -372,7 +365,8 @@ void Menu::showItem(const std::string& key){
 }
 
 void Menu::addSuperHeaderGraphic(){
-    if(!m_texture){
+
+    if(!m_texture.isInitialized()){
         std::cerr << "Menu: Unable to add super header graphic, menu texture does not exist" << std::endl;
         return;
     }
@@ -386,7 +380,7 @@ void Menu::addSuperHeaderGraphic(){
     float posX = m_itemOffsetX;
     float posY = m_lineHeight/2.f;
     m_superHeaderPtr->setPosition({posX, posY});
-    m_texture->draw(*m_superHeaderPtr);
+    redrawTexture();
 }
 
 void Menu::addHeaderGraphic(const unsigned int id){
@@ -412,38 +406,28 @@ void Menu::addHeaderGraphic(const unsigned int id){
     float posY = m_lineHeight/2.f;
     m_items.at(m_itemKeys.at(id).at(0))->setPosition({posX,posY});
     if(m_showItems){
-        m_texture->draw(*m_items.at(m_itemKeys.at(id).at(0)));
+        redrawTexture();
     }
 }
 
 void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex){
 
-    int reverseItemIndex = m_itemKeys.at(headerIndex).size() - itemIndex;
-
     m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->createGraphic((unsigned int)m_lineHeight);
     float posX = m_items.at(m_itemKeys.at(headerIndex).at(0))->getPositionLeft();
-    float posY = reverseItemIndex*m_lineHeight-m_lineHeight/2.f;
+    float posY = itemIndex*m_lineHeight+m_lineHeight/2.f;
     m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->setPosition({posX, posY});
     if(m_showItems){
-        m_texture->draw(*m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)));
+        redrawTexture();
     }
 }
 
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    if(!m_texture){
-        return;
-    }
-
-    sf::Sprite sprite(m_texture->getTexture());
-    sprite.setPosition(m_position);
-    sf::RenderStates newStates{states};
-    newStates.blendMode = sf::BlendAlpha;
-    target.draw(sprite,newStates);
+    target.draw(m_texture);
 }
 
 void sigrid::Menu::redrawTexture(){
 
-    if(!m_texture){
+    if(!m_texture.isInitialized()){
         return;
     }
 
@@ -455,54 +439,44 @@ void sigrid::Menu::redrawTexture(){
         numRows = 1;
     }
 
-    unsigned int textureSizeX = m_texture->getSize().x;
-    unsigned int textureSizeY = (unsigned int)(m_lineHeight*(numRows));
+    float textureSizeX = m_texture.getTextureSize().x;
+    float textureSizeY = m_lineHeight*(float)numRows;
 
-    bool success = m_texture->resize({textureSizeX, textureSizeY});
+    m_texture.setSize(sf::Vector2f{textureSizeX, textureSizeY});
 
-    assert(success);
-
-    m_texture->clear(m_backgroundColor);
+    m_texture.clear();
 
     if(!m_isPinned && m_superHeaderPtr){
-        float posX = m_superHeaderPtr->getPositionLeft();
-        float posY = (float)textureSizeY - m_lineHeight/2.f;
-        m_superHeaderPtr->setPosition({posX,posY});
-
-        m_texture->draw(*m_superHeaderPtr);
+        m_texture.draw(*m_superHeaderPtr);
     }
 
     if(!m_showItems){
+        m_texture.display();
         return;
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
-        float posX = m_items.at(m_itemKeys.at(i).at(0))->getPositionLeft();
-        float posY = (float)textureSizeY - m_lineHeight/2.f;
-        m_items.at(m_itemKeys.at(i).at(0))->setPosition({posX,posY});
-
-        m_texture->draw(*m_items.at(m_itemKeys.at(i).at(0)));
+        m_texture.draw(*m_items.at(m_itemKeys.at(i).at(0)));
     }
 
     if(m_showHeaderIndex == -1){
+        m_texture.display();
         return;
     }
 
-
     for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        m_texture->draw(*m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)));
+        m_texture.draw(*m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)));
     }
+
+    m_texture.display();
 }
 
 float sigrid::Menu::getTopPos(){
-    return m_position.y;
+    return m_texture.getTopPosition();
 }
 
 float sigrid::Menu::getBottomPos(){
-    if(!m_texture){
-        return m_position.y;
-    }
-    return m_position.y+(float)m_texture->getSize().y;
+    return m_texture.getBottomPosition();
 }
 
 std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector2f& point){

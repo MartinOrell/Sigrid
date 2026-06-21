@@ -9,7 +9,7 @@ MenuItem::MenuItem(const std::string& name, const sf::Font& font, const Action a
 : m_name(name)
 , m_action(action)
 , m_text(font)
-, m_textOffset({15,2})
+, m_textOffset({15.f,5.f})
 , m_isToggled{false}{}
 
 void MenuItem::createGraphic(const unsigned int height){
@@ -24,10 +24,9 @@ void MenuItem::createGraphic(const unsigned int height){
     else{
         m_text.setString(m_name);
     }
-    m_text.setScale({1.f,-1.f});
 
     sf::FloatRect rect = m_text.getLocalBounds();
-    m_text.setOrigin({0.f, (float)height/2.f+(float)m_textOffset.y});
+    m_text.setOrigin({0.f, (float)height/2.f+m_textOffset.y});
 
     unsigned int shapeWidth = rect.size.x+2*m_textOffset.x;
     m_shapePtr = std::make_unique<sf::RectangleShape>(sf::RectangleShape({(float)shapeWidth,(float)height}));
@@ -53,7 +52,7 @@ void MenuItem::setText(const std::string& text){
     sf::FloatRect rect = m_text.getLocalBounds();
 
     float newHeight = m_shapePtr->getSize().y;
-    float newWidth = rect.size.x+2.f*(float)m_textOffset.x;
+    float newWidth = rect.size.x+2.f*m_textOffset.x;
     m_shapePtr->setSize({newWidth, newHeight});
 }
 
@@ -78,14 +77,10 @@ bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const f
         return false;
     }
 
-    //Unsure why, but y pos needs to be inverted
-
-    float pointY = maxYPos+minYPos-point.y;
-
-    if(pointY < m_shapePtr->getPosition().y - m_shapePtr->getSize().y/2.f){
+    if(point.y < m_shapePtr->getPosition().y - m_shapePtr->getSize().y/2.f){
         return false;
     }
-    if(pointY > m_shapePtr->getPosition().y + m_shapePtr->getSize().y/2.f){
+    if(point.y > m_shapePtr->getPosition().y + m_shapePtr->getSize().y/2.f){
         return false;
     }
     return true;
@@ -123,7 +118,7 @@ void MenuItem::toggle(){
     
     if(m_shapePtr){
         float newHeight = m_shapePtr->getSize().y;
-        float newWidth = rect.size.x+2.f*(float)m_textOffset.x;
+        float newWidth = rect.size.x+2.f*m_textOffset.x;
         m_shapePtr->setSize({newWidth, newHeight});
     }
 }
