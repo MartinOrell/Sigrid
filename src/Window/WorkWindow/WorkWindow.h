@@ -11,6 +11,8 @@
 
 #include "PdfHandler.h"
 
+#include "../../List/Sigrid2DList.h"
+
 namespace sigrid{
 
     class BoardDataContainer;
@@ -131,12 +133,6 @@ namespace sigrid{
 
         private:
 
-            sigrid::Board& activeBoard();
-            const sigrid::Board& activeBoard() const;
-
-            int& activeId();
-            const int& activeId() const;
-
             std::string getUniqueName(const std::string& name);
 
             void useAddTileHighlightTool(const Coord& coord, const int& colorId);
@@ -146,21 +142,14 @@ namespace sigrid{
 
             void updateSelectionHighlight();
 
-            void displayFirstBoards();
-
-            void displayLastBoards();
-
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             typedef unsigned int LayoutItem;
 
             SigridRenderTexture m_texture;
             LayoutGrid m_layout;
-            std::vector<sigrid::Board> m_boards;
-            unsigned int m_maxBoardColumns = 1;
-            unsigned int m_maxBoardRows = 1;
-            std::vector<int> m_displayBoardIds;
-            int m_activeBoardIndex = 0;
+
+            Sigrid2DList<sigrid::Board> m_boards;
 
             RectangleBorder m_boardSelectHighlight;
 

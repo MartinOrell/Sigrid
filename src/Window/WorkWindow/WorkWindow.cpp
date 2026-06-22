@@ -15,9 +15,7 @@
 using namespace sigrid;
 
 
-WorkWindow::WorkWindow()
-: m_activeBoardIndex{0}
-, m_displayBoardIds{{0}}{
+WorkWindow::WorkWindow(){
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
     m_boardSelectHighlight.setColor(sf::Color{100,100,255});
@@ -28,11 +26,11 @@ void WorkWindow::setBoardFilename(const std::string& filename){
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_boards.size() < activeId()){
-        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
+    if(m_boards.size() < m_boards.activeDisplayIndex()){
+        std::cerr << "WorkWindow: Invalid board id: " << m_boards.activeDisplayIndex() << std::endl;
         return;
     }
-    activeBoard().setFilename(filename);
+    m_boards.atActive().setFilename(filename);
 }
 
 void WorkWindow::setResetBoardFilename(const std::string& filename){
@@ -48,11 +46,11 @@ void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_boards.size() < activeId()){
-        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
+    if(m_boards.size() < m_boards.activeDisplayIndex()){
+        std::cerr << "WorkWindow: Invalid board id: " << m_boards.activeDisplayIndex() << std::endl;
         return;
     }
-    activeBoard().setTileColorManagerPtr(managerPtr);
+    m_boards.atActive().setTileColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
@@ -60,11 +58,11 @@ void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_boards.size() < activeId()){
-        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
+    if(m_boards.size() < m_boards.activeDisplayIndex()){
+        std::cerr << "WorkWindow: Invalid board id: " << m_boards.activeDisplayIndex() << std::endl;
         return;
     }
-    activeBoard().setPieceManagerPtr(managerPtr);
+    m_boards.atActive().setPieceManagerPtr(managerPtr);
 }
 
 void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
@@ -72,11 +70,11 @@ void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_boards.size() < activeId()){
-        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
+    if(m_boards.size() < m_boards.activeDisplayIndex()){
+        std::cerr << "WorkWindow: Invalid board id: " << m_boards.activeDisplayIndex() << std::endl;
         return;
     }
-    activeBoard().setArrowColorManagerPtr(managerPtr);
+    m_boards.atActive().setArrowColorManagerPtr(managerPtr);
 }
 
 void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
@@ -84,11 +82,11 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_boards.size() < activeId()){
-        std::cerr << "WorkWindow: Invalid board id: " << activeId() << std::endl;
+    if(m_boards.size() < m_boards.activeDisplayIndex()){
+        std::cerr << "WorkWindow: Invalid board id: " << m_boards.activeDisplayIndex() << std::endl;
         return;
     }
-    activeBoard().setFontManagerPtr(managerPtr);
+    m_boards.atActive().setFontManagerPtr(managerPtr);
 }
 
 void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
@@ -97,15 +95,11 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
         Board board;
         m_boards.push_back(std::move(board));
     }
-    if(m_displayBoardIds.size() == 0){
-        m_displayBoardIds.push_back(0);
-    }
-    m_activeBoardIndex = 0;
 
-    activeBoard().init(boardData, graphicData);
+    m_boards.atActive().init(boardData, graphicData);
 
-    if(!activeBoard().isImageFilenameSet()){
-        activeBoard().setImageFilename(m_defaultBoardImageFilename);
+    if(!m_boards.atActive().isImageFilenameSet()){
+        m_boards.atActive().setImageFilename(m_defaultBoardImageFilename);
     }
 
     updateBoardLayout();
@@ -115,10 +109,10 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
 void WorkWindow::createGraphic(const sf::Vector2f& size)
 {
 
-    int numBoards = m_displayBoardIds.size();
+    int numBoards = m_boards.currentDisplaySize();
 
-    int boardColumns = (numBoards > m_maxBoardColumns) ? m_maxBoardColumns : numBoards;
-    int boardRows = (numBoards + boardColumns - 1)/boardColumns;
+    int boardColumns = m_boards.currentDisplayColumns();
+    int boardRows = m_boards.currentDisplayRows();
 
     m_layout.setPx(0, 0.f);
     m_layout.setPy(0, 0.f);
@@ -171,7 +165,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
 
     m_texture.setSize(size);
 
-    for(LayoutItem i = 0; i < m_displayBoardIds.size(); i++){
+    for(LayoutItem i = 0; i < numBoards; i++){
         auto layoutBoardSize_o = m_layout.getSize(LayoutItem{i});
         if(layoutBoardSize_o == std::nullopt){
             std::cerr << "WorkWindow: createGraphic failed, failed getting boardLayoutSize" << std::endl;
@@ -186,7 +180,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
         }
         sf::Vector2f boardTopLeftPosition = boardTopLeftPosition_o.value();
 
-        auto& board = m_boards.at(m_displayBoardIds.at(i));
+        auto& board = m_boards.atDisplay(i);
         unsigned int boardWidth = board.getImageWidth();
         unsigned int boardHeight = board.getImageHeight();
         float widthRatio = layoutBoardWidth/(float)boardWidth;
@@ -211,7 +205,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
 }
 
 void WorkWindow::loadFen(const std::string& fen){
-    activeBoard().loadFen(fen);
+    m_boards.atActive().loadFen(fen);
 }
 
 std::string WorkWindow::getName() const{
@@ -221,17 +215,17 @@ std::string WorkWindow::getName() const{
     if(m_boards.size() == 1){
         return m_boards.at(0).getName();
     }
-    return activeBoard().getName() + " (" +
-        std::to_string(activeId()+1) + "/" +
+    return m_boards.atActive().getName() + " (" +
+        std::to_string(m_boards.activeDisplayIndex()+1) + "/" +
         std::to_string(m_boards.size()) + ")";
 }
 
 std::string WorkWindow::getSaveFilename() const{
-    return activeBoard().getFilename();
+    return m_boards.atActive().getFilename();
 }
 
 std::string WorkWindow::getFen() const{
-    return activeBoard().getFen();
+    return m_boards.atActive().getFen();
 }
 
 void WorkWindow::setPosition(const sf::Vector2f& position){
@@ -239,10 +233,10 @@ void WorkWindow::setPosition(const sf::Vector2f& position){
 }
 
 unsigned int WorkWindow::getNumColumns() const{
-    if(m_boards.size() <= activeId()){
+    if(m_boards.size() <= m_boards.activeDisplayIndex()){
         return 0;
     }
-    return activeBoard().getNumColumns();
+    return m_boards.atActive().getNumColumns();
 }
 
 bool WorkWindow::contains(const sf::Vector2f& point) const{
@@ -250,23 +244,23 @@ bool WorkWindow::contains(const sf::Vector2f& point) const{
 }
 
 bool WorkWindow::isCoordinatesOutside() const{
-    return activeBoard().isCoordinatesOutside();
+    return m_boards.atActive().isCoordinatesOutside();
 }
 
 void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
-    activeBoard().removeDragArrow();
+    m_boards.atActive().removeDragArrow();
 
     sf::Vector2f position = windowPosition - m_texture.getPosition();
 
-    for(unsigned int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
-        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
+    for(unsigned int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
+        auto& board = m_boards.atDisplay(displayIndex);
         if(!board.contains(position)){
             continue;
         }
-        if(m_activeBoardIndex != displayIndex){
-            activeBoard().deselect();
-            m_activeBoardIndex = displayIndex;
+        if(m_boards.isDisplayActive(displayIndex)){
+            m_boards.atActive().deselect();
+            m_boards.select(displayIndex);
             updateSelectionHighlight();
         }
         return;
@@ -275,13 +269,13 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
 Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
-    activeBoard().removeDragArrow();
+    m_boards.atActive().removeDragArrow();
 
     sf::Vector2f from = pressPosition - m_texture.getPosition();
     sf::Vector2f to = releasePosition - m_texture.getPosition();
 
-    for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
-        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
+    for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
+        auto& board = m_boards.atDisplay(displayIndex);
 
         if(board.isWithinTurnToken(from) &&
         board.isWithinTurnToken(to)){
@@ -351,8 +345,8 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     sf::Vector2f from = pressPosition - m_texture.getPosition();
     sf::Vector2f to = currentPosition - m_texture.getPosition();
 
-    for(int displayIndex = 0; displayIndex < m_displayBoardIds.size(); displayIndex++){
-        auto& board = m_boards.at(m_displayBoardIds.at(displayIndex));
+    for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
+        auto& board = m_boards.atDisplay(displayIndex);
 
         auto fromCoord_o = board.getTileCoord(from);
 
@@ -395,26 +389,26 @@ void WorkWindow::reset(){
 
     BoardDataContainer boardData;
     boardData.load(m_resetBoardFilename);
-    activeBoard().loadBoardData(boardData);
+    m_boards.atActive().loadBoardData(boardData);
 }
 
 void WorkWindow::clear(){
-    activeBoard().clearEntities();
-    activeBoard().clearArrows();
+    m_boards.atActive().clearEntities();
+    m_boards.atActive().clearArrows();
 }
 
 void WorkWindow::print(){
-    activeBoard().print();
+    m_boards.atActive().print();
 }
 
 void WorkWindow::newBoard(){
 
-    activeBoard().deselect();
+    m_boards.atActive().deselect();
     Board newBoard;
-    newBoard = activeBoard();
+    newBoard = m_boards.atActive();
 
-    std::string newName = getUniqueName(activeBoard().getFilename());
-    std::string newImageName = getUniqueName(activeBoard().getImageFilename());
+    std::string newName = getUniqueName(m_boards.atActive().getFilename());
+    std::string newImageName = getUniqueName(m_boards.atActive().getImageFilename());
 
     std::cout << "New board name " << newName << std::endl;
     std::cout << "New image name " << newImageName << std::endl;    
@@ -423,15 +417,7 @@ void WorkWindow::newBoard(){
     newBoard.setImageFilename(newImageName);
 
     m_boards.push_back(std::move(newBoard));
-
-    if(m_displayBoardIds.size() < m_maxBoardColumns*m_maxBoardRows){
-        m_displayBoardIds.push_back(m_boards.size()-1);
-    }
-    else{
-        displayLastBoards();
-    }
-    
-    m_activeBoardIndex = m_displayBoardIds.size()-1;
+    m_boards.selectLast();
 
     reset();
 
@@ -442,14 +428,13 @@ void WorkWindow::newBoard(){
 
 void WorkWindow::addBoardColumn(){
 
-    activeBoard().deselect();
+    m_boards.atActive().deselect();
 
-    m_maxBoardColumns++;
+    m_boards.addColumn();
 
     updateBoardLayout();
-    displayLastBoards();
 
-    m_activeBoardIndex = m_displayBoardIds.size()-1;
+    m_boards.selectLast();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -458,18 +443,17 @@ void WorkWindow::addBoardColumn(){
 
 void WorkWindow::removeBoardColumn(){
     
-    if(m_maxBoardColumns < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.removeColumn()){
         return;
     }
 
-    activeBoard().deselect();
-
-    m_maxBoardColumns--;
+    currentActiveBoard.deselect();
 
     updateBoardLayout();
-    displayLastBoards();
 
-    m_activeBoardIndex = m_displayBoardIds.size()-1;
+    m_boards.selectLast();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -478,14 +462,13 @@ void WorkWindow::removeBoardColumn(){
 
 void WorkWindow::addBoardRow(){
 
-    activeBoard().deselect();
+    m_boards.atActive().deselect();
 
-    m_maxBoardRows++;
+    m_boards.addRow();
 
     updateBoardLayout();
-    displayLastBoards();
 
-    m_activeBoardIndex = m_displayBoardIds.size()-1;
+    m_boards.selectLast();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -494,18 +477,17 @@ void WorkWindow::addBoardRow(){
 
 void WorkWindow::removeBoardRow(){
 
-    if(m_maxBoardRows < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.removeRow()){
         return;
     }
 
-    activeBoard().deselect();
-
-    m_maxBoardRows--;
+    currentActiveBoard.deselect();
 
     updateBoardLayout();
-    displayLastBoards();
 
-    m_activeBoardIndex = m_displayBoardIds.size()-1;
+    m_boards.selectLast();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -514,58 +496,13 @@ void WorkWindow::removeBoardRow(){
 
 void WorkWindow::shiftBoardsLeft(){
 
-    if(m_boards.size() < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.shiftLeft()){
         return;
     }
 
-    activeBoard().deselect();
-
-    if(m_displayBoardIds.size() == m_boards.size()
-    || m_activeBoardIndex % m_maxBoardColumns != 0){
-
-        m_activeBoardIndex = (m_displayBoardIds.size() + m_activeBoardIndex - 1)%m_displayBoardIds.size();
-
-        if(m_texture.isInitialized()){
-            createGraphic(m_texture.getTextureSize());
-        }
-        return;
-    }
-
-    for(int i = 0; i < m_displayBoardIds.size()-1; i++){
-        m_displayBoardIds.at(i) = m_displayBoardIds.at(i+1);
-    }
-
-    auto isDisplayed = [this](const int& id){
-        for(int i = 0; i < m_displayBoardIds.size()-1; i++){
-            if(m_displayBoardIds.at(i) == id){
-                return true;
-            }
-        }
-        return false;
-    };
-
-    {
-        int backId = m_displayBoardIds.back();
-        if(backId == 0){
-            backId = m_boards.size()-1;
-        }
-        else{
-            backId--;
-        }
-        while(backId != m_displayBoardIds.back()){
-            if(!isDisplayed(backId)){
-                m_displayBoardIds.back() = backId;
-                break;
-            }
-
-            if(backId == 0){
-                backId = m_boards.size()-1;
-            }
-            else{
-                backId--;
-            }
-        }
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -574,49 +511,13 @@ void WorkWindow::shiftBoardsLeft(){
 
 void WorkWindow::shiftBoardsRight(){
 
-    if(m_boards.size() < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.shiftRight()){
         return;
     }
 
-    activeBoard().deselect();
-
-    if(m_displayBoardIds.size() == m_boards.size()
-    || m_activeBoardIndex % m_maxBoardColumns != m_maxBoardColumns - 1){
-
-        m_activeBoardIndex = (m_activeBoardIndex + 1)%m_displayBoardIds.size();
-
-        if(m_texture.isInitialized()){
-            createGraphic(m_texture.getTextureSize());
-        }
-        return;
-    }
-
-    for(int i = m_displayBoardIds.size()-1; i > 0; i--){
-        m_displayBoardIds.at(i) = m_displayBoardIds.at(i-1);
-    }
-
-    auto isDisplayed = [this](const int& id){
-        for(int i = 1; i < m_displayBoardIds.size(); i++){
-            if(m_displayBoardIds.at(i) == id){
-                return true;
-            }
-        }
-        return false;
-    };
-
-    {
-        int frontId = m_displayBoardIds.front();
-        frontId = (frontId+1)%m_boards.size();
-        
-        while(frontId != m_displayBoardIds.front()){
-            if(!isDisplayed(frontId)){
-                m_displayBoardIds.front() = frontId;
-                break;
-            }
-
-            frontId = (frontId+1)%m_boards.size();
-        }
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -625,35 +526,13 @@ void WorkWindow::shiftBoardsRight(){
 
 void WorkWindow::gotoRightBoard(){
 
-    if(m_maxBoardRows == 1){
-        shiftBoardsRight();
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.selectRight()){
         return;
     }
 
-    activeBoard().deselect();
-
-    if(m_displayBoardIds.size() < 2){
-        int& id = m_displayBoardIds.at(0);
-        id = (id + 1)%m_boards.size();
-    }
-    else if(m_activeBoardIndex < m_displayBoardIds.size()-1){
-        m_activeBoardIndex++;
-    }
-    else if(m_displayBoardIds.back() == m_boards.size()-1){
-        displayFirstBoards();
-        m_activeBoardIndex = 0;
-    }
-    else{
-        for(auto it = m_displayBoardIds.begin(); it != m_displayBoardIds.end();it++){
-            int newId = *it + m_maxBoardColumns;
-            if(newId >= m_boards.size()){
-                m_displayBoardIds.erase(it, m_displayBoardIds.end());
-                break;
-            }
-            *it = newId;
-        }
-        m_activeBoardIndex += 1 - m_maxBoardColumns;
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -662,34 +541,13 @@ void WorkWindow::gotoRightBoard(){
 
 void WorkWindow::gotoLeftBoard(){
 
-    if(m_maxBoardRows == 1){
-        shiftBoardsLeft();
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.selectLeft()){
         return;
     }
 
-    activeBoard().deselect();
-
-    if(m_displayBoardIds.size() < 2){
-        int& id = m_displayBoardIds.at(0);
-        id = (m_boards.size() + id - 1)%m_boards.size();
-    }
-    else if(m_activeBoardIndex > 0){
-        m_activeBoardIndex--;
-    }
-    else if(m_displayBoardIds.at(0) == 0){
-        displayLastBoards();
-        m_activeBoardIndex = m_displayBoardIds.size()-1;
-    }
-    else{
-        for(auto& id : m_displayBoardIds){
-            id -= m_maxBoardColumns;
-        }
-        for(int i = m_displayBoardIds.size(); i < m_maxBoardRows*m_maxBoardColumns; i++){
-            int id = m_displayBoardIds.back()+1;
-            m_displayBoardIds.push_back(id);
-        }
-        m_activeBoardIndex = m_maxBoardColumns-1;
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -698,39 +556,13 @@ void WorkWindow::gotoLeftBoard(){
 
 void WorkWindow::gotoUpBoard(){
 
-    if(m_maxBoardRows < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.selectUp()){
         return;
     }
 
-    if(m_displayBoardIds.size() <= m_maxBoardColumns){
-        return;
-    }
-
-    activeBoard().deselect();
-
-    if(m_activeBoardIndex > m_maxBoardColumns-1){
-        m_activeBoardIndex -= m_maxBoardColumns;
-    }
-    else if(m_displayBoardIds.at(m_activeBoardIndex) < m_maxBoardColumns){
-        displayLastBoards();
-        
-        int oldX = m_activeBoardIndex % m_maxBoardColumns;
-        int lastX = (m_boards.size() - 1) % m_maxBoardColumns;
-
-        m_activeBoardIndex = m_displayBoardIds.size() - 1;
-        if(oldX < lastX){
-            m_activeBoardIndex += oldX - lastX;
-        }
-    }
-    else{
-        for(auto& id : m_displayBoardIds){
-            id -= m_maxBoardColumns;
-        }
-        for(int i = m_displayBoardIds.size(); i < m_maxBoardRows*m_maxBoardColumns; i++){
-            int id = m_displayBoardIds.back()+1;
-            m_displayBoardIds.push_back(id);
-        }
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -739,38 +571,13 @@ void WorkWindow::gotoUpBoard(){
 
 void WorkWindow::gotoDownBoard(){
 
-    if(m_maxBoardRows < 2){
+    auto& currentActiveBoard = m_boards.atActive();
+
+    if(!m_boards.selectDown()){
         return;
     }
 
-    if(m_displayBoardIds.size() <= m_maxBoardColumns){
-        return;
-    }
-
-    activeBoard().deselect();
-
-    if(m_activeBoardIndex/m_maxBoardColumns < (m_displayBoardIds.size()-1)/m_maxBoardColumns){
-        int newId = m_activeBoardIndex + m_maxBoardColumns;
-        if(newId > m_displayBoardIds.size() - 1){
-            newId = m_displayBoardIds.size() - 1;
-        }
-        m_activeBoardIndex = newId;
-    }
-    else if(m_displayBoardIds.at(m_activeBoardIndex)/m_maxBoardColumns >= (m_boards.size()-1)/m_maxBoardColumns){
-        displayFirstBoards();
-        m_activeBoardIndex = m_activeBoardIndex % m_maxBoardColumns;
-    }
-    else{
-        for(auto it = m_displayBoardIds.begin(); it != m_displayBoardIds.end(); it++){
-            int newId = *it + m_maxBoardColumns;
-            if(newId >= m_boards.size()){
-                m_displayBoardIds.erase(it, m_displayBoardIds.end());
-                m_activeBoardIndex = m_displayBoardIds.size() - 1;
-                break;
-            }
-            *it = newId;
-        }
-    }
+    currentActiveBoard.deselect();
 
     if(m_texture.isInitialized()){
         createGraphic(m_texture.getTextureSize());
@@ -778,137 +585,137 @@ void WorkWindow::gotoDownBoard(){
 }
 
 void WorkWindow::saveBoard(){
-    activeBoard().save();
+    m_boards.atActive().save();
 }
 
 void WorkWindow::savePdf(){
-    m_pdfHandler.savePdf(m_boards);
+    m_pdfHandler.savePdf(m_boards.getVector());
 }
 
 void WorkWindow::flipBoard(){
-    activeBoard().flipBoard();
+    m_boards.atActive().flipBoard();
 }
 
 void WorkWindow::addLeftInsideLabels(){
-    activeBoard().addLeftInsideLabels();
+    m_boards.atActive().addLeftInsideLabels();
 }
 
 void WorkWindow::addBottomInsideLabels(){
-    activeBoard().addBottomInsideLabels();
+    m_boards.atActive().addBottomInsideLabels();
 }
 
 void WorkWindow::addLeftOutsideLabels(){
-    activeBoard().addLeftOutsideLabels();
+    m_boards.atActive().addLeftOutsideLabels();
 }
 
 void WorkWindow::addRightOutsideLabels(){
-    activeBoard().addRightOutsideLabels();
+    m_boards.atActive().addRightOutsideLabels();
 }
 
 void WorkWindow::addTopOutsideLabels(){
-    activeBoard().addTopOutsideLabels();
+    m_boards.atActive().addTopOutsideLabels();
 }
 
 void WorkWindow::addBottomOutsideLabels(){
-    activeBoard().addBottomOutsideLabels();
+    m_boards.atActive().addBottomOutsideLabels();
 }
 
 void WorkWindow::removeLeftInsideLabels(){
-    activeBoard().removeLeftInsideLabels();
+    m_boards.atActive().removeLeftInsideLabels();
 }
 
 void WorkWindow::removeBottomInsideLabels(){
-    activeBoard().removeBottomInsideLabels();
+    m_boards.atActive().removeBottomInsideLabels();
 }
 
 void WorkWindow::removeLeftOutsideLabels(){
-    activeBoard().removeLeftOutsideLabels();
+    m_boards.atActive().removeLeftOutsideLabels();
 }
 
 void WorkWindow::removeRightOutsideLabels(){
-    activeBoard().removeRightOutsideLabels();
+    m_boards.atActive().removeRightOutsideLabels();
 }
 
 void WorkWindow::removeTopOutsideLabels(){
-    activeBoard().removeTopOutsideLabels();
+    m_boards.atActive().removeTopOutsideLabels();
 }
 
 void WorkWindow::removeBottomOutsideLabels(){
-    activeBoard().removeBottomOutsideLabels();
+    m_boards.atActive().removeBottomOutsideLabels();
 }
 
 void WorkWindow::setCoordinateSize(const float& size){
-    activeBoard().setCoordinateSize(size);    
+    m_boards.atActive().setCoordinateSize(size);    
 }
 
 void WorkWindow::addTileColumnRight(){
-    activeBoard().addTileColumnRight();
+    m_boards.atActive().addTileColumnRight();
 }
 
 void WorkWindow::addTileColumnLeft(){
-    activeBoard().addTileColumnLeft();
+    m_boards.atActive().addTileColumnLeft();
 }
 
 void WorkWindow::removeTileColumnRight(){
-    activeBoard().removeTileColumnRight();
+    m_boards.atActive().removeTileColumnRight();
 }
 
 void WorkWindow::removeTileColumnLeft(){
-    activeBoard().removeTileColumnLeft();
+    m_boards.atActive().removeTileColumnLeft();
 }
 
 void WorkWindow::addTileRowUp(){
-    activeBoard().addTileRowUp();
+    m_boards.atActive().addTileRowUp();
 }
 
 void WorkWindow::addTileRowDown(){
-    activeBoard().addTileRowDown();
+    m_boards.atActive().addTileRowDown();
 }
 
 void WorkWindow::removeTileRowUp(){
-    activeBoard().removeTileRowUp();
+    m_boards.atActive().removeTileRowUp();
 }
 
 void WorkWindow::removeTileRowDown(){
-    activeBoard().removeTileRowDown();
+    m_boards.atActive().removeTileRowDown();
 }
 
 void WorkWindow::addBoardBorder(){
-    activeBoard().addBorder();
+    m_boards.atActive().addBorder();
 }
 
 void WorkWindow::removeBoardBorder(){
-    activeBoard().removeBorder();
+    m_boards.atActive().removeBorder();
 }
 
 void WorkWindow::addTurnToken(){
-    activeBoard().addTurnToken();
+    m_boards.atActive().addTurnToken();
 }
 
 void WorkWindow::removeTurnToken(){
-    activeBoard().removeTurnToken();
+    m_boards.atActive().removeTurnToken();
 }
 
 void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){
 
-    auto occupying_entity_o = activeBoard().getLogicEntity(coord);
+    auto occupying_entity_o = m_boards.atActive().getLogicEntity(coord);
 
     if(occupying_entity_o == std::nullopt){
-        activeBoard().addEntity(coord, newEntity);
+        m_boards.atActive().addEntity(coord, newEntity);
         return;
     }
 
     if(occupying_entity_o.value() == newEntity){
-        activeBoard().removeEntity(coord);
+        m_boards.atActive().removeEntity(coord);
         return;
     }
 
-    activeBoard().removeEntity(coord);
-    activeBoard().addEntity(coord, newEntity);
+    m_boards.atActive().removeEntity(coord);
+    m_boards.atActive().addEntity(coord, newEntity);
 }
 
 void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
-    activeBoard().addEntityAtSelection(newEntity);
+    m_boards.atActive().addEntityAtSelection(newEntity);
 }
 
 void WorkWindow::updateTexture(){
@@ -919,30 +726,12 @@ void WorkWindow::updateTexture(){
 
     m_texture.clear();
 
-    for(int id : m_displayBoardIds){
-        if(id < m_boards.size()){
-            m_texture.draw(m_boards.at(id));
-        }
+    for(int i = 0; i < m_boards.currentDisplaySize(); i++){
+        m_texture.draw(m_boards.atDisplay(i));
     }
     m_texture.draw(m_boardSelectHighlight);
 
     m_texture.display();
-}
-
-sigrid::Board& WorkWindow::activeBoard(){
-    return m_boards.at(activeId());
-}
-
-const sigrid::Board& WorkWindow::activeBoard() const{
-    return m_boards.at(activeId());
-}
-
-int& WorkWindow::activeId() {
-    return m_displayBoardIds.at(m_activeBoardIndex);
-}
-
-const int& WorkWindow::activeId() const{
-    return m_displayBoardIds.at(m_activeBoardIndex);
 }
 
 std::string WorkWindow::getUniqueName(const std::string& name){
@@ -950,7 +739,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
     while(true){
         
         bool exists = false;
-        for(const auto& board: m_boards){
+        for(const auto& board: m_boards.getVector()){
             if(board.getFilename() == newName || board.getImageFilename() == newName){
                 exists = true;
                 break;
@@ -988,12 +777,12 @@ std::string WorkWindow::getUniqueName(const std::string& name){
 
 void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
 
-    auto tile_o = activeBoard().getTile(coord);
+    auto tile_o = m_boards.atActive().getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "WorkWindow: unable to find logic tile "
             << coord.getNotation() << " on board with id "
-            << activeId()
+            << m_boards.activeDisplayIndex()
             << " when adding highlight" << std::endl;
         return;
     }
@@ -1001,42 +790,42 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
     auto occupyingColor_o = tile_o.value().getHighlightColorId();
 
     if(occupyingColor_o == std::nullopt){
-        activeBoard().addTileHighlight(coord, colorId);
+        m_boards.atActive().addTileHighlight(coord, colorId);
         return;
     }
 
     if(occupyingColor_o.value() == colorId){
-        activeBoard().removeTileHighlight(coord);
+        m_boards.atActive().removeTileHighlight(coord);
         return;
     }
 
-    activeBoard().removeTileHighlight(coord);
-    activeBoard().addTileHighlight(coord, colorId);
+    m_boards.atActive().removeTileHighlight(coord);
+    m_boards.atActive().addTileHighlight(coord, colorId);
 }
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
 
-    auto occupyingArrow_o = activeBoard().getLogicArrow({fromCoord, toCoord});
+    auto occupyingArrow_o = m_boards.atActive().getLogicArrow({fromCoord, toCoord});
 
     if(occupyingArrow_o == std::nullopt){
-        activeBoard().addArrow(fromCoord, toCoord, LogicArrow{colorId});
+        m_boards.atActive().addArrow(fromCoord, toCoord, LogicArrow{colorId});
         return;
     }
 
     if(occupyingArrow_o.value().getColorId() == colorId){
-        activeBoard().removeArrow(fromCoord, toCoord);
+        m_boards.atActive().removeArrow(fromCoord, toCoord);
         return;
     }
 
-    activeBoard().removeArrow(fromCoord, toCoord);
-    activeBoard().addArrow(fromCoord, toCoord, LogicArrow{colorId});
+    m_boards.atActive().removeArrow(fromCoord, toCoord);
+    m_boards.atActive().addArrow(fromCoord, toCoord, LogicArrow{colorId});
 }
 
 void WorkWindow::updateBoardLayout(){
 
     unsigned int i = 0;
-    for(unsigned int y = 0; y < m_maxBoardRows; y++){
-        for(unsigned int x = 0; x < m_maxBoardColumns; x++){
+    for(unsigned int y = 0; y < m_boards.maxDisplayRows(); y++){
+        for(unsigned int x = 0; x < m_boards.maxDisplayColumns(); x++){
             m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
             m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
             m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);
@@ -1048,71 +837,18 @@ void WorkWindow::updateBoardLayout(){
 
 void WorkWindow::updateSelectionHighlight(){
 
-    if(m_displayBoardIds.size() < 2){
+    if(m_boards.currentDisplaySize() < 2){
         m_boardSelectHighlight.hide();
         return;
     }
 
-    const auto& board = activeBoard();
+    const auto& board = m_boards.atActive();
     const float& thickness = m_boardSelectHighlight.getThickness();
     sf::Vector2f position = board.getTopLeftPosition();
     position -= sf::Vector2f{thickness, thickness};
     m_boardSelectHighlight.setTopLeftPosition(position);
     m_boardSelectHighlight.setEnclosedArea(board.getDisplaySize());
     m_boardSelectHighlight.show();
-}
-
-void WorkWindow::displayFirstBoards(){
-
-    m_displayBoardIds.clear();
-    for(int id = 0; id < m_maxBoardColumns * m_maxBoardRows; id++){
-        if(id >= m_boards.size()){
-            break;
-        }
-        m_displayBoardIds.push_back(id);
-    }
-}
-
-void WorkWindow::displayLastBoards(){
-
-    m_displayBoardIds.clear();
-
-    if(m_maxBoardRows == 1){
-        int lastId = m_boards.size()-1;
-        int firstDisplayId = lastId - m_maxBoardColumns + 1;
-        if(firstDisplayId < 0){
-            firstDisplayId = 0;
-        }
-        for(int id = firstDisplayId; id < m_boards.size(); id++){
-            m_displayBoardIds.push_back(id);
-        }
-        return;
-    }
-    
-    int numColumns = m_maxBoardColumns;
-    if(numColumns > m_boards.size()){
-        numColumns = m_boards.size();
-    }
-    int lastId = m_boards.size()-1;
-    int lastX = (m_boards.size()-1)%numColumns;
-    int maxDisplayBoards = numColumns*m_maxBoardRows;
-    if(maxDisplayBoards > m_boards.size()){
-        maxDisplayBoards = m_boards.size();
-    }
-    int offsetX = numColumns - 1 - lastX;
-    if(maxDisplayBoards == m_boards.size()){
-        offsetX = 0;
-    }
-    int numDisplayBoards = maxDisplayBoards - offsetX;
-
-    int topLeftId = lastId - numDisplayBoards + 1;
-
-    if(topLeftId < 0){
-        topLeftId = 0;
-    }
-    for(int id = topLeftId; id < m_boards.size(); id++){
-        m_displayBoardIds.push_back(id);
-    }
 }
 
 void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
