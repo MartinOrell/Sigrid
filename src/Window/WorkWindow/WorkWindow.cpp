@@ -190,7 +190,11 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
         }
         sf::Vector2f boardTopLeftPosition = boardTopLeftPosition_o.value();
 
-        auto& board = m_boards.atDisplay(i);
+        auto board_o = m_boards.atDisplay(i);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
         unsigned int boardWidth = board.getImageWidth();
         unsigned int boardHeight = board.getImageHeight();
         float widthRatio = layoutBoardWidth/(float)boardWidth;
@@ -231,7 +235,12 @@ std::string WorkWindow::getName() const{
         return "";
     }
     if(m_boards.size() == 1){
-        return m_boards.at(0).getName();
+        auto board_o = m_boards.at(0);
+        if(board_o == std::nullopt){
+            return "";
+        }
+        auto& board = board_o.value().get();
+        return board.getName();
     }
 
     auto board_o = m_boards.atActive();
@@ -311,7 +320,13 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
     sf::Vector2f position = windowPosition - m_texture.getPosition();
 
     for(unsigned int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
-        auto& board = m_boards.atDisplay(displayIndex);
+        
+        auto board_o = m_boards.atDisplay(displayIndex);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
+        
         if(!board.contains(position)){
             continue;
         }
@@ -338,8 +353,13 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
     sf::Vector2f to = releasePosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
-        auto& board = m_boards.atDisplay(displayIndex);
-
+        
+        auto board_o = m_boards.atDisplay(displayIndex);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
+        
         if(board.isWithinTurnToken(from) &&
         board.isWithinTurnToken(to)){
             board.toggleTurnToken();
@@ -409,8 +429,13 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     sf::Vector2f to = currentPosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
-        auto& board = m_boards.atDisplay(displayIndex);
-
+        
+        auto board_o = m_boards.atDisplay(displayIndex);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
+        
         auto fromCoord_o = board.getTileCoord(from);
 
         if(fromCoord_o == std::nullopt){
@@ -1056,7 +1081,14 @@ void WorkWindow::updateTexture(){
     m_texture.clear();
 
     for(int i = 0; i < m_boards.currentDisplaySize(); i++){
-        m_texture.draw(m_boards.atDisplay(i));
+
+        auto board_o = m_boards.atDisplay(i);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
+
+        m_texture.draw(board);
     }
     m_texture.draw(m_boardSelectHighlight);
 

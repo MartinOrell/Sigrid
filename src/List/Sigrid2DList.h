@@ -20,10 +20,10 @@ namespace sigrid{
             bool selectLast();
             bool select(const unsigned int& displayPosition);
 
-            T& at(const unsigned int& position);
-            const T& at(const unsigned int& position) const;
-            T& atDisplay(const unsigned int& displayPosition);
-            const T& atDisplay(const unsigned int& displayPosition) const;
+            std::optional<std::reference_wrapper<T>> at(const unsigned int& position);
+            const std::optional<std::reference_wrapper<const T>> at(const unsigned int& position) const;
+            std::optional<std::reference_wrapper<T>> atDisplay(const unsigned int& displayPosition);
+            const std::optional<std::reference_wrapper<const T>> atDisplay(const unsigned int& displayPosition) const;
             std::optional<std::reference_wrapper<T>> atActive();
             const std::optional<std::reference_wrapper<const T>> atActive() const;
             std::optional<std::reference_wrapper<unsigned int>> activeDisplayIndex();

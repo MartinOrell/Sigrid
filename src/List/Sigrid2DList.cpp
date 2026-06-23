@@ -92,23 +92,43 @@ bool Sigrid2DList<T>::select(const unsigned int& displayPosition){
 }
 
 template<typename T>
-T& Sigrid2DList<T>::at(const unsigned int& position){
+std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::at(const unsigned int& position){
+
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+
     return m_vector.at(position);
 }
 
 template<typename T>
-const T& Sigrid2DList<T>::at(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::at(const unsigned int& position) const{
+    
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+    
     return m_vector.at(position);
 }
 
 template<typename T>
-T& Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition){
-    return m_vector.at(m_displayIds.at(displayPosition));
+std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition){
+
+    if(displayPosition >= m_displayIds.size()){
+        return std::nullopt;
+    }
+
+    return at(m_displayIds.at(displayPosition));
 }
 
 template<typename T>
-const T& Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition) const{
-    return m_vector.at(m_displayIds.at(displayPosition));
+const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition) const{
+
+    if(displayPosition >= m_displayIds.size()){
+        return std::nullopt;
+    }
+
+    return at(m_displayIds.at(displayPosition));
 }
 
 template<typename T>
@@ -117,7 +137,8 @@ std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atActive(){
     if(!m_selectIndex_o){
         return std::nullopt;
     }
-    return m_vector.at(m_displayIds.at(m_selectIndex_o.value()));
+
+    return atDisplay(m_selectIndex_o.value());
 }
 
 template<typename T>
@@ -126,7 +147,8 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atActive()
     if(!m_selectIndex_o){
         return std::nullopt;
     }
-    return m_vector.at(m_displayIds.at(m_selectIndex_o.value()));
+
+    return atDisplay(m_selectIndex_o.value());
 }
 
 template<typename T>
