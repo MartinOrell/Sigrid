@@ -57,5 +57,16 @@ namespace sigrid{
             unsigned int m_displayRows = 1;
             std::vector<unsigned int> m_displayIds;
             std::optional<unsigned int> m_selectIndex_o = std::nullopt;
+
+            enum Wrap{
+                WRAP_ON,
+                WRAP_OFF,
+                NEXTWRAP_ON
+            };
+
+            Wrap m_multiRowHorisontalWrap = NEXTWRAP_ON;
+            bool m_verticalWrap = false;
+            bool m_singleRowStartEndWrap = false;
+            bool m_multiRowStartEndWrap = false;
     };
 }
