@@ -38,7 +38,7 @@ namespace sigrid{
             std::vector<T>& getVector();
             const std::vector<T>& getVector() const;
 
-            bool isDisplayActive(const unsigned int& displayPosition) const;
+            bool isDisplayedElementSelected(const unsigned int& displayPosition) const;
 
             bool shiftLeft();
             bool shiftRight();

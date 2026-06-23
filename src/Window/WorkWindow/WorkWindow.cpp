@@ -330,7 +330,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
         if(!board.contains(position)){
             continue;
         }
-        if(m_boards.isDisplayActive(displayIndex)){
+        if(m_boards.isDisplayedElementSelected(displayIndex)){
             if(activeBoard_o){
                 activeBoard_o.value().get().deselect();
             }

@@ -210,7 +210,7 @@ const std::vector<T>& Sigrid2DList<T>::getVector() const{
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isDisplayActive(const unsigned int& displayPosition) const{
+bool Sigrid2DList<T>::isDisplayedElementSelected(const unsigned int& displayPosition) const{
     
     if(!m_selectIndex_o){
         return false;
