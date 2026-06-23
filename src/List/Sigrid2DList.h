@@ -24,8 +24,8 @@ namespace sigrid{
             const std::optional<std::reference_wrapper<const T>> at(const unsigned int& position) const;
             std::optional<std::reference_wrapper<T>> atDisplay(const unsigned int& displayPosition);
             const std::optional<std::reference_wrapper<const T>> atDisplay(const unsigned int& displayPosition) const;
-            std::optional<std::reference_wrapper<T>> atActive();
-            const std::optional<std::reference_wrapper<const T>> atActive() const;
+            std::optional<std::reference_wrapper<T>> atSelection();
+            const std::optional<std::reference_wrapper<const T>> atSelection() const;
             std::optional<std::reference_wrapper<unsigned int>> activeDisplayIndex();
             const std::optional<std::reference_wrapper<const unsigned int>> activeDisplayIndex() const;
 

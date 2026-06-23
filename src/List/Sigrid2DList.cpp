@@ -132,7 +132,7 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atDisplay(
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atActive(){
+std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atSelection(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -142,7 +142,7 @@ std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atActive(){
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atActive() const{
+const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atSelection() const{
 
     if(!m_selectIndex_o){
         return std::nullopt;

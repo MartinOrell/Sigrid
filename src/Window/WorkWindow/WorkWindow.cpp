@@ -28,7 +28,7 @@ void WorkWindow::setBoardFilename(const std::string& filename){
         m_boards.push_back(std::move(board));
     }
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -100,7 +100,7 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
         m_boards.push_back(std::move(board));
     }
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -220,7 +220,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
 
 void WorkWindow::loadFen(const std::string& fen){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -243,7 +243,7 @@ std::string WorkWindow::getName() const{
         return board.getName();
     }
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return "";
     }
@@ -256,7 +256,7 @@ std::string WorkWindow::getName() const{
 
 std::string WorkWindow::getSaveFilename() const{
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return "";
     }
@@ -267,7 +267,7 @@ std::string WorkWindow::getSaveFilename() const{
 
 std::string WorkWindow::getFen() const{
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return "";
     }
@@ -282,7 +282,7 @@ void WorkWindow::setPosition(const sf::Vector2f& position){
 
 unsigned int WorkWindow::getNumColumns() const{
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return 0;
     }
@@ -300,7 +300,7 @@ bool WorkWindow::contains(const sf::Vector2f& point) const{
 
 bool WorkWindow::isCoordinatesOutside() const{
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return false;
     }
@@ -311,7 +311,7 @@ bool WorkWindow::isCoordinatesOutside() const{
 
 void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
-    auto activeBoard_o = m_boards.atActive();
+    auto activeBoard_o = m_boards.atSelection();
 
     if(activeBoard_o){
         activeBoard_o.value().get().removeDragArrow();
@@ -343,7 +343,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
 Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
-    auto activeBoard_o = m_boards.atActive();
+    auto activeBoard_o = m_boards.atSelection();
 
     if(activeBoard_o){
         activeBoard_o.value().get().removeDragArrow();
@@ -475,7 +475,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
 
 void WorkWindow::reset(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -488,7 +488,7 @@ void WorkWindow::reset(){
 
 void WorkWindow::clear(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -500,7 +500,7 @@ void WorkWindow::clear(){
 
 void WorkWindow::print(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -511,7 +511,7 @@ void WorkWindow::print(){
 
 void WorkWindow::newBoard(){
 
-    auto activeBoard_o = m_boards.atActive();
+    auto activeBoard_o = m_boards.atSelection();
 
     if(activeBoard_o){
         activeBoard_o.value().get().deselect();
@@ -542,7 +542,7 @@ void WorkWindow::newBoard(){
 
 void WorkWindow::addBoardColumn(){
 
-    auto activeBoard_o = m_boards.atActive();
+    auto activeBoard_o = m_boards.atSelection();
     if(activeBoard_o){
         activeBoard_o.value().get().deselect();
     }
@@ -560,7 +560,7 @@ void WorkWindow::addBoardColumn(){
 
 void WorkWindow::removeBoardColumn(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -583,7 +583,7 @@ void WorkWindow::removeBoardColumn(){
 
 void WorkWindow::addBoardRow(){
 
-    auto activeBoard_o = m_boards.atActive();
+    auto activeBoard_o = m_boards.atSelection();
     if(activeBoard_o){
         activeBoard_o.value().get().deselect();
     }
@@ -601,7 +601,7 @@ void WorkWindow::addBoardRow(){
 
 void WorkWindow::removeBoardRow(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -624,7 +624,7 @@ void WorkWindow::removeBoardRow(){
 
 void WorkWindow::shiftBoardsLeft(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -643,7 +643,7 @@ void WorkWindow::shiftBoardsLeft(){
 
 void WorkWindow::shiftBoardsRight(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -662,7 +662,7 @@ void WorkWindow::shiftBoardsRight(){
 
 void WorkWindow::gotoRightBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -681,7 +681,7 @@ void WorkWindow::gotoRightBoard(){
 
 void WorkWindow::gotoLeftBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -700,7 +700,7 @@ void WorkWindow::gotoLeftBoard(){
 
 void WorkWindow::gotoUpBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -719,7 +719,7 @@ void WorkWindow::gotoUpBoard(){
 
 void WorkWindow::gotoDownBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -738,7 +738,7 @@ void WorkWindow::gotoDownBoard(){
 
 void WorkWindow::saveBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -753,7 +753,7 @@ void WorkWindow::savePdf(){
 
 void WorkWindow::flipBoard(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -764,7 +764,7 @@ void WorkWindow::flipBoard(){
 
 void WorkWindow::addLeftInsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -775,7 +775,7 @@ void WorkWindow::addLeftInsideLabels(){
 
 void WorkWindow::addBottomInsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -786,7 +786,7 @@ void WorkWindow::addBottomInsideLabels(){
 
 void WorkWindow::addLeftOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -797,7 +797,7 @@ void WorkWindow::addLeftOutsideLabels(){
 
 void WorkWindow::addRightOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -808,7 +808,7 @@ void WorkWindow::addRightOutsideLabels(){
 
 void WorkWindow::addTopOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -819,7 +819,7 @@ void WorkWindow::addTopOutsideLabels(){
 
 void WorkWindow::addBottomOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -830,7 +830,7 @@ void WorkWindow::addBottomOutsideLabels(){
 
 void WorkWindow::removeLeftInsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -841,7 +841,7 @@ void WorkWindow::removeLeftInsideLabels(){
 
 void WorkWindow::removeBottomInsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -852,7 +852,7 @@ void WorkWindow::removeBottomInsideLabels(){
 
 void WorkWindow::removeLeftOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -863,7 +863,7 @@ void WorkWindow::removeLeftOutsideLabels(){
 
 void WorkWindow::removeRightOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -874,7 +874,7 @@ void WorkWindow::removeRightOutsideLabels(){
 
 void WorkWindow::removeTopOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -885,7 +885,7 @@ void WorkWindow::removeTopOutsideLabels(){
 
 void WorkWindow::removeBottomOutsideLabels(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -896,7 +896,7 @@ void WorkWindow::removeBottomOutsideLabels(){
 
 void WorkWindow::setCoordinateSize(const float& size){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -907,7 +907,7 @@ void WorkWindow::setCoordinateSize(const float& size){
 
 void WorkWindow::addTileColumnRight(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -918,7 +918,7 @@ void WorkWindow::addTileColumnRight(){
 
 void WorkWindow::addTileColumnLeft(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -929,7 +929,7 @@ void WorkWindow::addTileColumnLeft(){
 
 void WorkWindow::removeTileColumnRight(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -940,7 +940,7 @@ void WorkWindow::removeTileColumnRight(){
 
 void WorkWindow::removeTileColumnLeft(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -951,7 +951,7 @@ void WorkWindow::removeTileColumnLeft(){
 
 void WorkWindow::addTileRowUp(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -962,7 +962,7 @@ void WorkWindow::addTileRowUp(){
 
 void WorkWindow::addTileRowDown(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -973,7 +973,7 @@ void WorkWindow::addTileRowDown(){
 
 void WorkWindow::removeTileRowUp(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -984,7 +984,7 @@ void WorkWindow::removeTileRowUp(){
 
 void WorkWindow::removeTileRowDown(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -995,7 +995,7 @@ void WorkWindow::removeTileRowDown(){
 
 void WorkWindow::addBoardBorder(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1006,7 +1006,7 @@ void WorkWindow::addBoardBorder(){
 
 void WorkWindow::removeBoardBorder(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1017,7 +1017,7 @@ void WorkWindow::removeBoardBorder(){
 
 void WorkWindow::addTurnToken(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1028,7 +1028,7 @@ void WorkWindow::addTurnToken(){
 
 void WorkWindow::removeTurnToken(){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1039,7 +1039,7 @@ void WorkWindow::removeTurnToken(){
 
 void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1063,7 +1063,7 @@ void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEnti
 
 void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1138,7 +1138,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
 
 void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1172,7 +1172,7 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
 
 void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
@@ -1215,7 +1215,7 @@ void WorkWindow::updateSelectionHighlight(){
         return;
     }
 
-    auto board_o = m_boards.atActive();
+    auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
         return;
     }
