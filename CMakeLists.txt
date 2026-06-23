@@ -4,6 +4,7 @@ project(MyEditTool LANGUAGES CXX)
 set(SRC_FILES
     src/main.cpp
     src/SigridRenderTexture/SigridRenderTexture.cpp
+    src/List/Sigrid2DList.cpp
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
     src/Window/MainWindow/MainWindow.cpp

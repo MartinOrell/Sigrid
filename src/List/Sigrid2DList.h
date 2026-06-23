@@ -56,5 +56,3 @@ namespace sigrid{
             int m_activeIndex = -1;
     };
 }
-
-#include "Sigrid2DList.tpp"
