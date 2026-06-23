@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <optional>
+#include <functional> //Reference wrapper
 
 namespace sigrid{
 
@@ -15,17 +17,17 @@ namespace sigrid{
             bool removeColumn();
             bool removeRow();
 
-            void selectLast();
-            void select(const unsigned int& displayPosition);
+            bool selectLast();
+            bool select(const unsigned int& displayPosition);
 
             T& at(const unsigned int& position);
             const T& at(const unsigned int& position) const;
             T& atDisplay(const unsigned int& displayPosition);
             const T& atDisplay(const unsigned int& displayPosition) const;
-            T& atActive();
-            const T& atActive() const;
-            unsigned int& activeDisplayIndex();
-            const unsigned int& activeDisplayIndex() const;
+            std::optional<std::reference_wrapper<T>> atActive();
+            const std::optional<std::reference_wrapper<const T>> atActive() const;
+            std::optional<std::reference_wrapper<unsigned int>> activeDisplayIndex();
+            const std::optional<std::reference_wrapper<const unsigned int>> activeDisplayIndex() const;
 
             unsigned int size() const;
             unsigned int currentDisplaySize() const;
@@ -33,6 +35,7 @@ namespace sigrid{
             unsigned int currentDisplayRows() const;
             unsigned int maxDisplayColumns() const;
             unsigned int maxDisplayRows() const;
+            std::vector<T>& getVector();
             const std::vector<T>& getVector() const;
 
             bool isDisplayActive(const unsigned int& displayPosition) const;
@@ -53,6 +56,6 @@ namespace sigrid{
             unsigned int m_displayColumns = 1;
             unsigned int m_displayRows = 1;
             std::vector<unsigned int> m_displayIds;
-            int m_activeIndex = -1;
+            std::optional<unsigned int> m_selectIndex_o = std::nullopt;
     };
 }
