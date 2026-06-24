@@ -335,6 +335,25 @@ bool Sigrid2DList<T>::shiftRight(){
 }
 
 template<typename T>
+bool Sigrid2DList<T>::shiftUp(){
+
+    if(isOneRowDisplayed()){
+        return false;
+    }
+
+    for(auto it = m_displayIds.begin(); it != m_displayIds.end(); it++){
+        unsigned int newId = *it + m_displayColumns;
+        if(newId >= (unsigned int)m_vector.size()){
+            m_displayIds.erase(it, m_displayIds.end());
+            m_selectIndex_o = (unsigned int)m_displayIds.size() - 1;
+            break;
+        }
+        *it = newId;
+    }
+    return true;
+}
+
+template<typename T>
 bool Sigrid2DList<T>::shiftDown(){
 
     if(isOneRowDisplayed()){
@@ -595,17 +614,14 @@ bool Sigrid2DList<T>::selectDown(){
     if(!m_selectIndex_o){
         return false;
     }
+    
+    if(isOneRowDisplayed()){
+        return false;
+    }
+
     auto& selectIndex = m_selectIndex_o.value();
 
-    if(m_displayRows < 2){
-        return false;
-    }
-
-    if((unsigned int)m_displayIds.size() <= m_displayColumns){
-        return false;
-    }
-
-    if(selectIndex/m_displayColumns < ((unsigned int)m_displayIds.size()-1)/m_displayColumns){
+    if(!isBottomDisplayRow(selectIndex)){
         unsigned int newId = selectIndex + m_displayColumns;
         if(newId > (unsigned int)m_displayIds.size() - 1){
             newId = (unsigned int)m_displayIds.size() - 1;
@@ -614,7 +630,7 @@ bool Sigrid2DList<T>::selectDown(){
         return true;
     }
 
-    if(m_displayIds.at(selectIndex)/m_displayColumns >= ((unsigned int)m_vector.size()-1)/m_displayColumns){
+    if(isBottomRow(selectIndex)){
         if(m_verticalWrap){
             displayFirstElements();
             m_selectIndex_o = selectIndex % m_displayColumns;
@@ -623,16 +639,7 @@ bool Sigrid2DList<T>::selectDown(){
         return false;
     }
 
-    for(auto it = m_displayIds.begin(); it != m_displayIds.end(); it++){
-        unsigned int newId = *it + m_displayColumns;
-        if(newId >= (unsigned int)m_vector.size()){
-            m_displayIds.erase(it, m_displayIds.end());
-            m_selectIndex_o = (unsigned int)m_displayIds.size() - 1;
-            break;
-        }
-        *it = newId;
-    }
-    return true;
+    return shiftUp();
 }
 
 template<typename T>
@@ -649,6 +656,20 @@ bool Sigrid2DList<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
 template<typename T>
 bool Sigrid2DList<T>::isTopRow(const unsigned int& displayIndex) const{
     return m_displayIds.at(displayIndex) < m_displayColumns;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isBottomDisplayRow(const unsigned int& displayIndex) const{
+    int displayRow = displayIndex/m_displayColumns;
+    int bottomDisplayRow = ((unsigned int)m_displayIds.size()-1)/m_displayColumns;
+    return displayRow == bottomDisplayRow;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isBottomRow(const unsigned int& displayIndex) const{
+    int displayRow = m_displayIds.at(displayIndex)/m_displayColumns;
+    int bottomDisplayRow = ((unsigned int)m_vector.size()-1)/m_displayColumns;
+    return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
