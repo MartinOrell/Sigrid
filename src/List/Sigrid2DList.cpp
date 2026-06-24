@@ -219,7 +219,7 @@ bool Sigrid2DList<T>::isDisplayedElementSelected(const unsigned int& displayPosi
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftLeft(){
+bool Sigrid2DList<T>::shiftRight(){
 
     for(int i = m_displayIds.size()-1; i > 0; i--){
         m_displayIds.at(i) = m_displayIds.at(i-1);
@@ -251,7 +251,7 @@ bool Sigrid2DList<T>::shiftLeft(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftRight(){
+bool Sigrid2DList<T>::shiftLeft(){
 
     for(int i = 0; i < m_displayIds.size()-1; i++){
         m_displayIds.at(i) = m_displayIds.at(i+1);
@@ -408,7 +408,7 @@ bool Sigrid2DList<T>::selectLeft(){
 
     // Far left AND top display, but NOT first element
     if(m_displayRows == 1){
-        return shiftLeft();
+        return shiftRight();
     }
 
     switch(m_multiRowHorisontalWrap){
@@ -524,7 +524,7 @@ bool Sigrid2DList<T>::selectRight(){
 
     // Far right AND bottom display row, but NOT last element
     if(m_displayRows == 1){
-        return shiftRight();
+        return shiftLeft();
     }
 
     switch(m_multiRowHorisontalWrap){
