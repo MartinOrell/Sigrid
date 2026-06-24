@@ -335,6 +335,24 @@ bool Sigrid2DList<T>::shiftRight(){
 }
 
 template<typename T>
+bool Sigrid2DList<T>::shiftDown(){
+
+    if(isOneRowDisplayed()){
+        return false;
+    }
+
+    for(auto& id : m_displayIds){
+        id -= m_displayColumns;
+    }
+
+    for(int i = m_displayIds.size(); i < m_displayRows*m_displayColumns; i++){
+        int id = m_displayIds.back()+1;
+        m_displayIds.push_back(id);
+    }
+    return true;
+}
+
+template<typename T>
 bool Sigrid2DList<T>::selectLeft(){
 
     if(!m_selectIndex_o){
@@ -540,23 +558,19 @@ bool Sigrid2DList<T>::selectUp(){
     if(!m_selectIndex_o){
         return false;
     }
+
+    if(isOneRowDisplayed()){
+        return false;
+    }
+
     auto& selectIndex = m_selectIndex_o.value();
 
-    if(m_displayRows < 2){
-        return false;
-    }
-
-    if((unsigned int)m_displayIds.size() <= m_displayColumns){
-        return false;
-    }
-
-    if(selectIndex > m_displayColumns-1){
+    if(!isTopDisplayRow(selectIndex)){
         m_selectIndex_o = m_selectIndex_o.value() - m_displayColumns;
         return true;
     }
 
-
-    if(m_displayIds.at(selectIndex) < m_displayColumns){
+    if(isTopRow(selectIndex)){
         if(m_verticalWrap){
             displayLastElements();
         
@@ -572,14 +586,7 @@ bool Sigrid2DList<T>::selectUp(){
         return false;
     }
     
-    for(auto& id : m_displayIds){
-        id -= m_displayColumns;
-    }
-    for(int i = m_displayIds.size(); i < m_displayRows*m_displayColumns; i++){
-        int id = m_displayIds.back()+1;
-        m_displayIds.push_back(id);
-    }
-    return true;
+    return shiftDown();
 }
 
 template<typename T>
@@ -626,6 +633,22 @@ bool Sigrid2DList<T>::selectDown(){
         *it = newId;
     }
     return true;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isOneRowDisplayed() const{
+    return m_displayRows == 1 ||
+        (unsigned int)m_displayIds.size() <= m_displayColumns;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
+    return displayIndex < m_displayColumns;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isTopRow(const unsigned int& displayIndex) const{
+    return m_displayIds.at(displayIndex) < m_displayColumns;
 }
 
 template<typename T>

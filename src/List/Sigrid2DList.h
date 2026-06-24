@@ -42,12 +42,18 @@ namespace sigrid{
 
             bool shiftLeft();
             bool shiftRight();
+            bool shiftDown();
+
             bool selectLeft();
             bool selectRight();
             bool selectUp();
             bool selectDown();
 
         private:
+
+            bool isOneRowDisplayed() const;
+            bool isTopDisplayRow(const unsigned int& displayIndex) const;
+            bool isTopRow(const unsigned int& displayIndex) const;
 
             void displayFirstElements();
             void displayLastElements();
