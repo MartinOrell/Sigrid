@@ -219,6 +219,37 @@ bool Sigrid2DList<T>::isDisplayedElementSelected(const unsigned int& displayPosi
 }
 
 template<typename T>
+bool Sigrid2DList<T>::shiftLeft(){
+
+    for(int i = 0; i < m_displayIds.size()-1; i++){
+        m_displayIds.at(i) = m_displayIds.at(i+1);
+    }
+
+    auto isDisplayed = [this](const int& id){
+        for(int i = 0; i < m_displayIds.size()-1; i++){
+            if(m_displayIds.at(i) == id){
+                return true;
+            }
+        }
+        return false;
+    };
+
+    {
+        unsigned int backId = m_displayIds.back();
+        backId = (backId+1)%(unsigned int)m_vector.size();
+        while(backId != m_displayIds.back()){
+            if(!isDisplayed(backId)){
+                m_displayIds.back() = backId;
+                break;
+            }
+
+            backId = (backId+1)%(unsigned int)m_vector.size();
+        }
+    }
+    return true;
+}
+
+template<typename T>
 bool Sigrid2DList<T>::shiftRight(){
 
     for(int i = m_displayIds.size()-1; i > 0; i--){
@@ -245,37 +276,6 @@ bool Sigrid2DList<T>::shiftRight(){
             }
 
             frontId = (m_vector.size()+frontId-1)%m_vector.size();
-        }
-    }
-    return true;
-}
-
-template<typename T>
-bool Sigrid2DList<T>::shiftLeft(){
-
-    for(int i = 0; i < m_displayIds.size()-1; i++){
-        m_displayIds.at(i) = m_displayIds.at(i+1);
-    }
-
-    auto isDisplayed = [this](const int& id){
-        for(int i = 0; i < m_displayIds.size()-1; i++){
-            if(m_displayIds.at(i) == id){
-                return true;
-            }
-        }
-        return false;
-    };
-
-    {
-        unsigned int backId = m_displayIds.back();
-        backId = (backId+1)%(unsigned int)m_vector.size();
-        while(backId != m_displayIds.back()){
-            if(!isDisplayed(backId)){
-                m_displayIds.back() = backId;
-                break;
-            }
-
-            backId = (backId+1)%(unsigned int)m_vector.size();
         }
     }
     return true;
