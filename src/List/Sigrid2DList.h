@@ -53,10 +53,13 @@ namespace sigrid{
         private:
 
             bool isOneRowDisplayed() const;
+            bool isRightDisplayColumn(const unsigned int& displayIndex) const;
             bool isTopDisplayRow(const unsigned int& displayIndex) const;
             bool isTopRow(const unsigned int& displayIndex) const;
             bool isBottomDisplayRow(const unsigned int& displayIndex) const;
             bool isBottomRow(const unsigned int& displayIndex) const;
+
+            bool isLastElement(const unsigned int& displayIndex) const;
 
             void displayFirstElements();
             void displayLastElements();

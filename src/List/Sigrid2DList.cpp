@@ -279,33 +279,6 @@ bool Sigrid2DList<T>::shiftLeft(){
 template<typename T>
 bool Sigrid2DList<T>::shiftRight(){
 
-    if(!m_selectIndex_o){
-        return false;
-    }
-    auto& selectIndex = m_selectIndex_o.value();
-
-    if(m_vector.size() < 2){
-        return false;
-    }
-
-    if(selectIndex == (unsigned int)m_displayIds.size()-1 &&
-    m_displayIds.back() == m_vector.size()-1){
-
-        if(m_singleRowStartEndWrap){
-            displayFirstElements();
-            m_selectIndex_o = 0;
-            return true;
-        }
-
-        return false;
-    }
-
-    if(m_displayIds.size() == m_vector.size()
-    || selectIndex % m_displayColumns != m_displayColumns - 1){
-        m_selectIndex_o = (selectIndex + 1)%(unsigned int)m_displayIds.size();
-        return true;
-    }
-
     for(int i = 0; i < m_displayIds.size()-1; i++){
         m_displayIds.at(i) = m_displayIds.at(i+1);
     }
@@ -479,17 +452,16 @@ bool Sigrid2DList<T>::selectRight(){
     if(!m_selectIndex_o){
         return false;
     }
-    auto& selectIndex = m_selectIndex_o.value();
 
-    if(m_displayRows == 1){
-        return shiftRight();
+    if(m_vector.size() < 2){
+        return false;
     }
 
     if(m_displayIds.size() < 2){
         unsigned int& id = m_displayIds.at(0);
 
         if(id == (unsigned int)m_vector.size()-1){
-            if(m_multiRowStartEndWrap){
+            if(m_singleRowStartEndWrap){
                 id = 0;
                 return true;
             }
@@ -500,30 +472,19 @@ bool Sigrid2DList<T>::selectRight(){
         return true;
     }
 
-    if(selectIndex < (unsigned int)m_displayIds.size()-1){
+    auto& selectIndex = m_selectIndex_o.value();
 
-        if(selectIndex % m_displayColumns == m_displayColumns-1){
-            switch(m_multiRowHorisontalWrap){
-                case WRAP_OFF:
-                    return false;
-                case WRAP_ON:
-                {
-                    m_selectIndex_o = selectIndex - selectIndex % m_displayColumns;
-                    return true;
-                }
-                case NEXTWRAP_ON:
-                {
-                    m_selectIndex_o = m_selectIndex_o.value() + 1;
-                    return true;
-                }
+    if(isLastElement(selectIndex)){
+    // Last Element
+        if(isOneRowDisplayed()){
+            if(m_singleRowStartEndWrap){
+                displayFirstElements();
+                m_selectIndex_o = 0;
+                return true;
             }
+            return false;
         }
 
-        m_selectIndex_o = m_selectIndex_o.value() + 1;
-        return true;
-    }
-    
-    if(m_displayIds.back() == (unsigned int)m_vector.size()-1){
         switch(m_multiRowHorisontalWrap){
             case WRAP_OFF:
                 return false;
@@ -542,9 +503,37 @@ bool Sigrid2DList<T>::selectRight(){
                 return false;
             }
         }
-        
     }
-    
+
+    if(!isRightDisplayColumn(selectIndex)){
+    // Normal case: Not far right, Not last element
+        m_selectIndex_o = m_selectIndex_o.value() + 1;
+        return true;
+    }
+
+    if(!isBottomDisplayRow(selectIndex)){
+    // Far right, but NOT bottom display row
+        switch(m_multiRowHorisontalWrap){
+            case WRAP_OFF:
+                return false;
+            case WRAP_ON:
+            {
+                m_selectIndex_o = selectIndex - selectIndex % m_displayColumns;
+                return true;
+            }
+            case NEXTWRAP_ON:
+            {
+                m_selectIndex_o = m_selectIndex_o.value() + 1;
+                return true;
+            }
+        }
+    }
+
+    // Far right AND bottom display row, but NOT last element
+    if(m_displayRows == 1){
+        return shiftRight();
+    }
+
     switch(m_multiRowHorisontalWrap){
         case WRAP_OFF:
             return false;
@@ -649,6 +638,11 @@ bool Sigrid2DList<T>::isOneRowDisplayed() const{
 }
 
 template<typename T>
+bool Sigrid2DList<T>::isRightDisplayColumn(const unsigned int& displayIndex) const{
+    return displayIndex % m_displayColumns == m_displayColumns-1;
+}
+
+template<typename T>
 bool Sigrid2DList<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
     return displayIndex < m_displayColumns;
 }
@@ -670,6 +664,11 @@ bool Sigrid2DList<T>::isBottomRow(const unsigned int& displayIndex) const{
     int displayRow = m_displayIds.at(displayIndex)/m_displayColumns;
     int bottomDisplayRow = ((unsigned int)m_vector.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
+}
+
+template<typename T>
+bool Sigrid2DList<T>::isLastElement(const unsigned int& displayIndex) const{
+    return m_displayIds.at(displayIndex) == (unsigned int)m_vector.size()-1;
 }
 
 template<typename T>
