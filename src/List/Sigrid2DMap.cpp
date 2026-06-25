@@ -23,6 +23,44 @@ void Sigrid2DMap<T>::setInsertPattern(const std::vector<T>& insertPattern){
     if(m_rows == 0){
         return;
     }
+    if(m_insertPattern.size() == 0){
+        return;
+    }
+
+    refill();
+}
+
+template<typename T>
+void Sigrid2DMap<T>::setNumColumns(const unsigned int& columns){
+    m_columns = columns;
+
+    if(m_columns == 0){
+        return;
+    }
+    if(m_rows == 0){
+        return;
+    }
+    if(m_insertPattern.size() == 0){
+        return;
+    }
+
+    refill();
+}
+
+template<typename T>
+void Sigrid2DMap<T>::setNumRows(const unsigned int& rows){
+    m_rows = rows;
+
+    if(m_columns == 0){
+        return;
+    }
+    if(m_rows == 0){
+        return;
+    }
+    if(m_insertPattern.size() == 0){
+        return;
+    }
+
     refill();
 }
 
@@ -32,9 +70,17 @@ void Sigrid2DMap<T>::setSize(const unsigned int& columns, const unsigned int& ro
     m_columns = columns;
     m_rows = rows;
 
-    if(m_insertPattern.size() > 0){
-        refill();
+    if(m_columns == 0){
+        return;
     }
+    if(m_rows == 0){
+        return;
+    }
+    if(m_insertPattern.size() == 0){
+        return;
+    }
+
+    refill();
 }
 
 template<typename T>
@@ -179,7 +225,7 @@ bool Sigrid2DMap<T>::removeColumnLeft(){
 
     m_columns--;
 
-    for(int x = (int)m_columns - 1; x >= 0; x--){
+    for(int x = 0; (unsigned int)x < m_columns; x++){
         for(int y = 0; (unsigned int)y < m_rows; y++){
             auto currentIt = m_map.find({x,y});
             auto rightIt = m_map.find({x+1, y});
@@ -244,16 +290,16 @@ bool Sigrid2DMap<T>::removeRowUp(){
 
     m_rows--;
 
-    for(int y = (int)m_rows -1; y >=0; y--){
+    for(int y = 0; (unsigned int)y < m_rows; y++){
         for(int x = 0; (unsigned int)x < m_columns; x++){
             auto currentIt = m_map.find({x,y});
-            auto downIt = m_map.find({x, y+1});
-            if(downIt != m_map.end()){
+            auto upIt = m_map.find({x, y+1});
+            if(upIt != m_map.end()){
                 if(currentIt == m_map.end()){
-                    m_map.insert({{x,y}, downIt->second});
+                    m_map.insert({{x,y}, upIt->second});
                 }
                 else{
-                    currentIt->second = downIt->second;
+                    currentIt->second = upIt->second;
                 }
             }
             else{
@@ -342,6 +388,17 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DMap<T>::at(const Co
     }
 
     return it->second;
+}
+
+template<typename T>
+bool Sigrid2DMap<T>::removeAt(const Coord& coord){
+
+    auto it = m_map.find(coord);
+    if(it == m_map.end()){
+        return false;
+    }
+    m_map.erase(it);
+    return true;
 }
 
 template<typename T>

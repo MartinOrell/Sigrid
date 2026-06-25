@@ -15,6 +15,8 @@ namespace sigrid{
             Sigrid2DMap();
             
             void setInsertPattern(const std::vector<T>& insertPattern);
+            void setNumColumns(const unsigned int& columns);
+            void setNumRows(const unsigned int& rows);
             void setSize(const unsigned int& columns, const unsigned int& rows);
 
             bool addColumnLeft();
@@ -30,6 +32,8 @@ namespace sigrid{
 
             std::optional<std::reference_wrapper<T>> at(const Coord& coord);
             const std::optional<std::reference_wrapper<const T>> at(const Coord& coord) const;
+
+            bool removeAt(const Coord& coord);
 
             const unsigned int& numColumns() const;
             const unsigned int& numRows() const;

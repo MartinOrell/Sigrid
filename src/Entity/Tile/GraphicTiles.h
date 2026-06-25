@@ -1,9 +1,9 @@
 #pragma once
 
-#include <map>
 #include <optional>
 
 #include "../../Coord/Coord.h"
+#include "../../List/Sigrid2DMap.h"
 #include "GraphicTile.h"
 
 namespace sigrid{
@@ -64,12 +64,10 @@ namespace sigrid{
             ColorManager* m_tileColorManagerPtr = nullptr;
             ColorManager* m_highlightColorManagerPtr = nullptr;
 
-            int m_columns = 0;
-            int m_rows = 0;
+            Sigrid2DMap<GraphicTile> m_tiles;
 
             sf::Vector2f m_tileSize = {0.f, 0.f};
             sf::Vector2f m_topLeftPosition = {0.f, 0.f};
 
-            std::map<Coord, GraphicTile> m_tiles;
     };
 }

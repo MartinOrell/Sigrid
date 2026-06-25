@@ -18,15 +18,28 @@ void GraphicTiles::setHighlightColorManagerPtr(ColorManager* const managerPtr){
 }
 
 void GraphicTiles::setNumColumns(const int& columns){
-    m_columns = columns;
+    m_tiles.setNumColumns(columns);
 }
 
 void GraphicTiles::setNumRows(const int& rows){
-    m_rows = rows;
+    m_tiles.setNumRows(rows);
 }
 
 void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
+
     m_tileSize = tileSize;
+
+    if(m_tileSize.x <= 0.f){
+        return;
+    }
+    if(m_tileSize.y <= 0.f){
+        return;
+    }
+    GraphicTile tile;
+    tile.init(m_tileSize, sf::Color::White);
+    std::vector<GraphicTile> insertTiles;
+    insertTiles.push_back(tile);
+    m_tiles.setInsertPattern(insertTiles);
 }
 
 void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
@@ -35,42 +48,46 @@ void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
 
 void GraphicTiles::init(const bool& isLeftToRight, const bool& isTopToBottom){
 
-    if(m_tileSize.x == 0.f){
-        std::cerr << "GraphicTiles: Failed to init, tile width is 0" << std::endl;
-        return;
-    }
-    if(m_tileSize.y == 0.f){
-        std::cerr << "GraphicTiles: Failed to init, tile height is 0" << std::endl;
-        return;
-    }
+    unsigned int columns = m_tiles.numColumns();
+    unsigned int rows = m_tiles.numRows();
 
-    for(int y = 0; y < m_rows; y++){
-        for(int x = 0; x < m_columns; x++){
-            
+    for(int y = 0; (unsigned int)y < rows; y++){
+        for(int x = 0; (unsigned int)x < columns; x++){
+
+            auto tile_o = m_tiles.at({x,y});
+            if(tile_o == std::nullopt){
+                continue;
+            }
+            auto& tile = tile_o.value().get();
+
             sf::Vector2f position = m_topLeftPosition;
             if(isLeftToRight){
                 position.x += (float)(x*m_tileSize.x);
             }
             else{
-                position.x += (float)((m_columns-x-1)*m_tileSize.x);
+                position.x += (float)((columns-x-1)*m_tileSize.x);
             }
             if(isTopToBottom){
                 position.y += (float)(y*m_tileSize.y);
             }
             else{
-                position.y += (float)((m_rows-y-1)*m_tileSize.y);
+                position.y += (float)((rows-y-1)*m_tileSize.y);
             }
 
-            GraphicTile newTile;
-            newTile.init(m_tileSize, sf::Color::White);
-            newTile.setPosition(position);
-            m_tiles.insert({{x,y}, newTile});
+            tile.setPosition(position);
         }
     }
 }
 
 void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& position){
-    m_tiles.at(coord).setPosition(position);
+    
+    auto tile_o = m_tiles.at(coord);
+    if(tile_o == std::nullopt){
+        return;
+    }
+    auto& tile = tile_o.value().get();
+
+    tile.setPosition(position);
 }
 
 void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
@@ -83,12 +100,17 @@ void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
 
     auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
 
-    if(color_o != std::nullopt){
-        auto it = m_tiles.find(coord);
-        if(it != m_tiles.end()){
-            it->second.setTileColor(color_o.value());
-        }
+    if(color_o == std::nullopt){
+        return;
     }
+
+    auto tile_o = m_tiles.at(coord);
+    if(tile_o == std::nullopt){
+        return;
+    }
+    auto& tile = tile_o.value().get();
+
+    tile.setTileColor(color_o.value());
 }
 
 void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){
@@ -101,56 +123,83 @@ void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){
 
     auto color_o = m_highlightColorManagerPtr->getTransparentColor(colorId);
 
-    if(color_o != std::nullopt){
-        m_tiles.at(coord).setHighlightColor(color_o.value());
+    if(color_o == std::nullopt){
+        return;
     }
+
+    auto tile_o = m_tiles.at(coord);
+    if(tile_o == std::nullopt){
+        return;
+    }
+    auto& tile = tile_o.value().get();
+
+    tile.setHighlightColor(color_o.value());
 }
 
 void GraphicTiles::removeHighlight(const Coord& coord){
-    m_tiles.at(coord).removeHighlight();
+
+    auto tile_o = m_tiles.at(coord);
+    if(tile_o == std::nullopt){
+        return;
+    }
+    auto& tile = tile_o.value().get();
+
+    tile.removeHighlight();
 }
 
 void GraphicTiles::addColumnRight(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight){
 
-    m_columns++;
-    int x = m_columns-1;
-    for(int y = 0; y < m_rows; y++){
-        auto leftIt = m_tiles.find({x-1,y});
-        if(leftIt != m_tiles.end()){
+    m_tiles.addColumnRight();
 
-            sf::Vector2f position = leftIt->second.getTopLeftPosition();
-            if(isLeftToRight){
-                position.x += m_tileSize.x;
-            }
+    int x = (int)m_tiles.numColumns()-1;
+    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
 
-            sf::Color color;
-            if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+        auto currentTile_o = m_tiles.at({x,y});
+        if(currentTile_o == std::nullopt){
+            continue;
+        }
+
+        auto leftTile_o = m_tiles.at({x-1,y});
+        if(leftTile_o == std::nullopt){
+            m_tiles.removeAt({x,y});
+            continue;
+        }
+
+        auto& currentTile = currentTile_o.value().get();
+        auto& leftTile = leftTile_o.value().get();
+
+        sf::Vector2f position = leftTile.getTopLeftPosition();
+        if(isLeftToRight){
+            position.x += m_tileSize.x;
+        }
+
+        sf::Color color;
+        if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+           color = sf::Color::White;
+        }
+        else{
+            auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+            if(color_o == std::nullopt){
                 color = sf::Color::White;
             }
             else{
-                auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
-                if(color_o == std::nullopt){
-                    color = sf::Color::White;
-                }
-                else{
-                    color = color_o.value();
-                }
+                color = color_o.value();
             }
-
-            GraphicTile newTile;
-            newTile.init(m_tileSize, color);
-            newTile.setPosition(position);
-            m_tiles.insert({{x,y}, newTile});
-
         }
+
+        currentTile.setPosition(position);
+        currentTile.setTileColor(color);
     }
+
     if(!isLeftToRight){
-        for(int x = 0; x < m_columns-1; x++){
-            for(int y = 0; y < m_rows; y++){
-                auto it = m_tiles.find({x,y});
-                if(it != m_tiles.end()){
-                    it->second.move(sf::Vector2f{m_tileSize.x, 0.f});
+        for(int x = 0; (unsigned int)x < m_tiles.numColumns()-1; x++){
+            for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{m_tileSize.x, 0.f});
             }
         }
     }
@@ -158,194 +207,155 @@ void GraphicTiles::addColumnRight(const std::vector<int>& repeatTileColorIds, co
 
 void GraphicTiles::addColumnLeft(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight){
 
-    m_columns++;
-    {
-        int x = m_columns-1;
-        for(int y = 0; y < m_rows; y++){
-            auto leftIt = m_tiles.find({x-1,y});
-            if(leftIt != m_tiles.end()){
-                GraphicTile newTile = leftIt->second;
-                if(isLeftToRight){
-                    newTile.move(sf::Vector2f{m_tileSize.x,0.f});
-                }
-                m_tiles.insert({{x,y},newTile});
+    m_tiles.addColumnLeft();
+
+    int x = 0;
+    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+
+        auto currentTile_o = m_tiles.at({x,y});
+        if(currentTile_o == std::nullopt){
+            continue;
+        }
+
+        auto rightTile_o = m_tiles.at({x+1,y});
+        if(rightTile_o == std::nullopt){
+            m_tiles.removeAt({x,y});
+            continue;
+        }
+
+        auto& currentTile = currentTile_o.value().get();
+        auto& rightTile = rightTile_o.value().get();
+
+        sf::Vector2f position = rightTile.getTopLeftPosition();
+        if(isLeftToRight){
+            position.x -= m_tileSize.x;
+        }
+        else{
+            position.x += m_tileSize.x;
+        }
+
+        sf::Color color;
+        if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+           color = sf::Color::White;
+        }
+        else{
+            auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+            if(color_o == std::nullopt){
+                color = sf::Color::White;
+            }
+            else{
+                color = color_o.value();
             }
         }
+
+        currentTile.setPosition(position);
+        currentTile.setTileColor(color);
     }
 
-    for(int x = m_columns-2; x > 0; x--){
-        for(int y = 0; y < m_rows; y++){
-            auto currentIt = m_tiles.find({x,y});
-            auto leftIt = m_tiles.find({x-1,y});
-            if(leftIt != m_tiles.end()){
-                if(currentIt == m_tiles.end()){
-                    GraphicTile tile = leftIt->second;
-                    if(isLeftToRight){
-                        tile.move(sf::Vector2f{m_tileSize.x,0.f});
-                    }
-                    m_tiles.insert({{x,y}, tile});
+    if(isLeftToRight){
+        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+            for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
-                else{
-                    currentIt->second = leftIt->second;
-                    if(isLeftToRight){
-                        currentIt->second.move(sf::Vector2f{m_tileSize.x,0.f});
-                    }
-                }
-            }
-        }
-    }
-    
-    
-    {
-        int x = 0;
-        for(int y = 0; y < m_rows; y++){
-            auto currentIt = m_tiles.find({x,y});
-            if(currentIt != m_tiles.end()){
-                sf::Vector2f position = currentIt->second.getTopLeftPosition();
-                if(!isLeftToRight){
-                    position.x += m_tileSize.x;
-                }
-
-                sf::Color color;
-                if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-                    color = sf::Color::White;
-                }
-                else{
-                    auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
-                    if(color_o == std::nullopt){
-                        color = sf::Color::White;
-                    }
-                    else{
-                        color = color_o.value();
-                    }
-                }
-                
-                GraphicTile newTile;
-                newTile.init(m_tileSize, color);
-                newTile.setPosition(position);
-                currentIt->second = newTile;
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{m_tileSize.x, 0.f});
             }
         }
     }
 }
 
 void GraphicTiles::removeColumnRight(const bool& isLeftToRight){
-    m_columns--;
 
-    int x = m_columns;
-    for(int y = 0; y < m_rows; y++){
-        m_tiles.erase({x,y});
-    }
+    m_tiles.removeColumnRight();
 
     if(!isLeftToRight){
-        for(auto& tile: m_tiles){
-            tile.second.move(sf::Vector2f{-m_tileSize.x, 0.f});
+        for(int y=0; (unsigned int)y < m_tiles.numRows(); y++){
+            for(int x=0; (unsigned int)x < m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
+                }
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{-m_tileSize.x, 0.f});
+            }
         }
     }
 }
 
 void GraphicTiles::removeColumnLeft(const bool& isLeftToRight){
 
-    m_columns--;
-    for(int x = 0; x < m_columns; x++){
-        for(int y=0; y<m_rows; y++){
-            auto currentIt = m_tiles.find({x,y});
-            auto rightIt = m_tiles.find({x+1,y});
+    m_tiles.removeColumnLeft();
 
-            if(rightIt != m_tiles.end()){
-                if(currentIt == m_tiles.end()){
-                    GraphicTile tile = rightIt->second;
-                    if(isLeftToRight){
-                        tile.move(sf::Vector2f{-m_tileSize.x,0.f});
-                    }
-                    m_tiles.insert({{x,y},tile});
+    if(isLeftToRight){
+        for(int y=0; (unsigned int)y < m_tiles.numRows(); y++){
+            for(int x=0; (unsigned int)x < m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
-                else{
-                    currentIt->second = rightIt->second;
-                    if(isLeftToRight){
-                        currentIt->second.move(sf::Vector2f{-m_tileSize.x,0.f});
-                    }
-                }
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{-m_tileSize.x, 0.f});
             }
-        }
-    }
-
-    {
-        int x = m_columns;
-        for(int y = 0; y < m_rows; y++){
-            m_tiles.erase({x,y});
         }
     }
 }
 
 void GraphicTiles::addRowUp(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom){
 
-    m_rows++;
-    {
-        int y = m_rows-1;
-        for(int x = 0; x < m_columns; x++){
-            auto topIt = m_tiles.find({x,y-1});
-            if(topIt != m_tiles.end()){
-                GraphicTile newTile = topIt->second;
-                if(isTopToBottom){
-                    newTile.move(sf::Vector2f{0.f, m_tileSize.y});
-                }
-                m_tiles.insert({{x,y},newTile});
+    m_tiles.addRowUp();
+
+    int y = 0;
+    for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+        auto currentTile_o = m_tiles.at({x,y});
+        if(currentTile_o == std::nullopt){
+            continue;
+        }
+
+        auto topTile_o = m_tiles.at({x,y+1});
+        if(topTile_o == std::nullopt){
+            m_tiles.removeAt({x,y});
+            continue;
+        }
+
+        auto& currentTile = currentTile_o.value().get();
+        auto& topTile = topTile_o.value().get();
+
+        sf::Vector2f position = topTile.getTopLeftPosition();
+        if(isTopToBottom){
+            position.y -= m_tileSize.y;
+        }
+        else{
+            position.y += m_tileSize.y;
+        }
+
+        sf::Color color;
+        if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+           color = sf::Color::White;
+        }
+        else{
+            auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+            if(color_o == std::nullopt){
+                color = sf::Color::White;
+            }
+            else{
+                color = color_o.value();
             }
         }
+        currentTile.setPosition(position);
+        currentTile.setTileColor(color);
     }
 
-    for(int y = m_rows-2; y > 0; y--){
-        for(int x = 0; x < m_columns; x++){
-            auto currentIt = m_tiles.find({x,y});
-            auto topIt = m_tiles.find({x,y-1});
-            if(topIt != m_tiles.end()){
-                if(currentIt == m_tiles.end()){
-                    GraphicTile tile = topIt->second;
-                    if(isTopToBottom){
-                        tile.move(sf::Vector2f{0.f, m_tileSize.y});
-                    }
-                    m_tiles.insert({{x,y}, tile});
+    if(isTopToBottom){
+        for(int y = (int)m_tiles.numRows()-1; y >= 0; y--){
+            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
-                else{
-                    currentIt->second = topIt->second;
-                    if(isTopToBottom){
-                        currentIt->second.move(sf::Vector2f{0.f, m_tileSize.y});
-                    }
-                }
-            }
-        }
-    }
-    
-    
-    {
-        int y = 0;
-        for(int x = 0; x < m_columns; x++){
-            auto currentIt = m_tiles.find({x,y});
-            if(currentIt != m_tiles.end()){
-                sf::Vector2f position = currentIt->second.getTopLeftPosition();
-                if(!isTopToBottom){
-                    position.y += m_tileSize.y;
-                }
-
-                sf::Color color;
-                if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-                    color = sf::Color::White;
-                }
-                else{
-                    auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
-                    if(color_o == std::nullopt){
-                        color = sf::Color::White;
-                    }
-                    else{
-                        color = color_o.value();
-                    }
-                }
-                
-                GraphicTile newTile;
-                newTile.init(m_tileSize, color);
-                newTile.setPosition(position);
-                currentIt->second = newTile;
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{0.f, m_tileSize.y});
             }
         }
     }
@@ -353,45 +363,60 @@ void GraphicTiles::addRowUp(const std::vector<int>& repeatTileColorIds, const bo
 
 void GraphicTiles::addRowDown(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom){
 
-    m_rows++;
-    int y = m_rows-1;
-    for(int x = 0; x < m_columns; x++){
-        auto topIt = m_tiles.find({x,y-1});
-        if(topIt != m_tiles.end()){
+    m_tiles.addRowDown();
 
-            sf::Vector2f position = topIt->second.getTopLeftPosition();
-            if(isTopToBottom){
-                position.y += m_tileSize.y;
-            }
+    int y = (int)m_tiles.numRows()-1;
+    for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+        auto currentTile_o = m_tiles.at({x,y});
+        if(currentTile_o == std::nullopt){
+            continue;
+        }
 
-            sf::Color color;
-            if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+        auto downTile_o = m_tiles.at({x,y-1});
+        if(downTile_o == std::nullopt){
+            m_tiles.removeAt({x,y});
+            continue;
+        }
+
+        auto& currentTile = currentTile_o.value().get();
+        auto& downTile = downTile_o.value().get();
+
+        sf::Vector2f position = downTile.getTopLeftPosition();
+        if(isTopToBottom){
+            position.y += m_tileSize.y;
+        }
+        else{
+            position.y -= m_tileSize.y;
+        }
+
+        sf::Color color;
+        if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
+           color = sf::Color::White;
+        }
+        else{
+            auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
+            if(color_o == std::nullopt){
                 color = sf::Color::White;
             }
             else{
-                auto color_o = m_tileColorManagerPtr->getSolidColor(repeatTileColorIds.at((x+y)%repeatTileColorIds.size()));
-                if(color_o == std::nullopt){
-                    color = sf::Color::White;
-                }
-                else{
-                    color = color_o.value();
-                }
+                color = color_o.value();
             }
-
-            GraphicTile newTile;
-            newTile.init(m_tileSize, color);
-            newTile.setPosition(position);
-            m_tiles.insert({{x,y}, newTile});
-
         }
+
+        currentTile.setPosition(position);
+        currentTile.setTileColor(color);
     }
+
     if(!isTopToBottom){
-        for(int y = 0; y < m_rows-1; y++){
-            for(int x = 0; x < m_columns; x++){
-                auto it = m_tiles.find({x,y});
-                if(it != m_tiles.end()){
-                    it->second.move(sf::Vector2f{0.f, m_tileSize.y});
+        for(int y = (int)m_tiles.numRows()-1; y >= 0; y--){
+            for(int x = 0; x < (unsigned int)m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
+                auto& tile = currentTile_o.value().get();
+
+                tile.move(sf::Vector2f{0.f, m_tileSize.y});
             }
         }
     }
@@ -399,65 +424,50 @@ void GraphicTiles::addRowDown(const std::vector<int>& repeatTileColorIds, const 
 
 void GraphicTiles::removeRowUp(const bool& isTopToBottom){
 
-    m_rows--;
-    for(int y = 0; y < m_rows; y++){
-        for(int x = 0; x < m_columns; x++){
-            auto currentIt = m_tiles.find({x,y});
-            auto downIt = m_tiles.find({x,y+1});
+    m_tiles.removeRowUp();
 
-            if(downIt != m_tiles.end()){
-                if(currentIt == m_tiles.end()){
-                    GraphicTile tile = downIt->second;
-                    if(!isTopToBottom){
-                        tile.move(sf::Vector2f{0.f, -m_tileSize.y});
-                    }
-                    m_tiles.insert({{x,y},tile});
+    if(!isTopToBottom){
+        for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
                 }
-                else{
-                    currentIt->second = downIt->second;
-                    if(!isTopToBottom){
-                        currentIt->second.move(sf::Vector2f{0.f, -m_tileSize.y});
-                    }
-                }
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{0.f, -m_tileSize.y});
             }
-        }
-    }
-
-    {
-        int y = m_rows;
-        for(int x = 0; x < m_columns; x++){
-            m_tiles.erase({x,y});
         }
     }
 }
 
 void GraphicTiles::removeRowDown(const bool& isTopToBottom){
 
-    m_rows--;
-    int y = m_rows;
-    for(int x = 0; x < m_columns; x++){
-        m_tiles.erase({x,y});
-    }
+    m_tiles.removeRowDown();
 
     if(!isTopToBottom){
-        for(auto& tile: m_tiles){
-            tile.second.move(sf::Vector2f{0.f, -m_tileSize.y});
+        for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+                auto currentTile_o = m_tiles.at({x,y});
+                if(currentTile_o == std::nullopt){
+                    continue;
+                }
+                auto& tile = currentTile_o.value().get();
+                tile.move(sf::Vector2f{0.f, -m_tileSize.y});
+            }
         }
     }
 }
 
 void GraphicTiles::clear(){
-    m_columns = 0;
-    m_rows = 0;
     m_tiles.clear();
 }
 
 int GraphicTiles::getNumColumns() const{
-    return m_columns;
+    return m_tiles.numColumns();
 }
 
 int GraphicTiles::getNumRows() const{
-    return m_rows;
+    return m_tiles.numRows();
 }
 
 float GraphicTiles::getTileWidth() const{
@@ -474,68 +484,89 @@ sf::Vector2f GraphicTiles::getTileSize() const{
 
 std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const Coord& coord) const{
 
-    auto it = m_tiles.find(coord);
+    auto tile_o = m_tiles.at(coord);
 
-    if(it == m_tiles.end()){
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
+    auto& tile = tile_o.value().get();
 
-    return it->second.getTopLeftPosition();
+    return tile.getTopLeftPosition();
 }
 
 std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const Coord& coord) const{
 
-    auto it = m_tiles.find(coord);
+    auto tile_o = m_tiles.at(coord);
 
-    if(it == m_tiles.end()){
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
+    auto& tile = tile_o.value().get();
 
-    return it->second.getCentrePosition();
+    return tile.getCentrePosition();
 }
 
 std::optional<float> GraphicTiles::getTileRightPosition(const Coord& coord) const{
 
-    auto it = m_tiles.find(coord);
+    auto tile_o = m_tiles.at(coord);
 
-    if(it == m_tiles.end()){
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
+    auto& tile = tile_o.value().get();
 
-    return it->second.getRightPosition();
+    return tile.getRightPosition();
 }
 
 std::optional<float> GraphicTiles::getTileTopPosition(const Coord& coord) const{
 
-    auto it = m_tiles.find(coord);
+    auto tile_o = m_tiles.at(coord);
 
-    if(it == m_tiles.end()){
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
+    auto& tile = tile_o.value().get();
 
-    return it->second.getTopPosition();
+    return tile.getTopPosition();
 }
 
 std::optional<sf::Color> GraphicTiles::getTileColor(const Coord& coord) const{
 
-    auto it = m_tiles.find(coord);
+    auto tile_o = m_tiles.at(coord);
 
-    if(it == m_tiles.end()){
+    if(tile_o == std::nullopt){
         return std::nullopt;
     }
+    auto& tile = tile_o.value().get();
 
-    return it->second.getColor();
+    return tile.getColor();
 
 }
 
 void GraphicTiles::move(const sf::Vector2f& offset){
-    for(auto& tile: m_tiles){
-        tile.second.move(offset);
+
+    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+            auto currentTile_o = m_tiles.at({x,y});
+            if(currentTile_o == std::nullopt){
+                continue;
+            }
+            auto& tile = currentTile_o.value().get();
+            tile.move(offset);
+        }
     }
 }
 
 void GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    for(auto& tile: m_tiles){
-        target.draw(tile.second);
+
+    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+            auto currentTile_o = m_tiles.at({x,y});
+            if(currentTile_o == std::nullopt){
+                continue;
+            }
+            auto& tile = currentTile_o.value().get();
+            target.draw(tile);
+        }
     }
 }
