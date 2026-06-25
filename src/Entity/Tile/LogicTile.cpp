@@ -2,6 +2,8 @@
 
 using namespace sigrid;
 
+LogicTile::LogicTile(){}
+
 LogicTile::LogicTile(const int colorId)
 : m_colorId(colorId){}
 

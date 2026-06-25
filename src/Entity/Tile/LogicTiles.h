@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
 #include <optional>
 #include <vector>
 
 #include "../../Coord/Coord.h"
+#include "../../List/Sigrid2DMap.h"
 #include "LogicTile.h"
 
 namespace sigrid{
@@ -40,10 +40,6 @@ namespace sigrid{
 
         private:
 
-            int m_columns = 0;
-            int m_rows = 0;
-            std::vector<int> m_repeatTileColorIds;
-
-            std::map<Coord, LogicTile> m_tiles;
+            Sigrid2DMap<LogicTile> m_tiles;
     };
 }

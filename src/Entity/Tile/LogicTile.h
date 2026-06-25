@@ -7,6 +7,7 @@ namespace sigrid{
     class LogicTile{
 
         public:
+            LogicTile();
             LogicTile(const int colorId);
             LogicTile(const LogicTile& src);
             LogicTile& operator =(const LogicTile& rhs);
@@ -24,7 +25,7 @@ namespace sigrid{
             bool operator!=(const LogicTile& rhs) const;
 
         private:
-            int m_colorId;
+            int m_colorId = 0;
             std::unique_ptr<int> m_highlightColorIdPtr;
     };
 }
