@@ -676,32 +676,32 @@ void Board::addTileColumnLeft(){
     deselect();
 }
 
-void Board::removeTileColumnRight(){
+void Board::removeRightTileColumn(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeTileColumnRight()){
-            m_graphicBoard.removeTileColumnRight();
+        if(m_logicBoard.removeRightTileColumn()){
+            m_graphicBoard.removeRightTileColumn();
         }
     }
     else{
-        if(m_logicBoard.removeTileColumnLeft()){
-            m_graphicBoard.removeTileColumnLeft();
+        if(m_logicBoard.removeLeftTileColumn()){
+            m_graphicBoard.removeLeftTileColumn();
         }
     }
 
     deselect();
 }
 
-void Board::removeTileColumnLeft(){
+void Board::removeLeftTileColumn(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeTileColumnLeft()){
-            m_graphicBoard.removeTileColumnLeft();
+        if(m_logicBoard.removeLeftTileColumn()){
+            m_graphicBoard.removeLeftTileColumn();
         }
     }
     else{
-        if(m_logicBoard.removeTileColumnRight()){
-            m_graphicBoard.removeTileColumnRight();
+        if(m_logicBoard.removeRightTileColumn()){
+            m_graphicBoard.removeRightTileColumn();
         }
     }
     
@@ -740,32 +740,32 @@ void Board::addTileRowDown(){
     deselect();
 }
 
-void Board::removeTileRowUp(){
+void Board::removeTopTileRow(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeTileRowUp()){
-            m_graphicBoard.removeTileRowUp();
+        if(m_logicBoard.removeTopTileRow()){
+            m_graphicBoard.removeTopTileRow();
         }
     }
     else{
-        if(m_logicBoard.removeTileRowDown()){
-            m_graphicBoard.removeTileRowDown();
+        if(m_logicBoard.removeBottomTileRow()){
+            m_graphicBoard.removeBottomTileRow();
         }
     }
 
     deselect();
 }
 
-void Board::removeTileRowDown(){
+void Board::removeBottomTileRow(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeTileRowDown()){
-            m_graphicBoard.removeTileRowDown();
+        if(m_logicBoard.removeBottomTileRow()){
+            m_graphicBoard.removeBottomTileRow();
         }
     }
     else{
-        if(m_logicBoard.removeTileRowUp()){
-            m_graphicBoard.removeTileRowUp();
+        if(m_logicBoard.removeTopTileRow()){
+            m_graphicBoard.removeTopTileRow();
         }
     }
     

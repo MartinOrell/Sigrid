@@ -92,11 +92,11 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "addTileColumnLeft"){
         return ActionType::AddTileColumnLeft{};
     }
-    else if(name == "removeTileColumnRight"){
-        return ActionType::RemoveTileColumnRight{};
+    else if(name == "removeRightTileColumn"){
+        return ActionType::RemoveRightTileColumn{};
     }
-    else if(name == "removeTileColumnLeft"){
-        return ActionType::RemoveTileColumnLeft{};
+    else if(name == "removeLeftTileColumn"){
+        return ActionType::RemoveLeftTileColumn{};
     }
     else if(name == "addTileRowUp"){
         return ActionType::AddTileRowUp{};
@@ -104,11 +104,11 @@ Action sigrid::getAction(const std::string& s){
     else if(name == "addTileRowDown"){
         return ActionType::AddTileRowDown{};
     }
-    else if(name == "removeTileRowUp"){
-        return ActionType::RemoveTileRowUp{};
+    else if(name == "removeTopTileRow"){
+        return ActionType::RemoveTopTileRow{};
     }
-    else if(name == "removeTileRowDown"){
-        return ActionType::RemoveTileRowDown{};
+    else if(name == "removeBottomTileRow"){
+        return ActionType::RemoveBottomTileRow{};
     }
     else if(name == "addBoardBorder"){
         return ActionType::AddBoardBorder{};

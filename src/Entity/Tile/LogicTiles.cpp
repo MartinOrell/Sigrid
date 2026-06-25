@@ -66,12 +66,12 @@ bool LogicTiles::addColumnLeft(){
     return m_tiles.addColumnLeft();
 }
 
-bool LogicTiles::removeColumnRight(){
-    return m_tiles.removeColumnRight();
+bool LogicTiles::removeRightColumn(){
+    return m_tiles.removeRightColumn();
 }
 
-bool LogicTiles::removeColumnLeft(){
-    return m_tiles.removeColumnLeft();
+bool LogicTiles::removeLeftColumn(){
+    return m_tiles.removeLeftColumn();
 }
 
 bool LogicTiles::addRowUp(){
@@ -82,12 +82,12 @@ bool LogicTiles::addRowDown(){
     return m_tiles.addRowDown();
 }
 
-bool LogicTiles::removeRowUp(){
-    return m_tiles.removeRowUp();
+bool LogicTiles::removeTopRow(){
+    return m_tiles.removeTopRow();
 }
 
-bool LogicTiles::removeRowDown(){
-    return m_tiles.removeRowDown();
+bool LogicTiles::removeBottomRow(){
+    return m_tiles.removeBottomRow();
 }
 
 void LogicTiles::clear(){

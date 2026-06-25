@@ -91,12 +91,12 @@ namespace sigrid{
             void setCoordinateSize(const float& size);
             void addTileColumnRight();
             void addTileColumnLeft();
-            void removeTileColumnRight();
-            void removeTileColumnLeft();
+            void removeRightTileColumn();
+            void removeLeftTileColumn();
             void addTileRowUp();
             void addTileRowDown();
-            void removeTileRowUp();
-            void removeTileRowDown();
+            void removeTopTileRow();
+            void removeBottomTileRow();
             void addBoardBorder();
             void removeBoardBorder();
             void addTurnToken();

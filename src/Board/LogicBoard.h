@@ -47,12 +47,12 @@ namespace sigrid{
 
             bool addTileColumnRight();
             bool addTileColumnLeft();
-            bool removeTileColumnRight();
-            bool removeTileColumnLeft();
+            bool removeRightTileColumn();
+            bool removeLeftTileColumn();
             bool addTileRowUp();
             bool addTileRowDown();
-            bool removeTileRowUp();
-            bool removeTileRowDown();
+            bool removeTopTileRow();
+            bool removeBottomTileRow();
 
             void print();
             void clearEntities();

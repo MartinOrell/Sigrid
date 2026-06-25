@@ -23,10 +23,10 @@ namespace sigrid{
             bool addColumnRight();
             bool addRowUp();
             bool addRowDown();
-            bool removeColumnLeft();
-            bool removeColumnRight();
-            bool removeRowUp();
-            bool removeRowDown();
+            bool removeLeftColumn();
+            bool removeRightColumn();
+            bool removeTopRow();
+            bool removeBottomRow();
 
             void clear();
 

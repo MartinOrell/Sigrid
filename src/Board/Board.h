@@ -133,17 +133,17 @@ namespace sigrid{
 
             void addTileColumnLeft();
 
-            void removeTileColumnRight();
+            void removeRightTileColumn();
 
-            void removeTileColumnLeft();
+            void removeLeftTileColumn();
 
             void addTileRowUp();
 
             void addTileRowDown();
 
-            void removeTileRowUp();
+            void removeTopTileRow();
 
-            void removeTileRowDown();
+            void removeBottomTileRow();
 
             void addBorder();
 

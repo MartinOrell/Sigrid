@@ -33,12 +33,12 @@ namespace sigrid{
 
             void addColumnRight(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight);
             void addColumnLeft(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight);
-            void removeColumnRight(const bool& isLeftToRight);
-            void removeColumnLeft(const bool& isLeftToRight);
+            void removeRightColumn(const bool& isLeftToRight);
+            void removeLeftColumn(const bool& isLeftToRight);
             void addRowUp(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
             void addRowDown(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
-            void removeRowUp(const bool& isTopToBottom);
-            void removeRowDown(const bool& isTopToBottom);
+            void removeTopRow(const bool& isTopToBottom);
+            void removeBottomRow(const bool& isTopToBottom);
 
             void clear();
 

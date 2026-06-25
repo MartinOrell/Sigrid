@@ -215,7 +215,7 @@ bool Sigrid2DMap<T>::addRowDown(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeColumnLeft(){
+bool Sigrid2DMap<T>::removeLeftColumn(){
 
     if(m_columns < 2){
         return false;
@@ -260,7 +260,7 @@ bool Sigrid2DMap<T>::removeColumnLeft(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeColumnRight(){
+bool Sigrid2DMap<T>::removeRightColumn(){
 
     if(m_columns < 2){
         return false;
@@ -280,7 +280,7 @@ bool Sigrid2DMap<T>::removeColumnRight(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeRowUp(){
+bool Sigrid2DMap<T>::removeTopRow(){
 
     if(m_rows < 2){
         return false;
@@ -324,7 +324,7 @@ bool Sigrid2DMap<T>::removeRowUp(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeRowDown(){
+bool Sigrid2DMap<T>::removeBottomRow(){
 
     if(m_rows < 2){
         return false;

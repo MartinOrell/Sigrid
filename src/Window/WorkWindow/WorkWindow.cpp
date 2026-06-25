@@ -927,7 +927,7 @@ void WorkWindow::addTileColumnLeft(){
     board.addTileColumnLeft();
 }
 
-void WorkWindow::removeTileColumnRight(){
+void WorkWindow::removeRightTileColumn(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -935,10 +935,10 @@ void WorkWindow::removeTileColumnRight(){
     }
     auto& board = board_o.value().get();
 
-    board.removeTileColumnRight();
+    board.removeRightTileColumn();
 }
 
-void WorkWindow::removeTileColumnLeft(){
+void WorkWindow::removeLeftTileColumn(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -946,7 +946,7 @@ void WorkWindow::removeTileColumnLeft(){
     }
     auto& board = board_o.value().get();
 
-    board.removeTileColumnLeft();
+    board.removeLeftTileColumn();
 }
 
 void WorkWindow::addTileRowUp(){
@@ -971,7 +971,7 @@ void WorkWindow::addTileRowDown(){
     board.addTileRowDown();
 }
 
-void WorkWindow::removeTileRowUp(){
+void WorkWindow::removeTopTileRow(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -979,10 +979,10 @@ void WorkWindow::removeTileRowUp(){
     }
     auto& board = board_o.value().get();
 
-    board.removeTileRowUp();
+    board.removeTopTileRow();
 }
 
-void WorkWindow::removeTileRowDown(){
+void WorkWindow::removeBottomTileRow(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -990,7 +990,7 @@ void WorkWindow::removeTileRowDown(){
     }
     auto& board = board_o.value().get();
 
-    board.removeTileRowDown();
+    board.removeBottomTileRow();
 }
 
 void WorkWindow::addBoardBorder(){

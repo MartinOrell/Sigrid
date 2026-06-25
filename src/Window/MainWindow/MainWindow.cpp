@@ -66,13 +66,13 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Action ctrlDownKeyTool(ActionType::AddTileRowDown{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Down, std::move(ctrlDownKeyTool));
 
-    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveTileColumnRight{});
+    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveRightTileColumn{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Left, std::move(ctrlShiftLeftKeyTool));
-    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveTileColumnLeft{});
+    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveLeftTileColumn{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Right, std::move(ctrlShiftRightKeyTool));
-    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveTileRowDown{});
+    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveBottomTileRow{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Up, std::move(ctrlShiftUpKeyTool));
-    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveTileRowUp{});
+    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveTopTileRow{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>();
@@ -651,12 +651,12 @@ void MainWindow::handleAction(const sigrid::Action action){
         addTileColumnLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTileColumnRight>(action)){
-        removeTileColumnRight();
+    else if(std::holds_alternative<ActionType::RemoveRightTileColumn>(action)){
+        removeRightTileColumn();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTileColumnLeft>(action)){
-        removeTileColumnLeft();
+    else if(std::holds_alternative<ActionType::RemoveLeftTileColumn>(action)){
+        removeLeftTileColumn();
         return;
     }
     else if(std::holds_alternative<ActionType::AddTileRowUp>(action)){
@@ -667,12 +667,12 @@ void MainWindow::handleAction(const sigrid::Action action){
         addTileRowDown();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTileRowUp>(action)){
-        removeTileRowUp();
+    else if(std::holds_alternative<ActionType::RemoveTopTileRow>(action)){
+        removeTopTileRow();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTileRowDown>(action)){
-        removeTileRowDown();
+    else if(std::holds_alternative<ActionType::RemoveBottomTileRow>(action)){
+        removeBottomTileRow();
         return;
     }
     else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
@@ -1375,21 +1375,21 @@ void MainWindow::addTileColumnLeft(){
     createGraphic();
 }
 
-void MainWindow::removeTileColumnRight(){
+void MainWindow::removeRightTileColumn(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeTileColumnRight();
+    m_workWindow->removeRightTileColumn();
     createGraphic();
 }
 
-void MainWindow::removeTileColumnLeft(){
+void MainWindow::removeLeftTileColumn(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeTileColumnLeft();
+    m_workWindow->removeLeftTileColumn();
     createGraphic();
 }
 
@@ -1411,21 +1411,21 @@ void MainWindow::addTileRowDown(){
     createGraphic();
 }
 
-void MainWindow::removeTileRowUp(){
+void MainWindow::removeTopTileRow(){
     if(!m_workWindow){
         return;
     }
     
-    m_workWindow->removeTileRowUp();
+    m_workWindow->removeTopTileRow();
     createGraphic();
 }
 
-void MainWindow::removeTileRowDown(){
+void MainWindow::removeBottomTileRow(){
     if(!m_workWindow){
         return;
     }
 
-    m_workWindow->removeTileRowDown();
+    m_workWindow->removeBottomTileRow();
     createGraphic();
 }
 

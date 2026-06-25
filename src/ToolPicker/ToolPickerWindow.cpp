@@ -283,7 +283,7 @@ void ToolPickerWindow::hideColorTools(){
     m_columns -= m_colorBlock.columns;
 
     for(int i = 0; i < m_colorBlock.columns; i++){
-        m_board.removeTileColumnLeft();
+        m_board.removeLeftTileColumn();
     }
 
     int imageWidth = m_board.getImageWidth();

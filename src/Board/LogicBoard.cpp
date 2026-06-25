@@ -354,8 +354,8 @@ bool LogicBoard::addTileColumnLeft(){
     return true;
 }
 
-bool LogicBoard::removeTileColumnRight(){
-    if(!m_tileLayer.removeColumnRight()){
+bool LogicBoard::removeRightTileColumn(){
+    if(!m_tileLayer.removeRightColumn()){
         return false;
     }
     int columnId = m_tileLayer.getNumColumns();
@@ -364,8 +364,8 @@ bool LogicBoard::removeTileColumnRight(){
     return true;
 }
 
-bool LogicBoard::removeTileColumnLeft(){
-    if(!m_tileLayer.removeColumnLeft()){
+bool LogicBoard::removeLeftTileColumn(){
+    if(!m_tileLayer.removeLeftColumn()){
         return false;
     }
     m_pieceLayer.removeColumn(0);
@@ -388,8 +388,8 @@ bool LogicBoard::addTileRowDown(){
     return m_tileLayer.addRowDown();
 }
 
-bool LogicBoard::removeTileRowUp(){
-    if(!m_tileLayer.removeRowUp()){
+bool LogicBoard::removeTopTileRow(){
+    if(!m_tileLayer.removeTopRow()){
         return false;
     }
     m_pieceLayer.removeRow(0);
@@ -399,8 +399,8 @@ bool LogicBoard::removeTileRowUp(){
     return true;
 }
 
-bool LogicBoard::removeTileRowDown(){
-    if(!m_tileLayer.removeRowDown()){
+bool LogicBoard::removeBottomTileRow(){
+    if(!m_tileLayer.removeBottomRow()){
         return false;
     }
     int rowId = m_tileLayer.getNumRows();

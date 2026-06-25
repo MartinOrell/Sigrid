@@ -884,11 +884,11 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
     redrawTexture();
 }
 
-void GraphicBoard::removeTileColumnRight(){
+void GraphicBoard::removeRightTileColumn(){
     if(!m_tileLayerPtr){
         return;
     }
-    m_tileLayerPtr->removeColumnRight(m_isLeftToRight);
+    m_tileLayerPtr->removeRightColumn(m_isLeftToRight);
     int columnId = m_tileLayerPtr->getNumColumns();
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->removeColumn(columnId);
@@ -920,11 +920,11 @@ void GraphicBoard::removeTileColumnRight(){
     redrawTexture();
 }
 
-void GraphicBoard::removeTileColumnLeft(){
+void GraphicBoard::removeLeftTileColumn(){
     if(!m_tileLayerPtr){
         return;
     }
-    m_tileLayerPtr->removeColumnLeft(m_isLeftToRight);
+    m_tileLayerPtr->removeLeftColumn(m_isLeftToRight);
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->removeColumn(0);
         m_pieceLayerPtr->moveEntitiesLeft(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
@@ -1038,12 +1038,12 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
     redrawTexture();
 }
 
-void GraphicBoard::removeTileRowUp(){
+void GraphicBoard::removeTopTileRow(){
 
     if(!m_tileLayerPtr){
         return;
     }
-    m_tileLayerPtr->removeRowUp(m_isLeftToRight);
+    m_tileLayerPtr->removeTopRow(m_isLeftToRight);
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->removeRow(0);
         m_pieceLayerPtr->moveEntitiesUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
@@ -1071,12 +1071,12 @@ void GraphicBoard::removeTileRowUp(){
     redrawTexture();
 }
 
-void GraphicBoard::removeTileRowDown(){
+void GraphicBoard::removeBottomTileRow(){
 
     if(!m_tileLayerPtr){
         return;
     }
-    m_tileLayerPtr->removeRowDown(m_isTopToBottom);
+    m_tileLayerPtr->removeBottomRow(m_isTopToBottom);
     int rowId = m_tileLayerPtr->getNumRows();
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->removeRow(rowId);

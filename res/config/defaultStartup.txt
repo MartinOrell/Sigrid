@@ -211,12 +211,12 @@ Menu: [
       ]
       "Insert Column Right" addTileColumnRight
       "Insert Column Left" addTileColumnLeft
-      "Remove Column Right" removeTileColumnRight
-      "Remove Column Left" removeTileColumnLeft
+      "Remove Right Column" removeRightTileColumn
+      "Remove Left Column" removeLeftTileColumn
       "Insert Row Up" addTileRowUp
       "Insert Row Down" addTileRowDown
-      "Remove Row Up" removeTileRowUp
-      "Remove Row Down" removeTileRowDown
+      "Remove Top Row" removeTopTileRow
+      "Remove Bottom Row" removeBottomTileRow
       ToggleBoardBorder [
         "Remove Border" removeBoardBorder
         "Add Border" addBoardBorder

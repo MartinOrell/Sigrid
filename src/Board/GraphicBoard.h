@@ -112,13 +112,13 @@ namespace sigrid{
 
             void addTileColumnRight(const std::vector<int>& repeatTileColorIds);
             void addTileColumnLeft(const std::vector<int>& repeatTileColorIds);
-            void removeTileColumnRight();
-            void removeTileColumnLeft();
+            void removeRightTileColumn();
+            void removeLeftTileColumn();
 
             void addTileRowUp(const std::vector<int>& repeatTileColorIds);
             void addTileRowDown(const std::vector<int>& repeatTileColorIds);
-            void removeTileRowUp();
-            void removeTileRowDown();
+            void removeTopTileRow();
+            void removeBottomTileRow();
 
             void flip();
 

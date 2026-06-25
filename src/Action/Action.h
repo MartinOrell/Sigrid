@@ -82,12 +82,12 @@ namespace sigrid{
         };
         struct AddTileColumnRight{};
         struct AddTileColumnLeft{};
-        struct RemoveTileColumnRight{};
-        struct RemoveTileColumnLeft{};
+        struct RemoveRightTileColumn{};
+        struct RemoveLeftTileColumn{};
         struct AddTileRowUp{};
         struct AddTileRowDown{};
-        struct RemoveTileRowUp{};
-        struct RemoveTileRowDown{};
+        struct RemoveTopTileRow{};
+        struct RemoveBottomTileRow{};
         struct AddBoardBorder{};
         struct RemoveBoardBorder{};
         struct AddTurnToken{};
@@ -146,12 +146,12 @@ namespace sigrid{
         ActionType::SetCoordinateSize,
         ActionType::AddTileColumnRight,
         ActionType::AddTileColumnLeft,
-        ActionType::RemoveTileColumnRight,
-        ActionType::RemoveTileColumnLeft,
+        ActionType::RemoveRightTileColumn,
+        ActionType::RemoveLeftTileColumn,
         ActionType::AddTileRowUp,
         ActionType::AddTileRowDown,
-        ActionType::RemoveTileRowUp,
-        ActionType::RemoveTileRowDown,
+        ActionType::RemoveTopTileRow,
+        ActionType::RemoveBottomTileRow,
         ActionType::AddBoardBorder,
         ActionType::RemoveBoardBorder,
         ActionType::AddTurnToken,
