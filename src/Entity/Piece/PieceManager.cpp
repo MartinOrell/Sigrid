@@ -39,24 +39,33 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
 
     int colorId = logicPiece.getColorId();
 
-    if(colorId >= m_graphicPieces.size()){
+    auto color_o = m_colors.at(colorId);
+    if(color_o == std::nullopt){
+        return std::nullopt;
+    }
+
+    auto graphicPieces_o = m_graphicPieces.at(colorId);
+    if(graphicPieces_o == std::nullopt){
         return std::nullopt;
     }
 
     PieceIdentifier id;
     id.name = logicPiece.getNotation();
-    if(m_colors.at(colorId).isLight){
+
+    const auto& color = color_o.value().get();
+    if(color.isLight){
         id.style = "light";
     }
     else{
         id.style = "dark";
     }
 
+    auto& graphicPieces = graphicPieces_o.value().get();    
     {
-        auto it = m_graphicPieces.at(colorId).find(id);
+        auto it = graphicPieces.find(id);
 
-        if(it != m_graphicPieces.at(colorId).end()){
-            return m_graphicPieces.at(colorId).at(id);
+        if(it != graphicPieces.end()){
+            return graphicPieces.at(id);
         }
     }
 
@@ -68,8 +77,8 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
 
         sf::Image newImage{it->second};
 
-        sf::Color lightModifier = sf::Color(m_colors.at(colorId).lightModifier);
-        sf::Color darkModifier = sf::Color(m_colors.at(colorId).darkModifier);
+        sf::Color lightModifier = sf::Color(color.lightModifier);
+        sf::Color darkModifier = sf::Color(color.darkModifier);
 
         for(unsigned int x = 0; x < newImage.getSize().x; x++){
             for(unsigned int y = 0; y < newImage.getSize().y; y++){
@@ -87,10 +96,15 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
         }
 
         sf::Texture newTexture{newImage};
-        m_pieceTextures.at(colorId).insert(std::pair{id, newTexture});
+        auto pieceTexture_o = m_pieceTextures.at(colorId);
+        if(pieceTexture_o == std::nullopt){
+            return std::nullopt;
+        }
+        auto& pieceTextures = pieceTexture_o.value().get();
 
-        m_graphicPieces.at(colorId).insert({id, GraphicPiece{m_pieceSize, &(m_pieceTextures.at(colorId).at(id))}});
+        pieceTextures.insert(std::pair{id, newTexture});
+        graphicPieces.insert({id, GraphicPiece{m_pieceSize, &(pieceTextures.at(id))}});
     }
 
-    return m_graphicPieces.at(colorId).at(id);
+    return graphicPieces.at(id);
 }

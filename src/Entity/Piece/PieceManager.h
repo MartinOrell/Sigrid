@@ -1,8 +1,9 @@
 #pragma once
 
 #include <map>
-#include <vector>
 #include <SFML/Graphics/Texture.hpp>
+
+#include "../../List/SigridVector.h"
 #include "LogicPiece.h"
 #include "GraphicPiece.h"
 #include "PieceColor.h"
@@ -22,9 +23,9 @@ namespace sigrid{
         private:
             std::map<PieceIdentifier, std::string> m_pieceImageFilenames;
 
-            std::vector<PieceColor> m_colors;
-            std::vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
-            std::vector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
+            SigridVector<PieceColor> m_colors;
+            SigridVector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
+            SigridVector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
 
             sf::Vector2u m_pieceSize;
             
