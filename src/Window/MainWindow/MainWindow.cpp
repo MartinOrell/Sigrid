@@ -239,7 +239,15 @@ void MainWindow::createGraphic(){
             m_layout.setPxIfGreater(1, 120.f);
         }
     }
-    m_layout.setPx(2, m_layout.getPx(1) + m_piecePickerToBoardGap);
+
+    {
+        auto px1_o = m_layout.getPx(1);
+        if(px1_o != std::nullopt){
+            float px1 = px1_o.value();
+            float px2 = px1 + m_piecePickerToBoardGap;
+            m_layout.setPx(2, px2);
+        }
+    }
 
     if(m_menu){
         auto size_o = m_layout.getSize(LayoutItem::MENU);

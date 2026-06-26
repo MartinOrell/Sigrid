@@ -27,16 +27,16 @@ namespace sigrid{
             void setToXCoord(const unsigned int& id, const int& x);
             void setToYCoord(const unsigned int& id, const int& y);
 
-            float getPx(const int& x);
-            float getPy(const int& y);
+            std::optional<float> getPx(const int& x) const;
+            std::optional<float> getPy(const int& y) const;
 
-            std::optional<sf::Vector2f> getTopLeftPosition(const unsigned int& id);
-            std::optional<sf::Vector2f> getCenterPosition(const unsigned int& id);
-            std::optional<sf::Vector2f> getSize(const unsigned int& id);
-            std::optional<sf::Vector2u> getSizeU(const unsigned int& id);
+            std::optional<sf::Vector2f> getTopLeftPosition(const unsigned int& id) const;
+            std::optional<sf::Vector2f> getCenterPosition(const unsigned int& id) const;
+            std::optional<sf::Vector2f> getSize(const unsigned int& id) const;
+            std::optional<sf::Vector2u> getSizeU(const unsigned int& id) const;
 
-            std::optional<float> getWidth(const int& fromX, const int& toX);
-            std::optional<float> getHeight(const int& fromY, const int& toY);
+            std::optional<float> getWidth(const int& fromX, const int& toX) const;
+            std::optional<float> getHeight(const int& fromY, const int& toY) const;
 
         private:
             SigridVector<float> m_xCoords;
