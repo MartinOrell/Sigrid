@@ -1,8 +1,9 @@
 #pragma once
 
-#include <map>
 #include <optional>
 #include <memory>
+
+#include "../List/SigridMap.h"
 #include "../Coord/Coord.h"
 #include "LogicEntity.h"
 #include "GraphicEntity.h"
@@ -47,10 +48,10 @@ namespace sigrid{
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            std::map<Coord, GraphicPiece> m_pieces;
-            std::map<Coord, GraphicCircle> m_circles;
-            std::map<Coord, GraphicArrow> m_arrows;
-            std::map<Coord, Icon> m_icons;
+            SigridMap<Coord, GraphicPiece> m_pieces;
+            SigridMap<Coord, GraphicCircle> m_circles;
+            SigridMap<Coord, GraphicArrow> m_arrows;
+            SigridMap<Coord, Icon> m_icons;
 
             sf::Vector2f m_pieceSize = {0.f, 0.f};
             float m_circleDiameter = 0.f;

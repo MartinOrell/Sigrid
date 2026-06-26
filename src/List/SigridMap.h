@@ -22,7 +22,9 @@ namespace sigrid{
             unsigned int size() const;
 
             typename std::map<TKey, TValue>::iterator begin();
+            typename std::map<TKey, TValue>::const_iterator begin() const;
             typename std::map<TKey, TValue>::iterator end();
+            typename std::map<TKey, TValue>::const_iterator end() const;
 
         private:
             

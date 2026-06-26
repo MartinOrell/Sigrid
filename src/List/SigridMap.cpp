@@ -72,6 +72,16 @@ typename std::map<TKey, TValue>::iterator SigridMap<TKey, TValue>::begin(){
 }
 
 template<typename TKey, typename TValue>
+typename std::map<TKey, TValue>::const_iterator SigridMap<TKey, TValue>::begin() const{
+    return m_map.cbegin();
+}
+
+template<typename TKey, typename TValue>
 typename std::map<TKey, TValue>::iterator SigridMap<TKey, TValue>::end(){
     return m_map.end();
+}
+
+template<typename TKey, typename TValue>
+typename std::map<TKey, TValue>::const_iterator SigridMap<TKey, TValue>::end() const{
+    return m_map.cend();
 }
