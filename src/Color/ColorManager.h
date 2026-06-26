@@ -1,8 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <SFML/Graphics/Color.hpp>
 #include <optional>
+
+#include "../List/SigridVector.h"
 
 namespace sigrid{
     class ColorManager{
@@ -14,7 +15,7 @@ namespace sigrid{
             std::optional<sf::Color> getTransparentColor(const int colorId) const;
 
         private:
-            std::vector<sf::Color> m_colors;
+            SigridVector<sf::Color> m_colors;
 
     };
 }

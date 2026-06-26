@@ -1,0 +1,61 @@
+#include "SigridVector.h"
+#include "SigridVector_contentTypes.h"
+// Any type used must be added in the SigridVector_contentTypes.h file
+// Reasoning being that I want this code in a cpp file
+// If this should work with any class, then it is possible by
+// renaming this file's extension to tpp and
+// including this file at the end of Sigrid2DList.h
+// Both includes above can then be removed from this file
+
+using namespace sigrid;
+
+template <typename T> 
+SigridVector<T>::SigridVector(){}
+
+template <typename T> 
+void SigridVector<T>::push_back(const T& value){
+    m_vector.push_back(value);
+}
+
+template<typename T>
+std::optional<std::reference_wrapper<T>> SigridVector<T>::at(const unsigned int& position){
+
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+
+    return m_vector.at(position);
+}
+
+template<typename T>
+const std::optional<std::reference_wrapper<const T>> SigridVector<T>::at(const unsigned int& position) const{
+    
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+    
+    return m_vector.at(position);
+}
+
+template<typename T>
+std::optional<std::reference_wrapper<T>> SigridVector<T>::at(const int& position){
+
+    if(position < 0){
+        return std::nullopt;
+    }
+    return at((unsigned int)position);
+}
+
+template<typename T>
+const std::optional<std::reference_wrapper<const T>> SigridVector<T>::at(const int& position) const{
+    
+    if(position < 0){
+        return std::nullopt;
+    }
+    return at((unsigned int)position);
+}
+
+template <typename T> 
+unsigned int SigridVector<T>::size() const{
+    return m_vector.size();
+}
