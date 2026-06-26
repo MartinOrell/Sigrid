@@ -5,7 +5,7 @@ using namespace sigrid;
 LogicArrows::LogicArrows(){}
 
 void LogicArrows::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
-    m_arrows.insert({coordPair, arrow});
+    m_arrows.insert(coordPair, arrow);
 }
             
 void LogicArrows::removeArrow(const CoordPair& coordPair){
@@ -13,16 +13,17 @@ void LogicArrows::removeArrow(const CoordPair& coordPair){
 }
             
 std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) const{
-    auto it = m_arrows.find(coordPair);
 
-    if(it == m_arrows.end()){
+    auto arrow_o = m_arrows.at(coordPair);
+
+    if(arrow_o == std::nullopt){
         return std::nullopt;
     }
-
-    return it->second;
+    return arrow_o.value().get();
 }
 
 void LogicArrows::removeColumn(const int& columnId){
+
     for(auto it = m_arrows.begin(); it != m_arrows.end();){
         if(it->first.from.x == columnId || it->first.to.x == columnId){
             it = m_arrows.erase(it);
@@ -77,7 +78,7 @@ void LogicArrows::moveArrowsRight(){
                 for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                     Coord from{x+1,y};
                     Coord to{it->first.to.x+1,it->first.to.y};
-                    m_arrows.insert({{from,to},it->second});
+                    m_arrows.insert({from,to},it->second);
                     m_arrows.erase(it);
                 }
             }
@@ -118,7 +119,7 @@ void LogicArrows::moveArrowsLeft(){
                 for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                     Coord from{x-1,y};
                     Coord to{it->first.to.x-1,it->first.to.y};
-                    m_arrows.insert({{from,to},it->second});
+                    m_arrows.insert({from,to},it->second);
                     m_arrows.erase(it);
                 }
             }
@@ -158,7 +159,7 @@ void LogicArrows::moveArrowsUp(){
                 for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                     Coord from{x,y-1};
                     Coord to{it->first.to.x,it->first.to.y-1};
-                    m_arrows.insert({{from,to},it->second});
+                    m_arrows.insert({from,to},it->second);
                     m_arrows.erase(it);
                 }
             }
@@ -199,7 +200,7 @@ void LogicArrows::moveArrowsDown(){
                 for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
                     Coord from{x,y+1};
                     Coord to{it->first.to.x,it->first.to.y+1};
-                    m_arrows.insert({{from,to},it->second});
+                    m_arrows.insert({from,to},it->second);
                     m_arrows.erase(it);
                 }
             }

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <map>
 #include <optional>
 
+#include "../../../List/SigridMap.h"
 #include "../../../Coord/CoordPair.h"
 #include "LogicArrow.h"
 
@@ -27,6 +27,6 @@ namespace sigrid{
 
             void clear();
         private:
-            std::map<CoordPair, LogicArrow> m_arrows;
+            SigridMap<CoordPair, LogicArrow> m_arrows;
     };
 }

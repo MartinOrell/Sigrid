@@ -12,9 +12,17 @@ namespace sigrid{
             SigridMap();
 
             std::optional<std::reference_wrapper<TValue>> insert(const TKey& key, const TValue& value);
+            void erase(const TKey& key);
+            typename std::map<TKey, TValue>::iterator erase(const typename std::map<TKey, TValue>::iterator& iterator);
+            void clear();
 
             std::optional<std::reference_wrapper<TValue>> at(const TKey& key);
             const std::optional<std::reference_wrapper<const TValue>> at(const TKey& key) const;
+
+            unsigned int size() const;
+
+            typename std::map<TKey, TValue>::iterator begin();
+            typename std::map<TKey, TValue>::iterator end();
 
         private:
             
