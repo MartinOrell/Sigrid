@@ -1,5 +1,5 @@
 #include "Sigrid2DList.h"
-#include "Sigrid2DList_contenTypes.h"
+#include "Sigrid2DList_contentTypes.h"
 // Any type used must be added in the Sigrid2DList_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
