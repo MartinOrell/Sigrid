@@ -1,10 +1,11 @@
 #pragma once
 
 #include <optional>
-#include <map>
 
 #include <string>
 #include <SFML/Graphics/Texture.hpp>
+
+#include "../../List/SigridMap.h"
 
 namespace sigrid{
 
@@ -15,7 +16,7 @@ namespace sigrid{
             std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
             
         private:
-            std::map<std::string, sf::Texture> m_textures;
+            SigridMap<std::string, sf::Texture> m_textures;
     };
 
 }
