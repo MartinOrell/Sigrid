@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "../../SigridRenderTexture/SigridRenderTexture.h"
 #include "../../Layout/LayoutGrid.h"
 #include "../../Board/Board.h"
