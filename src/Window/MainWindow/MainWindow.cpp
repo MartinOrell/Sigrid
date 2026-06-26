@@ -316,10 +316,16 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         handleAction(action);
     }
     else if(m_workWindow && m_workWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
-        Action action = m_workWindow->clicked(*usedToolPtr, m_mouse.getPressPosition(button), scaledPosition);
-        handleAction(action);
-        m_window.setTitle(m_workWindow->getName());
+
+        auto pressPosition_o = m_mouse.getPressPosition(button);
+        if(pressPosition_o != std::nullopt){
+            auto& pressPosition = pressPosition_o.value().get();
+
+            sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
+            Action action = m_workWindow->clicked(*usedToolPtr, pressPosition, scaledPosition);
+            handleAction(action);
+            m_window.setTitle(m_workWindow->getName());
+        }
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
         //Currently clicking inside toolWindow does nothing
@@ -402,7 +408,11 @@ void MainWindow::mouseMove(const sf::Vector2i& position){
         for(int i = 0; i < 5; i++){
             sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(buttons[i]);
             if(m_mouse.isPressed(buttons[i])){
-                m_workWindow->dragMouse(*usedToolPtr, m_mouse.getPressPosition(buttons[i]), scaledPosition);
+                auto pressPosition_o = m_mouse.getPressPosition(buttons[i]);
+                if(pressPosition_o != std::nullopt){
+                    auto& pressPosition = pressPosition_o.value().get();
+                    m_workWindow->dragMouse(*usedToolPtr, pressPosition, scaledPosition);
+                }
             }
         }
     }

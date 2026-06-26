@@ -3,8 +3,10 @@
 #include "SigridMap.h"
 
 #include <string>
+#include <optional>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Window/Mouse.hpp>
 
 #include "../Coord/Coord.h"
 #include "../Coord/CoordPair.h"
@@ -30,3 +32,4 @@ template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicCircle>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicArrow>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicIcon>;
+template class sigrid::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>>;

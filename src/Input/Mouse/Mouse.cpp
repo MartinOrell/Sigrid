@@ -2,36 +2,41 @@
 
 using namespace sigrid;
 
-Mouse::Mouse(){
+Mouse::Mouse(){}
 
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Left, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Right, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Middle, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Extra1, false});
-    m_isMouseButtonPressedMap.insert({sf::Mouse::Button::Extra2, false});
+const std::optional<std::reference_wrapper<const sf::Vector2f>> Mouse::getPressPosition(const sf::Mouse::Button& button) const{
+    
+    auto position_o = m_pressedPositions.at(button);
 
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Left, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Right, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Middle, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra1, {0,0}});
-    m_mouseButtonPressedPositionMap.insert({sf::Mouse::Button::Extra2, {0,0}});
-}
-
-sf::Vector2f Mouse::getPressPosition(const sf::Mouse::Button& button) const{
-    return m_mouseButtonPressedPositionMap.at(button);
+    if(position_o == std::nullopt){
+        return std::nullopt;
+    }
+    return position_o.value().get();
 }
 
 bool Mouse::isPressed(const sf::Mouse::Button& button) const{
-    return m_isMouseButtonPressedMap.at(button);
+    return m_pressedPositions.at(button) != std::nullopt;
 }
 
-void Mouse::press(const sf::Mouse::Button& button, const sf::Vector2f& position){
+void Mouse::press(const sf::Mouse::Button& button, const sf::Vector2f& pressPosition){
  
-    m_mouseButtonPressedPositionMap.at(button) = position;
-    m_isMouseButtonPressedMap.at(button) = true;
+    auto mappedPosition_o = m_pressedPositions.at(button);
+
+    if(mappedPosition_o == std::nullopt){
+        m_pressedPositions.insert(button, pressPosition);
+        return;
+    }
+    auto& mappedPosition = mappedPosition_o.value().get();
+    mappedPosition = pressPosition;
 }
 
 void Mouse::release(const sf::Mouse::Button& button){
 
-    m_isMouseButtonPressedMap.at(button) = false;
+    auto position_o = m_pressedPositions.at(button);
+
+    if(position_o == std::nullopt){
+        return;
+    }
+    auto& position = position_o.value().get();
+    position = std::nullopt;
 }
