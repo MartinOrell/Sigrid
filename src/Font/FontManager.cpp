@@ -7,16 +7,24 @@ using namespace sigrid;
 FontManager::FontManager(){};
 
 std::optional<sf::Font*> FontManager::getFontPtr(const std::string& filename){
-    auto it = m_fonts.find(filename);
-    if(it == m_fonts.end()){
-        sf::Font newFont;
-        if(!newFont.openFromFile(filename)){
-            std::cerr << "FontManager: Failed to load font: "
-                << filename << std::endl;
-            return std::nullopt;
-        }
-        m_fonts.insert({filename,newFont});
-        return &(m_fonts.at(filename));
+
+    auto font_o = m_fonts.at(filename);
+    if(font_o != std::nullopt){
+        return &(font_o.value().get());
     }
-    return &(m_fonts.at(filename));
+
+    sf::Font newFont;
+    if(!newFont.openFromFile(filename)){
+        std::cerr << "FontManager: Failed to load font: "
+            << filename << std::endl;
+        return std::nullopt;
+    }
+
+    auto insertedFont_o = m_fonts.insert(filename, newFont);
+    if(insertedFont_o == std::nullopt){
+        std::cerr << "FontManager: failed inserting font: "
+            << filename << std::endl;
+        return std::nullopt;
+    }
+    return &(insertedFont_o.value().get());
 }

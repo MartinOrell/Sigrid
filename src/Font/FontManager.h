@@ -1,9 +1,10 @@
 #pragma once
 
-#include <map>
 #include <SFML/Graphics/Font.hpp>
 #include <string>
 #include <optional>
+
+#include "../List/SigridMap.h"
 
 namespace sigrid{
 
@@ -15,7 +16,7 @@ namespace sigrid{
 
         private:
 
-            std::map<std::string, sf::Font> m_fonts;
+            SigridMap<std::string, sf::Font> m_fonts;
 
     };
 }
