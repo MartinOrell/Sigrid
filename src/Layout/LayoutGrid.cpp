@@ -4,59 +4,71 @@ using namespace sigrid;
 
 LayoutGrid::LayoutGrid(){}
 
-void LayoutGrid::setPx(const int& x, const float& px){
+void LayoutGrid::setPx(const unsigned int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
     }
-    m_xCoords.at(x) = px;
+    auto& xCoord = m_xCoords.at(x).value().get();
+
+    xCoord = px;
 }
 
-void LayoutGrid::setPy(const int& y, const float& py){
+void LayoutGrid::setPy(const unsigned int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
     }
-    m_yCoords.at(y) = py;
+    auto& yCoord = m_yCoords.at(y).value().get();
+    
+    yCoord = py;
 }
 
-void LayoutGrid::setPxIfLess(const int& x, const float& px){
+void LayoutGrid::setPxIfLess(const unsigned int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
     }
-    if(px < m_xCoords.at(x)){
-        m_xCoords.at(x) = px;
+    auto& xCoord = m_xCoords.at(x).value().get();
+
+    if(px < xCoord){
+        xCoord = px;
     }
 }
 
-void LayoutGrid::setPyIfLess(const int& y, const float& py){
+void LayoutGrid::setPyIfLess(const unsigned int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
     }
-    if(py < m_yCoords.at(y)){
-        m_yCoords.at(y) = py;
+    auto& yCoord = m_yCoords.at(y).value().get();
+
+    if(py < yCoord){
+        yCoord = py;
     }
 }
 
-void LayoutGrid::setPxIfGreater(const int& x, const float& px){
+void LayoutGrid::setPxIfGreater(const unsigned int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
     }
-    if(px > m_xCoords.at(x)){
-        m_xCoords.at(x) = px;
+    auto& xCoord = m_xCoords.at(x).value().get();
+
+    if(px > xCoord){
+        xCoord = px;
     }
 }
 
-void LayoutGrid::setPyIfGreater(const int& y, const float& py){
+void LayoutGrid::setPyIfGreater(const unsigned int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
     }
-    if(py > m_yCoords.at(y)){
-        m_yCoords.at(y) = py;
+    auto& yCoord = m_yCoords.at(y).value().get();
+
+    if(py > yCoord){
+        yCoord = py;
     }
 }
 
@@ -114,18 +126,20 @@ void LayoutGrid::setToYCoord(const unsigned int& id, const int& y){
 
 float LayoutGrid::getPx(const int& x){
 
-    if(x >= m_xCoords.size()){
+    auto xCoord_o = m_xCoords.at(x);
+    if(xCoord_o == std::nullopt){
         return 0.f;
     }
-    return m_xCoords.at(x);
+    return xCoord_o.value().get();
 }
 
 float LayoutGrid::getPy(const int& y){
 
-    if(y >= m_yCoords.size()){
+    auto yCoord_o = m_yCoords.at(y);
+    if(yCoord_o == std::nullopt){
         return 0.f;
     }
-    return m_yCoords.at(y);
+    return yCoord_o.value().get();
 }
 
 std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& id){
@@ -136,52 +150,60 @@ std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& i
     }
 
     int fromX = it->second.from.x;
-    if(fromX >= m_xCoords.size()){
+    auto fromPx_o = m_xCoords.at(fromX);
+    if(fromPx_o == std::nullopt){
         return std::nullopt;
     }
-    float fromPx = m_xCoords.at(fromX);
 
     int fromY = it->second.from.y;
-    if(fromY >= m_yCoords.size()){
+    auto fromPy_o = m_yCoords.at(fromY);
+    if(fromPy_o == std::nullopt){
         return std::nullopt;
     }
-    float fromPy = m_yCoords.at(fromY);
+
+    const float& fromPx = fromPx_o.value().get();
+    const float& fromPy = fromPy_o.value().get();
 
     return sf::Vector2f{fromPx, fromPy};
 }
 
 std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id){
+
     auto it = m_objects.find(id);
     if(it == m_objects.end()){
         return std::nullopt;
     }
 
     int fromX = it->second.from.x;
-    if(fromX >= m_xCoords.size()){
+    auto fromPx_o = m_xCoords.at(fromX);
+    if(fromPx_o == std::nullopt){
         return std::nullopt;
     }
-    float fromPx = m_xCoords.at(fromX);
-
-    int toX = it->second.to.x;
-    if(toX >= m_xCoords.size()){
-        return std::nullopt;
-    }
-    float toPx = m_xCoords.at(toX);
 
     int fromY = it->second.from.y;
-    if(fromY >= m_yCoords.size()){
+    auto fromPy_o = m_yCoords.at(fromY);
+    if(fromPy_o == std::nullopt){
         return std::nullopt;
     }
-    float fromPy = m_yCoords.at(fromY);
+
+    int toX = it->second.to.x;
+    auto toPx_o = m_xCoords.at(toX);
+    if(toPx_o == std::nullopt){
+        return std::nullopt;
+    }
 
     int toY = it->second.to.y;
-    if(toY >= m_yCoords.size()){
+    auto toPy_o = m_yCoords.at(toY);
+    if(toPy_o == std::nullopt){
         return std::nullopt;
     }
-    float toPy = m_yCoords.at(toY);
+
+    const float& fromPx = fromPx_o.value().get();
+    const float& fromPy = fromPy_o.value().get();
+    const float& toPx = toPx_o.value().get();
+    const float& toPy = toPy_o.value().get();
 
     float px = fromPx + (toPx - fromPx)/2.f;
-
     float py = fromPy + (toPy - fromPy)/2.f;
 
     return sf::Vector2f{px, py};
@@ -195,40 +217,22 @@ std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id){
     }
 
     int fromX = it->second.from.x;
-    if(fromX >= m_xCoords.size()){
-        return std::nullopt;
-    }
-    float fromPx = m_xCoords.at(fromX);
-
     int toX = it->second.to.x;
-    if(toX >= m_xCoords.size()){
+
+    auto width_o = getWidth(fromX, toX);
+    if(width_o == std::nullopt){
         return std::nullopt;
     }
-    float toPx = m_xCoords.at(toX);
-
-    float width = toPx - fromPx;
-
-    if(width < 0){
-        return std::nullopt;
-    }
+    const float width = width_o.value();
 
     int fromY = it->second.from.y;
-    if(fromY >= m_yCoords.size()){
-        return std::nullopt;
-    }
-    float fromPy = m_yCoords.at(fromY);
-
     int toY = it->second.to.y;
-    if(toY >= m_yCoords.size()){
+
+    auto height_o = getHeight(fromY, toY);
+    if(height_o == std::nullopt){
         return std::nullopt;
     }
-    float toPy = m_yCoords.at(toY);
-
-    float height = toPy - fromPy;
-
-    if(height < 0){
-        return std::nullopt;
-    }
+    const float height = height_o.value();
 
     return sf::Vector2f{width, height};
 }
@@ -244,28 +248,48 @@ std::optional<sf::Vector2u> LayoutGrid::getSizeU(const unsigned int& id){
 
 std::optional<float> LayoutGrid::getWidth(const int& fromX, const int& toX){
 
-    if(fromX >= m_xCoords.size()){
-        return std::nullopt;
-    }
-    if(toX >= m_xCoords.size()){
+    auto fromPx_o = m_xCoords.at(fromX);
+    if(fromPx_o == std::nullopt){
         return std::nullopt;
     }
 
-    float fromPx = m_xCoords.at(fromX);
-    float toPx = m_xCoords.at(toX);
-    return toPx - fromPx;
+    auto toPx_o = m_xCoords.at(toX);
+    if(toPx_o == std::nullopt){
+        return std::nullopt;
+    }
+
+    const float& fromPx = fromPx_o.value().get();
+    const float& toPx = toPx_o.value().get();
+
+    const float width = toPx - fromPx;
+
+    if(width < 0.f){
+        return std::nullopt;
+    }
+
+    return width;
 }
 
 std::optional<float> LayoutGrid::getHeight(const int& fromY, const int& toY){
 
-    if(fromY >= m_yCoords.size()){
-        return std::nullopt;
-    }
-    if(toY >= m_yCoords.size()){
+    auto fromPy_o = m_yCoords.at(fromY);
+    if(fromPy_o == std::nullopt){
         return std::nullopt;
     }
 
-    float fromPy = m_yCoords.at(fromY);
-    float toPy = m_yCoords.at(toY);
-    return toPy - fromPy;
+    auto toPy_o = m_yCoords.at(toY);
+    if(toPy_o == std::nullopt){
+        return std::nullopt;
+    }
+
+    const float& fromPy = fromPy_o.value().get();
+    const float& toPy = toPy_o.value().get();
+
+    const float height = toPy - fromPy;
+
+    if(height < 0.f){
+        return std::nullopt;
+    }
+
+    return height;
 }

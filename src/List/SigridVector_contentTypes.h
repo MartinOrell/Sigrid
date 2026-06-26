@@ -10,6 +10,7 @@
 
 // This class is only included by Sigrid2DMap.cpp
 // Add more templates below to support more types
+template class sigrid::SigridVector<float>;
 template class sigrid::SigridVector<sf::Color>;
 template class sigrid::SigridVector<sigrid::PieceColor>;
 template class sigrid::SigridVector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;

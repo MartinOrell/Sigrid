@@ -1,8 +1,9 @@
 #pragma once
 
 #include <optional>
-#include <vector>
 #include <map>
+
+#include "../List/SigridVector.h"
 #include "../Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
@@ -13,13 +14,13 @@ namespace sigrid{
         public:
             LayoutGrid();
 
-            void setPx(const int& x, const float& px);
-            void setPy(const int& y, const float& px);
+            void setPx(const unsigned int& x, const float& px);
+            void setPy(const unsigned int& y, const float& px);
 
-            void setPxIfLess(const int& x, const float& px);
-            void setPyIfLess(const int& y, const float& py);
-            void setPxIfGreater(const int& x, const float& px);
-            void setPyIfGreater(const int& y, const float& py);
+            void setPxIfLess(const unsigned int& x, const float& px);
+            void setPyIfLess(const unsigned int& y, const float& py);
+            void setPxIfGreater(const unsigned int& x, const float& px);
+            void setPyIfGreater(const unsigned int& y, const float& py);
 
             void setFromXCoord(const unsigned int& id, const int& x);
             void setFromYCoord(const unsigned int& id, const int& y);
@@ -38,8 +39,8 @@ namespace sigrid{
             std::optional<float> getHeight(const int& fromY, const int& toY);
 
         private:
-            std::vector<float> m_xCoords;
-            std::vector<float> m_yCoords;
+            SigridVector<float> m_xCoords;
+            SigridVector<float> m_yCoords;
             std::map<unsigned int, CoordPair> m_objects;
     };
 
