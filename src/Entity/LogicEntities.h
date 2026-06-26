@@ -1,8 +1,8 @@
 #pragma once
 
-#include <map>
 #include <optional>
 
+#include "../List/SigridMap.h"
 #include "../Coord/Coord.h"
 #include "LogicEntity.h"
 #include "Piece/LogicPiece.h"
@@ -32,9 +32,9 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
-            std::map<Coord, LogicPiece> m_pieces;
-            std::map<Coord, LogicCircle> m_circles;
-            std::map<Coord, LogicArrow> m_arrows;
-            std::map<Coord, LogicIcon> m_icons;
+            SigridMap<Coord, LogicPiece> m_pieces;
+            SigridMap<Coord, LogicCircle> m_circles;
+            SigridMap<Coord, LogicArrow> m_arrows;
+            SigridMap<Coord, LogicIcon> m_icons;
     };
 }

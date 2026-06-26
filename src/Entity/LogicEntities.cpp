@@ -8,16 +8,16 @@ LogicEntities::LogicEntities(){}
 
 void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
-        m_pieces.insert({coord, std::get<LogicPiece>(entity)});
+        m_pieces.insert(coord, std::get<LogicPiece>(entity));
     }
     else if(std::holds_alternative<LogicCircle>(entity)){
-        m_circles.insert({coord, std::get<LogicCircle>(entity)});
+        m_circles.insert(coord, std::get<LogicCircle>(entity));
     }
     else if(std::holds_alternative<LogicArrow>(entity)){
-        m_arrows.insert({coord, std::get<LogicArrow>(entity)});
+        m_arrows.insert(coord, std::get<LogicArrow>(entity));
     }
     else if(std::holds_alternative<LogicIcon>(entity)){
-        m_icons.insert({coord, std::get<LogicIcon>(entity)});
+        m_icons.insert(coord, std::get<LogicIcon>(entity));
     }
     else{
         std::cerr << "LogicEntities: Unable to add Entity" << std::endl;
@@ -33,37 +33,41 @@ void LogicEntities::removeEntity(const Coord& coord){
 }
 
 void LogicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord){
-    {
-        auto it = m_pieces.find(fromCoord);
-        if(it != m_pieces.end()){
-            m_pieces.insert({toCoord, it->second});
-            m_pieces.erase(fromCoord);
-            return;
-        }
+
+    if(fromCoord == toCoord){
+        return;
     }
-    {
-        auto it = m_circles.find(fromCoord);
-        if(it != m_circles.end()){
-            m_circles.insert({toCoord, it->second});
-            m_circles.erase(fromCoord);
-            return;
-        }
+
+    auto piece_o = m_pieces.at(fromCoord);
+    if(piece_o != std::nullopt){
+        auto piece = piece_o.value().get();
+        m_pieces.insert(toCoord, piece);
+        m_pieces.erase(fromCoord);
+        return;
     }
-    {
-        auto it = m_arrows.find(fromCoord);
-        if(it != m_arrows.end()){
-            m_arrows.insert({toCoord, it->second});
-            m_arrows.erase(fromCoord);
-            return;
-        }
+
+    auto circle_o = m_circles.at(fromCoord);
+    if(circle_o != std::nullopt){
+        auto circle = circle_o.value().get();
+        m_circles.insert(toCoord, circle);
+        m_circles.erase(fromCoord);
+        return;
     }
-    {
-        auto it = m_icons.find(fromCoord);
-        if(it != m_icons.end()){
-            m_icons.insert({toCoord, it->second});
-            m_icons.erase(fromCoord);
-            return;
-        }
+
+    auto arrow_o = m_arrows.at(fromCoord);
+    if(arrow_o != std::nullopt){
+        auto arrow = arrow_o.value().get();
+        m_arrows.insert(toCoord, arrow);
+        m_arrows.erase(fromCoord);
+        return;
+    }
+
+    auto icon_o = m_icons.at(fromCoord);
+    if(icon_o != std::nullopt){
+        auto icon = icon_o.value().get();
+        m_icons.insert(toCoord, icon);
+        m_icons.erase(fromCoord);
+        return;
     }
 }
 
@@ -76,29 +80,24 @@ void LogicEntities::clear(){
 
 std::optional<LogicEntity> LogicEntities::getEntityAt(const Coord& coord) const{
 
-    {   
-        auto it = m_pieces.find(coord);
-        if(it != m_pieces.end()){
-            return it->second;
-        }
+    auto piece_o = m_pieces.at(coord);
+    if(piece_o != std::nullopt){
+        return piece_o.value().get();
     }
-    {   
-        auto it = m_circles.find(coord);
-        if(it != m_circles.end()){
-            return it->second;
-        }
+
+    auto circle_o = m_circles.at(coord);
+    if(circle_o != std::nullopt){
+        return circle_o.value().get();
     }
-    {   
-        auto it = m_arrows.find(coord);
-        if(it != m_arrows.end()){
-            return it->second;
-        }
+
+    auto arrow_o = m_arrows.at(coord);
+    if(arrow_o != std::nullopt){
+        return arrow_o.value().get();
     }
-    {   
-        auto it = m_icons.find(coord);
-        if(it != m_icons.end()){
-            return it->second;
-        }
+
+    auto icon_o = m_icons.at(coord);
+    if(icon_o != std::nullopt){
+        return icon_o.value().get();
     }
     return std::nullopt;
 }
@@ -207,20 +206,24 @@ template <typename T> void moveEntitiesRight_h(T& list){
 
     for(int x = maxX; x >= minX; x--){
         for(int y = minY; y <= maxY; y++){
-            auto it = list.find({x,y});
-            if(it != list.end()){
-                list.insert({{x+1,y},it->second});
-                list.erase(it);
+
+            auto entity_o = list.at({x,y});
+            if(entity_o == std::nullopt){
+                continue;
             }
+            auto entity = entity_o.value().get();
+
+            list.insert({x+1,y}, entity);
+            list.erase({x,y});
         }
     }
 }
 
 void LogicEntities::moveEntitiesRight(){
-    moveEntitiesRight_h<std::map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesRight_h<std::map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesRight_h<std::map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesRight_h<std::map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesRight_h<SigridMap<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesRight_h<SigridMap<Coord, LogicCircle>>(m_circles);
+    moveEntitiesRight_h<SigridMap<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesRight_h<SigridMap<Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesLeft_h(T& list){
@@ -251,20 +254,24 @@ template <typename T> void moveEntitiesLeft_h(T& list){
 
     for(int x = minX; x <= maxX; x++){
         for(int y = minY; y <= maxY; y++){
-            auto it = list.find({x,y});
-            if(it != list.end()){
-                list.insert({{x-1,y},it->second});
-                list.erase(it);
+
+            auto entity_o = list.at({x,y});
+            if(entity_o == std::nullopt){
+                continue;
             }
+            auto entity = entity_o.value().get();
+
+            list.insert({x-1,y}, entity);
+            list.erase({x,y});
         }
     }
 }
 
 void LogicEntities::moveEntitiesLeft(){
-    moveEntitiesLeft_h<std::map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesLeft_h<std::map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesLeft_h<std::map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesLeft_h<std::map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesLeft_h<SigridMap<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesLeft_h<SigridMap<Coord, LogicCircle>>(m_circles);
+    moveEntitiesLeft_h<SigridMap<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesLeft_h<SigridMap<Coord, LogicIcon>>(m_icons);
 }
 
 
@@ -296,19 +303,23 @@ template <typename T> void moveEntitiesUp_h(T& list){
 
     for(int y = minY; y <= maxY; y++){
         for(int x = minX; x <= maxX; x++){
-            auto it = list.find({x,y});
-            if(it != list.end()){
-                list.insert({{x,y-1},it->second});
-                list.erase(it);
+
+            auto entity_o = list.at({x,y});
+            if(entity_o == std::nullopt){
+                continue;
             }
+            auto entity = entity_o.value().get();
+
+            list.insert({x,y-1}, entity);
+            list.erase({x,y});
         }
     }
 }
 void LogicEntities::moveEntitiesUp(){
-    moveEntitiesUp_h<std::map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesUp_h<std::map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesUp_h<std::map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesUp_h<std::map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesUp_h<SigridMap<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesUp_h<SigridMap<Coord, LogicCircle>>(m_circles);
+    moveEntitiesUp_h<SigridMap<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesUp_h<SigridMap<Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesDown_h(T& list){
@@ -339,20 +350,23 @@ template <typename T> void moveEntitiesDown_h(T& list){
 
     for(int y = maxY; y >= minY; y--){
         for(int x = minX; x <= maxX; x++){
-            auto it = list.find({x,y});
-            if(it != list.end()){
-                list.insert({{x,y+1},it->second});
-                list.erase(it);
+            auto entity_o = list.at({x,y});
+            if(entity_o == std::nullopt){
+                continue;
             }
+            auto entity = entity_o.value().get();
+
+            list.insert({x,y+1}, entity);
+            list.erase({x,y});
         }
     }
 }
 
 void LogicEntities::moveEntitiesDown(){
-    moveEntitiesDown_h<std::map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesDown_h<std::map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesDown_h<std::map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesDown_h<std::map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesDown_h<SigridMap<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesDown_h<SigridMap<Coord, LogicCircle>>(m_circles);
+    moveEntitiesDown_h<SigridMap<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesDown_h<SigridMap<Coord, LogicIcon>>(m_icons);
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)
