@@ -98,8 +98,8 @@ void PdfHandler::savePdf(const std::vector<sigrid::Board>& boards){
                 const auto& blue = pixel.b;
 
                 ss << std::hex << std::setw(2) << static_cast<int>(red);
-                ss << std::hex << std::setw(2) << static_cast<int>(red);
-                ss << std::hex << std::setw(2) << static_cast<int>(red);
+                ss << std::hex << std::setw(2) << static_cast<int>(green);
+                ss << std::hex << std::setw(2) << static_cast<int>(blue);
             }
         }
         pdImage.asciiHexStream = ss.str();
