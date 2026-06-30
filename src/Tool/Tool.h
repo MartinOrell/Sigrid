@@ -12,7 +12,10 @@ namespace sigrid{
     class Tool{
         public:
 
+            Tool();
+            Tool(const Tool& src);
             Tool(const ToolContainer& data);
+            Tool& operator=(const Tool& rhs);
             const ToolSelection selection() const;
             LogicEntity getEntity() const;
             int getArrowColorId() const;

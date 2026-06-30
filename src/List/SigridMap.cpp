@@ -15,7 +15,7 @@ SigridMap<TKey, TValue>::SigridMap(){}
 template<typename TKey, typename TValue>
 std::optional<std::reference_wrapper<TValue>> SigridMap<TKey, TValue>::insert(const TKey& key, const TValue& value){
     
-    auto result = m_map.insert({key, value});
+    auto result = m_map.insert(std::pair{key, value});
     if(!result.second){
         return std::nullopt;
     }

@@ -22,9 +22,31 @@ sigrid::ToolSelection getTool(const std::string& toolname){
     }
 }
 
+Tool::Tool(){}
+
+Tool::Tool(const Tool& src){
+    *this = src;
+}
+
 Tool::Tool(const ToolContainer& data)
 : m_selection(getTool(data.selection))
 , m_arrowColorId(data.colorId){}
+
+Tool& Tool::operator=(const Tool& rhs){
+    m_selection = rhs.m_selection;
+    m_arrowColorId = rhs.m_arrowColorId;
+    
+    if(rhs.m_entity){
+        if(!m_entity){
+            m_entity = std::make_unique<LogicEntity>(*(rhs.m_entity));
+        }
+        else{
+            *m_entity = *(rhs.m_entity);
+        }
+    }
+
+    return *this;
+}
 
 const ToolSelection Tool::selection() const{
     return m_selection;

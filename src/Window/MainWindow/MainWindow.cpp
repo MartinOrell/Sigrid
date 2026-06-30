@@ -321,19 +321,27 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         if(pressPosition_o != std::nullopt){
             auto& pressPosition = pressPosition_o.value().get();
 
-            sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
-            Action action = m_workWindow->clicked(*usedToolPtr, pressPosition, scaledPosition);
-            handleAction(action);
-            m_window.setTitle(m_workWindow->getName());
+            auto usedToolPtr_o = m_inputHandler.getToolPtr(button);
+            if(usedToolPtr_o != std::nullopt){
+
+                Tool* usedToolPtr = usedToolPtr_o.value();
+                Action action = m_workWindow->clicked(*usedToolPtr, pressPosition, scaledPosition);
+                handleAction(action);
+                m_window.setTitle(m_workWindow->getName());
+            }
         }
     }
     else if(m_toolWindow && m_toolWindow->contains(scaledPosition)){
         //Currently clicking inside toolWindow does nothing
     }
     else if(m_toolPickerWindow && m_toolPickerWindow->contains(scaledPosition)){
-        sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(button);
-        Action action = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
-        handleAction(action);
+
+        auto usedToolPtr_o = m_inputHandler.getToolPtr(button);
+        if(usedToolPtr_o != std::nullopt){
+            Tool* usedToolPtr = usedToolPtr_o.value();
+            Action action = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
+            handleAction(action);
+        }
     }
     m_mouse.release(button);
 }
@@ -406,7 +414,13 @@ void MainWindow::mouseMove(const sf::Vector2i& position){
     if(m_workWindow && m_workWindow->contains(scaledPosition)){
         sf::Mouse::Button buttons[5] = {sf::Mouse::Button::Left, sf::Mouse::Button::Right, sf::Mouse::Button::Middle, sf::Mouse::Button::Extra1, sf::Mouse::Button::Extra2};
         for(int i = 0; i < 5; i++){
-            sigrid::Tool* usedToolPtr = m_inputHandler.getToolPtr(buttons[i]);
+
+            auto usedToolPtr_o = m_inputHandler.getToolPtr(buttons[i]);
+            if(usedToolPtr_o == std::nullopt){
+                continue;
+            }
+            Tool* usedToolPtr = usedToolPtr_o.value();
+
             if(m_mouse.isPressed(buttons[i])){
                 auto pressPosition_o = m_mouse.getPressPosition(buttons[i]);
                 if(pressPosition_o != std::nullopt){
