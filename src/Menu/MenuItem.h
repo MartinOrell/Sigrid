@@ -15,6 +15,8 @@ namespace sigrid{
 
         public:
             MenuItem();
+            MenuItem(const MenuItem& src);
+            MenuItem& operator=(const MenuItem& rhs);
 
             void createGraphic(const unsigned int height);
 

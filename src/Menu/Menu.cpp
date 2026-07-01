@@ -114,7 +114,14 @@ Action Menu::clicked(const sf::Vector2f& position){
         redrawTexture();
     }
 
-    return m_items.at(m_itemKeys.at(id.x).at(id.y)).getAction();
+    auto item_o = m_items.at(m_itemKeys.at(id.x).at(id.y));
+
+    if(item_o == std::nullopt){
+        return ActionType::None();
+    }
+    auto& item = item_o.value().get();
+
+    return item.getAction();
 }
 
 void Menu::pinMenu(){
@@ -208,7 +215,7 @@ void Menu::addHeader(const std::string& name){
     newItem.setFont(*(fontPtr_o.value()));
     newItem.setAction(action);
 
-    m_items.insert(std::pair{name, std::move(newItem)});
+    m_items.insert(name, std::move(newItem));
 
     std::vector<std::string> itemKeyList;
     itemKeyList.push_back(name);
@@ -248,7 +255,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     newItem.setFont(*(fontPtr_o.value()));
     newItem.setAction(action);
 
-    m_items.insert(std::pair{name, std::move(newItem)});
+    m_items.insert(name, std::move(newItem));
 
     m_itemKeys.at(headerIndex).push_back(name);
 
@@ -288,7 +295,7 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     newItem.setAction(action0);
     newItem.addToggle(text1, action1);
 
-    m_items.insert(std::pair{key, std::move(newItem)});
+    m_items.insert(key, std::move(newItem));
 
     m_itemKeys.at(headerIndex).push_back(key);
 
@@ -307,29 +314,31 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
 
 void Menu::toggleItem(const std::string& key){
 
-    auto it = m_items.find(key);
-    if(it == m_items.end()){
+    auto item_o = m_items.at(key);
+
+    if(item_o == std::nullopt){
         std::cerr << "Menu: Unable to toggle menu item. " << key << " not found" << std::endl;
         return;
     }
+    auto& item = item_o.value().get();
 
-    it->second.toggle();
+    item.toggle();
 
     redrawTexture();
 }
 
 void Menu::hideItem(const std::string& key){
 
-    auto it = m_items.find(key);
+    auto item_o = m_items.at(key);
 
-    if(it == m_items.end()){
+    if(item_o == std::nullopt){
         std::cerr << "Menu: Unable to hide menu item. " << key << " not found" << std::endl;
         return;
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
         for(auto it2 = m_itemKeys.at(i).begin(); it2 != m_itemKeys.at(i).end(); it2++){
-            if(*it2 == it->first){
+            if(*it2 == key){
                 m_itemKeys.at(i).erase(it2);
                 return;
             }
@@ -339,15 +348,15 @@ void Menu::hideItem(const std::string& key){
 
 void Menu::showItem(const std::string& key){
 
-    auto it = m_items.find(key);
+    auto item_o = m_items.at(key);
 
-    if(it == m_items.end()){
+    if(item_o == std::nullopt){
         std::cerr << "Menu: Unable to show menu item. " << key << " not found" << std::endl;
         return;
     }
 
     if(m_itemKeys.at(m_layoutItems.at(key).headerIndex).size() == 0){
-        m_itemKeys.at(m_layoutItems.at(key).headerIndex).push_back(it->first);
+        m_itemKeys.at(m_layoutItems.at(key).headerIndex).push_back(key);
         return;
     }
 
@@ -356,12 +365,12 @@ void Menu::showItem(const std::string& key){
         unsigned int cmpPriority = m_layoutItems.at(*it2).priority;
         if(priority > cmpPriority){
             if(it2+1 == m_itemKeys.at(m_layoutItems.at(key).headerIndex).end()){
-                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, it->first);
+                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, key);
                 return;
             }
             unsigned int nextcmpPriority = m_layoutItems.at(*(it2+1)).priority;
             if(priority < nextcmpPriority){
-                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, it->first);
+                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, key);
                 return;
             }
         }
@@ -390,7 +399,15 @@ void Menu::addHeaderGraphic(const unsigned int id){
         return;
     }
 
-    m_items.at(m_itemKeys.at(id).at(0)).createGraphic((unsigned int)m_lineHeight);
+    auto header_o = m_items.at(m_itemKeys.at(id).at(0));
+    if(header_o == std::nullopt){
+        std::cerr << "Menu: Unable to add header graphic. Header id "
+            << id << " not found" << std::endl;
+        return;
+    }
+    auto& header = header_o.value().get();
+
+    header.createGraphic((unsigned int)m_lineHeight);
     float posX;
     if(id == 0){
         if(m_isPinned){
@@ -401,10 +418,14 @@ void Menu::addHeaderGraphic(const unsigned int id){
         }
     }   
     else{
-        posX = m_items.at(m_itemKeys.at(id-1).at(0)).getPositionRight() + m_itemOffsetX;
+        auto leftHeader_o = m_items.at(m_itemKeys.at(id-1).at(0));
+        if(leftHeader_o != std::nullopt){
+            auto& leftHeader = leftHeader_o.value().get();
+            posX = leftHeader.getPositionRight() + m_itemOffsetX;
+        }
     }
     float posY = m_lineHeight/2.f;
-    m_items.at(m_itemKeys.at(id).at(0)).setPosition({posX,posY});
+    header.setPosition({posX,posY});
     if(m_showItems){
         redrawTexture();
     }
@@ -412,10 +433,25 @@ void Menu::addHeaderGraphic(const unsigned int id){
 
 void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex){
 
-    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)).createGraphic((unsigned int)m_lineHeight);
-    float posX = m_items.at(m_itemKeys.at(headerIndex).at(0)).getPositionLeft();
+    auto item_o = m_items.at(m_itemKeys.at(headerIndex).at(itemIndex));
+
+    if(item_o == std::nullopt){
+        std::cerr << "Menu: Unable to add item graphic. Item not found." << std::endl;
+        return;
+    }
+    auto& item = item_o.value().get();
+
+    auto header_o = m_items.at(m_itemKeys.at(headerIndex).at(0));
+    if(header_o == std::nullopt){
+        std::cerr << "Menu: Unable to add item graphic. Header not found." << std::endl;
+        return;
+    }
+    auto& header = header_o.value().get();
+
+    item.createGraphic((unsigned int)m_lineHeight);
+    float posX = header.getPositionLeft();
     float posY = itemIndex*m_lineHeight+m_lineHeight/2.f;
-    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)).setPosition({posX, posY});
+    item.setPosition({posX, posY});
     if(m_showItems){
         redrawTexture();
     }
@@ -456,7 +492,13 @@ void sigrid::Menu::redrawTexture(){
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
-        m_texture.draw(m_items.at(m_itemKeys.at(i).at(0)));
+        auto item_o = m_items.at(m_itemKeys.at(i).at(0));
+        if(item_o == std::nullopt){
+            std::cerr << "Menu: Missing header " << i << std::endl;
+            continue;
+        }
+        auto& item = item_o.value().get();
+        m_texture.draw(item);
     }
 
     if(m_showHeaderIndex == -1){
@@ -465,7 +507,14 @@ void sigrid::Menu::redrawTexture(){
     }
 
     for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        m_texture.draw(m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)));
+        auto item_o = m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i));
+        if(item_o == std::nullopt){
+            std::cerr << "Menu: Missing item "
+                << m_showHeaderIndex << " " << i << std::endl;
+            continue;
+        }
+        auto& item = item_o.value().get();
+        m_texture.draw(item);
     }
 
     m_texture.display();
@@ -490,7 +539,14 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
-        if(m_items.at(m_itemKeys.at(i).at(0)).isWithin(point, getTopPos(), getBottomPos())){
+        auto item_o = m_items.at(m_itemKeys.at(i).at(0));
+
+        if(item_o == std::nullopt){
+            return std::nullopt;
+        }
+        auto& item = item_o.value().get();
+
+        if(item.isWithin(point, getTopPos(), getBottomPos())){
             sigrid::Menu::PosIndex id{i,0};
             return id;
         }
@@ -500,10 +556,16 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
         return std::nullopt;
     }
 
-    assert(m_items.size()-1 >= m_showHeaderIndex);
-
     for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        if(m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)).isWithin(point, getTopPos(), getBottomPos())){
+
+        auto item_o = m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i));
+
+        if(item_o == std::nullopt){
+            continue;
+        }
+        auto& item = item_o.value().get();
+
+        if(item.isWithin(point, getTopPos(), getBottomPos())){
             sigrid::Menu::PosIndex id{m_showHeaderIndex,i};
             return id;
         }

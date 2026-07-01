@@ -21,6 +21,7 @@
 #include "../Entity/Shape/Circle/GraphicCircle.h"
 #include "../Entity/Shape/Arrow/GraphicArrow.h"
 #include "../Entity/Icon/LogicIcon.h"
+#include "../Menu/MenuItem.h"
 
 // This class is only included by SigridMap.cpp
 // Add more templates below to support more types
@@ -39,3 +40,4 @@ template class sigrid::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>>
 template class sigrid::SigridMap<sf::Mouse::Button, sigrid::Tool>;
 template class sigrid::SigridMap<sf::Keyboard::Key, sigrid::Action>;
 template class sigrid::SigridMap<unsigned int, sigrid::CoordPair>;
+template class sigrid::SigridMap<std::string, sigrid::MenuItem>;

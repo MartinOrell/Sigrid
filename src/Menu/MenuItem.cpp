@@ -1,5 +1,7 @@
 #include "MenuItem.h"
 
+#include <iostream>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -7,9 +9,37 @@ using namespace sigrid;
 
 MenuItem::MenuItem(){}
 
+MenuItem::MenuItem(const MenuItem& src){
+    *this = src;
+}
+
+MenuItem& MenuItem::operator=(const MenuItem& rhs){
+
+    m_name = rhs.m_name;
+    m_shape = rhs.m_shape;
+    m_action = rhs.m_action;
+
+    if(rhs.m_textPtr){
+        if(!m_textPtr){
+            m_textPtr = std::make_unique<sf::Text>(*(rhs.m_textPtr));
+        }
+        else{
+            *m_textPtr = *(rhs.m_textPtr);
+        }
+    }
+
+    m_textOffset = rhs.m_textOffset;
+    m_isToggled = rhs.m_isToggled;
+    m_toggledName = rhs.m_toggledName;
+    m_toggledAction = rhs.m_toggledAction;
+
+    return *this;
+}
+
 void MenuItem::createGraphic(const unsigned int height){
     
     if(!m_textPtr){
+        std::cerr << "MenuItem " << m_name << ": Failed creating graphic: missing textPtr (most likely font is missing)" << std::endl;
         return;
     }
 

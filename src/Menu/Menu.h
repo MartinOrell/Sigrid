@@ -8,6 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "../Action/Action.h"
 
+#include "../List/SigridMap.h"
 #include "../SigridRenderTexture/SigridRenderTexture.h"
 #include "MenuItem.h"
 
@@ -89,7 +90,7 @@ namespace sigrid{
 
             MenuItem m_superHeader;
 
-            std::map<std::string, MenuItem> m_items;
+            SigridMap<std::string, MenuItem> m_items;
 
             std::vector<std::vector<std::string>> m_itemKeys;
 
