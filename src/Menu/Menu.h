@@ -10,12 +10,12 @@
 #include "../Action/Action.h"
 
 #include "../SigridRenderTexture/SigridRenderTexture.h"
+#include "MenuItem.h"
 
 namespace sigrid{
 
     class MenuContainer;
     class FontManager;
-    class MenuItem;
 
     class Menu: public sf::Drawable{
         public:
@@ -88,7 +88,7 @@ namespace sigrid{
 
             SigridRenderTexture m_texture;
 
-            std::unique_ptr<MenuItem> m_superHeaderPtr;
+            MenuItem m_superHeader;
 
             std::map<std::string, std::unique_ptr<MenuItem>> m_items;
 

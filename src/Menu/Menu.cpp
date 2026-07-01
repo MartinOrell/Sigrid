@@ -3,7 +3,6 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include "MenuContainer.h"
 #include "../Font/FontManager.h"
-#include "MenuItem.h"
 
 #include <iostream>
 
@@ -104,10 +103,10 @@ Action Menu::clicked(const sf::Vector2f& position){
     }
     sigrid::Menu::PosIndex id = itemId_o.value();
     if(id.x == -1){
-        if(!m_superHeaderPtr || m_isPinned){
+        if(m_isPinned){
             return ActionType::None();
         }
-        return m_superHeaderPtr->getAction();
+        return m_superHeader.getAction();
     }
 
     if(id.y > 0){
@@ -132,9 +131,7 @@ void Menu::showMenu(){
 
     m_showItems = true;
     m_showHeaderIndex = -1;
-    if(m_superHeaderPtr){
-        m_superHeaderPtr->toggle();
-    }
+    m_superHeader.toggle();
     
     redrawTexture();
 }
@@ -143,9 +140,7 @@ void Menu::hideMenu(){
     
     m_showItems = false;
     m_showHeaderIndex = -1;
-    if(m_superHeaderPtr){
-        m_superHeaderPtr->toggle();
-    }
+    m_superHeader.toggle();
 
     redrawTexture();
 }
@@ -179,11 +174,10 @@ void Menu::addSuperHeader(const std::string& name){
 
     sigrid::ActionType::ShowMenu action0;
     sigrid::ActionType::HideMenu action1;
-    m_superHeaderPtr = std::make_unique<MenuItem>();
-    m_superHeaderPtr->setName(name);
-    m_superHeaderPtr->setFont(*(fontPtr_o.value()));
-    m_superHeaderPtr->setAction(action0);
-    m_superHeaderPtr->addToggle(name, action1);
+    m_superHeader.setName(name);
+    m_superHeader.setFont(*(fontPtr_o.value()));
+    m_superHeader.setAction(action0);
+    m_superHeader.addToggle(name, action1);
 
     if(m_texture.isInitialized()){
         addSuperHeaderGraphic();
@@ -382,16 +376,11 @@ void Menu::addSuperHeaderGraphic(){
         std::cerr << "Menu: Unable to add super header graphic, menu texture does not exist" << std::endl;
         return;
     }
-
-    if(!m_superHeaderPtr){
-        std::cerr << "Menu: Unable to add super header graphic, super header does not exist" << std::endl;
-        return;
-    }
     
-    m_superHeaderPtr->createGraphic((unsigned int)m_lineHeight);
+    m_superHeader.createGraphic((unsigned int)m_lineHeight);
     float posX = m_itemOffsetX;
     float posY = m_lineHeight/2.f;
-    m_superHeaderPtr->setPosition({posX, posY});
+    m_superHeader.setPosition({posX, posY});
     redrawTexture();
 }
 
@@ -409,7 +398,7 @@ void Menu::addHeaderGraphic(const unsigned int id){
             posX = m_itemOffsetX;
         }
         else{
-            posX = m_superHeaderPtr->getPositionRight() + m_itemOffsetX;
+            posX = m_superHeader.getPositionRight() + m_itemOffsetX;
         }
     }   
     else{
@@ -458,8 +447,8 @@ void sigrid::Menu::redrawTexture(){
 
     m_texture.clear();
 
-    if(!m_isPinned && m_superHeaderPtr){
-        m_texture.draw(*m_superHeaderPtr);
+    if(!m_isPinned){
+        m_texture.draw(m_superHeader);
     }
 
     if(!m_showItems){
@@ -492,7 +481,7 @@ float sigrid::Menu::getBottomPos(){
 }
 
 std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector2f& point){
-    if(m_superHeaderPtr && !m_isPinned && m_superHeaderPtr->isWithin(point, getTopPos(), getBottomPos())){
+    if(!m_isPinned && m_superHeader.isWithin(point, getTopPos(), getBottomPos())){
         sigrid::Menu::PosIndex id{-1,0};
         return id;
     }
