@@ -179,7 +179,10 @@ void Menu::addSuperHeader(const std::string& name){
 
     sigrid::ActionType::ShowMenu action0;
     sigrid::ActionType::HideMenu action1;
-    m_superHeaderPtr = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action0);
+    m_superHeaderPtr = std::make_unique<MenuItem>();
+    m_superHeaderPtr->setName(name);
+    m_superHeaderPtr->setFont(*(fontPtr_o.value()));
+    m_superHeaderPtr->setAction(action0);
     m_superHeaderPtr->addToggle(name, action1);
 
     if(m_texture.isInitialized()){
@@ -206,7 +209,10 @@ void Menu::addHeader(const std::string& name){
     int id = m_items.size();
     sigrid::ActionType::ToggleHeader action{id};    
 
-    auto newItem = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
+    auto newItem = std::make_unique<MenuItem>();
+    newItem->setName(name);
+    newItem->setFont(*(fontPtr_o.value()));
+    newItem->setAction(action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -243,7 +249,10 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>(name, *(fontPtr_o.value()), action);
+    auto newItem = std::make_unique<MenuItem>();
+    newItem->setName(name);
+    newItem->setFont(*(fontPtr_o.value()));
+    newItem->setAction(action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -279,7 +288,10 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>(text0, *(fontPtr_o.value()), action0);
+    auto newItem = std::make_unique<MenuItem>();
+    newItem->setName(text0);
+    newItem->setFont(*(fontPtr_o.value()));
+    newItem->setAction(action0);
 
     newItem->addToggle(text1, action1);
 

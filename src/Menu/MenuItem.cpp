@@ -5,28 +5,27 @@
 
 using namespace sigrid;
 
-MenuItem::MenuItem(const std::string& name, const sf::Font& font, const Action action)
-: m_name(name)
-, m_action(action)
-, m_text(font)
-, m_textOffset({15.f,5.f})
-, m_isToggled{false}{}
+MenuItem::MenuItem(){}
 
 void MenuItem::createGraphic(const unsigned int height){
     
+    if(!m_textPtr){
+        return;
+    }
+
     unsigned int characterSize = height-m_textOffset.y*2;
 
-    m_text.setCharacterSize(characterSize);
-    m_text.setFillColor(sf::Color(0,0,0));
+    m_textPtr->setCharacterSize(characterSize);
+    m_textPtr->setFillColor(sf::Color(0,0,0));
     if(m_isToggled){
-        m_text.setString(m_toggledName);
+        m_textPtr->setString(m_toggledName);
     }
     else{
-        m_text.setString(m_name);
+        m_textPtr->setString(m_name);
     }
 
-    sf::FloatRect rect = m_text.getLocalBounds();
-    m_text.setOrigin({0.f, (float)height/2.f+m_textOffset.y});
+    sf::FloatRect rect = m_textPtr->getLocalBounds();
+    m_textPtr->setOrigin({0.f, (float)height/2.f+m_textOffset.y});
 
     unsigned int shapeWidth = rect.size.x+2*m_textOffset.x;
     m_shape.setSize({(float)shapeWidth,(float)height});
@@ -36,9 +35,25 @@ void MenuItem::createGraphic(const unsigned int height){
     m_shape.setOutlineThickness(-2.f);
 }
 
+void MenuItem::setName(const std::string& name){
+    m_name = name;
+}
+
+void MenuItem::setFont(const sf::Font& font){
+
+    if(!m_textPtr){
+        m_textPtr = std::make_unique<sf::Text>(font);
+        return;
+    }
+
+    m_textPtr->setFont(font);
+}
+
 void MenuItem::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
-    m_text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
+    if(m_textPtr){
+        m_textPtr->setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
+    }
 }
 
 void MenuItem::setAction(const Action& action){
@@ -47,9 +62,13 @@ void MenuItem::setAction(const Action& action){
 
 void MenuItem::setText(const std::string& text){
     
+    if(!m_textPtr){
+        return;
+    }
+
     m_name = text;
-    m_text.setString(text);
-    sf::FloatRect rect = m_text.getLocalBounds();
+    m_textPtr->setString(text);
+    sf::FloatRect rect = m_textPtr->getLocalBounds();
 
     float newHeight = m_shape.getSize().y;
     float newWidth = rect.size.x+2.f*m_textOffset.x;
@@ -108,13 +127,17 @@ void MenuItem::addToggle(const std::string& name, const Action& action){
 void MenuItem::toggle(){
     m_isToggled = !m_isToggled;
 
+    if(!m_textPtr){
+        return;
+    }
+
     if(m_isToggled){
-        m_text.setString(m_toggledName);
+        m_textPtr->setString(m_toggledName);
     }
     else{
-        m_text.setString(m_name);
+        m_textPtr->setString(m_name);
     }
-    sf::FloatRect rect = m_text.getLocalBounds();
+    sf::FloatRect rect = m_textPtr->getLocalBounds();
     
     float newHeight = m_shape.getSize().y;
     float newWidth = rect.size.x+2.f*m_textOffset.x;
@@ -123,5 +146,7 @@ void MenuItem::toggle(){
 
 void MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_shape);
-    target.draw(m_text);
+    if(m_textPtr){
+        target.draw(*m_textPtr);
+    }
 }

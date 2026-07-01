@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <SFML/Graphics/Text.hpp>
 #include "../Action/Action.h"
 
@@ -13,10 +14,12 @@ namespace sigrid{
     class MenuItem: public sf::Drawable{
 
         public:
-            MenuItem(const std::string& name, const sf::Font& font, const Action);
+            MenuItem();
 
             void createGraphic(const unsigned int height);
 
+            void setName(const std::string& name);
+            void setFont(const sf::Font& font);
             void setPosition(const sf::Vector2f& position);
             void setAction(const Action& action);
             void setText(const std::string& text);
@@ -32,15 +35,15 @@ namespace sigrid{
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            std::string m_name;
+            std::string m_name = "";
             sf::RectangleShape m_shape;
             Action m_action;
 
-            sf::Text m_text;
-            sf::Vector2f m_textOffset;
+            std::unique_ptr<sf::Text> m_textPtr;
+            sf::Vector2f m_textOffset = {15.f,5.f};
 
-            bool m_isToggled;
-            std::string m_toggledName;
+            bool m_isToggled = false;
+            std::string m_toggledName = "";
             Action m_toggledAction;
     };
 
