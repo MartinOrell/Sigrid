@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
-#include <memory>
 #include <map>
 #include <vector>
 
@@ -90,7 +89,7 @@ namespace sigrid{
 
             MenuItem m_superHeader;
 
-            std::map<std::string, std::unique_ptr<MenuItem>> m_items;
+            std::map<std::string, MenuItem> m_items;
 
             std::vector<std::vector<std::string>> m_itemKeys;
 

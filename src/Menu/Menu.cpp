@@ -114,7 +114,7 @@ Action Menu::clicked(const sf::Vector2f& position){
         redrawTexture();
     }
 
-    return m_items.at(m_itemKeys.at(id.x).at(id.y))->getAction();
+    return m_items.at(m_itemKeys.at(id.x).at(id.y)).getAction();
 }
 
 void Menu::pinMenu(){
@@ -203,10 +203,10 @@ void Menu::addHeader(const std::string& name){
     int id = m_items.size();
     sigrid::ActionType::ToggleHeader action{id};    
 
-    auto newItem = std::make_unique<MenuItem>();
-    newItem->setName(name);
-    newItem->setFont(*(fontPtr_o.value()));
-    newItem->setAction(action);
+    MenuItem newItem;
+    newItem.setName(name);
+    newItem.setFont(*(fontPtr_o.value()));
+    newItem.setAction(action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -243,10 +243,10 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>();
-    newItem->setName(name);
-    newItem->setFont(*(fontPtr_o.value()));
-    newItem->setAction(action);
+    MenuItem newItem;
+    newItem.setName(name);
+    newItem.setFont(*(fontPtr_o.value()));
+    newItem.setAction(action);
 
     m_items.insert(std::pair{name, std::move(newItem)});
 
@@ -282,12 +282,11 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     assert(m_itemKeys.size()-1 >= headerIndex);
     assert(m_itemKeys.at(headerIndex).size() > 0);
 
-    auto newItem = std::make_unique<MenuItem>();
-    newItem->setName(text0);
-    newItem->setFont(*(fontPtr_o.value()));
-    newItem->setAction(action0);
-
-    newItem->addToggle(text1, action1);
+    MenuItem newItem;
+    newItem.setName(text0);
+    newItem.setFont(*(fontPtr_o.value()));
+    newItem.setAction(action0);
+    newItem.addToggle(text1, action1);
 
     m_items.insert(std::pair{key, std::move(newItem)});
 
@@ -314,7 +313,7 @@ void Menu::toggleItem(const std::string& key){
         return;
     }
 
-    it->second->toggle();
+    it->second.toggle();
 
     redrawTexture();
 }
@@ -391,7 +390,7 @@ void Menu::addHeaderGraphic(const unsigned int id){
         return;
     }
 
-    m_items.at(m_itemKeys.at(id).at(0))->createGraphic((unsigned int)m_lineHeight);
+    m_items.at(m_itemKeys.at(id).at(0)).createGraphic((unsigned int)m_lineHeight);
     float posX;
     if(id == 0){
         if(m_isPinned){
@@ -402,10 +401,10 @@ void Menu::addHeaderGraphic(const unsigned int id){
         }
     }   
     else{
-        posX = m_items.at(m_itemKeys.at(id-1).at(0))->getPositionRight() + m_itemOffsetX;
+        posX = m_items.at(m_itemKeys.at(id-1).at(0)).getPositionRight() + m_itemOffsetX;
     }
     float posY = m_lineHeight/2.f;
-    m_items.at(m_itemKeys.at(id).at(0))->setPosition({posX,posY});
+    m_items.at(m_itemKeys.at(id).at(0)).setPosition({posX,posY});
     if(m_showItems){
         redrawTexture();
     }
@@ -413,10 +412,10 @@ void Menu::addHeaderGraphic(const unsigned int id){
 
 void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex){
 
-    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->createGraphic((unsigned int)m_lineHeight);
-    float posX = m_items.at(m_itemKeys.at(headerIndex).at(0))->getPositionLeft();
+    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)).createGraphic((unsigned int)m_lineHeight);
+    float posX = m_items.at(m_itemKeys.at(headerIndex).at(0)).getPositionLeft();
     float posY = itemIndex*m_lineHeight+m_lineHeight/2.f;
-    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex))->setPosition({posX, posY});
+    m_items.at(m_itemKeys.at(headerIndex).at(itemIndex)).setPosition({posX, posY});
     if(m_showItems){
         redrawTexture();
     }
@@ -457,7 +456,7 @@ void sigrid::Menu::redrawTexture(){
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
-        m_texture.draw(*m_items.at(m_itemKeys.at(i).at(0)));
+        m_texture.draw(m_items.at(m_itemKeys.at(i).at(0)));
     }
 
     if(m_showHeaderIndex == -1){
@@ -466,7 +465,7 @@ void sigrid::Menu::redrawTexture(){
     }
 
     for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        m_texture.draw(*m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)));
+        m_texture.draw(m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)));
     }
 
     m_texture.display();
@@ -491,7 +490,7 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
     }
 
     for(int i = 0; i < m_itemKeys.size(); i++){
-        if(m_items.at(m_itemKeys.at(i).at(0))->isWithin(point, getTopPos(), getBottomPos())){
+        if(m_items.at(m_itemKeys.at(i).at(0)).isWithin(point, getTopPos(), getBottomPos())){
             sigrid::Menu::PosIndex id{i,0};
             return id;
         }
@@ -504,7 +503,7 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
     assert(m_items.size()-1 >= m_showHeaderIndex);
 
     for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        if(m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i))->isWithin(point, getTopPos(), getBottomPos())){
+        if(m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i)).isWithin(point, getTopPos(), getBottomPos())){
             sigrid::Menu::PosIndex id{m_showHeaderIndex,i};
             return id;
         }
