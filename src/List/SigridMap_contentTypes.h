@@ -38,3 +38,4 @@ template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicIcon>;
 template class sigrid::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>>;
 template class sigrid::SigridMap<sf::Mouse::Button, sigrid::Tool>;
 template class sigrid::SigridMap<sf::Keyboard::Key, sigrid::Action>;
+template class sigrid::SigridMap<unsigned int, sigrid::CoordPair>;

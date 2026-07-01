@@ -74,54 +74,62 @@ void LayoutGrid::setPyIfGreater(const unsigned int& y, const float& py){
 
 void LayoutGrid::setFromXCoord(const unsigned int& id, const int& x){
 
-    auto it = m_objects.find(id);
-    if(it != m_objects.end()){
-        it->second.from.x = x;
+    auto object_o = m_objects.at(id);
+
+    if(object_o != std::nullopt){
+        auto& object = object_o.value().get();
+        object.from.x = x;
         return;
     }
     
     CoordPair pair;
     pair.from.x = x;
-    m_objects.insert({id, pair});
+    m_objects.insert(id, pair);
 }
 
 void LayoutGrid::setFromYCoord(const unsigned int& id, const int& y){
 
-    auto it = m_objects.find(id);
-    if(it != m_objects.end()){
-        it->second.from.y = y;
+    auto object_o = m_objects.at(id);
+
+    if(object_o != std::nullopt){
+        auto& object = object_o.value().get();
+        object.from.y = y;
         return;
     }
     
     CoordPair pair;
     pair.from.y = y;
-    m_objects.insert({id, pair});
+    m_objects.insert(id, pair);
 }
 
 void LayoutGrid::setToXCoord(const unsigned int& id, const int& x){
 
-    auto it = m_objects.find(id);
-    if(it != m_objects.end()){
-        it->second.to.x = x;
+    auto object_o = m_objects.at(id);
+
+    if(object_o != std::nullopt){
+        auto& object = object_o.value().get();
+        object.to.x = x;
         return;
     }
 
     CoordPair pair;
     pair.to.x = x;
-    m_objects.insert({id, pair});
+    m_objects.insert(id, pair);
 }
 
 void LayoutGrid::setToYCoord(const unsigned int& id, const int& y){
 
-    auto it = m_objects.find(id);
-    if(it != m_objects.end()){
-        it->second.to.y = y;
+    auto object_o = m_objects.at(id);
+
+    if(object_o != std::nullopt){
+        auto& object = object_o.value().get();
+        object.to.y = y;
         return;
     }
 
     CoordPair pair;
     pair.to.y = y;
-    m_objects.insert({id, pair});
+    m_objects.insert(id, pair);
 }
 
 std::optional<float> LayoutGrid::getPx(const int& x) const{
@@ -144,18 +152,20 @@ std::optional<float> LayoutGrid::getPy(const int& y) const{
 
 std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& id) const{
 
-    auto it = m_objects.find(id);
-    if(it == m_objects.end()){
+    auto object_o = m_objects.at(id);
+
+    if(object_o == std::nullopt){
         return std::nullopt;
     }
+    auto& object = object_o.value().get();
 
-    int fromX = it->second.from.x;
+    int fromX = object.from.x;
     auto fromPx_o = m_xCoords.at(fromX);
     if(fromPx_o == std::nullopt){
         return std::nullopt;
     }
 
-    int fromY = it->second.from.y;
+    int fromY = object.from.y;
     auto fromPy_o = m_yCoords.at(fromY);
     if(fromPy_o == std::nullopt){
         return std::nullopt;
@@ -169,30 +179,32 @@ std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& i
 
 std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id) const{
 
-    auto it = m_objects.find(id);
-    if(it == m_objects.end()){
+    auto object_o = m_objects.at(id);
+
+    if(object_o == std::nullopt){
         return std::nullopt;
     }
+    auto& object = object_o.value().get();
 
-    int fromX = it->second.from.x;
+    int fromX = object.from.x;
     auto fromPx_o = m_xCoords.at(fromX);
     if(fromPx_o == std::nullopt){
         return std::nullopt;
     }
 
-    int fromY = it->second.from.y;
+    int fromY = object.from.y;
     auto fromPy_o = m_yCoords.at(fromY);
     if(fromPy_o == std::nullopt){
         return std::nullopt;
     }
 
-    int toX = it->second.to.x;
+    int toX = object.to.x;
     auto toPx_o = m_xCoords.at(toX);
     if(toPx_o == std::nullopt){
         return std::nullopt;
     }
 
-    int toY = it->second.to.y;
+    int toY = object.to.y;
     auto toPy_o = m_yCoords.at(toY);
     if(toPy_o == std::nullopt){
         return std::nullopt;
@@ -211,13 +223,15 @@ std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id
 
 std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id) const{
 
-    auto it = m_objects.find(id);
-    if(it == m_objects.end()){
+    auto object_o = m_objects.at(id);
+
+    if(object_o == std::nullopt){
         return std::nullopt;
     }
+    auto& object = object_o.value().get();
 
-    int fromX = it->second.from.x;
-    int toX = it->second.to.x;
+    int fromX = object.from.x;
+    int toX = object.to.x;
 
     auto width_o = getWidth(fromX, toX);
     if(width_o == std::nullopt){
@@ -225,8 +239,8 @@ std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id) const{
     }
     const float width = width_o.value();
 
-    int fromY = it->second.from.y;
-    int toY = it->second.to.y;
+    int fromY = object.from.y;
+    int toY = object.to.y;
 
     auto height_o = getHeight(fromY, toY);
     if(height_o == std::nullopt){

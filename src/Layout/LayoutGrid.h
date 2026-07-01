@@ -1,9 +1,9 @@
 #pragma once
 
 #include <optional>
-#include <map>
 
 #include "../List/SigridVector.h"
+#include "../List/SigridMap.h"
 #include "../Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
@@ -41,7 +41,7 @@ namespace sigrid{
         private:
             SigridVector<float> m_xCoords;
             SigridVector<float> m_yCoords;
-            std::map<unsigned int, CoordPair> m_objects;
+            SigridMap<unsigned int, CoordPair> m_objects;
     };
 
 }
