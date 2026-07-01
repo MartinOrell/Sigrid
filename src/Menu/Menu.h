@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
-#include <map>
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
@@ -60,16 +59,16 @@ namespace sigrid{
 
             void showItem(const std::string& key);
 
+            struct LayoutItem{
+                unsigned int headerIndex = -1;
+                unsigned int priority = -1;
+            };
+
         private:
 
             struct PosIndex{
                 int x = -1;
                 int y = -1;
-            };
-
-            struct LayoutItem{
-                unsigned int headerIndex = -1;
-                unsigned int priority = -1;
             };
 
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -94,7 +93,7 @@ namespace sigrid{
 
             std::vector<std::vector<std::string>> m_itemKeys;
 
-            std::map<std::string, LayoutItem> m_layoutItems;
+            SigridMap<std::string, LayoutItem> m_layoutItems;
 
             float m_lineHeight = 0.f;
             float m_itemOffsetX = 0.f;

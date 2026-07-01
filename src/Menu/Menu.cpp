@@ -224,7 +224,7 @@ void Menu::addHeader(const std::string& name){
     LayoutItem layoutItem;
     layoutItem.headerIndex = id;
     layoutItem.priority = 0;
-    m_layoutItems.insert(std::pair{name, layoutItem});
+    m_layoutItems.insert(name, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
         addHeaderGraphic(id);
@@ -262,7 +262,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     LayoutItem layoutItem;
     layoutItem.headerIndex = headerIndex;
     layoutItem.priority = m_layoutItems.size();
-    m_layoutItems.insert(std::pair{name, layoutItem});
+    m_layoutItems.insert(name, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
         unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
@@ -302,7 +302,7 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     LayoutItem layoutItem;
     layoutItem.headerIndex = headerIndex;
     layoutItem.priority = m_layoutItems.size();
-    m_layoutItems.insert(std::pair{key, layoutItem});
+    m_layoutItems.insert(key, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
         unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
@@ -355,22 +355,42 @@ void Menu::showItem(const std::string& key){
         return;
     }
 
-    if(m_itemKeys.at(m_layoutItems.at(key).headerIndex).size() == 0){
-        m_itemKeys.at(m_layoutItems.at(key).headerIndex).push_back(key);
+    auto layoutItem_o = m_layoutItems.at(key);
+    if(layoutItem_o == std::nullopt){
+        return;
+    }
+    auto& layoutItem = layoutItem_o.value().get();
+
+    if(m_itemKeys.at(layoutItem.headerIndex).size() == 0){
+        m_itemKeys.at(layoutItem.headerIndex).push_back(key);
         return;
     }
 
-    unsigned int priority = m_layoutItems.at(key).priority;
-    for(auto it2 = m_itemKeys.at(m_layoutItems.at(key).headerIndex).begin(); it2 != m_itemKeys.at(m_layoutItems.at(key).headerIndex).end(); it2++){
-        unsigned int cmpPriority = m_layoutItems.at(*it2).priority;
+    unsigned int priority = layoutItem.priority;
+    for(auto it2 = m_itemKeys.at(layoutItem.headerIndex).begin(); it2 != m_itemKeys.at(layoutItem.headerIndex).end(); it2++){
+        
+        auto cmpLayoutItem_o = m_layoutItems.at(*it2);
+        if(cmpLayoutItem_o == std::nullopt){
+            continue;
+        }
+        auto& cmpLayoutItem = cmpLayoutItem_o.value().get();
+        
+        unsigned int cmpPriority = cmpLayoutItem.priority;
         if(priority > cmpPriority){
-            if(it2+1 == m_itemKeys.at(m_layoutItems.at(key).headerIndex).end()){
-                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, key);
+            if(it2+1 == m_itemKeys.at(layoutItem.headerIndex).end()){
+                m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
                 return;
             }
-            unsigned int nextcmpPriority = m_layoutItems.at(*(it2+1)).priority;
+
+            auto nextCmpLayoutItem_o = m_layoutItems.at(*(it2+1));
+            if(nextCmpLayoutItem_o == std::nullopt){
+                continue;
+            }
+            auto& nextCmpLayoutItem = nextCmpLayoutItem_o.value().get();
+
+            unsigned int nextcmpPriority = nextCmpLayoutItem.priority;
             if(priority < nextcmpPriority){
-                m_itemKeys.at(m_layoutItems.at(key).headerIndex).insert(it2, key);
+                m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
                 return;
             }
         }
