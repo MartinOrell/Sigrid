@@ -29,15 +29,15 @@ void MenuItem::createGraphic(const unsigned int height){
     m_text.setOrigin({0.f, (float)height/2.f+m_textOffset.y});
 
     unsigned int shapeWidth = rect.size.x+2*m_textOffset.x;
-    m_shapePtr = std::make_unique<sf::RectangleShape>(sf::RectangleShape({(float)shapeWidth,(float)height}));
+    m_shape.setSize({(float)shapeWidth,(float)height});
 
-    m_shapePtr->setOrigin({0.f, (float)height/2.f});
-    m_shapePtr->setOutlineColor(sf::Color(0,0,0));
-    m_shapePtr->setOutlineThickness(-2.f);
+    m_shape.setOrigin({0.f, (float)height/2.f});
+    m_shape.setOutlineColor(sf::Color(0,0,0));
+    m_shape.setOutlineThickness(-2.f);
 }
 
 void MenuItem::setPosition(const sf::Vector2f& position){
-    m_shapePtr->setPosition(position);
+    m_shape.setPosition(position);
     m_text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
 }
 
@@ -51,36 +51,36 @@ void MenuItem::setText(const std::string& text){
     m_text.setString(text);
     sf::FloatRect rect = m_text.getLocalBounds();
 
-    float newHeight = m_shapePtr->getSize().y;
+    float newHeight = m_shape.getSize().y;
     float newWidth = rect.size.x+2.f*m_textOffset.x;
-    m_shapePtr->setSize({newWidth, newHeight});
+    m_shape.setSize({newWidth, newHeight});
 }
 
 float MenuItem::getPositionLeft(){
-    return m_shapePtr->getPosition().x;
+    return m_shape.getPosition().x;
 }
 
 float MenuItem::getPositionRight(){
-    return m_shapePtr->getPosition().x + m_shapePtr->getSize().x;
+    return m_shape.getPosition().x + m_shape.getSize().x;
 }
 
 float MenuItem::getPositionTop(){
-    return m_shapePtr->getPosition().y;
+    return m_shape.getPosition().y;
 }
 
 bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos){    
 
-    if(point.x < m_shapePtr->getPosition().x){
+    if(point.x < m_shape.getPosition().x){
         return false;
     }
-    if(point.x > m_shapePtr->getPosition().x + m_shapePtr->getSize().x){
+    if(point.x > m_shape.getPosition().x + m_shape.getSize().x){
         return false;
     }
 
-    if(point.y < m_shapePtr->getPosition().y - m_shapePtr->getSize().y/2.f){
+    if(point.y < m_shape.getPosition().y - m_shape.getSize().y/2.f){
         return false;
     }
-    if(point.y > m_shapePtr->getPosition().y + m_shapePtr->getSize().y/2.f){
+    if(point.y > m_shape.getPosition().y + m_shape.getSize().y/2.f){
         return false;
     }
     return true;
@@ -116,14 +116,12 @@ void MenuItem::toggle(){
     }
     sf::FloatRect rect = m_text.getLocalBounds();
     
-    if(m_shapePtr){
-        float newHeight = m_shapePtr->getSize().y;
-        float newWidth = rect.size.x+2.f*m_textOffset.x;
-        m_shapePtr->setSize({newWidth, newHeight});
-    }
+    float newHeight = m_shape.getSize().y;
+    float newWidth = rect.size.x+2.f*m_textOffset.x;
+    m_shape.setSize({newWidth, newHeight});
 }
 
 void MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    target.draw(*m_shapePtr);
+    target.draw(m_shape);
     target.draw(m_text);
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <SFML/Graphics/Text.hpp>
 #include "../Action/Action.h"
 
@@ -34,7 +33,7 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             std::string m_name;
-            std::unique_ptr<sf::RectangleShape> m_shapePtr;
+            sf::RectangleShape m_shape;
             Action m_action;
 
             sf::Text m_text;
