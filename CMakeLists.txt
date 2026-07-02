@@ -17,7 +17,6 @@ set(SRC_FILES
     src/Window/WorkWindow/WorkWindow.cpp
     src/Window/WorkWindow/PdfHandler.cpp
     src/Window/ToolWindow/ToolWindow.cpp
-    src/Window/ToolWindow/ToolItem.cpp
     src/Board/BoardDataContainer.cpp
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
