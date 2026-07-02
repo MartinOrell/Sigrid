@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 #include <string>
 
@@ -162,7 +161,7 @@ namespace sigrid{
 
             GraphicBoard m_graphicBoard;
 
-            std::unique_ptr<Coord> m_selection;
+            std::optional<Coord> m_selection_o = std::nullopt;
 
             std::string m_filename;
             std::string m_imageFilename;

@@ -84,13 +84,7 @@ Board& Board::operator=(const Board& rhs){
     m_imageFilename = rhs.m_imageFilename;
     m_logicBoard = rhs.m_logicBoard;
     m_graphicBoard = rhs.m_graphicBoard;
-    
-    if(rhs.m_selection){
-        if(!m_selection){
-            m_selection = std::make_unique<Coord>();
-        }
-        *m_selection = *(rhs.m_selection);
-    }
+    m_selection_o = rhs.m_selection_o;
 
     return *this;
 }
@@ -227,22 +221,22 @@ std::string Board::getFen() const{
 }
 
 void Board::select(const Coord& newCoord){
-    if(!m_selection){
-        m_selection = std::make_unique<Coord>(newCoord);
+    
+    if(m_selection_o == std::nullopt){
+        m_selection_o = newCoord;
         m_graphicBoard.highlightTile(newCoord);
         return;
     }
-
-    Coord oldCoord = *m_selection;
+    Coord oldCoord = m_selection_o.value();
     
     if(oldCoord == newCoord){
-        m_selection = nullptr;
+        m_selection_o = std::nullopt;
         m_graphicBoard.unhighlight();
         return;
     }
 
     if(m_logicBoard.isEmptyTile(oldCoord)){
-        m_selection = std::make_unique<Coord>(newCoord);
+        m_selection_o = newCoord;
         m_graphicBoard.highlightTile(newCoord);
         return;
     }
@@ -251,12 +245,12 @@ void Board::select(const Coord& newCoord){
         m_graphicBoard.moveEntity(oldCoord, newCoord);
     }
 
-    m_selection = nullptr;
+    m_selection_o = std::nullopt;
     m_graphicBoard.unhighlight();
 }
 
 void Board::deselect(){
-    m_selection = nullptr;
+    m_selection_o = std::nullopt;
     m_graphicBoard.unhighlight();
 }
 
@@ -303,11 +297,14 @@ void Board::removeEntity(const Coord& coord){
 }
 
 void Board::addEntityAtSelection(const LogicEntity& newEntity){
-    if(m_selection == nullptr){
+    
+    if(m_selection_o == std::nullopt){
         return;
     }
-    addEntity(*m_selection, newEntity);
-    m_selection = nullptr;
+    auto& selection = m_selection_o.value();
+
+    addEntity(selection, newEntity);
+    m_selection_o = std::nullopt;
     m_graphicBoard.unhighlight();
 }
 
