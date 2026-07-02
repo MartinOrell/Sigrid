@@ -5,6 +5,8 @@
 
 #include "../Coord/Coord.h"
 
+#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
 
@@ -30,7 +32,6 @@ namespace sigrid{
     class GraphicEntities;
     class GraphicArrows;
     
-    class RectangleBorder;
     class BoardLabels;
     class TurnToken;    
 
@@ -194,7 +195,7 @@ namespace sigrid{
             float m_topEdgeWidth;
             float m_bottomEdgeWidth;
 
-            std::unique_ptr<RectangleBorder> m_borderPtr;
+            std::optional<RectangleBorder> m_border_o;
 
             std::unique_ptr<BoardLabels> m_labelsPtr;
 
