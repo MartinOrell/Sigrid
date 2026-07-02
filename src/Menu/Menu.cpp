@@ -28,16 +28,35 @@ void Menu::init(const MenuContainer& menuData){
 
     for(const auto& menuItem : menuData.menuItems){
         if(menuItem.displayNames.size() == 1){
-            addItem(menuItem.displayNames.at(0), menuItem.headerId, getAction(menuItem.actionNames.at(0)));
+
+            auto action_o = getAction(menuItem.actionNames.at(0));
+            if(action_o == std::nullopt){
+                continue;
+            }
+            auto& action = action_o.value();
+
+            addItem(menuItem.displayNames.at(0), menuItem.headerId, action);
         }
         else if(menuItem.displayNames.size() == 2){
+
+            auto actionA_o = getAction(menuItem.actionNames.at(0));
+            if(actionA_o == std::nullopt){
+                continue;
+            }
+            auto actionB_o = getAction(menuItem.actionNames.at(1));
+            if(actionB_o == std::nullopt){
+                continue;
+            }
+            auto& actionA = actionA_o.value();
+            auto& actionB = actionB_o.value();
+
             addToggleItem(
                 menuItem.keyName,
                 menuItem.headerId,
                 menuItem.displayNames.at(0),
-                getAction(menuItem.actionNames.at(0)),
+                actionA,
                 menuItem.displayNames.at(1),
-                getAction(menuItem.actionNames.at(1))
+                actionB
             );
         }
         else{
@@ -91,7 +110,7 @@ bool Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-Action Menu::clicked(const sf::Vector2f& position){
+std::optional<Action> Menu::clicked(const sf::Vector2f& position){
 
     std::optional<sigrid::Menu::PosIndex> itemId_o = getMenuItemPosIndex(position);
     if(itemId_o == std::nullopt){
@@ -99,12 +118,12 @@ Action Menu::clicked(const sf::Vector2f& position){
             m_showHeaderIndex = -1;
             redrawTexture();
         }
-        return ActionType::None();
+        return std::nullopt;
     }
     sigrid::Menu::PosIndex id = itemId_o.value();
     if(id.x == -1){
         if(m_isPinned){
-            return ActionType::None();
+            return std::nullopt;
         }
         return m_superHeader.getAction();
     }
@@ -117,7 +136,7 @@ Action Menu::clicked(const sf::Vector2f& position){
     auto item_o = m_items.at(m_itemKeys.at(id.x).at(id.y));
 
     if(item_o == std::nullopt){
-        return ActionType::None();
+        return std::nullopt;
     }
     auto& item = item_o.value().get();
 

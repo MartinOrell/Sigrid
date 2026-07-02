@@ -3,7 +3,7 @@
 
 using namespace sigrid;
 
-Action sigrid::getAction(const std::string& s){
+std::optional<Action> sigrid::getAction(const std::string& s){
     std::string name;
     std::string content;
 
@@ -154,5 +154,5 @@ Action sigrid::getAction(const std::string& s){
     }
 
     std::cerr << "Action: Unidentified Action: " << s << std::endl;
-    return ActionType::None{};
+    return std::nullopt;
 }

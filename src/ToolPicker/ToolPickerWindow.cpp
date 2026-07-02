@@ -188,10 +188,10 @@ bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
 }
 
 
-Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
+std::optional<Action> ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     if(m_texture.isHidden()){
-        return ActionType::None();
+        return std::nullopt;
     }
 
     sf::Vector2f point = position - m_texture.getPosition();
@@ -199,14 +199,14 @@ Action ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& p
     auto coord_o = m_board.getTileCoord(point);
 
     if(coord_o == std::nullopt){
-        return ActionType::None();
+        return std::nullopt;
     }
 
     if(m_clickActions.find(coord_o.value()) != m_clickActions.end()){
         return m_clickActions.at(coord_o.value());
     }
 
-    return ActionType::None();
+    return std::nullopt;
 }
 
 void ToolPickerWindow::setPieceColorTools(const std::string& pieceNotation){

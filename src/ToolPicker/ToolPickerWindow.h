@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <memory>
 #include <map>
 
@@ -57,7 +58,7 @@ namespace sigrid{
 
             bool contains(const sf::Vector2f& point) const;
 
-            Action clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
+            std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
             void setPieceColorTools(const std::string& pieceNotation);
 

@@ -312,8 +312,11 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
     if(m_menu && m_menu->contains(scaledPosition)){
-        Action action = m_menu->clicked(scaledPosition);
-        handleAction(action);
+        auto action_o = m_menu->clicked(scaledPosition);
+        if(action_o != std::nullopt){
+            auto& action = action_o.value();
+            handleAction(action);
+        }
     }
     else if(m_workWindow && m_workWindow->contains(scaledPosition)){
 
@@ -325,8 +328,11 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
             if(usedToolPtr_o != std::nullopt){
 
                 Tool* usedToolPtr = usedToolPtr_o.value();
-                Action action = m_workWindow->clicked(*usedToolPtr, pressPosition, scaledPosition);
-                handleAction(action);
+                auto action_o = m_workWindow->clicked(*usedToolPtr, pressPosition, scaledPosition);
+                if(action_o != std::nullopt){
+                    auto& action = action_o.value();
+                    handleAction(action);
+                }
                 m_window.setTitle(m_workWindow->getName());
             }
         }
@@ -339,8 +345,11 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
         auto usedToolPtr_o = m_inputHandler.getToolPtr(button);
         if(usedToolPtr_o != std::nullopt){
             Tool* usedToolPtr = usedToolPtr_o.value();
-            Action action = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
-            handleAction(action);
+            auto action_o = m_toolPickerWindow->clicked(*usedToolPtr, scaledPosition);
+            if(action_o != std::nullopt){
+                auto& action = action_o.value();
+                handleAction(action);
+            }
         }
     }
     m_mouse.release(button);

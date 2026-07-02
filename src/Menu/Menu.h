@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
+#include <optional>
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
@@ -33,7 +34,7 @@ namespace sigrid{
 
             bool isCollapsed() const;
 
-            Action clicked(const sf::Vector2f& position);
+            std::optional<Action> clicked(const sf::Vector2f& position);
 
             void pinMenu();
 

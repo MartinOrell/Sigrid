@@ -341,7 +341,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
     }
 }
 
-Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
+std::optional<Action> WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
     auto activeBoard_o = m_boards.atSelection();
 
@@ -363,7 +363,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
         if(board.isWithinTurnToken(from) &&
         board.isWithinTurnToken(to)){
             board.toggleTurnToken();
-            return ActionType::None();
+            return std::nullopt;
         }
 
         auto fromCoord_o = board.getTileCoord(from);
@@ -382,7 +382,7 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
                 default:
                     break;
             }
-            return ActionType::None();
+            return std::nullopt;
         }
 
         auto fromCoord = fromCoord_o.value();
@@ -396,15 +396,15 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
                 else{
                     board.dragAndDrop(fromCoord_o.value(), toCoord_o.value());
                 }
-                return ActionType::None();
+                return std::nullopt;
             case ToolSelection::EntityAdder:
                 useAddEntityTool(toCoord,tool.getEntity());
-                return ActionType::None();
+                return std::nullopt;
             case ToolSelection::EntityPicker:
                 {
                     auto logicEntity_o = board.getLogicEntity(toCoord);
                     if(logicEntity_o == std::nullopt){
-                        return ActionType::None();
+                        return std::nullopt;
                     }
                     ActionType::PickEntity action{logicEntity_o.value()};
                     return action;
@@ -412,15 +412,15 @@ Action WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPo
             case ToolSelection::DrawArrow:
                 if(fromCoord == toCoord){
                     useAddTileHighlightTool(toCoord, tool.getArrowColorId());
-                    return ActionType::None();
+                    return std::nullopt;
                 }
                 useAddArrowTool(fromCoord, toCoord, tool.getArrowColorId());
-                return ActionType::None();
+                return std::nullopt;
             default:
-                return ActionType::None();
+                return std::nullopt;
         }
     }
-    return ActionType::None();
+    return std::nullopt;
 }
 
 void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){

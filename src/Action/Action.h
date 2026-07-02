@@ -1,6 +1,8 @@
 #pragma once
 
 #include <variant>
+#include <optional>
+
 #include <SFML/Window/Mouse.hpp>
 
 #include "../Entity/LogicEntity.h"
@@ -11,7 +13,6 @@
 
 namespace sigrid{
     namespace ActionType{
-        struct None{};
         struct PinMenu{};
         struct UnPinMenu{};
         struct ShowMenu{};
@@ -95,7 +96,6 @@ namespace sigrid{
     }
 
     typedef std::variant<
-        ActionType::None,
         ActionType::PinMenu,
         ActionType::UnPinMenu,
         ActionType::ShowMenu,
@@ -158,5 +158,5 @@ namespace sigrid{
         ActionType::RemoveTurnToken
     > Action;
 
-    Action getAction(const std::string& s);
+    std::optional<Action> getAction(const std::string& s);
 }
