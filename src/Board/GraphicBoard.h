@@ -195,7 +195,7 @@ namespace sigrid{
             float m_topEdgeWidth;
             float m_bottomEdgeWidth;
 
-            std::optional<RectangleBorder> m_border_o;
+            RectangleBorder m_border;
 
             std::unique_ptr<BoardLabels> m_labelsPtr;
 

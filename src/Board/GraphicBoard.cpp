@@ -97,11 +97,9 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
     m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
     m_tileLayerPtr->init(m_isLeftToRight, m_isTopToBottom);
     m_tileLayerPtr->move({m_leftEdgeWidth, m_topEdgeWidth});
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            m_tileLayerPtr->move({border.getThickness(), border.getThickness()});
-        }
+
+    if(m_border.isVisible()){
+        m_tileLayerPtr->move({m_border.getThickness(), m_border.getThickness()});
     }
 
     for(int y = 0; y < logicBoard.getNumRows(); y++){
@@ -130,13 +128,12 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
         m_turnTokenPtr->setTurnToMove(logicBoard.getTurnToMove());
     }
 
-    if(m_border_o != std::nullopt){;
+    {
         sf::Vector2f boardArea;
         boardArea.x = m_tileLayerPtr->getTileWidth() * logicBoard.getNumColumns();
         boardArea.y = m_tileLayerPtr->getTileHeight() * logicBoard.getNumRows();
         
-        auto& border = m_border_o.value();
-        border.setEnclosedArea(boardArea);
+        m_border.setEnclosedArea(boardArea);
     }
 
     if(m_labelsPtr){
@@ -329,20 +326,18 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
         boardArea.x = config.tileWidth* logicBoard.getNumColumns();
         boardArea.y = config.tileHeight* logicBoard.getNumRows();
 
-        m_border_o = RectangleBorder{};
-        auto& border = m_border_o.value();
-        border.setThickness(config.borderThickness);
-        border.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
-        border.setEnclosedArea(boardArea);
-        border.setColor(sf::Color{0,0,0});
-        border.show();
+        m_border.setThickness(config.borderThickness);
+        m_border.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
+        m_border.setEnclosedArea(boardArea);
+        m_border.setColor(sf::Color{0,0,0});
+        m_border.show();
+    }
+    else{
+        m_border.hide();
     }
 
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            moveTiles({border.getThickness(), border.getThickness()});
-        }
+    if(m_border.isVisible()){
+        moveTiles({m_border.getThickness(), m_border.getThickness()});
     }
     
     resizeTexture();
@@ -410,7 +405,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     m_borderThickness = rhs.m_borderThickness;
 
-    m_border_o = rhs.m_border_o;
+    m_border = rhs.m_border;
 
     if(rhs.m_turnTokenPtr){
         if(!m_turnTokenPtr){
@@ -823,10 +818,9 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
             m_arrowLayerPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         }
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addWidth(m_tileLayerPtr->getTileSize().x);
-    }
+
+    m_border.addWidth(m_tileLayerPtr->getTileSize().x);
+
     if(m_turnTokenPtr){
         m_turnTokenPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
     }
@@ -862,10 +856,9 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
     if(m_arrowLayerPtr){
         m_arrowLayerPtr->moveArrowsRight(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addWidth(m_tileLayerPtr->getTileSize().x);
-    }
+
+    m_border.addWidth(m_tileLayerPtr->getTileSize().x);
+    
     if(m_turnTokenPtr){
         m_turnTokenPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x, 0.f});
     }
@@ -911,10 +904,9 @@ void GraphicBoard::removeRightTileColumn(){
     if(m_turnTokenPtr){
         m_turnTokenPtr->move({-m_tileLayerPtr->getTileSize().x, 0.f});
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addWidth(-m_tileLayerPtr->getTileSize().x);
-    }
+
+    m_border.addWidth(-m_tileLayerPtr->getTileSize().x);
+
     if(m_labelsPtr){
         m_labelsPtr->removeHorizontalLabel();
         if(!m_isLeftToRight){
@@ -943,10 +935,9 @@ void GraphicBoard::removeLeftTileColumn(){
     if(m_turnTokenPtr){
         m_turnTokenPtr->move({-m_tileLayerPtr->getTileSize().x, 0.f});
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addWidth(-m_tileLayerPtr->getTileSize().x);
-    }
+
+    m_border.addWidth(-m_tileLayerPtr->getTileSize().x);
+
     if(m_labelsPtr){
         m_labelsPtr->removeHorizontalLabel();
         if(!m_isLeftToRight){
@@ -972,10 +963,9 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
     if(m_arrowLayerPtr){
         m_arrowLayerPtr->moveArrowsDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addHeight(m_tileLayerPtr->getTileSize().y);
-    }
+
+    m_border.addHeight(m_tileLayerPtr->getTileSize().y);
+
     if(m_labelsPtr){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
@@ -1018,10 +1008,9 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
             m_arrowLayerPtr->move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         }
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addHeight(m_tileLayerPtr->getTileSize().y);
-    }
+
+    m_border.addHeight(m_tileLayerPtr->getTileSize().y);
+
     if(m_labelsPtr){
         if(!m_isTopToBottom){
             m_labelsPtr->moveLeftInsideLabels(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
@@ -1062,10 +1051,9 @@ void GraphicBoard::removeTopTileRow(){
         m_arrowLayerPtr->removeRow(0);
         m_arrowLayerPtr->moveArrowsUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addHeight(-m_tileLayerPtr->getTileSize().y);
-    }
+
+    m_border.addHeight(-m_tileLayerPtr->getTileSize().y);
+
     if(m_labelsPtr){
         m_labelsPtr->removeVerticalLabel();
         if(!m_isTopToBottom){
@@ -1101,10 +1089,9 @@ void GraphicBoard::removeBottomTileRow(){
             m_arrowLayerPtr->move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         }
     }
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.addHeight(-m_tileLayerPtr->getTileSize().y);
-    }
+
+    m_border.addHeight(-m_tileLayerPtr->getTileSize().y);
+
     if(m_labelsPtr){
         m_labelsPtr->removeVerticalLabel();
         if(!m_isTopToBottom){
@@ -1400,25 +1387,8 @@ void GraphicBoard::setCoordinateSize(const float& size){
 
 void GraphicBoard::addBorder(){
 
-    if(m_border_o == std::nullopt){
-        
-        sf::Vector2f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
-        sf::Vector2f boardArea;
-        boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
-        boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
-
-        m_border_o = RectangleBorder{};
-        auto& border = m_border_o.value();
-        border.setThickness(m_borderThickness);
-        border.setTopLeftPosition(topLeftPosition);
-        border.setEnclosedArea(boardArea);
-        border.show();
-    }
-    else{
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            return;
-        }
+    if(m_border.isVisible()){
+        return;
     }
 
     sf::Vector2f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
@@ -1426,10 +1396,10 @@ void GraphicBoard::addBorder(){
     boardArea.x = m_tileLayerPtr->getTileWidth()* m_tileLayerPtr->getNumColumns();
     boardArea.y = m_tileLayerPtr->getTileHeight()*m_tileLayerPtr->getNumRows();
 
-    auto& border = m_border_o.value();
-    border.setEnclosedArea(boardArea);
-    border.setTopLeftPosition(topLeftPosition);
-    border.show();
+    m_border.setThickness(m_borderThickness);
+    m_border.setEnclosedArea(boardArea);
+    m_border.setTopLeftPosition(topLeftPosition);
+    m_border.show();
 
     moveTiles({(float)m_borderThickness, (float)m_borderThickness});
     if(m_labelsPtr){
@@ -1447,16 +1417,11 @@ void GraphicBoard::addBorder(){
 
 void GraphicBoard::removeBorder(){
 
-    if(m_border_o == std::nullopt){
-        return;
-    }
-    auto& border = m_border_o.value();
-
-    if(border.isHidden()){
+    if(m_border.isHidden()){
         return;
     }
 
-    border.hide();
+    m_border.hide();
 
     moveTiles({-(float)m_borderThickness, -(float)m_borderThickness});
     moveTurnToken({-2.f*(float)m_borderThickness, -(float)m_borderThickness});
@@ -1519,11 +1484,8 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     float radius = 0.2* m_tileLayerPtr->getTileHeight();
     
     float x = m_leftEdgeWidth;
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            x+= 2*m_borderThickness;
-        }
+    if(m_border.isVisible()){
+        x+= 2*m_borderThickness;
     }
     
     x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
@@ -1556,11 +1518,8 @@ float GraphicBoard::calcTextureWidth() const{
 
     float boardWidth = (m_tileLayerPtr->getTileWidth()* (float)m_tileLayerPtr->getNumColumns());
     boardWidth += m_leftEdgeWidth + m_rightEdgeWidth;
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            boardWidth += 2.f*(float)m_borderThickness;
-        }
+    if(m_border.isVisible()){
+        boardWidth += 2.f*(float)m_borderThickness;
     }
 
     return boardWidth;
@@ -1570,11 +1529,8 @@ float GraphicBoard::calcTextureHeight() const{
 
     float boardHeight = (m_tileLayerPtr->getTileHeight()*(float)m_tileLayerPtr->getNumRows());
     boardHeight += m_topEdgeWidth + m_bottomEdgeWidth;
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            boardHeight += 2.f*(float)m_borderThickness;
-        }
+    if(m_border.isVisible()){
+        boardHeight += 2.f*(float)m_borderThickness;
     }
 
     return boardHeight;
@@ -1629,11 +1585,8 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(*m_labelsPtr);
     }
 
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        if(border.isVisible()){
-            m_texture.draw(border);
-        }
+    if(m_border.isVisible()){
+        m_texture.draw(m_border);
     }
 
     if(m_turnTokenPtr){
@@ -1663,10 +1616,7 @@ void GraphicBoard::updateLeftEdgeWidth(){
     m_leftEdgeWidth = newEdgeWidth;
 
     moveTiles({moveX, 0.f});
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.move({moveX, 0.f});
-    }
+    m_border.move({moveX, 0.f});
     moveTurnToken({moveX, 0.f});
 
     if(m_labelsPtr&& m_labelsPtr->isLeftOutsideVisible()){
@@ -1715,11 +1665,8 @@ void GraphicBoard::updateRightEdgeWidth(){
 
     if(m_turnTokenPtr){   
         float x = m_leftEdgeWidth;
-        if(m_border_o != std::nullopt){
-            auto& border = m_border_o.value();
-            if(border.isVisible()){
-                x+= 2*m_borderThickness;
-            }
+        if(m_border.isVisible()){
+            x+= 2*m_borderThickness;
         }
         x += m_tileLayerPtr->getTileWidth()*m_tileLayerPtr->getNumColumns();
 
@@ -1763,10 +1710,7 @@ void GraphicBoard::updateTopEdgeWidth(){
     
 
     moveTiles({0.f, moveY});
-    if(m_border_o != std::nullopt){
-        auto& border = m_border_o.value();
-        border.move({0.f, moveY});
-    }
+    m_border.move({0.f, moveY});
     moveTurnToken({0.f, moveY});
 
     if(m_texture.isInitialized()){
