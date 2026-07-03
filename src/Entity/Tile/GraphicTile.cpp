@@ -6,13 +6,6 @@ using namespace sigrid;
 
 GraphicTile::GraphicTile(){}
 
-GraphicTile::GraphicTile(const GraphicTile& src){
-
-    m_shape = src.m_shape;
-    m_isHighlightVisible = src.m_isHighlightVisible;
-    m_highlight = src.m_highlight;
-}
-
 void GraphicTile::init(const sf::Vector2f& size, const sf::Color& color){
 
     m_shape.setSize(size);
@@ -70,14 +63,6 @@ sf::Color GraphicTile::getColor() const{
     return m_shape.getFillColor();
 }
 
-GraphicTile& GraphicTile::operator =(const GraphicTile& rhs){
-
-    m_shape = rhs.m_shape;
-    m_isHighlightVisible = rhs.m_isHighlightVisible;
-    m_highlight = rhs.m_highlight;
-    return *this;
-}
-
 void GraphicTile::move(const sf::Vector2f& offset){
 
     m_shape.move(offset);
@@ -87,7 +72,7 @@ void GraphicTile::move(const sf::Vector2f& offset){
 }
 
 void GraphicTile::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    
+
     target.draw(m_shape);
     if(m_isHighlightVisible){
         target.draw(m_highlight);

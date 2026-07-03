@@ -9,7 +9,6 @@ namespace sigrid{
 
         public:
             GraphicTile();
-            GraphicTile(const GraphicTile& src);
 
             void init(const sf::Vector2f& size, const sf::Color& color);
 
@@ -32,8 +31,6 @@ namespace sigrid{
             float getTopPosition() const;
 
             sf::Color getColor() const;
-
-            GraphicTile& operator =(const GraphicTile&);
 
             void move(const sf::Vector2f& offset);
 
