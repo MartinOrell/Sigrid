@@ -6,6 +6,7 @@
 #include "../Coord/Coord.h"
 
 #include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "BoardLabels.h"
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
@@ -32,7 +33,6 @@ namespace sigrid{
     class GraphicEntities;
     class GraphicArrows;
     
-    class BoardLabels;
     class TurnToken;    
 
     class GraphicBoard: public sf::Drawable{
@@ -197,7 +197,7 @@ namespace sigrid{
 
             RectangleBorder m_border;
 
-            std::unique_ptr<BoardLabels> m_labelsPtr;
+            BoardLabels m_labels;
 
             std::unique_ptr<TurnToken> m_turnTokenPtr;
 
