@@ -7,6 +7,7 @@
 
 #include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "BoardLabels.h"
+#include "../Entity/TurnToken/TurnToken.h"
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
@@ -31,9 +32,7 @@ namespace sigrid{
     class GraphicTile;
     class GraphicTiles;
     class GraphicEntities;
-    class GraphicArrows;
-    
-    class TurnToken;    
+    class GraphicArrows; 
 
     class GraphicBoard: public sf::Drawable{
         public:
@@ -199,7 +198,7 @@ namespace sigrid{
 
             BoardLabels m_labels;
 
-            std::unique_ptr<TurnToken> m_turnTokenPtr;
+            TurnToken m_turnToken;
 
             std::unique_ptr<GraphicTiles> m_tileLayerPtr;
 

@@ -8,8 +8,6 @@
 #include "../Entity/GraphicEntities.h"
 #include "../Entity/Shape/Arrow/GraphicArrows.h"
 
-#include "../Entity/TurnToken/TurnToken.h"
-
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Image.hpp>
@@ -120,8 +118,8 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
         }
     }
 
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->setTurnToMove(logicBoard.getTurnToMove());
+    if(m_turnToken.isVisible()){
+        m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
     }
 
     {
@@ -302,10 +300,12 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
 
     if(config.turnToken){
-        m_turnTokenPtr = std::make_unique<TurnToken>();
-        m_turnTokenPtr->show();
-        updateRightEdgeWidth();
         initTurnToken(logicBoard.getTurnToMove());
+        m_turnToken.show();
+        updateRightEdgeWidth();
+    }
+    else{
+        m_turnToken.hide();
     }
 
     m_border.setThickness(config.borderThickness);
@@ -387,13 +387,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     m_labels = rhs.m_labels;
     m_border = rhs.m_border;
-
-    if(rhs.m_turnTokenPtr){
-        if(!m_turnTokenPtr){
-            m_turnTokenPtr = std::make_unique<TurnToken>();
-        }
-        *m_turnTokenPtr = *(rhs.m_turnTokenPtr);
-    }
+    m_turnToken = rhs.m_turnToken;
 
     m_isLeftToRight = rhs.m_isLeftToRight;
     m_isTopToBottom = rhs.m_isTopToBottom;
@@ -472,12 +466,7 @@ bool GraphicBoard::isCoordinatesOutside() const{
 }
 
 bool GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
-
-    if(!m_turnTokenPtr){
-        return false;
-    }
-
-    return m_turnTokenPtr->isWithin((point-m_texture.getPosition())/m_texture.getScale());
+    return m_turnToken.isWithin((point-m_texture.getPosition())/m_texture.getScale());
 }
 
 std::optional<Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
@@ -799,9 +788,7 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
 
     m_border.addWidth(m_tileLayerPtr->getTileSize().x);
 
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
-    }
+    m_turnToken.move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
 
     if(!m_isLeftToRight){
         m_labels.moveBottomInsideLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
@@ -837,9 +824,7 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
 
     m_border.addWidth(m_tileLayerPtr->getTileSize().x);
     
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x, 0.f});
-    }
+    m_turnToken.move(sf::Vector2f{m_tileLayerPtr->getTileSize().x, 0.f});
 
     if(!m_isLeftToRight){
         m_labels.moveBottomInsideLabels(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
@@ -879,9 +864,7 @@ void GraphicBoard::removeRightTileColumn(){
             m_arrowLayerPtr->move(sf::Vector2f{-m_tileLayerPtr->getTileSize().x, 0.f});
         }
     }
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move({-m_tileLayerPtr->getTileSize().x, 0.f});
-    }
+    m_turnToken.move({-m_tileLayerPtr->getTileSize().x, 0.f});
 
     m_border.addWidth(-m_tileLayerPtr->getTileSize().x);
 
@@ -909,9 +892,8 @@ void GraphicBoard::removeLeftTileColumn(){
         m_arrowLayerPtr->removeColumn(0);
         m_arrowLayerPtr->moveArrowsLeft(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
     }
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move({-m_tileLayerPtr->getTileSize().x, 0.f});
-    }
+
+    m_turnToken.move({-m_tileLayerPtr->getTileSize().x, 0.f});
 
     m_border.addWidth(-m_tileLayerPtr->getTileSize().x);
 
@@ -1355,20 +1337,13 @@ void GraphicBoard::removeBorder(){
 
 void GraphicBoard::addTurnToken(const int& turnToMove){
 
-    if(m_turnTokenPtr && m_turnTokenPtr->isVisible()){
+    if(m_turnToken.isVisible()){
         return;
     }
 
-    if(!m_turnTokenPtr){
-        m_turnTokenPtr = std::make_unique<TurnToken>();
-        m_turnTokenPtr->show();
-        updateRightEdgeWidth();
-        initTurnToken(turnToMove);
-    }
-    else{
-        m_turnTokenPtr->show();
-        updateRightEdgeWidth();
-    }
+    initTurnToken(turnToMove);
+    m_turnToken.show();
+    updateRightEdgeWidth();
 
     resizeTexture();
     redrawTexture();
@@ -1376,11 +1351,11 @@ void GraphicBoard::addTurnToken(const int& turnToMove){
 
 void GraphicBoard::removeTurnToken(){
 
-    if(!m_turnTokenPtr){
+    if(m_turnToken.isHidden()){
         return;
     }
 
-    m_turnTokenPtr->hide();
+    m_turnToken.hide();
     updateRightEdgeWidth();
 
     resizeTexture();
@@ -1388,16 +1363,18 @@ void GraphicBoard::removeTurnToken(){
 }
 
 void GraphicBoard::setTurnToMove(const int& turnToMove){
-    if(!m_turnTokenPtr){
+    
+    if(m_turnToken.isHidden()){
         return;
     }
-
-    m_turnTokenPtr->setTurnToMove(turnToMove);
+    
+    m_turnToken.setTurnToMove(turnToMove);
 
     redrawTexture();
 }
 
 void GraphicBoard::initTurnToken(const int& turnToMove){
+
     float radius = 0.2* m_tileLayerPtr->getTileHeight();
     
     float x = m_leftEdgeWidth;
@@ -1417,10 +1394,10 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     float y = m_topEdgeWidth;
     y += m_tileLayerPtr->getTileHeight()/2.f;
 
-    m_turnTokenPtr->setRadius(radius);
-    m_turnTokenPtr->setCenterPosition({x,y});
-    m_turnTokenPtr->setTurnToMove(turnToMove);
-    m_turnTokenPtr->init();
+    m_turnToken.setRadius(radius);
+    m_turnToken.setCenterPosition({x,y});
+    m_turnToken.setTurnToMove(turnToMove);
+    m_turnToken.init();
 }
 
 sf::Vector2f GraphicBoard::getTextureSize() const{
@@ -1504,8 +1481,8 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(m_border);
     }
 
-    if(m_turnTokenPtr){
-        m_texture.draw(*m_turnTokenPtr);
+    if(m_turnToken.isVisible()){
+        m_texture.draw(m_turnToken);
     }
 
     m_texture.display();
@@ -1560,15 +1537,13 @@ void GraphicBoard::updateRightEdgeWidth(){
 
             float moveX = newWorkWidth - oldWorkWidth;
             m_labels.moveRightOutsideLabels({moveX/2.f, 0.f});
-            if(m_turnTokenPtr){
-                m_turnTokenPtr->move({moveX, 0.f});
-            }
+            m_turnToken.move({moveX, 0.f});
         }
 
         newEdgeWidth += newWorkWidth;
     }
 
-    if(m_turnTokenPtr && m_tileLayerPtr && m_turnTokenPtr->isVisible()){
+    if(m_tileLayerPtr && m_turnToken.isVisible()){
         newEdgeWidth += m_tileLayerPtr->getTileWidth()/2.f;
     }
 
@@ -1578,7 +1553,7 @@ void GraphicBoard::updateRightEdgeWidth(){
 
     m_rightEdgeWidth = newEdgeWidth;
 
-    if(m_turnTokenPtr){   
+    {   
         float x = m_leftEdgeWidth;
         if(m_border.isVisible()){
             x+= 2*m_border.getThickness();
@@ -1595,10 +1570,10 @@ void GraphicBoard::updateRightEdgeWidth(){
         float y = m_topEdgeWidth;
         y += m_tileLayerPtr->getTileHeight()/2.f;
 
-        sf::Vector2f oldPosition = m_turnTokenPtr->getCenterPosition();
+        sf::Vector2f oldPosition = m_turnToken.getCenterPosition();
         sf::Vector2f newPosition{x,y};
         if(oldPosition != newPosition){
-            m_turnTokenPtr->setCenterPosition({x,y});
+            m_turnToken.setCenterPosition({x,y});
         }
     }
 
@@ -1881,9 +1856,7 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
 }
 
 void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
-    if(m_turnTokenPtr){
-        m_turnTokenPtr->move(offset);
-    }
+    m_turnToken.move(offset);
 }
 
 void GraphicBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{

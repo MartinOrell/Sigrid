@@ -69,7 +69,11 @@ bool TurnToken::isVisible() const{
     return m_isVisible;
 }
 
-bool TurnToken::isWithin(const sf::Vector2f& point){
+bool TurnToken::isHidden() const{
+    return !m_isVisible;
+}
+
+bool TurnToken::isWithin(const sf::Vector2f& point) const{
 
     if(!m_isVisible){
         return false;

@@ -29,8 +29,9 @@ namespace sigrid{
             TurnToken& operator =(const TurnToken& rhs);
 
             bool isVisible() const;
+            bool isHidden() const;
 
-            bool isWithin(const sf::Vector2f& point);
+            bool isWithin(const sf::Vector2f& point) const;
 
             float getRadius() const;
 
