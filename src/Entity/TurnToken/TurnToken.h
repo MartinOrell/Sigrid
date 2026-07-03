@@ -1,14 +1,12 @@
 #pragma once
 
-#include <memory>
-
 #include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 namespace sf{
     template <typename T> class Vector2;
     using Vector2f = Vector2<float>;
     class Color;
-    class CircleShape;
 }
 
 namespace sigrid{
@@ -51,6 +49,6 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             bool m_isVisible = false;
-            std::unique_ptr<sf::CircleShape> m_shapePtr;
+            sf::CircleShape m_shape;
     };
 }
