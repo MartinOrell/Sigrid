@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -44,7 +42,8 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
             
             sf::RectangleShape m_shape;
-            std::unique_ptr<sf::RectangleShape> m_highlightPtr;
+            bool m_isHighlightVisible = false;
+            sf::RectangleShape m_highlight;
     };
 
 }
