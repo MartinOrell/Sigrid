@@ -22,7 +22,7 @@ namespace sigrid{
         float circleDiameter = 0.f;
         std::vector<BoardLabelContainer> labels;
         bool border = false;
-        unsigned int borderThickness = 0.f;
+        float borderThickness = 0.f;
         bool turnToken = false;
     };
 }

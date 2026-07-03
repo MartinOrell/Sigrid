@@ -8,7 +8,7 @@ using namespace sigrid;
 
 RectangleBorder::RectangleBorder(){}
 
-void RectangleBorder::setThickness(const unsigned int& thickness){
+void RectangleBorder::setThickness(const float& thickness){
 
     m_thickness = thickness;
 

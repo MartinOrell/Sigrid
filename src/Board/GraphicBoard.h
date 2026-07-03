@@ -213,7 +213,7 @@ namespace sigrid{
 
             ColorManager* m_arrowColorManagerPtr = nullptr;
 
-            unsigned int m_borderThickness;
+            float m_borderThickness;
 
             bool m_isLeftToRight;
             bool m_isTopToBottom;

@@ -1409,7 +1409,7 @@ void GraphicBoard::addBorder(){
 
         m_border_o = RectangleBorder{};
         auto& border = m_border_o.value();
-        border.setThickness((float)m_borderThickness);
+        border.setThickness(m_borderThickness);
         border.setTopLeftPosition(topLeftPosition);
         border.setEnclosedArea(boardArea);
         border.show();
