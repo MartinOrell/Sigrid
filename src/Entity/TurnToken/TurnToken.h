@@ -22,8 +22,6 @@ namespace sigrid{
 
             void setTurnToMove(const int& turnToMove);
 
-            TurnToken& operator =(const TurnToken& rhs);
-
             bool isVisible() const;
             bool isHidden() const;
 

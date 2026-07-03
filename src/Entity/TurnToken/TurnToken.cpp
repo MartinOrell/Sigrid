@@ -22,22 +22,6 @@ void TurnToken::setTurnToMove(const int& turnToMove){
     m_shape.setFillColor(getColor(turnToMove));
 }
 
-TurnToken& TurnToken::operator =(const TurnToken& rhs){
-
-    m_isInitialized = rhs.m_isInitialized;
-    m_isVisible = rhs.m_isVisible;
-
-    m_shape.setRadius(rhs.m_shape.getRadius());
-    m_shape.setOrigin({rhs.m_shape.getRadius(),rhs.m_shape.getRadius()});
-    m_shape.setPointCount(rhs.m_shape.getPointCount());
-    m_shape.setPosition(rhs.m_shape.getPosition());
-    m_shape.setFillColor(rhs.m_shape.getFillColor());
-    m_shape.setOutlineColor(rhs.m_shape.getOutlineColor());
-    m_shape.setOutlineThickness(rhs.m_shape.getOutlineThickness());
-
-    return *this;
-}
-
 bool TurnToken::isVisible() const{
     return m_isVisible;
 }
