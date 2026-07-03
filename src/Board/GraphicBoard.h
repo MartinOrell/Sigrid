@@ -9,6 +9,8 @@
 #include "BoardLabels.h"
 #include "../Entity/TurnToken/TurnToken.h"
 
+#include "../Entity/Tile/GraphicTile.h"
+
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
 
@@ -29,7 +31,6 @@ namespace sigrid{
     
     class CoordPair;
 
-    class GraphicTile;
     class GraphicTiles;
     class GraphicEntities;
     class GraphicArrows; 
@@ -208,7 +209,8 @@ namespace sigrid{
 
             std::unique_ptr<GraphicArrow> m_dragArrowPtr;
 
-            std::unique_ptr<GraphicTile> m_selectHighlight;
+            bool m_isSelectHighlightVisible = false;
+            GraphicTile m_selectHighlight;
 
             ColorManager* m_arrowColorManagerPtr = nullptr;
 

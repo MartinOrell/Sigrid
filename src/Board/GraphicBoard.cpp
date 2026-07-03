@@ -376,12 +376,8 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_dragArrowPtr = *(rhs.m_dragArrowPtr);
     }
 
-    if(rhs.m_selectHighlight){
-        if(!m_selectHighlight){
-            m_selectHighlight = std::make_unique<GraphicTile>();
-        }
-        *m_selectHighlight = *(rhs.m_selectHighlight);
-    }
+    m_isSelectHighlightVisible = rhs.m_isSelectHighlightVisible;
+    m_selectHighlight = rhs.m_selectHighlight;
 
     m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
 
@@ -730,23 +726,23 @@ void GraphicBoard::highlightTile(const Coord& coord){
             << coord.getNotation() << std::endl;
         std::cerr << "Tile position not found" << std::endl;
     }
+    auto& position = position_o.value();
 
-    if(!m_selectHighlight){
-        m_selectHighlight = std::make_unique<GraphicTile>();
-        sf::Color color{255,255,0,100};
-        m_selectHighlight->init(m_tileLayerPtr->getTileSize(), color);
-    }
-
-    m_selectHighlight->setPosition(position_o.value());
+    m_isSelectHighlightVisible = true;
+    sf::Color color{255,255,0,100};
+    m_selectHighlight.init(m_tileLayerPtr->getTileSize(), color);
+    m_selectHighlight.setPosition(position);
 
     redrawTexture();
 }
 
 void GraphicBoard::unhighlight(){
-    if(m_selectHighlight){
-        m_selectHighlight = nullptr;
-        redrawTexture();
+    
+    if(!m_isSelectHighlightVisible){
+        return;
     }
+    m_isSelectHighlightVisible = false;
+    redrawTexture();
 }
 
 void GraphicBoard::saveImage(const std::string& fileName){
@@ -1458,8 +1454,8 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(*m_tileLayerPtr);
     }
 
-    if(m_selectHighlight){
-        m_texture.draw(*m_selectHighlight);
+    if(m_isSelectHighlightVisible){
+        m_texture.draw(m_selectHighlight);
     }
 
     if(m_pieceLayerPtr){
