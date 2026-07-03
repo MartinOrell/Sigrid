@@ -24,8 +24,6 @@ namespace sigrid{
 
             void setTurnToMove(const int& turnToMove);
 
-            void init();
-
             TurnToken& operator =(const TurnToken& rhs);
 
             bool isVisible() const;
@@ -44,6 +42,9 @@ namespace sigrid{
             void move(const sf::Vector2f& offset);
 
         private:
+
+            bool m_isInitialized = false;
+            void init();
 
             sf::Color getColor(const int& turnToMove) const;
 

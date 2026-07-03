@@ -1397,7 +1397,6 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     m_turnToken.setRadius(radius);
     m_turnToken.setCenterPosition({x,y});
     m_turnToken.setTurnToMove(turnToMove);
-    m_turnToken.init();
 }
 
 sf::Vector2f GraphicBoard::getTextureSize() const{

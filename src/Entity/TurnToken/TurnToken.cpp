@@ -35,18 +35,6 @@ void TurnToken::setTurnToMove(const int& turnToMove){
     m_shapePtr->setFillColor(getColor(turnToMove));
 }
 
-void TurnToken::init(){
-
-    if(!m_shapePtr){
-        m_shapePtr = std::make_unique<sf::CircleShape>();
-    }
-
-    m_shapePtr->setPointCount(30);
-    m_shapePtr->setOutlineColor(sf::Color{0,0,0,255});
-    m_shapePtr->setOutlineThickness(-6.f);
-    m_isVisible = true;
-}
-
 TurnToken& TurnToken::operator =(const TurnToken& rhs){
     m_isVisible = rhs.m_isVisible;
 
@@ -108,6 +96,10 @@ sf::Vector2f TurnToken::getCenterPosition() const{
 
 void TurnToken::show(){
     m_isVisible = true;
+
+    if(!m_isInitialized){
+        init();
+    }
 }
 
 void TurnToken::hide(){
@@ -119,6 +111,18 @@ void TurnToken::move(const sf::Vector2f& offset){
         return;
     }
     m_shapePtr->move(offset);
+}
+
+void TurnToken::init(){
+
+    if(!m_shapePtr){
+        m_shapePtr = std::make_unique<sf::CircleShape>();
+    }
+
+    m_shapePtr->setPointCount(30);
+    m_shapePtr->setOutlineColor(sf::Color{0,0,0,255});
+    m_shapePtr->setOutlineThickness(-6.f);
+    m_isInitialized = true;
 }
 
 sf::Color TurnToken::getColor(const int& turnToMove) const{
