@@ -19,17 +19,15 @@ namespace sigrid{
 
             void setToPosition(const sf::Vector2f& toPosition);
 
+            void setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
+
             void setColor(const sf::Color& color);
 
             void setThickness(const float& thickness);
 
             void setHeadSize(const float& size);
 
-            void init();
-
             GraphicArrow& operator =(const GraphicArrow&);
-
-            void set(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
 
             void setPosition(const sf::Vector2f& position);
 
@@ -37,6 +35,16 @@ namespace sigrid{
 
         private:
 
+            struct IsSet{
+                bool fromPosition = false;
+                bool toPosition = false;
+                bool thickness = false;
+                bool headSize = false;
+                bool isAllSet();
+            };
+
+            IsSet m_isSet;
+            void updateShape();
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
             
             //Since Convex shape cannot draw concave shapes, multiple shapes are required

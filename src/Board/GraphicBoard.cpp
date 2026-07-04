@@ -700,10 +700,9 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         m_dragArrowPtr->setColor(color_o.value());
         m_dragArrowPtr->setThickness(m_arrowLayerPtr->getThickness());
         m_dragArrowPtr->setHeadSize(m_arrowLayerPtr->getHeadSize());
-        m_dragArrowPtr->init();
     }
     else{
-        m_dragArrowPtr->set(fromPosition_o.value(), toPosition_o.value());
+        m_dragArrowPtr->setPosition(fromPosition_o.value(), toPosition_o.value());
         m_dragArrowPtr->setColor(color_o.value());
     }
     
@@ -1098,7 +1097,7 @@ void GraphicBoard::flip(){
         for(auto& arrow : *m_arrowLayerPtr){
             sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.from).value();
             sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.to).value();
-            arrow.second.set(fromPos,toPos);
+            arrow.second.setPosition(fromPos,toPos);
         }
     }
     

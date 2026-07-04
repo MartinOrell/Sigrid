@@ -63,7 +63,6 @@ void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fro
     graphicArrow.setColor(color);
     graphicArrow.setThickness(m_arrowThickness);
     graphicArrow.setHeadSize(m_arrowHeadSize);
-    graphicArrow.init();
 
     m_arrows.insert({coordPair, graphicArrow});
     m_drawOrder.push_back(coordPair);

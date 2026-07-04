@@ -118,7 +118,6 @@ void GraphicEntities::addEntity(const Coord& coord, const sf::Vector2f position,
         newArrow.setColor(color);
         newArrow.setThickness(30);
         newArrow.setHeadSize(60);
-        newArrow.init();
         m_arrows.insert(coord, newArrow);
 
     }
