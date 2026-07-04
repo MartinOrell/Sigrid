@@ -207,7 +207,8 @@ namespace sigrid{
 
             std::unique_ptr<GraphicArrows> m_arrowLayerPtr;
 
-            std::unique_ptr<GraphicArrow> m_dragArrowPtr;
+            bool m_isDragArrowVisible = false;
+            GraphicArrow m_dragArrow;
 
             bool m_isSelectHighlightVisible = false;
             GraphicTile m_selectHighlight;

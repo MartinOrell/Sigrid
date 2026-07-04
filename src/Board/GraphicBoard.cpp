@@ -369,12 +369,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_arrowLayerPtr = *(rhs.m_arrowLayerPtr);
     }
 
-    if(rhs.m_dragArrowPtr){
-        if(!m_dragArrowPtr){
-            m_dragArrowPtr = std::make_unique<GraphicArrow>();
-        }
-        *m_dragArrowPtr = *(rhs.m_dragArrowPtr);
-    }
+    m_dragArrow = rhs.m_dragArrow;
 
     m_isSelectHighlightVisible = rhs.m_isSelectHighlightVisible;
     m_selectHighlight = rhs.m_selectHighlight;
@@ -685,7 +680,7 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
         return;
     }
 
-    if(!m_dragArrowPtr){
+    if(!m_isDragArrowVisible){
 
         if(!m_arrowLayerPtr){
             std::cerr << "GraphicBoard: Unable to update dragArrow position to "
@@ -693,27 +688,23 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
             std::cerr << "arrowLayer not found" << std::endl;
             return;
         }
-
-        m_dragArrowPtr = std::make_unique<GraphicArrow>();
-        m_dragArrowPtr->setFromPosition(fromPosition_o.value());
-        m_dragArrowPtr->setToPosition(toPosition_o.value());
-        m_dragArrowPtr->setColor(color_o.value());
-        m_dragArrowPtr->setThickness(m_arrowLayerPtr->getThickness());
-        m_dragArrowPtr->setHeadSize(m_arrowLayerPtr->getHeadSize());
+        m_dragArrow.setThickness(m_arrowLayerPtr->getThickness());
+        m_dragArrow.setHeadSize(m_arrowLayerPtr->getHeadSize());
     }
-    else{
-        m_dragArrowPtr->setPosition(fromPosition_o.value(), toPosition_o.value());
-        m_dragArrowPtr->setColor(color_o.value());
-    }
+    
+    m_dragArrow.setPosition(fromPosition_o.value(), toPosition_o.value());
+    m_dragArrow.setColor(color_o.value());
+    m_isDragArrowVisible = true;
     
     redrawTexture();
 }
 
 void GraphicBoard::removeDragArrow(){
-    if(m_dragArrowPtr){
-        m_dragArrowPtr = nullptr;
-        redrawTexture();
+    if(!m_isDragArrowVisible){
+        return;
     }
+    m_isDragArrowVisible = false;
+    redrawTexture();
 }
 
 void GraphicBoard::highlightTile(const Coord& coord){
@@ -1466,8 +1457,8 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(*m_arrowLayerPtr);
     }
 
-    if(m_dragArrowPtr){
-        m_texture.draw(*m_dragArrowPtr);
+    if(m_isDragArrowVisible){
+        m_texture.draw(m_dragArrow);
     }
 
     m_texture.draw(m_labels);
