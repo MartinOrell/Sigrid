@@ -27,8 +27,6 @@ namespace sigrid{
 
             void setHeadSize(const float& size);
 
-            GraphicArrow& operator =(const GraphicArrow&);
-
             void setPosition(const sf::Vector2f& position);
 
             void move(const sf::Vector2f& offset);

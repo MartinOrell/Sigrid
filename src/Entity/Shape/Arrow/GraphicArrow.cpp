@@ -61,15 +61,6 @@ void GraphicArrow::setHeadSize(const float& size){
     }
 }
 
-GraphicArrow& GraphicArrow::operator =(const GraphicArrow& src){
-    m_line = src.m_line;
-    m_head = src.m_head;
-    m_thickness = src.m_thickness;
-    m_headSize = src.m_headSize;
-    m_toPosition = src.m_toPosition;
-    return *this;
-}
-
 void GraphicArrow::setPosition(const sf::Vector2f& position){
     sf::Vector2f offset = position - m_line.getPosition();
     move(offset);
