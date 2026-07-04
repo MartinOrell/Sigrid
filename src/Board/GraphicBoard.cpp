@@ -730,7 +730,8 @@ void GraphicBoard::highlightTile(const Coord& coord){
 
     m_isSelectHighlightVisible = true;
     sf::Color color{255,255,0,100};
-    m_selectHighlight.init(m_tileLayerPtr->getTileSize(), color);
+    m_selectHighlight.setSize(m_tileLayerPtr->getTileSize());
+    m_selectHighlight.setTileColor(color);
     m_selectHighlight.setPosition(position);
 
     redrawTexture();

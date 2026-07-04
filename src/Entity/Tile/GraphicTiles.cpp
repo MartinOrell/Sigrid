@@ -35,8 +35,9 @@ void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
     if(m_tileSize.y <= 0.f){
         return;
     }
+
     GraphicTile tile;
-    tile.init(m_tileSize, sf::Color::White);
+    tile.setSize(m_tileSize);
     std::vector<GraphicTile> insertTiles;
     insertTiles.push_back(tile);
     m_tiles.setInsertPattern(insertTiles);

@@ -10,7 +10,7 @@ namespace sigrid{
         public:
             GraphicTile();
 
-            void init(const sf::Vector2f& size, const sf::Color& color);
+            void setSize(const sf::Vector2f& size);
 
             void setPosition(const sf::Vector2f& topLeftPosition);
 

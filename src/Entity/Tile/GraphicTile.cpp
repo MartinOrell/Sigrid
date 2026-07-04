@@ -6,10 +6,12 @@ using namespace sigrid;
 
 GraphicTile::GraphicTile(){}
 
-void GraphicTile::init(const sf::Vector2f& size, const sf::Color& color){
+void GraphicTile::setSize(const sf::Vector2f& size){
 
     m_shape.setSize(size);
-    m_shape.setFillColor(color);
+    if(m_isHighlightVisible){
+        m_highlight.setSize(size);
+    }
 }
 
 void GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
