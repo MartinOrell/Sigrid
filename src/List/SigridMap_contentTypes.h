@@ -13,6 +13,7 @@
 #include "../Coord/CoordPair.h"
 #include "../Action/Action.h"
 #include "../Tool/Tool.h"
+#include "../Entity/Piece/PieceIdentifier.h"
 #include "../Entity/Piece/LogicPiece.h"
 #include "../Entity/Shape/Circle/LogicCircle.h"
 #include "../Entity/Shape/Arrow/LogicArrow.h"
@@ -28,6 +29,7 @@
 // Add more templates below to support more types
 template class sigrid::SigridMap<std::string, sf::Texture>;
 template class sigrid::SigridMap<std::string, sf::Font>;
+template class sigrid::SigridMap<sigrid::PieceIdentifier, std::string>;
 template class sigrid::SigridMap<sigrid::CoordPair, sigrid::LogicArrow>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicCircle>;

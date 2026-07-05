@@ -1,8 +1,8 @@
 #pragma once
 
-#include <map>
 #include <SFML/Graphics/Texture.hpp>
 
+#include "../../List/SigridMap.h"
 #include "../../List/SigridVector.h"
 #include "LogicPiece.h"
 #include "GraphicPiece.h"
@@ -21,7 +21,7 @@ namespace sigrid{
             void loadImages(const std::vector<PieceContainer>& pieces);
             std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);
         private:
-            std::map<PieceIdentifier, std::string> m_pieceImageFilenames;
+            SigridMap<PieceIdentifier, std::string> m_pieceImageFilenames;
 
             SigridVector<PieceColor> m_colors;
             SigridVector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;

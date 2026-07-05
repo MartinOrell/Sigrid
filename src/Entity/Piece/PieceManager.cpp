@@ -29,7 +29,7 @@ void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
         PieceIdentifier id;
         id.name = piece.name;
         id.style = piece.style;
-        m_pieceImageFilenames.insert({id, piece.filename});
+        m_pieceImageFilenames.insert(id, piece.filename);
     }
 }
 
@@ -70,12 +70,13 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
     }
 
     {
-        auto it = m_pieceImageFilenames.find(id);
-        if(it == m_pieceImageFilenames.end()){
+        auto pieceImageFileName_o = m_pieceImageFilenames.at(id);
+        if(pieceImageFileName_o == std::nullopt){
             return std::nullopt;
         }
+        auto& pieceImageFileName = pieceImageFileName_o.value().get();
 
-        sf::Image newImage{it->second};
+        sf::Image newImage{pieceImageFileName};
 
         sf::Color lightModifier = sf::Color(color.lightModifier);
         sf::Color darkModifier = sf::Color(color.darkModifier);
