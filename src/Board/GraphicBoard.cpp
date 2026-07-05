@@ -6,7 +6,6 @@
 
 #include "../Entity/Tile/GraphicTiles.h"
 #include "../Entity/GraphicEntities.h"
-#include "../Entity/Shape/Arrow/GraphicArrows.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -83,9 +82,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
         m_pieceLayerPtr->clear();
     }
 
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->clear();
-    }
+    m_arrowLayer.clear();
     
     m_tileLayerPtr->setNumColumns(logicBoard.getNumColumns());
     m_tileLayerPtr->setNumRows(logicBoard.getNumRows());
@@ -182,11 +179,10 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     m_pieceLayerPtr->setPieceSize({config.tileWidth, config.tileHeight});
     m_pieceLayerPtr->setCircleDiameter(config.circleDiameter);
 
-    m_arrowLayerPtr = std::make_unique<GraphicArrows>();
-    m_arrowLayerPtr->setThickness(config.arrowThickness);
-    m_arrowLayerPtr->setHeadSize(config.arrowHeadSize);
+    m_arrowLayer.setThickness(config.arrowThickness);
+    m_arrowLayer.setHeadSize(config.arrowHeadSize);
     if(m_arrowColorManagerPtr){
-        m_arrowLayerPtr->setColorManagerPtr(m_arrowColorManagerPtr);
+        m_arrowLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }
 
     for(auto& label: config.labels){
@@ -362,12 +358,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
         *m_pieceLayerPtr = *(rhs.m_pieceLayerPtr);
     }
 
-    if(rhs.m_arrowLayerPtr){
-        if(!m_arrowLayerPtr){
-            m_arrowLayerPtr = std::make_unique<GraphicArrows>();
-        }
-        *m_arrowLayerPtr = *(rhs.m_arrowLayerPtr);
-    }
+    m_arrowLayer = rhs.m_arrowLayer;
 
     m_dragArrow = rhs.m_dragArrow;
 
@@ -602,14 +593,7 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    if(!m_arrowLayerPtr){
-        std::cerr << "GraphicBoard: Failed to add arrow at "
-            << coordPair.getNotation() << std::endl;
-        std::cerr << "arrow layer not found" << std::endl;
-        return;
-    }
-
-    auto occupyingArrow_o = m_arrowLayerPtr->getArrow(coordPair);
+    auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o != std::nullopt){
         std::cerr << "GraphicBoard: Failed to add arrow at "
@@ -618,21 +602,14 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
         return;
     }
 
-    m_arrowLayerPtr->addArrow(coordPair, fromPosition_o.value(), toPosition_o.value(), logicArrow);
+    m_arrowLayer.addArrow(coordPair, fromPosition_o.value(), toPosition_o.value(), logicArrow);
 
     redrawTexture();
 }
 
 void GraphicBoard::removeArrow(const CoordPair& coordPair){
 
-    if(!m_arrowLayerPtr){
-        std::cerr << "GraphicBoard: Failed to remove arrow at "
-            << coordPair.getNotation() << std::endl;
-        std::cerr << "ArrowLayer not found" << std::endl;
-        return;
-    }
-
-    auto occupyingArrow_o = m_arrowLayerPtr->getArrow(coordPair);
+    auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o == std::nullopt){
         std::cerr << "GraphicBoard: Failed to remove arrow at "
@@ -641,7 +618,7 @@ void GraphicBoard::removeArrow(const CoordPair& coordPair){
         return;
     }
 
-    m_arrowLayerPtr->removeArrow(coordPair);
+    m_arrowLayer.removeArrow(coordPair);
     
     redrawTexture();
 }
@@ -682,14 +659,8 @@ void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord,
 
     if(!m_isDragArrowVisible){
 
-        if(!m_arrowLayerPtr){
-            std::cerr << "GraphicBoard: Unable to update dragArrow position to "
-                << toCoord.getNotation() << std::endl;
-            std::cerr << "arrowLayer not found" << std::endl;
-            return;
-        }
-        m_dragArrow.setThickness(m_arrowLayerPtr->getThickness());
-        m_dragArrow.setHeadSize(m_arrowLayerPtr->getHeadSize());
+        m_dragArrow.setThickness(m_arrowLayer.getThickness());
+        m_dragArrow.setHeadSize(m_arrowLayer.getHeadSize());
     }
     
     m_dragArrow.setPosition(fromPosition_o.value(), toPosition_o.value());
@@ -753,7 +724,7 @@ void GraphicBoard::clearEntities(){
 }
 
 void GraphicBoard::clearArrows(){
-    m_arrowLayerPtr->clear();
+    m_arrowLayer.clear();
     redrawTexture();
 }
 
@@ -767,10 +738,8 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
             m_pieceLayerPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
         }
     }
-    if(m_arrowLayerPtr){
-        if(!m_isLeftToRight){
-            m_arrowLayerPtr->move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
-        }
+    if(!m_isLeftToRight){
+        m_arrowLayer.move(sf::Vector2f{m_tileLayerPtr->getTileSize().x,0.f});
     }
 
     m_border.addWidth(m_tileLayerPtr->getTileSize().x);
@@ -805,9 +774,7 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->moveEntitiesRight(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->moveArrowsRight(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
-    }
+    m_arrowLayer.moveArrowsRight(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
 
     m_border.addWidth(m_tileLayerPtr->getTileSize().x);
     
@@ -845,11 +812,9 @@ void GraphicBoard::removeRightTileColumn(){
             m_pieceLayerPtr->move(sf::Vector2f{-m_tileLayerPtr->getTileSize().x, 0.f});
         }
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->removeColumn(columnId);
-        if(!m_isLeftToRight){
-            m_arrowLayerPtr->move(sf::Vector2f{-m_tileLayerPtr->getTileSize().x, 0.f});
-        }
+    m_arrowLayer.removeColumn(columnId);
+    if(!m_isLeftToRight){
+        m_arrowLayer.move(sf::Vector2f{-m_tileLayerPtr->getTileSize().x, 0.f});
     }
     m_turnToken.move({-m_tileLayerPtr->getTileSize().x, 0.f});
 
@@ -875,10 +840,8 @@ void GraphicBoard::removeLeftTileColumn(){
         m_pieceLayerPtr->removeColumn(0);
         m_pieceLayerPtr->moveEntitiesLeft(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->removeColumn(0);
-        m_arrowLayerPtr->moveArrowsLeft(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
-    }
+    m_arrowLayer.removeColumn(0);
+    m_arrowLayer.moveArrowsLeft(m_tileLayerPtr->getTileSize().x, m_isLeftToRight);
 
     m_turnToken.move({-m_tileLayerPtr->getTileSize().x, 0.f});
 
@@ -905,9 +868,7 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
     if(m_pieceLayerPtr){
         m_pieceLayerPtr->moveEntitiesDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->moveArrowsDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
-    }
+    m_arrowLayer.moveArrowsDown(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
 
     m_border.addHeight(m_tileLayerPtr->getTileSize().y);
 
@@ -947,10 +908,8 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
             m_pieceLayerPtr->move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
         }
     }
-    if(m_arrowLayerPtr){
-        if(!m_isTopToBottom){
-            m_arrowLayerPtr->move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
-        }
+    if(!m_isTopToBottom){
+        m_arrowLayer.move(sf::Vector2f{0.f, m_tileLayerPtr->getTileSize().y});
     }
 
     m_border.addHeight(m_tileLayerPtr->getTileSize().y);
@@ -990,10 +949,8 @@ void GraphicBoard::removeTopTileRow(){
         m_pieceLayerPtr->removeRow(0);
         m_pieceLayerPtr->moveEntitiesUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->removeRow(0);
-        m_arrowLayerPtr->moveArrowsUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
-    }
+        m_arrowLayer.removeRow(0);
+        m_arrowLayer.moveArrowsUp(m_tileLayerPtr->getTileSize().y, m_isTopToBottom);
 
     m_border.addHeight(-m_tileLayerPtr->getTileSize().y);
 
@@ -1025,11 +982,9 @@ void GraphicBoard::removeBottomTileRow(){
             m_pieceLayerPtr->move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
         }
     }
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->removeRow(rowId);
-        if(!m_isTopToBottom){
-            m_arrowLayerPtr->move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
-        }
+    m_arrowLayer.removeRow(rowId);
+    if(!m_isTopToBottom){
+        m_arrowLayer.move(sf::Vector2f{0.f, -m_tileLayerPtr->getTileSize().y});
     }
 
     m_border.addHeight(-m_tileLayerPtr->getTileSize().y);
@@ -1084,25 +1039,23 @@ void GraphicBoard::flip(){
         }
     }
 
-    if(m_arrowLayerPtr){
-        for(unsigned int i = 0; i < m_arrowLayerPtr->getArrows().size(); i++){
+    for(unsigned int i = 0; i < m_arrowLayer.getArrows().size(); i++){
 
-            auto coordPair_o = m_arrowLayerPtr->getArrows().keyAt(i);
-            if(coordPair_o == std::nullopt){
-                continue;
-            }
-            auto& coordPair = coordPair_o.value().get();
-
-            auto arrow_o = m_arrowLayerPtr->getArrows().at(i);
-            if(arrow_o == std::nullopt){
-                continue;
-            }
-            auto& arrow = arrow_o.value().get();
-
-            sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(coordPair.from).value();
-            sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(coordPair.to).value();
-            arrow.setPosition(fromPos,toPos);
+        auto coordPair_o = m_arrowLayer.getArrows().keyAt(i);
+        if(coordPair_o == std::nullopt){
+            continue;
         }
+        auto& coordPair = coordPair_o.value().get();
+
+        auto arrow_o = m_arrowLayer.getArrows().at(i);
+        if(arrow_o == std::nullopt){
+            continue;
+        }
+        auto& arrow = arrow_o.value().get();
+
+        sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(coordPair.from).value();
+        sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(coordPair.to).value();
+        arrow.setPosition(fromPos,toPos);
     }
     
     if(m_labels.isLeftInsideVisible()){
@@ -1466,9 +1419,7 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(*m_pieceLayerPtr);
     }
 
-    if(m_arrowLayerPtr){
-        m_texture.draw(*m_arrowLayerPtr);
-    }
+    m_texture.draw(m_arrowLayer);
 
     if(m_isDragArrowVisible){
         m_texture.draw(m_dragArrow);
@@ -1842,9 +1793,7 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
         m_pieceLayerPtr->move(offset);
     }
     
-    if(m_arrowLayerPtr){
-        m_arrowLayerPtr->move(offset);
-    }
+    m_arrowLayer.move(offset);
 
     m_labels.moveLeftInsideLabels(offset);
     m_labels.moveBottomInsideLabels(offset);

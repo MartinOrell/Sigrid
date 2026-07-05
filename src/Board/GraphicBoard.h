@@ -16,6 +16,7 @@
 
 #include "../Entity/Shape/Arrow/LogicArrow.h"
 #include "../Entity/Shape/Arrow/GraphicArrow.h"
+#include "../Entity/Shape/Arrow/GraphicArrows.h"
 
 #include "../Font/FontManager.h"
 
@@ -33,7 +34,6 @@ namespace sigrid{
 
     class GraphicTiles;
     class GraphicEntities;
-    class GraphicArrows; 
 
     class GraphicBoard: public sf::Drawable{
         public:
@@ -205,7 +205,7 @@ namespace sigrid{
 
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
 
-            std::unique_ptr<GraphicArrows> m_arrowLayerPtr;
+            GraphicArrows m_arrowLayer;
 
             bool m_isDragArrowVisible = false;
             GraphicArrow m_dragArrow;
