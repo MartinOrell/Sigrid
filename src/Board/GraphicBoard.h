@@ -10,6 +10,7 @@
 #include "../Entity/TurnToken/TurnToken.h"
 
 #include "../Entity/Tile/GraphicTile.h"
+#include "../Entity/Tile/GraphicTiles.h"
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
@@ -32,7 +33,6 @@ namespace sigrid{
     
     class CoordPair;
 
-    class GraphicTiles;
     class GraphicEntities;
 
     class GraphicBoard: public sf::Drawable{
@@ -201,7 +201,7 @@ namespace sigrid{
 
             TurnToken m_turnToken;
 
-            std::unique_ptr<GraphicTiles> m_tileLayerPtr;
+            GraphicTiles m_tileLayer;
 
             std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
 
