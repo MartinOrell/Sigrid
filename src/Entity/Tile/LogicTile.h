@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 
 namespace sigrid{
@@ -26,6 +25,7 @@ namespace sigrid{
 
         private:
             int m_colorId = 0;
-            std::unique_ptr<int> m_highlightColorIdPtr;
+            bool m_isHighlightVisible = false;
+            int m_highlightColorId;
     };
 }

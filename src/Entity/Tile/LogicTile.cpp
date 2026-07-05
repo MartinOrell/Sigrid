@@ -9,16 +9,14 @@ LogicTile::LogicTile(const int colorId)
 
 LogicTile::LogicTile(const LogicTile& src){
     m_colorId = src.m_colorId;
-    if(src.m_highlightColorIdPtr){
-        m_highlightColorIdPtr = std::make_unique<int>(*(src.m_highlightColorIdPtr));
-    }
+    m_isHighlightVisible = src.m_isHighlightVisible;
+    m_highlightColorId = src.m_highlightColorId;
 }
 
 LogicTile& LogicTile::operator =(const LogicTile& rhs){
     m_colorId = rhs.m_colorId;
-    if(rhs.m_highlightColorIdPtr){
-        m_highlightColorIdPtr = std::make_unique<int>(*(rhs.m_highlightColorIdPtr));
-    }
+    m_isHighlightVisible = rhs.m_isHighlightVisible;
+    m_highlightColorId = rhs.m_highlightColorId;
     return *this;
 }
 
@@ -27,10 +25,11 @@ int LogicTile::getColorId() const{
 }
 
 std::optional<int> LogicTile::getHighlightColorId() const{
-    if(!m_highlightColorIdPtr){
+
+    if(!m_isHighlightVisible){
         return std::nullopt;
     }
-    return *m_highlightColorIdPtr;
+    return m_highlightColorId;
 }
 
 void LogicTile::setColor(const int colorId){
@@ -38,16 +37,13 @@ void LogicTile::setColor(const int colorId){
 }
 
 void LogicTile::setHighlightColor(const int colorId){
-    if(m_highlightColorIdPtr){
-        *m_highlightColorIdPtr = colorId;
-    }
-    else{
-        m_highlightColorIdPtr = std::make_unique<int>(colorId);
-    }
+
+    m_highlightColorId = colorId;
+    m_isHighlightVisible = true;
 }
 
 void LogicTile::removeHighlight(){
-    m_highlightColorIdPtr.reset();
+    m_isHighlightVisible = false;
 }
 
 bool LogicTile::operator<(const LogicTile& rhs) const{
