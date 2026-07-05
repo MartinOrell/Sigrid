@@ -8,8 +8,6 @@ namespace sigrid{
         public:
             LogicTile();
             LogicTile(const int colorId);
-            LogicTile(const LogicTile& src);
-            LogicTile& operator =(const LogicTile& rhs);
 
             int getColorId() const;
             std::optional<int> getHighlightColorId() const;
