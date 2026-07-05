@@ -10,7 +10,9 @@ void LogicTiles::init(const int& numColumns, const int& numRows, const std::vect
 
     std::vector<LogicTile> insertPattern;
     for(const auto& color: repeatTileColorIds){
-        insertPattern.push_back(LogicTile{color});
+        LogicTile newTile;
+        newTile.setColor(color);
+        insertPattern.push_back(std::move(newTile));
     }
 
     m_tiles.setInsertPattern(insertPattern);
