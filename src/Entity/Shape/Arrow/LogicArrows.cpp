@@ -5,7 +5,7 @@ using namespace sigrid;
 LogicArrows::LogicArrows(){}
 
 void LogicArrows::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
-    m_arrows.insert(coordPair, arrow);
+    m_arrows.push_back(coordPair, arrow);
 }
             
 void LogicArrows::removeArrow(const CoordPair& coordPair){
@@ -24,63 +24,110 @@ std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) cons
 
 void LogicArrows::removeColumn(const int& columnId){
 
-    for(auto it = m_arrows.begin(); it != m_arrows.end();){
-        if(it->first.from.x == columnId || it->first.to.x == columnId){
-            it = m_arrows.erase(it);
+    for(unsigned int i = 0; i < m_arrows.size();){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            i++;
+            continue;
         }
-        else{
-            it++;
+        auto& coordPair = coordPair_o.value().get();
+
+        if(coordPair.from.x == columnId){
+            m_arrows.erase(i);
+            continue;
         }
+
+        if(coordPair.to.x == columnId){
+            m_arrows.erase(i);
+            continue;
+        }
+
+        i++;
     }
 }
 
 void LogicArrows::removeRow(const int& rowId){
-    for(auto it = m_arrows.begin(); it != m_arrows.end();){
-        if(it->first.from.y == rowId || it->first.to.y == rowId){
-            it = m_arrows.erase(it);
+
+    for(unsigned int i = 0; i < m_arrows.size();){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            i++;
+            continue;
         }
-        else{
-            it++;
+        auto& coordPair = coordPair_o.value().get();
+
+        if(coordPair.from.y == rowId){
+            m_arrows.erase(i);
+            continue;
         }
+
+        if(coordPair.to.y == rowId){
+            m_arrows.erase(i);
+            continue;
+        }
+
+        i++;
     }
 }
 
 void LogicArrows::moveArrowsRight(){
 
-    if(m_arrows.size() > 0){
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+    if(m_arrows.size() == 0){
+        return;
+    }
 
-        for(auto& arrow: m_arrows){
-            if(arrow.first.from.x < minX){
-                minX = arrow.first.from.x;
-            }
-            if(arrow.first.from.x > maxX){
-                maxX = arrow.first.from.x;
-            }
-            if(arrow.first.from.y < minY){
-                minY = arrow.first.from.y;
-            }
-            if(arrow.first.from.y > maxY){
-                maxY = arrow.first.from.y;
-            }
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(unsigned int i = 0; i < m_arrows.size(); i++){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            continue;
         }
+        auto& coordPair = coordPair_o.value().get();
 
-        for(int x = maxX; x >= minX; x--){
-            for(int y = minY; y <= maxY; y++){
+        if(coordPair.from.x < minX){
+            minX = coordPair.from.x;
+        }
+        if(coordPair.from.x > maxX){
+            maxX = coordPair.from.x;
+        }
+        if(coordPair.from.y < minY){
+            minY = coordPair.from.y;
+        }
+        if(coordPair.from.y > maxY){
+            maxY = coordPair.from.y;
+        }
+    }
 
-                auto isFrom = [&x, &y](std::pair<CoordPair,LogicArrow> arrow) {
-                    return arrow.first.from == Coord{x,y};
-                };
+    for(int x = maxX; x >= minX; x--){
+        for(int y = minY; y <= maxY; y++){
 
-                for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
-                    Coord from{x+1,y};
-                    Coord to{it->first.to.x+1,it->first.to.y};
-                    m_arrows.insert({from,to},it->second);
-                    m_arrows.erase(it);
+            for(unsigned int i = 0; i < m_arrows.size(); i++){
+                auto coordPair_o = m_arrows.keyAt(i);
+                if(coordPair_o == std::nullopt){
+                    continue;
                 }
+                auto& coordPair = coordPair_o.value().get();
+
+                if(coordPair.from != Coord{x,y}){
+                    continue;
+                }
+
+                auto arrow_o = m_arrows.at(coordPair);
+                if(arrow_o == std::nullopt){
+                    continue;
+                }
+                auto arrow = arrow_o.value().get();
+
+                CoordPair newCoordPair = coordPair;
+                newCoordPair.from.x++;
+                newCoordPair.to.x++;
+                
+                m_arrows.insert(i, newCoordPair, arrow);
+                m_arrows.erase(i+1);
             }
         }
     }
@@ -88,80 +135,126 @@ void LogicArrows::moveArrowsRight(){
 
 void LogicArrows::moveArrowsLeft(){
 
-    if(m_arrows.size() > 0){
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+    if(m_arrows.size() == 0){
+        return;
+    }
 
-        for(auto& arrow: m_arrows){
-            if(arrow.first.from.x < minX){
-                minX = arrow.first.from.x;
-            }
-            if(arrow.first.from.x > maxX){
-                maxX = arrow.first.from.x;
-            }
-            if(arrow.first.from.y < minY){
-                minY = arrow.first.from.y;
-            }
-            if(arrow.first.from.y > maxY){
-                maxY = arrow.first.from.y;
-            }
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(unsigned int i = 0; i < m_arrows.size(); i++){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            continue;
         }
+        auto& coordPair = coordPair_o.value().get();
 
-        for(int x = minX; x <= maxX; x++){
-            for(int y = minY; y <= maxY; y++){
+        if(coordPair.from.x < minX){
+            minX = coordPair.from.x;
+        }
+        if(coordPair.from.x > maxX){
+            maxX = coordPair.from.x;
+        }
+        if(coordPair.from.y < minY){
+            minY = coordPair.from.y;
+        }
+        if(coordPair.from.y > maxY){
+            maxY = coordPair.from.y;
+        }
+    }
 
-                auto isFrom = [&x, &y](std::pair<CoordPair,LogicArrow> arrow) {
-                    return arrow.first.from == Coord{x,y};
-                };
+    for(int x = minX; x <= maxX; x++){
+        for(int y = minY; y <= maxY; y++){
 
-                for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
-                    Coord from{x-1,y};
-                    Coord to{it->first.to.x-1,it->first.to.y};
-                    m_arrows.insert({from,to},it->second);
-                    m_arrows.erase(it);
+
+            for(unsigned int i = 0; i < m_arrows.size(); i++){
+                auto coordPair_o = m_arrows.keyAt(i);
+                if(coordPair_o == std::nullopt){
+                    continue;
                 }
+                auto& coordPair = coordPair_o.value().get();
+
+                if(coordPair.from != Coord{x,y}){
+                    continue;
+                }
+
+                auto arrow_o = m_arrows.at(coordPair);
+                if(arrow_o == std::nullopt){
+                    continue;
+                }
+                auto arrow = arrow_o.value().get();
+
+                CoordPair newCoordPair = coordPair;
+                newCoordPair.from.x--;
+                newCoordPair.to.x--;
+                
+                m_arrows.insert(i, newCoordPair, arrow);
+                m_arrows.erase(i+1);
             }
         }
     }
 }
 
 void LogicArrows::moveArrowsUp(){
-    if(m_arrows.size() > 0){
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
 
-        for(auto& arrow: m_arrows){
-            if(arrow.first.from.x < minX){
-                minX = arrow.first.from.x;
-            }
-            if(arrow.first.from.x > maxX){
-                maxX = arrow.first.from.x;
-            }
-            if(arrow.first.from.y < minY){
-                minY = arrow.first.from.y;
-            }
-            if(arrow.first.from.y > maxY){
-                maxY = arrow.first.from.y;
-            }
+    if(m_arrows.size() == 0){
+        return;
+    }
+
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(unsigned int i = 0; i < m_arrows.size(); i++){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            continue;
         }
+        auto& coordPair = coordPair_o.value().get();
 
-        for(int y = minY; y <= maxY; y++){
-            for(int x = minX; x <= maxX; x++){
+        if(coordPair.from.x < minX){
+            minX = coordPair.from.x;
+        }
+        if(coordPair.from.x > maxX){
+            maxX = coordPair.from.x;
+        }
+        if(coordPair.from.y < minY){
+            minY = coordPair.from.y;
+        }
+        if(coordPair.from.y > maxY){
+            maxY = coordPair.from.y;
+        }
+    }
 
-                auto isFrom = [&x, &y](std::pair<CoordPair,LogicArrow> arrow) {
-                    return arrow.first.from == Coord{x,y};
-                };
+    for(int y = minY; y <= maxY; y++){
+        for(int x = minX; x <= maxX; x++){
 
-                for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
-                    Coord from{x,y-1};
-                    Coord to{it->first.to.x,it->first.to.y-1};
-                    m_arrows.insert({from,to},it->second);
-                    m_arrows.erase(it);
+            for(unsigned int i = 0; i < m_arrows.size(); i++){
+                auto coordPair_o = m_arrows.keyAt(i);
+                if(coordPair_o == std::nullopt){
+                    continue;
                 }
+                auto& coordPair = coordPair_o.value().get();
+
+                if(coordPair.from != Coord{x,y}){
+                    continue;
+                }
+
+                auto arrow_o = m_arrows.at(coordPair);
+                if(arrow_o == std::nullopt){
+                    continue;
+                }
+                auto arrow = arrow_o.value().get();
+
+                CoordPair newCoordPair = coordPair;
+                newCoordPair.from.y--;
+                newCoordPair.to.y--;
+                
+                m_arrows.insert(i, newCoordPair, arrow);
+                m_arrows.erase(i+1);
             }
         }
     }
@@ -169,40 +262,62 @@ void LogicArrows::moveArrowsUp(){
 
 void LogicArrows::moveArrowsDown(){
 
-    if(m_arrows.size() > 0){
-        int minX = 2147483647;
-        int maxX = 0;
-        int minY = 2147483647;
-        int maxY = 0;
+    if(m_arrows.size() == 0){
+        return;
+    }
 
-        for(auto& arrow: m_arrows){
-            if(arrow.first.from.x < minX){
-                minX = arrow.first.from.x;
-            }
-            if(arrow.first.from.x > maxX){
-                maxX = arrow.first.from.x;
-            }
-            if(arrow.first.from.y < minY){
-                minY = arrow.first.from.y;
-            }
-            if(arrow.first.from.y > maxY){
-                maxY = arrow.first.from.y;
-            }
+    int minX = 2147483647;
+    int maxX = 0;
+    int minY = 2147483647;
+    int maxY = 0;
+
+    for(unsigned int i = 0; i < m_arrows.size(); i++){
+        auto coordPair_o = m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            continue;
         }
+        auto& coordPair = coordPair_o.value().get();
 
-        for(int y = maxY; y >= minY; y--){
-            for(int x = minX; x <= maxX; x++){
+        if(coordPair.from.x < minX){
+            minX = coordPair.from.x;
+        }
+        if(coordPair.from.x > maxX){
+            maxX = coordPair.from.x;
+        }
+        if(coordPair.from.y < minY){
+            minY = coordPair.from.y;
+        }
+        if(coordPair.from.y > maxY){
+            maxY = coordPair.from.y;
+        }
+    }
 
-                auto isFrom = [&x, &y](std::pair<CoordPair,LogicArrow> arrow) {
-                    return arrow.first.from == Coord{x,y};
-                };
+    for(int y = maxY; y >= minY; y--){
+        for(int x = minX; x <= maxX; x++){
 
-                for(auto it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom);it != m_arrows.end();it = std::find_if(m_arrows.begin(),m_arrows.end(),isFrom)){
-                    Coord from{x,y+1};
-                    Coord to{it->first.to.x,it->first.to.y+1};
-                    m_arrows.insert({from,to},it->second);
-                    m_arrows.erase(it);
+            for(unsigned int i = 0; i < m_arrows.size(); i++){
+                auto coordPair_o = m_arrows.keyAt(i);
+                if(coordPair_o == std::nullopt){
+                    continue;
                 }
+                auto& coordPair = coordPair_o.value().get();
+
+                if(coordPair.from != Coord{x,y}){
+                    continue;
+                }
+
+                auto arrow_o = m_arrows.at(coordPair);
+                if(arrow_o == std::nullopt){
+                    continue;
+                }
+                auto arrow = arrow_o.value().get();
+
+                CoordPair newCoordPair = coordPair;
+                newCoordPair.from.y++;
+                newCoordPair.to.y++;
+                
+                m_arrows.insert(i, newCoordPair, arrow);
+                m_arrows.erase(i+1);
             }
         }
     }
