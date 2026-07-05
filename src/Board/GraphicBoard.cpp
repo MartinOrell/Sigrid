@@ -4,8 +4,6 @@
 #include "BoardDesignContainer.h"
 #include "../Color/ColorManager.h"
 
-#include "../Entity/GraphicEntities.h"
-
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Image.hpp>
@@ -25,10 +23,7 @@ GraphicBoard::GraphicBoard()
 }
 
 void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
-    if(!m_pieceLayerPtr){
-        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-    }
-    m_pieceLayerPtr->setPieceManagerPtr(managerPtr);
+    m_pieceLayer.setPieceManagerPtr(managerPtr);
 }
 
 void GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
@@ -44,10 +39,7 @@ void GraphicBoard::setFontManagerPtr(FontManager* const managerPtr){
 }
 
 void GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
-    if(!m_pieceLayerPtr){
-        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-    }
-    m_pieceLayerPtr->setIconManagerPtr(managerPtr);
+    m_pieceLayer.setIconManagerPtr(managerPtr);
 }
 
 void GraphicBoard::setLeftToRight(){
@@ -69,11 +61,7 @@ void GraphicBoard::setBottomToTop(){
 void GraphicBoard::load(const LogicBoard& logicBoard){
 
     m_tileLayer.clear();
-
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->clear();
-    }
-
+    m_pieceLayer.clear();
     m_arrowLayer.clear();
     
     m_tileLayer.setNumColumns(logicBoard.getNumColumns());
@@ -96,12 +84,9 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
 
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
-                if(!m_pieceLayerPtr){
-                    m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-                }
                 auto position_o = m_tileLayer.getTileCentrePosition({x,y});
                 if(position_o != std::nullopt){
-                    m_pieceLayerPtr->addEntity({x,y},position_o.value(),entity_o.value());
+                    m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
                 }
             }
         }
@@ -157,15 +142,11 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     }
     m_tileLayer.init(m_isLeftToRight,m_isTopToBottom);
     
-    if(!m_pieceLayerPtr){
-        m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-    }
-    
     if(m_arrowColorManagerPtr){
-        m_pieceLayerPtr->setColorManagerPtr(m_arrowColorManagerPtr);
+        m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }
-    m_pieceLayerPtr->setPieceSize({config.tileWidth, config.tileHeight});
-    m_pieceLayerPtr->setCircleDiameter(config.circleDiameter);
+    m_pieceLayer.setPieceSize({config.tileWidth, config.tileHeight});
+    m_pieceLayer.setCircleDiameter(config.circleDiameter);
 
     m_arrowLayer.setThickness(config.arrowThickness);
     m_arrowLayer.setHeadSize(config.arrowHeadSize);
@@ -255,7 +236,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
             auto entity_o = logicBoard.getEntityAt({x,y});
             if(entity_o != std::nullopt){
                 auto position_o = m_tileLayer.getTileCentrePosition({x,y});
-                m_pieceLayerPtr->addEntity({x,y},position_o.value(),entity_o.value());
+                m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
             }
         }
     }
@@ -333,14 +314,7 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
 
     m_tileLayer = rhs.m_tileLayer;
-
-    if(rhs.m_pieceLayerPtr){
-        if(!m_pieceLayerPtr){
-            m_pieceLayerPtr = std::make_unique<GraphicEntities>();
-        }
-        *m_pieceLayerPtr = *(rhs.m_pieceLayerPtr);
-    }
-
+    m_pieceLayer = rhs.m_pieceLayer;
     m_arrowLayer = rhs.m_arrowLayer;
 
     m_dragArrow = rhs.m_dragArrow;
@@ -484,27 +458,27 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
         return;
     }
 
-    if(m_pieceLayerPtr->getEntityAt(coord) != std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
         std::cerr << "GraphicBoard: Failed to add entity at "
             << coord.getNotation() << std::endl;
         std::cerr << "There is already an entity there" << std::endl;
         return;
     }
 
-    m_pieceLayerPtr->addEntity(coord,position_o.value(),entity);
+    m_pieceLayer.addEntity(coord,position_o.value(),entity);
     redrawTexture();
 }
 
 void GraphicBoard::removeEntity(const Coord& coord){
 
-    if(m_pieceLayerPtr->getEntityAt(coord) == std::nullopt){
+    if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cerr << "GraphicBoard: Failed to remove entity at "
             << coord.getNotation() << std::endl;
         std::cerr << "There is no entity there" << std::endl;
         return;
     }
 
-    m_pieceLayerPtr->removeEntity(coord);
+    m_pieceLayer.removeEntity(coord);
     redrawTexture();
 }
 
@@ -528,12 +502,12 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
         return;
     }
 
-    if(m_pieceLayerPtr->getEntityAt(toCoord) != std::nullopt){
-        m_pieceLayerPtr->removeEntity(toCoord);
+    if(m_pieceLayer.getEntityAt(toCoord) != std::nullopt){
+        m_pieceLayer.removeEntity(toCoord);
     }
 
-    if(m_pieceLayerPtr->getEntityAt(fromCoord) != std::nullopt){
-        m_pieceLayerPtr->moveEntity(fromCoord, toCoord,toPosition_o.value());
+    if(m_pieceLayer.getEntityAt(fromCoord) != std::nullopt){
+        m_pieceLayer.moveEntity(fromCoord, toCoord,toPosition_o.value());
     }
 
     redrawTexture();
@@ -699,7 +673,7 @@ void GraphicBoard::saveImage(const std::string& fileName){
 }
 
 void GraphicBoard::clearEntities(){
-    m_pieceLayerPtr->clear();
+    m_pieceLayer.clear();
     redrawTexture();
 }
 
@@ -711,12 +685,9 @@ void GraphicBoard::clearArrows(){
 void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnRight(repeatTileColorIds, m_isLeftToRight);
-    if(m_pieceLayerPtr){
-        if(!m_isLeftToRight){
-            m_pieceLayerPtr->move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
-        }
-    }
+
     if(!m_isLeftToRight){
+        m_pieceLayer.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
         m_arrowLayer.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
     }
 
@@ -747,9 +718,8 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
 void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnLeft(repeatTileColorIds, m_isLeftToRight);
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->moveEntitiesRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
-    }
+
+    m_pieceLayer.moveEntitiesRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
     m_arrowLayer.moveArrowsRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
 
     m_border.addWidth(m_tileLayer.getTileSize().x);
@@ -780,14 +750,10 @@ void GraphicBoard::removeRightTileColumn(){
 
     m_tileLayer.removeRightColumn(m_isLeftToRight);
     int columnId = m_tileLayer.getNumColumns();
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->removeColumn(columnId);
-        if(!m_isLeftToRight){
-            m_pieceLayerPtr->move(sf::Vector2f{-m_tileLayer.getTileSize().x, 0.f});
-        }
-    }
+    m_pieceLayer.removeColumn(columnId);
     m_arrowLayer.removeColumn(columnId);
     if(!m_isLeftToRight){
+        m_pieceLayer.move(sf::Vector2f{-m_tileLayer.getTileSize().x, 0.f});
         m_arrowLayer.move(sf::Vector2f{-m_tileLayer.getTileSize().x, 0.f});
     }
     m_turnToken.move({-m_tileLayer.getTileSize().x, 0.f});
@@ -808,10 +774,8 @@ void GraphicBoard::removeRightTileColumn(){
 void GraphicBoard::removeLeftTileColumn(){
 
     m_tileLayer.removeLeftColumn(m_isLeftToRight);
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->removeColumn(0);
-        m_pieceLayerPtr->moveEntitiesLeft(m_tileLayer.getTileSize().x, m_isLeftToRight);
-    }
+    m_pieceLayer.removeColumn(0);
+    m_pieceLayer.moveEntitiesLeft(m_tileLayer.getTileSize().x, m_isLeftToRight);
     m_arrowLayer.removeColumn(0);
     m_arrowLayer.moveArrowsLeft(m_tileLayer.getTileSize().x, m_isLeftToRight);
 
@@ -833,9 +797,7 @@ void GraphicBoard::removeLeftTileColumn(){
 void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowUp(repeatTileColorIds, m_isTopToBottom);
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->moveEntitiesDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
-    }
+    m_pieceLayer.moveEntitiesDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
     m_arrowLayer.moveArrowsDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
 
     m_border.addHeight(m_tileLayer.getTileSize().y);
@@ -868,12 +830,9 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
 void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowDown(repeatTileColorIds, m_isTopToBottom);
-    if(m_pieceLayerPtr){
-        if(!m_isTopToBottom){
-            m_pieceLayerPtr->move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        }
-    }
+
     if(!m_isTopToBottom){
+        m_pieceLayer.move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
         m_arrowLayer.move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
     }
 
@@ -907,12 +866,10 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
 void GraphicBoard::removeTopTileRow(){
 
     m_tileLayer.removeTopRow(m_isLeftToRight);
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->removeRow(0);
-        m_pieceLayerPtr->moveEntitiesUp(m_tileLayer.getTileSize().y, m_isTopToBottom);
-    }
-        m_arrowLayer.removeRow(0);
-        m_arrowLayer.moveArrowsUp(m_tileLayer.getTileSize().y, m_isTopToBottom);
+    m_pieceLayer.removeRow(0);
+    m_pieceLayer.moveEntitiesUp(m_tileLayer.getTileSize().y, m_isTopToBottom);
+    m_arrowLayer.removeRow(0);
+    m_arrowLayer.moveArrowsUp(m_tileLayer.getTileSize().y, m_isTopToBottom);
 
     m_border.addHeight(-m_tileLayer.getTileSize().y);
 
@@ -935,14 +892,11 @@ void GraphicBoard::removeBottomTileRow(){
 
     m_tileLayer.removeBottomRow(m_isTopToBottom);
     int rowId = m_tileLayer.getNumRows();
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->removeRow(rowId);
-        if(!m_isTopToBottom){
-            m_pieceLayerPtr->move(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        }
-    }
+
+    m_pieceLayer.removeRow(rowId);
     m_arrowLayer.removeRow(rowId);
     if(!m_isTopToBottom){
+        m_pieceLayer.move(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
         m_arrowLayer.move(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
     }
 
@@ -989,11 +943,11 @@ void GraphicBoard::flip(){
             position.y += m_topEdgeWidth;
             m_tileLayer.setTilePosition({x,y},position);
 
-            auto entity_o = m_pieceLayerPtr->getEntityAt({x,y});
+            auto entity_o = m_pieceLayer.getEntityAt({x,y});
 
             if(entity_o != std::nullopt){
                 auto position_o = m_tileLayer.getTileCentrePosition({x,y});
-                m_pieceLayerPtr->setEntityPosition({x,y}, position_o.value());
+                m_pieceLayer.setEntityPosition({x,y}, position_o.value());
             }
         }
     }
@@ -1348,9 +1302,7 @@ void GraphicBoard::redrawTexture(){
         m_texture.draw(m_selectHighlight);
     }
 
-    if(m_pieceLayerPtr){
-        m_texture.draw(*m_pieceLayerPtr);
-    }
+    m_texture.draw(m_pieceLayer);
 
     m_texture.draw(m_arrowLayer);
 
@@ -1675,11 +1627,7 @@ void GraphicBoard::addBottomOutsideLabels_h(){
 void GraphicBoard::moveTiles(const sf::Vector2f& offset){
     
     m_tileLayer.move(offset);
-
-    if(m_pieceLayerPtr){
-        m_pieceLayerPtr->move(offset);
-    }
-    
+    m_pieceLayer.move(offset);
     m_arrowLayer.move(offset);
 
     m_labels.moveLeftInsideLabels(offset);

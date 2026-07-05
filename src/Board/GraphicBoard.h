@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 
 #include "../Coord/Coord.h"
@@ -14,6 +13,7 @@
 
 #include "../Entity/LogicEntity.h"
 #include "../Entity/GraphicEntity.h"
+#include "../Entity/GraphicEntities.h"
 
 #include "../Entity/Shape/Arrow/LogicArrow.h"
 #include "../Entity/Shape/Arrow/GraphicArrow.h"
@@ -32,8 +32,6 @@ namespace sigrid{
     class IconManager;
     
     class CoordPair;
-
-    class GraphicEntities;
 
     class GraphicBoard: public sf::Drawable{
         public:
@@ -202,9 +200,7 @@ namespace sigrid{
             TurnToken m_turnToken;
 
             GraphicTiles m_tileLayer;
-
-            std::unique_ptr<GraphicEntities> m_pieceLayerPtr;
-
+            GraphicEntities m_pieceLayer;
             GraphicArrows m_arrowLayer;
 
             bool m_isDragArrowVisible = false;
