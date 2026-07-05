@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SigridVector.h"
+#include "../Coord/CoordPair.h"
 #include <SFML/Graphics/Color.hpp>
 #include "../Entity/Piece/PieceColor.h"
 #include <map>
@@ -11,6 +12,7 @@
 // This class is only included by Sigrid2DMap.cpp
 // Add more templates below to support more types
 template class sigrid::SigridVector<float>;
+template class sigrid::SigridVector<sigrid::CoordPair>;
 template class sigrid::SigridVector<sf::Color>;
 template class sigrid::SigridVector<sigrid::PieceColor>;
 template class sigrid::SigridVector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;

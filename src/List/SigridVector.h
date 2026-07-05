@@ -12,6 +12,10 @@ namespace sigrid{
             SigridVector();
 
             void push_back(const T& value);
+            void insert(const unsigned int& position, const T& value);
+            void erase(const unsigned int& position);
+            typename std::vector<T>::iterator erase(const typename std::vector<T>::iterator& iterator);
+            void clear();
 
             std::optional<std::reference_wrapper<T>> at(const unsigned int& position);
             const std::optional<std::reference_wrapper<const T>> at(const unsigned int& position) const;
@@ -19,6 +23,11 @@ namespace sigrid{
             const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
 
             unsigned int size() const;
+
+            typename std::vector<T>::iterator begin();
+            typename std::vector<T>::const_iterator begin() const;
+            typename std::vector<T>::iterator end();
+            typename std::vector<T>::const_iterator end() const;
 
         private:
 

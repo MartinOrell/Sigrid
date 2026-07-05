@@ -1,8 +1,8 @@
 #pragma once
 
-#include <map>
 #include <optional>
-#include <vector>
+
+#include "../../../List/SigridOrderedMap.h"
 
 #include "../../../Coord/CoordPair.h"
 #include "GraphicArrow.h"
@@ -19,9 +19,6 @@ namespace sigrid{
             void setThickness(const float& thickness);
             void setHeadSize(const float& headSize);
             void setColorManagerPtr(ColorManager* const managerPtr);
-            
-            std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator begin();
-            std::map<sigrid::CoordPair, sigrid::GraphicArrow>::iterator end();
 
             void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
             void removeArrow(const CoordPair& coordPair);
@@ -30,6 +27,8 @@ namespace sigrid{
             float getHeadSize() const;
 
             std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
+            const SigridOrderedMap<CoordPair, GraphicArrow>& getArrows() const;
+            SigridOrderedMap<CoordPair, GraphicArrow>& getArrows();
 
             void clear();
 
@@ -48,8 +47,7 @@ namespace sigrid{
 
             ColorManager* m_colorManagerPtr = nullptr;
 
-            std::map<CoordPair, GraphicArrow> m_arrows;
-            std::vector<CoordPair> m_drawOrder;
+            SigridOrderedMap<CoordPair, GraphicArrow> m_arrows;
 
             float m_arrowThickness = 0.f;
             float m_arrowHeadSize = 0.f;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <ostream>
 
 #include "Coord.h"
 
@@ -16,6 +17,7 @@ namespace sigrid{
         bool operator!=(const CoordPair& rhs) const;
 
         std::string getNotation() const;
+        friend std::ostream& operator<<(std::ostream& out, const CoordPair& coordPair);
     };
 
 }

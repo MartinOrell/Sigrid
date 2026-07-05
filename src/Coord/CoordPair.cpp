@@ -29,3 +29,9 @@ std::string CoordPair::getNotation() const{
     notation.append(to.getNotation());
     return notation;
 }
+
+std::ostream& sigrid::operator<<(std::ostream &out, const CoordPair &coordPair)
+{
+    out << coordPair.getNotation();
+    return out;
+}

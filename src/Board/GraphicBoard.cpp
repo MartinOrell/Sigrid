@@ -1085,10 +1085,23 @@ void GraphicBoard::flip(){
     }
 
     if(m_arrowLayerPtr){
-        for(auto& arrow : *m_arrowLayerPtr){
-            sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.from).value();
-            sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(arrow.first.to).value();
-            arrow.second.setPosition(fromPos,toPos);
+        for(unsigned int i = 0; i < m_arrowLayerPtr->getArrows().size(); i++){
+
+            auto coordPair_o = m_arrowLayerPtr->getArrows().keyAt(i);
+            if(coordPair_o == std::nullopt){
+                continue;
+            }
+            auto& coordPair = coordPair_o.value().get();
+
+            auto arrow_o = m_arrowLayerPtr->getArrows().at(i);
+            if(arrow_o == std::nullopt){
+                continue;
+            }
+            auto& arrow = arrow_o.value().get();
+
+            sf::Vector2f fromPos = m_tileLayerPtr->getTileCentrePosition(coordPair.from).value();
+            sf::Vector2f toPos = m_tileLayerPtr->getTileCentrePosition(coordPair.to).value();
+            arrow.setPosition(fromPos,toPos);
         }
     }
     

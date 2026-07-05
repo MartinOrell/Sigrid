@@ -32,6 +32,7 @@ template class sigrid::SigridMap<sigrid::CoordPair, sigrid::LogicArrow>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicCircle>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicArrow>;
+template class sigrid::SigridMap<sigrid::CoordPair, sigrid::GraphicArrow>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::Icon>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicCircle>;

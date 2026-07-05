@@ -6,6 +6,7 @@ set(SRC_FILES
     src/SigridRenderTexture/SigridRenderTexture.cpp
     src/List/SigridVector.cpp
     src/List/SigridMap.cpp
+    src/List/SigridOrderedMap.cpp
     src/List/Sigrid2DList.cpp
     src/List/Sigrid2DMap.cpp
     src/Input/Mouse/Mouse.cpp
