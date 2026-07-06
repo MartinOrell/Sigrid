@@ -1,10 +1,10 @@
 #pragma once
 
 #include <map>
-#include <vector>
 #include <optional>
 #include <functional> //Reference wrapper
 
+#include "List/SigridVector.h"
 #include "Coord/Coord.h"
 
 namespace sigrid{
@@ -14,7 +14,7 @@ namespace sigrid{
         public:
             Sigrid2DMap();
             
-            void setInsertPattern(const std::vector<T>& insertPattern);
+            void setInsertPattern(const SigridVector<T>& insertPattern);
             void setNumColumns(const unsigned int& columns);
             void setNumRows(const unsigned int& rows);
             void setSize(const unsigned int& columns, const unsigned int& rows);
@@ -37,7 +37,7 @@ namespace sigrid{
 
             const unsigned int& numColumns() const;
             const unsigned int& numRows() const;
-            const std::vector<T>& getInsertPattern() const;
+            const SigridVector<T>& getInsertPattern() const;
 
         private:
 
@@ -50,6 +50,6 @@ namespace sigrid{
         unsigned int m_columns = 0;
         unsigned int m_rows = 0;
         std::map<Coord, T> m_map;
-        std::vector<T> m_insertPattern;
+        SigridVector<T> m_insertPattern;
     };
 }

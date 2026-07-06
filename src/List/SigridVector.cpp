@@ -23,6 +23,11 @@ void SigridVector<T>::insert(const unsigned int& position, const T& value){
 }
 
 template <typename T> 
+void SigridVector<T>::pop_back(){
+    m_vector.pop_back();
+}
+
+template <typename T> 
 void SigridVector<T>::erase(const unsigned int& position){
 
     if(position >= m_vector.size()){
@@ -40,6 +45,26 @@ typename std::vector<T>::iterator SigridVector<T>::erase(const typename std::vec
 template <typename T> 
 void SigridVector<T>::clear(){
     m_vector.clear();
+}
+
+template<typename T>
+std::optional<std::reference_wrapper<T>> SigridVector<T>::back(){
+
+    if(m_vector.size() == 0){
+        return std::nullopt;
+    }
+
+    return m_vector.back();
+}
+
+template<typename T>
+const std::optional<std::reference_wrapper<const T>> SigridVector<T>::back() const{
+    
+    if(m_vector.size() == 0){
+        return std::nullopt;
+    }
+
+    return m_vector.back();
 }
 
 template<typename T>

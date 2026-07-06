@@ -13,7 +13,7 @@ template<typename T>
 Sigrid2DMap<T>::Sigrid2DMap(){}
 
 template<typename T>
-void Sigrid2DMap<T>::setInsertPattern(const std::vector<T>& insertPattern){
+void Sigrid2DMap<T>::setInsertPattern(const SigridVector<T>& insertPattern){
 
     m_insertPattern = insertPattern;
 
@@ -32,6 +32,7 @@ void Sigrid2DMap<T>::setInsertPattern(const std::vector<T>& insertPattern){
 
 template<typename T>
 void Sigrid2DMap<T>::setNumColumns(const unsigned int& columns){
+
     m_columns = columns;
 
     if(m_columns == 0){
@@ -49,6 +50,7 @@ void Sigrid2DMap<T>::setNumColumns(const unsigned int& columns){
 
 template<typename T>
 void Sigrid2DMap<T>::setNumRows(const unsigned int& rows){
+
     m_rows = rows;
 
     if(m_columns == 0){
@@ -412,16 +414,19 @@ const unsigned int& Sigrid2DMap<T>::numRows() const{
 }
 
 template<typename T>
-const std::vector<T>& Sigrid2DMap<T>::getInsertPattern() const{
+const SigridVector<T>& Sigrid2DMap<T>::getInsertPattern() const{
     return m_insertPattern;
 }
 
 template<typename T>
 T Sigrid2DMap<T>::getInsertElement(const Coord& coord) const{
-    if(m_insertPattern.size() == 0){
+
+    auto element_o = m_insertPattern.at((coord.x+coord.y)%m_insertPattern.size());
+
+    if(element_o == std::nullopt){
         return T{};
     }
-    return m_insertPattern.at((coord.x+coord.y)%m_insertPattern.size());
+    return element_o.value().get();
 }
 
 template<typename T>
@@ -443,7 +448,12 @@ void Sigrid2DMap<T>::shiftInsertPatternRight(){
         return;
     }
 
-    T lastElement = m_insertPattern.back();
-    m_insertPattern.insert(m_insertPattern.begin(), lastElement);
+    auto lastElement_o = m_insertPattern.back();
+    if(lastElement_o == std::nullopt){
+        return;
+    }
+    auto lastElement = lastElement_o.value().get();
+
+    m_insertPattern.insert(0, lastElement);
     m_insertPattern.pop_back();
 }
