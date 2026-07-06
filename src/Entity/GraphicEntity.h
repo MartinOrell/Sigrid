@@ -2,10 +2,10 @@
 
 #include <variant>
 
-#include "Piece/GraphicPiece.h"
-#include "Shape/Circle/GraphicCircle.h"
-#include "Shape/Arrow/GraphicArrow.h"
-#include "Icon/Icon.h"
+#include "Entity/Piece/GraphicPiece.h"
+#include "Entity/Shape/Circle/GraphicCircle.h"
+#include "Entity/Shape/Arrow/GraphicArrow.h"
+#include "Entity/Icon/Icon.h"
 
 namespace sigrid{
     typedef std::variant<

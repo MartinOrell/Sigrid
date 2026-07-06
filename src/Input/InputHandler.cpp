@@ -1,4 +1,4 @@
-#include "InputHandler.h"
+#include "Input/InputHandler.h"
 
 using namespace sigrid;
 

@@ -1,4 +1,4 @@
-#include "MainWindowConfigContainer.h"
+#include "Window/MainWindow/MainWindowConfigContainer.h"
 
 #include <fstream>
 #include <iostream>

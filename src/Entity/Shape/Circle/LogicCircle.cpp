@@ -1,4 +1,4 @@
-#include "LogicCircle.h"
+#include "Entity/Shape/Circle/LogicCircle.h"
 
 using namespace sigrid;
 

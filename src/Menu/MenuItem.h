@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 #include <SFML/Graphics/Text.hpp>
-#include "../Action/Action.h"
+#include "Action/Action.h"
 
 namespace sf{
     class RectangleShape;

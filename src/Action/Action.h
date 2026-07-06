@@ -5,11 +5,11 @@
 
 #include <SFML/Window/Mouse.hpp>
 
-#include "../Entity/LogicEntity.h"
-#include "../Entity/GraphicEntity.h"
-#include "../Entity/Piece/LogicPiece.h"
-#include "../Entity/Piece/GraphicPiece.h"
-#include "../Tool/ToolSelection.h"
+#include "Entity/LogicEntity.h"
+#include "Entity/GraphicEntity.h"
+#include "Entity/Piece/LogicPiece.h"
+#include "Entity/Piece/GraphicPiece.h"
+#include "Tool/ToolSelection.h"
 
 namespace sigrid{
     namespace ActionType{

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../../Board/Board.h"
-#include "../../Layout/LayoutGrid.h"
+#include "Board/Board.h"
+#include "Layout/LayoutGrid.h"
 
 namespace sigrid{
 

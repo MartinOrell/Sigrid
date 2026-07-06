@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "../Entity/Tile/LogicTiles.h"
-#include "../Entity/LogicEntities.h"
-#include "../Entity/Shape/Arrow/LogicArrows.h"
+#include "Entity/Tile/LogicTiles.h"
+#include "Entity/LogicEntities.h"
+#include "Entity/Shape/Arrow/LogicArrows.h"
 
 namespace sigrid{
 

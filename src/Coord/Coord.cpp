@@ -1,4 +1,4 @@
-#include "Coord.h"
+#include "Coord/Coord.h"
 
 #include <iostream>
 

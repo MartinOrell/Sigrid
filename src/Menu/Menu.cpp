@@ -1,8 +1,8 @@
-#include "Menu.h"
+#include "Menu/Menu.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "MenuContainer.h"
-#include "../Font/FontManager.h"
+#include "Menu/MenuContainer.h"
+#include "Font/FontManager.h"
 
 #include <iostream>
 

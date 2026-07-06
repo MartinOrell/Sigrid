@@ -1,4 +1,4 @@
-#include "Board.h"
+#include "Board/Board.h"
 
 #include <iostream>
 #include <fstream>
@@ -7,13 +7,13 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Image.hpp>
 
-#include "BoardDataContainer.h"
-#include "../Entity/Tile/GraphicTiles.h"
-#include "../Entity/GraphicEntities.h"
-#include "../Entity/Shape/Arrow/GraphicArrows.h"
-#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
-#include "../Board/BoardLabels.h"
-#include "../Entity/TurnToken/TurnToken.h"
+#include "Board/BoardDataContainer.h"
+#include "Entity/Tile/GraphicTiles.h"
+#include "Entity/GraphicEntities.h"
+#include "Entity/Shape/Arrow/GraphicArrows.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "Board/BoardLabels.h"
+#include "Entity/TurnToken/TurnToken.h"
 
 using namespace sigrid;
 

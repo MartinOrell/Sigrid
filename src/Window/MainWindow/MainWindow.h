@@ -6,18 +6,18 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Mouse.hpp>
-#include "../../Tool/Tool.h"
+#include "Tool/Tool.h"
 
-#include "../../Input/InputHandler.h"
-#include "../../Input/Mouse/Mouse.h"
+#include "Input/InputHandler.h"
+#include "Input/Mouse/Mouse.h"
 
-#include "../../Layout/LayoutGrid.h"
-#include "../../Menu/Menu.h"
-#include "../WorkWindow/WorkWindow.h"
-#include "../ToolWindow/ToolWindow.h"
-#include "../../ToolPicker/ToolPickerWindow.h"
+#include "Layout/LayoutGrid.h"
+#include "Menu/Menu.h"
+#include "Window/WorkWindow/WorkWindow.h"
+#include "Window/ToolWindow/ToolWindow.h"
+#include "ToolPicker/ToolPickerWindow.h"
 
-#include "../../Entity/Icon/IconManager.h"
+#include "Entity/Icon/IconManager.h"
 
 namespace sigrid{
 

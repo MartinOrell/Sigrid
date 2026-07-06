@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Object.h"
-#include "PageResources.h"
-#include "ContentStreams.h"
+#include "Pdf/Object.h"
+#include "Pdf/PageResources.h"
+#include "Pdf/ContentStreams.h"
 
 namespace myPdf{
 

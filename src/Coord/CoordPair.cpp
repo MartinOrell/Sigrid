@@ -1,4 +1,4 @@
-#include "CoordPair.h"
+#include "Coord/CoordPair.h"
 
 #include <cctype>
 

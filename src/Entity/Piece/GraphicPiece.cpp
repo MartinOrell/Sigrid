@@ -1,4 +1,4 @@
-#include "GraphicPiece.h"
+#include "Entity/Piece/GraphicPiece.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>

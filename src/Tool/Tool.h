@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "ToolSelection.h"
-#include "../Entity/LogicEntity.h"
+#include "Tool/ToolSelection.h"
+#include "Entity/LogicEntity.h"
 
 namespace sigrid{
 

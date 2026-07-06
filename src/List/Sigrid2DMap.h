@@ -5,7 +5,7 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-#include "../Coord/Coord.h"
+#include "Coord/Coord.h"
 
 namespace sigrid{
 

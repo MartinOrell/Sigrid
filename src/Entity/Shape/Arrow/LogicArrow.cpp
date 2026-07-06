@@ -1,4 +1,4 @@
-#include "LogicArrow.h"
+#include "Entity/Shape/Arrow/LogicArrow.h"
 
 using namespace sigrid;
 

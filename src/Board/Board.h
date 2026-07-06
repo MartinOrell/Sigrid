@@ -3,9 +3,9 @@
 #include <optional>
 #include <string>
 
-#include "GraphicBoard.h"
-#include "LogicBoard.h"
-#include "../Entity/Piece/PieceManager.h"
+#include "Board/GraphicBoard.h"
+#include "Board/LogicBoard.h"
+#include "Entity/Piece/PieceManager.h"
 
 namespace sigrid{
 

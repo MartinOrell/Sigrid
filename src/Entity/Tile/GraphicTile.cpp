@@ -1,4 +1,4 @@
-#include "GraphicTile.h"
+#include "Entity/Tile/GraphicTile.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 

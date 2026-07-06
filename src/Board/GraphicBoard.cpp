@@ -1,14 +1,14 @@
-#include "GraphicBoard.h"
+#include "Board/GraphicBoard.h"
 
-#include "LogicBoard.h"
-#include "BoardDesignContainer.h"
-#include "../Color/ColorManager.h"
+#include <iostream>
+
+#include "Board/LogicBoard.h"
+#include "Board/BoardDesignContainer.h"
+#include "Color/ColorManager.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Image.hpp>
-
-#include <iostream>
 
 using namespace sigrid;
 

@@ -1,4 +1,4 @@
-#include "PdfHandler.h"
+#include "Window/WorkWindow/PdfHandler.h"
 
 #include <iostream>
 #include <sstream>
@@ -6,8 +6,8 @@
 
 #include <SFML/Graphics/Image.hpp>
 
-#include "../../Pdf/Pdf.h"
-#include "../../Pdf/Image.h"
+#include "Pdf/Pdf.h"
+#include "Pdf/Image.h"
 
 using namespace sigrid;
 

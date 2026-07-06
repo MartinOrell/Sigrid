@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ContentStream.h"
+#include "Pdf/ContentStream.h"
 
 using namespace myPdf;
 

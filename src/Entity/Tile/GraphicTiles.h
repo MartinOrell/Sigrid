@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "../../Coord/Coord.h"
-#include "../../List/Sigrid2DMap.h"
-#include "GraphicTile.h"
+#include "Coord/Coord.h"
+#include "List/Sigrid2DMap.h"
+#include "Entity/Tile/GraphicTile.h"
 
 namespace sigrid{
     

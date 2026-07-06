@@ -2,10 +2,10 @@
 
 #include <optional>
 
-#include "../../../List/SigridOrderedMap.h"
+#include "List/SigridOrderedMap.h"
 
-#include "../../../Coord/CoordPair.h"
-#include "GraphicArrow.h"
+#include "Coord/CoordPair.h"
+#include "Entity/Shape/Arrow/GraphicArrow.h"
 
 namespace sigrid{
 

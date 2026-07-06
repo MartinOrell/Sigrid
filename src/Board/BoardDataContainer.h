@@ -2,8 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "../Entity/Piece/PieceDataContainer.h"
-#include "../Entity/Shape/Circle/CircleDataContainer.h"
+
+#include "Entity/Piece/PieceDataContainer.h"
+#include "Entity/Shape/Circle/CircleDataContainer.h"
 
 namespace sigrid{
     struct BoardDataContainer{

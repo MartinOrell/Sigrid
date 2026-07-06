@@ -1,4 +1,4 @@
-#include "Icon.h"
+#include "Entity/Icon/Icon.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 

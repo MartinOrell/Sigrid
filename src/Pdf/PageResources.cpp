@@ -1,4 +1,4 @@
-#include "PageResources.h"
+#include "Pdf/PageResources.h"
 
 using namespace myPdf;
 

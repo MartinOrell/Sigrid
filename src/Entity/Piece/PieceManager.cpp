@@ -1,8 +1,8 @@
-#include "PieceManager.h"
+#include "Entity/Piece/PieceManager.h"
 
 #include <SFML/Graphics/Image.hpp>
 
-#include "PieceContainer.h"
+#include "Entity/Piece/PieceContainer.h"
 
 using namespace sigrid;
 

@@ -3,9 +3,9 @@
 #include <optional>
 #include <vector>
 
-#include "../../Coord/Coord.h"
-#include "../../List/Sigrid2DMap.h"
-#include "LogicTile.h"
+#include "Coord/Coord.h"
+#include "List/Sigrid2DMap.h"
+#include "Entity/Tile/LogicTile.h"
 
 namespace sigrid{
     class LogicTiles{

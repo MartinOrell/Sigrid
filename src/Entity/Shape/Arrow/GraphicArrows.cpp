@@ -1,7 +1,7 @@
-#include "GraphicArrows.h"
+#include "Entity/Shape/Arrow/GraphicArrows.h"
 
-#include "LogicArrow.h"
-#include "../../../Color/ColorManager.h"
+#include "Entity/Shape/Arrow/LogicArrow.h"
+#include "Color/ColorManager.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include <iostream>

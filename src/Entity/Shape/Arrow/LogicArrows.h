@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "../../../List/SigridOrderedMap.h"
-#include "../../../Coord/CoordPair.h"
-#include "LogicArrow.h"
+#include "List/SigridOrderedMap.h"
+#include "Coord/CoordPair.h"
+#include "Entity/Shape/Arrow/LogicArrow.h"
 
 namespace sigrid{
     class LogicArrows{

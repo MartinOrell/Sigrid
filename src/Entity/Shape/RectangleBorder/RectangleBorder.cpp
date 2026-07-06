@@ -1,4 +1,4 @@
-#include "RectangleBorder.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorder.h"
 
 using namespace sigrid;
 

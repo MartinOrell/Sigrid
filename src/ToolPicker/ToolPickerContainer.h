@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "../Coord/CoordBlock.h"
+#include "Coord/CoordBlock.h"
 
 namespace sigrid{
 

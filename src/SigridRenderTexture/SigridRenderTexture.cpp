@@ -1,4 +1,4 @@
-#include "SigridRenderTexture.h"
+#include "SigridRenderTexture/SigridRenderTexture.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 

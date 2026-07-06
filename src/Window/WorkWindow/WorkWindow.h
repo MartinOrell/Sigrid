@@ -2,16 +2,16 @@
 
 #include <optional>
 
-#include "../../SigridRenderTexture/SigridRenderTexture.h"
-#include "../../Layout/LayoutGrid.h"
-#include "../../Board/Board.h"
-#include "../../Action/Action.h"
+#include "SigridRenderTexture/SigridRenderTexture.h"
+#include "Layout/LayoutGrid.h"
+#include "Board/Board.h"
+#include "Action/Action.h"
 
-#include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorder.h"
 
 #include "PdfHandler.h"
 
-#include "../../List/Sigrid2DList.h"
+#include "List/Sigrid2DList.h"
 
 namespace sigrid{
 

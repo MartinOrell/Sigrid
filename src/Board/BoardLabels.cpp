@@ -1,10 +1,11 @@
 #include "BoardLabels.h"
 
-#include <SFML/Graphics/RenderTarget.hpp>
-#include "../Font/FontManager.h"
-#include "../Coord/Coord.h"
-
 #include <iostream>
+
+#include <SFML/Graphics/RenderTarget.hpp>
+
+#include "Font/FontManager.h"
+#include "Coord/Coord.h"
 
 using namespace sigrid;
 

@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "../List/SigridVector.h"
-#include "../List/SigridMap.h"
-#include "../Coord/CoordPair.h"
+#include "List/SigridVector.h"
+#include "List/SigridMap.h"
+#include "Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
 namespace sigrid{

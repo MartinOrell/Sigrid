@@ -5,12 +5,12 @@
 #include <map>
 
 #include <SFML/System/Vector2.hpp>
-#include "../Action/Action.h"
-#include "../Coord/CoordBlock.h"
-#include "../Color/ColorManager.h"
-#include "../Board/Board.h"
+#include "Action/Action.h"
+#include "Coord/CoordBlock.h"
+#include "Color/ColorManager.h"
+#include "Board/Board.h"
 
-#include "../SigridRenderTexture/SigridRenderTexture.h"
+#include "SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 

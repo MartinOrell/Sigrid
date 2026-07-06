@@ -3,9 +3,9 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "../List/SigridMap.h"
-#include "../Tool/Tool.h"
-#include "../Action/Action.h"
+#include "List/SigridMap.h"
+#include "Tool/Tool.h"
+#include "Action/Action.h"
 
 namespace sigrid{
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Coord.h"
+#include "Coord/Coord.h"
 
 namespace sigrid{
 

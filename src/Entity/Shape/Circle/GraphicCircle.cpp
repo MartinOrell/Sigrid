@@ -1,4 +1,4 @@
-#include "GraphicCircle.h"
+#include "Entity/Shape/Circle/GraphicCircle.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 

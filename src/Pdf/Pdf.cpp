@@ -1,15 +1,15 @@
-#include "Pdf.h"
+#include "Pdf/Pdf.h"
 
 #include <iostream>
 #include <fstream>
 
-#include "Catalog.h"
-#include "Pages.h"
-#include "ProcedureSet.h"
-#include "MediaBox.h"
-#include "PageResources.h"
-#include "ExternalObjects.h"
-#include "ContentStreams.h"
+#include "Pdf/Catalog.h"
+#include "Pdf/Pages.h"
+#include "Pdf/ProcedureSet.h"
+#include "Pdf/MediaBox.h"
+#include "Pdf/PageResources.h"
+#include "Pdf/ExternalObjects.h"
+#include "Pdf/ContentStreams.h"
 
 using namespace myPdf;
 

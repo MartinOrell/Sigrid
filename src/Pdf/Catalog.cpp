@@ -1,4 +1,4 @@
-#include "Catalog.h"
+#include "Pdf/Catalog.h"
 
 using namespace myPdf;
 

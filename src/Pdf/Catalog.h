@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Object.h"
-#include "Pages.h"
+#include "Pdf/Object.h"
+#include "Pdf/Pages.h"
 
 namespace myPdf{
 

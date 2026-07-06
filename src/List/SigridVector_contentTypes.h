@@ -1,12 +1,12 @@
 #pragma once
 
-#include "SigridVector.h"
-#include "../Coord/CoordPair.h"
+#include "List/SigridVector.h"
+#include "Coord/CoordPair.h"
 #include <SFML/Graphics/Color.hpp>
-#include "../Entity/Piece/PieceColor.h"
+#include "Entity/Piece/PieceColor.h"
 #include <map>
-#include "../Entity/Piece/PieceIdentifier.h"
-#include "../Entity/Piece/GraphicPiece.h"
+#include "Entity/Piece/PieceIdentifier.h"
+#include "Entity/Piece/GraphicPiece.h"
 #include <SFML/Graphics/Texture.hpp>
 
 // This class is only included by Sigrid2DMap.cpp

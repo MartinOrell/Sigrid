@@ -1,8 +1,8 @@
-#include "MainWindow.h"
+#include "Window/MainWindow/MainWindow.h"
 
-#include "MainWindowConfigContainer.h"
+#include "Window/MainWindow/MainWindowConfigContainer.h"
 
-#include "../../Board/BoardDataContainer.h"
+#include "Board/BoardDataContainer.h"
 #include <SFML/Window/Clipboard.hpp>
 #include <iostream>
 

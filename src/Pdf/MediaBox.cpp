@@ -1,4 +1,4 @@
-#include "MediaBox.h"
+#include "Pdf/MediaBox.h"
 
 using namespace myPdf;
 

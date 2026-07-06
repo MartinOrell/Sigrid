@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SigridMap.h"
+#include "List/SigridMap.h"
 
 #include <string>
 #include <optional>
@@ -9,21 +9,21 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "../Coord/Coord.h"
-#include "../Coord/CoordPair.h"
-#include "../Action/Action.h"
-#include "../Tool/Tool.h"
-#include "../Entity/Piece/PieceIdentifier.h"
-#include "../Entity/Piece/LogicPiece.h"
-#include "../Entity/Shape/Circle/LogicCircle.h"
-#include "../Entity/Shape/Arrow/LogicArrow.h"
-#include "../Entity/Icon/Icon.h"
-#include "../Entity/Piece/GraphicPiece.h"
-#include "../Entity/Shape/Circle/GraphicCircle.h"
-#include "../Entity/Shape/Arrow/GraphicArrow.h"
-#include "../Entity/Icon/LogicIcon.h"
-#include "../Menu/Menu.h"
-#include "../Menu/MenuItem.h"
+#include "Coord/Coord.h"
+#include "Coord/CoordPair.h"
+#include "Action/Action.h"
+#include "Tool/Tool.h"
+#include "Entity/Piece/PieceIdentifier.h"
+#include "Entity/Piece/LogicPiece.h"
+#include "Entity/Shape/Circle/LogicCircle.h"
+#include "Entity/Shape/Arrow/LogicArrow.h"
+#include "Entity/Icon/Icon.h"
+#include "Entity/Piece/GraphicPiece.h"
+#include "Entity/Shape/Circle/GraphicCircle.h"
+#include "Entity/Shape/Arrow/GraphicArrow.h"
+#include "Entity/Icon/LogicIcon.h"
+#include "Menu/Menu.h"
+#include "Menu/MenuItem.h"
 
 // This class is only included by SigridMap.cpp
 // Add more templates below to support more types

@@ -1,6 +1,6 @@
-#include "LogicBoard.h"
+#include "Board/LogicBoard.h"
 
-#include "BoardDataContainer.h"
+#include "Board/BoardDataContainer.h"
 
 #include <iostream>
 

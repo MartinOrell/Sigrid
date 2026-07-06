@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "Image.h"
+#include "Pdf/Image.h"
 
 namespace myPdf{
 

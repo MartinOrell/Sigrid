@@ -1,7 +1,7 @@
-#include "GraphicTiles.h"
+#include "Entity/Tile/GraphicTiles.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "../../Color/ColorManager.h"
+#include "Color/ColorManager.h"
 
 #include <iostream>
 

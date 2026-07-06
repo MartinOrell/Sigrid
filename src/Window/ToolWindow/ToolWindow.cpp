@@ -1,17 +1,17 @@
-#include "ToolWindow.h"
+#include "Window/ToolWindow/ToolWindow.h"
 
 #include <iostream>
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "../../Board/BoardDataContainer.h"
-#include "../../Board/BoardDesignContainer.h"
-#include "../../Entity/Tile/GraphicTiles.h"
-#include "../../Entity/GraphicEntities.h"
-#include "../../Entity/Shape/Arrow/GraphicArrows.h"
-#include "../../Entity/Shape/RectangleBorder/RectangleBorder.h"
-#include "../../Board/BoardLabels.h"
-#include "../../Entity/TurnToken/TurnToken.h"
+#include "Board/BoardDataContainer.h"
+#include "Board/BoardDesignContainer.h"
+#include "Entity/Tile/GraphicTiles.h"
+#include "Entity/GraphicEntities.h"
+#include "Entity/Shape/Arrow/GraphicArrows.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "Board/BoardLabels.h"
+#include "Entity/TurnToken/TurnToken.h"
 
 using namespace sigrid;
 

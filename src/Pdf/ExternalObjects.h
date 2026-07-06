@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "Object.h"
-#include "ExternalObject.h"
+#include "Pdf/Object.h"
+#include "Pdf/ExternalObject.h"
 
 namespace myPdf{
 

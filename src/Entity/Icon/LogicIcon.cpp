@@ -1,4 +1,4 @@
-#include "LogicIcon.h"
+#include "Entity/Icon/LogicIcon.h"
 
 using namespace sigrid;
 

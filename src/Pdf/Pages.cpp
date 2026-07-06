@@ -1,4 +1,4 @@
-#include "Pages.h"
+#include "Pdf/Pages.h"
 
 using namespace myPdf;
 

@@ -1,4 +1,4 @@
-#include "LogicPiece.h"
+#include "Entity/Piece/LogicPiece.h"
 
 #include <cctype>
 

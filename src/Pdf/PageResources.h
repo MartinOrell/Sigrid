@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Object.h"
-#include "ExternalObjects.h"
+#include "Pdf/Object.h"
+#include "Pdf/ExternalObjects.h"
 
 namespace myPdf{
 

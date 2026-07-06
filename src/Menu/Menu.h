@@ -6,11 +6,11 @@
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
-#include "../Action/Action.h"
+#include "Action/Action.h"
 
-#include "../List/SigridMap.h"
-#include "../SigridRenderTexture/SigridRenderTexture.h"
-#include "MenuItem.h"
+#include "List/SigridMap.h"
+#include "SigridRenderTexture/SigridRenderTexture.h"
+#include "Menu/MenuItem.h"
 
 namespace sigrid{
 

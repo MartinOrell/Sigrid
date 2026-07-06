@@ -1,11 +1,11 @@
-#include "GraphicEntities.h"
+#include "Entity/GraphicEntities.h"
 
 #include <iostream>
 
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "Piece/PieceManager.h"
-#include "../Color/ColorManager.h"
-#include "Icon/IconManager.h"
+#include "Entity/Piece/PieceManager.h"
+#include "Color/ColorManager.h"
+#include "Entity/Icon/IconManager.h"
 
 using namespace sigrid;
 

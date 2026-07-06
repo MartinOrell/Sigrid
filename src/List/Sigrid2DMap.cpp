@@ -1,5 +1,5 @@
-#include "Sigrid2DMap.h"
-#include "Sigrid2DMap_contentTypes.h"
+#include "List/Sigrid2DMap.h"
+#include "List/Sigrid2DMap_contentTypes.h"
 // Any type used must be added in the Sigrid2DMap_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

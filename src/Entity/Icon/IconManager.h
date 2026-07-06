@@ -5,7 +5,7 @@
 #include <string>
 #include <SFML/Graphics/Texture.hpp>
 
-#include "../../List/SigridMap.h"
+#include "List/SigridMap.h"
 
 namespace sigrid{
 

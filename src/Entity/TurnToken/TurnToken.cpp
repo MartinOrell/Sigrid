@@ -1,4 +1,4 @@
-#include "TurnToken.h"
+#include "Entity/TurnToken/TurnToken.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 

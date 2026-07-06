@@ -1,4 +1,4 @@
-#include "LogicEntities.h"
+#include "Entity/LogicEntities.h"
 
 #include <iostream>
 

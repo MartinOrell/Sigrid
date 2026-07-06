@@ -1,4 +1,4 @@
-#include "PieceIdentifier.h"
+#include "Entity/Piece/PieceIdentifier.h"
 
 using namespace sigrid;
 

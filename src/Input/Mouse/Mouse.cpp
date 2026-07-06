@@ -1,4 +1,4 @@
-#include "Mouse.h"
+#include "Input/Mouse/Mouse.h"
 
 using namespace sigrid;
 

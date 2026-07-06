@@ -2,12 +2,12 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "../../List/SigridMap.h"
-#include "../../List/SigridVector.h"
-#include "LogicPiece.h"
-#include "GraphicPiece.h"
-#include "PieceColor.h"
-#include "PieceIdentifier.h"
+#include "List/SigridMap.h"
+#include "List/SigridVector.h"
+#include "Entity/Piece/LogicPiece.h"
+#include "Entity/Piece/GraphicPiece.h"
+#include "Entity/Piece/PieceColor.h"
+#include "Entity/Piece/PieceIdentifier.h"
 
 namespace sigrid{
 

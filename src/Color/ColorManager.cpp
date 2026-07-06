@@ -1,4 +1,4 @@
-#include "ColorManager.h"
+#include "Color/ColorManager.h"
 
 using namespace sigrid;
 

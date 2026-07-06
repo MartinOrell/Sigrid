@@ -2,26 +2,26 @@
 
 #include <optional>
 
-#include "../Coord/Coord.h"
+#include "Coord/Coord.h"
 
-#include "../Entity/Shape/RectangleBorder/RectangleBorder.h"
-#include "BoardLabels.h"
-#include "../Entity/TurnToken/TurnToken.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorder.h"
+#include "Board/BoardLabels.h"
+#include "Entity/TurnToken/TurnToken.h"
 
-#include "../Entity/Tile/GraphicTile.h"
-#include "../Entity/Tile/GraphicTiles.h"
+#include "Entity/Tile/GraphicTile.h"
+#include "Entity/Tile/GraphicTiles.h"
 
-#include "../Entity/LogicEntity.h"
-#include "../Entity/GraphicEntity.h"
-#include "../Entity/GraphicEntities.h"
+#include "Entity/LogicEntity.h"
+#include "Entity/GraphicEntity.h"
+#include "Entity/GraphicEntities.h"
 
-#include "../Entity/Shape/Arrow/LogicArrow.h"
-#include "../Entity/Shape/Arrow/GraphicArrow.h"
-#include "../Entity/Shape/Arrow/GraphicArrows.h"
+#include "Entity/Shape/Arrow/LogicArrow.h"
+#include "Entity/Shape/Arrow/GraphicArrow.h"
+#include "Entity/Shape/Arrow/GraphicArrows.h"
 
-#include "../Font/FontManager.h"
+#include "Font/FontManager.h"
 
-#include "../SigridRenderTexture/SigridRenderTexture.h"
+#include "SigridRenderTexture/SigridRenderTexture.h"
 
 namespace sigrid{
 

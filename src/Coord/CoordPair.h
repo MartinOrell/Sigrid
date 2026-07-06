@@ -3,7 +3,7 @@
 #include <string>
 #include <ostream>
 
-#include "Coord.h"
+#include "Coord/Coord.h"
 
 namespace sigrid{
 

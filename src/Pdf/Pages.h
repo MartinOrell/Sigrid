@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "Object.h"
-#include "Page.h"
+#include "Pdf/Object.h"
+#include "Pdf/Page.h"
 
 namespace myPdf{
 

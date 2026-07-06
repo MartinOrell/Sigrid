@@ -1,4 +1,4 @@
-#include "LogicTiles.h"
+#include "Entity/Tile/LogicTiles.h"
 
 #include <ostream>
 

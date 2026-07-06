@@ -4,7 +4,7 @@
 #include <string>
 #include <optional>
 
-#include "../List/SigridMap.h"
+#include "List/SigridMap.h"
 
 namespace sigrid{
 

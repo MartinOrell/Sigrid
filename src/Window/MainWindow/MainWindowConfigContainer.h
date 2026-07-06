@@ -2,12 +2,12 @@
 
 #include <string>
 #include <vector>
-#include "../../Entity/Piece/PieceColor.h"
-#include "../../Entity/Piece/PieceContainer.h"
-#include "../../Board/BoardDesignContainer.h"
-#include "../../Menu/MenuContainer.h"
-#include "../../ToolPicker/ToolPickerContainer.h"
-#include "../../Tool/ToolContainer.h"
+#include "Entity/Piece/PieceColor.h"
+#include "Entity/Piece/PieceContainer.h"
+#include "Board/BoardDesignContainer.h"
+#include "Menu/MenuContainer.h"
+#include "ToolPicker/ToolPickerContainer.h"
+#include "Tool/ToolContainer.h"
 
 namespace sigrid{
     struct MainWindowConfigContainer{

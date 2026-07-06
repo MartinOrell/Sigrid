@@ -5,7 +5,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 
-#include "../../List/SigridMap.h"
+#include "List/SigridMap.h"
 
 namespace sigrid{
     class Mouse{

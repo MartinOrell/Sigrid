@@ -3,12 +3,12 @@
 #include <optional>
 #include <memory>
 
-#include "../List/SigridMap.h"
-#include "../Coord/Coord.h"
-#include "LogicEntity.h"
-#include "GraphicEntity.h"
-#include "Piece/GraphicPiece.h"
-#include "Shape/Circle/GraphicCircle.h"
+#include "List/SigridMap.h"
+#include "Coord/Coord.h"
+#include "Entity/LogicEntity.h"
+#include "Entity/GraphicEntity.h"
+#include "Entity/Piece/GraphicPiece.h"
+#include "Entity/Shape/Circle/GraphicCircle.h"
 
 namespace sigrid{
 

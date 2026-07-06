@@ -1,4 +1,4 @@
-#include "LogicTile.h"
+#include "Entity/Tile/LogicTile.h"
 
 using namespace sigrid;
 

@@ -2,11 +2,11 @@
 
 #include <optional>
 
-#include "../List/SigridMap.h"
-#include "../Coord/Coord.h"
-#include "LogicEntity.h"
-#include "Piece/LogicPiece.h"
-#include "Shape/Circle/LogicCircle.h"
+#include "List/SigridMap.h"
+#include "Coord/Coord.h"
+#include "Entity/LogicEntity.h"
+#include "Entity/Piece/LogicPiece.h"
+#include "Entity/Shape/Circle/LogicCircle.h"
 
 namespace sigrid{
     class LogicEntities{
