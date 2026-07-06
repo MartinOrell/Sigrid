@@ -95,43 +95,51 @@ bool Sigrid2DMap<T>::addColumnLeft(){
     if(m_columns > 1){
         int x = m_columns-1;
         for(int y = 0; (unsigned int)y < m_rows; y++){
-            auto leftIt = m_map.find({x-1, y});
-            if(leftIt != m_map.end()){
-                m_map.insert({{x,y}, leftIt->second});
+            
+            auto leftElement_o = m_map.at({x-1, y});
+            if(leftElement_o == std::nullopt){
+                continue;
             }
+            auto leftElement = leftElement_o.value().get();
+            m_map.insert({x,y}, std::move(leftElement));
         }
     }
 
     for(int x = m_columns-1; x > 0; x--){
         for(int y = 0; (unsigned int)y < m_rows; y++){
-            auto currentIt = m_map.find({x,y});
-            auto leftIt = m_map.find({x-1, y});
-            if(leftIt != m_map.end()){
-                if(currentIt == m_map.end()){
-                    m_map.insert({{x,y}, leftIt->second});
+
+            auto leftElement_o = m_map.at({x-1, y});
+            auto currentElement_o = m_map.at({x,y});
+
+            if(leftElement_o == std::nullopt){
+                if(currentElement_o != std::nullopt){
+                    m_map.erase({x,y});
                 }
-                else{
-                    currentIt->second = leftIt->second;
-                }
+                continue;
             }
-            else{
-                if(currentIt != m_map.end()){
-                    m_map.erase(currentIt);
-                }
+
+            auto leftElement = leftElement_o.value().get();
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, std::move(leftElement));
+                continue;
             }
+
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = std::move(leftElement);
         }
     }
 
     {
         int x = 0;
         for(int y = 0; (unsigned int)y < m_rows; y++){
-            auto currentIt = m_map.find({x,y});
-            if(currentIt == m_map.end()){
-                m_map.insert({{x,y}, getInsertElement({x,y})});
+
+            auto currentElement_o = m_map.at({x,y});
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, getInsertElement({x,y}));
+                continue;
             }
-            else{
-                currentIt->second = getInsertElement({x,y});
-            }
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = getInsertElement({x,y});
         }
     }
     return true;
@@ -144,7 +152,7 @@ bool Sigrid2DMap<T>::addColumnRight(){
 
     int x = m_columns-1;
     for(int y = 0; y < m_rows; y++){
-        m_map.insert({{x,y}, getInsertElement({x,y})});
+        m_map.insert({x,y}, getInsertElement({x,y}));
     }
 
     return true;
@@ -160,43 +168,52 @@ bool Sigrid2DMap<T>::addRowUp(){
     if(m_rows > 1){
         int y = (int)m_rows-1;
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            auto upIt = m_map.find({x, y-1});
-            if(upIt != m_map.end()){
-                m_map.insert({{x,y}, upIt->second});
+
+            auto upElement_o = m_map.at({x, y-1});
+            if(upElement_o == std::nullopt){
+                continue;
             }
+            auto upElement = upElement_o.value().get();
+            m_map.insert({x,y}, std::move(upElement));
         }
     }
 
     for(int y = (int)m_rows-1; y > 0; y--){
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            auto currentIt = m_map.find({x,y});
-            auto upIt = m_map.find({x, y-1});
-            if(upIt != m_map.end()){
-                if(currentIt == m_map.end()){
-                    m_map.insert({{x,y}, upIt->second});
+
+            auto currentElement_o = m_map.at({x,y});
+            auto upElement_o = m_map.at({x, y-1});
+
+            if(upElement_o == std::nullopt){
+                if(currentElement_o == std::nullopt){
+                    m_map.erase({x,y});
                 }
-                else{
-                    currentIt->second = upIt->second;
-                }
+                continue;
             }
-            else{
-                if(currentIt != m_map.end()){
-                    m_map.erase(currentIt);
-                }
+            auto upElement = upElement_o.value().get();
+
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, std::move(upElement));
+                continue;
             }
+
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = std::move(upElement);
         }
     }
 
     {
         int y = 0;
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            auto currentIt = m_map.find({x,y});
-            if(currentIt == m_map.end()){
-                m_map.insert({{x,y}, getInsertElement({x,y})});
+
+            auto currentElement_o = m_map.at({x,y});
+
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, getInsertElement({x,y}));
+                continue;
             }
-            else{
-                currentIt->second = getInsertElement({x,y});
-            }
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = getInsertElement({x,y});
         }
     }
 
@@ -210,7 +227,7 @@ bool Sigrid2DMap<T>::addRowDown(){
 
     int y = (int)m_rows -1;
     for(int x = 0; (unsigned int)x < m_columns; x++){
-        m_map.insert({{x,y}, getInsertElement({x,y})});
+        m_map.insert({x,y}, getInsertElement({x,y}));
     }
 
     return true;
@@ -229,32 +246,37 @@ bool Sigrid2DMap<T>::removeLeftColumn(){
 
     for(int x = 0; (unsigned int)x < m_columns; x++){
         for(int y = 0; (unsigned int)y < m_rows; y++){
-            auto currentIt = m_map.find({x,y});
-            auto rightIt = m_map.find({x+1, y});
-            if(rightIt != m_map.end()){
-                if(currentIt == m_map.end()){
-                    m_map.insert({{x,y}, rightIt->second});
+
+            auto currentElement_o = m_map.at({x,y});
+            auto rightElement_o = m_map.at({x+1, y});
+
+            if(rightElement_o == std::nullopt){
+                if(currentElement_o != std::nullopt){
+                    m_map.erase({x,y});
                 }
-                else{
-                    currentIt->second = rightIt->second;
-                }
+                continue;
             }
-            else{
-                if(currentIt != m_map.end()){
-                    m_map.erase(currentIt);
-                }
+            auto rightElement = rightElement_o.value().get();
+
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, std::move(rightElement));
+                continue;
             }
-            
+
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = std::move(rightElement);
         }
     }
 
     {
         int x = (int)m_columns;
         for(int y = 0; (unsigned int)y < m_rows; y++){
-            auto currentIt = m_map.find({x,y});
-            if(currentIt != m_map.end()){
-                m_map.erase(currentIt);
+
+            auto currentElement_o = m_map.at({x,y});
+            if(currentElement_o == std::nullopt){
+                continue;
             }
+            m_map.erase({x,y});
         }
     }
 
@@ -272,10 +294,12 @@ bool Sigrid2DMap<T>::removeRightColumn(){
 
     int x = (int)m_columns;
     for(int y = 0; (unsigned int)y < m_rows; y++){
-        auto currentIt = m_map.find({x,y});
-        if(currentIt != m_map.end()){
-            m_map.erase(currentIt);
+
+        auto currentElement_o = m_map.at({x,y});
+        if(currentElement_o == std::nullopt){
+            continue;
         }
+        m_map.erase({x,y});
     }
 
     return true;
@@ -294,31 +318,37 @@ bool Sigrid2DMap<T>::removeTopRow(){
 
     for(int y = 0; (unsigned int)y < m_rows; y++){
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            auto currentIt = m_map.find({x,y});
-            auto upIt = m_map.find({x, y+1});
-            if(upIt != m_map.end()){
-                if(currentIt == m_map.end()){
-                    m_map.insert({{x,y}, upIt->second});
+
+            auto currentElement_o = m_map.at({x,y});
+            auto upElement_o = m_map.at({x, y+1});
+
+            if(upElement_o == std::nullopt){
+                if(currentElement_o != std::nullopt){
+                    m_map.erase({x,y});
                 }
-                else{
-                    currentIt->second = upIt->second;
-                }
+                continue;
             }
-            else{
-                if(currentIt != m_map.end()){
-                    m_map.erase(currentIt);
-                }
+            auto upElement = upElement_o.value().get();
+
+            if(currentElement_o == std::nullopt){
+                m_map.insert({x,y}, std::move(upElement));
+                continue;
             }
+            
+            auto& currentElement = currentElement_o.value().get();
+            currentElement = std::move(upElement);
         }
     }
 
     {
         int y = (int)m_rows;
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            auto currentIt = m_map.find({x,y});
-            if(currentIt != m_map.end()){
-                m_map.erase(currentIt);
+
+            auto currentElement_o = m_map.at({x,y});
+            if(currentElement_o == std::nullopt){
+                continue;
             }
+            m_map.erase({x,y});
         }
     }
 
@@ -336,10 +366,12 @@ bool Sigrid2DMap<T>::removeBottomRow(){
 
     int y = (int)m_rows;
     for(int x = 0; (unsigned int)x < m_columns; x++){
-        auto currentIt = m_map.find({x,y});
-        if(currentIt != m_map.end()){
-            m_map.erase(currentIt);
+
+        auto currentElement_o = m_map.at({x,y});
+        if(currentElement_o == std::nullopt){
+            continue;
         }
+        m_map.erase({x,y});
     }
 
     return true;
@@ -354,52 +386,22 @@ void Sigrid2DMap<T>::clear(){
 
 template<typename T>
 std::optional<std::reference_wrapper<T>> Sigrid2DMap<T>::at(const Coord& coord){
-
-    if(coord.x >= m_columns){
-        return std::nullopt;
-    }
-
-    if(coord.y >= m_rows){
-        return std::nullopt;
-    }
-
-    auto it = m_map.find(coord);
-
-    if(it == m_map.end()){
-        return std::nullopt;
-    }
-
-    return it->second;
+    return m_map.at(coord);
 }
 
 template<typename T>
 const std::optional<std::reference_wrapper<const T>> Sigrid2DMap<T>::at(const Coord& coord) const{
-
-    if(coord.x >= m_columns){
-        return std::nullopt;
-    }
-
-    if(coord.y >= m_rows){
-        return std::nullopt;
-    }
-
-    auto it = m_map.find(coord);
-
-    if(it == m_map.end()){
-        return std::nullopt;
-    }
-
-    return it->second;
+    return m_map.at(coord);
 }
 
 template<typename T>
 bool Sigrid2DMap<T>::removeAt(const Coord& coord){
 
-    auto it = m_map.find(coord);
-    if(it == m_map.end()){
+    auto element_o = m_map.at(coord);
+    if(element_o == std::nullopt){
         return false;
     }
-    m_map.erase(it);
+    m_map.erase({coord});
     return true;
 }
 
@@ -436,7 +438,7 @@ void Sigrid2DMap<T>::refill(){
 
     for(int y = 0; (unsigned int)y < m_rows; y++){
         for(int x = 0; (unsigned int)x < m_columns; x++){
-            m_map.insert({{x,y}, getInsertElement({x,y})});
+            m_map.insert({x,y}, getInsertElement({x,y}));
         }
     }
 }

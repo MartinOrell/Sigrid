@@ -1,9 +1,9 @@
 #pragma once
 
-#include <map>
 #include <optional>
 #include <functional> //Reference wrapper
 
+#include "List/SigridMap.h"
 #include "List/SigridVector.h"
 #include "Coord/Coord.h"
 
@@ -49,7 +49,7 @@ namespace sigrid{
 
         unsigned int m_columns = 0;
         unsigned int m_rows = 0;
-        std::map<Coord, T> m_map;
+        SigridMap<Coord, T> m_map;
         SigridVector<T> m_insertPattern;
     };
 }

@@ -14,10 +14,12 @@
 #include "Action/Action.h"
 #include "Tool/Tool.h"
 #include "Entity/Piece/PieceIdentifier.h"
+#include "Entity/Tile/LogicTile.h"
 #include "Entity/Piece/LogicPiece.h"
 #include "Entity/Shape/Circle/LogicCircle.h"
 #include "Entity/Shape/Arrow/LogicArrow.h"
 #include "Entity/Icon/Icon.h"
+#include "Entity/Tile/GraphicTile.h"
 #include "Entity/Piece/GraphicPiece.h"
 #include "Entity/Shape/Circle/GraphicCircle.h"
 #include "Entity/Shape/Arrow/GraphicArrow.h"
@@ -31,11 +33,13 @@ template class sigrid::SigridMap<std::string, sf::Texture>;
 template class sigrid::SigridMap<std::string, sf::Font>;
 template class sigrid::SigridMap<sigrid::PieceIdentifier, std::string>;
 template class sigrid::SigridMap<sigrid::CoordPair, sigrid::LogicArrow>;
+template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicTile>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicCircle>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicArrow>;
 template class sigrid::SigridMap<sigrid::CoordPair, sigrid::GraphicArrow>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::Icon>;
+template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicTile>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicPiece>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicCircle>;
 template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicArrow>;
