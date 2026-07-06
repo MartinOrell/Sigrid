@@ -64,7 +64,7 @@ namespace sigrid{
             ColorManager* m_tileColorManagerPtr = nullptr;
             ColorManager* m_highlightColorManagerPtr = nullptr;
 
-            Sigrid2DMap<GraphicTile> m_tiles;
+            list::Sigrid2DMap<GraphicTile> m_tiles;
 
             sf::Vector2f m_tileSize = {0.f, 0.f};
             sf::Vector2f m_topLeftPosition = {0.f, 0.f};

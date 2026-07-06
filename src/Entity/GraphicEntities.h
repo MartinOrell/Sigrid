@@ -48,10 +48,10 @@ namespace sigrid{
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            SigridMap<Coord, GraphicPiece> m_pieces;
-            SigridMap<Coord, GraphicCircle> m_circles;
-            SigridMap<Coord, GraphicArrow> m_arrows;
-            SigridMap<Coord, Icon> m_icons;
+            list::SigridMap<Coord, GraphicPiece> m_pieces;
+            list::SigridMap<Coord, GraphicCircle> m_circles;
+            list::SigridMap<Coord, GraphicArrow> m_arrows;
+            list::SigridMap<Coord, Icon> m_icons;
 
             sf::Vector2f m_pieceSize = {0.f, 0.f};
             float m_circleDiameter = 0.f;

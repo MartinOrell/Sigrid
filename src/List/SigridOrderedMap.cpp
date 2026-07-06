@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
+using namespace sigrid::list;
 
 template<typename TKey, typename TValue>
 SigridOrderedMap<TKey, TValue>::SigridOrderedMap(){}

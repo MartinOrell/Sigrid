@@ -21,11 +21,11 @@ namespace sigrid{
             void loadImages(const std::vector<PieceContainer>& pieces);
             std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);
         private:
-            SigridMap<PieceIdentifier, std::string> m_pieceImageFilenames;
+            list::SigridMap<PieceIdentifier, std::string> m_pieceImageFilenames;
 
-            SigridVector<PieceColor> m_colors;
-            SigridVector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
-            SigridVector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
+            list::SigridVector<PieceColor> m_colors;
+            list::SigridVector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
+            list::SigridVector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
 
             sf::Vector2u m_pieceSize;
             

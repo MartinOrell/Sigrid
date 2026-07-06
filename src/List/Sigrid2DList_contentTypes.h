@@ -5,4 +5,4 @@
 
 // This class is only included by Sigrid2DList.cpp
 // Add more templates below to support more types
-template class sigrid::Sigrid2DList<sigrid::Board>;
+template class sigrid::list::Sigrid2DList<sigrid::Board>;

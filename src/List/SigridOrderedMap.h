@@ -3,7 +3,7 @@
 #include "List/SigridMap.h"
 #include "List/SigridVector.h"
 
-namespace sigrid{
+namespace sigrid{namespace list{
     template <typename TKey, typename TValue> class SigridOrderedMap{
 
         public:
@@ -31,4 +31,4 @@ namespace sigrid{
             SigridVector<TKey> m_order;
 
     };
-}
+}}

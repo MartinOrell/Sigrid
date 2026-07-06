@@ -7,5 +7,5 @@
 
 // This class is only included by SigridOrderedMap.cpp
 // Add more templates below to support more types
-template class sigrid::SigridOrderedMap<sigrid::CoordPair, sigrid::LogicArrow>;
-template class sigrid::SigridOrderedMap<sigrid::CoordPair, sigrid::GraphicArrow>;
+template class sigrid::list::SigridOrderedMap<sigrid::CoordPair, sigrid::LogicArrow>;
+template class sigrid::list::SigridOrderedMap<sigrid::CoordPair, sigrid::GraphicArrow>;

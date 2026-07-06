@@ -15,7 +15,7 @@ namespace sigrid{
             std::optional<sf::Color> getTransparentColor(const int colorId) const;
 
         private:
-            SigridVector<sf::Color> m_colors;
+            list::SigridVector<sf::Color> m_colors;
 
     };
 }

@@ -16,7 +16,7 @@ namespace sigrid{
             std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
             
         private:
-            SigridMap<std::string, sf::Texture> m_textures;
+            list::SigridMap<std::string, sf::Texture> m_textures;
     };
 
 }

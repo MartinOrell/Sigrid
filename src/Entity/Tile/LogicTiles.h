@@ -40,6 +40,6 @@ namespace sigrid{
 
         private:
 
-            Sigrid2DMap<LogicTile> m_tiles;
+            list::Sigrid2DMap<LogicTile> m_tiles;
     };
 }

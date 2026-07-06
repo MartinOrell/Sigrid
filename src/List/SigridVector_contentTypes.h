@@ -13,11 +13,11 @@
 
 // This class is only included by Sigrid2DMap.cpp
 // Add more templates below to support more types
-template class sigrid::SigridVector<float>;
-template class sigrid::SigridVector<sigrid::CoordPair>;
-template class sigrid::SigridVector<sf::Color>;
-template class sigrid::SigridVector<sigrid::PieceColor>;
-template class sigrid::SigridVector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
-template class sigrid::SigridVector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
-template class sigrid::SigridVector<sigrid::LogicTile>;
-template class sigrid::SigridVector<sigrid::GraphicTile>;
+template class sigrid::list::SigridVector<float>;
+template class sigrid::list::SigridVector<sigrid::CoordPair>;
+template class sigrid::list::SigridVector<sf::Color>;
+template class sigrid::list::SigridVector<sigrid::PieceColor>;
+template class sigrid::list::SigridVector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
+template class sigrid::list::SigridVector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
+template class sigrid::list::SigridVector<sigrid::LogicTile>;
+template class sigrid::list::SigridVector<sigrid::GraphicTile>;

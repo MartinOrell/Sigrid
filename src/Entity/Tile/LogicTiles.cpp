@@ -8,7 +8,7 @@ LogicTiles::LogicTiles(){}
 
 void LogicTiles::init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds){
 
-    SigridVector<LogicTile> insertPattern;
+    list::SigridVector<LogicTile> insertPattern;
     for(const auto& color: repeatTileColorIds){
         LogicTile newTile;
         newTile.setColor(color);

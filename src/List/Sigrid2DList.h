@@ -4,7 +4,7 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-namespace sigrid{
+namespace sigrid{namespace list{
 
     template <typename T> class Sigrid2DList{
 
@@ -83,4 +83,4 @@ namespace sigrid{
             bool m_singleRowStartEndWrap = false;
             bool m_multiRowStartEndWrap = false;
     };
-}
+}}

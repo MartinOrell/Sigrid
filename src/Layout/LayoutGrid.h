@@ -39,9 +39,9 @@ namespace sigrid{
             std::optional<float> getHeight(const int& fromY, const int& toY) const;
 
         private:
-            SigridVector<float> m_xCoords;
-            SigridVector<float> m_yCoords;
-            SigridMap<unsigned int, CoordPair> m_objects;
+            list::SigridVector<float> m_xCoords;
+            list::SigridVector<float> m_yCoords;
+            list::SigridMap<unsigned int, CoordPair> m_objects;
     };
 
 }

@@ -149,7 +149,7 @@ namespace sigrid{
             SigridRenderTexture m_texture;
             LayoutGrid m_layout;
 
-            Sigrid2DList<sigrid::Board> m_boards;
+            list::Sigrid2DList<sigrid::Board> m_boards;
 
             RectangleBorder m_boardSelectHighlight;
 

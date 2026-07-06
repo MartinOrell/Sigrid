@@ -7,7 +7,7 @@
 #include "List/SigridVector.h"
 #include "Coord/Coord.h"
 
-namespace sigrid{
+namespace sigrid{namespace list{
 
     template <typename T> class Sigrid2DMap{
 
@@ -52,4 +52,4 @@ namespace sigrid{
         SigridMap<Coord, T> m_map;
         SigridVector<T> m_insertPattern;
     };
-}
+}}

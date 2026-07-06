@@ -38,7 +38,7 @@ void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
 
     GraphicTile tile;
     tile.setSize(m_tileSize);
-    SigridVector<GraphicTile> insertTiles;
+    list::SigridVector<GraphicTile> insertTiles;
     insertTiles.push_back(tile);
     m_tiles.setInsertPattern(insertTiles);
 }

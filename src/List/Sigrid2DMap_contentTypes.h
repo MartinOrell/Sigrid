@@ -6,5 +6,5 @@
 
 // This class is only included by Sigrid2DMap.cpp
 // Add more templates below to support more types
-template class sigrid::Sigrid2DMap<sigrid::LogicTile>;
-template class sigrid::Sigrid2DMap<sigrid::GraphicTile>;
+template class sigrid::list::Sigrid2DMap<sigrid::LogicTile>;
+template class sigrid::list::Sigrid2DMap<sigrid::GraphicTile>;

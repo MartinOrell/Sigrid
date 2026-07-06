@@ -73,11 +73,11 @@ std::optional<GraphicArrow> GraphicArrows::getArrow(const CoordPair& coordPair) 
     return m_arrows.at(coordPair);
 }
 
-const SigridOrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
+const list::SigridOrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
     return m_arrows;
 }
 
-SigridOrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows(){
+list::SigridOrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows(){
     return m_arrows;
 }
 

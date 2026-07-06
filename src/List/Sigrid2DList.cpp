@@ -7,7 +7,7 @@
 // including this file at the end of Sigrid2DList.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid;
+using namespace sigrid::list;
 
 template<typename T>
 Sigrid2DList<T>::Sigrid2DList(){}

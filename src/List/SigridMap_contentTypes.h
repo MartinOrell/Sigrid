@@ -29,24 +29,24 @@
 
 // This class is only included by SigridMap.cpp
 // Add more templates below to support more types
-template class sigrid::SigridMap<std::string, sf::Texture>;
-template class sigrid::SigridMap<std::string, sf::Font>;
-template class sigrid::SigridMap<sigrid::PieceIdentifier, std::string>;
-template class sigrid::SigridMap<sigrid::CoordPair, sigrid::LogicArrow>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicTile>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicPiece>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicCircle>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::GraphicArrow>;
-template class sigrid::SigridMap<sigrid::CoordPair, sigrid::GraphicArrow>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::Icon>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicTile>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicPiece>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicCircle>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicArrow>;
-template class sigrid::SigridMap<sigrid::Coord, sigrid::LogicIcon>;
-template class sigrid::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>>;
-template class sigrid::SigridMap<sf::Mouse::Button, sigrid::Tool>;
-template class sigrid::SigridMap<sf::Keyboard::Key, sigrid::Action>;
-template class sigrid::SigridMap<unsigned int, sigrid::CoordPair>;
-template class sigrid::SigridMap<std::string, sigrid::MenuItem>;
-template class sigrid::SigridMap<std::string, sigrid::Menu::LayoutItem>;
+template class sigrid::list::SigridMap<std::string, sf::Texture>;
+template class sigrid::list::SigridMap<std::string, sf::Font>;
+template class sigrid::list::SigridMap<sigrid::PieceIdentifier, std::string>;
+template class sigrid::list::SigridMap<sigrid::CoordPair, sigrid::LogicArrow>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::GraphicTile>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::GraphicPiece>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::GraphicCircle>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::GraphicArrow>;
+template class sigrid::list::SigridMap<sigrid::CoordPair, sigrid::GraphicArrow>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::Icon>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::LogicTile>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::LogicPiece>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::LogicCircle>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::LogicArrow>;
+template class sigrid::list::SigridMap<sigrid::Coord, sigrid::LogicIcon>;
+template class sigrid::list::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>>;
+template class sigrid::list::SigridMap<sf::Mouse::Button, sigrid::Tool>;
+template class sigrid::list::SigridMap<sf::Keyboard::Key, sigrid::Action>;
+template class sigrid::list::SigridMap<unsigned int, sigrid::CoordPair>;
+template class sigrid::list::SigridMap<std::string, sigrid::MenuItem>;
+template class sigrid::list::SigridMap<std::string, sigrid::Menu::LayoutItem>;
