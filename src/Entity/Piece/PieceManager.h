@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include "List/SigridMap.h"
-#include "List/SigridVector.h"
+#include "List/Vector.h"
 #include "Entity/Piece/LogicPiece.h"
 #include "Entity/Piece/GraphicPiece.h"
 #include "Entity/Piece/PieceColor.h"
@@ -23,9 +23,9 @@ namespace sigrid{
         private:
             list::SigridMap<PieceIdentifier, std::string> m_pieceImageFilenames;
 
-            list::SigridVector<PieceColor> m_colors;
-            list::SigridVector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
-            list::SigridVector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
+            list::Vector<PieceColor> m_colors;
+            list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
+            list::Vector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
 
             sf::Vector2u m_pieceSize;
             

@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "List/SigridVector.h"
+#include "List/Vector.h"
 #include "List/SigridMap.h"
 #include "Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
@@ -39,8 +39,8 @@ namespace sigrid{
             std::optional<float> getHeight(const int& fromY, const int& toY) const;
 
         private:
-            list::SigridVector<float> m_xCoords;
-            list::SigridVector<float> m_yCoords;
+            list::Vector<float> m_xCoords;
+            list::Vector<float> m_yCoords;
             list::SigridMap<unsigned int, CoordPair> m_objects;
     };
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "List/SigridMap.h"
-#include "List/SigridVector.h"
+#include "List/Vector.h"
 
 namespace sigrid{namespace list{
     template <typename TKey, typename TValue> class SigridOrderedMap{
@@ -28,7 +28,7 @@ namespace sigrid{namespace list{
         private:
 
             SigridMap<TKey, TValue> m_map;
-            SigridVector<TKey> m_order;
+            Vector<TKey> m_order;
 
     };
 }}

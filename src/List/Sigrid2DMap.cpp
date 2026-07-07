@@ -13,7 +13,7 @@ template<typename T>
 Sigrid2DMap<T>::Sigrid2DMap(){}
 
 template<typename T>
-void Sigrid2DMap<T>::setInsertPattern(const SigridVector<T>& insertPattern){
+void Sigrid2DMap<T>::setInsertPattern(const Vector<T>& insertPattern){
 
     m_insertPattern = insertPattern;
 
@@ -416,7 +416,7 @@ const unsigned int& Sigrid2DMap<T>::numRows() const{
 }
 
 template<typename T>
-const SigridVector<T>& Sigrid2DMap<T>::getInsertPattern() const{
+const Vector<T>& Sigrid2DMap<T>::getInsertPattern() const{
     return m_insertPattern;
 }
 

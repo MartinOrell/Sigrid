@@ -4,7 +4,7 @@
 #include <functional> //Reference wrapper
 
 #include "List/SigridMap.h"
-#include "List/SigridVector.h"
+#include "List/Vector.h"
 #include "Coord/Coord.h"
 
 namespace sigrid{namespace list{
@@ -14,7 +14,7 @@ namespace sigrid{namespace list{
         public:
             Sigrid2DMap();
             
-            void setInsertPattern(const SigridVector<T>& insertPattern);
+            void setInsertPattern(const Vector<T>& insertPattern);
             void setNumColumns(const unsigned int& columns);
             void setNumRows(const unsigned int& rows);
             void setSize(const unsigned int& columns, const unsigned int& rows);
@@ -37,7 +37,7 @@ namespace sigrid{namespace list{
 
             const unsigned int& numColumns() const;
             const unsigned int& numRows() const;
-            const SigridVector<T>& getInsertPattern() const;
+            const Vector<T>& getInsertPattern() const;
 
         private:
 
@@ -50,6 +50,6 @@ namespace sigrid{namespace list{
         unsigned int m_columns = 0;
         unsigned int m_rows = 0;
         SigridMap<Coord, T> m_map;
-        SigridVector<T> m_insertPattern;
+        Vector<T> m_insertPattern;
     };
 }}

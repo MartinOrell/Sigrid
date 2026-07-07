@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <optional>
 
-#include "List/SigridVector.h"
+#include "List/Vector.h"
 
 namespace sigrid{
     class ColorManager{
@@ -15,7 +15,7 @@ namespace sigrid{
             std::optional<sf::Color> getTransparentColor(const int colorId) const;
 
         private:
-            list::SigridVector<sf::Color> m_colors;
+            list::Vector<sf::Color> m_colors;
 
     };
 }

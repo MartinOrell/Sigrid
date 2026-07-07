@@ -6,10 +6,10 @@
 
 namespace sigrid{namespace list{
 
-    template <typename T> class SigridVector{
+    template <typename T> class Vector{
 
         public:
-            SigridVector();
+            Vector();
 
             void push_back(const T& value);
             void insert(const unsigned int& position, const T& value);
