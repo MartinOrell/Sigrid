@@ -14,7 +14,7 @@ void LogicArrows::removeArrow(const CoordPair& coordPair){
             
 std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) const{
 
-    auto arrow_o = m_arrows.at(coordPair);
+    auto arrow_o = m_arrows.atKey(coordPair);
 
     if(arrow_o == std::nullopt){
         return std::nullopt;
@@ -116,7 +116,7 @@ void LogicArrows::moveArrowsRight(){
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -180,7 +180,7 @@ void LogicArrows::moveArrowsLeft(){
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -243,7 +243,7 @@ void LogicArrows::moveArrowsUp(){
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -306,7 +306,7 @@ void LogicArrows::moveArrowsDown(){
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }

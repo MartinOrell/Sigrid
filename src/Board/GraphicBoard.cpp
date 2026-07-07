@@ -960,7 +960,7 @@ void GraphicBoard::flip(){
         }
         auto& coordPair = coordPair_o.value().get();
 
-        auto arrow_o = m_arrowLayer.getArrows().at(i);
+        auto arrow_o = m_arrowLayer.getArrows().atPosition(i);
         if(arrow_o == std::nullopt){
             continue;
         }

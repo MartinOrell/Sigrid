@@ -68,7 +68,7 @@ const std::optional<std::reference_wrapper<const TKey>> OrderedMap<TKey, TValue>
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::at(unsigned int& position){
+std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::atPosition(unsigned int& position){
     
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -80,7 +80,7 @@ std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::at(unsig
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::at(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::atPosition(const unsigned int& position) const{
 
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -92,12 +92,12 @@ const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValu
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::at(const TKey& key){
+std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::atKey(const TKey& key){
     return m_map.at(key);
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::at(const TKey& key) const{
+const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::atKey(const TKey& key) const{
     return m_map.at(key);
 }
 

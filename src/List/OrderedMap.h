@@ -16,10 +16,10 @@ namespace sigrid{namespace list{
             void clear();
 
             const std::optional<std::reference_wrapper<const TKey>> keyAt(const unsigned int& position) const;
-            std::optional<std::reference_wrapper<TValue>> at(unsigned int& position);
-            const std::optional<std::reference_wrapper<const TValue>> at(const unsigned int& position) const;
-            std::optional<std::reference_wrapper<TValue>> at(const TKey& key);
-            const std::optional<std::reference_wrapper<const TValue>> at(const TKey& key) const;
+            std::optional<std::reference_wrapper<TValue>> atPosition(unsigned int& position);
+            const std::optional<std::reference_wrapper<const TValue>> atPosition(const unsigned int& position) const;
+            std::optional<std::reference_wrapper<TValue>> atKey(const TKey& key);
+            const std::optional<std::reference_wrapper<const TValue>> atKey(const TKey& key) const;
 
             unsigned int size() const;
 

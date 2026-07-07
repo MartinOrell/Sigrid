@@ -70,7 +70,7 @@ float GraphicArrows::getHeadSize() const{
 }
 
 std::optional<GraphicArrow> GraphicArrows::getArrow(const CoordPair& coordPair) const{
-    return m_arrows.at(coordPair);
+    return m_arrows.atKey(coordPair);
 }
 
 const list::OrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
@@ -170,7 +170,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     std::cout << "arrow not found" << std::endl;
                     continue;
@@ -233,7 +233,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -295,7 +295,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -357,7 +357,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
                     continue;
                 }
 
-                auto arrow_o = m_arrows.at(coordPair);
+                auto arrow_o = m_arrows.atKey(coordPair);
                 if(arrow_o == std::nullopt){
                     continue;
                 }
@@ -380,7 +380,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
 void GraphicArrows::move(const sf::Vector2f& offset){
 
     for(unsigned int i = 0; i < m_arrows.size(); i++){
-        auto arrow_o = m_arrows.at(i);
+        auto arrow_o = m_arrows.atPosition(i);
         if(arrow_o == std::nullopt){
             continue;
         }
@@ -392,7 +392,7 @@ void GraphicArrows::move(const sf::Vector2f& offset){
 void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     for(unsigned int i = 0; i < m_arrows.size(); i++){
-        auto arrow_o = m_arrows.at(i);
+        auto arrow_o = m_arrows.atPosition(i);
         if(arrow_o == std::nullopt){
             continue;
         }
