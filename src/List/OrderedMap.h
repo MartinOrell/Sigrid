@@ -4,10 +4,10 @@
 #include "List/Vector.h"
 
 namespace sigrid{namespace list{
-    template <typename TKey, typename TValue> class SigridOrderedMap{
+    template <typename TKey, typename TValue> class OrderedMap{
 
         public:
-            SigridOrderedMap();
+            OrderedMap();
 
             void push_back(const TKey& key, const TValue& value);
             void insert(const unsigned int& position, const TKey& key, const TValue& value);

@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "List/SigridOrderedMap.h"
+#include "List/OrderedMap.h"
 #include "Coord/CoordPair.h"
 #include "Entity/Shape/Arrow/LogicArrow.h"
 
@@ -27,6 +27,6 @@ namespace sigrid{
 
             void clear();
         private:
-            list::SigridOrderedMap<CoordPair, LogicArrow> m_arrows;
+            list::OrderedMap<CoordPair, LogicArrow> m_arrows;
     };
 }

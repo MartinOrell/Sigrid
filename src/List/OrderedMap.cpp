@@ -1,5 +1,5 @@
-#include "List/SigridOrderedMap.h"
-#include "List/SigridOrderedMap_contentTypes.h"
+#include "List/OrderedMap.h"
+#include "List/OrderedMap_contentTypes.h"
 // Any type used must be added in the SigridOrderedMap_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
@@ -12,24 +12,24 @@
 using namespace sigrid::list;
 
 template<typename TKey, typename TValue>
-SigridOrderedMap<TKey, TValue>::SigridOrderedMap(){}
+OrderedMap<TKey, TValue>::OrderedMap(){}
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::push_back(const TKey& key, const TValue& value){
+void OrderedMap<TKey, TValue>::push_back(const TKey& key, const TValue& value){
 
     m_map.insert(key, value);
     m_order.push_back(key);
 }
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::insert(const unsigned int& position, const TKey& key, const TValue& value){
+void OrderedMap<TKey, TValue>::insert(const unsigned int& position, const TKey& key, const TValue& value){
 
     m_map.insert(key, value);
     m_order.insert(position, key);
 }
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::erase(const unsigned int& position){
+void OrderedMap<TKey, TValue>::erase(const unsigned int& position){
 
     auto key_o = m_order.at(position);
 
@@ -43,7 +43,7 @@ void SigridOrderedMap<TKey, TValue>::erase(const unsigned int& position){
 }
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::erase(const TKey& key){
+void OrderedMap<TKey, TValue>::erase(const TKey& key){
     
     m_map.erase(key);
 
@@ -56,19 +56,19 @@ void SigridOrderedMap<TKey, TValue>::erase(const TKey& key){
 }
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::clear(){
+void OrderedMap<TKey, TValue>::clear(){
 
     m_map.clear();
     m_order.clear();
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TKey>> SigridOrderedMap<TKey, TValue>::keyAt(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const TKey>> OrderedMap<TKey, TValue>::keyAt(const unsigned int& position) const{
     return m_order.at(position);
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> SigridOrderedMap<TKey, TValue>::at(unsigned int& position){
+std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::at(unsigned int& position){
     
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -80,7 +80,7 @@ std::optional<std::reference_wrapper<TValue>> SigridOrderedMap<TKey, TValue>::at
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> SigridOrderedMap<TKey, TValue>::at(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::at(const unsigned int& position) const{
 
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -92,22 +92,22 @@ const std::optional<std::reference_wrapper<const TValue>> SigridOrderedMap<TKey,
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> SigridOrderedMap<TKey, TValue>::at(const TKey& key){
+std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::at(const TKey& key){
     return m_map.at(key);
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> SigridOrderedMap<TKey, TValue>::at(const TKey& key) const{
+const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::at(const TKey& key) const{
     return m_map.at(key);
 }
 
 template<typename TKey, typename TValue>
-unsigned int SigridOrderedMap<TKey, TValue>::size() const{
+unsigned int OrderedMap<TKey, TValue>::size() const{
     return m_map.size();
 }
 
 template<typename TKey, typename TValue>
-void SigridOrderedMap<TKey, TValue>::print() const{
+void OrderedMap<TKey, TValue>::print() const{
 
     std::cout << "Printing ordered map" << std::endl;
     if(m_order.size() != m_map.size()){
