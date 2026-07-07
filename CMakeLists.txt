@@ -8,7 +8,7 @@ set(SRC_FILES
     src/List/Map.cpp
     src/List/OrderedMap.cpp
     src/List/Sigrid2DList.cpp
-    src/List/Sigrid2DMap.cpp
+    src/List/AutoInsertMappedGrid.cpp
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
     src/Window/MainWindow/MainWindow.cpp

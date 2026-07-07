@@ -9,10 +9,10 @@
 
 namespace sigrid{namespace list{
 
-    template <typename T> class Sigrid2DMap{
+    template <typename T> class AutoInsertMappedGrid{
 
         public:
-            Sigrid2DMap();
+            AutoInsertMappedGrid();
             
             void setInsertPattern(const Vector<T>& insertPattern);
             void setNumColumns(const unsigned int& columns);

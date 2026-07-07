@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "Coord/Coord.h"
-#include "List/Sigrid2DMap.h"
+#include "List/AutoInsertMappedGrid.h"
 #include "Entity/Tile/GraphicTile.h"
 
 namespace sigrid{
@@ -64,7 +64,7 @@ namespace sigrid{
             ColorManager* m_tileColorManagerPtr = nullptr;
             ColorManager* m_highlightColorManagerPtr = nullptr;
 
-            list::Sigrid2DMap<GraphicTile> m_tiles;
+            list::AutoInsertMappedGrid<GraphicTile> m_tiles;
 
             sf::Vector2f m_tileSize = {0.f, 0.f};
             sf::Vector2f m_topLeftPosition = {0.f, 0.f};

@@ -1,19 +1,19 @@
-#include "List/Sigrid2DMap.h"
-#include "List/Sigrid2DMap_contentTypes.h"
-// Any type used must be added in the Sigrid2DMap_contentTypes.h file
+#include "List/AutoInsertMappedGrid.h"
+#include "List/AutoInsertMappedGrid_contentTypes.h"
+// Any type used must be added in the AutoInsertMappedGrid_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
 // renaming this file's extension to tpp and
-// including this file at the end of Sigrid2DList.h
+// including this file at the end of AutoInsertMappedGrid.h
 // Both includes above can then be removed from this file
 
 using namespace sigrid::list;
 
 template<typename T>
-Sigrid2DMap<T>::Sigrid2DMap(){}
+AutoInsertMappedGrid<T>::AutoInsertMappedGrid(){}
 
 template<typename T>
-void Sigrid2DMap<T>::setInsertPattern(const Vector<T>& insertPattern){
+void AutoInsertMappedGrid<T>::setInsertPattern(const Vector<T>& insertPattern){
 
     m_insertPattern = insertPattern;
 
@@ -31,7 +31,7 @@ void Sigrid2DMap<T>::setInsertPattern(const Vector<T>& insertPattern){
 }
 
 template<typename T>
-void Sigrid2DMap<T>::setNumColumns(const unsigned int& columns){
+void AutoInsertMappedGrid<T>::setNumColumns(const unsigned int& columns){
 
     m_columns = columns;
 
@@ -49,7 +49,7 @@ void Sigrid2DMap<T>::setNumColumns(const unsigned int& columns){
 }
 
 template<typename T>
-void Sigrid2DMap<T>::setNumRows(const unsigned int& rows){
+void AutoInsertMappedGrid<T>::setNumRows(const unsigned int& rows){
 
     m_rows = rows;
 
@@ -67,7 +67,7 @@ void Sigrid2DMap<T>::setNumRows(const unsigned int& rows){
 }
 
 template<typename T>
-void Sigrid2DMap<T>::setSize(const unsigned int& columns, const unsigned int& rows){
+void AutoInsertMappedGrid<T>::setSize(const unsigned int& columns, const unsigned int& rows){
 
     m_columns = columns;
     m_rows = rows;
@@ -86,7 +86,7 @@ void Sigrid2DMap<T>::setSize(const unsigned int& columns, const unsigned int& ro
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::addColumnLeft(){
+bool AutoInsertMappedGrid<T>::addColumnLeft(){
 
     shiftInsertPatternRight();
 
@@ -146,7 +146,7 @@ bool Sigrid2DMap<T>::addColumnLeft(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::addColumnRight(){
+bool AutoInsertMappedGrid<T>::addColumnRight(){
 
     m_columns++;
 
@@ -159,7 +159,7 @@ bool Sigrid2DMap<T>::addColumnRight(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::addRowUp(){
+bool AutoInsertMappedGrid<T>::addRowUp(){
 
     shiftInsertPatternRight();
 
@@ -221,7 +221,7 @@ bool Sigrid2DMap<T>::addRowUp(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::addRowDown(){
+bool AutoInsertMappedGrid<T>::addRowDown(){
 
     m_rows++;
 
@@ -234,7 +234,7 @@ bool Sigrid2DMap<T>::addRowDown(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeLeftColumn(){
+bool AutoInsertMappedGrid<T>::removeLeftColumn(){
 
     if(m_columns < 2){
         return false;
@@ -284,7 +284,7 @@ bool Sigrid2DMap<T>::removeLeftColumn(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeRightColumn(){
+bool AutoInsertMappedGrid<T>::removeRightColumn(){
 
     if(m_columns < 2){
         return false;
@@ -306,7 +306,7 @@ bool Sigrid2DMap<T>::removeRightColumn(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeTopRow(){
+bool AutoInsertMappedGrid<T>::removeTopRow(){
 
     if(m_rows < 2){
         return false;
@@ -356,7 +356,7 @@ bool Sigrid2DMap<T>::removeTopRow(){
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeBottomRow(){
+bool AutoInsertMappedGrid<T>::removeBottomRow(){
 
     if(m_rows < 2){
         return false;
@@ -378,24 +378,24 @@ bool Sigrid2DMap<T>::removeBottomRow(){
 }
 
 template<typename T>
-void Sigrid2DMap<T>::clear(){
+void AutoInsertMappedGrid<T>::clear(){
     m_columns = 0;
     m_rows = 0;
     m_map.clear();
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Sigrid2DMap<T>::at(const Coord& coord){
+std::optional<std::reference_wrapper<T>> AutoInsertMappedGrid<T>::at(const Coord& coord){
     return m_map.at(coord);
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Sigrid2DMap<T>::at(const Coord& coord) const{
+const std::optional<std::reference_wrapper<const T>> AutoInsertMappedGrid<T>::at(const Coord& coord) const{
     return m_map.at(coord);
 }
 
 template<typename T>
-bool Sigrid2DMap<T>::removeAt(const Coord& coord){
+bool AutoInsertMappedGrid<T>::removeAt(const Coord& coord){
 
     auto element_o = m_map.at(coord);
     if(element_o == std::nullopt){
@@ -406,22 +406,22 @@ bool Sigrid2DMap<T>::removeAt(const Coord& coord){
 }
 
 template<typename T>
-const unsigned int& Sigrid2DMap<T>::numColumns() const{
+const unsigned int& AutoInsertMappedGrid<T>::numColumns() const{
     return m_columns;
 }
 
 template<typename T>
-const unsigned int& Sigrid2DMap<T>::numRows() const{
+const unsigned int& AutoInsertMappedGrid<T>::numRows() const{
     return m_rows;
 }
 
 template<typename T>
-const Vector<T>& Sigrid2DMap<T>::getInsertPattern() const{
+const Vector<T>& AutoInsertMappedGrid<T>::getInsertPattern() const{
     return m_insertPattern;
 }
 
 template<typename T>
-T Sigrid2DMap<T>::getInsertElement(const Coord& coord) const{
+T AutoInsertMappedGrid<T>::getInsertElement(const Coord& coord) const{
 
     auto element_o = m_insertPattern.at((coord.x+coord.y)%m_insertPattern.size());
 
@@ -432,7 +432,7 @@ T Sigrid2DMap<T>::getInsertElement(const Coord& coord) const{
 }
 
 template<typename T>
-void Sigrid2DMap<T>::refill(){
+void AutoInsertMappedGrid<T>::refill(){
 
     m_map.clear();
 
@@ -444,7 +444,7 @@ void Sigrid2DMap<T>::refill(){
 }
 
 template<typename T>
-void Sigrid2DMap<T>::shiftInsertPatternRight(){
+void AutoInsertMappedGrid<T>::shiftInsertPatternRight(){
     
     if(m_insertPattern.size() < 2){
         return;

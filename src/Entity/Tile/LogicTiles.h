@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Coord/Coord.h"
-#include "List/Sigrid2DMap.h"
+#include "List/AutoInsertMappedGrid.h"
 #include "Entity/Tile/LogicTile.h"
 
 namespace sigrid{
@@ -40,6 +40,6 @@ namespace sigrid{
 
         private:
 
-            list::Sigrid2DMap<LogicTile> m_tiles;
+            list::AutoInsertMappedGrid<LogicTile> m_tiles;
     };
 }
