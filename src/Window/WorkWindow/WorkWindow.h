@@ -11,7 +11,7 @@
 
 #include "PdfHandler.h"
 
-#include "List/Sigrid2DList.h"
+#include "List/VectorWithDisplayGrid.h"
 
 namespace sigrid{
 
@@ -149,7 +149,7 @@ namespace sigrid{
             SigridRenderTexture m_texture;
             LayoutGrid m_layout;
 
-            list::Sigrid2DList<sigrid::Board> m_boards;
+            list::VectorWithDisplayGrid<sigrid::Board> m_boards;
 
             RectangleBorder m_boardSelectHighlight;
 

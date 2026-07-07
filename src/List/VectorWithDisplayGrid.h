@@ -6,10 +6,10 @@
 
 namespace sigrid{namespace list{
 
-    template <typename T> class Sigrid2DList{
+    template <typename T> class VectorWithDisplayGrid{
 
         public:
-            Sigrid2DList();
+            VectorWithDisplayGrid();
 
             void push_back(const T& value);
             void addColumn();

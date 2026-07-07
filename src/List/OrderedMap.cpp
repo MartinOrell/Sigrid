@@ -1,10 +1,10 @@
 #include "List/OrderedMap.h"
 #include "List/OrderedMap_contentTypes.h"
-// Any type used must be added in the SigridOrderedMap_contentTypes.h file
+// Any type used must be added in the OrderedMap_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
 // renaming this file's extension to tpp and
-// including this file at the end of Sigrid2DList.h
+// including this file at the end of OrderedMap.h
 // Both includes above can then be removed from this file
 
 #include <iostream>

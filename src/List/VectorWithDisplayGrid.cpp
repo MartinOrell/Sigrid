@@ -1,19 +1,19 @@
-#include "List/Sigrid2DList.h"
-#include "List/Sigrid2DList_contentTypes.h"
-// Any type used must be added in the Sigrid2DList_contentTypes.h file
+#include "List/VectorWithDisplayGrid.h"
+#include "List/VectorWithDisplayGrid_contentTypes.h"
+// Any type used must be added in the VectorWithDisplayGrid_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
 // renaming this file's extension to tpp and
-// including this file at the end of Sigrid2DList.h
+// including this file at the end of VectorWithDisplayGrid.h
 // Both includes above can then be removed from this file
 
 using namespace sigrid::list;
 
 template<typename T>
-Sigrid2DList<T>::Sigrid2DList(){}
+VectorWithDisplayGrid<T>::VectorWithDisplayGrid(){}
 
 template<typename T>
-void Sigrid2DList<T>::push_back(const T& value){
+void VectorWithDisplayGrid<T>::push_back(const T& value){
     
     m_vector.push_back(value);
 
@@ -30,19 +30,19 @@ void Sigrid2DList<T>::push_back(const T& value){
 }
 
 template<typename T>
-void Sigrid2DList<T>::addColumn(){
+void VectorWithDisplayGrid<T>::addColumn(){
     m_displayColumns++;
     displayLastElements();
 }
 
 template<typename T>
-void Sigrid2DList<T>::addRow(){
+void VectorWithDisplayGrid<T>::addRow(){
     m_displayRows++;
     displayLastElements();
 }
 
 template<typename T>
-bool Sigrid2DList<T>::removeColumn(){
+bool VectorWithDisplayGrid<T>::removeColumn(){
 
     if(m_displayColumns < 2){
         return false;
@@ -55,7 +55,7 @@ bool Sigrid2DList<T>::removeColumn(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::removeRow(){
+bool VectorWithDisplayGrid<T>::removeRow(){
 
     if(m_displayRows < 2){
         return false;
@@ -68,7 +68,7 @@ bool Sigrid2DList<T>::removeRow(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::selectLast(){
+bool VectorWithDisplayGrid<T>::selectLast(){
 
     const unsigned int displaySize = m_displayIds.size();
     if(displaySize == 0){
@@ -80,7 +80,7 @@ bool Sigrid2DList<T>::selectLast(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::select(const unsigned int& displayPosition){
+bool VectorWithDisplayGrid<T>::select(const unsigned int& displayPosition){
 
     const unsigned int displaySize = m_displayIds.size();
     if(displayPosition >= displaySize){
@@ -92,7 +92,7 @@ bool Sigrid2DList<T>::select(const unsigned int& displayPosition){
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::at(const unsigned int& position){
+std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::at(const unsigned int& position){
 
     if(position >= m_vector.size()){
         return std::nullopt;
@@ -102,7 +102,7 @@ std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::at(const unsigned int&
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::at(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::at(const unsigned int& position) const{
     
     if(position >= m_vector.size()){
         return std::nullopt;
@@ -112,7 +112,7 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::at(const u
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition){
+std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition){
 
     if(displayPosition >= m_displayIds.size()){
         return std::nullopt;
@@ -122,7 +122,7 @@ std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atDisplay(const unsign
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atDisplay(const unsigned int& displayPosition) const{
+const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition) const{
 
     if(displayPosition >= m_displayIds.size()){
         return std::nullopt;
@@ -132,7 +132,7 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atDisplay(
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atSelection(){
+std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atSelection(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -142,7 +142,7 @@ std::optional<std::reference_wrapper<T>> Sigrid2DList<T>::atSelection(){
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atSelection() const{
+const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atSelection() const{
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -152,7 +152,7 @@ const std::optional<std::reference_wrapper<const T>> Sigrid2DList<T>::atSelectio
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<unsigned int>> Sigrid2DList<T>::activeDisplayIndex(){
+std::optional<std::reference_wrapper<unsigned int>> VectorWithDisplayGrid<T>::activeDisplayIndex(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -161,7 +161,7 @@ std::optional<std::reference_wrapper<unsigned int>> Sigrid2DList<T>::activeDispl
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const unsigned int>> Sigrid2DList<T>::activeDisplayIndex() const{
+const std::optional<std::reference_wrapper<const unsigned int>> VectorWithDisplayGrid<T>::activeDisplayIndex() const{
     
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -170,47 +170,47 @@ const std::optional<std::reference_wrapper<const unsigned int>> Sigrid2DList<T>:
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::size() const{
+unsigned int VectorWithDisplayGrid<T>::size() const{
     return (unsigned int)m_vector.size();
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::currentDisplaySize() const{
+unsigned int VectorWithDisplayGrid<T>::currentDisplaySize() const{
     return (unsigned int)m_displayIds.size();
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::currentDisplayColumns() const{
+unsigned int VectorWithDisplayGrid<T>::currentDisplayColumns() const{
     return (m_displayIds.size() > m_displayColumns) ? m_displayColumns : m_displayIds.size();
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::currentDisplayRows() const{
+unsigned int VectorWithDisplayGrid<T>::currentDisplayRows() const{
     return (m_displayIds.size() + m_displayColumns - 1)/m_displayColumns;
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::maxDisplayColumns() const{
+unsigned int VectorWithDisplayGrid<T>::maxDisplayColumns() const{
     return m_displayColumns;
 }
 
 template<typename T>
-unsigned int Sigrid2DList<T>::maxDisplayRows() const{
+unsigned int VectorWithDisplayGrid<T>::maxDisplayRows() const{
     return m_displayRows;
 }
 
 template<typename T>
-std::vector<T>& Sigrid2DList<T>::getVector(){
+std::vector<T>& VectorWithDisplayGrid<T>::getVector(){
     return m_vector;
 }
 
 template<typename T>
-const std::vector<T>& Sigrid2DList<T>::getVector() const{
+const std::vector<T>& VectorWithDisplayGrid<T>::getVector() const{
     return m_vector;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isDisplayedElementSelected(const unsigned int& displayPosition) const{
+bool VectorWithDisplayGrid<T>::isDisplayedElementSelected(const unsigned int& displayPosition) const{
     
     if(!m_selectIndex_o){
         return false;
@@ -219,7 +219,7 @@ bool Sigrid2DList<T>::isDisplayedElementSelected(const unsigned int& displayPosi
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftLeft(){
+bool VectorWithDisplayGrid<T>::shiftLeft(){
 
     for(int i = 0; i < m_displayIds.size()-1; i++){
         m_displayIds.at(i) = m_displayIds.at(i+1);
@@ -250,7 +250,7 @@ bool Sigrid2DList<T>::shiftLeft(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftRight(){
+bool VectorWithDisplayGrid<T>::shiftRight(){
 
     for(int i = m_displayIds.size()-1; i > 0; i--){
         m_displayIds.at(i) = m_displayIds.at(i-1);
@@ -282,7 +282,7 @@ bool Sigrid2DList<T>::shiftRight(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftUp(){
+bool VectorWithDisplayGrid<T>::shiftUp(){
 
     if(isOneRowDisplayed()){
         return false;
@@ -301,7 +301,7 @@ bool Sigrid2DList<T>::shiftUp(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::shiftDown(){
+bool VectorWithDisplayGrid<T>::shiftDown(){
 
     if(isOneRowDisplayed()){
         return false;
@@ -319,7 +319,7 @@ bool Sigrid2DList<T>::shiftDown(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::selectLeft(){
+bool VectorWithDisplayGrid<T>::selectLeft(){
 
     if(!m_selectIndex_o){
         return false;
@@ -440,7 +440,7 @@ bool Sigrid2DList<T>::selectLeft(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::selectRight(){
+bool VectorWithDisplayGrid<T>::selectRight(){
 
     if(!m_selectIndex_o){
         return false;
@@ -554,7 +554,7 @@ bool Sigrid2DList<T>::selectRight(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::selectUp(){
+bool VectorWithDisplayGrid<T>::selectUp(){
 
     if(!m_selectIndex_o){
         return false;
@@ -591,7 +591,7 @@ bool Sigrid2DList<T>::selectUp(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::selectDown(){
+bool VectorWithDisplayGrid<T>::selectDown(){
 
     if(!m_selectIndex_o){
         return false;
@@ -625,57 +625,57 @@ bool Sigrid2DList<T>::selectDown(){
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isOneRowDisplayed() const{
+bool VectorWithDisplayGrid<T>::isOneRowDisplayed() const{
     return m_displayRows == 1 ||
         (unsigned int)m_displayIds.size() <= m_displayColumns;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isLeftDisplayColumn(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isLeftDisplayColumn(const unsigned int& displayIndex) const{
     return displayIndex % m_displayColumns == 0;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isRightDisplayColumn(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isRightDisplayColumn(const unsigned int& displayIndex) const{
     return displayIndex % m_displayColumns == m_displayColumns-1;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
     return displayIndex < m_displayColumns;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isTopRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isTopRow(const unsigned int& displayIndex) const{
     return m_displayIds.at(displayIndex) < m_displayColumns;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isBottomDisplayRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isBottomDisplayRow(const unsigned int& displayIndex) const{
     int displayRow = displayIndex/m_displayColumns;
     int bottomDisplayRow = ((unsigned int)m_displayIds.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isBottomRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isBottomRow(const unsigned int& displayIndex) const{
     int displayRow = m_displayIds.at(displayIndex)/m_displayColumns;
     int bottomDisplayRow = ((unsigned int)m_vector.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isFirstElement(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isFirstElement(const unsigned int& displayIndex) const{
     return m_displayIds.at(displayIndex) == 0;
 }
 
 template<typename T>
-bool Sigrid2DList<T>::isLastElement(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isLastElement(const unsigned int& displayIndex) const{
     return m_displayIds.at(displayIndex) == (unsigned int)m_vector.size()-1;
 }
 
 template<typename T>
-void Sigrid2DList<T>::displayFirstElements(){
+void VectorWithDisplayGrid<T>::displayFirstElements(){
 
     m_displayIds.clear();
     for(int id = 0; id < m_displayColumns * m_displayRows; id++){
@@ -687,7 +687,7 @@ void Sigrid2DList<T>::displayFirstElements(){
 }
 
 template<typename T>
-void Sigrid2DList<T>::displayLastElements(){
+void VectorWithDisplayGrid<T>::displayLastElements(){
 
     m_displayIds.clear();
 

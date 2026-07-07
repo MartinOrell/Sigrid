@@ -7,7 +7,7 @@ set(SRC_FILES
     src/List/Vector.cpp
     src/List/Map.cpp
     src/List/OrderedMap.cpp
-    src/List/Sigrid2DList.cpp
+    src/List/VectorWithDisplayGrid.cpp
     src/List/AutoInsertMappedGrid.cpp
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
