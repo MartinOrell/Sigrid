@@ -4,7 +4,7 @@
 #include <string>
 #include <optional>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 
 namespace sigrid{
 
@@ -16,7 +16,7 @@ namespace sigrid{
 
         private:
 
-            list::SigridMap<std::string, sf::Font> m_fonts;
+            list::Map<std::string, sf::Font> m_fonts;
 
     };
 }

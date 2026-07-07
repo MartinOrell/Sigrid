@@ -6,10 +6,10 @@
 
 namespace sigrid{namespace list{
 
-    template <typename TKey, typename TValue> class SigridMap{
+    template <typename TKey, typename TValue> class Map{
 
         public:
-            SigridMap();
+            Map();
 
             std::optional<std::reference_wrapper<TValue>> insert(const TKey& key, const TValue& value);
             void erase(const TKey& key);

@@ -3,7 +3,7 @@
 #include <optional>
 #include <memory>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "Coord/Coord.h"
 #include "Entity/LogicEntity.h"
 #include "Entity/GraphicEntity.h"
@@ -48,10 +48,10 @@ namespace sigrid{
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            list::SigridMap<Coord, GraphicPiece> m_pieces;
-            list::SigridMap<Coord, GraphicCircle> m_circles;
-            list::SigridMap<Coord, GraphicArrow> m_arrows;
-            list::SigridMap<Coord, Icon> m_icons;
+            list::Map<Coord, GraphicPiece> m_pieces;
+            list::Map<Coord, GraphicCircle> m_circles;
+            list::Map<Coord, GraphicArrow> m_arrows;
+            list::Map<Coord, Icon> m_icons;
 
             sf::Vector2f m_pieceSize = {0.f, 0.f};
             float m_circleDiameter = 0.f;

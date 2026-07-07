@@ -5,7 +5,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 
 namespace sigrid{
     class Mouse{
@@ -19,7 +19,7 @@ namespace sigrid{
             void release(const sf::Mouse::Button& button);
 
         private:
-            list::SigridMap<sf::Mouse::Button, std::optional<sf::Vector2f>> m_pressedPositions;
+            list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>> m_pressedPositions;
     };
 }
 

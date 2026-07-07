@@ -3,7 +3,7 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "List/Vector.h"
 #include "Coord/Coord.h"
 
@@ -49,7 +49,7 @@ namespace sigrid{namespace list{
 
         unsigned int m_columns = 0;
         unsigned int m_rows = 0;
-        SigridMap<Coord, T> m_map;
+        Map<Coord, T> m_map;
         Vector<T> m_insertPattern;
     };
 }}

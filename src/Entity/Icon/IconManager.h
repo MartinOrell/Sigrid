@@ -5,7 +5,7 @@
 #include <string>
 #include <SFML/Graphics/Texture.hpp>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 
 namespace sigrid{
 
@@ -16,7 +16,7 @@ namespace sigrid{
             std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
             
         private:
-            list::SigridMap<std::string, sf::Texture> m_textures;
+            list::Map<std::string, sf::Texture> m_textures;
     };
 
 }

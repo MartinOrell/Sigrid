@@ -1,6 +1,6 @@
 #pragma once
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "List/Vector.h"
 
 namespace sigrid{namespace list{
@@ -27,7 +27,7 @@ namespace sigrid{namespace list{
 
         private:
 
-            SigridMap<TKey, TValue> m_map;
+            Map<TKey, TValue> m_map;
             Vector<TKey> m_order;
 
     };

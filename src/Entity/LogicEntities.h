@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "Coord/Coord.h"
 #include "Entity/LogicEntity.h"
 #include "Entity/Piece/LogicPiece.h"
@@ -32,9 +32,9 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
-            list::SigridMap<Coord, LogicPiece> m_pieces;
-            list::SigridMap<Coord, LogicCircle> m_circles;
-            list::SigridMap<Coord, LogicArrow> m_arrows;
-            list::SigridMap<Coord, LogicIcon> m_icons;
+            list::Map<Coord, LogicPiece> m_pieces;
+            list::Map<Coord, LogicCircle> m_circles;
+            list::Map<Coord, LogicArrow> m_arrows;
+            list::Map<Coord, LogicIcon> m_icons;
     };
 }

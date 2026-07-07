@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "List/Vector.h"
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
@@ -41,7 +41,7 @@ namespace sigrid{
         private:
             list::Vector<float> m_xCoords;
             list::Vector<float> m_yCoords;
-            list::SigridMap<unsigned int, CoordPair> m_objects;
+            list::Map<unsigned int, CoordPair> m_objects;
     };
 
 }

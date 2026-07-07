@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "List/Vector.h"
 #include "Entity/Piece/LogicPiece.h"
 #include "Entity/Piece/GraphicPiece.h"
@@ -21,7 +21,7 @@ namespace sigrid{
             void loadImages(const std::vector<PieceContainer>& pieces);
             std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);
         private:
-            list::SigridMap<PieceIdentifier, std::string> m_pieceImageFilenames;
+            list::Map<PieceIdentifier, std::string> m_pieceImageFilenames;
 
             list::Vector<PieceColor> m_colors;
             list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;

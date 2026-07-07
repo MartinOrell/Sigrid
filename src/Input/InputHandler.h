@@ -3,7 +3,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "Tool/Tool.h"
 #include "Action/Action.h"
 
@@ -38,10 +38,10 @@ namespace sigrid{
 
         private:
 
-            list::SigridMap<sf::Mouse::Button, sigrid::Tool> m_tools;
-            list::SigridMap<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
-            list::SigridMap<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
-            list::SigridMap<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
+            list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
+            list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
+            list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
+            list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
 
     };
 

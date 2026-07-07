@@ -5,7 +5,7 @@ set(SRC_FILES
     src/main.cpp
     src/SigridRenderTexture/SigridRenderTexture.cpp
     src/List/Vector.cpp
-    src/List/SigridMap.cpp
+    src/List/Map.cpp
     src/List/SigridOrderedMap.cpp
     src/List/Sigrid2DList.cpp
     src/List/Sigrid2DMap.cpp

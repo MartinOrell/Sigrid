@@ -8,7 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "Action/Action.h"
 
-#include "List/SigridMap.h"
+#include "List/Map.h"
 #include "SigridRenderTexture/SigridRenderTexture.h"
 #include "Menu/MenuItem.h"
 
@@ -90,11 +90,11 @@ namespace sigrid{
 
             MenuItem m_superHeader;
 
-            list::SigridMap<std::string, MenuItem> m_items;
+            list::Map<std::string, MenuItem> m_items;
 
             std::vector<std::vector<std::string>> m_itemKeys;
 
-            list::SigridMap<std::string, LayoutItem> m_layoutItems;
+            list::Map<std::string, LayoutItem> m_layoutItems;
 
             float m_lineHeight = 0.f;
             float m_itemOffsetX = 0.f;

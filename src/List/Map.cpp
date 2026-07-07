@@ -1,19 +1,19 @@
-#include "List/SigridMap.h"
-#include "List/SigridMap_contentTypes.h"
-// Any type used must be added in the SigridMap_contentTypes.h file
+#include "List/Map.h"
+#include "List/Map_contentTypes.h"
+// Any type used must be added in the Map_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by
 // renaming this file's extension to tpp and
-// including this file at the end of Sigrid2DList.h
+// including this file at the end of Map.h
 // Both includes above can then be removed from this file
 
 using namespace sigrid::list;
 
 template<typename TKey, typename TValue>
-SigridMap<TKey, TValue>::SigridMap(){}
+Map<TKey, TValue>::Map(){}
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> SigridMap<TKey, TValue>::insert(const TKey& key, const TValue& value){
+std::optional<std::reference_wrapper<TValue>> Map<TKey, TValue>::insert(const TKey& key, const TValue& value){
     
     auto result = m_map.insert(std::pair{key, value});
     if(!result.second){
@@ -23,22 +23,22 @@ std::optional<std::reference_wrapper<TValue>> SigridMap<TKey, TValue>::insert(co
 }
 
 template<typename TKey, typename TValue>
-void SigridMap<TKey, TValue>::erase(const TKey& key){
+void Map<TKey, TValue>::erase(const TKey& key){
     m_map.erase(key);
 }
 
 template<typename TKey, typename TValue>
-typename std::map<TKey, TValue>::iterator SigridMap<TKey, TValue>::erase(const typename std::map<TKey, TValue>::iterator& iterator){
+typename std::map<TKey, TValue>::iterator Map<TKey, TValue>::erase(const typename std::map<TKey, TValue>::iterator& iterator){
     return m_map.erase(iterator);
 }
 
 template<typename TKey, typename TValue>
-void SigridMap<TKey, TValue>::clear(){
+void Map<TKey, TValue>::clear(){
     m_map.clear();
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> SigridMap<TKey, TValue>::at(const TKey& key){
+std::optional<std::reference_wrapper<TValue>> Map<TKey, TValue>::at(const TKey& key){
 
     auto it = m_map.find(key);
 
@@ -50,7 +50,7 @@ std::optional<std::reference_wrapper<TValue>> SigridMap<TKey, TValue>::at(const 
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> SigridMap<TKey, TValue>::at(const TKey& key) const{
+const std::optional<std::reference_wrapper<const TValue>> Map<TKey, TValue>::at(const TKey& key) const{
 
     auto it = m_map.find(key);
 
@@ -62,26 +62,26 @@ const std::optional<std::reference_wrapper<const TValue>> SigridMap<TKey, TValue
 }
 
 template<typename TKey, typename TValue>
-unsigned int SigridMap<TKey, TValue>::size() const{
+unsigned int Map<TKey, TValue>::size() const{
     return m_map.size();
 }
 
 template<typename TKey, typename TValue>
-typename std::map<TKey, TValue>::iterator SigridMap<TKey, TValue>::begin(){
+typename std::map<TKey, TValue>::iterator Map<TKey, TValue>::begin(){
     return m_map.begin();
 }
 
 template<typename TKey, typename TValue>
-typename std::map<TKey, TValue>::const_iterator SigridMap<TKey, TValue>::begin() const{
+typename std::map<TKey, TValue>::const_iterator Map<TKey, TValue>::begin() const{
     return m_map.cbegin();
 }
 
 template<typename TKey, typename TValue>
-typename std::map<TKey, TValue>::iterator SigridMap<TKey, TValue>::end(){
+typename std::map<TKey, TValue>::iterator Map<TKey, TValue>::end(){
     return m_map.end();
 }
 
 template<typename TKey, typename TValue>
-typename std::map<TKey, TValue>::const_iterator SigridMap<TKey, TValue>::end() const{
+typename std::map<TKey, TValue>::const_iterator Map<TKey, TValue>::end() const{
     return m_map.cend();
 }
