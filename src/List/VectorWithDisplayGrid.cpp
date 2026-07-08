@@ -104,21 +104,27 @@ const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::a
 template<typename T>
 std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition){
 
-    if(displayPosition >= m_displayIds.size()){
+    auto id_o = m_displayIds.at(displayPosition);
+
+    if(id_o == std::nullopt){
         return std::nullopt;
     }
+    const auto& id = id_o.value().get();
 
-    return at(m_displayIds.at(displayPosition));
+    return at(id);
 }
 
 template<typename T>
 const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition) const{
 
-    if(displayPosition >= m_displayIds.size()){
+    auto id_o = m_displayIds.at(displayPosition);
+
+    if(id_o == std::nullopt){
         return std::nullopt;
     }
+    const auto& id = id_o.value().get();
 
-    return at(m_displayIds.at(displayPosition));
+    return at(id);
 }
 
 template<typename T>
@@ -166,7 +172,7 @@ unsigned int VectorWithDisplayGrid<T>::size() const{
 
 template<typename T>
 unsigned int VectorWithDisplayGrid<T>::currentDisplaySize() const{
-    return (unsigned int)m_displayIds.size();
+    return m_displayIds.size();
 }
 
 template<typename T>
@@ -221,8 +227,20 @@ typename std::vector<T>::const_iterator VectorWithDisplayGrid<T>::end() const{
 template<typename T>
 bool VectorWithDisplayGrid<T>::shiftLeft(){
 
-    for(int i = 0; i < m_displayIds.size()-1; i++){
-        m_displayIds.at(i) = m_displayIds.at(i+1);
+    for(unsigned int i = 0; i < m_displayIds.size()-1; i++){
+
+        auto currentId_o = m_displayIds.at(i);
+        if(currentId_o == std::nullopt){
+            continue;
+        }
+        auto rightId_o = m_displayIds.at(i+1);
+        if(rightId_o == std::nullopt){
+            continue;
+        }
+        auto& currentId = currentId_o.value().get();
+        const auto& rightId = rightId_o.value().get();
+
+        currentId = rightId;
     }
 
     auto isDisplayed = [this](const int& id){
@@ -235,15 +253,21 @@ bool VectorWithDisplayGrid<T>::shiftLeft(){
     };
 
     {
-        unsigned int backId = m_displayIds.back();
-        backId = (backId+1)%m_vector.size();
-        while(backId != m_displayIds.back()){
-            if(!isDisplayed(backId)){
-                m_displayIds.back() = backId;
+        auto backId_o = m_displayIds.back();
+        if(backId_o == std::nullopt){
+            return false;
+        }
+        auto& backId = backId_o.value().get();
+
+        unsigned int newBackId = (backId+1)%m_vector.size();
+        
+        while(newBackId != backId){
+            if(!isDisplayed(newBackId)){
+                backId = newBackId;
                 break;
             }
 
-            backId = (backId+1)%m_vector.size();
+            newBackId = (newBackId+1)%m_vector.size();
         }
     }
     return true;
@@ -253,7 +277,19 @@ template<typename T>
 bool VectorWithDisplayGrid<T>::shiftRight(){
 
     for(int i = m_displayIds.size()-1; i > 0; i--){
-        m_displayIds.at(i) = m_displayIds.at(i-1);
+
+        auto currentId_o = m_displayIds.at(i);
+        if(currentId_o == std::nullopt){
+            continue;
+        }
+        auto leftId_o = m_displayIds.at(i-1);
+        if(leftId_o == std::nullopt){
+            continue;
+        }
+        auto& currentId = currentId_o.value().get();
+        const auto& leftId = leftId_o.value().get();
+
+        currentId = leftId;
     }
 
     auto isDisplayed = [this](const int& id){
@@ -266,16 +302,22 @@ bool VectorWithDisplayGrid<T>::shiftRight(){
     };
 
     {
-        int frontId = m_displayIds.front();
-        frontId = (m_vector.size()+frontId-1)%m_vector.size();
+        auto frontId_o = m_displayIds.front();
+        if(frontId_o == std::nullopt){
+            return false;
+        }
+        auto& frontId = frontId_o.value().get();
+
+        int newFrontId = (m_vector.size()+frontId-1)%m_vector.size();
         
-        while(frontId != m_displayIds.front()){
-            if(!isDisplayed(frontId)){
-                m_displayIds.front() = frontId;
+        while(newFrontId != frontId){
+
+            if(!isDisplayed(newFrontId)){
+                frontId = newFrontId;
                 break;
             }
 
-            frontId = (m_vector.size()+frontId-1)%m_vector.size();
+            newFrontId = (m_vector.size()+newFrontId-1)%m_vector.size();
         }
     }
     return true;
@@ -288,14 +330,23 @@ bool VectorWithDisplayGrid<T>::shiftUp(){
         return false;
     }
 
-    for(auto it = m_displayIds.begin(); it != m_displayIds.end(); it++){
-        unsigned int newId = *it + m_displayColumns;
-        if(newId >= (unsigned int)m_vector.size()){
-            m_displayIds.erase(it, m_displayIds.end());
-            m_selectIndex_o = (unsigned int)m_displayIds.size() - 1;
+    for(unsigned int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
+
+        auto id_o = m_displayIds.at(displayIndex);
+        if(id_o == std::nullopt){
+            continue;
+        }
+        auto& id = id_o.value().get();
+
+        unsigned int newId = id + m_displayColumns;
+
+        if(newId >= m_vector.size()){
+            m_displayIds.eraseFrom(displayIndex);
+            m_selectIndex_o = m_displayIds.size() - 1;
             break;
         }
-        *it = newId;
+
+        id = newId;
     }
     return true;
 }
@@ -312,7 +363,14 @@ bool VectorWithDisplayGrid<T>::shiftDown(){
     }
 
     for(int i = m_displayIds.size(); i < m_displayRows*m_displayColumns; i++){
-        int id = m_displayIds.back()+1;
+
+        auto backId_o = m_displayIds.back();
+        if(backId_o == std::nullopt){
+            continue;
+        }
+        const auto& backId = backId_o.value().get();
+
+        int id = backId+1;
         m_displayIds.push_back(id);
     }
     return true;
@@ -330,7 +388,12 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
     }
 
     if(m_displayIds.size() < 2){
-        unsigned int& id = m_displayIds.at(0);
+
+        auto id_o = m_displayIds.at(0);
+        if(id_o == std::nullopt){
+            return false;
+        }
+        auto& id = id_o.value().get();
 
         if(id == 0){
             if(m_multiRowStartEndWrap){
@@ -350,7 +413,7 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
         if(isOneRowDisplayed()){
              if(m_singleRowStartEndWrap){
                 displayLastElements();
-                m_selectIndex_o = (unsigned int)m_displayIds.size()-1;
+                m_selectIndex_o = m_displayIds.size()-1;
                 return true;
             }
             return false;
@@ -362,8 +425,8 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
             case WRAP_ON:
             {
                 m_selectIndex_o = m_selectIndex_o.value() + m_displayColumns - 1;
-                if(m_selectIndex_o.value() > (unsigned int)m_displayIds.size()-1){
-                    m_selectIndex_o = (unsigned int)m_displayIds.size()-1;
+                if(m_selectIndex_o.value() > m_displayIds.size()-1){
+                    m_selectIndex_o = m_displayIds.size()-1;
                 }
                 return true;
             }
@@ -371,7 +434,7 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
             {
                 if(m_multiRowStartEndWrap){
                     displayLastElements();
-                    m_selectIndex_o = (unsigned int)m_displayIds.size()-1;
+                    m_selectIndex_o = m_displayIds.size()-1;
                     return true;
                 }
                 return false;
@@ -393,8 +456,8 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
             case WRAP_ON:
             {
                 m_selectIndex_o = m_selectIndex_o.value() + m_displayColumns - 1;
-                if(m_selectIndex_o.value() > (unsigned int)m_displayIds.size()-1){
-                    m_selectIndex_o = (unsigned int)m_displayIds.size()-1;
+                if(m_selectIndex_o.value() > m_displayIds.size()-1){
+                    m_selectIndex_o = m_displayIds.size()-1;
                 }
                 return true;
             }
@@ -417,8 +480,8 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
         case WRAP_ON:
         {
             m_selectIndex_o = m_selectIndex_o.value() + m_displayColumns - 1;
-            if(m_selectIndex_o.value() > (unsigned int)m_displayIds.size()-1){
-                m_selectIndex_o = (unsigned int)m_displayIds.size()-1;
+            if(m_selectIndex_o.value() > m_displayIds.size()-1){
+                m_selectIndex_o = m_displayIds.size()-1;
             }
             return true;
         }
@@ -428,7 +491,14 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
                 id -= m_displayColumns;
             }
             for(int i = m_displayIds.size(); i < m_displayRows*m_displayColumns; i++){
-                int id = m_displayIds.back()+1;
+
+                auto backId_o = m_displayIds.back();
+                if(backId_o == std::nullopt){
+                    continue;
+                }
+                const auto& backId = backId_o.value();
+
+                int id = backId+1;
                 m_displayIds.push_back(id);
             }
             m_selectIndex_o = m_displayColumns-1;
@@ -451,7 +521,12 @@ bool VectorWithDisplayGrid<T>::selectRight(){
     }
 
     if(m_displayIds.size() < 2){
-        unsigned int& id = m_displayIds.at(0);
+
+        auto id_o = m_displayIds.at(0);
+        if(id_o == std::nullopt){
+            return false;
+        }
+        auto& id = id_o.value().get();
 
         if(id == m_vector.size()-1){
             if(m_singleRowStartEndWrap){
@@ -537,13 +612,22 @@ bool VectorWithDisplayGrid<T>::selectRight(){
         }
         case NEXTWRAP_ON:
         {
-            for(auto it = m_displayIds.begin(); it != m_displayIds.end();it++){
-                int newId = *it + m_displayColumns;
+
+            for(unsigned int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
+                
+                auto id_o = m_displayIds.at(displayIndex);
+                if(id_o == std::nullopt){
+                    continue;
+                }
+                auto& id = id_o.value().get();
+
+                int newId = id + m_displayColumns;
                 if(newId >= m_vector.size()){
-                    m_displayIds.erase(it, m_displayIds.end());
+                    m_displayIds.eraseFrom(displayIndex);
                     break;
                 }
-                *it = newId;
+
+                id = newId;
             }
             m_selectIndex_o = m_selectIndex_o.value() + 1 - m_displayColumns;       
             return true;
@@ -578,7 +662,7 @@ bool VectorWithDisplayGrid<T>::selectUp(){
             int oldX = selectIndex % m_displayColumns;
             int lastX = (m_vector.size() - 1) % m_displayColumns;
 
-            m_selectIndex_o = (unsigned int)m_displayIds.size() - 1;
+            m_selectIndex_o = m_displayIds.size() - 1;
             if(oldX < lastX){
                 m_selectIndex_o = m_selectIndex_o.value() + oldX - lastX;
             }
@@ -605,8 +689,8 @@ bool VectorWithDisplayGrid<T>::selectDown(){
 
     if(!isBottomDisplayRow(selectIndex)){
         unsigned int newId = selectIndex + m_displayColumns;
-        if(newId > (unsigned int)m_displayIds.size() - 1){
-            newId = (unsigned int)m_displayIds.size() - 1;
+        if(newId > m_displayIds.size() - 1){
+            newId = m_displayIds.size() - 1;
         }
         m_selectIndex_o = newId;
         return true;
@@ -627,7 +711,7 @@ bool VectorWithDisplayGrid<T>::selectDown(){
 template<typename T>
 bool VectorWithDisplayGrid<T>::isOneRowDisplayed() const{
     return m_displayRows == 1 ||
-        (unsigned int)m_displayIds.size() <= m_displayColumns;
+        m_displayIds.size() <= m_displayColumns;
 }
 
 template<typename T>
@@ -647,31 +731,58 @@ bool VectorWithDisplayGrid<T>::isTopDisplayRow(const unsigned int& displayIndex)
 
 template<typename T>
 bool VectorWithDisplayGrid<T>::isTopRow(const unsigned int& displayIndex) const{
-    return m_displayIds.at(displayIndex) < m_displayColumns;
+    
+    auto id_o = m_displayIds.at(displayIndex);
+    if(id_o == std::nullopt){
+        return false;
+    }
+    const auto& id = id_o.value().get();
+
+    return id < m_displayColumns;
 }
 
 template<typename T>
 bool VectorWithDisplayGrid<T>::isBottomDisplayRow(const unsigned int& displayIndex) const{
     int displayRow = displayIndex/m_displayColumns;
-    int bottomDisplayRow = ((unsigned int)m_displayIds.size()-1)/m_displayColumns;
+    int bottomDisplayRow = (m_displayIds.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
 bool VectorWithDisplayGrid<T>::isBottomRow(const unsigned int& displayIndex) const{
-    int displayRow = m_displayIds.at(displayIndex)/m_displayColumns;
+
+    auto id_o = m_displayIds.at(displayIndex);
+    if(id_o == std::nullopt){
+        return false;
+    }
+    const auto& id = id_o.value().get();
+
+    int displayRow = id/m_displayColumns;
     int bottomDisplayRow = (m_vector.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
 bool VectorWithDisplayGrid<T>::isFirstElement(const unsigned int& displayIndex) const{
-    return m_displayIds.at(displayIndex) == 0;
+
+    auto id_o = m_displayIds.at(displayIndex);
+    if(id_o == std::nullopt){
+        return false;
+    }
+    const auto& id = id_o.value().get();
+    return id == 0;
 }
 
 template<typename T>
 bool VectorWithDisplayGrid<T>::isLastElement(const unsigned int& displayIndex) const{
-    return m_displayIds.at(displayIndex) == m_vector.size()-1;
+
+    auto id_o = m_displayIds.at(displayIndex);
+    if(id_o == std::nullopt){
+        return false;
+    }
+    const auto& id = id_o.value().get();
+
+    return id == m_vector.size()-1;
 }
 
 template<typename T>

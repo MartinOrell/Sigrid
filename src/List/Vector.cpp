@@ -37,6 +37,16 @@ void Vector<T>::erase(const unsigned int& position){
     m_vector.erase(m_vector.begin() + position);
 }
 
+template <typename T> 
+void Vector<T>::eraseFrom(const unsigned int& position){
+
+    if(position >= m_vector.size()){
+        return;
+    }
+
+    m_vector.erase(m_vector.begin() + position, m_vector.end());
+}
+
 template<typename T>
 typename std::vector<T>::iterator Vector<T>::erase(const typename std::vector<T>::iterator& iterator){
     return m_vector.erase(iterator);
@@ -45,6 +55,26 @@ typename std::vector<T>::iterator Vector<T>::erase(const typename std::vector<T>
 template <typename T> 
 void Vector<T>::clear(){
     m_vector.clear();
+}
+
+template<typename T>
+std::optional<std::reference_wrapper<T>> Vector<T>::front(){
+
+    if(m_vector.size() == 0){
+        return std::nullopt;
+    }
+
+    return m_vector.front();
+}
+
+template<typename T>
+const std::optional<std::reference_wrapper<const T>> Vector<T>::front() const{
+    
+    if(m_vector.size() == 0){
+        return std::nullopt;
+    }
+
+    return m_vector.front();
 }
 
 template<typename T>

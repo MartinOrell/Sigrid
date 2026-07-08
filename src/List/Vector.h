@@ -15,9 +15,12 @@ namespace sigrid{namespace list{
             void insert(const unsigned int& position, const T& value);
             void pop_back();
             void erase(const unsigned int& position);
+            void eraseFrom(const unsigned int& position);
             typename std::vector<T>::iterator erase(const typename std::vector<T>::iterator& iterator);
             void clear();
 
+            std::optional<std::reference_wrapper<T>> front();
+            const std::optional<std::reference_wrapper<const T>> front() const;
             std::optional<std::reference_wrapper<T>> back();
             const std::optional<std::reference_wrapper<const T>> back() const;
             std::optional<std::reference_wrapper<T>> at(const unsigned int& position);

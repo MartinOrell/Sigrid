@@ -14,6 +14,7 @@
 
 // This class is only included by Vector.cpp
 // Add more templates below to support more types
+template class sigrid::list::Vector<unsigned int>;
 template class sigrid::list::Vector<float>;
 template class sigrid::list::Vector<sigrid::CoordPair>;
 template class sigrid::list::Vector<sf::Color>;

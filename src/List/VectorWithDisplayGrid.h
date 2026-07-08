@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <optional>
 #include <functional> //Reference wrapper
 
@@ -74,7 +73,7 @@ namespace sigrid{namespace list{
             list::Vector<T> m_vector;
             unsigned int m_displayColumns = 1;
             unsigned int m_displayRows = 1;
-            std::vector<unsigned int> m_displayIds;
+            list::Vector<unsigned int> m_displayIds;
             std::optional<unsigned int> m_selectIndex_o = std::nullopt;
 
             enum Wrap{
