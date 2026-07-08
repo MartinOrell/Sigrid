@@ -22,7 +22,12 @@ namespace sigrid{
             void setTileSize(const sf::Vector2f& tileSize);
             void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
 
-            void init(const bool& isLeftToRight, const bool& isTopToBottom);
+            void setLeftToRight();
+            void setRightToLeft();
+            void setTopToBottom();
+            void setBottomToTop();
+
+            void init();
 
             void setTilePosition(const Coord& coord, const sf::Vector2f& position);
 
@@ -31,14 +36,14 @@ namespace sigrid{
             void setHighlightColor(const Coord& coord, const int& colorId);
             void removeHighlight(const Coord& coord);
 
-            void addColumnRight(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight);
-            void addColumnLeft(const std::vector<int>& repeatTileColorIds, const bool& isLeftToRight);
-            void removeRightColumn(const bool& isLeftToRight);
-            void removeLeftColumn(const bool& isLeftToRight);
-            void addRowUp(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
-            void addRowDown(const std::vector<int>& repeatTileColorIds, const bool& isTopToBottom);
-            void removeTopRow(const bool& isTopToBottom);
-            void removeBottomRow(const bool& isTopToBottom);
+            void addColumnRight(const std::vector<int>& repeatTileColorIds);
+            void addColumnLeft(const std::vector<int>& repeatTileColorIds);
+            void removeRightColumn();
+            void removeLeftColumn();
+            void addRowUp(const std::vector<int>& repeatTileColorIds);
+            void addRowDown(const std::vector<int>& repeatTileColorIds);
+            void removeTopRow();
+            void removeBottomRow();
 
             void clear();
 
@@ -69,5 +74,7 @@ namespace sigrid{
             sf::Vector2f m_tileSize = {0.f, 0.f};
             sf::Vector2f m_topLeftPosition = {0.f, 0.f};
 
+            bool m_isLeftToRight = true;
+            bool m_isTopToBottom = true;
     };
 }

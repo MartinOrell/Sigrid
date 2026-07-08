@@ -16,10 +16,10 @@ GraphicBoard::GraphicBoard()
 : m_leftEdgeWidth{0.f}
 , m_rightEdgeWidth{0.f}
 , m_topEdgeWidth{0.f}
-, m_bottomEdgeWidth{0.f}
-, m_isLeftToRight{true}
-, m_isTopToBottom{false}{
+, m_bottomEdgeWidth{0.f}{
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
+    setLeftToRight();
+    setBottomToTop();
 }
 
 void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
@@ -44,18 +44,22 @@ void GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
 
 void GraphicBoard::setLeftToRight(){
     m_isLeftToRight = true;
+    m_tileLayer.setLeftToRight();
 }
 
 void GraphicBoard::setRightToLeft(){
     m_isLeftToRight = false;
+    m_tileLayer.setRightToLeft();
 }
 
 void GraphicBoard::setTopToBottom(){
     m_isTopToBottom = true;
+    m_tileLayer.setTopToBottom();
 }
 
 void GraphicBoard::setBottomToTop(){
     m_isTopToBottom = false;
+    m_tileLayer.setBottomToTop();
 }
 
 void GraphicBoard::load(const LogicBoard& logicBoard){
@@ -66,7 +70,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
     
     m_tileLayer.setNumColumns(logicBoard.getNumColumns());
     m_tileLayer.setNumRows(logicBoard.getNumRows());
-    m_tileLayer.init(m_isLeftToRight, m_isTopToBottom);
+    m_tileLayer.init();
     m_tileLayer.move({m_leftEdgeWidth, m_topEdgeWidth});
 
     if(m_border.isVisible()){
@@ -140,7 +144,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     if(m_arrowColorManagerPtr){
         m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
-    m_tileLayer.init(m_isLeftToRight,m_isTopToBottom);
+    m_tileLayer.init();
     
     if(m_arrowColorManagerPtr){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
@@ -684,7 +688,7 @@ void GraphicBoard::clearArrows(){
 
 void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds){
 
-    m_tileLayer.addColumnRight(repeatTileColorIds, m_isLeftToRight);
+    m_tileLayer.addColumnRight(repeatTileColorIds);
 
     if(!m_isLeftToRight){
         m_pieceLayer.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
@@ -717,7 +721,7 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
 
 void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds){
 
-    m_tileLayer.addColumnLeft(repeatTileColorIds, m_isLeftToRight);
+    m_tileLayer.addColumnLeft(repeatTileColorIds);
 
     m_pieceLayer.moveEntitiesRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
     m_arrowLayer.moveArrowsRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
@@ -748,7 +752,7 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
 
 void GraphicBoard::removeRightTileColumn(){
 
-    m_tileLayer.removeRightColumn(m_isLeftToRight);
+    m_tileLayer.removeRightColumn();
     int columnId = m_tileLayer.getNumColumns();
     m_pieceLayer.removeColumn(columnId);
     m_arrowLayer.removeColumn(columnId);
@@ -773,7 +777,7 @@ void GraphicBoard::removeRightTileColumn(){
 
 void GraphicBoard::removeLeftTileColumn(){
 
-    m_tileLayer.removeLeftColumn(m_isLeftToRight);
+    m_tileLayer.removeLeftColumn();
     m_pieceLayer.removeColumn(0);
     m_pieceLayer.moveEntitiesLeft(m_tileLayer.getTileSize().x, m_isLeftToRight);
     m_arrowLayer.removeColumn(0);
@@ -796,7 +800,7 @@ void GraphicBoard::removeLeftTileColumn(){
 
 void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
 
-    m_tileLayer.addRowUp(repeatTileColorIds, m_isTopToBottom);
+    m_tileLayer.addRowUp(repeatTileColorIds);
     m_pieceLayer.moveEntitiesDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
     m_arrowLayer.moveArrowsDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
 
@@ -829,7 +833,7 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
 
 void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
 
-    m_tileLayer.addRowDown(repeatTileColorIds, m_isTopToBottom);
+    m_tileLayer.addRowDown(repeatTileColorIds);
 
     if(!m_isTopToBottom){
         m_pieceLayer.move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
@@ -865,7 +869,7 @@ void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
 
 void GraphicBoard::removeTopTileRow(){
 
-    m_tileLayer.removeTopRow(m_isLeftToRight);
+    m_tileLayer.removeTopRow();
     m_pieceLayer.removeRow(0);
     m_pieceLayer.moveEntitiesUp(m_tileLayer.getTileSize().y, m_isTopToBottom);
     m_arrowLayer.removeRow(0);
@@ -890,7 +894,7 @@ void GraphicBoard::removeTopTileRow(){
 
 void GraphicBoard::removeBottomTileRow(){
 
-    m_tileLayer.removeBottomRow(m_isTopToBottom);
+    m_tileLayer.removeBottomRow();
     int rowId = m_tileLayer.getNumRows();
 
     m_pieceLayer.removeRow(rowId);
@@ -918,8 +922,20 @@ void GraphicBoard::removeBottomTileRow(){
 }
 
 void GraphicBoard::flip(){
-    m_isLeftToRight = !m_isLeftToRight;
-    m_isTopToBottom = !m_isTopToBottom;
+
+    if(m_isLeftToRight){
+        setRightToLeft();
+    }
+    else{
+        setLeftToRight();
+    }
+
+    if(m_isTopToBottom){
+        setBottomToTop();
+    }
+    else{
+        setTopToBottom();
+    }
 
     int tileWidth = m_tileLayer.getTileWidth();
     int tileHeight = m_tileLayer.getTileHeight();
