@@ -4,6 +4,8 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
+#include "List/Vector.h"
+
 namespace sigrid{namespace list{
 
     template <typename T> class VectorWithDisplayGrid{
@@ -35,10 +37,13 @@ namespace sigrid{namespace list{
             unsigned int currentDisplayRows() const;
             unsigned int maxDisplayColumns() const;
             unsigned int maxDisplayRows() const;
-            std::vector<T>& getVector();
-            const std::vector<T>& getVector() const;
 
             bool isDisplayedElementSelected(const unsigned int& displayPosition) const;
+
+            typename std::vector<T>::iterator begin();
+            typename std::vector<T>::const_iterator begin() const;
+            typename std::vector<T>::iterator end();
+            typename std::vector<T>::const_iterator end() const;
 
             bool shiftLeft();
             bool shiftRight();
@@ -66,7 +71,7 @@ namespace sigrid{namespace list{
             void displayFirstElements();
             void displayLastElements();
 
-            std::vector<T> m_vector;
+            list::Vector<T> m_vector;
             unsigned int m_displayColumns = 1;
             unsigned int m_displayRows = 1;
             std::vector<unsigned int> m_displayIds;

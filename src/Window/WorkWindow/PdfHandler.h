@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "List/VectorWithDisplayGrid.h"
 #include "Board/Board.h"
 #include "Layout/LayoutGrid.h"
 
@@ -11,7 +11,7 @@ namespace sigrid{
         public:
 
             void updateLayout();
-            void savePdf(const std::vector<sigrid::Board>& boards);
+            void savePdf(const list::VectorWithDisplayGrid<sigrid::Board>& boards);
 
         private:
         

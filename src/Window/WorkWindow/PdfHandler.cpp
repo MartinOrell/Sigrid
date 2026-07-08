@@ -45,7 +45,7 @@ void PdfHandler::updateLayout(){
     m_layout.setPy(9, 842.f);
 }
 
-void PdfHandler::savePdf(const std::vector<sigrid::Board>& boards){
+void PdfHandler::savePdf(const list::VectorWithDisplayGrid<sigrid::Board>& boards){
 
     std::cout << "Preparing to save pdf" << std::endl;
     myPdf::Pdf pdf;
@@ -79,14 +79,20 @@ void PdfHandler::savePdf(const std::vector<sigrid::Board>& boards){
 
         float quality = 4;
 
-        sf::Image sfImage = boards.at(i).getImage(entitledWidth*quality, entitledHeight*quality);
+        auto board_o = boards.at(i);
+        if(board_o == std::nullopt){
+            continue;
+        }
+        auto& board = board_o.value().get();
+
+        sf::Image sfImage = board.getImage(entitledWidth*quality, entitledHeight*quality);
         
         pdImage.displayWidth = sfImage.getSize().x/quality;
         pdImage.displayHeight = sfImage.getSize().y/quality;
         pdImage.dataWidth = sfImage.getSize().x;
         pdImage.dataHeight = sfImage.getSize().y;
         
-        std::cout << "loading data from " << boards.at(i).getName()
+        std::cout << "loading data from " << board.getName()
             << " (" << i+1 << "/" << boards.size() << ")" << std::endl;
         std::stringstream ss;
         ss << std::hex << std::setfill('0');

@@ -52,7 +52,7 @@ void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
 
-    for(auto& board: m_boards.getVector()){
+    for(auto& board: m_boards){
         board.setTileColorManagerPtr(managerPtr);
     }
 }
@@ -64,7 +64,7 @@ void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
 
-    for(auto& board: m_boards.getVector()){
+    for(auto& board: m_boards){
         board.setPieceManagerPtr(managerPtr);
     }
 }
@@ -76,7 +76,7 @@ void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
 
-    for(auto& board: m_boards.getVector()){
+    for(auto& board: m_boards){
         board.setArrowColorManagerPtr(managerPtr);
     }
 }
@@ -88,7 +88,7 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
         m_boards.push_back(std::move(board));
     }
 
-    for(auto& board: m_boards.getVector()){
+    for(auto& board: m_boards){
         board.setFontManagerPtr(managerPtr);
     }
 }
@@ -748,7 +748,7 @@ void WorkWindow::saveBoard(){
 }
 
 void WorkWindow::savePdf(){
-    m_pdfHandler.savePdf(m_boards.getVector());
+    m_pdfHandler.savePdf(m_boards);
 }
 
 void WorkWindow::flipBoard(){
@@ -1100,7 +1100,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
     while(true){
         
         bool exists = false;
-        for(const auto& board: m_boards.getVector()){
+        for(const auto& board: m_boards){
             if(board.getFilename() == newName || board.getImageFilename() == newName){
                 exists = true;
                 break;

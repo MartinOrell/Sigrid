@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "Entity/Tile/LogicTile.h"
 #include "Entity/Tile/GraphicTile.h"
+#include "Board/Board.h"
 
 // This class is only included by Vector.cpp
 // Add more templates below to support more types
@@ -21,3 +22,4 @@ template class sigrid::list::Vector<std::map<sigrid::PieceIdentifier, sigrid::Gr
 template class sigrid::list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
 template class sigrid::list::Vector<sigrid::LogicTile>;
 template class sigrid::list::Vector<sigrid::GraphicTile>;
+template class sigrid::list::Vector<sigrid::Board>;
