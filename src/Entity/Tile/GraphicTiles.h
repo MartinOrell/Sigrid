@@ -27,8 +27,6 @@ namespace sigrid{
             void setTopToBottom();
             void setBottomToTop();
 
-            void init();
-
             void setTilePosition(const Coord& coord, const sf::Vector2f& position);
 
             void setTileColor(const Coord& coord, const int& colorId);
@@ -64,6 +62,22 @@ namespace sigrid{
             void move(const sf::Vector2f& offset);
 
         private:
+
+            struct IsSet{
+                bool numColumns = false;
+                bool numRows = false;
+                bool tileSize = false;
+                bool topLeftPosition = false;
+                bool horizontalOrientation = false;
+                bool verticalOrientation = false;
+                bool isAllSet();
+            };
+
+            IsSet m_isSet;
+            bool m_isInitialized = false;
+
+            void init();
+
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             ColorManager* m_tileColorManagerPtr = nullptr;

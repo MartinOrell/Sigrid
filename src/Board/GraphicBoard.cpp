@@ -70,8 +70,7 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
     
     m_tileLayer.setNumColumns(logicBoard.getNumColumns());
     m_tileLayer.setNumRows(logicBoard.getNumRows());
-    m_tileLayer.init();
-    m_tileLayer.move({m_leftEdgeWidth, m_topEdgeWidth});
+    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
 
     if(m_border.isVisible()){
         m_tileLayer.move({m_border.getThickness(), m_border.getThickness()});
@@ -144,7 +143,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     if(m_arrowColorManagerPtr){
         m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
-    m_tileLayer.init();
     
     if(m_arrowColorManagerPtr){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
