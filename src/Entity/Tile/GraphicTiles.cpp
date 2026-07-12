@@ -109,40 +109,6 @@ void GraphicTiles::setBottomToTop(){
     }
 }
 
-void GraphicTiles::init(){
-
-    unsigned int columns = m_tiles.numColumns();
-    unsigned int rows = m_tiles.numRows();
-
-    for(int y = 0; (unsigned int)y < rows; y++){
-        for(int x = 0; (unsigned int)x < columns; x++){
-
-            auto tile_o = m_tiles.at({x,y});
-            if(tile_o == std::nullopt){
-                continue;
-            }
-            auto& tile = tile_o.value().get();
-
-            sf::Vector2f position = m_topLeftPosition;
-            if(m_isLeftToRight){
-                position.x += (float)(x*m_tileSize.x);
-            }
-            else{
-                position.x += (float)((columns-x-1)*m_tileSize.x);
-            }
-            if(m_isTopToBottom){
-                position.y += (float)(y*m_tileSize.y);
-            }
-            else{
-                position.y += (float)((rows-y-1)*m_tileSize.y);
-            }
-
-            tile.setPosition(position);
-        }
-    }
-
-    m_isInitialized = true;
-}
 
 void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& position){
 
@@ -632,6 +598,42 @@ bool GraphicTiles::IsSet::isAllSet(){
         topLeftPosition &&
         horizontalOrientation &&
         verticalOrientation;
+}
+
+
+void GraphicTiles::init(){
+
+    unsigned int columns = m_tiles.numColumns();
+    unsigned int rows = m_tiles.numRows();
+
+    for(int y = 0; (unsigned int)y < rows; y++){
+        for(int x = 0; (unsigned int)x < columns; x++){
+
+            auto tile_o = m_tiles.at({x,y});
+            if(tile_o == std::nullopt){
+                continue;
+            }
+            auto& tile = tile_o.value().get();
+
+            sf::Vector2f position = m_topLeftPosition;
+            if(m_isLeftToRight){
+                position.x += (float)(x*m_tileSize.x);
+            }
+            else{
+                position.x += (float)((columns-x-1)*m_tileSize.x);
+            }
+            if(m_isTopToBottom){
+                position.y += (float)(y*m_tileSize.y);
+            }
+            else{
+                position.y += (float)((rows-y-1)*m_tileSize.y);
+            }
+
+            tile.setPosition(position);
+        }
+    }
+
+    m_isInitialized = true;
 }
 
 void GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
