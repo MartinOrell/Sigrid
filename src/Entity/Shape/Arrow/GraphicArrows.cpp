@@ -87,7 +87,7 @@ void GraphicArrows::clear(){
 
 void GraphicArrows::removeColumn(const int& columnId){
 
-    for(unsigned int i = 0; i < m_arrows.size();){
+    for(int i = 0; i < m_arrows.size();){
         auto& coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             i++;
@@ -108,7 +108,7 @@ void GraphicArrows::removeColumn(const int& columnId){
 
 void GraphicArrows::removeRow(const int& rowId){
 
-    for(unsigned int i = 0; i < m_arrows.size();){
+    for(int i = 0; i < m_arrows.size();){
         auto& coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             i++;
@@ -134,7 +134,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -158,7 +158,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
     for(int x = maxX; x >= minX; x--){
         for(int y = minY; y <= maxY; y++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     std::cout << "coordPair not found" << std::endl;
@@ -198,7 +198,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -222,7 +222,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
     for(int x = minX; x <= maxX; x++){
         for(int y = minY; y <= maxY; y++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -260,7 +260,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -284,7 +284,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
     for(int y = minY; y <= maxY; y++){
         for(int x = minX; x <= maxX; x++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -322,7 +322,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -346,7 +346,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
     for(int y = maxY; y >= minY; y--){
         for(int x = minX; x <= maxX; x++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -379,7 +379,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
 
 void GraphicArrows::move(const sf::Vector2f& offset){
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto arrow_o = m_arrows.atPosition(i);
         if(arrow_o == std::nullopt){
             continue;
@@ -391,7 +391,7 @@ void GraphicArrows::move(const sf::Vector2f& offset){
 
 void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto arrow_o = m_arrows.atPosition(i);
         if(arrow_o == std::nullopt){
             continue;

@@ -32,7 +32,7 @@ namespace sigrid{
             void createGraphic();
             
             void handleEvents();
-            void resize(const sf::Vector2u& size);
+            void resize(const sf::Vector2i& size);
             void mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button);
             void mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button);
             void keyPress(const sf::Event::KeyPressed& keyboardKeyPressed);
@@ -113,7 +113,7 @@ namespace sigrid{
 
             sf::RenderWindow m_window;
             sf::Color m_backgroundColor;
-            sf::Vector2u m_size;
+            sf::Vector2i m_size;
             sf::Vector2f m_scale;
             float m_piecePickerToBoardGap;
 

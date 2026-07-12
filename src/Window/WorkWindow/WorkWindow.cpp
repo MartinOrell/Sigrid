@@ -195,8 +195,8 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
             continue;
         }
         auto& board = board_o.value().get();
-        unsigned int boardWidth = board.getImageWidth();
-        unsigned int boardHeight = board.getImageHeight();
+        int boardWidth = board.getImageWidth();
+        int boardHeight = board.getImageHeight();
         float widthRatio = layoutBoardWidth/(float)boardWidth;
         float heightRatio = layoutBoardHeight/(float)boardHeight;
         float boardScale;
@@ -280,7 +280,7 @@ void WorkWindow::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
 }
 
-unsigned int WorkWindow::getNumColumns() const{
+int WorkWindow::getNumColumns() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -319,7 +319,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
     sf::Vector2f position = windowPosition - m_texture.getPosition();
 
-    for(unsigned int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
+    for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
         
         auto board_o = m_boards.atDisplay(displayIndex);
         if(board_o == std::nullopt){
@@ -1197,8 +1197,8 @@ void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, c
 void WorkWindow::updateBoardLayout(){
 
     unsigned int i = 0;
-    for(unsigned int y = 0; y < m_boards.maxDisplayRows(); y++){
-        for(unsigned int x = 0; x < m_boards.maxDisplayColumns(); x++){
+    for(int y = 0; y < m_boards.maxDisplayRows(); y++){
+        for(int x = 0; x < m_boards.maxDisplayColumns(); x++){
             m_layout.setFromXCoord(LayoutItem{i}, 1 + 2*x);
             m_layout.setToXCoord(LayoutItem{i}, 2 + 2*x);
             m_layout.setFromYCoord(LayoutItem{i}, 1 + 2*y);

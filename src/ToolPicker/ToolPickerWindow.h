@@ -52,9 +52,9 @@ namespace sigrid{
 
             sf::Vector2f getSize() const;
 
-            unsigned int getNumColumns() const;
+            int getNumColumns() const;
 
-            unsigned int getNumRows() const;
+            int getNumRows() const;
 
             bool contains(const sf::Vector2f& point) const;
 

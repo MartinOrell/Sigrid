@@ -24,7 +24,7 @@ std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) cons
 
 void LogicArrows::removeColumn(const int& columnId){
 
-    for(unsigned int i = 0; i < m_arrows.size();){
+    for(int i = 0; i < m_arrows.size();){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             i++;
@@ -48,7 +48,7 @@ void LogicArrows::removeColumn(const int& columnId){
 
 void LogicArrows::removeRow(const int& rowId){
 
-    for(unsigned int i = 0; i < m_arrows.size();){
+    for(int i = 0; i < m_arrows.size();){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             i++;
@@ -81,7 +81,7 @@ void LogicArrows::moveArrowsRight(){
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -105,7 +105,7 @@ void LogicArrows::moveArrowsRight(){
     for(int x = maxX; x >= minX; x--){
         for(int y = minY; y <= maxY; y++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -144,7 +144,7 @@ void LogicArrows::moveArrowsLeft(){
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -169,7 +169,7 @@ void LogicArrows::moveArrowsLeft(){
         for(int y = minY; y <= maxY; y++){
 
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -208,7 +208,7 @@ void LogicArrows::moveArrowsUp(){
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -232,7 +232,7 @@ void LogicArrows::moveArrowsUp(){
     for(int y = minY; y <= maxY; y++){
         for(int x = minX; x <= maxX; x++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;
@@ -271,7 +271,7 @@ void LogicArrows::moveArrowsDown(){
     int minY = 2147483647;
     int maxY = 0;
 
-    for(unsigned int i = 0; i < m_arrows.size(); i++){
+    for(int i = 0; i < m_arrows.size(); i++){
         auto coordPair_o = m_arrows.keyAt(i);
         if(coordPair_o == std::nullopt){
             continue;
@@ -295,7 +295,7 @@ void LogicArrows::moveArrowsDown(){
     for(int y = maxY; y >= minY; y--){
         for(int x = minX; x <= maxX; x++){
 
-            for(unsigned int i = 0; i < m_arrows.size(); i++){
+            for(int i = 0; i < m_arrows.size(); i++){
                 auto coordPair_o = m_arrows.keyAt(i);
                 if(coordPair_o == std::nullopt){
                     continue;

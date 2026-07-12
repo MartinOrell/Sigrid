@@ -284,7 +284,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     m_layoutItems.insert(name, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
-        unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
+        int itemIndex = m_itemKeys.at(headerIndex).size()-1;
         addItemGraphic(headerIndex, itemIndex);
     }
 }
@@ -324,7 +324,7 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
     m_layoutItems.insert(key, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
-        unsigned int itemIndex = m_itemKeys.at(headerIndex).size()-1;
+        int itemIndex = m_itemKeys.at(headerIndex).size()-1;
         addItemGraphic(headerIndex, itemIndex);
     }
 
@@ -385,7 +385,7 @@ void Menu::showItem(const std::string& key){
         return;
     }
 
-    unsigned int priority = layoutItem.priority;
+    int priority = layoutItem.priority;
     for(auto it2 = m_itemKeys.at(layoutItem.headerIndex).begin(); it2 != m_itemKeys.at(layoutItem.headerIndex).end(); it2++){
         
         auto cmpLayoutItem_o = m_layoutItems.at(*it2);
@@ -394,7 +394,7 @@ void Menu::showItem(const std::string& key){
         }
         auto& cmpLayoutItem = cmpLayoutItem_o.value().get();
         
-        unsigned int cmpPriority = cmpLayoutItem.priority;
+        int cmpPriority = cmpLayoutItem.priority;
         if(priority > cmpPriority){
             if(it2+1 == m_itemKeys.at(layoutItem.headerIndex).end()){
                 m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
@@ -407,7 +407,7 @@ void Menu::showItem(const std::string& key){
             }
             auto& nextCmpLayoutItem = nextCmpLayoutItem_o.value().get();
 
-            unsigned int nextcmpPriority = nextCmpLayoutItem.priority;
+            int nextcmpPriority = nextCmpLayoutItem.priority;
             if(priority < nextcmpPriority){
                 m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
                 return;
@@ -424,14 +424,14 @@ void Menu::addSuperHeaderGraphic(){
         return;
     }
     
-    m_superHeader.createGraphic((unsigned int)m_lineHeight);
+    m_superHeader.createGraphic((int)m_lineHeight);
     float posX = m_itemOffsetX;
     float posY = m_lineHeight/2.f;
     m_superHeader.setPosition({posX, posY});
     redrawTexture();
 }
 
-void Menu::addHeaderGraphic(const unsigned int id){
+void Menu::addHeaderGraphic(const int id){
 
     if(m_lineHeight <= 0){
         std::cerr << "Menu: Height not set, unable to add header graphic" << std::endl;
@@ -446,7 +446,7 @@ void Menu::addHeaderGraphic(const unsigned int id){
     }
     auto& header = header_o.value().get();
 
-    header.createGraphic((unsigned int)m_lineHeight);
+    header.createGraphic((int)m_lineHeight);
     float posX;
     if(id == 0){
         if(m_isPinned){
@@ -470,7 +470,7 @@ void Menu::addHeaderGraphic(const unsigned int id){
     }
 }
 
-void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex){
+void Menu::addItemGraphic(const int headerIndex, const int itemIndex){
 
     auto item_o = m_items.at(m_itemKeys.at(headerIndex).at(itemIndex));
 
@@ -487,7 +487,7 @@ void Menu::addItemGraphic(const unsigned int headerIndex, const unsigned int ite
     }
     auto& header = header_o.value().get();
 
-    item.createGraphic((unsigned int)m_lineHeight);
+    item.createGraphic((int)m_lineHeight);
     float posX = header.getPositionLeft();
     float posY = itemIndex*m_lineHeight+m_lineHeight/2.f;
     item.setPosition({posX, posY});
@@ -506,7 +506,7 @@ void sigrid::Menu::redrawTexture(){
         return;
     }
 
-    unsigned int numRows;
+    int numRows;
     if(m_showHeaderIndex >= 0 && m_showHeaderIndex < m_itemKeys.size()){
         numRows = m_itemKeys.at(m_showHeaderIndex).size();
     }

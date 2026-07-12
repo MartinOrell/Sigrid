@@ -16,12 +16,12 @@ MainWindow::MainWindow()
 
 bool MainWindow::init(const MainWindowConfigContainer& config){
     
-    m_window.create(sf::VideoMode({config.windowWidth, config.windowHeight}), config.windowName);
+    m_window.create(sf::VideoMode({(unsigned int)config.windowWidth, (unsigned int)config.windowHeight}), config.windowName);
     m_window.setFramerateLimit(60);
 
     m_fontManagerPtr = std::make_unique<FontManager>();
 
-    m_size = sf::Vector2u{config.windowWidth, config.windowHeight};
+    m_size = sf::Vector2i{config.windowWidth, config.windowHeight};
     m_tileColorManagerPtr = std::make_unique<ColorManager>(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
@@ -218,9 +218,9 @@ void MainWindow::createGraphic(){
         m_layout.setPx(1, 120.f);
     }
     else{
-        unsigned int toolPickerColumns = m_toolPickerWindow->getNumColumns();
-        unsigned int toolPickerRows = m_toolPickerWindow->getNumRows();
-        unsigned int boardColumns = m_workWindow->getNumColumns();
+        int toolPickerColumns = m_toolPickerWindow->getNumColumns();
+        int toolPickerRows = m_toolPickerWindow->getNumRows();
+        int boardColumns = m_workWindow->getNumColumns();
 
         auto toolAndWorkWidth_o = m_layout.getWidth(0,3);
         if(toolAndWorkWidth_o != std::nullopt){
@@ -233,8 +233,8 @@ void MainWindow::createGraphic(){
         auto toolPickerHeight_o = m_layout.getHeight(1,2);
         if(toolPickerHeight_o != std::nullopt){
             float toolPickerHeight = toolPickerHeight_o.value();
-            unsigned int toolPickerTileHeight = toolPickerHeight/toolPickerRows;
-            unsigned int toolPickerTileWidth = toolPickerTileHeight;
+            int toolPickerTileHeight = toolPickerHeight/toolPickerRows;
+            int toolPickerTileWidth = toolPickerTileHeight;
             m_layout.setPxIfLess(1, toolPickerTileWidth*toolPickerColumns);
             m_layout.setPxIfGreater(1, 120.f);
         }
@@ -286,7 +286,7 @@ void MainWindow::createGraphic(){
     }
 }
 
-void MainWindow::resize(const sf::Vector2u& size){
+void MainWindow::resize(const sf::Vector2i& size){
 
     sf::FloatRect visibleArea{{0,0},{(float)size.x, (float)size.y}};
 
@@ -450,7 +450,9 @@ void MainWindow::handleEvents(){
         }
 
         if(const auto* resized = event->getIf<sf::Event::Resized>()){
-            resize(resized->size);
+            const sf::Vector2u& newSizeU = resized->size;
+            const sf::Vector2i& newSize{(int)newSizeU.x, (int)newSizeU.y};
+            resize(newSize);
         }
 
         if(const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>()){

@@ -115,8 +115,8 @@ void ToolPickerWindow::createGraphic(const sf::Vector2f& size){
 
     m_texture.setSize(size);
 
-    unsigned int boardWidth = m_board.getImageWidth();
-    unsigned int boardHeight = m_board.getImageHeight();
+    int boardWidth = m_board.getImageWidth();
+    int boardHeight = m_board.getImageHeight();
     float widthRatio = (float)size.x/(float)boardWidth;
     float heightRatio = (float)size.y/(float)boardHeight;
     float boardScale;
@@ -175,11 +175,11 @@ sf::Vector2f ToolPickerWindow::getSize() const{
     return m_texture.getTextureSize();
 }
 
-unsigned int ToolPickerWindow::getNumColumns() const{
+int ToolPickerWindow::getNumColumns() const{
     return m_columns;
 }
 
-unsigned int ToolPickerWindow::getNumRows() const{
+int ToolPickerWindow::getNumRows() const{
     return m_rows;
 }
 

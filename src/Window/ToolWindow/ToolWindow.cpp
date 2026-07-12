@@ -73,8 +73,8 @@ void ToolWindow::createGraphic(const sf::Vector2f& size){
 
     m_texture.setSize(size);
 
-    unsigned int boardWidth = m_board.getImageWidth();
-    unsigned int boardHeight = m_board.getImageHeight();
+    int boardWidth = m_board.getImageWidth();
+    int boardHeight = m_board.getImageHeight();
     float widthRatio = size.x/(float)boardWidth;
     float heightRatio = size.y/(float)boardHeight;
     float boardScale;

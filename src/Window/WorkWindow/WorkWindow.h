@@ -50,7 +50,7 @@ namespace sigrid{
             
             void setPosition(const sf::Vector2f& position);
 
-            unsigned int getNumColumns() const;
+            int getNumColumns() const;
 
             bool contains(const sf::Vector2f& point) const;
 

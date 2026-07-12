@@ -88,7 +88,7 @@ sf::Image SigridRenderTexture::getImage() const{
     return image;
 }
 
-sf::Image SigridRenderTexture::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
+sf::Image SigridRenderTexture::getImage(const int maxWidth, const int maxHeight) const{
 
     const auto& size = m_texture->getSize();
     float oldWidth = size.x;

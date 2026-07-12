@@ -4,7 +4,7 @@ using namespace sigrid;
 
 LayoutGrid::LayoutGrid(){}
 
-void LayoutGrid::setPx(const unsigned int& x, const float& px){
+void LayoutGrid::setPx(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -14,7 +14,7 @@ void LayoutGrid::setPx(const unsigned int& x, const float& px){
     xCoord = px;
 }
 
-void LayoutGrid::setPy(const unsigned int& y, const float& py){
+void LayoutGrid::setPy(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -24,7 +24,7 @@ void LayoutGrid::setPy(const unsigned int& y, const float& py){
     yCoord = py;
 }
 
-void LayoutGrid::setPxIfLess(const unsigned int& x, const float& px){
+void LayoutGrid::setPxIfLess(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -36,7 +36,7 @@ void LayoutGrid::setPxIfLess(const unsigned int& x, const float& px){
     }
 }
 
-void LayoutGrid::setPyIfLess(const unsigned int& y, const float& py){
+void LayoutGrid::setPyIfLess(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -48,7 +48,7 @@ void LayoutGrid::setPyIfLess(const unsigned int& y, const float& py){
     }
 }
 
-void LayoutGrid::setPxIfGreater(const unsigned int& x, const float& px){
+void LayoutGrid::setPxIfGreater(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -60,7 +60,7 @@ void LayoutGrid::setPxIfGreater(const unsigned int& x, const float& px){
     }
 }
 
-void LayoutGrid::setPyIfGreater(const unsigned int& y, const float& py){
+void LayoutGrid::setPyIfGreater(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -72,7 +72,7 @@ void LayoutGrid::setPyIfGreater(const unsigned int& y, const float& py){
     }
 }
 
-void LayoutGrid::setFromXCoord(const unsigned int& id, const int& x){
+void LayoutGrid::setFromXCoord(const int& id, const int& x){
 
     auto object_o = m_objects.at(id);
 
@@ -87,7 +87,7 @@ void LayoutGrid::setFromXCoord(const unsigned int& id, const int& x){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setFromYCoord(const unsigned int& id, const int& y){
+void LayoutGrid::setFromYCoord(const int& id, const int& y){
 
     auto object_o = m_objects.at(id);
 
@@ -102,7 +102,7 @@ void LayoutGrid::setFromYCoord(const unsigned int& id, const int& y){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setToXCoord(const unsigned int& id, const int& x){
+void LayoutGrid::setToXCoord(const int& id, const int& x){
 
     auto object_o = m_objects.at(id);
 
@@ -117,7 +117,7 @@ void LayoutGrid::setToXCoord(const unsigned int& id, const int& x){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setToYCoord(const unsigned int& id, const int& y){
+void LayoutGrid::setToYCoord(const int& id, const int& y){
 
     auto object_o = m_objects.at(id);
 
@@ -150,7 +150,7 @@ std::optional<float> LayoutGrid::getPy(const int& y) const{
     return yCoord_o.value().get();
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& id) const{
+std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -177,7 +177,7 @@ std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const unsigned int& i
     return sf::Vector2f{fromPx, fromPy};
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id) const{
+std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -221,7 +221,7 @@ std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const unsigned int& id
     return sf::Vector2f{px, py};
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id) const{
+std::optional<sf::Vector2f> LayoutGrid::getSize(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -249,15 +249,6 @@ std::optional<sf::Vector2f> LayoutGrid::getSize(const unsigned int& id) const{
     const float height = height_o.value();
 
     return sf::Vector2f{width, height};
-}
-
-std::optional<sf::Vector2u> LayoutGrid::getSizeU(const unsigned int& id) const{
-
-    auto size_o = getSize(id);
-    if(size_o == std::nullopt){
-        return std::nullopt;
-    }
-    return sf::Vector2u{(unsigned int)size_o.value().x, (unsigned int)size_o.value().y};
 }
 
 std::optional<float> LayoutGrid::getWidth(const int& fromX, const int& toX) const{

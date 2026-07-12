@@ -23,7 +23,7 @@ namespace sigrid{namespace list{
             std::optional<std::reference_wrapper<TValue>> at(const TKey& key);
             const std::optional<std::reference_wrapper<const TValue>> at(const TKey& key) const;
 
-            unsigned int size() const;
+            int size() const;
 
             typename std::map<TKey, TValue>::iterator begin();
             typename std::map<TKey, TValue>::const_iterator begin() const;

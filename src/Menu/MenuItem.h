@@ -18,7 +18,7 @@ namespace sigrid{
             MenuItem(const MenuItem& src);
             MenuItem& operator=(const MenuItem& rhs);
 
-            void createGraphic(const unsigned int height);
+            void createGraphic(const int height);
 
             void setName(const std::string& name);
             void setFont(const sf::Font& font);

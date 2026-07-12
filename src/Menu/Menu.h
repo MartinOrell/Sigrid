@@ -61,8 +61,8 @@ namespace sigrid{
             void showItem(const std::string& key);
 
             struct LayoutItem{
-                unsigned int headerIndex = -1;
-                unsigned int priority = -1;
+                int headerIndex = -1;
+                int priority = -1;
             };
 
         private:
@@ -75,8 +75,8 @@ namespace sigrid{
             void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
             void addSuperHeaderGraphic();
-            void addHeaderGraphic(const unsigned int id);
-            void addItemGraphic(const unsigned int headerIndex, const unsigned int itemIndex);
+            void addHeaderGraphic(const int id);
+            void addItemGraphic(const int headerIndex, const int itemIndex);
 
             void redrawTexture();
 

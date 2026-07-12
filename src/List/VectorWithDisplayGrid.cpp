@@ -70,7 +70,7 @@ bool VectorWithDisplayGrid<T>::removeRow(){
 template<typename T>
 bool VectorWithDisplayGrid<T>::selectLast(){
 
-    const unsigned int displaySize = m_displayIds.size();
+    const int displaySize = m_displayIds.size();
     if(displaySize == 0){
         m_selectIndex_o = std::nullopt;
         return false;
@@ -80,9 +80,9 @@ bool VectorWithDisplayGrid<T>::selectLast(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::select(const unsigned int& displayPosition){
+bool VectorWithDisplayGrid<T>::select(const int& displayPosition){
 
-    const unsigned int displaySize = m_displayIds.size();
+    const int displaySize = m_displayIds.size();
     if(displayPosition >= displaySize){
         m_selectIndex_o = std::nullopt;
         return false;
@@ -92,17 +92,17 @@ bool VectorWithDisplayGrid<T>::select(const unsigned int& displayPosition){
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::at(const unsigned int& position){
+std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::at(const int& position){
     return m_vector.at(position);
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::at(const unsigned int& position) const{
+const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::at(const int& position) const{
     return m_vector.at(position);
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition){
+std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition){
 
     auto id_o = m_displayIds.at(displayPosition);
 
@@ -115,7 +115,7 @@ std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(con
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atDisplay(const unsigned int& displayPosition) const{
+const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition) const{
 
     auto id_o = m_displayIds.at(displayPosition);
 
@@ -148,7 +148,7 @@ const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::a
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<unsigned int>> VectorWithDisplayGrid<T>::activeDisplayIndex(){
+std::optional<std::reference_wrapper<int>> VectorWithDisplayGrid<T>::activeDisplayIndex(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -157,7 +157,7 @@ std::optional<std::reference_wrapper<unsigned int>> VectorWithDisplayGrid<T>::ac
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const unsigned int>> VectorWithDisplayGrid<T>::activeDisplayIndex() const{
+const std::optional<std::reference_wrapper<const int>> VectorWithDisplayGrid<T>::activeDisplayIndex() const{
     
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -166,37 +166,37 @@ const std::optional<std::reference_wrapper<const unsigned int>> VectorWithDispla
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::size() const{
+int VectorWithDisplayGrid<T>::size() const{
     return m_vector.size();
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::currentDisplaySize() const{
+int VectorWithDisplayGrid<T>::currentDisplaySize() const{
     return m_displayIds.size();
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::currentDisplayColumns() const{
+int VectorWithDisplayGrid<T>::currentDisplayColumns() const{
     return (m_displayIds.size() > m_displayColumns) ? m_displayColumns : m_displayIds.size();
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::currentDisplayRows() const{
+int VectorWithDisplayGrid<T>::currentDisplayRows() const{
     return (m_displayIds.size() + m_displayColumns - 1)/m_displayColumns;
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::maxDisplayColumns() const{
+int VectorWithDisplayGrid<T>::maxDisplayColumns() const{
     return m_displayColumns;
 }
 
 template<typename T>
-unsigned int VectorWithDisplayGrid<T>::maxDisplayRows() const{
+int VectorWithDisplayGrid<T>::maxDisplayRows() const{
     return m_displayRows;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isDisplayedElementSelected(const unsigned int& displayPosition) const{
+bool VectorWithDisplayGrid<T>::isDisplayedElementSelected(const int& displayPosition) const{
     
     if(!m_selectIndex_o){
         return false;
@@ -227,7 +227,7 @@ typename std::vector<T>::const_iterator VectorWithDisplayGrid<T>::end() const{
 template<typename T>
 bool VectorWithDisplayGrid<T>::shiftLeft(){
 
-    for(unsigned int i = 0; i < m_displayIds.size()-1; i++){
+    for(int i = 0; i < m_displayIds.size()-1; i++){
 
         auto currentId_o = m_displayIds.at(i);
         if(currentId_o == std::nullopt){
@@ -259,7 +259,7 @@ bool VectorWithDisplayGrid<T>::shiftLeft(){
         }
         auto& backId = backId_o.value().get();
 
-        unsigned int newBackId = (backId+1)%m_vector.size();
+        int newBackId = (backId+1)%m_vector.size();
         
         while(newBackId != backId){
             if(!isDisplayed(newBackId)){
@@ -330,7 +330,7 @@ bool VectorWithDisplayGrid<T>::shiftUp(){
         return false;
     }
 
-    for(unsigned int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
+    for(int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
 
         auto id_o = m_displayIds.at(displayIndex);
         if(id_o == std::nullopt){
@@ -338,7 +338,7 @@ bool VectorWithDisplayGrid<T>::shiftUp(){
         }
         auto& id = id_o.value().get();
 
-        unsigned int newId = id + m_displayColumns;
+        int newId = id + m_displayColumns;
 
         if(newId >= m_vector.size()){
             m_displayIds.eraseFrom(displayIndex);
@@ -613,7 +613,7 @@ bool VectorWithDisplayGrid<T>::selectRight(){
         case NEXTWRAP_ON:
         {
 
-            for(unsigned int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
+            for(int displayIndex = 0; displayIndex < m_displayIds.size(); displayIndex++){
                 
                 auto id_o = m_displayIds.at(displayIndex);
                 if(id_o == std::nullopt){
@@ -688,7 +688,7 @@ bool VectorWithDisplayGrid<T>::selectDown(){
     auto& selectIndex = m_selectIndex_o.value();
 
     if(!isBottomDisplayRow(selectIndex)){
-        unsigned int newId = selectIndex + m_displayColumns;
+        int newId = selectIndex + m_displayColumns;
         if(newId > m_displayIds.size() - 1){
             newId = m_displayIds.size() - 1;
         }
@@ -715,22 +715,22 @@ bool VectorWithDisplayGrid<T>::isOneRowDisplayed() const{
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isLeftDisplayColumn(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isLeftDisplayColumn(const int& displayIndex) const{
     return displayIndex % m_displayColumns == 0;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isRightDisplayColumn(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isRightDisplayColumn(const int& displayIndex) const{
     return displayIndex % m_displayColumns == m_displayColumns-1;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isTopDisplayRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isTopDisplayRow(const int& displayIndex) const{
     return displayIndex < m_displayColumns;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isTopRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isTopRow(const int& displayIndex) const{
     
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -742,14 +742,14 @@ bool VectorWithDisplayGrid<T>::isTopRow(const unsigned int& displayIndex) const{
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isBottomDisplayRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isBottomDisplayRow(const int& displayIndex) const{
     int displayRow = displayIndex/m_displayColumns;
     int bottomDisplayRow = (m_displayIds.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isBottomRow(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isBottomRow(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -763,7 +763,7 @@ bool VectorWithDisplayGrid<T>::isBottomRow(const unsigned int& displayIndex) con
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isFirstElement(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isFirstElement(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -774,7 +774,7 @@ bool VectorWithDisplayGrid<T>::isFirstElement(const unsigned int& displayIndex) 
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isLastElement(const unsigned int& displayIndex) const{
+bool VectorWithDisplayGrid<T>::isLastElement(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){

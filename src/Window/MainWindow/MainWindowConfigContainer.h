@@ -14,8 +14,8 @@ namespace sigrid{
 
         bool load(const std::string& filename);
 
-        unsigned int windowWidth;
-        unsigned int windowHeight;
+        int windowWidth;
+        int windowHeight;
         std::string windowName;
 
         std::vector<uint32_t> tileColors;

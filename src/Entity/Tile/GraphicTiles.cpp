@@ -182,8 +182,8 @@ void GraphicTiles::addColumnRight(const std::vector<int>& repeatTileColorIds){
 
     m_tiles.addColumnRight();
 
-    int x = (int)m_tiles.numColumns()-1;
-    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+    int x = m_tiles.numColumns()-1;
+    for(int y = 0; y < m_tiles.numRows(); y++){
 
         auto currentTile_o = m_tiles.at({x,y});
         if(currentTile_o == std::nullopt){
@@ -223,8 +223,8 @@ void GraphicTiles::addColumnRight(const std::vector<int>& repeatTileColorIds){
     }
 
     if(!m_isLeftToRight){
-        for(int x = 0; (unsigned int)x < m_tiles.numColumns()-1; x++){
-            for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+        for(int x = 0; x < m_tiles.numColumns()-1; x++){
+            for(int y = 0; y < m_tiles.numRows(); y++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -241,7 +241,7 @@ void GraphicTiles::addColumnLeft(const std::vector<int>& repeatTileColorIds){
     m_tiles.addColumnLeft();
 
     int x = 0;
-    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+    for(int y = 0; y < m_tiles.numRows(); y++){
 
         auto currentTile_o = m_tiles.at({x,y});
         if(currentTile_o == std::nullopt){
@@ -284,8 +284,8 @@ void GraphicTiles::addColumnLeft(const std::vector<int>& repeatTileColorIds){
     }
 
     if(m_isLeftToRight){
-        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
-            for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
+        for(int x = 0; x < m_tiles.numColumns(); x++){
+            for(int y = 0; y < m_tiles.numRows(); y++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -302,8 +302,8 @@ void GraphicTiles::removeRightColumn(){
     m_tiles.removeRightColumn();
 
     if(!m_isLeftToRight){
-        for(int y=0; (unsigned int)y < m_tiles.numRows(); y++){
-            for(int x=0; (unsigned int)x < m_tiles.numColumns(); x++){
+        for(int y=0; y < m_tiles.numRows(); y++){
+            for(int x=0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -320,8 +320,8 @@ void GraphicTiles::removeLeftColumn(){
     m_tiles.removeLeftColumn();
 
     if(m_isLeftToRight){
-        for(int y=0; (unsigned int)y < m_tiles.numRows(); y++){
-            for(int x=0; (unsigned int)x < m_tiles.numColumns(); x++){
+        for(int y=0; y < m_tiles.numRows(); y++){
+            for(int x=0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -338,7 +338,7 @@ void GraphicTiles::addRowUp(const std::vector<int>& repeatTileColorIds){
     m_tiles.addRowUp();
 
     int y = 0;
-    for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+    for(int x = 0; x < m_tiles.numColumns(); x++){
         auto currentTile_o = m_tiles.at({x,y});
         if(currentTile_o == std::nullopt){
             continue;
@@ -380,7 +380,7 @@ void GraphicTiles::addRowUp(const std::vector<int>& repeatTileColorIds){
 
     if(m_isTopToBottom){
         for(int y = (int)m_tiles.numRows()-1; y >= 0; y--){
-            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+            for(int x = 0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -397,7 +397,7 @@ void GraphicTiles::addRowDown(const std::vector<int>& repeatTileColorIds){
     m_tiles.addRowDown();
 
     int y = (int)m_tiles.numRows()-1;
-    for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+    for(int x = 0; x < m_tiles.numColumns(); x++){
         auto currentTile_o = m_tiles.at({x,y});
         if(currentTile_o == std::nullopt){
             continue;
@@ -438,8 +438,8 @@ void GraphicTiles::addRowDown(const std::vector<int>& repeatTileColorIds){
         currentTile.setTileColor(color);
     }
     if(!m_isTopToBottom){
-        for(int y = (int)m_tiles.numRows()-1; y >= 0; y--){
-            for(int x = 0; x < (unsigned int)m_tiles.numColumns(); x++){
+        for(int y = m_tiles.numRows()-1; y >= 0; y--){
+            for(int x = 0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -457,8 +457,8 @@ void GraphicTiles::removeTopRow(){
     m_tiles.removeTopRow();
 
     if(m_isTopToBottom){
-        for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
-            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+        for(int y = 0; y < m_tiles.numRows(); y++){
+            for(int x = 0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -475,8 +475,8 @@ void GraphicTiles::removeBottomRow(){
     m_tiles.removeBottomRow();
 
     if(!m_isTopToBottom){
-        for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
-            for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+        for(int y = 0; y < m_tiles.numRows(); y++){
+            for(int x = 0; x < m_tiles.numColumns(); x++){
                 auto currentTile_o = m_tiles.at({x,y});
                 if(currentTile_o == std::nullopt){
                     continue;
@@ -579,8 +579,8 @@ std::optional<sf::Color> GraphicTiles::getTileColor(const Coord& coord) const{
 
 void GraphicTiles::move(const sf::Vector2f& offset){
 
-    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
-        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+    for(int y = 0; y < m_tiles.numRows(); y++){
+        for(int x = 0; x < m_tiles.numColumns(); x++){
             auto currentTile_o = m_tiles.at({x,y});
             if(currentTile_o == std::nullopt){
                 continue;
@@ -603,11 +603,11 @@ bool GraphicTiles::IsSet::isAllSet(){
 
 void GraphicTiles::init(){
 
-    unsigned int columns = m_tiles.numColumns();
-    unsigned int rows = m_tiles.numRows();
+    int columns = m_tiles.numColumns();
+    int rows = m_tiles.numRows();
 
-    for(int y = 0; (unsigned int)y < rows; y++){
-        for(int x = 0; (unsigned int)x < columns; x++){
+    for(int y = 0; y < rows; y++){
+        for(int x = 0; x < columns; x++){
 
             auto tile_o = m_tiles.at({x,y});
             if(tile_o == std::nullopt){
@@ -638,8 +638,8 @@ void GraphicTiles::init(){
 
 void GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
-    for(int y = 0; (unsigned int)y < m_tiles.numRows(); y++){
-        for(int x = 0; (unsigned int)x < m_tiles.numColumns(); x++){
+    for(int y = 0; y < m_tiles.numRows(); y++){
+        for(int x = 0; x < m_tiles.numColumns(); x++){
             auto currentTile_o = m_tiles.at({x,y});
             if(currentTile_o == std::nullopt){
                 continue;

@@ -36,14 +36,14 @@ MenuItem& MenuItem::operator=(const MenuItem& rhs){
     return *this;
 }
 
-void MenuItem::createGraphic(const unsigned int height){
+void MenuItem::createGraphic(const int height){
     
     if(!m_textPtr){
         std::cerr << "MenuItem " << m_name << ": Failed creating graphic: missing textPtr (most likely font is missing)" << std::endl;
         return;
     }
 
-    unsigned int characterSize = height-m_textOffset.y*2;
+    int characterSize = height-m_textOffset.y*2;
 
     m_textPtr->setCharacterSize(characterSize);
     m_textPtr->setFillColor(sf::Color(0,0,0));
@@ -57,7 +57,7 @@ void MenuItem::createGraphic(const unsigned int height){
     sf::FloatRect rect = m_textPtr->getLocalBounds();
     m_textPtr->setOrigin({0.f, (float)height/2.f+m_textOffset.y});
 
-    unsigned int shapeWidth = rect.size.x+2*m_textOffset.x;
+    int shapeWidth = rect.size.x+2*m_textOffset.x;
     m_shape.setSize({(float)shapeWidth,(float)height});
 
     m_shape.setOrigin({0.f, (float)height/2.f});

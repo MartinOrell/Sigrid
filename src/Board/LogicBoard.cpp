@@ -77,11 +77,11 @@ LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
     return *this;
 }
 
-const unsigned int LogicBoard::getNumColumns() const{
+const int LogicBoard::getNumColumns() const{
     return m_tileLayer.getNumColumns();
 }
 
-const unsigned int LogicBoard::getNumRows() const{
+const int LogicBoard::getNumRows() const{
     return m_tileLayer.getNumRows();
 }
 

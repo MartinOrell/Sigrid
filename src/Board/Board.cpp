@@ -109,19 +109,19 @@ void Board::setImageFilename(const std::string& filename){
     m_imageFilename = filename;
 }
 
-unsigned int Board::getNumColumns() const{
+int Board::getNumColumns() const{
     return m_logicBoard.getNumColumns();
 }
 
-unsigned int Board::getImageWidth() const{
+int Board::getImageWidth() const{
     return m_graphicBoard.getImageWidth();
 }
 
-unsigned int Board::getImageHeight() const{
+int Board::getImageHeight() const{
     return m_graphicBoard.getImageHeight();
 }
 
-sf::Image Board::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
+sf::Image Board::getImage(const int maxWidth, const int maxHeight) const{
     return m_graphicBoard.getImage(maxWidth, maxHeight);
 }
 

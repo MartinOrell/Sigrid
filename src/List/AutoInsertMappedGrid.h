@@ -19,9 +19,9 @@ namespace sigrid{namespace list{
             AutoInsertMappedGrid& operator=(AutoInsertMappedGrid&&) = default;
             
             void setInsertPattern(const Vector<T>& insertPattern);
-            void setNumColumns(const unsigned int& columns);
-            void setNumRows(const unsigned int& rows);
-            void setSize(const unsigned int& columns, const unsigned int& rows);
+            void setNumColumns(const int& columns);
+            void setNumRows(const int& rows);
+            void setSize(const int& columns, const int& rows);
 
             bool addColumnLeft();
             bool addColumnRight();
@@ -39,8 +39,8 @@ namespace sigrid{namespace list{
 
             bool removeAt(const Coord& coord);
 
-            const unsigned int& numColumns() const;
-            const unsigned int& numRows() const;
+            const int& numColumns() const;
+            const int& numRows() const;
             const Vector<T>& getInsertPattern() const;
 
         private:
@@ -51,8 +51,8 @@ namespace sigrid{namespace list{
 
             void shiftInsertPatternRight();
 
-        unsigned int m_columns = 0;
-        unsigned int m_rows = 0;
+        int m_columns = 0;
+        int m_rows = 0;
         Map<Coord, T> m_map;
         Vector<T> m_insertPattern;
     };

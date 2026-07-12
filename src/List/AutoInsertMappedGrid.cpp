@@ -28,7 +28,7 @@ void AutoInsertMappedGrid<T>::setInsertPattern(const Vector<T>& insertPattern){
 }
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setNumColumns(const unsigned int& columns){
+void AutoInsertMappedGrid<T>::setNumColumns(const int& columns){
 
     m_columns = columns;
 
@@ -46,7 +46,7 @@ void AutoInsertMappedGrid<T>::setNumColumns(const unsigned int& columns){
 }
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setNumRows(const unsigned int& rows){
+void AutoInsertMappedGrid<T>::setNumRows(const int& rows){
 
     m_rows = rows;
 
@@ -64,7 +64,7 @@ void AutoInsertMappedGrid<T>::setNumRows(const unsigned int& rows){
 }
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setSize(const unsigned int& columns, const unsigned int& rows){
+void AutoInsertMappedGrid<T>::setSize(const int& columns, const int& rows){
 
     m_columns = columns;
     m_rows = rows;
@@ -91,7 +91,7 @@ bool AutoInsertMappedGrid<T>::addColumnLeft(){
 
     if(m_columns > 1){
         int x = m_columns-1;
-        for(int y = 0; (unsigned int)y < m_rows; y++){
+        for(int y = 0; y < m_rows; y++){
             
             auto leftElement_o = m_map.at({x-1, y});
             if(leftElement_o == std::nullopt){
@@ -103,7 +103,7 @@ bool AutoInsertMappedGrid<T>::addColumnLeft(){
     }
 
     for(int x = m_columns-1; x > 0; x--){
-        for(int y = 0; (unsigned int)y < m_rows; y++){
+        for(int y = 0; y < m_rows; y++){
 
             auto leftElement_o = m_map.at({x-1, y});
             auto currentElement_o = m_map.at({x,y});
@@ -128,7 +128,7 @@ bool AutoInsertMappedGrid<T>::addColumnLeft(){
 
     {
         int x = 0;
-        for(int y = 0; (unsigned int)y < m_rows; y++){
+        for(int y = 0; y < m_rows; y++){
 
             auto currentElement_o = m_map.at({x,y});
             if(currentElement_o == std::nullopt){
@@ -163,8 +163,8 @@ bool AutoInsertMappedGrid<T>::addRowUp(){
     m_rows++;
 
     if(m_rows > 1){
-        int y = (int)m_rows-1;
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+        int y = m_rows-1;
+        for(int x = 0; x < m_columns; x++){
 
             auto upElement_o = m_map.at({x, y-1});
             if(upElement_o == std::nullopt){
@@ -175,8 +175,8 @@ bool AutoInsertMappedGrid<T>::addRowUp(){
         }
     }
 
-    for(int y = (int)m_rows-1; y > 0; y--){
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+    for(int y = m_rows-1; y > 0; y--){
+        for(int x = 0; x < m_columns; x++){
 
             auto currentElement_o = m_map.at({x,y});
             auto upElement_o = m_map.at({x, y-1});
@@ -201,7 +201,7 @@ bool AutoInsertMappedGrid<T>::addRowUp(){
 
     {
         int y = 0;
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+        for(int x = 0; x < m_columns; x++){
 
             auto currentElement_o = m_map.at({x,y});
 
@@ -222,8 +222,8 @@ bool AutoInsertMappedGrid<T>::addRowDown(){
 
     m_rows++;
 
-    int y = (int)m_rows -1;
-    for(int x = 0; (unsigned int)x < m_columns; x++){
+    int y = m_rows -1;
+    for(int x = 0; x < m_columns; x++){
         m_map.insert({x,y}, getInsertElement({x,y}));
     }
 
@@ -241,8 +241,8 @@ bool AutoInsertMappedGrid<T>::removeLeftColumn(){
 
     m_columns--;
 
-    for(int x = 0; (unsigned int)x < m_columns; x++){
-        for(int y = 0; (unsigned int)y < m_rows; y++){
+    for(int x = 0; x < m_columns; x++){
+        for(int y = 0; y < m_rows; y++){
 
             auto currentElement_o = m_map.at({x,y});
             auto rightElement_o = m_map.at({x+1, y});
@@ -266,8 +266,8 @@ bool AutoInsertMappedGrid<T>::removeLeftColumn(){
     }
 
     {
-        int x = (int)m_columns;
-        for(int y = 0; (unsigned int)y < m_rows; y++){
+        int x = m_columns;
+        for(int y = 0; y < m_rows; y++){
 
             auto currentElement_o = m_map.at({x,y});
             if(currentElement_o == std::nullopt){
@@ -289,8 +289,8 @@ bool AutoInsertMappedGrid<T>::removeRightColumn(){
 
     m_columns--;
 
-    int x = (int)m_columns;
-    for(int y = 0; (unsigned int)y < m_rows; y++){
+    int x = m_columns;
+    for(int y = 0; y < m_rows; y++){
 
         auto currentElement_o = m_map.at({x,y});
         if(currentElement_o == std::nullopt){
@@ -313,8 +313,8 @@ bool AutoInsertMappedGrid<T>::removeTopRow(){
 
     m_rows--;
 
-    for(int y = 0; (unsigned int)y < m_rows; y++){
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
 
             auto currentElement_o = m_map.at({x,y});
             auto upElement_o = m_map.at({x, y+1});
@@ -338,8 +338,8 @@ bool AutoInsertMappedGrid<T>::removeTopRow(){
     }
 
     {
-        int y = (int)m_rows;
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+        int y = m_rows;
+        for(int x = 0; x < m_columns; x++){
 
             auto currentElement_o = m_map.at({x,y});
             if(currentElement_o == std::nullopt){
@@ -361,8 +361,8 @@ bool AutoInsertMappedGrid<T>::removeBottomRow(){
 
     m_rows--;
 
-    int y = (int)m_rows;
-    for(int x = 0; (unsigned int)x < m_columns; x++){
+    int y = m_rows;
+    for(int x = 0; x < m_columns; x++){
 
         auto currentElement_o = m_map.at({x,y});
         if(currentElement_o == std::nullopt){
@@ -403,12 +403,12 @@ bool AutoInsertMappedGrid<T>::removeAt(const Coord& coord){
 }
 
 template<typename T>
-const unsigned int& AutoInsertMappedGrid<T>::numColumns() const{
+const int& AutoInsertMappedGrid<T>::numColumns() const{
     return m_columns;
 }
 
 template<typename T>
-const unsigned int& AutoInsertMappedGrid<T>::numRows() const{
+const int& AutoInsertMappedGrid<T>::numRows() const{
     return m_rows;
 }
 
@@ -433,8 +433,8 @@ void AutoInsertMappedGrid<T>::refill(){
 
     m_map.clear();
 
-    for(int y = 0; (unsigned int)y < m_rows; y++){
-        for(int x = 0; (unsigned int)x < m_columns; x++){
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
             m_map.insert({x,y}, getInsertElement({x,y}));
         }
     }

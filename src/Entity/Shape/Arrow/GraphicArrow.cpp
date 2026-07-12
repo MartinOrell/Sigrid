@@ -92,7 +92,7 @@ void GraphicArrow::updateShape(){
     float length = sqrt(x*x+y*y);
 
     //Set points for line with rounded edge
-    const unsigned int precision{ (unsigned int)(m_thickness * 2)};
+    const int precision{ (int)(m_thickness * 2)};
 
     m_line.setPointCount(precision + 2);
     size_t index{0};
@@ -105,7 +105,7 @@ void GraphicArrow::updateShape(){
     m_line.setPoint(index, sf::Vector2f(0.f, m_thickness));
 
     //rounded edge
-    for(unsigned int i = 1; i < precision - 1; i++){
+    for(int i = 1; i < precision - 1; i++){
         float radius = ((float)i / (float) precision * 3.14f);
         float posX = (-sin(radius)) * m_thickness / 2.f;
         float posY = m_thickness - (1.f - cos(radius)) * m_thickness / 2.f;

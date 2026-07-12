@@ -44,13 +44,13 @@ namespace sigrid{
 
             void setImageFilename(const std::string& filename);
 
-            unsigned int getNumColumns() const;
+            int getNumColumns() const;
 
-            unsigned int getImageWidth() const;
+            int getImageWidth() const;
 
-            unsigned int getImageHeight() const;
+            int getImageHeight() const;
 
-            sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
+            sf::Image getImage(const int maxWidth, const int maxHeight) const;
 
             const sf::Vector2f& getTopLeftPosition() const;
 

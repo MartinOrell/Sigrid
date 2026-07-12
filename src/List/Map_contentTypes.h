@@ -47,6 +47,6 @@ template class sigrid::list::Map<sigrid::Coord, sigrid::LogicIcon>;
 template class sigrid::list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>>;
 template class sigrid::list::Map<sf::Mouse::Button, sigrid::Tool>;
 template class sigrid::list::Map<sf::Keyboard::Key, sigrid::Action>;
-template class sigrid::list::Map<unsigned int, sigrid::CoordPair>;
+template class sigrid::list::Map<int, sigrid::CoordPair>;
 template class sigrid::list::Map<std::string, sigrid::MenuItem>;
 template class sigrid::list::Map<std::string, sigrid::Menu::LayoutItem>;

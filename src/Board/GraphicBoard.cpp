@@ -367,7 +367,7 @@ float GraphicBoard::getImageHeight() const{
     return m_texture.getTextureSize().y;
 }
 
-sf::Image GraphicBoard::getImage(const unsigned int maxWidth, const unsigned int maxHeight) const{
+sf::Image GraphicBoard::getImage(const int maxWidth, const int maxHeight) const{
     return m_texture.getImage(maxWidth, maxHeight);
 }
 
@@ -966,7 +966,7 @@ void GraphicBoard::flip(){
         }
     }
 
-    for(unsigned int i = 0; i < m_arrowLayer.getArrows().size(); i++){
+    for(int i = 0; i < m_arrowLayer.getArrows().size(); i++){
 
         auto coordPair_o = m_arrowLayer.getArrows().keyAt(i);
         if(coordPair_o == std::nullopt){

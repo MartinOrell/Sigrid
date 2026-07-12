@@ -10,18 +10,18 @@ namespace sigrid{namespace list{
             OrderedMap();
 
             void push_back(const TKey& key, const TValue& value);
-            void insert(const unsigned int& position, const TKey& key, const TValue& value);
-            void erase(const unsigned int& position);
+            void insert(const int& position, const TKey& key, const TValue& value);
+            void erase(const int& position);
             void erase(const TKey& key);
             void clear();
 
-            const std::optional<std::reference_wrapper<const TKey>> keyAt(const unsigned int& position) const;
-            std::optional<std::reference_wrapper<TValue>> atPosition(unsigned int& position);
-            const std::optional<std::reference_wrapper<const TValue>> atPosition(const unsigned int& position) const;
+            const std::optional<std::reference_wrapper<const TKey>> keyAt(const int& position) const;
+            std::optional<std::reference_wrapper<TValue>> atPosition(int& position);
+            const std::optional<std::reference_wrapper<const TValue>> atPosition(const int& position) const;
             std::optional<std::reference_wrapper<TValue>> atKey(const TKey& key);
             const std::optional<std::reference_wrapper<const TValue>> atKey(const TKey& key) const;
 
-            unsigned int size() const;
+            int size() const;
 
             void print() const;
 

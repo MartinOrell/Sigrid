@@ -59,7 +59,7 @@ const std::optional<std::reference_wrapper<const TValue>> Map<TKey, TValue>::at(
 }
 
 template<typename TKey, typename TValue>
-unsigned int Map<TKey, TValue>::size() const{
+int Map<TKey, TValue>::size() const{
     return m_map.size();
 }
 

@@ -15,7 +15,11 @@ void Vector<T>::push_back(const T& value){
 }
 
 template <typename T> 
-void Vector<T>::insert(const unsigned int& position, const T& value){
+void Vector<T>::insert(const int& position, const T& value){
+
+    if(position < 0){
+        return;
+    } 
     m_vector.insert(m_vector.begin() + position, value);
 }
 
@@ -25,7 +29,11 @@ void Vector<T>::pop_back(){
 }
 
 template <typename T> 
-void Vector<T>::erase(const unsigned int& position){
+void Vector<T>::erase(const int& position){
+
+    if(position < 0){
+        return;
+    }
 
     if(position >= m_vector.size()){
         return;
@@ -35,7 +43,11 @@ void Vector<T>::erase(const unsigned int& position){
 }
 
 template <typename T> 
-void Vector<T>::eraseFrom(const unsigned int& position){
+void Vector<T>::eraseFrom(const int& position){
+
+    if(position < 0){
+        return;
+    }
 
     if(position >= m_vector.size()){
         return;
@@ -95,32 +107,17 @@ const std::optional<std::reference_wrapper<const T>> Vector<T>::back() const{
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Vector<T>::at(const unsigned int& position){
-
-    if(position >= m_vector.size()){
-        return std::nullopt;
-    }
-
-    return m_vector.at(position);
-}
-
-template<typename T>
-const std::optional<std::reference_wrapper<const T>> Vector<T>::at(const unsigned int& position) const{
-    
-    if(position >= m_vector.size()){
-        return std::nullopt;
-    }
-    
-    return m_vector.at(position);
-}
-
-template<typename T>
 std::optional<std::reference_wrapper<T>> Vector<T>::at(const int& position){
 
     if(position < 0){
         return std::nullopt;
     }
-    return at((unsigned int)position);
+
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+
+    return m_vector.at(position);
 }
 
 template<typename T>
@@ -129,12 +126,17 @@ const std::optional<std::reference_wrapper<const T>> Vector<T>::at(const int& po
     if(position < 0){
         return std::nullopt;
     }
-    return at((unsigned int)position);
+
+    if(position >= m_vector.size()){
+        return std::nullopt;
+    }
+
+    return m_vector.at(position);
 }
 
 template <typename T> 
-unsigned int Vector<T>::size() const{
-    return m_vector.size();
+int Vector<T>::size() const{
+    return (int)m_vector.size();
 }
 
 template<typename T>

@@ -14,26 +14,25 @@ namespace sigrid{
         public:
             LayoutGrid();
 
-            void setPx(const unsigned int& x, const float& px);
-            void setPy(const unsigned int& y, const float& px);
+            void setPx(const int& x, const float& px);
+            void setPy(const int& y, const float& px);
 
-            void setPxIfLess(const unsigned int& x, const float& px);
-            void setPyIfLess(const unsigned int& y, const float& py);
-            void setPxIfGreater(const unsigned int& x, const float& px);
-            void setPyIfGreater(const unsigned int& y, const float& py);
+            void setPxIfLess(const int& x, const float& px);
+            void setPyIfLess(const int& y, const float& py);
+            void setPxIfGreater(const int& x, const float& px);
+            void setPyIfGreater(const int& y, const float& py);
 
-            void setFromXCoord(const unsigned int& id, const int& x);
-            void setFromYCoord(const unsigned int& id, const int& y);
-            void setToXCoord(const unsigned int& id, const int& x);
-            void setToYCoord(const unsigned int& id, const int& y);
+            void setFromXCoord(const int& id, const int& x);
+            void setFromYCoord(const int& id, const int& y);
+            void setToXCoord(const int& id, const int& x);
+            void setToYCoord(const int& id, const int& y);
 
             std::optional<float> getPx(const int& x) const;
             std::optional<float> getPy(const int& y) const;
 
-            std::optional<sf::Vector2f> getTopLeftPosition(const unsigned int& id) const;
-            std::optional<sf::Vector2f> getCenterPosition(const unsigned int& id) const;
-            std::optional<sf::Vector2f> getSize(const unsigned int& id) const;
-            std::optional<sf::Vector2u> getSizeU(const unsigned int& id) const;
+            std::optional<sf::Vector2f> getTopLeftPosition(const int& id) const;
+            std::optional<sf::Vector2f> getCenterPosition(const int& id) const;
+            std::optional<sf::Vector2f> getSize(const int& id) const;
 
             std::optional<float> getWidth(const int& fromX, const int& toX) const;
             std::optional<float> getHeight(const int& fromY, const int& toY) const;
@@ -41,7 +40,7 @@ namespace sigrid{
         private:
             list::Vector<float> m_xCoords;
             list::Vector<float> m_yCoords;
-            list::Map<unsigned int, CoordPair> m_objects;
+            list::Map<int, CoordPair> m_objects;
     };
 
 }

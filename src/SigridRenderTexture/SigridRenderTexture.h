@@ -34,7 +34,7 @@ namespace sigrid{
             sf::Vector2f getTextureSize() const;
             sf::Vector2f getDisplaySize() const;
             sf::Image getImage() const;
-            sf::Image getImage(const unsigned int maxWidth, const unsigned int maxHeight) const;
+            sf::Image getImage(const int maxWidth, const int maxHeight) const;
 
             bool isInitialized() const;
             bool isVisible() const;

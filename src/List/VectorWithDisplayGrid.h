@@ -19,25 +19,25 @@ namespace sigrid{namespace list{
             bool removeRow();
 
             bool selectLast();
-            bool select(const unsigned int& displayPosition);
+            bool select(const int& displayPosition);
 
-            std::optional<std::reference_wrapper<T>> at(const unsigned int& position);
-            const std::optional<std::reference_wrapper<const T>> at(const unsigned int& position) const;
-            std::optional<std::reference_wrapper<T>> atDisplay(const unsigned int& displayPosition);
-            const std::optional<std::reference_wrapper<const T>> atDisplay(const unsigned int& displayPosition) const;
+            std::optional<std::reference_wrapper<T>> at(const int& position);
+            const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
+            std::optional<std::reference_wrapper<T>> atDisplay(const int& displayPosition);
+            const std::optional<std::reference_wrapper<const T>> atDisplay(const int& displayPosition) const;
             std::optional<std::reference_wrapper<T>> atSelection();
             const std::optional<std::reference_wrapper<const T>> atSelection() const;
-            std::optional<std::reference_wrapper<unsigned int>> activeDisplayIndex();
-            const std::optional<std::reference_wrapper<const unsigned int>> activeDisplayIndex() const;
+            std::optional<std::reference_wrapper<int>> activeDisplayIndex();
+            const std::optional<std::reference_wrapper<const int>> activeDisplayIndex() const;
 
-            unsigned int size() const;
-            unsigned int currentDisplaySize() const;
-            unsigned int currentDisplayColumns() const;
-            unsigned int currentDisplayRows() const;
-            unsigned int maxDisplayColumns() const;
-            unsigned int maxDisplayRows() const;
+            int size() const;
+            int currentDisplaySize() const;
+            int currentDisplayColumns() const;
+            int currentDisplayRows() const;
+            int maxDisplayColumns() const;
+            int maxDisplayRows() const;
 
-            bool isDisplayedElementSelected(const unsigned int& displayPosition) const;
+            bool isDisplayedElementSelected(const int& displayPosition) const;
 
             typename std::vector<T>::iterator begin();
             typename std::vector<T>::const_iterator begin() const;
@@ -57,24 +57,24 @@ namespace sigrid{namespace list{
         private:
 
             bool isOneRowDisplayed() const;
-            bool isLeftDisplayColumn(const unsigned int& displayIndex) const;
-            bool isRightDisplayColumn(const unsigned int& displayIndex) const;
-            bool isTopDisplayRow(const unsigned int& displayIndex) const;
-            bool isTopRow(const unsigned int& displayIndex) const;
-            bool isBottomDisplayRow(const unsigned int& displayIndex) const;
-            bool isBottomRow(const unsigned int& displayIndex) const;
+            bool isLeftDisplayColumn(const int& displayIndex) const;
+            bool isRightDisplayColumn(const int& displayIndex) const;
+            bool isTopDisplayRow(const int& displayIndex) const;
+            bool isTopRow(const int& displayIndex) const;
+            bool isBottomDisplayRow(const int& displayIndex) const;
+            bool isBottomRow(const int& displayIndex) const;
 
-            bool isFirstElement(const unsigned int& displayIndex) const;
-            bool isLastElement(const unsigned int& displayIndex) const;
+            bool isFirstElement(const int& displayIndex) const;
+            bool isLastElement(const int& displayIndex) const;
 
             void displayFirstElements();
             void displayLastElements();
 
             list::Vector<T> m_vector;
-            unsigned int m_displayColumns = 1;
-            unsigned int m_displayRows = 1;
-            list::Vector<unsigned int> m_displayIds;
-            std::optional<unsigned int> m_selectIndex_o = std::nullopt;
+            int m_displayColumns = 1;
+            int m_displayRows = 1;
+            list::Vector<int> m_displayIds;
+            std::optional<int> m_selectIndex_o = std::nullopt;
 
             enum Wrap{
                 WRAP_ON,
