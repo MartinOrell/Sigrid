@@ -27,7 +27,7 @@ namespace sigrid{
             list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
             list::Vector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
 
-            sf::Vector2u m_pieceSize;
+            sf::Vector2f m_pieceSize;
             
     };
 

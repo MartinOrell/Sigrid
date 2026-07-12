@@ -7,7 +7,7 @@
 using namespace sigrid;
 
 PieceManager::PieceManager(const std::vector<PieceColor>& pieceColors)
-: m_pieceSize{108,108}{
+: m_pieceSize{108.f,108.f}{
 
     for(const auto& color: pieceColors){
         addPieceColor(color);
@@ -104,7 +104,10 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
         auto& pieceTextures = pieceTexture_o.value().get();
 
         pieceTextures.insert(std::pair{id, newTexture});
-        graphicPieces.insert({id, GraphicPiece{m_pieceSize, &(pieceTextures.at(id))}});
+        GraphicPiece newPiece;
+        newPiece.setSize(m_pieceSize);
+        newPiece.setTexturePtr(&(pieceTextures.at(id)));
+        graphicPieces.insert({id, std::move(newPiece)});
     }
 
     return graphicPieces.at(id);

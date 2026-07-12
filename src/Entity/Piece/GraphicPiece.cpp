@@ -5,47 +5,80 @@
 
 using namespace sigrid;
 
-GraphicPiece::GraphicPiece(sf::Vector2u size, const sf::Texture* const texturePtr)
-: m_sprite(*texturePtr)
-, m_texturePtr(texturePtr){
-    sf::FloatRect rect(m_sprite.getLocalBounds());
-    m_sprite.setOrigin({rect.size.x/2.f, rect.size.y/2.f});
-    m_sprite.setPosition({size.x/2.f, size.y/2.f});
-    float scale = 0.8;
-    m_sprite.scale({scale,scale});
+void GraphicPiece::setSize(const sf::Vector2f& size){
+
+    m_size = size;
+    if(m_sprite_o == std::nullopt){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+
+    sprite.setPosition({size.x/2.f, size.y/2.f});
 }
 
-GraphicPiece::GraphicPiece(const GraphicPiece& p)
-: m_sprite(p.m_sprite)
-, m_texturePtr(p.m_texturePtr){
-}
+void GraphicPiece::setTexturePtr(const sf::Texture* const texturePtr){
+    
+    m_texturePtr = texturePtr;
 
-GraphicPiece& GraphicPiece::operator =(const GraphicPiece& p){
-    m_sprite = p.m_sprite;
-    m_texturePtr = p.m_texturePtr;
-    return *this;
+    if(m_sprite_o == std::nullopt){
+        m_sprite_o = sf::Sprite(*texturePtr);
+        float scale = 0.8;
+        auto& sprite = m_sprite_o.value();
+        sprite.scale({scale,scale});
+    }
+    else{
+        m_sprite_o = sf::Sprite(*texturePtr);
+    }
+
+    auto& sprite = m_sprite_o.value();
+
+    sf::FloatRect rect(sprite.getLocalBounds());
+    sprite.setOrigin({rect.size.x/2.f, rect.size.y/2.f});
+
+    if(m_size.x <= 0.f){
+        return;
+    }
+    if(m_size.y <= 0.f){
+        return;
+    }
+
+    sprite.setPosition({m_size.x/2.f, m_size.y/2.f});
 }
 
 void GraphicPiece::setPosition(sf::Vector2f position){
-    m_sprite.setPosition(position);
+    
+    if(!m_sprite_o){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+    sprite.setPosition(position);
 }
 
 bool GraphicPiece::contains(sf::Vector2i point) const{
-    sf::FloatRect rect = m_sprite.getGlobalBounds();
+
+    if(!m_sprite_o){
+        return false;
+    }
+    auto& sprite = m_sprite_o.value();
+    sf::FloatRect rect = sprite.getGlobalBounds();
     return rect.contains({(float)point.x, (float)point.y});
 }
 
 void GraphicPiece::resize(sf::Vector2f size){
 
-    auto rect = m_sprite.getTextureRect();
+    if(!m_sprite_o){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+    auto rect = sprite.getTextureRect();
     float scaleX = size.x/rect.size.x;
     float scaleY = size.y/rect.size.y;
 
-    m_sprite.setScale({scaleX, scaleY});
+    sprite.setScale({scaleX, scaleY});
 }
 
 const sf::Texture GraphicPiece::getTexture() const{
-    return m_sprite.getTexture();
+    return *m_texturePtr;
 }
 
 const sf::Texture* GraphicPiece::getTexturePtr() const{
@@ -53,9 +86,19 @@ const sf::Texture* GraphicPiece::getTexturePtr() const{
 }
 
 void GraphicPiece::move(const sf::Vector2f& offset){
-    m_sprite.move(offset);
+
+    if(!m_sprite_o){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+    sprite.move(offset);
 }
 
 void GraphicPiece::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    target.draw(m_sprite);
+
+    if(!m_sprite_o){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+    target.draw(sprite);
 }
