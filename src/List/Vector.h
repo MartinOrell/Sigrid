@@ -9,7 +9,11 @@ namespace sigrid{namespace list{
     template <typename T> class Vector{
 
         public:
-            Vector();
+            Vector() = default;
+            Vector(const Vector&) = default;
+            Vector(Vector&&) = default;
+            Vector& operator=(const Vector&) = default;
+            Vector& operator=(Vector&&) = default;
 
             void push_back(const T& value);
             void insert(const unsigned int& position, const T& value);

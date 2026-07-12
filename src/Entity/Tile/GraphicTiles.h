@@ -12,7 +12,11 @@ namespace sigrid{
 
     class GraphicTiles: public sf::Drawable{
         public:
-            GraphicTiles();
+            GraphicTiles() = default;
+            GraphicTiles(const GraphicTiles&) = default;
+            GraphicTiles(GraphicTiles&&) = default;
+            GraphicTiles& operator=(const GraphicTiles&) = default;
+            GraphicTiles& operator=(GraphicTiles&&) = default;
 
             void setColorManagerPtr(ColorManager* const managerPtr);
             void setHighlightColorManagerPtr(ColorManager* const managerPtr);

@@ -12,7 +12,11 @@ namespace sigrid{namespace list{
     template <typename T> class AutoInsertMappedGrid{
 
         public:
-            AutoInsertMappedGrid();
+            AutoInsertMappedGrid() = default;
+            AutoInsertMappedGrid(const AutoInsertMappedGrid&) = default;
+            AutoInsertMappedGrid(AutoInsertMappedGrid&&) = default;
+            AutoInsertMappedGrid& operator=(const AutoInsertMappedGrid&) = default;
+            AutoInsertMappedGrid& operator=(AutoInsertMappedGrid&&) = default;
             
             void setInsertPattern(const Vector<T>& insertPattern);
             void setNumColumns(const unsigned int& columns);

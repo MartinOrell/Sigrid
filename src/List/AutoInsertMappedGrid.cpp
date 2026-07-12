@@ -10,9 +10,6 @@
 using namespace sigrid::list;
 
 template<typename T>
-AutoInsertMappedGrid<T>::AutoInsertMappedGrid(){}
-
-template<typename T>
 void AutoInsertMappedGrid<T>::setInsertPattern(const Vector<T>& insertPattern){
 
     m_insertPattern = insertPattern;

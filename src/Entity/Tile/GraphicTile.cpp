@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-GraphicTile::GraphicTile(){}
-
 void GraphicTile::setSize(const sf::Vector2f& size){
 
     m_shape.setSize(size);

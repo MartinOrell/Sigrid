@@ -10,9 +10,6 @@
 using namespace sigrid::list;
 
 template<typename TKey, typename TValue>
-Map<TKey, TValue>::Map(){}
-
-template<typename TKey, typename TValue>
 std::optional<std::reference_wrapper<TValue>> Map<TKey, TValue>::insert(const TKey& key, const TValue& value){
     
     auto result = m_map.insert(std::pair{key, value});

@@ -8,7 +8,11 @@ namespace sigrid{
     class GraphicTile: public sf::Drawable{
 
         public:
-            GraphicTile();
+            GraphicTile() = default;
+            GraphicTile(const GraphicTile&) = default;
+            GraphicTile(GraphicTile&&) = default;
+            GraphicTile& operator=(const GraphicTile& rhs) = default;
+            GraphicTile& operator=(GraphicTile&& rhs) = default;
 
             void setSize(const sf::Vector2f& size);
 

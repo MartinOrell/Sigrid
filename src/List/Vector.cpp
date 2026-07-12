@@ -10,9 +10,6 @@
 using namespace sigrid::list;
 
 template <typename T> 
-Vector<T>::Vector(){}
-
-template <typename T> 
 void Vector<T>::push_back(const T& value){
     m_vector.push_back(value);
 }

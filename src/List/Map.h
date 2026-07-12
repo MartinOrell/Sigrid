@@ -9,7 +9,11 @@ namespace sigrid{namespace list{
     template <typename TKey, typename TValue> class Map{
 
         public:
-            Map();
+            Map() = default;
+            Map(const Map&) = default;
+            Map(Map&&) = default;
+            Map& operator=(const Map&) = default;
+            Map& operator=(Map&&) = default;
 
             std::optional<std::reference_wrapper<TValue>> insert(const TKey& key, const TValue& value);
             void erase(const TKey& key);

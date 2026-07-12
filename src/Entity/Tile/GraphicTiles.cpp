@@ -7,8 +7,6 @@
 
 using namespace sigrid;
 
-GraphicTiles::GraphicTiles(){}
-
 void GraphicTiles::setColorManagerPtr(ColorManager* const managerPtr){
     m_tileColorManagerPtr = managerPtr;
 }
@@ -526,6 +524,10 @@ void GraphicTiles::removeBottomRow(){
 
 void GraphicTiles::clear(){
     m_tiles.clear();
+    m_isInitialized = false;
+    m_isSet.numColumns = false;
+    m_isSet.numRows = false;
+    m_isSet.topLeftPosition = false;
 }
 
 int GraphicTiles::getNumColumns() const{
