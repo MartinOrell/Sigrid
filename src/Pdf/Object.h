@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct Object{
 

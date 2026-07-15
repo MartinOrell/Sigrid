@@ -3,7 +3,7 @@
 #include "Pdf/Object.h"
 #include "Pdf/ExternalObjects.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct Resources : Object{
 

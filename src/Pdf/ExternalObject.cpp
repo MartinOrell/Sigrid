@@ -1,6 +1,6 @@
 #include "Pdf/ExternalObject.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string ExternalObject::getString() const{
 

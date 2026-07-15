@@ -3,7 +3,7 @@
 #include "Pdf/Object.h"
 #include "Pdf/Pages.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct Catalog : Object{
 

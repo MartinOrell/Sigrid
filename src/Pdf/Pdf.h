@@ -5,13 +5,13 @@
 
 #include "Pdf/Image.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     class Pdf{
       
         public:
             Pdf();
-            void addImage(const unsigned int imageId, const myPdf::Image& image);
+            void addImage(const unsigned int imageId, const sigrid_pdf::Image& image);
             bool save(const std::string& filename) const;
 
         private:

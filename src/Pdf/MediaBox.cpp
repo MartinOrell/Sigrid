@@ -1,6 +1,6 @@
 #include "Pdf/MediaBox.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string MediaBox::getString() const{
     

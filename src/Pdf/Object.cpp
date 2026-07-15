@@ -1,6 +1,6 @@
 #include "Pdf/Object.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string Object::getObjectString() const{
 

@@ -1,6 +1,6 @@
 #include "Pdf/Catalog.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string Catalog::getString() const{
     std::string s;

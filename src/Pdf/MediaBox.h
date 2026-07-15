@@ -2,7 +2,7 @@
 
 #include "Pdf/Object.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct MediaBox : Object{
 

@@ -5,7 +5,7 @@
 #include "Pdf/Object.h"
 #include "Pdf/Page.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct Pages : Object{
 

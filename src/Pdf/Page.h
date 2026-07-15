@@ -4,7 +4,7 @@
 #include "Pdf/PageResources.h"
 #include "Pdf/ContentStreams.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct Page : Object{
 

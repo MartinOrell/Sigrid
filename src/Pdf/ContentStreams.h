@@ -5,7 +5,7 @@
 #include "Pdf/Object.h"
 #include "Pdf/ContentStream.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct ContentStreams : Object{
 

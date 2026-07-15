@@ -1,6 +1,6 @@
 #include "Pdf/ContentStreams.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string ContentStreams::getString() const{
 

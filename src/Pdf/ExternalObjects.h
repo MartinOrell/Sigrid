@@ -5,7 +5,7 @@
 #include "Pdf/Object.h"
 #include "Pdf/ExternalObject.h"
 
-namespace myPdf{
+namespace sigrid_pdf{
 
     struct ExternalObjects : Object{
 

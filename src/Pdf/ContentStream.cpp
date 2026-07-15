@@ -2,7 +2,7 @@
 
 #include "Pdf/ContentStream.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string ContentStream::getString() const{
     

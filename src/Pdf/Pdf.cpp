@@ -11,13 +11,13 @@
 #include "Pdf/ExternalObjects.h"
 #include "Pdf/ContentStreams.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 Pdf::Pdf(){
     m_images.push_back(std::vector<Image>{});
 }
 
-void Pdf::addImage(const unsigned int pageId, const myPdf::Image& image){
+void Pdf::addImage(const unsigned int pageId, const sigrid_pdf::Image& image){
     while(m_images.size() <= pageId){
         m_images.push_back(std::vector<Image>{});
     }

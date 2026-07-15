@@ -48,13 +48,13 @@ void PdfHandler::updateLayout(){
 void PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards){
 
     std::cout << "Preparing to save pdf" << std::endl;
-    myPdf::Pdf pdf;
+    sigrid_pdf::Pdf pdf;
 
     for(unsigned int i = 0; i < boards.size(); i++){
         unsigned int pageId = i/12;
         unsigned int boardId = i%12;
 
-        myPdf::Image pdImage;
+        sigrid_pdf::Image pdImage;
 
         auto position_o = m_layout.getTopLeftPosition(boardId);
 

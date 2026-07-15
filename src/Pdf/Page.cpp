@@ -1,6 +1,6 @@
 #include "Pdf/Page.h"
 
-using namespace myPdf;
+using namespace sigrid_pdf;
 
 std::string Page::getString() const{
     
