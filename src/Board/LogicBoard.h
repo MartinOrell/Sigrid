@@ -14,13 +14,13 @@ class LogicBoard{
 
   public:
 
-    LogicBoard();
-    LogicBoard(const LogicBoard& board);
-    ~LogicBoard();
+    LogicBoard() = default;
+    LogicBoard(const LogicBoard&) = default;
+    LogicBoard(LogicBoard&&) = default;
+    LogicBoard& operator=(const LogicBoard&) = default;
+    LogicBoard& operator=(LogicBoard&&) = default;
 
     bool init(const BoardDataContainer& data);
-
-    LogicBoard& operator=(const LogicBoard& rhs);
 
     const int getNumColumns() const;
     const int getNumRows() const;

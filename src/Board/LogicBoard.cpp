@@ -6,14 +6,6 @@
 
 using namespace sigrid;
 
-LogicBoard::LogicBoard(){}
-
-LogicBoard::LogicBoard(const LogicBoard& board)
-: m_pieceLayer{board.m_pieceLayer}
-, m_tileLayer{board.m_tileLayer}{}
-
-LogicBoard::~LogicBoard(){}
-
 bool LogicBoard::init(const BoardDataContainer& data){
 
     m_tileLayer.clear();
@@ -65,16 +57,6 @@ bool LogicBoard::init(const BoardDataContainer& data){
     }
 
     return true;
-}
-
-LogicBoard& LogicBoard::operator=(const LogicBoard& rhs){
-
-    m_tileLayer = rhs.m_tileLayer;
-    m_pieceLayer = rhs.m_pieceLayer;
-    m_arrowLayer = rhs.m_arrowLayer;
-    m_turnToMove = rhs.m_turnToMove;
-
-    return *this;
 }
 
 const int LogicBoard::getNumColumns() const{
