@@ -27,8 +27,8 @@ namespace sigrid{
             float getHeadSize() const;
 
             std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
-            const list::OrderedMap<CoordPair, GraphicArrow>& getArrows() const;
-            list::OrderedMap<CoordPair, GraphicArrow>& getArrows();
+            const sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows() const;
+            sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows();
 
             void clear();
 
@@ -47,7 +47,7 @@ namespace sigrid{
 
             ColorManager* m_colorManagerPtr = nullptr;
 
-            list::OrderedMap<CoordPair, GraphicArrow> m_arrows;
+            sigrid_list::OrderedMap<CoordPair, GraphicArrow> m_arrows;
 
             float m_arrowThickness = 0.f;
             float m_arrowHeadSize = 0.f;

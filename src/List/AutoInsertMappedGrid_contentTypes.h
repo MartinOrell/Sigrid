@@ -6,5 +6,5 @@
 
 // This class is only included by AutoInsertMappedGrid.cpp
 // Add more templates below to support more types
-template class sigrid::list::AutoInsertMappedGrid<sigrid::LogicTile>;
-template class sigrid::list::AutoInsertMappedGrid<sigrid::GraphicTile>;
+template class sigrid_list::AutoInsertMappedGrid<sigrid::LogicTile>;
+template class sigrid_list::AutoInsertMappedGrid<sigrid::GraphicTile>;

@@ -40,6 +40,6 @@ namespace sigrid{
 
         private:
 
-            list::AutoInsertMappedGrid<LogicTile> m_tiles;
+            sigrid_list::AutoInsertMappedGrid<LogicTile> m_tiles;
     };
 }

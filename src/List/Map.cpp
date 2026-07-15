@@ -7,7 +7,7 @@
 // including this file at the end of Map.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid::list;
+using namespace sigrid_list;
 
 template<typename TKey, typename TValue>
 std::optional<std::reference_wrapper<TValue>> Map<TKey, TValue>::insert(const TKey& key, const TValue& value){

@@ -48,7 +48,7 @@ void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
 
     GraphicTile tile;
     tile.setSize(m_tileSize);
-    list::Vector<GraphicTile> insertTiles;
+    sigrid_list::Vector<GraphicTile> insertTiles;
     insertTiles.push_back(tile);
     m_tiles.setInsertPattern(insertTiles);
 
@@ -507,7 +507,7 @@ void GraphicTiles::removeBottomRow(){
 }
 
 void GraphicTiles::clear(){
-    
+
     m_tiles.clear();
     m_isInitialized = false;
 }

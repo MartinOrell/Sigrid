@@ -4,7 +4,7 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-namespace sigrid{namespace list{
+namespace sigrid_list{
 
     template <typename T> class Vector{
 
@@ -41,4 +41,4 @@ namespace sigrid{namespace list{
 
             std::vector<T> m_vector;
     };
-}}
+}

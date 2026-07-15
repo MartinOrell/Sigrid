@@ -7,7 +7,7 @@
 // including this file at the end of Vector.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid::list;
+using namespace sigrid_list;
 
 template <typename T> 
 void Vector<T>::push_back(const T& value){

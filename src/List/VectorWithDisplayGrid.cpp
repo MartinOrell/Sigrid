@@ -7,7 +7,7 @@
 // including this file at the end of VectorWithDisplayGrid.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid::list;
+using namespace sigrid_list;
 
 template<typename T>
 VectorWithDisplayGrid<T>::VectorWithDisplayGrid(){}

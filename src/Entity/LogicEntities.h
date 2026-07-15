@@ -32,9 +32,9 @@ namespace sigrid{
 
             friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
         private:
-            list::Map<Coord, LogicPiece> m_pieces;
-            list::Map<Coord, LogicCircle> m_circles;
-            list::Map<Coord, LogicArrow> m_arrows;
-            list::Map<Coord, LogicIcon> m_icons;
+            sigrid_list::Map<Coord, LogicPiece> m_pieces;
+            sigrid_list::Map<Coord, LogicCircle> m_circles;
+            sigrid_list::Map<Coord, LogicArrow> m_arrows;
+            sigrid_list::Map<Coord, LogicIcon> m_icons;
     };
 }

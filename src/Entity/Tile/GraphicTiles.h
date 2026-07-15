@@ -91,7 +91,7 @@ namespace sigrid{
             ColorManager* m_tileColorManagerPtr = nullptr;
             ColorManager* m_highlightColorManagerPtr = nullptr;
 
-            list::AutoInsertMappedGrid<GraphicTile> m_tiles;
+            sigrid_list::AutoInsertMappedGrid<GraphicTile> m_tiles;
 
             sf::Vector2f m_tileSize = {0.f, 0.f};
             sf::Vector2f m_topLeftPosition = {0.f, 0.f};

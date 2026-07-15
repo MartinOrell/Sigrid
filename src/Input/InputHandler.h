@@ -38,10 +38,10 @@ namespace sigrid{
 
         private:
 
-            list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
-            list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
-            list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
-            list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
+            sigrid_list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
+            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
+            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
+            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
 
     };
 

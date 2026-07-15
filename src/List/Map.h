@@ -4,7 +4,7 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-namespace sigrid{namespace list{
+namespace sigrid_list{
 
     template <typename TKey, typename TValue> class Map{
 
@@ -34,4 +34,4 @@ namespace sigrid{namespace list{
             
             std::map<TKey, TValue> m_map;
     };
-}}
+}

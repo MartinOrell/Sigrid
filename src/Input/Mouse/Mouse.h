@@ -19,7 +19,7 @@ namespace sigrid{
             void release(const sf::Mouse::Button& button);
 
         private:
-            list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>> m_pressedPositions;
+            sigrid_list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>> m_pressedPositions;
     };
 }
 

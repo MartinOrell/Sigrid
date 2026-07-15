@@ -7,10 +7,10 @@
 // including this file at the end of AutoInsertMappedGrid.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid::list;
+using namespace sigrid_list;
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setInsertPattern(const Vector<T>& insertPattern){
+void AutoInsertMappedGrid<T>::setInsertPattern(const sigrid_list::Vector<T>& insertPattern){
 
     m_insertPattern = insertPattern;
 
@@ -382,17 +382,17 @@ void AutoInsertMappedGrid<T>::clear(){
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> AutoInsertMappedGrid<T>::at(const Coord& coord){
+std::optional<std::reference_wrapper<T>> AutoInsertMappedGrid<T>::at(const sigrid::Coord& coord){
     return m_map.at(coord);
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> AutoInsertMappedGrid<T>::at(const Coord& coord) const{
+const std::optional<std::reference_wrapper<const T>> AutoInsertMappedGrid<T>::at(const sigrid::Coord& coord) const{
     return m_map.at(coord);
 }
 
 template<typename T>
-bool AutoInsertMappedGrid<T>::removeAt(const Coord& coord){
+bool AutoInsertMappedGrid<T>::removeAt(const sigrid::Coord& coord){
 
     auto element_o = m_map.at(coord);
     if(element_o == std::nullopt){
@@ -413,12 +413,12 @@ const int& AutoInsertMappedGrid<T>::numRows() const{
 }
 
 template<typename T>
-const Vector<T>& AutoInsertMappedGrid<T>::getInsertPattern() const{
+const sigrid_list::Vector<T>& AutoInsertMappedGrid<T>::getInsertPattern() const{
     return m_insertPattern;
 }
 
 template<typename T>
-T AutoInsertMappedGrid<T>::getInsertElement(const Coord& coord) const{
+T AutoInsertMappedGrid<T>::getInsertElement(const sigrid::Coord& coord) const{
 
     auto element_o = m_insertPattern.at((coord.x+coord.y)%m_insertPattern.size());
 

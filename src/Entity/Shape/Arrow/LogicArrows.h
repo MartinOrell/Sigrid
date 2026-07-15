@@ -27,6 +27,6 @@ namespace sigrid{
 
             void clear();
         private:
-            list::OrderedMap<CoordPair, LogicArrow> m_arrows;
+            sigrid_list::OrderedMap<CoordPair, LogicArrow> m_arrows;
     };
 }

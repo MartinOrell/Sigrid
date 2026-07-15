@@ -5,4 +5,4 @@
 
 // This class is only included by VectorWithDisplayGrid.cpp
 // Add more templates below to support more types
-template class sigrid::list::VectorWithDisplayGrid<sigrid::Board>;
+template class sigrid_list::VectorWithDisplayGrid<sigrid::Board>;

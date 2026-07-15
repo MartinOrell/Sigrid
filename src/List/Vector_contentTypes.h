@@ -14,13 +14,13 @@
 
 // This class is only included by Vector.cpp
 // Add more templates below to support more types
-template class sigrid::list::Vector<int>;
-template class sigrid::list::Vector<float>;
-template class sigrid::list::Vector<sigrid::CoordPair>;
-template class sigrid::list::Vector<sf::Color>;
-template class sigrid::list::Vector<sigrid::PieceColor>;
-template class sigrid::list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
-template class sigrid::list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
-template class sigrid::list::Vector<sigrid::LogicTile>;
-template class sigrid::list::Vector<sigrid::GraphicTile>;
-template class sigrid::list::Vector<sigrid::Board>;
+template class sigrid_list::Vector<int>;
+template class sigrid_list::Vector<float>;
+template class sigrid_list::Vector<sigrid::CoordPair>;
+template class sigrid_list::Vector<sf::Color>;
+template class sigrid_list::Vector<sigrid::PieceColor>;
+template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
+template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
+template class sigrid_list::Vector<sigrid::LogicTile>;
+template class sigrid_list::Vector<sigrid::GraphicTile>;
+template class sigrid_list::Vector<sigrid::Board>;

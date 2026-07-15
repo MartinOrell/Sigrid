@@ -5,7 +5,7 @@
 
 #include "List/Vector.h"
 
-namespace sigrid{namespace list{
+namespace sigrid_list{
 
     template <typename T> class VectorWithDisplayGrid{
 
@@ -70,10 +70,10 @@ namespace sigrid{namespace list{
             void displayFirstElements();
             void displayLastElements();
 
-            list::Vector<T> m_vector;
+            sigrid_list::Vector<T> m_vector;
             int m_displayColumns = 1;
             int m_displayRows = 1;
-            list::Vector<int> m_displayIds;
+            sigrid_list::Vector<int> m_displayIds;
             std::optional<int> m_selectIndex_o = std::nullopt;
 
             enum Wrap{
@@ -87,4 +87,4 @@ namespace sigrid{namespace list{
             bool m_singleRowStartEndWrap = false;
             bool m_multiRowStartEndWrap = false;
     };
-}}
+}

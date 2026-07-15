@@ -16,7 +16,7 @@ namespace sigrid{
 
         private:
 
-            list::Map<std::string, sf::Font> m_fonts;
+            sigrid_list::Map<std::string, sf::Font> m_fonts;
 
     };
 }

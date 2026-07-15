@@ -11,7 +11,7 @@ namespace sigrid{
         public:
 
             void updateLayout();
-            void savePdf(const list::VectorWithDisplayGrid<sigrid::Board>& boards);
+            void savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards);
 
         private:
         

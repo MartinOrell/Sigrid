@@ -220,10 +220,10 @@ template <typename T> void moveEntitiesRight_h(T& list){
 }
 
 void LogicEntities::moveEntitiesRight(){
-    moveEntitiesRight_h<list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesRight_h<list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesRight_h<list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesRight_h<list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
+    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesLeft_h(T& list){
@@ -268,10 +268,10 @@ template <typename T> void moveEntitiesLeft_h(T& list){
 }
 
 void LogicEntities::moveEntitiesLeft(){
-    moveEntitiesLeft_h<list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesLeft_h<list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesLeft_h<list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesLeft_h<list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
+    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
 }
 
 
@@ -316,10 +316,10 @@ template <typename T> void moveEntitiesUp_h(T& list){
     }
 }
 void LogicEntities::moveEntitiesUp(){
-    moveEntitiesUp_h<list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesUp_h<list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesUp_h<list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesUp_h<list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
+    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesDown_h(T& list){
@@ -363,10 +363,10 @@ template <typename T> void moveEntitiesDown_h(T& list){
 }
 
 void LogicEntities::moveEntitiesDown(){
-    moveEntitiesDown_h<list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesDown_h<list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesDown_h<list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesDown_h<list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
+    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
+    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
+    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)

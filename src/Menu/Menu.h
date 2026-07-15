@@ -90,11 +90,11 @@ namespace sigrid{
 
             MenuItem m_superHeader;
 
-            list::Map<std::string, MenuItem> m_items;
+            sigrid_list::Map<std::string, MenuItem> m_items;
 
             std::vector<std::vector<std::string>> m_itemKeys;
 
-            list::Map<std::string, LayoutItem> m_layoutItems;
+            sigrid_list::Map<std::string, LayoutItem> m_layoutItems;
 
             float m_lineHeight = 0.f;
             float m_itemOffsetX = 0.f;

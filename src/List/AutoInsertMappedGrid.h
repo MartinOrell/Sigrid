@@ -7,7 +7,7 @@
 #include "List/Vector.h"
 #include "Coord/Coord.h"
 
-namespace sigrid{namespace list{
+namespace sigrid_list{
 
     template <typename T> class AutoInsertMappedGrid{
 
@@ -34,10 +34,10 @@ namespace sigrid{namespace list{
 
             void clear();
 
-            std::optional<std::reference_wrapper<T>> at(const Coord& coord);
-            const std::optional<std::reference_wrapper<const T>> at(const Coord& coord) const;
+            std::optional<std::reference_wrapper<T>> at(const sigrid::Coord& coord);
+            const std::optional<std::reference_wrapper<const T>> at(const sigrid::Coord& coord) const;
 
-            bool removeAt(const Coord& coord);
+            bool removeAt(const sigrid::Coord& coord);
 
             const int& numColumns() const;
             const int& numRows() const;
@@ -45,7 +45,7 @@ namespace sigrid{namespace list{
 
         private:
 
-            T getInsertElement(const Coord& coord) const;
+            T getInsertElement(const sigrid::Coord& coord) const;
 
             void refill();
 
@@ -53,7 +53,7 @@ namespace sigrid{namespace list{
 
         int m_columns = 0;
         int m_rows = 0;
-        Map<Coord, T> m_map;
+        Map<sigrid::Coord, T> m_map;
         Vector<T> m_insertPattern;
     };
-}}
+}

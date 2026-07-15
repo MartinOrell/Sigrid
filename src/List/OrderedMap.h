@@ -3,7 +3,8 @@
 #include "List/Map.h"
 #include "List/Vector.h"
 
-namespace sigrid{namespace list{
+namespace sigrid_list{
+
     template <typename TKey, typename TValue> class OrderedMap{
 
         public:
@@ -31,4 +32,4 @@ namespace sigrid{namespace list{
             Vector<TKey> m_order;
 
     };
-}}
+}

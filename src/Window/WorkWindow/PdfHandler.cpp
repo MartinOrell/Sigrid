@@ -45,7 +45,7 @@ void PdfHandler::updateLayout(){
     m_layout.setPy(9, 842.f);
 }
 
-void PdfHandler::savePdf(const list::VectorWithDisplayGrid<sigrid::Board>& boards){
+void PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards){
 
     std::cout << "Preparing to save pdf" << std::endl;
     myPdf::Pdf pdf;
