@@ -2,21 +2,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-std::string notation::getColumnNotation(const int& x){
-    std::string notation = "";
-
-    int base = 'z' - 'a'+1;
-    for(int i{x}; i>=0; i = i / base-1){
-        notation.insert(0,1,(i%base + 'a'));
-    }
-    return notation;
-}
-
-std::string notation::getRowNotation(const int& y){
-    return std::to_string(y+1);
-}
+using namespace sigrid_coord;
 
 Coord::Coord()
 : x(0)
@@ -97,8 +83,23 @@ bool Coord::operator!=(const Coord& rhs) const{
 std::string Coord::getNotation() const{
 
     std::string notation;
-    notation.append(notation::getColumnNotation(x));
-    notation.append(notation::getRowNotation(y));
+    notation.append(getColumnNotation(x));
+    notation.append(getRowNotation(y));
     
     return notation;
+}
+
+
+std::string sigrid_coord::getColumnNotation(const int& x){
+    std::string notation = "";
+
+    int base = 'z' - 'a'+1;
+    for(int i{x}; i>=0; i = i / base-1){
+        notation.insert(0,1,(i%base + 'a'));
+    }
+    return notation;
+}
+
+std::string sigrid_coord::getRowNotation(const int& y){
+    return std::to_string(y+1);
 }

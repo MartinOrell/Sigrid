@@ -171,7 +171,7 @@ bool Board::contains(const sf::Vector2f& point) const{
     return m_graphicBoard.contains(point);
 }
 
-bool Board::isEmptyTile(const Coord& coord) const{
+bool Board::isEmptyTile(const sigrid_coord::Coord& coord) const{
     return m_logicBoard.isEmptyTile(coord);
 }
 
@@ -187,11 +187,11 @@ bool Board::isImageFilenameSet() const{
     return m_imageFilename.length() > 0;
 }
 
-std::optional<Coord> Board::getTileCoord(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> Board::getTileCoord(const sf::Vector2f& point){
     return m_graphicBoard.getTileCoord(point);
 }
 
-std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
+std::optional<LogicEntity> Board::getLogicEntity(const sigrid_coord::Coord& coord){
     auto entity_o = m_logicBoard.getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
@@ -200,7 +200,7 @@ std::optional<LogicEntity> Board::getLogicEntity(const Coord& coord){
 }
 
 
-std::optional<LogicTile> Board::getTile(const Coord& coord){
+std::optional<LogicTile> Board::getTile(const sigrid_coord::Coord& coord){
     auto tile_o = m_logicBoard.getTile(coord);
     if(tile_o == std::nullopt){
         return std::nullopt;
@@ -208,7 +208,7 @@ std::optional<LogicTile> Board::getTile(const Coord& coord){
     return tile_o.value();
 }
 
-std::optional<LogicArrow> Board::getLogicArrow(const CoordPair& coordPair){
+std::optional<LogicArrow> Board::getLogicArrow(const sigrid_coord::CoordPair& coordPair){
     auto arrow_o = m_logicBoard.getArrowAt(coordPair);
     if(arrow_o == std::nullopt){
         return std::nullopt;
@@ -220,14 +220,14 @@ std::string Board::getFen() const{
     return m_logicBoard.getFen();
 }
 
-void Board::select(const Coord& newCoord){
+void Board::select(const sigrid_coord::Coord& newCoord){
     
     if(m_selection_o == std::nullopt){
         m_selection_o = newCoord;
         m_graphicBoard.highlightTile(newCoord);
         return;
     }
-    Coord oldCoord = m_selection_o.value();
+    sigrid_coord::Coord oldCoord = m_selection_o.value();
     
     if(oldCoord == newCoord){
         m_selection_o = std::nullopt;
@@ -254,7 +254,7 @@ void Board::deselect(){
     m_graphicBoard.unhighlight();
 }
 
-void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
+void Board::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
 
     if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
@@ -275,7 +275,7 @@ void Board::addEntity(const Coord& coord, const LogicEntity& newEntity){
     }
 }
 
-void Board::removeEntity(const Coord& coord){
+void Board::removeEntity(const sigrid_coord::Coord& coord){
 
     if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
@@ -308,7 +308,7 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
     m_graphicBoard.unhighlight();
 }
 
-void Board::addTileHighlight(const Coord& coord, const int& colorId){
+void Board::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId){
 
     if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add highlight at "
@@ -340,7 +340,7 @@ void Board::addTileHighlight(const Coord& coord, const int& colorId){
     }
 }
 
-void Board::removeTileHighlight(const Coord& coord){
+void Board::removeTileHighlight(const sigrid_coord::Coord& coord){
 
     if(!m_logicBoard.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove highlight at "
@@ -372,7 +372,7 @@ void Board::removeTileHighlight(const Coord& coord){
     }
 }
 
-void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
+void Board::dragAndDrop(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
     assert(fromCoord != toCoord);
 
     if(m_logicBoard.isEmptyTile(fromCoord)){
@@ -385,7 +385,7 @@ void Board::dragAndDrop(const Coord& fromCoord, const Coord& toCoord){
     
 }
 
-void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow){
+void Board::addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const LogicArrow& newArrow){
 
     if(!m_logicBoard.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to add arrow "
@@ -418,7 +418,7 @@ void Board::addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicAr
     }
 }
 
-void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
+void Board::removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
 
     if(!m_logicBoard.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to remove arrow "
@@ -451,7 +451,7 @@ void Board::removeArrow(const Coord& fromCoord, const Coord& toCoord){
     }
 }
 
-void Board::updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
+void Board::updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
     m_graphicBoard.updateDragArrow(fromCoord, toCoord, colorId);
 }
 

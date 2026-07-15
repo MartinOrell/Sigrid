@@ -25,26 +25,26 @@ class LogicBoard{
     const int getNumColumns() const;
     const int getNumRows() const;
 
-    bool isWithinBoard(const Coord& coord) const;
-    bool isEmptyTile(const Coord& coord) const;
-    std::optional<LogicTile> getTile(const Coord& coord) const;
-    std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
-    std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
+    bool isWithinBoard(const sigrid_coord::Coord& coord) const;
+    bool isEmptyTile(const sigrid_coord::Coord& coord) const;
+    std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
+    std::optional<LogicEntity> getEntityAt(const sigrid_coord::Coord& coord) const;
+    std::optional<LogicArrow> getArrowAt(const sigrid_coord::CoordPair& coordPair) const;
     std::string getFen() const;
     int getTurnToMove() const;
     std::vector<int> getRepeatColorIds() const;
 
     void setTurnToMove(const int& turnToMove);
 
-    bool addEntity(const Coord& coord, const LogicEntity& entity);
-    bool removeEntity(const Coord& coord);
-    bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
+    bool addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity);
+    bool removeEntity(const sigrid_coord::Coord& coord);
+    bool moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord);
 
-    bool addTileHighlight(const Coord& coord, const int& highlightColorId);
-    bool removeTileHighlight(const Coord& coord);
+    bool addTileHighlight(const sigrid_coord::Coord& coord, const int& highlightColorId);
+    bool removeTileHighlight(const sigrid_coord::Coord& coord);
 
-    bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
-    bool removeArrow(const CoordPair& coordPair);
+    bool addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
+    bool removeArrow(const sigrid_coord::CoordPair& coordPair);
 
     bool addTileColumnRight();
     bool addTileColumnLeft();

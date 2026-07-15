@@ -231,7 +231,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                         }
                         else if(s2 == "position:"){
                             std::string position = readString(is);
-                            toolPickerData.miscToolBlock.coord = Coord(position);
+                            toolPickerData.miscToolBlock.coord = sigrid_coord::Coord(position);
                         }
                         else if(s2 == "columns:"){
                             is >> toolPickerData.miscToolBlock.columns;
@@ -258,7 +258,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                         }
                         else if(s2 == "position:"){
                             std::string position = readString(is);
-                            toolPickerData.colorBlock.coord = Coord(position);
+                            toolPickerData.colorBlock.coord = sigrid_coord::Coord(position);
                         }
                         else if(s2 == "columns:"){
                             is >> toolPickerData.colorBlock.columns;
@@ -279,7 +279,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                     for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
                         
                         if(s2 == "["){
-                            CoordBlock pieceBlock;
+                            sigrid_coord::CoordBlock pieceBlock;
                             for(std::string s3 = readString(is); s3 != "]"; s3 = readString(is)){
 
                                 if(s3 == "visibility:"){
@@ -289,7 +289,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                                 }
                                 else if(s3 == "position:"){
                                     std::string position = readString(is);
-                                    pieceBlock.coord = Coord{position};
+                                    pieceBlock.coord = sigrid_coord::Coord{position};
                                 }
                                 else if(s3 == "columns:"){
                                     is >> pieceBlock.columns;

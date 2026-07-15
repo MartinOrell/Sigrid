@@ -6,7 +6,7 @@ using namespace sigrid;
 
 LogicEntities::LogicEntities(){}
 
-void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
+void LogicEntities::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         m_pieces.insert(coord, std::get<LogicPiece>(entity));
     }
@@ -25,14 +25,14 @@ void LogicEntities::addEntity(const Coord& coord, const LogicEntity& entity){
     }
 }
 
-void LogicEntities::removeEntity(const Coord& coord){
+void LogicEntities::removeEntity(const sigrid_coord::Coord& coord){
     m_pieces.erase(coord);
     m_circles.erase(coord);
     m_arrows.erase(coord);
     m_icons.erase(coord);
 }
 
-void LogicEntities::moveEntity(const Coord& fromCoord, const Coord& toCoord){
+void LogicEntities::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
 
     if(fromCoord == toCoord){
         return;
@@ -78,7 +78,7 @@ void LogicEntities::clear(){
     m_icons.clear();
 }
 
-std::optional<LogicEntity> LogicEntities::getEntityAt(const Coord& coord) const{
+std::optional<LogicEntity> LogicEntities::getEntityAt(const sigrid_coord::Coord& coord) const{
 
     auto piece_o = m_pieces.at(coord);
     if(piece_o != std::nullopt){
@@ -220,10 +220,10 @@ template <typename T> void moveEntitiesRight_h(T& list){
 }
 
 void LogicEntities::moveEntitiesRight(){
-    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesRight_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, LogicPiece>>(m_pieces);
+    moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, LogicCircle>>(m_circles);
+    moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, LogicArrow>>(m_arrows);
+    moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesLeft_h(T& list){
@@ -268,10 +268,10 @@ template <typename T> void moveEntitiesLeft_h(T& list){
 }
 
 void LogicEntities::moveEntitiesLeft(){
-    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesLeft_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, LogicPiece>>(m_pieces);
+    moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, LogicCircle>>(m_circles);
+    moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, LogicArrow>>(m_arrows);
+    moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, LogicIcon>>(m_icons);
 }
 
 
@@ -316,10 +316,10 @@ template <typename T> void moveEntitiesUp_h(T& list){
     }
 }
 void LogicEntities::moveEntitiesUp(){
-    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesUp_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, LogicPiece>>(m_pieces);
+    moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, LogicCircle>>(m_circles);
+    moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, LogicArrow>>(m_arrows);
+    moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, LogicIcon>>(m_icons);
 }
 
 template <typename T> void moveEntitiesDown_h(T& list){
@@ -363,10 +363,10 @@ template <typename T> void moveEntitiesDown_h(T& list){
 }
 
 void LogicEntities::moveEntitiesDown(){
-    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicPiece>>(m_pieces);
-    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicCircle>>(m_circles);
-    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicArrow>>(m_arrows);
-    moveEntitiesDown_h<sigrid_list::Map<Coord, LogicIcon>>(m_icons);
+    moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicPiece>>(m_pieces);
+    moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicCircle>>(m_circles);
+    moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicArrow>>(m_arrows);
+    moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicIcon>>(m_icons);
 }
 
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)

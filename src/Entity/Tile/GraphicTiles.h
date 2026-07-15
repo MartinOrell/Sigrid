@@ -37,12 +37,12 @@ class GraphicTiles: public sf::Drawable{
     void setTopToBottom();
     void setBottomToTop();
 
-    void setTilePosition(const Coord& coord, const sf::Vector2f& position);
+    void setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position);
 
-    void setTileColor(const Coord& coord, const int& colorId);
+    void setTileColor(const sigrid_coord::Coord& coord, const int& colorId);
 
-    void setHighlightColor(const Coord& coord, const int& colorId);
-    void removeHighlight(const Coord& coord);
+    void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
+    void removeHighlight(const sigrid_coord::Coord& coord);
 
     void addColumnRight(const std::vector<int>& repeatTileColorIds);
     void addColumnLeft(const std::vector<int>& repeatTileColorIds);
@@ -62,12 +62,12 @@ class GraphicTiles: public sf::Drawable{
     float getTileHeight() const;
     sf::Vector2f getTileSize() const;
     
-    std::optional<sf::Vector2f> getTileTopLeftPosition(const Coord& coord) const;
-    std::optional<sf::Vector2f> getTileCentrePosition(const Coord& coord) const;
-    std::optional<float> getTileRightPosition(const Coord& coord) const;
-    std::optional<float> getTileTopPosition(const Coord& coord) const;
+    std::optional<sf::Vector2f> getTileTopLeftPosition(const sigrid_coord::Coord& coord) const;
+    std::optional<sf::Vector2f> getTileCentrePosition(const sigrid_coord::Coord& coord) const;
+    std::optional<float> getTileRightPosition(const sigrid_coord::Coord& coord) const;
+    std::optional<float> getTileTopPosition(const sigrid_coord::Coord& coord) const;
 
-    std::optional<sf::Color> getTileColor(const Coord& coord) const;
+    std::optional<sf::Color> getTileColor(const sigrid_coord::Coord& coord) const;
 
     void move(const sf::Vector2f& offset);
 

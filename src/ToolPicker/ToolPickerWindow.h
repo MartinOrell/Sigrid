@@ -110,7 +110,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     Board m_board;
 
-    std::map<Coord, sigrid_action::Action> m_clickActions;
+    std::map<sigrid_coord::Coord, sigrid_action::Action> m_clickActions;
 
     std::vector<int> m_displayedPieceColorIds;
     int m_arrowColorId = 0;
@@ -123,9 +123,9 @@ class ToolPickerWindow: public sf::Drawable{
 
     std::vector<int> m_colorIds;
 
-    CoordBlock m_miscBlock;
-    CoordBlock m_colorBlock;
-    std::vector<CoordBlock> m_pieceBlocks;
+    sigrid_coord::CoordBlock m_miscBlock;
+    sigrid_coord::CoordBlock m_colorBlock;
+    std::vector<sigrid_coord::CoordBlock> m_pieceBlocks;
 
     int m_defaultArrowColorId = 0;
     int m_defaultCircleColorId = 0;

@@ -411,7 +411,7 @@ bool GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
     return m_turnToken.isWithin((point-m_texture.getPosition())/m_texture.getScale());
 }
 
-std::optional<Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
 
     const float& scale = m_texture.getScale();
     const sf::Vector2f& position = m_texture.getPosition();
@@ -450,10 +450,10 @@ std::optional<Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
     if(!m_isTopToBottom){
         y = (float)m_tileLayer.getNumRows()-y;
     }
-    return std::make_optional<Coord>((int)x,(int)y);
+    return std::make_optional<sigrid_coord::Coord>((int)x,(int)y);
 }
 
-void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
+void GraphicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
     
     auto position_o = m_tileLayer.getTileCentrePosition(coord);
 
@@ -475,7 +475,7 @@ void GraphicBoard::addEntity(const Coord& coord, const LogicEntity& entity){
     redrawTexture();
 }
 
-void GraphicBoard::removeEntity(const Coord& coord){
+void GraphicBoard::removeEntity(const sigrid_coord::Coord& coord){
 
     if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cerr << "GraphicBoard: Failed to remove entity at "
@@ -488,7 +488,7 @@ void GraphicBoard::removeEntity(const Coord& coord){
     redrawTexture();
 }
 
-void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
+void GraphicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
     
     if(fromCoord == toCoord){
         std::cerr << "GraphicBoard: Failed to move entity from "
@@ -519,21 +519,21 @@ void GraphicBoard::moveEntity(const Coord& fromCoord, const Coord& toCoord){
     redrawTexture();
 }
 
-void GraphicBoard::addTileHighlight(const Coord& coord, const int& colorId){
+void GraphicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId){
 
     m_tileLayer.setHighlightColor(coord, colorId);
 
     redrawTexture();
 }
 
-void GraphicBoard::removeTileHighlight(const Coord& coord){
+void GraphicBoard::removeTileHighlight(const sigrid_coord::Coord& coord){
 
     m_tileLayer.removeHighlight(coord);
 
     redrawTexture();
 }
 
-void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicArrow){
+void GraphicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& logicArrow){
 
     auto fromPosition_o = m_tileLayer.getTileCentrePosition(coordPair.from);
 
@@ -567,7 +567,7 @@ void GraphicBoard::addArrow(const CoordPair& coordPair, const LogicArrow& logicA
     redrawTexture();
 }
 
-void GraphicBoard::removeArrow(const CoordPair& coordPair){
+void GraphicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
 
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
@@ -583,7 +583,7 @@ void GraphicBoard::removeArrow(const CoordPair& coordPair){
     redrawTexture();
 }
 
-void GraphicBoard::updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
+void GraphicBoard::updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
     
     if(!m_arrowColorManagerPtr){
         std::cerr << "GraphicBoard: Failed to update drag arrow" << std::endl;
@@ -638,7 +638,7 @@ void GraphicBoard::removeDragArrow(){
     redrawTexture();
 }
 
-void GraphicBoard::highlightTile(const Coord& coord){
+void GraphicBoard::highlightTile(const sigrid_coord::Coord& coord){
 
     auto position_o = m_tileLayer.getTileTopLeftPosition(coord);
 
@@ -1345,7 +1345,7 @@ void GraphicBoard::updateLeftEdgeWidth(){
 
     float newEdgeWidth = 0.f;
     if(m_labels.isLeftOutsideVisible()){
-        int numDigits = notation::getRowNotation(m_tileLayer.getNumRows()-1).length();
+        int numDigits = sigrid_coord::getRowNotation(m_tileLayer.getNumRows()-1).length();
         float labelSize = m_labels.getLeftOutsideLabelSize();
         float tileWidth = m_tileLayer.getTileWidth();
 
@@ -1378,7 +1378,7 @@ void GraphicBoard::updateRightEdgeWidth(){
     float newEdgeWidth = 0.f;
 
     if(m_labels.isRightOutsideVisible()){
-        int numDigits = notation::getRowNotation(m_tileLayer.getNumRows()-1).length();
+        int numDigits = sigrid_coord::getRowNotation(m_tileLayer.getNumRows()-1).length();
         float labelSize = m_labels.getRightOutsideLabelSize();
         float tileWidth = m_tileLayer.getTileWidth();
 
@@ -1482,7 +1482,7 @@ void GraphicBoard::updateBottomEdgeWidth(){
 
 void GraphicBoard::addLeftInsideLabel_h(const int& row){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     if(!m_isLeftToRight){
         coord.x = m_tileLayer.getNumColumns()-1;
     }
@@ -1511,7 +1511,7 @@ void GraphicBoard::addLeftInsideLabels_h(){
 
 void GraphicBoard::addBottomInsideLabel_h(const int& column){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     coord.x = column;
     if(m_isTopToBottom){
         coord.y = m_tileLayer.getNumRows() - 1;
@@ -1540,7 +1540,7 @@ void GraphicBoard::addBottomInsideLabels_h(){
 
 void GraphicBoard::addLeftOutsideLabel_h(const int& row){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     if(!m_isLeftToRight){
         coord.x = m_tileLayer.getNumColumns()-1;
     }
@@ -1566,7 +1566,7 @@ void GraphicBoard::addLeftOutsideLabels_h(){
 
 void GraphicBoard::addRightOutsideLabel_h(const int& row){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     if(m_isLeftToRight){
         coord.x = m_tileLayer.getNumColumns()-1;
     }
@@ -1592,7 +1592,7 @@ void GraphicBoard::addRightOutsideLabels_h(){
 
 void GraphicBoard::addTopOutsideLabel_h(const int& column){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     coord.x = column;
     if(!m_isTopToBottom){
         coord.y = m_tileLayer.getNumRows()-1;
@@ -1618,7 +1618,7 @@ void GraphicBoard::addTopOutsideLabels_h(){
 
 void GraphicBoard::addBottomOutsideLabel_h(const int& column){
 
-    Coord coord;
+    sigrid_coord::Coord coord;
     coord.x = column;
     if(m_isTopToBottom){
         coord.y = m_tileLayer.getNumRows() - 1;

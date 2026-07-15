@@ -2,12 +2,7 @@
 
 #include <string>
 
-namespace sigrid{
-
-namespace notation{
-    std::string getColumnNotation(const int& x);
-    std::string getRowNotation(const int& y);
-}
+namespace sigrid_coord{
 
 struct Coord{
     Coord();
@@ -26,4 +21,7 @@ struct Coord{
     int y;
 };
 
-}  // namespace sigrid
+std::string getColumnNotation(const int& x);
+std::string getRowNotation(const int& y);
+
+}  // namespace sigrid_coord

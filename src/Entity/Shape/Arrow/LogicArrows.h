@@ -14,10 +14,10 @@ class LogicArrows{
 
     LogicArrows();
 
-    void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
-    void removeArrow(const CoordPair& coordPair);
+    void addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
+    void removeArrow(const sigrid_coord::CoordPair& coordPair);
     
-    std::optional<LogicArrow> getArrow(const CoordPair& coordPair) const;
+    std::optional<LogicArrow> getArrow(const sigrid_coord::CoordPair& coordPair) const;
 
     void removeColumn(const int& columnId);
     void removeRow(const int& rowId);
@@ -31,7 +31,7 @@ class LogicArrows{
 
   private:
 
-    sigrid_list::OrderedMap<CoordPair, LogicArrow> m_arrows;
+    sigrid_list::OrderedMap<sigrid_coord::CoordPair, LogicArrow> m_arrows;
 };
 
 }  // namespace sigrid

@@ -2,7 +2,7 @@
 
 #include <cctype>
 
-using namespace sigrid;
+using namespace sigrid_coord;
 
 bool CoordPair::operator<(const CoordPair& rhs) const{
     if(from < rhs.from){
@@ -30,7 +30,7 @@ std::string CoordPair::getNotation() const{
     return notation;
 }
 
-std::ostream& sigrid::operator<<(std::ostream &out, const CoordPair &coordPair)
+std::ostream& sigrid_coord::operator<<(std::ostream &out, const CoordPair &coordPair)
 {
     out << coordPair.getNotation();
     return out;

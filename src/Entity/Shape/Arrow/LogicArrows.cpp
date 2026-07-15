@@ -4,15 +4,15 @@ using namespace sigrid;
 
 LogicArrows::LogicArrows(){}
 
-void LogicArrows::addArrow(const CoordPair& coordPair, const LogicArrow& arrow){
+void LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
     m_arrows.push_back(coordPair, arrow);
 }
             
-void LogicArrows::removeArrow(const CoordPair& coordPair){
+void LogicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
     m_arrows.erase(coordPair);
 }
             
-std::optional<LogicArrow> LogicArrows::getArrow(const CoordPair& coordPair) const{
+std::optional<LogicArrow> LogicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
 
     auto arrow_o = m_arrows.atKey(coordPair);
 
@@ -112,7 +112,7 @@ void LogicArrows::moveArrowsRight(){
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -122,7 +122,7 @@ void LogicArrows::moveArrowsRight(){
                 }
                 auto arrow = arrow_o.value().get();
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.x++;
                 newCoordPair.to.x++;
                 
@@ -176,7 +176,7 @@ void LogicArrows::moveArrowsLeft(){
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -186,7 +186,7 @@ void LogicArrows::moveArrowsLeft(){
                 }
                 auto arrow = arrow_o.value().get();
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.x--;
                 newCoordPair.to.x--;
                 
@@ -239,7 +239,7 @@ void LogicArrows::moveArrowsUp(){
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -249,7 +249,7 @@ void LogicArrows::moveArrowsUp(){
                 }
                 auto arrow = arrow_o.value().get();
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.y--;
                 newCoordPair.to.y--;
                 
@@ -302,7 +302,7 @@ void LogicArrows::moveArrowsDown(){
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -312,7 +312,7 @@ void LogicArrows::moveArrowsDown(){
                 }
                 auto arrow = arrow_o.value().get();
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.y++;
                 newCoordPair.to.y++;
                 

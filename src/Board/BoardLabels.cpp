@@ -207,7 +207,7 @@ bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf:
     }
 
     int i = m_leftInsideCoordLabels.labels.size();
-    std::string notation = notation::getRowNotation(i);
+    std::string notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftInsideCoordLabels.labelSizeFactor * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
@@ -258,7 +258,7 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
     }
 
     int i = m_bottomInsideCoordLabels.labels.size();
-    std::string notation = notation::getColumnNotation(i);
+    std::string notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomInsideCoordLabels.labelSizeFactor * tileSize.x;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
@@ -314,7 +314,7 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
     }
 
     int i = m_leftOutsideCoordLabels.labels.size();
-    std::string notation = notation::getRowNotation(i);
+    std::string notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftOutsideCoordLabels.labelSizeFactor * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
@@ -362,7 +362,7 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
     }
 
     int i = m_rightOutsideCoordLabels.labels.size();
-    std::string notation = notation::getRowNotation(i);
+    std::string notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_rightOutsideCoordLabels.labelSizeFactor * tileSize.y;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
@@ -410,7 +410,7 @@ bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf:
     }
 
     int i = m_topOutsideCoordLabels.labels.size();
-    std::string notation = notation::getColumnNotation(i);
+    std::string notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_topOutsideCoordLabels.labelSizeFactor * tileSize.x;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 
@@ -462,7 +462,7 @@ bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const 
     }
 
     int i = m_bottomOutsideCoordLabels.labels.size();
-    std::string notation = notation::getColumnNotation(i);
+    std::string notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomOutsideCoordLabels.labelSizeFactor * tileSize.x;
     sf::Text label{*(fontPtr_o.value()), notation, labelSize};
 

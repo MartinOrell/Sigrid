@@ -16,7 +16,7 @@
 // Add more templates below to support more types
 template class sigrid_list::Vector<int>;
 template class sigrid_list::Vector<float>;
-template class sigrid_list::Vector<sigrid::CoordPair>;
+template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sf::Color>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;

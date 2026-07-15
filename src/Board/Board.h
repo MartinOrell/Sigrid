@@ -67,7 +67,7 @@ class Board: public sf::Drawable{
 
     bool contains(const sf::Vector2f& point) const;
 
-    bool isEmptyTile(const Coord& coord) const;
+    bool isEmptyTile(const sigrid_coord::Coord& coord) const;
 
     bool isCoordinatesOutside() const;
 
@@ -75,33 +75,33 @@ class Board: public sf::Drawable{
 
     bool isImageFilenameSet() const;
 
-    std::optional<Coord> getTileCoord(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getTileCoord(const sf::Vector2f& point);
 
-    std::optional<LogicTile> getTile(const Coord& coord);
+    std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord);
 
-    std::optional<LogicEntity> getLogicEntity(const Coord& coord);
+    std::optional<LogicEntity> getLogicEntity(const sigrid_coord::Coord& coord);
 
-    std::optional<LogicArrow> getLogicArrow(const CoordPair& coordPair);
+    std::optional<LogicArrow> getLogicArrow(const sigrid_coord::CoordPair& coordPair);
 
     std::string getFen() const;
 
-    void select(const Coord& coord);
+    void select(const sigrid_coord::Coord& coord);
 
     void deselect();
 
-    void addEntity(const Coord& coord, const LogicEntity& newEntity);
-    void removeEntity(const Coord& coord);
+    void addEntity(const sigrid_coord::Coord& coord, const LogicEntity& newEntity);
+    void removeEntity(const sigrid_coord::Coord& coord);
 
     void addEntityAtSelection(const LogicEntity& newEntity);
-    void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
+    void dragAndDrop(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord);
 
-    void addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow);
-    void removeArrow(const Coord& fromCoord, const Coord& toCoord);
+    void addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const LogicArrow& newArrow);
+    void removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord);
 
-    void addTileHighlight(const Coord& coord, const int& colorId);
-    void removeTileHighlight(const Coord& coord);
+    void addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId);
+    void removeTileHighlight(const sigrid_coord::Coord& coord);
 
-    void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
+    void updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId);
     void removeDragArrow();
 
     void loadFen(const std::string& fen);
@@ -163,7 +163,7 @@ class Board: public sf::Drawable{
 
     GraphicBoard m_graphicBoard;
 
-    std::optional<Coord> m_selection_o = std::nullopt;
+    std::optional<sigrid_coord::Coord> m_selection_o = std::nullopt;
 
     std::string m_filename;
     std::string m_imageFilename;

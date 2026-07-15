@@ -3,6 +3,7 @@
 #include <optional>
 
 #include "Coord/Coord.h"
+#include "Coord/CoordPair.h"
 
 #include "Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "Board/BoardLabels.h"
@@ -30,8 +31,6 @@ class BoardDesignContainer;
 class PieceManager;
 class ColorManager;
 class IconManager;
-
-class CoordPair;
 
 class GraphicBoard: public sf::Drawable{
 
@@ -85,22 +84,22 @@ class GraphicBoard: public sf::Drawable{
 
     bool isWithinTurnToken(const sf::Vector2f& point) const;
 
-    std::optional<Coord> getTileCoord(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getTileCoord(const sf::Vector2f& point);
 
-    void addEntity(const Coord& coord, const LogicEntity& logicEntity);
-    void removeEntity(const Coord& coord);
-    void moveEntity(const Coord& fromCoord, const Coord& toCoord);
+    void addEntity(const sigrid_coord::Coord& coord, const LogicEntity& logicEntity);
+    void removeEntity(const sigrid_coord::Coord& coord);
+    void moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord);
 
-    void addTileHighlight(const Coord& coord, const int& colorId);
-    void removeTileHighlight(const Coord& coord);
+    void addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId);
+    void removeTileHighlight(const sigrid_coord::Coord& coord);
 
-    void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
-    void removeArrow(const CoordPair& coordPair);
+    void addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
+    void removeArrow(const sigrid_coord::CoordPair& coordPair);
 
-    void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
+    void updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId);
     void removeDragArrow();
 
-    void highlightTile(const Coord& coord);
+    void highlightTile(const sigrid_coord::Coord& coord);
 
     void unhighlight();
     

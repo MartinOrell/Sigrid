@@ -35,10 +35,10 @@ template <typename T> class AutoInsertMappedGrid{
 
     void clear();
 
-    std::optional<std::reference_wrapper<T>> at(const sigrid::Coord& coord);
-    const std::optional<std::reference_wrapper<const T>> at(const sigrid::Coord& coord) const;
+    std::optional<std::reference_wrapper<T>> at(const sigrid_coord::Coord& coord);
+    const std::optional<std::reference_wrapper<const T>> at(const sigrid_coord::Coord& coord) const;
 
-    bool removeAt(const sigrid::Coord& coord);
+    bool removeAt(const sigrid_coord::Coord& coord);
 
     const int& numColumns() const;
     const int& numRows() const;
@@ -46,7 +46,7 @@ template <typename T> class AutoInsertMappedGrid{
 
   private:
 
-    T getInsertElement(const sigrid::Coord& coord) const;
+    T getInsertElement(const sigrid_coord::Coord& coord) const;
 
     void refill();
 
@@ -54,7 +54,7 @@ template <typename T> class AutoInsertMappedGrid{
 
     int m_columns = 0;
     int m_rows = 0;
-    Map<sigrid::Coord, T> m_map;
+    Map<sigrid_coord::Coord, T> m_map;
     Vector<T> m_insertPattern;
 };
 

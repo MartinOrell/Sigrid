@@ -1037,7 +1037,7 @@ void WorkWindow::removeTurnToken(){
     board.removeTurnToken();
 }
 
-void WorkWindow::useAddEntityTool(const Coord& coord, const LogicEntity& newEntity){
+void WorkWindow::useAddEntityTool(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1136,7 +1136,7 @@ std::string WorkWindow::getUniqueName(const std::string& name){
     return newName;
 }
 
-void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId){
+void WorkWindow::useAddTileHighlightTool(const sigrid_coord::Coord& coord, const int& colorId){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1170,7 +1170,7 @@ void WorkWindow::useAddTileHighlightTool(const Coord& coord, const int& colorId)
     board.addTileHighlight(coord, colorId);
 }
 
-void WorkWindow::useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId){
+void WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){

@@ -128,7 +128,7 @@ void GraphicTiles::setBottomToTop(){
 }
 
 
-void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& position){
+void GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -139,7 +139,7 @@ void GraphicTiles::setTilePosition(const Coord& coord, const sf::Vector2f& posit
     tile.setPosition(position);
 }
 
-void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
+void GraphicTiles::setTileColor(const sigrid_coord::Coord& coord, const int& colorId){
     
     if(!m_tileColorManagerPtr){
         std::cerr << "GraphicTiles: Unable to set tile color" << std::endl;
@@ -162,7 +162,7 @@ void GraphicTiles::setTileColor(const Coord& coord, const int& colorId){
     tile.setTileColor(color_o.value());
 }
 
-void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){
+void GraphicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
 
     if(!m_highlightColorManagerPtr){
         std::cerr << "GraphicTiles: Unable to set highlight color" << std::endl;
@@ -185,7 +185,7 @@ void GraphicTiles::setHighlightColor(const Coord& coord, const int& colorId){
     tile.setHighlightColor(color_o.value());
 }
 
-void GraphicTiles::removeHighlight(const Coord& coord){
+void GraphicTiles::removeHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -532,7 +532,7 @@ sf::Vector2f GraphicTiles::getTileSize() const{
     return m_tileSize;
 }
 
-std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const Coord& coord) const{
+std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -544,7 +544,7 @@ std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const Coord& co
     return tile.getTopLeftPosition();
 }
 
-std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const Coord& coord) const{
+std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -556,7 +556,7 @@ std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const Coord& coo
     return tile.getCentrePosition();
 }
 
-std::optional<float> GraphicTiles::getTileRightPosition(const Coord& coord) const{
+std::optional<float> GraphicTiles::getTileRightPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -568,7 +568,7 @@ std::optional<float> GraphicTiles::getTileRightPosition(const Coord& coord) cons
     return tile.getRightPosition();
 }
 
-std::optional<float> GraphicTiles::getTileTopPosition(const Coord& coord) const{
+std::optional<float> GraphicTiles::getTileTopPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -580,7 +580,7 @@ std::optional<float> GraphicTiles::getTileTopPosition(const Coord& coord) const{
     return tile.getTopPosition();
 }
 
-std::optional<sf::Color> GraphicTiles::getTileColor(const Coord& coord) const{
+std::optional<sf::Color> GraphicTiles::getTileColor(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 

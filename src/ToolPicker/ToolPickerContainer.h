@@ -12,9 +12,9 @@ struct ToolPickerContainer{
     std::vector<int> tileColorIds;
     int columns;
     int rows;
-    CoordBlock miscToolBlock;
-    CoordBlock colorBlock;
-    std::vector<CoordBlock> pieceBlocks;
+    sigrid_coord::CoordBlock miscToolBlock;
+    sigrid_coord::CoordBlock colorBlock;
+    std::vector<sigrid_coord::CoordBlock> pieceBlocks;
     bool show;
     bool showColors;
     std::string defaultPieceNotation;

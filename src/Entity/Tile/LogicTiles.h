@@ -17,8 +17,8 @@ class LogicTiles{
 
     void init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds);
 
-    void setHighlightColor(const Coord& coord, const int& colorId);
-    void removeHighlight(const Coord& coord);
+    void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
+    void removeHighlight(const sigrid_coord::Coord& coord);
     
     int getNumColumns() const;
     int getNumRows() const;
@@ -36,7 +36,7 @@ class LogicTiles{
 
     void clear();
 
-    std::optional<LogicTile> getTile(const Coord& coord) const;
+    std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
 
     friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
 

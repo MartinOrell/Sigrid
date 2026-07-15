@@ -22,7 +22,7 @@ void GraphicArrows::setColorManagerPtr(ColorManager* const managerPtr){
     m_colorManagerPtr = managerPtr;
 }
 
-void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
+void GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
 
     if(m_arrowThickness == 0.f){
         std::cerr << "GraphicArrows: Failed to add arrow, arrow thickness is 0" << std::endl;
@@ -57,7 +57,7 @@ void GraphicArrows::addArrow(const CoordPair& coordPair, const sf::Vector2f& fro
     m_arrows.push_back(coordPair, graphicArrow);
 }
 
-void GraphicArrows::removeArrow(const CoordPair& coordPair){
+void GraphicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
     m_arrows.erase(coordPair);
 }
 
@@ -69,15 +69,15 @@ float GraphicArrows::getHeadSize() const{
     return m_arrowHeadSize;
 }
 
-std::optional<GraphicArrow> GraphicArrows::getArrow(const CoordPair& coordPair) const{
+std::optional<GraphicArrow> GraphicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
     return m_arrows.atKey(coordPair);
 }
 
-const sigrid_list::OrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
+const sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
     return m_arrows;
 }
 
-sigrid_list::OrderedMap<CoordPair, GraphicArrow>& GraphicArrows::getArrows(){
+sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& GraphicArrows::getArrows(){
     return m_arrows;
 }
 
@@ -166,7 +166,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -180,7 +180,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
                     arrow.move({tileWidth, 0.f});
                 }
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.x++;
                 newCoordPair.to.x++;
                 
@@ -229,7 +229,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -242,7 +242,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
                     arrow.move({-tileWidth, 0.f});
                 }
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.x--;
                 newCoordPair.to.x--;
                 
@@ -291,7 +291,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -304,7 +304,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
                     arrow.move({0.f, -tileHeight});
                 }
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.y--;
                 newCoordPair.to.y--;
                 
@@ -353,7 +353,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
                 }
                 auto& coordPair = coordPair_o.value().get();
 
-                if(coordPair.from != Coord{x,y}){
+                if(coordPair.from != sigrid_coord::Coord{x,y}){
                     continue;
                 }
 
@@ -366,7 +366,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
                     arrow.move({0.f, tileHeight});
                 }
 
-                CoordPair newCoordPair = coordPair;
+                sigrid_coord::CoordPair newCoordPair = coordPair;
                 newCoordPair.from.y++;
                 newCoordPair.to.y++;
                 

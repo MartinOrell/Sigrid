@@ -42,7 +42,7 @@ class LayoutGrid{
 
     sigrid_list::Vector<float> m_xCoords;
     sigrid_list::Vector<float> m_yCoords;
-    sigrid_list::Map<int, CoordPair> m_objects;
+    sigrid_list::Map<int, sigrid_coord::CoordPair> m_objects;
 };
 
 }  // namespace sigrid

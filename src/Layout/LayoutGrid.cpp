@@ -82,7 +82,7 @@ void LayoutGrid::setFromXCoord(const int& id, const int& x){
         return;
     }
     
-    CoordPair pair;
+    sigrid_coord::CoordPair pair;
     pair.from.x = x;
     m_objects.insert(id, pair);
 }
@@ -97,7 +97,7 @@ void LayoutGrid::setFromYCoord(const int& id, const int& y){
         return;
     }
     
-    CoordPair pair;
+    sigrid_coord::CoordPair pair;
     pair.from.y = y;
     m_objects.insert(id, pair);
 }
@@ -112,7 +112,7 @@ void LayoutGrid::setToXCoord(const int& id, const int& x){
         return;
     }
 
-    CoordPair pair;
+    sigrid_coord::CoordPair pair;
     pair.to.x = x;
     m_objects.insert(id, pair);
 }
@@ -127,7 +127,7 @@ void LayoutGrid::setToYCoord(const int& id, const int& y){
         return;
     }
 
-    CoordPair pair;
+    sigrid_coord::CoordPair pair;
     pair.to.y = y;
     m_objects.insert(id, pair);
 }

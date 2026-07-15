@@ -19,7 +19,7 @@ void LogicTiles::init(const int& numColumns, const int& numRows, const std::vect
     m_tiles.setSize(numColumns, numRows);
 }
 
-void LogicTiles::setHighlightColor(const Coord& coord, const int& colorId){
+void LogicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -30,7 +30,7 @@ void LogicTiles::setHighlightColor(const Coord& coord, const int& colorId){
     tile.setHighlightColor(colorId);
 }
 
-void LogicTiles::removeHighlight(const Coord& coord){
+void LogicTiles::removeHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -96,7 +96,7 @@ void LogicTiles::clear(){
     m_tiles.clear();
 }
 
-std::optional<LogicTile> LogicTiles::getTile(const Coord& coord) const{
+std::optional<LogicTile> LogicTiles::getTile(const sigrid_coord::Coord& coord) const{
     return m_tiles.at(coord);
 }
 

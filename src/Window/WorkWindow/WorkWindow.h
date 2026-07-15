@@ -128,7 +128,7 @@ class WorkWindow: public sf::Drawable{
 
     void removeTurnToken();
 
-    void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
+    void useAddEntityTool(const sigrid_coord::Coord& coord, const LogicEntity& newEntity);
     void useAddEntityAtSelectionTool(const LogicEntity& newEntity);
 
     void updateTexture();
@@ -137,8 +137,8 @@ class WorkWindow: public sf::Drawable{
 
     std::string getUniqueName(const std::string& name);
 
-    void useAddTileHighlightTool(const Coord& coord, const int& colorId);
-    void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
+    void useAddTileHighlightTool(const sigrid_coord::Coord& coord, const int& colorId);
+    void useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId);
 
     void updateBoardLayout();
 

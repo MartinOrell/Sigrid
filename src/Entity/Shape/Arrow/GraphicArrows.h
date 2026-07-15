@@ -22,15 +22,15 @@ class GraphicArrows: public sf::Drawable{
     void setHeadSize(const float& headSize);
     void setColorManagerPtr(ColorManager* const managerPtr);
 
-    void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
-    void removeArrow(const CoordPair& coordPair);
+    void addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
+    void removeArrow(const sigrid_coord::CoordPair& coordPair);
 
     float getThickness() const;
     float getHeadSize() const;
 
-    std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
-    const sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows() const;
-    sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows();
+    std::optional<GraphicArrow> getArrow(const sigrid_coord::CoordPair& coordPair) const;
+    const sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& getArrows() const;
+    sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& getArrows();
 
     void clear();
 
@@ -50,7 +50,7 @@ class GraphicArrows: public sf::Drawable{
 
     ColorManager* m_colorManagerPtr = nullptr;
 
-    sigrid_list::OrderedMap<CoordPair, GraphicArrow> m_arrows;
+    sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow> m_arrows;
 
     float m_arrowThickness = 0.f;
     float m_arrowHeadSize = 0.f;

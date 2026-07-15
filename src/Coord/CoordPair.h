@@ -5,7 +5,7 @@
 
 #include "Coord/Coord.h"
 
-namespace sigrid{
+namespace sigrid_coord{
 
 struct CoordPair{
 
@@ -20,4 +20,4 @@ struct CoordPair{
     friend std::ostream& operator<<(std::ostream& out, const CoordPair& coordPair);
 };
 
-}  // namespace sigrid
+}  // namespace sigrid_coord

@@ -2,7 +2,7 @@
 
 #include "Coord/Coord.h"
 
-namespace sigrid{
+namespace sigrid_coord{
 
 struct CoordBlock{
     Coord coord;
@@ -10,4 +10,4 @@ struct CoordBlock{
     int rows;
 };
 
-}  // namespace sigrid
+}  // namespace sigrid_coord
