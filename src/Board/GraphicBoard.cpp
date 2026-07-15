@@ -65,6 +65,10 @@ void GraphicBoard::setBottomToTop(){
 void GraphicBoard::load(const LogicBoard& logicBoard){
 
     m_tileLayer.clear();
+    m_tileLayer.unsetNumColumns();
+    m_tileLayer.unsetNumRows();
+    m_tileLayer.unsetTopLeftPosition();
+
     m_pieceLayer.clear();
     m_arrowLayer.clear();
     

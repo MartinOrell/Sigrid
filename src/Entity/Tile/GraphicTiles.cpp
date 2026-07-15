@@ -69,6 +69,24 @@ void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
     }
 }
 
+void GraphicTiles::unsetNumColumns(){
+
+    m_isSet.numColumns = false;
+    m_isInitialized = false;
+}
+
+void GraphicTiles::unsetNumRows(){
+
+    m_isSet.numRows = false;
+    m_isInitialized = false;
+}
+
+void GraphicTiles::unsetTopLeftPosition(){
+
+    m_isSet.topLeftPosition = false;
+    m_isInitialized = false;
+}
+
 void GraphicTiles::setLeftToRight(){
 
     m_isLeftToRight = true;
@@ -489,11 +507,9 @@ void GraphicTiles::removeBottomRow(){
 }
 
 void GraphicTiles::clear(){
+    
     m_tiles.clear();
     m_isInitialized = false;
-    m_isSet.numColumns = false;
-    m_isSet.numRows = false;
-    m_isSet.topLeftPosition = false;
 }
 
 int GraphicTiles::getNumColumns() const{

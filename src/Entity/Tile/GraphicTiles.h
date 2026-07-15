@@ -26,6 +26,10 @@ namespace sigrid{
             void setTileSize(const sf::Vector2f& tileSize);
             void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
 
+            void unsetNumColumns();
+            void unsetNumRows();
+            void unsetTopLeftPosition();
+
             void setLeftToRight();
             void setRightToLeft();
             void setTopToBottom();
