@@ -17,8 +17,6 @@
 
 using namespace sigrid;
 
-Board::Board(){}
-
 Board::Board(const Board& src){
     *this = src;
 }
@@ -77,16 +75,6 @@ void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer
     else{
         std::cerr << "Board: Failed to init logicBoard" << std::endl;
     }
-}
-
-Board& Board::operator=(const Board& rhs){
-    m_filename = rhs.m_filename;
-    m_imageFilename = rhs.m_imageFilename;
-    m_logicBoard = rhs.m_logicBoard;
-    m_graphicBoard = rhs.m_graphicBoard;
-    m_selection_o = rhs.m_selection_o;
-
-    return *this;
 }
 
 void Board::setPosition(const sf::Vector2f& position){

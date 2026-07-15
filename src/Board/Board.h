@@ -17,8 +17,11 @@ class Board: public sf::Drawable{
 
   public:
 
-    Board();
-    Board(const Board& src);
+    Board() = default;
+    Board(const Board&);
+    Board(Board&&) = default;
+    Board& operator=(const Board&) = default;
+    Board& operator=(Board&&) = default;
 
     void setPieceManagerPtr(PieceManager* const managerPtr);
     void setTileColorManagerPtr(ColorManager* const managerPtr);
@@ -32,8 +35,6 @@ class Board: public sf::Drawable{
 
     void loadBoardData(const BoardDataContainer& boardData);
     void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
-
-    Board& operator=(const Board& rhs);
 
     void setPosition(const sf::Vector2f& position);
 
