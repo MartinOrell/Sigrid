@@ -36,7 +36,7 @@ class Menu: public sf::Drawable{
 
     bool isCollapsed() const;
 
-    std::optional<Action> clicked(const sf::Vector2f& position);
+    std::optional<sigrid_action::Action> clicked(const sf::Vector2f& position);
 
     void pinMenu();
 
@@ -52,9 +52,9 @@ class Menu: public sf::Drawable{
 
     void addHeader(const std::string&);
 
-    void addItem(const std::string&, const int index, const Action);
+    void addItem(const std::string&, const int index, const sigrid_action::Action);
 
-    void addToggleItem(const std::string& key, const int index, const std::string& text0, const Action action0, const std::string& text1, const Action action1);
+    void addToggleItem(const std::string& key, const int index, const std::string& text0, const sigrid_action::Action action0, const std::string& text1, const sigrid_action::Action action1);
 
     void toggleItem(const std::string& key);
 

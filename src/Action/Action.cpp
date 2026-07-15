@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-using namespace sigrid;
+using namespace sigrid_action;
 
-std::optional<Action> sigrid::getAction(const std::string& s){
+std::optional<Action> sigrid_action::getAction(const std::string& s){
     std::string name;
     std::string content;
 
@@ -19,139 +19,139 @@ std::optional<Action> sigrid::getAction(const std::string& s){
     }
 
     if(name == "save"){
-        return ActionType::SaveBoard{};
+        return sigrid_action::SaveBoard{};
     }
     else if(name == "savePdf"){
-        return ActionType::SavePdf{};
+        return sigrid_action::SavePdf{};
     }
     else if(name == "new"){
-        return ActionType::NewBoard{};
+        return sigrid_action::NewBoard{};
     }
     else if(name == "addBoardColumn"){
-        return ActionType::AddBoardColumn{};
+        return sigrid_action::AddBoardColumn{};
     }
     else if(name == "removeBoardColumn"){
-        return ActionType::RemoveBoardColumn{};
+        return sigrid_action::RemoveBoardColumn{};
     }
     else if(name == "addBoardRow"){
-        return ActionType::AddBoardRow{};
+        return sigrid_action::AddBoardRow{};
     }
     else if(name == "removeBoardRow"){
-        return ActionType::RemoveBoardRow{};
+        return sigrid_action::RemoveBoardRow{};
     }
     else if(name == "reset"){
-        return ActionType::Reset{};
+        return sigrid_action::Reset{};
     }
     else if(name == "clear"){
-        return ActionType::Clear{};
+        return sigrid_action::Clear{};
     }
     else if(name == "addLeftInsideLabels"){
-        return ActionType::AddLeftInsideLabels{};
+        return sigrid_action::AddLeftInsideLabels{};
     }
     else if(name == "addRightOutsideLabels"){
-        return ActionType::AddRightOutsideLabels{};
+        return sigrid_action::AddRightOutsideLabels{};
     }
     else if(name == "addBottomInsideLabels"){
-        return ActionType::AddBottomInsideLabels{};
+        return sigrid_action::AddBottomInsideLabels{};
     }
     else if(name == "addLeftOutsideLabels"){
-        return ActionType::AddLeftOutsideLabels{};
+        return sigrid_action::AddLeftOutsideLabels{};
     }
     else if(name == "addTopOutsideLabels"){
-        return ActionType::AddTopOutsideLabels{};
+        return sigrid_action::AddTopOutsideLabels{};
     }
     else if(name == "addBottomOutsideLabels"){
-        return ActionType::AddBottomOutsideLabels{};
+        return sigrid_action::AddBottomOutsideLabels{};
     }
     else if(name == "removeLeftInsideLabels"){
-        return ActionType::RemoveLeftInsideLabels{};
+        return sigrid_action::RemoveLeftInsideLabels{};
     }
     else if(name == "removeBottomInsideLabels"){
-        return ActionType::RemoveBottomInsideLabels{};
+        return sigrid_action::RemoveBottomInsideLabels{};
     }
     else if(name == "removeLeftOutsideLabels"){
-        return ActionType::RemoveLeftOutsideLabels{};
+        return sigrid_action::RemoveLeftOutsideLabels{};
     }
     else if(name == "removeRightOutsideLabels"){
-        return ActionType::RemoveRightOutsideLabels{};
+        return sigrid_action::RemoveRightOutsideLabels{};
     }
     else if(name == "removeTopOutsideLabels"){
-        return ActionType::RemoveTopOutsideLabels{};
+        return sigrid_action::RemoveTopOutsideLabels{};
     }
     else if(name == "removeBottomOutsideLabels"){
-        return ActionType::RemoveBottomOutsideLabels{};
+        return sigrid_action::RemoveBottomOutsideLabels{};
     }
     else if(name == "setCoordinateSize"){
         std::string number = content;
         number.pop_back(); //remove '%'
         float size = std::stof(number)/100.f;
-        return ActionType::SetCoordinateSize{size};
+        return sigrid_action::SetCoordinateSize{size};
     }
     else if(name == "addTileColumnRight"){
-        return ActionType::AddTileColumnRight{};
+        return sigrid_action::AddTileColumnRight{};
     }
     else if(name == "addTileColumnLeft"){
-        return ActionType::AddTileColumnLeft{};
+        return sigrid_action::AddTileColumnLeft{};
     }
     else if(name == "removeRightTileColumn"){
-        return ActionType::RemoveRightTileColumn{};
+        return sigrid_action::RemoveRightTileColumn{};
     }
     else if(name == "removeLeftTileColumn"){
-        return ActionType::RemoveLeftTileColumn{};
+        return sigrid_action::RemoveLeftTileColumn{};
     }
     else if(name == "addTileRowUp"){
-        return ActionType::AddTileRowUp{};
+        return sigrid_action::AddTileRowUp{};
     }
     else if(name == "addTileRowDown"){
-        return ActionType::AddTileRowDown{};
+        return sigrid_action::AddTileRowDown{};
     }
     else if(name == "removeTopTileRow"){
-        return ActionType::RemoveTopTileRow{};
+        return sigrid_action::RemoveTopTileRow{};
     }
     else if(name == "removeBottomTileRow"){
-        return ActionType::RemoveBottomTileRow{};
+        return sigrid_action::RemoveBottomTileRow{};
     }
     else if(name == "addBoardBorder"){
-        return ActionType::AddBoardBorder{};
+        return sigrid_action::AddBoardBorder{};
     }
     else if(name == "removeBoardBorder"){
-        return ActionType::RemoveBoardBorder{};
+        return sigrid_action::RemoveBoardBorder{};
     }
     else if(name == "addTurnToken"){
-        return ActionType::AddTurnToken{};
+        return sigrid_action::AddTurnToken{};
     }
     else if(name == "removeTurnToken"){
-        return ActionType::RemoveTurnToken{};
+        return sigrid_action::RemoveTurnToken{};
     }
     else if(name == "pasteFen"){
-        return ActionType::PasteFen{};
+        return sigrid_action::PasteFen{};
     }
     else if(name == "copyFen"){
-        return ActionType::CopyFen{};
+        return sigrid_action::CopyFen{};
     }
     else if(name == "flipBoard"){
-        return ActionType::FlipBoard{};
+        return sigrid_action::FlipBoard{};
     }
     else if(name == "pinMenu"){
-        return ActionType::PinMenu{};
+        return sigrid_action::PinMenu{};
     }
     else if(name == "unpinMenu"){
-        return ActionType::UnPinMenu{};
+        return sigrid_action::UnPinMenu{};
     }
     else if(name == "showToolWindow"){
-        return ActionType::ShowTools{};
+        return sigrid_action::ShowTools{};
     }
     else if(name == "hideToolWindow"){
-        return ActionType::HideTools{};
+        return sigrid_action::HideTools{};
     }
     else if(name == "showColorTools"){
-        return ActionType::ShowColorTools{};
+        return sigrid_action::ShowColorTools{};
     }
     else if(name == "hideColorTools"){
-        return ActionType::HideColorTools{};
+        return sigrid_action::HideColorTools{};
     }
     else if(name == "print"){
-        return ActionType::Print{};
+        return sigrid_action::Print{};
     }
 
     std::cerr << "Action: Unidentified Action: " << s << std::endl;

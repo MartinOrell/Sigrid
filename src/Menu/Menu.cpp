@@ -29,7 +29,7 @@ void Menu::init(const MenuContainer& menuData){
     for(const auto& menuItem : menuData.menuItems){
         if(menuItem.displayNames.size() == 1){
 
-            auto action_o = getAction(menuItem.actionNames.at(0));
+            auto action_o = sigrid_action::getAction(menuItem.actionNames.at(0));
             if(action_o == std::nullopt){
                 continue;
             }
@@ -39,11 +39,11 @@ void Menu::init(const MenuContainer& menuData){
         }
         else if(menuItem.displayNames.size() == 2){
 
-            auto actionA_o = getAction(menuItem.actionNames.at(0));
+            auto actionA_o = sigrid_action::getAction(menuItem.actionNames.at(0));
             if(actionA_o == std::nullopt){
                 continue;
             }
-            auto actionB_o = getAction(menuItem.actionNames.at(1));
+            auto actionB_o = sigrid_action::getAction(menuItem.actionNames.at(1));
             if(actionB_o == std::nullopt){
                 continue;
             }
@@ -110,7 +110,7 @@ bool Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-std::optional<Action> Menu::clicked(const sf::Vector2f& position){
+std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position){
 
     std::optional<sigrid::Menu::PosIndex> itemId_o = getMenuItemPosIndex(position);
     if(itemId_o == std::nullopt){
@@ -198,8 +198,8 @@ void Menu::addSuperHeader(const std::string& name){
         return;
     }
 
-    sigrid::ActionType::ShowMenu action0;
-    sigrid::ActionType::HideMenu action1;
+    sigrid_action::ShowMenu action0;
+    sigrid_action::HideMenu action1;
     m_superHeader.setName(name);
     m_superHeader.setFont(*(fontPtr_o.value()));
     m_superHeader.setAction(action0);
@@ -227,7 +227,7 @@ void Menu::addHeader(const std::string& name){
     }
 
     int id = m_items.size();
-    sigrid::ActionType::ToggleHeader action{id};    
+    sigrid_action::ToggleHeader action{id};    
 
     MenuItem newItem;
     newItem.setName(name);
@@ -250,7 +250,7 @@ void Menu::addHeader(const std::string& name){
     }
 }
 
-void Menu::addItem(const std::string& name, const int headerIndex, const Action action){
+void Menu::addItem(const std::string& name, const int headerIndex, const sigrid_action::Action action){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add item " << name << std::endl;
@@ -289,7 +289,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const Action 
     }
 }
 
-void Menu::addToggleItem(const std::string& key, const int headerIndex, const std::string& text0, const Action action0, const std::string& text1, const Action action1){
+void Menu::addToggleItem(const std::string& key, const int headerIndex, const std::string& text0, const sigrid_action::Action action0, const std::string& text1, const sigrid_action::Action action1){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add toggle item " << key << std::endl;

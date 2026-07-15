@@ -59,7 +59,7 @@ class WorkWindow: public sf::Drawable{
     bool isCoordinatesOutside() const;
 
     void mousePress(const sf::Vector2f& position);
-    std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
+    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
     void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
 
     void reset();

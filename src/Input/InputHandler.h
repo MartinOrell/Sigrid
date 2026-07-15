@@ -17,11 +17,11 @@ class InputHandler{
 
     void addTool(const sf::Mouse::Button& button, sigrid::Tool tool);
 
-    void addTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addTool(const sf::Keyboard::Key& button, sigrid_action::Action action);
 
-    void addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addCtrlTool(const sf::Keyboard::Key& button, sigrid_action::Action action);
 
-    void addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid_action::Action action);
 
     void setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity);
 
@@ -31,18 +31,18 @@ class InputHandler{
 
     std::optional<sigrid::Tool*> getToolPtr(const sf::Mouse::Button& button);
 
-    std::optional<sigrid::Action> getAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid_action::Action> getAction(const sf::Keyboard::Key& key);
 
-    std::optional<sigrid::Action> getCtrlAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid_action::Action> getCtrlAction(const sf::Keyboard::Key& key);
 
-    std::optional<sigrid::Action> getCtrlShiftAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid_action::Action> getCtrlShiftAction(const sf::Keyboard::Key& key);
 
   private:
 
     sigrid_list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
-    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
-    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
-    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid_action::Action> m_keyboardActions;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid_action::Action> m_ctrlKeyboardActions;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid_action::Action> m_ctrlShiftKeyboardActions;
 
 };
 

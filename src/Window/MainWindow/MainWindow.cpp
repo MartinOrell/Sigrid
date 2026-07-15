@@ -38,41 +38,41 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     sigrid::Tool extra2ClickTool{config.extra2ClickTool};
     m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
 
-    sigrid::Action spaceBarTool(ActionType::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
+    sigrid_action::Action spaceBarTool(sigrid_action::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
     m_inputHandler.addTool(sf::Keyboard::Key::Space, std::move(spaceBarTool));
-    sigrid::Action leftKeyTool(ActionType::GotoLeftBoard{});
+    sigrid_action::Action leftKeyTool(sigrid_action::GotoLeftBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Left, std::move(leftKeyTool));
-    sigrid::Action rightKeyTool(ActionType::GotoRightBoard{});
+    sigrid_action::Action rightKeyTool(sigrid_action::GotoRightBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Right, std::move(rightKeyTool));
-    sigrid::Action upKeyTool(ActionType::GotoUpBoard{});
+    sigrid_action::Action upKeyTool(sigrid_action::GotoUpBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Up, std::move(upKeyTool));
-    sigrid::Action downKeyTool(ActionType::GotoDownBoard{});
+    sigrid_action::Action downKeyTool(sigrid_action::GotoDownBoard{});
     m_inputHandler.addTool(sf::Keyboard::Key::Down, std::move(downKeyTool));
 
-    sigrid::Action ctrlNTool(ActionType::NewBoard{});
+    sigrid_action::Action ctrlNTool(sigrid_action::NewBoard{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::N, std::move(ctrlNTool));
-    sigrid::Action ctrlSTool(ActionType::SaveBoard{});
+    sigrid_action::Action ctrlSTool(sigrid_action::SaveBoard{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::S, std::move(ctrlSTool));
-    sigrid::Action ctrlCTool(ActionType::CopyFen{});
+    sigrid_action::Action ctrlCTool(sigrid_action::CopyFen{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::C, std::move(ctrlCTool));
-    sigrid::Action ctrlVTool(ActionType::PasteFen{});
+    sigrid_action::Action ctrlVTool(sigrid_action::PasteFen{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::V, std::move(ctrlVTool));
-    sigrid::Action ctrlLeftKeyTool(ActionType::AddTileColumnLeft{});
+    sigrid_action::Action ctrlLeftKeyTool(sigrid_action::AddTileColumnLeft{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Left, std::move(ctrlLeftKeyTool));
-    sigrid::Action ctrlRightKeyTool(ActionType::AddTileColumnRight{});
+    sigrid_action::Action ctrlRightKeyTool(sigrid_action::AddTileColumnRight{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Right, std::move(ctrlRightKeyTool));
-    sigrid::Action ctrlUpKeyTool(ActionType::AddTileRowUp{});
+    sigrid_action::Action ctrlUpKeyTool(sigrid_action::AddTileRowUp{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Up, std::move(ctrlUpKeyTool));
-    sigrid::Action ctrlDownKeyTool(ActionType::AddTileRowDown{});
+    sigrid_action::Action ctrlDownKeyTool(sigrid_action::AddTileRowDown{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::Down, std::move(ctrlDownKeyTool));
 
-    sigrid::Action ctrlShiftLeftKeyTool(ActionType::RemoveRightTileColumn{});
+    sigrid_action::Action ctrlShiftLeftKeyTool(sigrid_action::RemoveRightTileColumn{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Left, std::move(ctrlShiftLeftKeyTool));
-    sigrid::Action ctrlShiftRightKeyTool(ActionType::RemoveLeftTileColumn{});
+    sigrid_action::Action ctrlShiftRightKeyTool(sigrid_action::RemoveLeftTileColumn{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Right, std::move(ctrlShiftRightKeyTool));
-    sigrid::Action ctrlShiftUpKeyTool(ActionType::RemoveBottomTileRow{});
+    sigrid_action::Action ctrlShiftUpKeyTool(sigrid_action::RemoveBottomTileRow{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Up, std::move(ctrlShiftUpKeyTool));
-    sigrid::Action ctrlShiftDownKeyTool(ActionType::RemoveTopTileRow{});
+    sigrid_action::Action ctrlShiftDownKeyTool(sigrid_action::RemoveTopTileRow{});
     m_inputHandler.addCtrlShiftTool(sf::Keyboard::Key::Down, std::move(ctrlShiftDownKeyTool));
 
     m_toolWindow = std::make_unique<sigrid::ToolWindow>();
@@ -477,260 +477,260 @@ void MainWindow::handleEvents(){
     }
 }
 
-void MainWindow::handleAction(const sigrid::Action action){
+void MainWindow::handleAction(const sigrid_action::Action action){
 
-    if(std::holds_alternative<ActionType::PinMenu>(action)){
+    if(std::holds_alternative<sigrid_action::PinMenu>(action)){
         pinMenu();
         return;
     }
-    else if(std::holds_alternative<ActionType::UnPinMenu>(action)){
+    else if(std::holds_alternative<sigrid_action::UnPinMenu>(action)){
         unPinMenu();
         return;
     }
-    else if(std::holds_alternative<ActionType::ShowMenu>(action)){
+    else if(std::holds_alternative<sigrid_action::ShowMenu>(action)){
         showMenu();
         return;
     }
-    else if(std::holds_alternative<ActionType::HideMenu>(action)){
+    else if(std::holds_alternative<sigrid_action::HideMenu>(action)){
         hideMenu();
         return;
     }
-    else if(std::holds_alternative<ActionType::ToggleHeader>(action)){
-        int headerId = std::get<ActionType::ToggleHeader>(action).headerId;
+    else if(std::holds_alternative<sigrid_action::ToggleHeader>(action)){
+        int headerId = std::get<sigrid_action::ToggleHeader>(action).headerId;
         toggleHeader(headerId);
     }
-    else if(std::holds_alternative<ActionType::Reset>(action)){
+    else if(std::holds_alternative<sigrid_action::Reset>(action)){
         reset();
         return;
     }
-    else if(std::holds_alternative<ActionType::Clear>(action)){
+    else if(std::holds_alternative<sigrid_action::Clear>(action)){
         clear();
         return;
     }
-    else if(std::holds_alternative<ActionType::Print>(action)){
+    else if(std::holds_alternative<sigrid_action::Print>(action)){
         print();
         return;
     }
-    else if(std::holds_alternative<ActionType::PickEntity>(action)){
+    else if(std::holds_alternative<sigrid_action::PickEntity>(action)){
         
-        sigrid::LogicEntity logicEntity = std::get<ActionType::PickEntity>(action).logicEntity;
+        sigrid::LogicEntity logicEntity = std::get<sigrid_action::PickEntity>(action).logicEntity;
         
         pickEntity(logicEntity);
         return;
     }
-    else if(std::holds_alternative<ActionType::PickPieceColor>(action)){
+    else if(std::holds_alternative<sigrid_action::PickPieceColor>(action)){
 
-        sigrid::LogicPiece logicPiece = std::get<ActionType::PickPieceColor>(action).logicPiece;
+        sigrid::LogicPiece logicPiece = std::get<sigrid_action::PickPieceColor>(action).logicPiece;
    
         pickPieceColor(logicPiece);
         return;
     }
-    else if(std::holds_alternative<ActionType::PickArrow>(action)){
+    else if(std::holds_alternative<sigrid_action::PickArrow>(action)){
 
-        int colorId = std::get<ActionType::PickArrow>(action).colorId;
+        int colorId = std::get<sigrid_action::PickArrow>(action).colorId;
         pickArrow(colorId);
         return;
     }
-    else if(std::holds_alternative<ActionType::PickArrowColor>(action)){
+    else if(std::holds_alternative<sigrid_action::PickArrowColor>(action)){
         
-        int colorId = std::get<ActionType::PickArrowColor>(action).colorId;
+        int colorId = std::get<sigrid_action::PickArrowColor>(action).colorId;
         pickArrowColor(colorId);
         return;
     }
-    else if(std::holds_alternative<ActionType::PickCircle>(action)){
+    else if(std::holds_alternative<sigrid_action::PickCircle>(action)){
 
-        int colorId = std::get<ActionType::PickCircle>(action).colorId;
+        int colorId = std::get<sigrid_action::PickCircle>(action).colorId;
         pickCircle(colorId);
     }
-    else if(std::holds_alternative<ActionType::PickCircleColor>(action)){
+    else if(std::holds_alternative<sigrid_action::PickCircleColor>(action)){
 
-        int colorId = std::get<ActionType::PickCircleColor>(action).colorId;
+        int colorId = std::get<sigrid_action::PickCircleColor>(action).colorId;
         pickCircleColor(colorId);
     }
-    else if(std::holds_alternative<ActionType::SetTool>(action)){
+    else if(std::holds_alternative<sigrid_action::SetTool>(action)){
         
-        ActionType::SetTool a = std::get<ActionType::SetTool>(action);
+        sigrid_action::SetTool a = std::get<sigrid_action::SetTool>(action);
         setTool(a.selection, a.button);
         return;
     }
-    else if(std::holds_alternative<ActionType::ShowColorTools>(action)){
+    else if(std::holds_alternative<sigrid_action::ShowColorTools>(action)){
         showColorTools();
         return;
     }
-    else if(std::holds_alternative<ActionType::HideColorTools>(action)){
+    else if(std::holds_alternative<sigrid_action::HideColorTools>(action)){
         hideColorTools();
         return;
     }
-    else if(std::holds_alternative<ActionType::ShowTools>(action)){
+    else if(std::holds_alternative<sigrid_action::ShowTools>(action)){
         showTools();
         return;
     }
-    else if(std::holds_alternative<ActionType::HideTools>(action)){
+    else if(std::holds_alternative<sigrid_action::HideTools>(action)){
         hideTools();
         return;
     }
-    else if(std::holds_alternative<ActionType::NewBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::NewBoard>(action)){
         newBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddBoardColumn>(action)){
+    else if(std::holds_alternative<sigrid_action::AddBoardColumn>(action)){
         addBoardColumn();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBoardColumn>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBoardColumn>(action)){
         removeBoardColumn();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddBoardRow>(action)){
+    else if(std::holds_alternative<sigrid_action::AddBoardRow>(action)){
         addBoardRow();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBoardRow>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBoardRow>(action)){
         removeBoardRow();
         return;
     }
-    else if(std::holds_alternative<ActionType::ShiftBoardsLeft>(action)){
+    else if(std::holds_alternative<sigrid_action::ShiftBoardsLeft>(action)){
         shiftBoardsLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::ShiftBoardsRight>(action)){
+    else if(std::holds_alternative<sigrid_action::ShiftBoardsRight>(action)){
         shiftBoardsRight();
         return;
     }
-    else if(std::holds_alternative<ActionType::GotoLeftBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::GotoLeftBoard>(action)){
         gotoLeftBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::GotoRightBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::GotoRightBoard>(action)){
         gotoRightBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::GotoUpBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::GotoUpBoard>(action)){
         gotoUpBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::GotoDownBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::GotoDownBoard>(action)){
         gotoDownBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::SaveBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::SaveBoard>(action)){
         saveBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::SavePdf>(action)){
+    else if(std::holds_alternative<sigrid_action::SavePdf>(action)){
         savePdf();
         return;
     }
-    else if(std::holds_alternative<ActionType::PasteFen>(action)){
+    else if(std::holds_alternative<sigrid_action::PasteFen>(action)){
         pasteFen();
         return;
     }
-    else if(std::holds_alternative<ActionType::CopyFen>(action)){
+    else if(std::holds_alternative<sigrid_action::CopyFen>(action)){
         copyFen();
         return;
     }
-    else if(std::holds_alternative<ActionType::FlipBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::FlipBoard>(action)){
         flipBoard();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddLeftInsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddLeftInsideLabels>(action)){
         addLeftInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddBottomInsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddBottomInsideLabels>(action)){
         addBottomInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddLeftOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddLeftOutsideLabels>(action)){
         addLeftOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddRightOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddRightOutsideLabels>(action)){
         addRightOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTopOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTopOutsideLabels>(action)){
         addTopOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddBottomOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::AddBottomOutsideLabels>(action)){
         addBottomOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveLeftInsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveLeftInsideLabels>(action)){
         removeLeftInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBottomInsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBottomInsideLabels>(action)){
         removeBottomInsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveLeftOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveLeftOutsideLabels>(action)){
         removeLeftOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveRightOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveRightOutsideLabels>(action)){
         removeRightOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTopOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveTopOutsideLabels>(action)){
         removeTopOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBottomOutsideLabels>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBottomOutsideLabels>(action)){
         removeBottomOutsideLabels();
         return;
     }
-    else if(std::holds_alternative<ActionType::SetCoordinateSize>(action)){
-        float size = std::get<ActionType::SetCoordinateSize>(action).size;
+    else if(std::holds_alternative<sigrid_action::SetCoordinateSize>(action)){
+        float size = std::get<sigrid_action::SetCoordinateSize>(action).size;
         setCoordinateSize(size);
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTileColumnRight>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTileColumnRight>(action)){
         addTileColumnRight();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTileColumnLeft>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTileColumnLeft>(action)){
         addTileColumnLeft();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveRightTileColumn>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveRightTileColumn>(action)){
         removeRightTileColumn();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveLeftTileColumn>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveLeftTileColumn>(action)){
         removeLeftTileColumn();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTileRowUp>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTileRowUp>(action)){
         addTileRowUp();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTileRowDown>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTileRowDown>(action)){
         addTileRowDown();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTopTileRow>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveTopTileRow>(action)){
         removeTopTileRow();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBottomTileRow>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBottomTileRow>(action)){
         removeBottomTileRow();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddBoardBorder>(action)){
+    else if(std::holds_alternative<sigrid_action::AddBoardBorder>(action)){
         addBoardBorder();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveBoardBorder>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveBoardBorder>(action)){
         removeBoardBorder();
         return;
     }
-    else if(std::holds_alternative<ActionType::AddTurnToken>(action)){
+    else if(std::holds_alternative<sigrid_action::AddTurnToken>(action)){
         addTurnToken();
         return;
     }
-    else if(std::holds_alternative<ActionType::RemoveTurnToken>(action)){
+    else if(std::holds_alternative<sigrid_action::RemoveTurnToken>(action)){
         removeTurnToken();
         return;
     }

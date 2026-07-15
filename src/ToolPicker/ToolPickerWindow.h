@@ -59,7 +59,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     bool contains(const sf::Vector2f& point) const;
 
-    std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
+    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
     void setPieceColorTools(const std::string& pieceNotation);
 
@@ -96,7 +96,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     struct ToolStruct{
         LogicIcon icon;
-        Action action;
+        sigrid_action::Action action;
     };
 
     int m_columns = 1;
@@ -110,7 +110,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     Board m_board;
 
-    std::map<Coord, Action> m_clickActions;
+    std::map<Coord, sigrid_action::Action> m_clickActions;
 
     std::vector<int> m_displayedPieceColorIds;
     int m_arrowColorId = 0;

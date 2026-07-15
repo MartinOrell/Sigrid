@@ -24,15 +24,15 @@ class MenuItem: public sf::Drawable{
     void setName(const std::string& name);
     void setFont(const sf::Font& font);
     void setPosition(const sf::Vector2f& position);
-    void setAction(const Action& action);
+    void setAction(const sigrid_action::Action& action);
     void setText(const std::string& text);
     float getPositionLeft();
     float getPositionRight();
     float getPositionTop();
     bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos);
-    Action getAction();
+    sigrid_action::Action getAction();
     std::string getName();
-    void addToggle(const std::string& text, const Action&);
+    void addToggle(const std::string& text, const sigrid_action::Action&);
     void toggle();
 
   private:
@@ -41,14 +41,14 @@ class MenuItem: public sf::Drawable{
 
     std::string m_name = "";
     sf::RectangleShape m_shape;
-    Action m_action;
+    sigrid_action::Action m_action;
 
     std::unique_ptr<sf::Text> m_textPtr;
     sf::Vector2f m_textOffset = {15.f,5.f};
 
     bool m_isToggled = false;
     std::string m_toggledName = "";
-    Action m_toggledAction;
+    sigrid_action::Action m_toggledAction;
 };
 
 }  // namespace sigrid

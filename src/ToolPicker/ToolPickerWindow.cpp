@@ -141,7 +141,7 @@ void ToolPickerWindow::addSelectTool(){
     LogicIcon icon;
     icon.setFilename("res/icons/select_object.png");
     tool.icon = icon;
-    ActionType::SetTool action{sf::Mouse::Button::Left, ToolSelection::Select};
+    sigrid_action::SetTool action{sf::Mouse::Button::Left, ToolSelection::Select};
     tool.action = action;
     m_miscTools.push_back(tool);
 }
@@ -188,7 +188,7 @@ bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
 }
 
 
-std::optional<Action> ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
+std::optional<sigrid_action::Action> ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     if(m_texture.isHidden()){
         return std::nullopt;
@@ -378,7 +378,7 @@ void ToolPickerWindow::redrawTexture(){
         sigrid::LogicArrow logicArrow{m_arrowColorId};
         m_board.addEntity({x,y}, logicArrow);
 
-        ActionType::PickArrow action{m_arrowColorId};
+        sigrid_action::PickArrow action{m_arrowColorId};
         m_clickActions.insert_or_assign({x,y}, action);
         if((i+1)%m_miscBlock.columns == 0){
             x = m_miscBlock.coord.x;
@@ -394,7 +394,7 @@ void ToolPickerWindow::redrawTexture(){
     if(m_circleColorId >= 0){
         sigrid::LogicCircle logicCircle{m_circleColorId};
         m_board.addEntity({x,y}, logicCircle);
-        ActionType::PickCircle action{m_circleColorId};
+        sigrid_action::PickCircle action{m_circleColorId};
         m_clickActions.insert_or_assign({x,y}, action);
         if((i+1)%m_miscBlock.columns == 0){
             x = m_miscBlock.coord.x;
@@ -419,7 +419,7 @@ void ToolPickerWindow::redrawTexture(){
 
                     m_board.addEntity({x,y}, logicPiece);
 
-                    ActionType::PickPieceColor action{logicPiece};
+                    sigrid_action::PickPieceColor action{logicPiece};
 
                     m_clickActions.insert_or_assign({x,y}, action);
 
@@ -438,7 +438,7 @@ void ToolPickerWindow::redrawTexture(){
                     sigrid::LogicArrow logicArrow{colorId};
                     m_board.addEntity({x,y}, logicArrow);
 
-                    ActionType::PickArrowColor action{colorId};
+                    sigrid_action::PickArrowColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 
                     if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
@@ -455,7 +455,7 @@ void ToolPickerWindow::redrawTexture(){
 
                     sigrid::LogicCircle logicCircle{colorId};
                     m_board.addEntity({x,y}, logicCircle);
-                    ActionType::PickCircleColor action{colorId};
+                    sigrid_action::PickCircleColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 
                     if(x < m_colorBlock.coord.x + m_colorBlock.columns-1){
@@ -482,7 +482,7 @@ void ToolPickerWindow::redrawTexture(){
 
             m_board.addEntity({x,y}, logicPiece);
 
-            ActionType::PickEntity action{logicPiece};
+            sigrid_action::PickEntity action{logicPiece};
 
             m_clickActions.insert_or_assign({x,y}, action);
 

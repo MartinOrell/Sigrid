@@ -341,7 +341,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
     }
 }
 
-std::optional<Action> WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
+std::optional<sigrid_action::Action> WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
     auto activeBoard_o = m_boards.atSelection();
 
@@ -406,7 +406,7 @@ std::optional<Action> WorkWindow::clicked(const sigrid::Tool& tool, const sf::Ve
                     if(logicEntity_o == std::nullopt){
                         return std::nullopt;
                     }
-                    ActionType::PickEntity action{logicEntity_o.value()};
+                    sigrid_action::PickEntity action{logicEntity_o.value()};
                     return action;
                 }
             case ToolSelection::DrawArrow:

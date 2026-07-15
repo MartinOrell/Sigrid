@@ -86,7 +86,7 @@ void MenuItem::setPosition(const sf::Vector2f& position){
     }
 }
 
-void MenuItem::setAction(const Action& action){
+void MenuItem::setAction(const sigrid_action::Action& action){
     m_action = action;
 }
 
@@ -135,7 +135,7 @@ bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const f
     return true;
 }
 
-Action MenuItem::getAction(){
+sigrid_action::Action MenuItem::getAction(){
     if(m_isToggled){
         return m_toggledAction;
     }
@@ -149,7 +149,7 @@ std::string MenuItem::getName(){
     return m_name;
 }
 
-void MenuItem::addToggle(const std::string& name, const Action& action){
+void MenuItem::addToggle(const std::string& name, const sigrid_action::Action& action){
     m_toggledName = name;
     m_toggledAction = action;
 }

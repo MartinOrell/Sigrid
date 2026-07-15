@@ -43,7 +43,7 @@ class MainWindow{
     void textEnter(const char32_t& unicode);
     void mouseMove(const sf::Vector2i& position);
 
-    void handleAction(const sigrid::Action action);
+    void handleAction(const sigrid_action::Action action);
 
     void pinMenu();
     void unPinMenu();

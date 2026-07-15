@@ -8,15 +8,15 @@ void InputHandler::addTool(const sf::Mouse::Button& button, sigrid::Tool tool){
     m_tools.insert(button,std::move(tool));
 }
 
-void InputHandler::addTool(const sf::Keyboard::Key& button, sigrid::Action action){
+void InputHandler::addTool(const sf::Keyboard::Key& button, sigrid_action::Action action){
     m_keyboardActions.insert(button, std::move(action));
 }
 
-void InputHandler::addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action){
+void InputHandler::addCtrlTool(const sf::Keyboard::Key& button, sigrid_action::Action action){
     m_ctrlKeyboardActions.insert(button, std::move(action));
 }
 
-void InputHandler::addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid::Action action){
+void InputHandler::addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid_action::Action action){
     m_ctrlShiftKeyboardActions.insert(button, std::move(action));
 }
 
@@ -62,13 +62,13 @@ std::optional<sigrid::Tool*> InputHandler::getToolPtr(const sf::Mouse::Button& b
     return &(tool_o.value().get());
 }
 
-std::optional<sigrid::Action> InputHandler::getAction(const sf::Keyboard::Key& key){
+std::optional<sigrid_action::Action> InputHandler::getAction(const sf::Keyboard::Key& key){
     return m_keyboardActions.at(key);
 }
 
-std::optional<sigrid::Action> InputHandler::getCtrlAction(const sf::Keyboard::Key& key){
+std::optional<sigrid_action::Action> InputHandler::getCtrlAction(const sf::Keyboard::Key& key){
     return m_ctrlKeyboardActions.at(key);
 }
 
-std::optional<sigrid::Action> InputHandler::getCtrlShiftAction(const sf::Keyboard::Key& key){
+std::optional<sigrid_action::Action> InputHandler::getCtrlShiftAction(const sf::Keyboard::Key& key){
     return m_ctrlShiftKeyboardActions.at(key);}
