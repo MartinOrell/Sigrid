@@ -4,20 +4,21 @@
 
 namespace sigrid{
 
-    class LogicPiece{
+class LogicPiece{
 
-        public:
+  public:
 
-            LogicPiece(std::string notation, int colorId);
-            int getColorId() const;
-            std::string getNotation() const;
+    LogicPiece(std::string notation, int colorId);
+    int getColorId() const;
+    std::string getNotation() const;
 
-            bool operator==(const LogicPiece& rhs) const;
-            bool operator!=(const LogicPiece& rhs) const;
+    bool operator==(const LogicPiece& rhs) const;
+    bool operator!=(const LogicPiece& rhs) const;
 
-        private:
-            std::string m_notation;
-            int m_colorId;
-    };
+  private:
 
-}
+    std::string m_notation;
+    int m_colorId;
+};
+
+}  // namespace sigrid

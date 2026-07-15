@@ -6,39 +6,41 @@
 
 namespace sigrid_list{
 
-    template <typename T> class Vector{
+template <typename T> class Vector{
 
-        public:
-            Vector() = default;
-            Vector(const Vector&) = default;
-            Vector(Vector&&) = default;
-            Vector& operator=(const Vector&) = default;
-            Vector& operator=(Vector&&) = default;
+  public:
 
-            void push_back(const T& value);
-            void insert(const int& position, const T& value);
-            void pop_back();
-            void erase(const int& position);
-            void eraseFrom(const int& position);
-            typename std::vector<T>::iterator erase(const typename std::vector<T>::iterator& iterator);
-            void clear();
+    Vector() = default;
+    Vector(const Vector&) = default;
+    Vector(Vector&&) = default;
+    Vector& operator=(const Vector&) = default;
+    Vector& operator=(Vector&&) = default;
 
-            std::optional<std::reference_wrapper<T>> front();
-            const std::optional<std::reference_wrapper<const T>> front() const;
-            std::optional<std::reference_wrapper<T>> back();
-            const std::optional<std::reference_wrapper<const T>> back() const;
-            std::optional<std::reference_wrapper<T>> at(const int& position);
-            const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
+    void push_back(const T& value);
+    void insert(const int& position, const T& value);
+    void pop_back();
+    void erase(const int& position);
+    void eraseFrom(const int& position);
+    typename std::vector<T>::iterator erase(const typename std::vector<T>::iterator& iterator);
+    void clear();
 
-            int size() const;
+    std::optional<std::reference_wrapper<T>> front();
+    const std::optional<std::reference_wrapper<const T>> front() const;
+    std::optional<std::reference_wrapper<T>> back();
+    const std::optional<std::reference_wrapper<const T>> back() const;
+    std::optional<std::reference_wrapper<T>> at(const int& position);
+    const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
 
-            typename std::vector<T>::iterator begin();
-            typename std::vector<T>::const_iterator begin() const;
-            typename std::vector<T>::iterator end();
-            typename std::vector<T>::const_iterator end() const;
+    int size() const;
 
-        private:
+    typename std::vector<T>::iterator begin();
+    typename std::vector<T>::const_iterator begin() const;
+    typename std::vector<T>::iterator end();
+    typename std::vector<T>::const_iterator end() const;
 
-            std::vector<T> m_vector;
-    };
-}
+  private:
+
+    std::vector<T> m_vector;
+};
+
+}  // namespace sigrid_list

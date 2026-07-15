@@ -5,24 +5,25 @@
 
 namespace sigrid{
 
-    struct BoardLabelContainer{
-        bool isInside = true;
-        int position = -1; // 0 = Left, 1 = right, 2 = top, 3 = bottom
-        bool isVisible = false;
-        float size = 0.f;
-        std::string font = "";
-    };
+struct BoardLabelContainer{
+    bool isInside = true;
+    int position = -1; // 0 = Left, 1 = right, 2 = top, 3 = bottom
+    bool isVisible = false;
+    float size = 0.f;
+    std::string font = "";
+};
 
-    struct BoardDesignContainer{
+struct BoardDesignContainer{
 
-        float tileWidth = 0.f;
-        float tileHeight = 0.f;
-        float arrowThickness = 0.f;
-        float arrowHeadSize = 0.f;
-        float circleDiameter = 0.f;
-        std::vector<BoardLabelContainer> labels;
-        bool border = false;
-        float borderThickness = 0.f;
-        bool turnToken = false;
-    };
-}
+    float tileWidth = 0.f;
+    float tileHeight = 0.f;
+    float arrowThickness = 0.f;
+    float arrowHeadSize = 0.f;
+    float circleDiameter = 0.f;
+    std::vector<BoardLabelContainer> labels;
+    bool border = false;
+    float borderThickness = 0.f;
+    bool turnToken = false;
+};
+
+}  // namespace sigrid

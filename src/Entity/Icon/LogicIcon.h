@@ -4,19 +4,20 @@
 
 namespace sigrid{
 
-    class LogicIcon{
+class LogicIcon{
 
-        public:
+  public:
 
-            LogicIcon();
-            void setFilename(const std::string& name);
-            std::string getFilename() const;
+    LogicIcon();
+    void setFilename(const std::string& name);
+    std::string getFilename() const;
 
-            bool operator==(const LogicIcon& rhs) const;
-            bool operator!=(const LogicIcon& rhs) const;
+    bool operator==(const LogicIcon& rhs) const;
+    bool operator!=(const LogicIcon& rhs) const;
 
-        private:
-            std::string m_filename;
-    };
+  private:
 
-}
+    std::string m_filename;
+};
+
+}  // namespace sigrid

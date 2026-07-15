@@ -7,26 +7,31 @@
 #include "Entity/Shape/Arrow/LogicArrow.h"
 
 namespace sigrid{
-    class LogicArrows{
 
-        public:
-            LogicArrows();
+class LogicArrows{
 
-            void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
-            void removeArrow(const CoordPair& coordPair);
-            
-            std::optional<LogicArrow> getArrow(const CoordPair& coordPair) const;
+  public:
 
-            void removeColumn(const int& columnId);
-            void removeRow(const int& rowId);
+    LogicArrows();
 
-            void moveArrowsRight();
-            void moveArrowsLeft();
-            void moveArrowsUp();
-            void moveArrowsDown();
+    void addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
+    void removeArrow(const CoordPair& coordPair);
+    
+    std::optional<LogicArrow> getArrow(const CoordPair& coordPair) const;
 
-            void clear();
-        private:
-            sigrid_list::OrderedMap<CoordPair, LogicArrow> m_arrows;
-    };
-}
+    void removeColumn(const int& columnId);
+    void removeRow(const int& rowId);
+
+    void moveArrowsRight();
+    void moveArrowsLeft();
+    void moveArrowsUp();
+    void moveArrowsDown();
+
+    void clear();
+
+  private:
+
+    sigrid_list::OrderedMap<CoordPair, LogicArrow> m_arrows;
+};
+
+}  // namespace sigrid

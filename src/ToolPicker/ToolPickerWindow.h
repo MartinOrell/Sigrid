@@ -14,119 +14,121 @@
 
 namespace sigrid{
 
-    class ToolPickerContainer;
-    class PieceManager;
-    class IconManager;
+class ToolPickerContainer;
+class PieceManager;
+class IconManager;
 
-    class Tool;
+class Tool;
 
-    class ToolPickerWindow: public sf::Drawable{
-        public:
+class ToolPickerWindow: public sf::Drawable{
 
-            ToolPickerWindow();
+  public:
 
-            void setTileColorManagerPtr(ColorManager* const managerPtr);
+    ToolPickerWindow();
 
-            void setPieceManagerPtr(PieceManager* const managerPtr);
+    void setTileColorManagerPtr(ColorManager* const managerPtr);
 
-            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+    void setPieceManagerPtr(PieceManager* const managerPtr);
 
-            void setIconManagerPtr(IconManager* const managerPtr);
+    void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
-            void init(const ToolPickerContainer& data);
+    void setIconManagerPtr(IconManager* const managerPtr);
 
-            void createGraphic(const sf::Vector2f& size);
+    void init(const ToolPickerContainer& data);
 
-            void addSelectTool();
+    void createGraphic(const sf::Vector2f& size);
 
-            void addArrowTool(const int colorId);
+    void addSelectTool();
 
-            void addCircleTool(const int colorId);
+    void addArrowTool(const int colorId);
 
-            void addPieceTool(const std::string& notation);
+    void addCircleTool(const int colorId);
 
-            virtual void setPosition(const sf::Vector2f& position);
+    void addPieceTool(const std::string& notation);
 
-            bool isVisible() const;
-            bool isHidden() const;
+    virtual void setPosition(const sf::Vector2f& position);
 
-            sf::Vector2f getSize() const;
+    bool isVisible() const;
+    bool isHidden() const;
 
-            int getNumColumns() const;
+    sf::Vector2f getSize() const;
 
-            int getNumRows() const;
+    int getNumColumns() const;
 
-            bool contains(const sf::Vector2f& point) const;
+    int getNumRows() const;
 
-            std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
+    bool contains(const sf::Vector2f& point) const;
 
-            void setPieceColorTools(const std::string& pieceNotation);
+    std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
-            void setPieceTools(const int colorId);
+    void setPieceColorTools(const std::string& pieceNotation);
 
-            void setArrowColors();
+    void setPieceTools(const int colorId);
 
-            void setCircleColors();
+    void setArrowColors();
 
-            void setAddArrowTool(const int colorId);
+    void setCircleColors();
 
-            void setAddCircleTool(const int colorId);
+    void setAddArrowTool(const int colorId);
 
-            void hideColorTools();
+    void setAddCircleTool(const int colorId);
 
-            void showColorTools();
+    void hideColorTools();
 
-            void hide();
+    void showColorTools();
 
-            void show();
+    void hide();
 
-        private:
+    void show();
 
-            void redrawTexture();
+  private:
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void redrawTexture();
 
-            enum ColorDisplay{
-                None,
-                Piece,
-                Arrow,
-                Circle
-            };
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            struct ToolStruct{
-                LogicIcon icon;
-                Action action;
-            };
-
-            int m_columns = 1;
-            int m_rows = 1;
-
-            std::vector<ToolStruct> m_miscTools;
-
-            ColorDisplay m_colorDisplay;
-
-            SigridRenderTexture m_texture;
-
-            Board m_board;
-
-            std::map<Coord, Action> m_clickActions;
-
-            std::vector<int> m_displayedPieceColorIds;
-            int m_arrowColorId = 0;
-            int m_circleColorId = 0;
-            std::string m_pieceNotation = "";
-
-            std::vector<std::string> m_pieceNotations;
-
-            bool m_showColors = false;
-
-            std::vector<int> m_colorIds;
-
-            CoordBlock m_miscBlock;
-            CoordBlock m_colorBlock;
-            std::vector<CoordBlock> m_pieceBlocks;
-
-            int m_defaultArrowColorId = 0;
-            int m_defaultCircleColorId = 0;
+    enum ColorDisplay{
+        None,
+        Piece,
+        Arrow,
+        Circle
     };
-}
+
+    struct ToolStruct{
+        LogicIcon icon;
+        Action action;
+    };
+
+    int m_columns = 1;
+    int m_rows = 1;
+
+    std::vector<ToolStruct> m_miscTools;
+
+    ColorDisplay m_colorDisplay;
+
+    SigridRenderTexture m_texture;
+
+    Board m_board;
+
+    std::map<Coord, Action> m_clickActions;
+
+    std::vector<int> m_displayedPieceColorIds;
+    int m_arrowColorId = 0;
+    int m_circleColorId = 0;
+    std::string m_pieceNotation = "";
+
+    std::vector<std::string> m_pieceNotations;
+
+    bool m_showColors = false;
+
+    std::vector<int> m_colorIds;
+
+    CoordBlock m_miscBlock;
+    CoordBlock m_colorBlock;
+    std::vector<CoordBlock> m_pieceBlocks;
+
+    int m_defaultArrowColorId = 0;
+    int m_defaultCircleColorId = 0;
+};
+
+}  // namespace sigrid

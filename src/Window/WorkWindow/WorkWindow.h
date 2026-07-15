@@ -15,147 +15,150 @@
 
 namespace sigrid{
 
-    class BoardDataContainer;
-    class Tool;
+class BoardDataContainer;
+class Tool;
 
-    class WorkWindow: public sf::Drawable{
-        public:
-            WorkWindow();
+class WorkWindow: public sf::Drawable{
 
-            void setBoardFilename(const std::string& filename);
+  public:
 
-            void setResetBoardFilename(const std::string& filename);
+    WorkWindow();
 
-            void setDefaultBoardImageFilename(const std::string& filename);
+    void setBoardFilename(const std::string& filename);
 
-            void setTileColorManagerPtr(ColorManager* const managerPtr);
+    void setResetBoardFilename(const std::string& filename);
 
-            void setPieceManagerPtr(PieceManager* const managerPtr);
+    void setDefaultBoardImageFilename(const std::string& filename);
 
-            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+    void setTileColorManagerPtr(ColorManager* const managerPtr);
 
-            void setFontManagerPtr(FontManager* const managerPtr);
+    void setPieceManagerPtr(PieceManager* const managerPtr);
 
-            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
+    void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
-            void createGraphic(const sf::Vector2f& size);
+    void setFontManagerPtr(FontManager* const managerPtr);
 
-            void loadFen(const std::string& fen);
+    void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
-            std::string getName() const;
+    void createGraphic(const sf::Vector2f& size);
 
-            std::string getSaveFilename() const;
+    void loadFen(const std::string& fen);
 
-            std::string getFen() const;
-            
-            void setPosition(const sf::Vector2f& position);
+    std::string getName() const;
 
-            int getNumColumns() const;
+    std::string getSaveFilename() const;
 
-            bool contains(const sf::Vector2f& point) const;
+    std::string getFen() const;
+    
+    void setPosition(const sf::Vector2f& position);
 
-            bool isCoordinatesOutside() const;
+    int getNumColumns() const;
 
-            void mousePress(const sf::Vector2f& position);
-            std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
-            void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
+    bool contains(const sf::Vector2f& point) const;
 
-            void reset();
+    bool isCoordinatesOutside() const;
 
-            void clear();
+    void mousePress(const sf::Vector2f& position);
+    std::optional<Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
+    void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
 
-            void print();
+    void reset();
 
-            void newBoard();
+    void clear();
 
-            void addBoardColumn();
-            void removeBoardColumn();
-            void addBoardRow();
-            void removeBoardRow();
+    void print();
 
-            void shiftBoardsLeft();
-            void shiftBoardsRight();
+    void newBoard();
 
-            void gotoRightBoard();
-            void gotoLeftBoard();
-            void gotoUpBoard();
-            void gotoDownBoard();
+    void addBoardColumn();
+    void removeBoardColumn();
+    void addBoardRow();
+    void removeBoardRow();
 
-            void saveBoard();
-            void savePdf();
+    void shiftBoardsLeft();
+    void shiftBoardsRight();
 
-            void flipBoard();
+    void gotoRightBoard();
+    void gotoLeftBoard();
+    void gotoUpBoard();
+    void gotoDownBoard();
 
-            void addLeftInsideLabels();
-            void addBottomInsideLabels();
-            void addLeftOutsideLabels();
-            void addRightOutsideLabels();
-            void addTopOutsideLabels();
-            void addBottomOutsideLabels();
-            
-            void removeLeftInsideLabels();
-            void removeBottomInsideLabels();
-            void removeLeftOutsideLabels();
-            void removeRightOutsideLabels();
-            void removeTopOutsideLabels();
-            void removeBottomOutsideLabels();
+    void saveBoard();
+    void savePdf();
 
-            void setCoordinateSize(const float& size);
+    void flipBoard();
 
-            void addTileColumnRight();
+    void addLeftInsideLabels();
+    void addBottomInsideLabels();
+    void addLeftOutsideLabels();
+    void addRightOutsideLabels();
+    void addTopOutsideLabels();
+    void addBottomOutsideLabels();
+    
+    void removeLeftInsideLabels();
+    void removeBottomInsideLabels();
+    void removeLeftOutsideLabels();
+    void removeRightOutsideLabels();
+    void removeTopOutsideLabels();
+    void removeBottomOutsideLabels();
 
-            void addTileColumnLeft();
+    void setCoordinateSize(const float& size);
 
-            void removeRightTileColumn();
+    void addTileColumnRight();
 
-            void removeLeftTileColumn();
+    void addTileColumnLeft();
 
-            void addTileRowUp();
+    void removeRightTileColumn();
 
-            void addTileRowDown();
+    void removeLeftTileColumn();
 
-            void removeTopTileRow();
+    void addTileRowUp();
 
-            void removeBottomTileRow();
+    void addTileRowDown();
 
-            void addBoardBorder();
+    void removeTopTileRow();
 
-            void removeBoardBorder();
+    void removeBottomTileRow();
 
-            void addTurnToken();
+    void addBoardBorder();
 
-            void removeTurnToken();
+    void removeBoardBorder();
 
-            void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
-            void useAddEntityAtSelectionTool(const LogicEntity& newEntity);
+    void addTurnToken();
 
-            void updateTexture();
+    void removeTurnToken();
 
-        private:
+    void useAddEntityTool(const Coord& coord, const LogicEntity& newEntity);
+    void useAddEntityAtSelectionTool(const LogicEntity& newEntity);
 
-            std::string getUniqueName(const std::string& name);
+    void updateTexture();
 
-            void useAddTileHighlightTool(const Coord& coord, const int& colorId);
-            void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
+  private:
 
-            void updateBoardLayout();
+    std::string getUniqueName(const std::string& name);
 
-            void updateSelectionHighlight();
+    void useAddTileHighlightTool(const Coord& coord, const int& colorId);
+    void useAddArrowTool(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void updateBoardLayout();
 
-            typedef unsigned int LayoutItem;
+    void updateSelectionHighlight();
 
-            SigridRenderTexture m_texture;
-            LayoutGrid m_layout;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            sigrid_list::VectorWithDisplayGrid<sigrid::Board> m_boards;
+    typedef unsigned int LayoutItem;
 
-            RectangleBorder m_boardSelectHighlight;
+    SigridRenderTexture m_texture;
+    LayoutGrid m_layout;
 
-            PdfHandler m_pdfHandler;
+    sigrid_list::VectorWithDisplayGrid<sigrid::Board> m_boards;
 
-            std::string m_resetBoardFilename = "";
-            std::string m_defaultBoardImageFilename = "";
-    };
-}
+    RectangleBorder m_boardSelectHighlight;
+
+    PdfHandler m_pdfHandler;
+
+    std::string m_resetBoardFilename = "";
+    std::string m_defaultBoardImageFilename = "";
+};
+
+}  // namespace sigrid

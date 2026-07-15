@@ -8,15 +8,17 @@
 
 namespace sigrid{
 
-    class FontManager{
+class FontManager{
 
-        public:
-            FontManager();
-            std::optional<sf::Font*> getFontPtr(const std::string& filename);
+  public:
 
-        private:
+    FontManager();
+    std::optional<sf::Font*> getFontPtr(const std::string& filename);
 
-            sigrid_list::Map<std::string, sf::Font> m_fonts;
+  private:
 
-    };
-}
+    sigrid_list::Map<std::string, sf::Font> m_fonts;
+
+};
+
+}  // namespace sigrid

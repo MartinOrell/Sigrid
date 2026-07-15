@@ -4,7 +4,8 @@
 
 namespace sigrid_pdf{
 
-    struct ProcedureSet : Object{
-        std::string getString() const override;
-    };
-}
+struct ProcedureSet : Object{
+    std::string getString() const override;
+};
+
+}  // namespace sigrid_pdf

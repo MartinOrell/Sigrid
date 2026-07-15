@@ -9,47 +9,51 @@
 
 namespace sigrid{
 
-    class LogicArrow;
-    class ColorManager;
+class LogicArrow;
+class ColorManager;
 
-    class GraphicArrows: public sf::Drawable{
-        public:
-            GraphicArrows();
+class GraphicArrows: public sf::Drawable{
 
-            void setThickness(const float& thickness);
-            void setHeadSize(const float& headSize);
-            void setColorManagerPtr(ColorManager* const managerPtr);
+  public:
 
-            void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
-            void removeArrow(const CoordPair& coordPair);
+    GraphicArrows();
 
-            float getThickness() const;
-            float getHeadSize() const;
+    void setThickness(const float& thickness);
+    void setHeadSize(const float& headSize);
+    void setColorManagerPtr(ColorManager* const managerPtr);
 
-            std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
-            const sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows() const;
-            sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows();
+    void addArrow(const CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
+    void removeArrow(const CoordPair& coordPair);
 
-            void clear();
+    float getThickness() const;
+    float getHeadSize() const;
 
-            void removeColumn(const int& columnId);
-            void removeRow(const int& rowId);
+    std::optional<GraphicArrow> getArrow(const CoordPair& coordPair) const;
+    const sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows() const;
+    sigrid_list::OrderedMap<CoordPair, GraphicArrow>& getArrows();
 
-            void moveArrowsRight(const float& tileWidth, const bool& isLeftToRight);
-            void moveArrowsLeft(const float& tileWidth, const bool& isLeftToRight);
-            void moveArrowsUp(const float& tileHeight, const bool& isTopToBottom);
-            void moveArrowsDown(const float& tileHeight, const bool& isTopToBottom);
+    void clear();
 
-            void move(const sf::Vector2f& offset);
+    void removeColumn(const int& columnId);
+    void removeRow(const int& rowId);
 
-        private:
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void moveArrowsRight(const float& tileWidth, const bool& isLeftToRight);
+    void moveArrowsLeft(const float& tileWidth, const bool& isLeftToRight);
+    void moveArrowsUp(const float& tileHeight, const bool& isTopToBottom);
+    void moveArrowsDown(const float& tileHeight, const bool& isTopToBottom);
 
-            ColorManager* m_colorManagerPtr = nullptr;
+    void move(const sf::Vector2f& offset);
 
-            sigrid_list::OrderedMap<CoordPair, GraphicArrow> m_arrows;
+  private:
 
-            float m_arrowThickness = 0.f;
-            float m_arrowHeadSize = 0.f;
-    };
-}
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    ColorManager* m_colorManagerPtr = nullptr;
+
+    sigrid_list::OrderedMap<CoordPair, GraphicArrow> m_arrows;
+
+    float m_arrowThickness = 0.f;
+    float m_arrowHeadSize = 0.f;
+};
+
+}  // namespace sigrid

@@ -5,49 +5,51 @@
 
 namespace sigrid{
 
-    class RectangleBorder: public sf::Drawable{
+class RectangleBorder: public sf::Drawable{
 
-        public:
-            RectangleBorder();
+  public:
 
-            void setThickness(const float& thickness);
+    RectangleBorder();
 
-            void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
+    void setThickness(const float& thickness);
 
-            void setEnclosedArea(const sf::Vector2f& enclosedArea);
+    void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
 
-            void setColor(const sf::Color& color);
+    void setEnclosedArea(const sf::Vector2f& enclosedArea);
 
-            RectangleBorder& operator =(const RectangleBorder& rhs);
+    void setColor(const sf::Color& color);
 
-            bool isVisible() const;
-            bool isHidden() const;
+    RectangleBorder& operator =(const RectangleBorder& rhs);
 
-            float getThickness() const;
+    bool isVisible() const;
+    bool isHidden() const;
 
-            void show();
+    float getThickness() const;
 
-            void hide();
+    void show();
 
-            void addWidth(const float& addedWidth);
-            void addHeight(const float& addedHeight);
+    void hide();
 
-            void move(const sf::Vector2f& offset);
+    void addWidth(const float& addedWidth);
+    void addHeight(const float& addedHeight);
 
-        private:
+    void move(const sf::Vector2f& offset);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  private:
 
-            bool m_isVisible = true;
-            float m_thickness = 0.f;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            sf::Vector2f m_topLeftPosition = {0.f,0.f};
-            sf::Vector2f m_enclosedArea = {0.f,0.f};
+    bool m_isVisible = true;
+    float m_thickness = 0.f;
 
-            sf::RectangleShape m_left;
-            sf::RectangleShape m_right;
-            sf::RectangleShape m_top;
-            sf::RectangleShape m_bottom;
+    sf::Vector2f m_topLeftPosition = {0.f,0.f};
+    sf::Vector2f m_enclosedArea = {0.f,0.f};
 
-    };
-}
+    sf::RectangleShape m_left;
+    sf::RectangleShape m_right;
+    sf::RectangleShape m_top;
+    sf::RectangleShape m_bottom;
+
+};
+
+}  // namespace sigrid

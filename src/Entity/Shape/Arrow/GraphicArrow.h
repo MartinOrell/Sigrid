@@ -10,49 +10,50 @@ namespace sf{
 
 namespace sigrid{
 
-    class GraphicArrow: public sf::Drawable{
+class GraphicArrow: public sf::Drawable{
 
-        public:
-            GraphicArrow();
+  public:
 
-            void setFromPosition(const sf::Vector2f& fromPosition);
+    GraphicArrow();
 
-            void setToPosition(const sf::Vector2f& toPosition);
+    void setFromPosition(const sf::Vector2f& fromPosition);
 
-            void setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
+    void setToPosition(const sf::Vector2f& toPosition);
 
-            void setColor(const sf::Color& color);
+    void setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
 
-            void setThickness(const float& thickness);
+    void setColor(const sf::Color& color);
 
-            void setHeadSize(const float& size);
+    void setThickness(const float& thickness);
 
-            void setPosition(const sf::Vector2f& position);
+    void setHeadSize(const float& size);
 
-            void move(const sf::Vector2f& offset);
+    void setPosition(const sf::Vector2f& position);
 
-        private:
+    void move(const sf::Vector2f& offset);
 
-            struct IsSet{
-                bool fromPosition = false;
-                bool toPosition = false;
-                bool thickness = false;
-                bool headSize = false;
-                bool isAllSet();
-            };
+  private:
 
-            IsSet m_isSet;
-            void updateShape();
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-            
-            //Since Convex shape cannot draw concave shapes, multiple shapes are required
-            sf::ConvexShape m_line;
-            sf::CircleShape m_head;
-
-            float m_thickness = 0.f;
-            float m_headSize = 0.f;
-
-            sf::Vector2f m_toPosition = {0.f, 0.f};
+    struct IsSet{
+        bool fromPosition = false;
+        bool toPosition = false;
+        bool thickness = false;
+        bool headSize = false;
+        bool isAllSet();
     };
 
-}
+    IsSet m_isSet;
+    void updateShape();
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    
+    //Since Convex shape cannot draw concave shapes, multiple shapes are required
+    sf::ConvexShape m_line;
+    sf::CircleShape m_head;
+
+    float m_thickness = 0.f;
+    float m_headSize = 0.f;
+
+    sf::Vector2f m_toPosition = {0.f, 0.f};
+};
+
+}  // namespace sigrid

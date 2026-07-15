@@ -6,16 +6,20 @@
 #include "List/Vector.h"
 
 namespace sigrid{
-    class ColorManager{
 
-        public:
-            ColorManager(const std::vector<uint32_t>& colors);
+class ColorManager{
 
-            std::optional<sf::Color> getSolidColor(const int colorId) const;
-            std::optional<sf::Color> getTransparentColor(const int colorId) const;
+  public:
 
-        private:
-            sigrid_list::Vector<sf::Color> m_colors;
+    ColorManager(const std::vector<uint32_t>& colors);
 
-    };
-}
+    std::optional<sf::Color> getSolidColor(const int colorId) const;
+    std::optional<sf::Color> getTransparentColor(const int colorId) const;
+
+  private:
+
+    sigrid_list::Vector<sf::Color> m_colors;
+
+};
+
+}  // namespace sigrid

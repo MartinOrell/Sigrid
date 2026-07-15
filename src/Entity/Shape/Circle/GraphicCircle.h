@@ -5,24 +5,24 @@
 
 namespace sigrid{
 
-    class GraphicCircle: public sf::Drawable{
+class GraphicCircle: public sf::Drawable{
 
-        public:
-            GraphicCircle(const sf::Color& color, const float& diameter);
-            GraphicCircle(const GraphicCircle&);
-            GraphicCircle& operator =(const GraphicCircle&);
+  public:
 
-            void setPosition(const sf::Vector2f& position);
-            void setColor(const sf::Color& color);
+    GraphicCircle(const sf::Color& color, const float& diameter);
+    GraphicCircle(const GraphicCircle&);
+    GraphicCircle& operator =(const GraphicCircle&);
 
-            void move(const sf::Vector2f& offset);
+    void setPosition(const sf::Vector2f& position);
+    void setColor(const sf::Color& color);
 
-        private:
+    void move(const sf::Vector2f& offset);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-            
-            sf::CircleShape m_shape;
+  private:
 
-    };
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    
+    sf::CircleShape m_shape;
+};
 
-}
+}  // namespace sigrid

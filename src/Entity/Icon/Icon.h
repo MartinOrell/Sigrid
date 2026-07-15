@@ -5,22 +5,25 @@
 
 namespace sigrid{
 
-    class Icon: public sf::Drawable{
+class Icon: public sf::Drawable{
 
-        public:
-            Icon();
-            
-            void setSize(const sf::Vector2f& size);
+  public:
 
-            void setPosition(const sf::Vector2f& position);
+    Icon();
+    
+    void setSize(const sf::Vector2f& size);
 
-            void setTexture(const sf::Texture* texturePtr);
+    void setPosition(const sf::Vector2f& position);
 
-            void move(const sf::Vector2f& offset);
+    void setTexture(const sf::Texture* texturePtr);
 
-        private:
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void move(const sf::Vector2f& offset);
 
-            sf::RectangleShape m_shape;
-    };
-}
+  private:
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    sf::RectangleShape m_shape;
+};
+
+}  // namespace sigrid

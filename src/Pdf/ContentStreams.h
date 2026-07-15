@@ -7,11 +7,12 @@
 
 namespace sigrid_pdf{
 
-    struct ContentStreams : Object{
+struct ContentStreams : Object{
 
-        std::vector<ContentStream> streams;
+    std::vector<ContentStream> streams;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

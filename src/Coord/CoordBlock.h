@@ -4,9 +4,10 @@
 
 namespace sigrid{
 
-    struct CoordBlock{
-        Coord coord;
-        int columns;
-        int rows;
-    };
-}
+struct CoordBlock{
+    Coord coord;
+    int columns;
+    int rows;
+};
+
+}  // namespace sigrid

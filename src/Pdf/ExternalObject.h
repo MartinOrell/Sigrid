@@ -5,10 +5,11 @@
 
 namespace sigrid_pdf{
 
-    struct ExternalObject : Object{
+struct ExternalObject : Object{
 
-        Image image;
+    Image image;
 
-        std::string getString() const override;
-    };
-}
+    std::string getString() const override;
+};
+
+}  // namespace sigrid_pdf

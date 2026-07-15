@@ -6,16 +6,17 @@
 
 namespace sigrid{
 
-    class PdfHandler{
+class PdfHandler{
 
-        public:
+  public:
 
-            void updateLayout();
-            void savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards);
+    void updateLayout();
+    void savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards);
 
-        private:
-        
-            typedef unsigned int LayoutItem;
-            LayoutGrid m_layout;
-    };
-}
+  private:
+
+    typedef unsigned int LayoutItem;
+    LayoutGrid m_layout;
+};
+
+}  // namespace sigrid

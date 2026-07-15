@@ -4,33 +4,36 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace sigrid{
-    class GraphicPiece: public sf::Drawable{
-        public:
 
-            GraphicPiece() = default;
-            GraphicPiece(const GraphicPiece&) = default;
-            GraphicPiece(GraphicPiece&&) = default;
-            GraphicPiece& operator=(const GraphicPiece&) = default;
-            GraphicPiece& operator=(GraphicPiece&&) = default;
+class GraphicPiece: public sf::Drawable{
 
-            void setSize(const sf::Vector2f& size);
-            void setTexturePtr(const sf::Texture* const texturePtr);
+  public:
 
-            void setPosition(sf::Vector2f);
-            bool contains(sf::Vector2i point) const;
-            void resize(sf::Vector2f size);
+    GraphicPiece() = default;
+    GraphicPiece(const GraphicPiece&) = default;
+    GraphicPiece(GraphicPiece&&) = default;
+    GraphicPiece& operator=(const GraphicPiece&) = default;
+    GraphicPiece& operator=(GraphicPiece&&) = default;
 
-            const sf::Texture getTexture() const;
-            const sf::Texture* getTexturePtr() const;
+    void setSize(const sf::Vector2f& size);
+    void setTexturePtr(const sf::Texture* const texturePtr);
 
-            void move(const sf::Vector2f& offset);
+    void setPosition(sf::Vector2f);
+    bool contains(sf::Vector2i point) const;
+    void resize(sf::Vector2f size);
 
-        private:
+    const sf::Texture getTexture() const;
+    const sf::Texture* getTexturePtr() const;
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void move(const sf::Vector2f& offset);
 
-            sf::Vector2f m_size = {0.f,0.f};
-            std::optional<sf::Sprite> m_sprite_o = std::nullopt;
-            const sf::Texture* m_texturePtr;
-    };
-}
+  private:
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    sf::Vector2f m_size = {0.f,0.f};
+    std::optional<sf::Sprite> m_sprite_o = std::nullopt;
+    const sf::Texture* m_texturePtr;
+};
+
+}  // namespace sigrid

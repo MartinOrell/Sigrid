@@ -16,50 +16,52 @@
 
 namespace sigrid{
 
-    class ToolWindow: public sf::Drawable{
-        public:
-            ToolWindow();
+class ToolWindow: public sf::Drawable{
 
-            void setTileColorManagerPtr(ColorManager* const managerPtr);
+  public:
 
-            void setIconManagerPtr(IconManager* const managerPtr);
+    ToolWindow();
 
-            void setPieceManagerPtr(PieceManager* const managerPtr);
+    void setTileColorManagerPtr(ColorManager* const managerPtr);
 
-            void setArrowColorManagerPtr(ColorManager* const managerPtr);
+    void setIconManagerPtr(IconManager* const managerPtr);
 
-            void init();
+    void setPieceManagerPtr(PieceManager* const managerPtr);
 
-            void createGraphic(const sf::Vector2f& size);
+    void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
-            virtual void setPosition(const sf::Vector2f& position);
+    void init();
 
-            bool isVisible() const;
-            bool isHidden() const;
+    void createGraphic(const sf::Vector2f& size);
 
-            bool contains(const sf::Vector2f& point) const;
+    virtual void setPosition(const sf::Vector2f& position);
 
-            void setSetPieceTool(const LogicPiece& logicPiece);
+    bool isVisible() const;
+    bool isHidden() const;
 
-            void setSelectTool(const sf::Mouse::Button button, const ToolSelection selection);
+    bool contains(const sf::Vector2f& point) const;
 
-            void setAddArrowTool(const int colorId);
+    void setSetPieceTool(const LogicPiece& logicPiece);
 
-            void setAddCircleTool(const int colorId);
+    void setSelectTool(const sf::Mouse::Button button, const ToolSelection selection);
 
-            void show();
+    void setAddArrowTool(const int colorId);
 
-            void hide();
+    void setAddCircleTool(const int colorId);
 
-            
-        private:
+    void show();
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void hide();
 
-            void redrawTexture();
+  private:
 
-            SigridRenderTexture m_texture;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            Board m_board;
-    };
-}
+    void redrawTexture();
+
+    SigridRenderTexture m_texture;
+
+    Board m_board;
+};
+
+}  // namespace sigrid

@@ -9,14 +9,16 @@
 
 namespace sigrid{
 
-    class IconManager{
+class IconManager{
 
-        public:
-            IconManager();
-            std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
-            
-        private:
-            sigrid_list::Map<std::string, sf::Texture> m_textures;
-    };
+  public:
 
-}
+    IconManager();
+    std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
+    
+  private:
+
+    sigrid_list::Map<std::string, sf::Texture> m_textures;
+};
+
+}  // namespace sigrid

@@ -1,19 +1,23 @@
 #pragma once
 
 namespace sigrid{
-    class LogicCircle{
 
-        public:
-            LogicCircle(const int colorId);
-            int getColorId() const;
+class LogicCircle{
 
-            void setColor(const int colorId);
+  public:
 
-            bool operator<(const LogicCircle& rhs) const;
-            bool operator==(const LogicCircle& rhs) const;
-            bool operator!=(const LogicCircle& rhs) const;
+    LogicCircle(const int colorId);
+    int getColorId() const;
 
-        private:
-            int m_colorId;
-    };
-}
+    void setColor(const int colorId);
+
+    bool operator<(const LogicCircle& rhs) const;
+    bool operator==(const LogicCircle& rhs) const;
+    bool operator!=(const LogicCircle& rhs) const;
+
+  private:
+
+    int m_colorId;
+};
+
+}  // namespace sigrid

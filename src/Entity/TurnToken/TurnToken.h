@@ -11,42 +11,44 @@ namespace sf{
 
 namespace sigrid{
 
-    class TurnToken: public sf::Drawable{
+class TurnToken: public sf::Drawable{
 
-        public:
-            TurnToken();
+  public:
 
-            void setRadius(const float& radius);
+    TurnToken();
 
-            void setCenterPosition(const sf::Vector2f& centerPosition);
+    void setRadius(const float& radius);
 
-            void setTurnToMove(const int& turnToMove);
+    void setCenterPosition(const sf::Vector2f& centerPosition);
 
-            bool isVisible() const;
-            bool isHidden() const;
+    void setTurnToMove(const int& turnToMove);
 
-            bool isWithin(const sf::Vector2f& point) const;
+    bool isVisible() const;
+    bool isHidden() const;
 
-            float getRadius() const;
+    bool isWithin(const sf::Vector2f& point) const;
 
-            sf::Vector2f getCenterPosition() const;
+    float getRadius() const;
 
-            void show();
+    sf::Vector2f getCenterPosition() const;
 
-            void hide();
+    void show();
 
-            void move(const sf::Vector2f& offset);
+    void hide();
 
-        private:
+    void move(const sf::Vector2f& offset);
 
-            bool m_isInitialized = false;
-            void init();
+  private:
 
-            sf::Color getColor(const int& turnToMove) const;
+    bool m_isInitialized = false;
+    void init();
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    sf::Color getColor(const int& turnToMove) const;
 
-            bool m_isVisible = false;
-            sf::CircleShape m_shape;
-    };
-}
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    bool m_isVisible = false;
+    sf::CircleShape m_shape;
+};
+
+}  // namespace sigrid

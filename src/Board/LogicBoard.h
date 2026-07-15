@@ -8,63 +8,66 @@
 
 namespace sigrid{
 
-    class BoardDataContainer;
+class BoardDataContainer;
 
-    class LogicBoard{
+class LogicBoard{
 
-        public:
-            LogicBoard();
-            LogicBoard(const LogicBoard& board);
-            ~LogicBoard();
+  public:
 
-            bool init(const BoardDataContainer& data);
+    LogicBoard();
+    LogicBoard(const LogicBoard& board);
+    ~LogicBoard();
 
-            LogicBoard& operator=(const LogicBoard& rhs);
+    bool init(const BoardDataContainer& data);
 
-            const int getNumColumns() const;
-            const int getNumRows() const;
+    LogicBoard& operator=(const LogicBoard& rhs);
 
-            bool isWithinBoard(const Coord& coord) const;
-            bool isEmptyTile(const Coord& coord) const;
-            std::optional<LogicTile> getTile(const Coord& coord) const;
-            std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
-            std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
-            std::string getFen() const;
-            int getTurnToMove() const;
-            std::vector<int> getRepeatColorIds() const;
+    const int getNumColumns() const;
+    const int getNumRows() const;
 
-            void setTurnToMove(const int& turnToMove);
+    bool isWithinBoard(const Coord& coord) const;
+    bool isEmptyTile(const Coord& coord) const;
+    std::optional<LogicTile> getTile(const Coord& coord) const;
+    std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
+    std::optional<LogicArrow> getArrowAt(const CoordPair& coordPair) const;
+    std::string getFen() const;
+    int getTurnToMove() const;
+    std::vector<int> getRepeatColorIds() const;
 
-            bool addEntity(const Coord& coord, const LogicEntity& entity);
-            bool removeEntity(const Coord& coord);
-            bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
+    void setTurnToMove(const int& turnToMove);
 
-            bool addTileHighlight(const Coord& coord, const int& highlightColorId);
-            bool removeTileHighlight(const Coord& coord);
+    bool addEntity(const Coord& coord, const LogicEntity& entity);
+    bool removeEntity(const Coord& coord);
+    bool moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
-            bool removeArrow(const CoordPair& coordPair);
+    bool addTileHighlight(const Coord& coord, const int& highlightColorId);
+    bool removeTileHighlight(const Coord& coord);
 
-            bool addTileColumnRight();
-            bool addTileColumnLeft();
-            bool removeRightTileColumn();
-            bool removeLeftTileColumn();
-            bool addTileRowUp();
-            bool addTileRowDown();
-            bool removeTopTileRow();
-            bool removeBottomTileRow();
+    bool addArrow(const CoordPair& coordPair, const LogicArrow& arrow);
+    bool removeArrow(const CoordPair& coordPair);
 
-            void print();
-            void clearEntities();
-            void clearArrows();
+    bool addTileColumnRight();
+    bool addTileColumnLeft();
+    bool removeRightTileColumn();
+    bool removeLeftTileColumn();
+    bool addTileRowUp();
+    bool addTileRowDown();
+    bool removeTopTileRow();
+    bool removeBottomTileRow();
 
-            friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
-        private:
-            
-            LogicTiles m_tileLayer;
-            LogicEntities m_pieceLayer;
-            LogicArrows m_arrowLayer;
-            int m_turnToMove = 0; //0 = white to move, 1 = black to move
+    void print();
+    void clearEntities();
+    void clearArrows();
 
-    };
-}
+    friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
+
+  private:
+    
+    LogicTiles m_tileLayer;
+    LogicEntities m_pieceLayer;
+    LogicArrows m_arrowLayer;
+    int m_turnToMove = 0; //0 = white to move, 1 = black to move
+
+};
+
+}  // namespace sigrid

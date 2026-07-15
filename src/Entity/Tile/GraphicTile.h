@@ -5,46 +5,47 @@
 
 namespace sigrid{
 
-    class GraphicTile: public sf::Drawable{
+class GraphicTile: public sf::Drawable{
 
-        public:
-            GraphicTile() = default;
-            GraphicTile(const GraphicTile&) = default;
-            GraphicTile(GraphicTile&&) = default;
-            GraphicTile& operator=(const GraphicTile& rhs) = default;
-            GraphicTile& operator=(GraphicTile&& rhs) = default;
+  public:
 
-            void setSize(const sf::Vector2f& size);
+    GraphicTile() = default;
+    GraphicTile(const GraphicTile&) = default;
+    GraphicTile(GraphicTile&&) = default;
+    GraphicTile& operator=(const GraphicTile& rhs) = default;
+    GraphicTile& operator=(GraphicTile&& rhs) = default;
 
-            void setPosition(const sf::Vector2f& topLeftPosition);
+    void setSize(const sf::Vector2f& size);
 
-            void setTileColor(const sf::Color& color);
+    void setPosition(const sf::Vector2f& topLeftPosition);
 
-            void setHighlightColor(const sf::Color& color);
+    void setTileColor(const sf::Color& color);
 
-            void removeHighlight();
+    void setHighlightColor(const sf::Color& color);
 
-            sf::Vector2f getSize() const;
+    void removeHighlight();
 
-            sf::Vector2f getTopLeftPosition() const;
+    sf::Vector2f getSize() const;
 
-            sf::Vector2f getCentrePosition() const;
+    sf::Vector2f getTopLeftPosition() const;
 
-            float getRightPosition() const;
+    sf::Vector2f getCentrePosition() const;
 
-            float getTopPosition() const;
+    float getRightPosition() const;
 
-            sf::Color getColor() const;
+    float getTopPosition() const;
 
-            void move(const sf::Vector2f& offset);
+    sf::Color getColor() const;
 
-        private:
+    void move(const sf::Vector2f& offset);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-            
-            sf::RectangleShape m_shape;
-            bool m_isHighlightVisible = false;
-            sf::RectangleShape m_highlight;
-    };
+  private:
 
-}
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    
+    sf::RectangleShape m_shape;
+    bool m_isHighlightVisible = false;
+    sf::RectangleShape m_highlight;
+};
+
+}  // namespace sigrid

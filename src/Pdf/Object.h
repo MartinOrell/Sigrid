@@ -4,14 +4,15 @@
 
 namespace sigrid_pdf{
 
-    struct Object{
+struct Object{
 
-        unsigned int objectNumber = 0;
-        std::string description = "";
+    unsigned int objectNumber = 0;
+    std::string description = "";
 
-        virtual std::string getString() const = 0;
+    virtual std::string getString() const = 0;
 
-        std::string getObjectString() const;
+    std::string getObjectString() const;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

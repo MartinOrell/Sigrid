@@ -6,32 +6,34 @@
 
 namespace sigrid_list{
 
-    template <typename TKey, typename TValue> class Map{
+template <typename TKey, typename TValue> class Map{
 
-        public:
-            Map() = default;
-            Map(const Map&) = default;
-            Map(Map&&) = default;
-            Map& operator=(const Map&) = default;
-            Map& operator=(Map&&) = default;
+  public:
 
-            std::optional<std::reference_wrapper<TValue>> insert(const TKey& key, const TValue& value);
-            void erase(const TKey& key);
-            typename std::map<TKey, TValue>::iterator erase(const typename std::map<TKey, TValue>::iterator& iterator);
-            void clear();
+    Map() = default;
+    Map(const Map&) = default;
+    Map(Map&&) = default;
+    Map& operator=(const Map&) = default;
+    Map& operator=(Map&&) = default;
 
-            std::optional<std::reference_wrapper<TValue>> at(const TKey& key);
-            const std::optional<std::reference_wrapper<const TValue>> at(const TKey& key) const;
+    std::optional<std::reference_wrapper<TValue>> insert(const TKey& key, const TValue& value);
+    void erase(const TKey& key);
+    typename std::map<TKey, TValue>::iterator erase(const typename std::map<TKey, TValue>::iterator& iterator);
+    void clear();
 
-            int size() const;
+    std::optional<std::reference_wrapper<TValue>> at(const TKey& key);
+    const std::optional<std::reference_wrapper<const TValue>> at(const TKey& key) const;
 
-            typename std::map<TKey, TValue>::iterator begin();
-            typename std::map<TKey, TValue>::const_iterator begin() const;
-            typename std::map<TKey, TValue>::iterator end();
-            typename std::map<TKey, TValue>::const_iterator end() const;
+    int size() const;
 
-        private:
-            
-            std::map<TKey, TValue> m_map;
-    };
-}
+    typename std::map<TKey, TValue>::iterator begin();
+    typename std::map<TKey, TValue>::const_iterator begin() const;
+    typename std::map<TKey, TValue>::iterator end();
+    typename std::map<TKey, TValue>::const_iterator end() const;
+
+  private:
+    
+    std::map<TKey, TValue> m_map;
+};
+
+}  // namespace sigrid_list

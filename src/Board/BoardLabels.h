@@ -6,109 +6,111 @@
 
 namespace sigrid{
 
-    class FontManager;
+class FontManager;
 
-    class BoardLabels: public sf::Drawable{
+class BoardLabels: public sf::Drawable{
 
-        public:
-            BoardLabels();
+  public:
 
-            void showLeftInside();
-            void showBottomInside();
-            void showLeftOutside();
-            void showRightOutside();
-            void showTopOutside();
-            void showBottomOutside();
+    BoardLabels();
 
-            void hideLeftInside();
-            void hideBottomInside();
-            void hideLeftOutside();
-            void hideRightOutside();
-            void hideTopOutside();
-            void hideBottomOutside();
+    void showLeftInside();
+    void showBottomInside();
+    void showLeftOutside();
+    void showRightOutside();
+    void showTopOutside();
+    void showBottomOutside();
 
-            void setLeftInsideSize(const float& size);
-            void setBottomInsideSize(const float& size);
-            void setLeftOutsideSize(const float& size);
-            void setRightOutsideSize(const float& size);
-            void setTopOutsideSize(const float& size);
-            void setBottomOutsideSize(const float& size);
+    void hideLeftInside();
+    void hideBottomInside();
+    void hideLeftOutside();
+    void hideRightOutside();
+    void hideTopOutside();
+    void hideBottomOutside();
 
-            void setLeftInsideFont(const std::string& fontFilename);
-            void setBottomInsideFont(const std::string& fontFilename);
-            void setLeftOutsideFont(const std::string& fontFilename);
-            void setRightOutsideFont(const std::string& fontFilename);
-            void setTopOutsideFont(const std::string& fontFilename);
-            void setBottomOutsideFont(const std::string& fontFilename);
+    void setLeftInsideSize(const float& size);
+    void setBottomInsideSize(const float& size);
+    void setLeftOutsideSize(const float& size);
+    void setRightOutsideSize(const float& size);
+    void setTopOutsideSize(const float& size);
+    void setBottomOutsideSize(const float& size);
 
-            void setLeftOutsideWorkWidth(const float& width);
-            void setRightOutsideWorkWidth(const float& width);
-            void setTopOutsideWorkHeight(const float& height);
-            void setBottomOutsideWorkHeight(const float& height);
+    void setLeftInsideFont(const std::string& fontFilename);
+    void setBottomInsideFont(const std::string& fontFilename);
+    void setLeftOutsideFont(const std::string& fontFilename);
+    void setRightOutsideFont(const std::string& fontFilename);
+    void setTopOutsideFont(const std::string& fontFilename);
+    void setBottomOutsideFont(const std::string& fontFilename);
 
-            void setFontManagerPtr(FontManager* const managerPtr);
+    void setLeftOutsideWorkWidth(const float& width);
+    void setRightOutsideWorkWidth(const float& width);
+    void setTopOutsideWorkHeight(const float& height);
+    void setBottomOutsideWorkHeight(const float& height);
 
-            bool isLeftInsideVisible() const;
-            bool isBottomInsideVisible() const;
-            bool isLeftOutsideVisible() const;
-            bool isRightOutsideVisible() const;
-            bool isTopOutsideVisible() const;
-            bool isBottomOutsideVisible() const;
+    void setFontManagerPtr(FontManager* const managerPtr);
 
-            float getLeftInsideLabelSize() const;
-            float getBottomInsideLabelSize() const;
-            float getLeftOutsideLabelSize() const;
-            float getRightOutsideLabelSize() const;
-            float getTopOutsideLabelSize() const;
-            float getBottomOutsideLabelSize() const;
+    bool isLeftInsideVisible() const;
+    bool isBottomInsideVisible() const;
+    bool isLeftOutsideVisible() const;
+    bool isRightOutsideVisible() const;
+    bool isTopOutsideVisible() const;
+    bool isBottomOutsideVisible() const;
 
-            float getRightOutsideWorkWidth() const;
+    float getLeftInsideLabelSize() const;
+    float getBottomInsideLabelSize() const;
+    float getLeftOutsideLabelSize() const;
+    float getRightOutsideLabelSize() const;
+    float getTopOutsideLabelSize() const;
+    float getBottomOutsideLabelSize() const;
 
-            bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-            bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-            bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-            bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-            bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+    float getRightOutsideWorkWidth() const;
 
-            void removeLeftInsideLabels();
-            void removeBottomInsideLabels();
-            void removeLeftOutsideLabels();
-            void removeRightOutsideLabels();
-            void removeTopOutsideLabels();
-            void removeBottomOutsideLabels();
+    bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
+    bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
+    bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+    bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+    bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+    bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
 
-            void removeHorizontalLabel();
-            void removeVerticalLabel();
+    void removeLeftInsideLabels();
+    void removeBottomInsideLabels();
+    void removeLeftOutsideLabels();
+    void removeRightOutsideLabels();
+    void removeTopOutsideLabels();
+    void removeBottomOutsideLabels();
 
-            void moveLeftInsideLabels(const sf::Vector2f& offset);
-            void moveBottomInsideLabels(const sf::Vector2f& offset);
-            void moveLeftOutsideLabels(const sf::Vector2f& offset);
-            void moveRightOutsideLabels(const sf::Vector2f& offset);
-            void moveTopOutsideLabels(const sf::Vector2f& offset);
-            void moveBottomOutsideLabels(const sf::Vector2f& offset);
+    void removeHorizontalLabel();
+    void removeVerticalLabel();
 
-        private:
+    void moveLeftInsideLabels(const sf::Vector2f& offset);
+    void moveBottomInsideLabels(const sf::Vector2f& offset);
+    void moveLeftOutsideLabels(const sf::Vector2f& offset);
+    void moveRightOutsideLabels(const sf::Vector2f& offset);
+    void moveTopOutsideLabels(const sf::Vector2f& offset);
+    void moveBottomOutsideLabels(const sf::Vector2f& offset);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  private:
 
-            struct SideLabels{
-                std::vector<sf::Text> labels;
-                bool isVisible = false;
-                std::string fontFilename = "";
-                float labelSizeFactor = 0.f; //fraction of tileHeight
-            };
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            FontManager* m_fontManagerPtr = nullptr;
-            SideLabels m_leftInsideCoordLabels;
-            SideLabels m_bottomInsideCoordLabels;
-            SideLabels m_leftOutsideCoordLabels;
-            SideLabels m_rightOutsideCoordLabels;
-            SideLabels m_topOutsideCoordLabels;
-            SideLabels m_bottomOutsideCoordLabels;
-            float m_leftWorkWidth = 0.f;
-            float m_rightWorkWidth = 0.f;
-            float m_topWorkHeight = 0.f;
-            float m_bottomWorkHeight = 0.f;
+    struct SideLabels{
+        std::vector<sf::Text> labels;
+        bool isVisible = false;
+        std::string fontFilename = "";
+        float labelSizeFactor = 0.f; //fraction of tileHeight
     };
-}
+
+    FontManager* m_fontManagerPtr = nullptr;
+    SideLabels m_leftInsideCoordLabels;
+    SideLabels m_bottomInsideCoordLabels;
+    SideLabels m_leftOutsideCoordLabels;
+    SideLabels m_rightOutsideCoordLabels;
+    SideLabels m_topOutsideCoordLabels;
+    SideLabels m_bottomOutsideCoordLabels;
+    float m_leftWorkWidth = 0.f;
+    float m_rightWorkWidth = 0.f;
+    float m_topWorkHeight = 0.f;
+    float m_bottomWorkHeight = 0.f;
+};
+
+}  // namespace sigrid

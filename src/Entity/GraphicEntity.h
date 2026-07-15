@@ -8,10 +8,12 @@
 #include "Entity/Icon/Icon.h"
 
 namespace sigrid{
-    typedef std::variant<
-        GraphicPiece,
-        GraphicCircle,
-        GraphicArrow,
-        Icon
-    > GraphicEntity;
-}
+
+typedef std::variant<
+    GraphicPiece,
+    GraphicCircle,
+    GraphicArrow,
+    Icon
+> GraphicEntity;
+
+}  // namespace sigrid

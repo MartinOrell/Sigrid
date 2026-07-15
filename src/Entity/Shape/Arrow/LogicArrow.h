@@ -1,19 +1,23 @@
 #pragma once
 
 namespace sigrid{
-    class LogicArrow{
 
-        public:
-            LogicArrow(const int colorId);
-            int getColorId() const;
+class LogicArrow{
 
-            void setColor(const int colorId);
+  public:
 
-            bool operator<(const LogicArrow& rhs) const;
-            bool operator==(const LogicArrow& rhs) const;
-            bool operator!=(const LogicArrow& rhs) const;
+    LogicArrow(const int colorId);
+    int getColorId() const;
 
-        private:
-            int m_colorId;
-    };
-}
+    void setColor(const int colorId);
+
+    bool operator<(const LogicArrow& rhs) const;
+    bool operator==(const LogicArrow& rhs) const;
+    bool operator!=(const LogicArrow& rhs) const;
+
+  private:
+
+    int m_colorId;
+};
+
+}  // namespace sigrid

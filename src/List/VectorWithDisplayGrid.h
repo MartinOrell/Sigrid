@@ -7,84 +7,86 @@
 
 namespace sigrid_list{
 
-    template <typename T> class VectorWithDisplayGrid{
+template <typename T> class VectorWithDisplayGrid{
 
-        public:
-            VectorWithDisplayGrid();
+  public:
 
-            void push_back(const T& value);
-            void addColumn();
-            void addRow();
-            bool removeColumn();
-            bool removeRow();
+    VectorWithDisplayGrid();
 
-            bool selectLast();
-            bool select(const int& displayPosition);
+    void push_back(const T& value);
+    void addColumn();
+    void addRow();
+    bool removeColumn();
+    bool removeRow();
 
-            std::optional<std::reference_wrapper<T>> at(const int& position);
-            const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
-            std::optional<std::reference_wrapper<T>> atDisplay(const int& displayPosition);
-            const std::optional<std::reference_wrapper<const T>> atDisplay(const int& displayPosition) const;
-            std::optional<std::reference_wrapper<T>> atSelection();
-            const std::optional<std::reference_wrapper<const T>> atSelection() const;
-            std::optional<std::reference_wrapper<int>> activeDisplayIndex();
-            const std::optional<std::reference_wrapper<const int>> activeDisplayIndex() const;
+    bool selectLast();
+    bool select(const int& displayPosition);
 
-            int size() const;
-            int currentDisplaySize() const;
-            int currentDisplayColumns() const;
-            int currentDisplayRows() const;
-            int maxDisplayColumns() const;
-            int maxDisplayRows() const;
+    std::optional<std::reference_wrapper<T>> at(const int& position);
+    const std::optional<std::reference_wrapper<const T>> at(const int& position) const;
+    std::optional<std::reference_wrapper<T>> atDisplay(const int& displayPosition);
+    const std::optional<std::reference_wrapper<const T>> atDisplay(const int& displayPosition) const;
+    std::optional<std::reference_wrapper<T>> atSelection();
+    const std::optional<std::reference_wrapper<const T>> atSelection() const;
+    std::optional<std::reference_wrapper<int>> activeDisplayIndex();
+    const std::optional<std::reference_wrapper<const int>> activeDisplayIndex() const;
 
-            bool isDisplayedElementSelected(const int& displayPosition) const;
+    int size() const;
+    int currentDisplaySize() const;
+    int currentDisplayColumns() const;
+    int currentDisplayRows() const;
+    int maxDisplayColumns() const;
+    int maxDisplayRows() const;
 
-            typename std::vector<T>::iterator begin();
-            typename std::vector<T>::const_iterator begin() const;
-            typename std::vector<T>::iterator end();
-            typename std::vector<T>::const_iterator end() const;
+    bool isDisplayedElementSelected(const int& displayPosition) const;
 
-            bool shiftLeft();
-            bool shiftRight();
-            bool shiftUp();
-            bool shiftDown();
+    typename std::vector<T>::iterator begin();
+    typename std::vector<T>::const_iterator begin() const;
+    typename std::vector<T>::iterator end();
+    typename std::vector<T>::const_iterator end() const;
 
-            bool selectLeft();
-            bool selectRight();
-            bool selectUp();
-            bool selectDown();
+    bool shiftLeft();
+    bool shiftRight();
+    bool shiftUp();
+    bool shiftDown();
 
-        private:
+    bool selectLeft();
+    bool selectRight();
+    bool selectUp();
+    bool selectDown();
 
-            bool isOneRowDisplayed() const;
-            bool isLeftDisplayColumn(const int& displayIndex) const;
-            bool isRightDisplayColumn(const int& displayIndex) const;
-            bool isTopDisplayRow(const int& displayIndex) const;
-            bool isTopRow(const int& displayIndex) const;
-            bool isBottomDisplayRow(const int& displayIndex) const;
-            bool isBottomRow(const int& displayIndex) const;
+  private:
 
-            bool isFirstElement(const int& displayIndex) const;
-            bool isLastElement(const int& displayIndex) const;
+    bool isOneRowDisplayed() const;
+    bool isLeftDisplayColumn(const int& displayIndex) const;
+    bool isRightDisplayColumn(const int& displayIndex) const;
+    bool isTopDisplayRow(const int& displayIndex) const;
+    bool isTopRow(const int& displayIndex) const;
+    bool isBottomDisplayRow(const int& displayIndex) const;
+    bool isBottomRow(const int& displayIndex) const;
 
-            void displayFirstElements();
-            void displayLastElements();
+    bool isFirstElement(const int& displayIndex) const;
+    bool isLastElement(const int& displayIndex) const;
 
-            sigrid_list::Vector<T> m_vector;
-            int m_displayColumns = 1;
-            int m_displayRows = 1;
-            sigrid_list::Vector<int> m_displayIds;
-            std::optional<int> m_selectIndex_o = std::nullopt;
+    void displayFirstElements();
+    void displayLastElements();
 
-            enum Wrap{
-                WRAP_ON,
-                WRAP_OFF,
-                NEXTWRAP_ON
-            };
+    sigrid_list::Vector<T> m_vector;
+    int m_displayColumns = 1;
+    int m_displayRows = 1;
+    sigrid_list::Vector<int> m_displayIds;
+    std::optional<int> m_selectIndex_o = std::nullopt;
 
-            Wrap m_multiRowHorisontalWrap = NEXTWRAP_ON;
-            bool m_verticalWrap = false;
-            bool m_singleRowStartEndWrap = false;
-            bool m_multiRowStartEndWrap = false;
+    enum Wrap{
+        WRAP_ON,
+        WRAP_OFF,
+        NEXTWRAP_ON
     };
-}
+
+    Wrap m_multiRowHorisontalWrap = NEXTWRAP_ON;
+    bool m_verticalWrap = false;
+    bool m_singleRowStartEndWrap = false;
+    bool m_multiRowStartEndWrap = false;
+};
+
+}  // namespace sigrid_list

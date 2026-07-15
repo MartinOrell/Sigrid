@@ -8,10 +8,12 @@
 #include "Entity/Icon/LogicIcon.h"
 
 namespace sigrid{
+
     typedef std::variant<
         LogicPiece,
         LogicCircle,
         LogicArrow,
         LogicIcon
     > LogicEntity;
-}
+
+}  // namespace sigrid

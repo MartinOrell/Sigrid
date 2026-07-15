@@ -7,11 +7,12 @@
 
 namespace sigrid_pdf{
 
-    struct Pages : Object{
+struct Pages : Object{
 
-        std::vector<Page> kids;
+    std::vector<Page> kids;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

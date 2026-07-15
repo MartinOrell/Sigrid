@@ -5,13 +5,14 @@
 
 namespace sigrid_pdf{
 
-    struct Resources : Object{
+struct Resources : Object{
 
-        unsigned int procedureSetObjectNumber = 0;
+    unsigned int procedureSetObjectNumber = 0;
 
-        ExternalObjects externalObjects;
+    ExternalObjects externalObjects;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

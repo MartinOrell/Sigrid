@@ -3,8 +3,10 @@
 #include <string>
 
 namespace sigrid{
-    struct ToolContainer{
-        std::string selection = "Select";
-        int colorId = 0;
-    };
-}
+
+struct ToolContainer{
+    std::string selection = "Select";
+    int colorId = 0;
+};
+
+}  // namespace sigrid

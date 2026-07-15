@@ -8,38 +8,41 @@
 #include "Entity/Tile/LogicTile.h"
 
 namespace sigrid{
-    class LogicTiles{
 
-        public:
-            LogicTiles();
+class LogicTiles{
 
-            void init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds);
+  public:
 
-            void setHighlightColor(const Coord& coord, const int& colorId);
-            void removeHighlight(const Coord& coord);
-            
-            int getNumColumns() const;
-            int getNumRows() const;
+    LogicTiles();
 
-            std::vector<int> getRepeatColorIds() const;
+    void init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds);
 
-            bool addColumnRight();
-            bool addColumnLeft();
-            bool removeRightColumn();
-            bool removeLeftColumn();
-            bool addRowUp();
-            bool addRowDown();
-            bool removeTopRow();
-            bool removeBottomRow();
+    void setHighlightColor(const Coord& coord, const int& colorId);
+    void removeHighlight(const Coord& coord);
+    
+    int getNumColumns() const;
+    int getNumRows() const;
 
-            void clear();
+    std::vector<int> getRepeatColorIds() const;
 
-            std::optional<LogicTile> getTile(const Coord& coord) const;
+    bool addColumnRight();
+    bool addColumnLeft();
+    bool removeRightColumn();
+    bool removeLeftColumn();
+    bool addRowUp();
+    bool addRowDown();
+    bool removeTopRow();
+    bool removeBottomRow();
 
-            friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
+    void clear();
 
-        private:
+    std::optional<LogicTile> getTile(const Coord& coord) const;
 
-            sigrid_list::AutoInsertMappedGrid<LogicTile> m_tiles;
-    };
-}
+    friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
+
+  private:
+
+    sigrid_list::AutoInsertMappedGrid<LogicTile> m_tiles;
+};
+
+}  // namespace sigrid

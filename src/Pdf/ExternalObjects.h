@@ -7,11 +7,12 @@
 
 namespace sigrid_pdf{
 
-    struct ExternalObjects : Object{
+struct ExternalObjects : Object{
 
-        std::vector<ExternalObject> xObjects;
+    std::vector<ExternalObject> xObjects;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

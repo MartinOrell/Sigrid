@@ -11,42 +11,44 @@ namespace sf{
 
 namespace sigrid{
 
-    class MenuItem: public sf::Drawable{
+class MenuItem: public sf::Drawable{
 
-        public:
-            MenuItem();
-            MenuItem(const MenuItem& src);
-            MenuItem& operator=(const MenuItem& rhs);
+  public:
 
-            void createGraphic(const int height);
+    MenuItem();
+    MenuItem(const MenuItem& src);
+    MenuItem& operator=(const MenuItem& rhs);
 
-            void setName(const std::string& name);
-            void setFont(const sf::Font& font);
-            void setPosition(const sf::Vector2f& position);
-            void setAction(const Action& action);
-            void setText(const std::string& text);
-            float getPositionLeft();
-            float getPositionRight();
-            float getPositionTop();
-            bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos);
-            Action getAction();
-            std::string getName();
-            void addToggle(const std::string& text, const Action&);
-            void toggle();
-        private:
+    void createGraphic(const int height);
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void setName(const std::string& name);
+    void setFont(const sf::Font& font);
+    void setPosition(const sf::Vector2f& position);
+    void setAction(const Action& action);
+    void setText(const std::string& text);
+    float getPositionLeft();
+    float getPositionRight();
+    float getPositionTop();
+    bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos);
+    Action getAction();
+    std::string getName();
+    void addToggle(const std::string& text, const Action&);
+    void toggle();
 
-            std::string m_name = "";
-            sf::RectangleShape m_shape;
-            Action m_action;
+  private:
 
-            std::unique_ptr<sf::Text> m_textPtr;
-            sf::Vector2f m_textOffset = {15.f,5.f};
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            bool m_isToggled = false;
-            std::string m_toggledName = "";
-            Action m_toggledAction;
-    };
+    std::string m_name = "";
+    sf::RectangleShape m_shape;
+    Action m_action;
 
-}
+    std::unique_ptr<sf::Text> m_textPtr;
+    sf::Vector2f m_textOffset = {15.f,5.f};
+
+    bool m_isToggled = false;
+    std::string m_toggledName = "";
+    Action m_toggledAction;
+};
+
+}  // namespace sigrid

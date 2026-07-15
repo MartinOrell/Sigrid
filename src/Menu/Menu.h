@@ -14,95 +14,98 @@
 
 namespace sigrid{
 
-    class MenuContainer;
-    class FontManager;
+class MenuContainer;
+class FontManager;
 
-    class Menu: public sf::Drawable{
-        public:
-            Menu();
+class Menu: public sf::Drawable{
 
-            void setFontManagerPtr(FontManager* const managerPtr);
+  public:
 
-            void init(const MenuContainer& menuData);
+    Menu();
 
-            void createGraphic(const sf::Vector2f& size);
+    void setFontManagerPtr(FontManager* const managerPtr);
 
-            void setPosition(const sf::Vector2f& position);
-            bool contains(const sf::Vector2f& point) const;
+    void init(const MenuContainer& menuData);
 
-            bool isPinned() const;
+    void createGraphic(const sf::Vector2f& size);
 
-            bool isCollapsed() const;
+    void setPosition(const sf::Vector2f& position);
+    bool contains(const sf::Vector2f& point) const;
 
-            std::optional<Action> clicked(const sf::Vector2f& position);
+    bool isPinned() const;
 
-            void pinMenu();
+    bool isCollapsed() const;
 
-            void unPinMenu();
+    std::optional<Action> clicked(const sf::Vector2f& position);
 
-            void showMenu();
+    void pinMenu();
 
-            void hideMenu();
+    void unPinMenu();
 
-            void toggleHeader(const int headerId);
+    void showMenu();
 
-            void addSuperHeader(const std::string&);
+    void hideMenu();
 
-            void addHeader(const std::string&);
+    void toggleHeader(const int headerId);
 
-            void addItem(const std::string&, const int index, const Action);
+    void addSuperHeader(const std::string&);
 
-            void addToggleItem(const std::string& key, const int index, const std::string& text0, const Action action0, const std::string& text1, const Action action1);
+    void addHeader(const std::string&);
 
-            void toggleItem(const std::string& key);
+    void addItem(const std::string&, const int index, const Action);
 
-            void hideItem(const std::string& key);
+    void addToggleItem(const std::string& key, const int index, const std::string& text0, const Action action0, const std::string& text1, const Action action1);
 
-            void showItem(const std::string& key);
+    void toggleItem(const std::string& key);
 
-            struct LayoutItem{
-                int headerIndex = -1;
-                int priority = -1;
-            };
+    void hideItem(const std::string& key);
 
-        private:
+    void showItem(const std::string& key);
 
-            struct PosIndex{
-                int x = -1;
-                int y = -1;
-            };
-
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-            void addSuperHeaderGraphic();
-            void addHeaderGraphic(const int id);
-            void addItemGraphic(const int headerIndex, const int itemIndex);
-
-            void redrawTexture();
-
-            float getTopPos();
-            float getBottomPos();
-            std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
-
-            FontManager* m_fontManagerPtr = nullptr;
-
-            SigridRenderTexture m_texture;
-
-            MenuItem m_superHeader;
-
-            sigrid_list::Map<std::string, MenuItem> m_items;
-
-            std::vector<std::vector<std::string>> m_itemKeys;
-
-            sigrid_list::Map<std::string, LayoutItem> m_layoutItems;
-
-            float m_lineHeight = 0.f;
-            float m_itemOffsetX = 0.f;
-
-            std::string m_fontFilename = "";
-
-            bool m_isPinned = false;
-            bool m_showItems = true;
-            int m_showHeaderIndex = -1;
+    struct LayoutItem{
+        int headerIndex = -1;
+        int priority = -1;
     };
-}
+
+  private:
+
+    struct PosIndex{
+        int x = -1;
+        int y = -1;
+    };
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    void addSuperHeaderGraphic();
+    void addHeaderGraphic(const int id);
+    void addItemGraphic(const int headerIndex, const int itemIndex);
+
+    void redrawTexture();
+
+    float getTopPos();
+    float getBottomPos();
+    std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
+
+    FontManager* m_fontManagerPtr = nullptr;
+
+    SigridRenderTexture m_texture;
+
+    MenuItem m_superHeader;
+
+    sigrid_list::Map<std::string, MenuItem> m_items;
+
+    std::vector<std::vector<std::string>> m_itemKeys;
+
+    sigrid_list::Map<std::string, LayoutItem> m_layoutItems;
+
+    float m_lineHeight = 0.f;
+    float m_itemOffsetX = 0.f;
+
+    std::string m_fontFilename = "";
+
+    bool m_isPinned = false;
+    bool m_showItems = true;
+    int m_showHeaderIndex = -1;
+};
+
+}  // namespace sigrid

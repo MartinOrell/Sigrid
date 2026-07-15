@@ -5,11 +5,12 @@
 
 namespace sigrid_pdf{
 
-    struct Catalog : Object{
+struct Catalog : Object{
 
-        Pages pages;
+    Pages pages;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

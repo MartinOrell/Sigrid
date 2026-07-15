@@ -9,161 +9,164 @@
 
 namespace sigrid{
 
-    class BoardDataContainer;
-    class LogicTile;
-    class IconManager;
+class BoardDataContainer;
+class LogicTile;
+class IconManager;
 
-    class Board: public sf::Drawable{
-        public:            
+class Board: public sf::Drawable{
 
-            Board();
-            Board(const Board& src);
+  public:
 
-            void setPieceManagerPtr(PieceManager* const managerPtr);
-            void setTileColorManagerPtr(ColorManager* const managerPtr);
-            void setArrowColorManagerPtr(ColorManager* const managerPtr);
-            void setFontManagerPtr(FontManager* const managerPtr);
-            void setIconManagerPtr(IconManager* const managerPtr);
-            void setLeftToRight();
-            void setRightToLeft();
-            void setTopToBottom();
-            void setBottomToTop();
+    Board();
+    Board(const Board& src);
 
-            void loadBoardData(const BoardDataContainer& boardData);
-            void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
+    void setPieceManagerPtr(PieceManager* const managerPtr);
+    void setTileColorManagerPtr(ColorManager* const managerPtr);
+    void setArrowColorManagerPtr(ColorManager* const managerPtr);
+    void setFontManagerPtr(FontManager* const managerPtr);
+    void setIconManagerPtr(IconManager* const managerPtr);
+    void setLeftToRight();
+    void setRightToLeft();
+    void setTopToBottom();
+    void setBottomToTop();
 
-            Board& operator=(const Board& rhs);
+    void loadBoardData(const BoardDataContainer& boardData);
+    void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
-            void setPosition(const sf::Vector2f& position);
+    Board& operator=(const Board& rhs);
 
-            void setPositionX(const float x);
+    void setPosition(const sf::Vector2f& position);
 
-            void setScale(const float scale);
+    void setPositionX(const float x);
 
-            void setFilename(const std::string& filename);
+    void setScale(const float scale);
 
-            void setImageFilename(const std::string& filename);
+    void setFilename(const std::string& filename);
 
-            int getNumColumns() const;
+    void setImageFilename(const std::string& filename);
 
-            int getImageWidth() const;
+    int getNumColumns() const;
 
-            int getImageHeight() const;
+    int getImageWidth() const;
 
-            sf::Image getImage(const int maxWidth, const int maxHeight) const;
+    int getImageHeight() const;
 
-            const sf::Vector2f& getTopLeftPosition() const;
+    sf::Image getImage(const int maxWidth, const int maxHeight) const;
 
-            sf::Vector2f getDisplaySize() const;
-            float getDisplayWidth() const;
-            float getDisplayHeight() const;
+    const sf::Vector2f& getTopLeftPosition() const;
 
-            std::string getName() const;
+    sf::Vector2f getDisplaySize() const;
+    float getDisplayWidth() const;
+    float getDisplayHeight() const;
 
-            std::string getFilename() const;
+    std::string getName() const;
 
-            std::string getImageFilename() const;
+    std::string getFilename() const;
 
-            bool contains(const sf::Vector2f& point) const;
+    std::string getImageFilename() const;
 
-            bool isEmptyTile(const Coord& coord) const;
+    bool contains(const sf::Vector2f& point) const;
 
-            bool isCoordinatesOutside() const;
+    bool isEmptyTile(const Coord& coord) const;
 
-            bool isWithinTurnToken(const sf::Vector2f& point) const;
+    bool isCoordinatesOutside() const;
 
-            bool isImageFilenameSet() const;
+    bool isWithinTurnToken(const sf::Vector2f& point) const;
 
-            std::optional<Coord> getTileCoord(const sf::Vector2f& point);
+    bool isImageFilenameSet() const;
 
-            std::optional<LogicTile> getTile(const Coord& coord);
+    std::optional<Coord> getTileCoord(const sf::Vector2f& point);
 
-            std::optional<LogicEntity> getLogicEntity(const Coord& coord);
+    std::optional<LogicTile> getTile(const Coord& coord);
 
-            std::optional<LogicArrow> getLogicArrow(const CoordPair& coordPair);
+    std::optional<LogicEntity> getLogicEntity(const Coord& coord);
 
-            std::string getFen() const;
+    std::optional<LogicArrow> getLogicArrow(const CoordPair& coordPair);
 
-            void select(const Coord& coord);
+    std::string getFen() const;
 
-            void deselect();
+    void select(const Coord& coord);
 
-            void addEntity(const Coord& coord, const LogicEntity& newEntity);
-            void removeEntity(const Coord& coord);
+    void deselect();
 
-            void addEntityAtSelection(const LogicEntity& newEntity);
-            void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
+    void addEntity(const Coord& coord, const LogicEntity& newEntity);
+    void removeEntity(const Coord& coord);
 
-            void addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow);
-            void removeArrow(const Coord& fromCoord, const Coord& toCoord);
+    void addEntityAtSelection(const LogicEntity& newEntity);
+    void dragAndDrop(const Coord& fromCoord, const Coord& toCoord);
 
-            void addTileHighlight(const Coord& coord, const int& colorId);
-            void removeTileHighlight(const Coord& coord);
+    void addArrow(const Coord& fromCoord, const Coord& toCoord, const LogicArrow& newArrow);
+    void removeArrow(const Coord& fromCoord, const Coord& toCoord);
 
-            void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
-            void removeDragArrow();
+    void addTileHighlight(const Coord& coord, const int& colorId);
+    void removeTileHighlight(const Coord& coord);
 
-            void loadFen(const std::string& fen);
+    void updateDragArrow(const Coord& fromCoord, const Coord& toCoord, const int& colorId);
+    void removeDragArrow();
 
-            void save();
+    void loadFen(const std::string& fen);
 
-            void clearEntities();
-            void clearArrows();
-            void print();
+    void save();
 
-            void flipBoard();
+    void clearEntities();
+    void clearArrows();
+    void print();
 
-            void addLeftInsideLabels();
-            void addBottomInsideLabels();
-            void addLeftOutsideLabels();
-            void addRightOutsideLabels();
-            void addTopOutsideLabels();
-            void addBottomOutsideLabels();
-            void removeLeftInsideLabels();
-            void removeBottomInsideLabels();
-            void removeLeftOutsideLabels();
-            void removeRightOutsideLabels();
-            void removeTopOutsideLabels();
-            void removeBottomOutsideLabels();
+    void flipBoard();
 
-            void setCoordinateSize(const float& size);
+    void addLeftInsideLabels();
+    void addBottomInsideLabels();
+    void addLeftOutsideLabels();
+    void addRightOutsideLabels();
+    void addTopOutsideLabels();
+    void addBottomOutsideLabels();
+    void removeLeftInsideLabels();
+    void removeBottomInsideLabels();
+    void removeLeftOutsideLabels();
+    void removeRightOutsideLabels();
+    void removeTopOutsideLabels();
+    void removeBottomOutsideLabels();
 
-            void addTileColumnRight();
+    void setCoordinateSize(const float& size);
 
-            void addTileColumnLeft();
+    void addTileColumnRight();
 
-            void removeRightTileColumn();
+    void addTileColumnLeft();
 
-            void removeLeftTileColumn();
+    void removeRightTileColumn();
 
-            void addTileRowUp();
+    void removeLeftTileColumn();
 
-            void addTileRowDown();
+    void addTileRowUp();
 
-            void removeTopTileRow();
+    void addTileRowDown();
 
-            void removeBottomTileRow();
+    void removeTopTileRow();
 
-            void addBorder();
+    void removeBottomTileRow();
 
-            void removeBorder();
+    void addBorder();
 
-            void addTurnToken();
+    void removeBorder();
 
-            void removeTurnToken();
+    void addTurnToken();
 
-            void toggleTurnToken();
-        private:
+    void removeTurnToken();
 
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void toggleTurnToken();
 
-            LogicBoard m_logicBoard;
+  private:
 
-            GraphicBoard m_graphicBoard;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-            std::optional<Coord> m_selection_o = std::nullopt;
+    LogicBoard m_logicBoard;
 
-            std::string m_filename;
-            std::string m_imageFilename;
-    };
-}
+    GraphicBoard m_graphicBoard;
+
+    std::optional<Coord> m_selection_o = std::nullopt;
+
+    std::string m_filename;
+    std::string m_imageFilename;
+};
+
+}  // Namespace sigrid

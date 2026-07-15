@@ -6,15 +6,16 @@
 
 namespace sigrid_pdf{
 
-    struct Page : Object{
+struct Page : Object{
 
-        unsigned int parentObjectNumber = 0;
-        unsigned int mediaBoxObjectNumber = 0;
+    unsigned int parentObjectNumber = 0;
+    unsigned int mediaBoxObjectNumber = 0;
 
-        Resources resources;
-        ContentStreams contents;
+    Resources resources;
+    ContentStreams contents;
 
-        std::string getString() const override;
+    std::string getString() const override;
 
-    };
-}
+};
+
+}  // namespace sigrid_pdf

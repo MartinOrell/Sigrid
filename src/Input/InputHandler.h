@@ -9,40 +9,41 @@
 
 namespace sigrid{
 
-    class InputHandler{
+class InputHandler{
 
-        public:
-            InputHandler();
+  public:
 
-            void addTool(const sf::Mouse::Button& button, sigrid::Tool tool);
+    InputHandler();
 
-            void addTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addTool(const sf::Mouse::Button& button, sigrid::Tool tool);
 
-            void addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addTool(const sf::Keyboard::Key& button, sigrid::Action action);
 
-            void addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid::Action action);
+    void addCtrlTool(const sf::Keyboard::Key& button, sigrid::Action action);
 
-            void setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity);
+    void addCtrlShiftTool(const sf::Keyboard::Key& button, sigrid::Action action);
 
-            void setArrow(const sf::Mouse::Button& button, const int& colorId);
+    void setEntity(const sf::Mouse::Button& button, const sigrid::LogicEntity& logicEntity);
 
-            void setSelection(const sf::Mouse::Button& button, const ToolSelection& selection);
+    void setArrow(const sf::Mouse::Button& button, const int& colorId);
 
-            std::optional<sigrid::Tool*> getToolPtr(const sf::Mouse::Button& button);
+    void setSelection(const sf::Mouse::Button& button, const ToolSelection& selection);
 
-            std::optional<sigrid::Action> getAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid::Tool*> getToolPtr(const sf::Mouse::Button& button);
 
-            std::optional<sigrid::Action> getCtrlAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid::Action> getAction(const sf::Keyboard::Key& key);
 
-            std::optional<sigrid::Action> getCtrlShiftAction(const sf::Keyboard::Key& key);
+    std::optional<sigrid::Action> getCtrlAction(const sf::Keyboard::Key& key);
 
-        private:
+    std::optional<sigrid::Action> getCtrlShiftAction(const sf::Keyboard::Key& key);
 
-            sigrid_list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
-            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
-            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
-            sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
+  private:
 
-    };
+    sigrid_list::Map<sf::Mouse::Button, sigrid::Tool> m_tools;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_keyboardActions;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlKeyboardActions;
+    sigrid_list::Map<sf::Keyboard::Key, sigrid::Action> m_ctrlShiftKeyboardActions;
 
-}
+};
+
+}  // namespace sigrid

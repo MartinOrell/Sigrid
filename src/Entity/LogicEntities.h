@@ -9,32 +9,37 @@
 #include "Entity/Shape/Circle/LogicCircle.h"
 
 namespace sigrid{
-    class LogicEntities{
 
-        public:
-            LogicEntities();
+class LogicEntities{
 
-            void addEntity(const Coord& coord, const LogicEntity& entity);
-            void removeEntity(const Coord& coord);
-            void moveEntity(const Coord& fromCoord, const Coord& toCoord);
+  public:
 
-            void clear();
-            
-            std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
+    LogicEntities();
 
-            void removeColumn(const int& columnId);
-            void removeRow(const int& rowId);
+    void addEntity(const Coord& coord, const LogicEntity& entity);
+    void removeEntity(const Coord& coord);
+    void moveEntity(const Coord& fromCoord, const Coord& toCoord);
 
-            void moveEntitiesRight();
-            void moveEntitiesLeft();
-            void moveEntitiesUp();
-            void moveEntitiesDown();
+    void clear();
+    
+    std::optional<LogicEntity> getEntityAt(const Coord& coord) const;
 
-            friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
-        private:
-            sigrid_list::Map<Coord, LogicPiece> m_pieces;
-            sigrid_list::Map<Coord, LogicCircle> m_circles;
-            sigrid_list::Map<Coord, LogicArrow> m_arrows;
-            sigrid_list::Map<Coord, LogicIcon> m_icons;
-    };
-}
+    void removeColumn(const int& columnId);
+    void removeRow(const int& rowId);
+
+    void moveEntitiesRight();
+    void moveEntitiesLeft();
+    void moveEntitiesUp();
+    void moveEntitiesDown();
+
+    friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
+
+  private:
+
+    sigrid_list::Map<Coord, LogicPiece> m_pieces;
+    sigrid_list::Map<Coord, LogicCircle> m_circles;
+    sigrid_list::Map<Coord, LogicArrow> m_arrows;
+    sigrid_list::Map<Coord, LogicIcon> m_icons;
+};
+
+}  // namespace sigrid
