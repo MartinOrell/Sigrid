@@ -12,7 +12,11 @@ class BoardLabels: public sf::Drawable{
 
   public:
 
-    BoardLabels();
+    BoardLabels() = default;
+    BoardLabels(const BoardLabels&) = default;
+    BoardLabels(BoardLabels&&) = default;
+    BoardLabels& operator=(const BoardLabels&) = default;
+    BoardLabels& operator=(BoardLabels&&) = default;
 
     void showLeftInside();
     void showBottomInside();

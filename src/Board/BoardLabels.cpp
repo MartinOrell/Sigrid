@@ -9,8 +9,6 @@
 
 using namespace sigrid;
 
-BoardLabels::BoardLabels(){}
-
 void BoardLabels::showLeftInside(){
     m_leftInsideCoordLabels.isVisible = true;
 }
