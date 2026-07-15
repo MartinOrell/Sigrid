@@ -37,6 +37,10 @@ class GraphicBoard: public sf::Drawable{
   public:
     
     GraphicBoard();
+    GraphicBoard(const GraphicBoard&) = default;
+    GraphicBoard(GraphicBoard&&) = delete;
+    GraphicBoard& operator=(const GraphicBoard&);
+    GraphicBoard& operator=(GraphicBoard&&) = delete;
     
     void setPieceManagerPtr(PieceManager* const managerPtr);
     void setTileColorManagerPtr(ColorManager* const managerPtr);
@@ -51,8 +55,6 @@ class GraphicBoard: public sf::Drawable{
     void load(const LogicBoard& logicBoard);
 
     void init(const LogicBoard& logicBoard, const BoardDesignContainer& config);
-
-    GraphicBoard& operator=(const GraphicBoard& rhs);
 
     sf::Vector2f getTileSize() const;
 

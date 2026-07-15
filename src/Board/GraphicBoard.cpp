@@ -22,6 +22,44 @@ GraphicBoard::GraphicBoard()
     setBottomToTop();
 }
 
+GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
+
+    if(rhs.m_texture.isInitialized()){
+        m_texture.setSize(rhs.getTextureSize());
+    }
+
+    m_texture.setPosition(rhs.getTopLeftPosition());
+    m_texture.setBackgroundColor(rhs.getBackgroundColor());
+    m_texture.setScale(rhs.getScale());
+
+    m_leftEdgeWidth = rhs.m_leftEdgeWidth;
+    m_rightEdgeWidth = rhs.m_rightEdgeWidth;
+    m_topEdgeWidth = rhs.m_topEdgeWidth;
+    m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
+
+    m_tileLayer = rhs.m_tileLayer;
+    m_pieceLayer = rhs.m_pieceLayer;
+    m_arrowLayer = rhs.m_arrowLayer;
+
+    m_dragArrow = rhs.m_dragArrow;
+
+    m_isSelectHighlightVisible = rhs.m_isSelectHighlightVisible;
+    m_selectHighlight = rhs.m_selectHighlight;
+
+    m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
+
+    m_labels = rhs.m_labels;
+    m_border = rhs.m_border;
+    m_turnToken = rhs.m_turnToken;
+
+    m_isLeftToRight = rhs.m_isLeftToRight;
+    m_isTopToBottom = rhs.m_isTopToBottom;
+
+    redrawTexture();
+
+    return *this;
+}
+
 void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
     m_pieceLayer.setPieceManagerPtr(managerPtr);
 }
@@ -302,44 +340,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     
     resizeTexture();
     redrawTexture();
-}
-
-GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
-
-    if(rhs.m_texture.isInitialized()){
-        m_texture.setSize(rhs.getTextureSize());
-    }
-
-    m_texture.setPosition(rhs.getTopLeftPosition());
-    m_texture.setBackgroundColor(rhs.getBackgroundColor());
-    m_texture.setScale(rhs.getScale());
-
-    m_leftEdgeWidth = rhs.m_leftEdgeWidth;
-    m_rightEdgeWidth = rhs.m_rightEdgeWidth;
-    m_topEdgeWidth = rhs.m_topEdgeWidth;
-    m_bottomEdgeWidth = rhs.m_bottomEdgeWidth;
-
-    m_tileLayer = rhs.m_tileLayer;
-    m_pieceLayer = rhs.m_pieceLayer;
-    m_arrowLayer = rhs.m_arrowLayer;
-
-    m_dragArrow = rhs.m_dragArrow;
-
-    m_isSelectHighlightVisible = rhs.m_isSelectHighlightVisible;
-    m_selectHighlight = rhs.m_selectHighlight;
-
-    m_arrowColorManagerPtr = rhs.m_arrowColorManagerPtr;
-
-    m_labels = rhs.m_labels;
-    m_border = rhs.m_border;
-    m_turnToken = rhs.m_turnToken;
-
-    m_isLeftToRight = rhs.m_isLeftToRight;
-    m_isTopToBottom = rhs.m_isTopToBottom;
-
-    redrawTexture();
-
-    return *this;
 }
 
 sf::Vector2f GraphicBoard::getTileSize() const{
