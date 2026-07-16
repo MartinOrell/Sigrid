@@ -30,7 +30,7 @@ class PieceManager{
     sigrid_list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
     sigrid_list::Vector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
 
-    sf::Vector2f m_pieceSize;
+    sf::Vector2f m_pieceSize{108.f,108.f};
         
 };
 
