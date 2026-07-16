@@ -6,7 +6,31 @@ using namespace sigrid;
 
 #include <iostream>
 
-RectangleBorder::RectangleBorder(){}
+RectangleBorder& RectangleBorder::operator =(const RectangleBorder& rhs){
+
+    m_isVisible = rhs.m_isVisible;
+    m_thickness = rhs.m_thickness;
+    m_topLeftPosition = rhs.m_topLeftPosition;
+    m_enclosedArea = rhs.m_enclosedArea;
+
+    m_left.setSize(rhs.m_left.getSize());
+    m_left.setPosition(rhs.m_left.getPosition());
+    m_left.setFillColor(rhs.m_left.getFillColor());
+
+    m_right.setSize(rhs.m_right.getSize());
+    m_right.setPosition(rhs.m_right.getPosition());
+    m_right.setFillColor(rhs.m_right.getFillColor());
+
+    m_top.setSize(rhs.m_top.getSize());
+    m_top.setPosition(rhs.m_top.getPosition());
+    m_top.setFillColor(rhs.m_top.getFillColor());
+
+    m_bottom.setSize(rhs.m_bottom.getSize());
+    m_bottom.setPosition(rhs.m_bottom.getPosition());
+    m_bottom.setFillColor(rhs.m_bottom.getFillColor());
+
+    return *this;
+}
 
 void RectangleBorder::setThickness(const float& thickness){
 
@@ -117,32 +141,6 @@ void RectangleBorder::setColor(const sf::Color& color){
     m_right.setFillColor(color);
     m_top.setFillColor(color);
     m_bottom.setFillColor(color);
-}
-
-RectangleBorder& RectangleBorder::operator =(const RectangleBorder& rhs){
-
-    m_isVisible = rhs.m_isVisible;
-    m_thickness = rhs.m_thickness;
-    m_topLeftPosition = rhs.m_topLeftPosition;
-    m_enclosedArea = rhs.m_enclosedArea;
-
-    m_left.setSize(rhs.m_left.getSize());
-    m_left.setPosition(rhs.m_left.getPosition());
-    m_left.setFillColor(rhs.m_left.getFillColor());
-
-    m_right.setSize(rhs.m_right.getSize());
-    m_right.setPosition(rhs.m_right.getPosition());
-    m_right.setFillColor(rhs.m_right.getFillColor());
-
-    m_top.setSize(rhs.m_top.getSize());
-    m_top.setPosition(rhs.m_top.getPosition());
-    m_top.setFillColor(rhs.m_top.getFillColor());
-
-    m_bottom.setSize(rhs.m_bottom.getSize());
-    m_bottom.setPosition(rhs.m_bottom.getPosition());
-    m_bottom.setFillColor(rhs.m_bottom.getFillColor());
-
-    return *this;
 }
 
 bool RectangleBorder::isVisible() const{

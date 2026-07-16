@@ -9,7 +9,11 @@ class RectangleBorder: public sf::Drawable{
 
   public:
 
-    RectangleBorder();
+    RectangleBorder() = default;
+    RectangleBorder(const RectangleBorder&) = default;
+    RectangleBorder(RectangleBorder&&) = default;
+    RectangleBorder& operator=(const RectangleBorder&);
+    RectangleBorder& operator=(RectangleBorder&&) = default;
 
     void setThickness(const float& thickness);
 
@@ -18,8 +22,6 @@ class RectangleBorder: public sf::Drawable{
     void setEnclosedArea(const sf::Vector2f& enclosedArea);
 
     void setColor(const sf::Color& color);
-
-    RectangleBorder& operator =(const RectangleBorder& rhs);
 
     bool isVisible() const;
     bool isHidden() const;
