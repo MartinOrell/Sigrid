@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-InputHandler::InputHandler(){}
-
 void InputHandler::addTool(const sf::Mouse::Button& button, sigrid::Tool tool){
     m_tools.insert(button,std::move(tool));
 }

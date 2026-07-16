@@ -13,7 +13,11 @@ class InputHandler{
 
   public:
 
-    InputHandler();
+    InputHandler() = default;
+    InputHandler(const InputHandler&) = default;
+    InputHandler(InputHandler&&) = default;
+    InputHandler& operator=(const InputHandler&) = default;
+    InputHandler& operator=(InputHandler&&) = default;
 
     void addTool(const sf::Mouse::Button& button, sigrid::Tool tool);
 
