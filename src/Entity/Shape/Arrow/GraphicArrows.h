@@ -16,7 +16,11 @@ class GraphicArrows: public sf::Drawable{
 
   public:
 
-    GraphicArrows();
+    GraphicArrows() = default;
+    GraphicArrows(const GraphicArrows&) = default;
+    GraphicArrows(GraphicArrows&&) = default;
+    GraphicArrows& operator=(const GraphicArrows&) = default;
+    GraphicArrows& operator=(GraphicArrows&&) = default;
 
     void setThickness(const float& thickness);
     void setHeadSize(const float& headSize);

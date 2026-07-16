@@ -8,8 +8,6 @@
 
 using namespace sigrid;
 
-GraphicArrows::GraphicArrows(){}
-
 void GraphicArrows::setThickness(const float& thickness){
     m_arrowThickness = thickness;
 }
