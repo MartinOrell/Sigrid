@@ -12,9 +12,6 @@
 using namespace sigrid_list;
 
 template<typename TKey, typename TValue>
-OrderedMap<TKey, TValue>::OrderedMap(){}
-
-template<typename TKey, typename TValue>
 void OrderedMap<TKey, TValue>::push_back(const TKey& key, const TValue& value){
 
     m_map.insert(key, value);

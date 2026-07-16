@@ -9,7 +9,11 @@ template <typename TKey, typename TValue> class OrderedMap{
 
   public:
 
-    OrderedMap();
+    OrderedMap() = default;
+    OrderedMap(const OrderedMap&) = default;
+    OrderedMap(OrderedMap&&) = default;
+    OrderedMap& operator=(const OrderedMap&) = default;
+    OrderedMap& operator=(OrderedMap&&) = default;
 
     void push_back(const TKey& key, const TValue& value);
     void insert(const int& position, const TKey& key, const TValue& value);
