@@ -2,7 +2,9 @@
 
 using namespace sigrid;
 
-ColorManager::ColorManager(const std::vector<uint32_t>& colors){
+ColorManager::ColorManager(){}
+
+void ColorManager::setColors(const std::vector<uint32_t>& colors){
 
     for(const auto& colorHex : colors){
         m_colors.push_back(sf::Color(colorHex));

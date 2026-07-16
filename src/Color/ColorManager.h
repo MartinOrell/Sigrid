@@ -11,7 +11,9 @@ class ColorManager{
 
   public:
 
-    ColorManager(const std::vector<uint32_t>& colors);
+    ColorManager();
+
+    void setColors(const std::vector<uint32_t>& colors);
 
     std::optional<sf::Color> getSolidColor(const int colorId) const;
     std::optional<sf::Color> getTransparentColor(const int colorId) const;

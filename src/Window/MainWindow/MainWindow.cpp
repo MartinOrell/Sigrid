@@ -16,8 +16,10 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_fontManagerPtr = std::make_unique<FontManager>();
 
     m_size = sf::Vector2i{config.windowWidth, config.windowHeight};
-    m_tileColorManagerPtr = std::make_unique<ColorManager>(config.tileColors);
-    m_arrowColorManagerPtr = std::make_unique<ColorManager>(config.arrowColors);
+    m_tileColorManagerPtr = std::make_unique<ColorManager>();
+    m_tileColorManagerPtr->setColors(config.tileColors);
+    m_arrowColorManagerPtr = std::make_unique<ColorManager>();
+    m_arrowColorManagerPtr->setColors(config.arrowColors);
     m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
     m_iconManagerPtr = std::make_unique<IconManager>();
 
