@@ -8,7 +8,12 @@ class LogicIcon{
 
   public:
 
-    LogicIcon();
+    LogicIcon() = default;
+    LogicIcon(const LogicIcon&) = default;
+    LogicIcon(LogicIcon&&) = default;
+    LogicIcon& operator=(const LogicIcon&) = default;
+    LogicIcon& operator=(LogicIcon&&) = default;
+
     void setFilename(const std::string& name);
     std::string getFilename() const;
 

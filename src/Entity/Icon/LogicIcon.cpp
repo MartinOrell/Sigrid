@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-LogicIcon::LogicIcon(){}
-
 void LogicIcon::setFilename(const std::string& filename){
     m_filename = filename;
 }
