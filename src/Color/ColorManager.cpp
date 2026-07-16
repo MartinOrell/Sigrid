@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-ColorManager::ColorManager(){}
-
 void ColorManager::setColors(const std::vector<uint32_t>& colors){
 
     for(const auto& colorHex : colors){

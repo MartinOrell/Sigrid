@@ -11,7 +11,11 @@ class ColorManager{
 
   public:
 
-    ColorManager();
+    ColorManager() = default;
+    ColorManager(const ColorManager&) = default;
+    ColorManager(ColorManager&&) = default;
+    ColorManager& operator=(const ColorManager&) = default;
+    ColorManager& operator=(ColorManager&&) = default;
 
     void setColors(const std::vector<uint32_t>& colors);
 
