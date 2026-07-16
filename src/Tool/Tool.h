@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include <optional>
 
 #include "Tool/ToolSelection.h"
 #include "Entity/LogicEntity.h"
@@ -18,7 +18,7 @@ class Tool{
     Tool(const ToolContainer& data);
     Tool& operator=(const Tool& rhs);
     const ToolSelection selection() const;
-    LogicEntity getEntity() const;
+    std::optional<LogicEntity> getEntity() const;
     int getArrowColorId() const;
     void setEntity(const LogicEntity& entity);
     void setSelection(const ToolSelection& selection);
@@ -27,7 +27,7 @@ class Tool{
   private:
 
     ToolSelection m_selection;
-    std::unique_ptr<LogicEntity> m_entity;
+    std::optional<LogicEntity> m_entity_o;
     int m_arrowColorId;
 };
 

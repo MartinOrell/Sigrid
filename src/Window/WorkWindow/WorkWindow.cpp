@@ -398,17 +398,24 @@ std::optional<sigrid_action::Action> WorkWindow::clicked(const sigrid::Tool& too
                 }
                 return std::nullopt;
             case ToolSelection::EntityAdder:
-                useAddEntityTool(toCoord,tool.getEntity());
-                return std::nullopt;
-            case ToolSelection::EntityPicker:
-                {
-                    auto logicEntity_o = board.getLogicEntity(toCoord);
-                    if(logicEntity_o == std::nullopt){
-                        return std::nullopt;
-                    }
-                    sigrid_action::PickEntity action{logicEntity_o.value()};
-                    return action;
+            {
+                auto tool_o = tool.getEntity();
+                if(tool_o == std::nullopt){
+                    return std::nullopt;
                 }
+                auto tool = tool_o.value();
+                useAddEntityTool(toCoord, tool);
+                return std::nullopt;
+            }
+            case ToolSelection::EntityPicker:
+            {
+                auto logicEntity_o = board.getLogicEntity(toCoord);
+                if(logicEntity_o == std::nullopt){
+                    return std::nullopt;
+                }
+                sigrid_action::PickEntity action{logicEntity_o.value()};
+                return action;
+            }
             case ToolSelection::DrawArrow:
                 if(fromCoord == toCoord){
                     useAddTileHighlightTool(toCoord, tool.getArrowColorId());

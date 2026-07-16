@@ -35,15 +35,7 @@ Tool::Tool(const ToolContainer& data)
 Tool& Tool::operator=(const Tool& rhs){
     m_selection = rhs.m_selection;
     m_arrowColorId = rhs.m_arrowColorId;
-    
-    if(rhs.m_entity){
-        if(!m_entity){
-            m_entity = std::make_unique<LogicEntity>(*(rhs.m_entity));
-        }
-        else{
-            *m_entity = *(rhs.m_entity);
-        }
-    }
+    m_entity_o = rhs.m_entity_o;
 
     return *this;
 }
@@ -52,8 +44,8 @@ const ToolSelection Tool::selection() const{
     return m_selection;
 }
 
-LogicEntity Tool::getEntity() const{
-    return *m_entity;
+std::optional<LogicEntity> Tool::getEntity() const{
+    return m_entity_o;
 }
 
 int Tool::getArrowColorId() const{
@@ -61,7 +53,7 @@ int Tool::getArrowColorId() const{
 }
 
 void Tool::setEntity(const LogicEntity& entity){
-    m_entity = std::make_unique<LogicEntity>(entity);
+    m_entity_o = entity;
 }
 
 void Tool::setSelection(const ToolSelection& selection){
