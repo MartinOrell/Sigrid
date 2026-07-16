@@ -9,10 +9,7 @@
 using namespace sigrid;
 
 
-MainWindow::MainWindow()
-: m_backgroundColor{sf::Color(30,30,30)}
-, m_scale{1.f,1.f}
-, m_piecePickerToBoardGap{10.f}{}
+MainWindow::MainWindow(){}
 
 bool MainWindow::init(const MainWindowConfigContainer& config){
     

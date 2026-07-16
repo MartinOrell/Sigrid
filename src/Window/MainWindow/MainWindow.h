@@ -116,10 +116,10 @@ class MainWindow{
     };
 
     sf::RenderWindow m_window;
-    sf::Color m_backgroundColor;
+    sf::Color m_backgroundColor{sf::Color(30,30,30)};
     sf::Vector2i m_size;
-    sf::Vector2f m_scale;
-    float m_piecePickerToBoardGap;
+    sf::Vector2f m_scale{1.f,1.f};
+    float m_piecePickerToBoardGap{10.f};
 
     LayoutGrid m_layout;
     std::unique_ptr<Menu> m_menu;
