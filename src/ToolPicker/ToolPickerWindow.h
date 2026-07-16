@@ -104,7 +104,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     std::vector<ToolStruct> m_miscTools;
 
-    ColorDisplay m_colorDisplay;
+    ColorDisplay m_colorDisplay{ColorDisplay::Piece};
 
     SigridRenderTexture m_texture;
 
@@ -113,8 +113,8 @@ class ToolPickerWindow: public sf::Drawable{
     std::map<sigrid_coord::Coord, sigrid_action::Action> m_clickActions;
 
     std::vector<int> m_displayedPieceColorIds;
-    int m_arrowColorId = 0;
-    int m_circleColorId = 0;
+    int m_arrowColorId = -1;
+    int m_circleColorId = -1;
     std::string m_pieceNotation = "";
 
     std::vector<std::string> m_pieceNotations;

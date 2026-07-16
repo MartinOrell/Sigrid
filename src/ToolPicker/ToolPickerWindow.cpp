@@ -16,11 +16,7 @@
 
 using namespace sigrid;
 
-
-ToolPickerWindow::ToolPickerWindow()
-: m_colorDisplay{ColorDisplay::Piece}
-, m_arrowColorId{-1}
-, m_circleColorId{-1}{}
+ToolPickerWindow::ToolPickerWindow(){}
 
 void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
