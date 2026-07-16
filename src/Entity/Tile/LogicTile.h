@@ -8,7 +8,11 @@ class LogicTile{
 
   public:
 
-    LogicTile();
+    LogicTile() = default;
+    LogicTile(const LogicTile&) = default;
+    LogicTile(LogicTile&&) = default;
+    LogicTile& operator=(const LogicTile&) = default;
+    LogicTile& operator=(LogicTile&&) = default;
 
     int getColorId() const;
     std::optional<int> getHighlightColorId() const;
