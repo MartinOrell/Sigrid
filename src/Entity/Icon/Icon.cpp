@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-Icon::Icon(){}
-
 void Icon::setSize(const sf::Vector2f& size){
     m_shape.setSize(size);
 }

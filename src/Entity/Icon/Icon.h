@@ -9,7 +9,11 @@ class Icon: public sf::Drawable{
 
   public:
 
-    Icon();
+    Icon() = default;
+    Icon(const Icon&) = default;
+    Icon(Icon&&) = default;
+    Icon& operator=(const Icon&) = default;
+    Icon& operator=(Icon&&) = default;
     
     void setSize(const sf::Vector2f& size);
 
