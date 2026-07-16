@@ -13,7 +13,11 @@ class LogicTiles{
 
   public:
 
-    LogicTiles();
+    LogicTiles() = default;
+    LogicTiles(const LogicTiles&) = default;
+    LogicTiles(LogicTiles&&) = default;
+    LogicTiles& operator=(const LogicTiles&) = default;
+    LogicTiles& operator=(LogicTiles&&) = default;
 
     void init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds);
 

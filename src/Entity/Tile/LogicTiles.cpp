@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-LogicTiles::LogicTiles(){}
-
 void LogicTiles::init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds){
 
     sigrid_list::Vector<LogicTile> insertPattern;
