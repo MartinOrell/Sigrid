@@ -8,9 +8,6 @@
 
 using namespace sigrid;
 
-
-MainWindow::MainWindow(){}
-
 bool MainWindow::init(const MainWindowConfigContainer& config){
     
     m_window.create(sf::VideoMode({(unsigned int)config.windowWidth, (unsigned int)config.windowHeight}), config.windowName);

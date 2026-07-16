@@ -27,7 +27,12 @@ class MainWindow{
 
   public:
 
-    MainWindow();
+    MainWindow() = default;
+    MainWindow(const MainWindow&) = default;
+    MainWindow(MainWindow&&) = default;
+    MainWindow& operator=(const MainWindow&) = default;
+    MainWindow& operator=(MainWindow&&) = default;
+
     bool init(const MainWindowConfigContainer& config);
     void run();
 
