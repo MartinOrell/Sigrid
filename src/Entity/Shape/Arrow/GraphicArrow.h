@@ -14,7 +14,11 @@ class GraphicArrow: public sf::Drawable{
 
   public:
 
-    GraphicArrow();
+    GraphicArrow() = default;
+    GraphicArrow(const GraphicArrow&) = default;
+    GraphicArrow(GraphicArrow&&) = default;
+    GraphicArrow& operator=(const GraphicArrow&) = default;
+    GraphicArrow& operator=(GraphicArrow&&) = default;
 
     void setFromPosition(const sf::Vector2f& fromPosition);
 

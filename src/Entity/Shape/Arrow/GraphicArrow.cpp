@@ -6,8 +6,6 @@
 
 using namespace sigrid;
 
-GraphicArrow::GraphicArrow(){}
-
 void GraphicArrow::setFromPosition(const sf::Vector2f& fromPosition){
     m_line.setPosition(fromPosition);
     m_isSet.fromPosition = true;
