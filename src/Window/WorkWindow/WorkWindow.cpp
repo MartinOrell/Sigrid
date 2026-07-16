@@ -15,11 +15,7 @@
 using namespace sigrid;
 
 
-WorkWindow::WorkWindow(){
-    m_boardSelectHighlight.hide();
-    m_boardSelectHighlight.setThickness(10);
-    m_boardSelectHighlight.setColor(sf::Color{100,100,255});
-}
+WorkWindow::WorkWindow(){}
 
 void WorkWindow::setBoardFilename(const std::string& filename){
 
@@ -94,6 +90,10 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
 }
 
 void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
+
+    m_boardSelectHighlight.hide();
+    m_boardSelectHighlight.setThickness(10);
+    m_boardSelectHighlight.setColor(sf::Color{100,100,255});
 
     if(m_boards.size() == 0){
         Board board;
