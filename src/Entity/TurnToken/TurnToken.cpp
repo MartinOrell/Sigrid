@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-TurnToken::TurnToken(){}
-
 void TurnToken::setRadius(const float& radius){
 
     m_shape.setRadius(radius);

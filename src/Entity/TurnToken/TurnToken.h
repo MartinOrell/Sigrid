@@ -15,7 +15,11 @@ class TurnToken: public sf::Drawable{
 
   public:
 
-    TurnToken();
+    TurnToken() = default;
+    TurnToken(const TurnToken&) = default;
+    TurnToken(TurnToken&&) = default;
+    TurnToken& operator=(const TurnToken&) = default;
+    TurnToken& operator=(TurnToken&&) = default;
 
     void setRadius(const float& radius);
 
