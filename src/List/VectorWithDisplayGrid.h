@@ -11,7 +11,11 @@ template <typename T> class VectorWithDisplayGrid{
 
   public:
 
-    VectorWithDisplayGrid();
+    VectorWithDisplayGrid() = default;
+    VectorWithDisplayGrid(const VectorWithDisplayGrid&) = default;
+    VectorWithDisplayGrid(VectorWithDisplayGrid&&) = default;
+    VectorWithDisplayGrid& operator=(const VectorWithDisplayGrid) = delete;
+    VectorWithDisplayGrid& operator=(VectorWithDisplayGrid&&) = default;
 
     void push_back(const T& value);
     void addColumn();

@@ -10,9 +10,6 @@
 using namespace sigrid_list;
 
 template<typename T>
-VectorWithDisplayGrid<T>::VectorWithDisplayGrid(){}
-
-template<typename T>
 void VectorWithDisplayGrid<T>::push_back(const T& value){
     
     m_vector.push_back(value);
