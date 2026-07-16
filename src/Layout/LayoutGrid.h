@@ -13,7 +13,11 @@ class LayoutGrid{
 
   public:
 
-    LayoutGrid();
+    LayoutGrid() = default;
+    LayoutGrid(const LayoutGrid&) = default;
+    LayoutGrid(LayoutGrid&&) = default;
+    LayoutGrid& operator=(const LayoutGrid&) = default;
+    LayoutGrid& operator=(LayoutGrid&&) = default;
 
     void setPx(const int& x, const float& px);
     void setPy(const int& y, const float& px);

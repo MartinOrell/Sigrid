@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-LayoutGrid::LayoutGrid(){}
-
 void LayoutGrid::setPx(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
