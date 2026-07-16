@@ -21,6 +21,10 @@ class ToolWindow: public sf::Drawable{
   public:
 
     ToolWindow();
+    ToolWindow(const ToolWindow&) = default;
+    ToolWindow(ToolWindow&&) = default;
+    ToolWindow& operator=(const ToolWindow&) = default;
+    ToolWindow& operator=(ToolWindow&&) = default;
 
     void setTileColorManagerPtr(ColorManager* const managerPtr);
 
