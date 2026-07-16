@@ -13,10 +13,14 @@ class Tool{
 
   public:
 
-    Tool();
-    Tool(const Tool& src);
+    Tool() = default;
+    Tool(const Tool&) = default;
+    Tool(Tool&&) = default;
+    Tool& operator=(const Tool&) = default;
+    Tool& operator=(Tool&&) = default;
+
     Tool(const ToolContainer& data);
-    Tool& operator=(const Tool& rhs);
+    
     const ToolSelection selection() const;
     std::optional<LogicEntity> getEntity() const;
     int getArrowColorId() const;

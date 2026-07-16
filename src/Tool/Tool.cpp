@@ -22,23 +22,9 @@ sigrid::ToolSelection getTool(const std::string& toolname){
     }
 }
 
-Tool::Tool(){}
-
-Tool::Tool(const Tool& src){
-    *this = src;
-}
-
 Tool::Tool(const ToolContainer& data)
 : m_selection(getTool(data.selection))
 , m_arrowColorId(data.colorId){}
-
-Tool& Tool::operator=(const Tool& rhs){
-    m_selection = rhs.m_selection;
-    m_arrowColorId = rhs.m_arrowColorId;
-    m_entity_o = rhs.m_entity_o;
-
-    return *this;
-}
 
 const ToolSelection Tool::selection() const{
     return m_selection;
