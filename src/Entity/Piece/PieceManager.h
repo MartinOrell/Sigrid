@@ -17,7 +17,10 @@ class PieceManager{
 
   public:
 
-    PieceManager(const std::vector<PieceColor>& pieceColors);
+    PieceManager();
+
+    void setPieceColors(const std::vector<PieceColor>& pieceColors);
+
     void addPieceColor(const PieceColor& newColor);
     void loadImages(const std::vector<PieceContainer>& pieces);
     std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);

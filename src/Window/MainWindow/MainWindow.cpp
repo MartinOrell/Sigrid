@@ -20,7 +20,8 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_tileColorManagerPtr->setColors(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>();
     m_arrowColorManagerPtr->setColors(config.arrowColors);
-    m_pieceManagerPtr = std::make_unique<PieceManager>(config.pieceColors);
+    m_pieceManagerPtr = std::make_unique<PieceManager>();
+    m_pieceManagerPtr->setPieceColors(config.pieceColors);
     m_iconManagerPtr = std::make_unique<IconManager>();
 
     sigrid::Tool leftClickTool{config.leftClickTool};
