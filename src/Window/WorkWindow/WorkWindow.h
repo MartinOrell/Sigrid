@@ -23,6 +23,10 @@ class WorkWindow: public sf::Drawable{
   public:
 
     WorkWindow();
+    WorkWindow(const WorkWindow&) = default;
+    WorkWindow(WorkWindow&&) = default;
+    WorkWindow& operator=(const WorkWindow&) = default;
+    WorkWindow& operator=(WorkWindow&&) = default;
 
     void setBoardFilename(const std::string& filename);
 
