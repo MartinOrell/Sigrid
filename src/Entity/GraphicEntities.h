@@ -20,7 +20,11 @@ class GraphicEntities: public sf::Drawable{
 
   public:
 
-    GraphicEntities();
+    GraphicEntities() = default;
+    GraphicEntities(const GraphicEntities&) = default;
+    GraphicEntities(GraphicEntities&&) = default;
+    GraphicEntities& operator=(const GraphicEntities&) = default;
+    GraphicEntities& operator=(GraphicEntities&&) = default;
 
     void setPieceManagerPtr(PieceManager* const managerPtr);
     void setColorManagerPtr(ColorManager* const managerPtr);

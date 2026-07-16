@@ -9,8 +9,6 @@
 
 using namespace sigrid;
 
-GraphicEntities::GraphicEntities(){}
-
 void GraphicEntities::setPieceManagerPtr(PieceManager* const managerPtr){
     m_pieceManagerPtr = managerPtr;
 }
