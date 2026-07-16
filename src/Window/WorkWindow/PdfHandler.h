@@ -10,6 +10,12 @@ class PdfHandler{
 
   public:
 
+    PdfHandler() = default;
+    PdfHandler(const PdfHandler&) = default;
+    PdfHandler(PdfHandler&&) = default;
+    PdfHandler& operator=(const PdfHandler&) = default;
+    PdfHandler& operator=(PdfHandler&&) = default;
+
     void updateLayout();
     void savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards);
 
