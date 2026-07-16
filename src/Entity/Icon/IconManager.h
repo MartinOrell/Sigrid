@@ -13,7 +13,12 @@ class IconManager{
 
   public:
 
-    IconManager();
+    IconManager() = default;
+    IconManager(const IconManager&) = default;
+    IconManager(IconManager&&) = default;
+    IconManager& operator=(const IconManager&) = default;
+    IconManager& operator=(IconManager&&) = default;
+
     std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
     
   private:

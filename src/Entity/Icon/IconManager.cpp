@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-IconManager::IconManager(){}
-
 std::optional<sf::Texture*> IconManager::getTexturePtr(const std::string& filename){
 
     auto m_texture_o = m_textures.at(filename);
