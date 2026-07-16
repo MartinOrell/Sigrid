@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-Mouse::Mouse(){}
-
 const std::optional<std::reference_wrapper<const sf::Vector2f>> Mouse::getPressPosition(const sf::Mouse::Button& button) const{
     
     auto position_o = m_pressedPositions.at(button);

@@ -13,7 +13,11 @@ class Mouse{
 
   public:
 
-    Mouse();
+    Mouse() = default;
+    Mouse(const Mouse&) = default;
+    Mouse(Mouse&&) = default;
+    Mouse& operator=(const Mouse&) = default;
+    Mouse& operator=(Mouse&&) = default;
 
     const std::optional<std::reference_wrapper<const sf::Vector2f>> getPressPosition(const sf::Mouse::Button& button) const;
     bool isPressed(const sf::Mouse::Button& button) const;
