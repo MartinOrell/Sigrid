@@ -14,7 +14,11 @@ class LogicEntities{
 
   public:
 
-    LogicEntities();
+    LogicEntities() = default;
+    LogicEntities(const LogicEntities&) = default;
+    LogicEntities(LogicEntities&&) = default;
+    LogicEntities& operator=(const LogicEntities&) = default;
+    LogicEntities& operator=(LogicEntities&&) = default;
 
     void addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity);
     void removeEntity(const sigrid_coord::Coord& coord);

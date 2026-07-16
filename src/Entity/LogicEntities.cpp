@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-LogicEntities::LogicEntities(){}
-
 void LogicEntities::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         m_pieces.insert(coord, std::get<LogicPiece>(entity));
