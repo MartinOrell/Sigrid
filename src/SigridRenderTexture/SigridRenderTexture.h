@@ -17,7 +17,11 @@ class SigridRenderTexture: public sf::Drawable{
 
   public:
 
-    SigridRenderTexture();
+    SigridRenderTexture() = default;
+    SigridRenderTexture(const SigridRenderTexture&) = default;
+    SigridRenderTexture(SigridRenderTexture&&) = default;
+    SigridRenderTexture& operator=(const SigridRenderTexture&) = default;
+    SigridRenderTexture& operator=(SigridRenderTexture&&) = default;
 
     void setBackgroundColor(const sf::Color& color);
     bool setSize(const sf::Vector2f& size);

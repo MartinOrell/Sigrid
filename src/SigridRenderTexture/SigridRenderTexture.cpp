@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-SigridRenderTexture::SigridRenderTexture(){}
-
 void SigridRenderTexture::setBackgroundColor(const sf::Color& color){
     m_backgroundColor = color;
 }
