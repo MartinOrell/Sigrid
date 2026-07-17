@@ -16,8 +16,6 @@
 
 using namespace sigrid;
 
-ToolPickerWindow::ToolPickerWindow(){}
-
 void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
 }

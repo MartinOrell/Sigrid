@@ -24,7 +24,7 @@ class ToolPickerWindow: public sf::Drawable{
 
   public:
 
-    ToolPickerWindow();
+    ToolPickerWindow() = default;
     ToolPickerWindow(const ToolPickerWindow&) = default;
     ToolPickerWindow(ToolPickerWindow&&) = default;
     ToolPickerWindow& operator=(const ToolPickerWindow&) = default;
