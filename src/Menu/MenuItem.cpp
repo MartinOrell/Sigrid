@@ -7,28 +7,6 @@
 
 using namespace sigrid;
 
-MenuItem::MenuItem(){}
-
-MenuItem::MenuItem(const MenuItem& src){
-    *this = src;
-}
-
-MenuItem& MenuItem::operator=(const MenuItem& rhs){
-
-    m_name = rhs.m_name;
-    m_shape = rhs.m_shape;
-    m_action = rhs.m_action;
-
-    m_text_o = rhs.m_text_o;
-
-    m_textOffset = rhs.m_textOffset;
-    m_isToggled = rhs.m_isToggled;
-    m_toggledName = rhs.m_toggledName;
-    m_toggledAction = rhs.m_toggledAction;
-
-    return *this;
-}
-
 void MenuItem::createGraphic(const int height){
     
     if(m_text_o == std::nullopt){

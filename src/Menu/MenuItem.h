@@ -15,9 +15,11 @@ class MenuItem: public sf::Drawable{
 
   public:
 
-    MenuItem();
-    MenuItem(const MenuItem& src);
-    MenuItem& operator=(const MenuItem& rhs);
+    MenuItem() = default;
+    MenuItem(const MenuItem&) = default;
+    MenuItem(MenuItem&&) = default;
+    MenuItem& operator=(const MenuItem&) = default;
+    MenuItem& operator=(MenuItem&&) = default;
 
     void createGraphic(const int height);
 
