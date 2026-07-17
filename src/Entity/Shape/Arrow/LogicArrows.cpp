@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-LogicArrows::LogicArrows(){}
-
 void LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
     m_arrows.push_back(coordPair, arrow);
 }

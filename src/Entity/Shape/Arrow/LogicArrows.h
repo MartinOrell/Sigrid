@@ -12,7 +12,11 @@ class LogicArrows{
 
   public:
 
-    LogicArrows();
+    LogicArrows() = default;
+    LogicArrows(const LogicArrows&) = default;
+    LogicArrows(LogicArrows&&) = default;
+    LogicArrows& operator=(const LogicArrows&) = default;
+    LogicArrows& operator=(LogicArrows&&) = default;
 
     void addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
     void removeArrow(const sigrid_coord::CoordPair& coordPair);
