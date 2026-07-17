@@ -134,7 +134,6 @@ bool SigridRenderTexture::contains(const sf::Vector2f& point) const{
 }
 
 void SigridRenderTexture::clear(){
-
     m_texture.clear(m_backgroundColor);
 }
 
@@ -144,21 +143,23 @@ void SigridRenderTexture::draw(const sf::Drawable& drawable){
 
 void SigridRenderTexture::display(){
 
-    m_sprite = std::make_unique<sf::Sprite>(m_texture.getTexture());
-    m_sprite->setPosition(m_position);
-    m_sprite->move({0.f, m_scale*(float)m_texture.getTexture().getSize().y});
-    m_sprite->setScale({m_scale, -m_scale});
+    m_sprite_o = sf::Sprite{m_texture.getTexture()};
+    auto& sprite = m_sprite_o.value();
+    sprite.setPosition(m_position);
+    sprite.move({0.f, m_scale*(float)m_texture.getTexture().getSize().y});
+    sprite.setScale({m_scale, -m_scale});
 }
 
 void SigridRenderTexture::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-
-    if(!m_sprite){
-        return;
-    }
 
     if(!m_show){
         return;
     }
 
-    target.draw(*m_sprite);
+    if(m_sprite_o == std::nullopt){
+        return;
+    }
+    auto& sprite = m_sprite_o.value();
+
+    target.draw(sprite);
 }

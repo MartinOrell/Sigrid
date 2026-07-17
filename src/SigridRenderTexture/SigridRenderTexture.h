@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include <optional>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -51,7 +51,7 @@ class SigridRenderTexture: public sf::Drawable{
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     sf::RenderTexture m_texture;
-    std::unique_ptr<sf::Sprite> m_sprite;
+    std::optional<sf::Sprite> m_sprite_o = std::nullopt;
     sf::Color m_backgroundColor = sf::Color{255,255,255,0};
     sf::Vector2f m_position;
     float m_scale = 1.f;
