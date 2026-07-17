@@ -6,7 +6,11 @@ class LogicArrow{
 
   public:
 
-    LogicArrow();
+    LogicArrow() = default;
+    LogicArrow(const LogicArrow&) = default;
+    LogicArrow(LogicArrow&&) = default;
+    LogicArrow& operator=(const LogicArrow&) = default;
+    LogicArrow& operator=(LogicArrow&&) = default;
 
     void setColor(const int colorId);
 

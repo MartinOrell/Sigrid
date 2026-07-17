@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-LogicArrow::LogicArrow(){}
-
 void LogicArrow::setColor(const int colorId){
     m_colorId = colorId;
 }
