@@ -20,7 +20,7 @@ class ToolWindow: public sf::Drawable{
 
   public:
 
-    ToolWindow();
+    ToolWindow() = default;
     ToolWindow(const ToolWindow&) = default;
     ToolWindow(ToolWindow&&) = default;
     ToolWindow& operator=(const ToolWindow&) = default;
