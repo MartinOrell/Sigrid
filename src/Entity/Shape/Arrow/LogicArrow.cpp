@@ -4,12 +4,12 @@ using namespace sigrid;
 
 LogicArrow::LogicArrow(){}
 
-int LogicArrow::getColorId() const{
-    return m_colorId;
-}
-
 void LogicArrow::setColor(const int colorId){
     m_colorId = colorId;
+}
+
+int LogicArrow::getColorId() const{
+    return m_colorId;
 }
 
 bool LogicArrow::operator<(const LogicArrow& rhs) const{

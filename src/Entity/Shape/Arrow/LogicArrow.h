@@ -7,9 +7,10 @@ class LogicArrow{
   public:
 
     LogicArrow();
-    int getColorId() const;
 
     void setColor(const int colorId);
+
+    int getColorId() const;
 
     bool operator<(const LogicArrow& rhs) const;
     bool operator==(const LogicArrow& rhs) const;
