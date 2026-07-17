@@ -9,12 +9,13 @@ class GraphicCircle: public sf::Drawable{
 
   public:
 
-    GraphicCircle(const sf::Color& color, const float& diameter);
+    GraphicCircle();
     GraphicCircle(const GraphicCircle&);
     GraphicCircle& operator =(const GraphicCircle&);
 
     void setPosition(const sf::Vector2f& position);
     void setColor(const sf::Color& color);
+    void setDiameter(const float& diameter);
 
     void move(const sf::Vector2f& offset);
 

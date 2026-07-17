@@ -84,9 +84,11 @@ void GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vect
             }
         }
 
-        GraphicCircle newCircle(color, m_circleDiameter);
+        GraphicCircle newCircle;
+        newCircle.setDiameter(m_circleDiameter);
+        newCircle.setColor(color);
         newCircle.setPosition(position);
-        m_circles.insert(coord, newCircle);
+        m_circles.insert(coord, std::move(newCircle));
     }
     else if(std::holds_alternative<LogicArrow>(entity)){
 
