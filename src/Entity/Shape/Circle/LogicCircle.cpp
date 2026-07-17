@@ -2,8 +2,6 @@
 
 using namespace sigrid;
 
-LogicCircle::LogicCircle(){}
-
 void LogicCircle::setColor(const int colorId){
     m_colorId = colorId;
 }

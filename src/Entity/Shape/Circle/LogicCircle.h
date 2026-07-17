@@ -6,7 +6,11 @@ class LogicCircle{
 
   public:
 
-    LogicCircle();
+    LogicCircle() = default;
+    LogicCircle(const LogicCircle&) = default;
+    LogicCircle(LogicCircle&&) = default;
+    LogicCircle& operator=(const LogicCircle&) = default;
+    LogicCircle& operator=(LogicCircle&&) = default;
 
     void setColor(const int colorId);
 
