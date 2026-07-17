@@ -12,11 +12,7 @@
 
 using namespace sigrid;
 
-GraphicBoard::GraphicBoard()
-: m_leftEdgeWidth{0.f}
-, m_rightEdgeWidth{0.f}
-, m_topEdgeWidth{0.f}
-, m_bottomEdgeWidth{0.f}{
+GraphicBoard::GraphicBoard(){
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
     setLeftToRight();
     setBottomToTop();

@@ -190,10 +190,10 @@ class GraphicBoard: public sf::Drawable{
 
     SigridRenderTexture m_texture;
 
-    float m_leftEdgeWidth;
-    float m_rightEdgeWidth;
-    float m_topEdgeWidth;
-    float m_bottomEdgeWidth;
+    float m_leftEdgeWidth = 0.f;
+    float m_rightEdgeWidth = 0.f;
+    float m_topEdgeWidth = 0.f;
+    float m_bottomEdgeWidth = 0.f;
 
     RectangleBorder m_border;
 
