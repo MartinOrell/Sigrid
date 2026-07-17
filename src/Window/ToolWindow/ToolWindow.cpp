@@ -146,9 +146,10 @@ void ToolWindow::setAddArrowTool(const int colorId){
 
 void ToolWindow::setAddCircleTool(const int colorId){
 
-    LogicCircle circle{colorId};
+    LogicCircle circle;
+    circle.setColor(colorId);
     m_board.removeEntity({0,0});
-    m_board.addEntity({0,0}, circle);
+    m_board.addEntity({0,0}, std::move(circle));
 
     redrawTexture();
 }

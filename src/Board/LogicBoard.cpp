@@ -53,7 +53,9 @@ bool LogicBoard::init(const BoardDataContainer& data){
             continue;
         }
 
-        m_pieceLayer.addEntity(coord, LogicCircle{cData.colorId});
+        LogicCircle logicCircle;
+        logicCircle.setColor(cData.colorId);
+        m_pieceLayer.addEntity(coord, std::move(logicCircle));
     }
 
     return true;

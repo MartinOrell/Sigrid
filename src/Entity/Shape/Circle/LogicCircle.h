@@ -6,7 +6,8 @@ class LogicCircle{
 
   public:
 
-    LogicCircle(const int colorId);
+    LogicCircle();
+
     int getColorId() const;
 
     void setColor(const int colorId);
@@ -17,7 +18,7 @@ class LogicCircle{
 
   private:
 
-    int m_colorId;
+    int m_colorId = -1;
 };
 
 }  // namespace sigrid

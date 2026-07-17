@@ -389,8 +389,9 @@ void ToolPickerWindow::redrawTexture(){
     
     //Circle tool
     if(m_circleColorId >= 0){
-        sigrid::LogicCircle logicCircle{m_circleColorId};
-        m_board.addEntity({x,y}, logicCircle);
+        LogicCircle logicCircle;
+        logicCircle.setColor(m_circleColorId);
+        m_board.addEntity({x,y}, std::move(logicCircle));
         sigrid_action::PickCircle action{m_circleColorId};
         m_clickActions.insert_or_assign({x,y}, action);
         if((i+1)%m_miscBlock.columns == 0){
@@ -451,8 +452,9 @@ void ToolPickerWindow::redrawTexture(){
             case ColorDisplay::Circle:
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
-                    sigrid::LogicCircle logicCircle{colorId};
-                    m_board.addEntity({x,y}, logicCircle);
+                    LogicCircle logicCircle;
+                    logicCircle.setColor(colorId);
+                    m_board.addEntity({x,y}, std::move(logicCircle));
                     sigrid_action::PickCircleColor action{colorId};
                     m_clickActions.insert_or_assign({x,y}, action);
 

@@ -897,7 +897,9 @@ void MainWindow::pickCircle(const int colorId){
         std::cerr << "MainWindow: Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
+    LogicCircle logicCircle;
+    logicCircle.setColor(colorId);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, std::move(logicCircle));
     m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setCircleColors();
@@ -912,7 +914,9 @@ void MainWindow::pickCircleColor(const int colorId){
         std::cerr << "MainWindow: Unable to pick circle color, toolpicker window does not exist" << std::endl;
         return;
     }
-    m_inputHandler.setEntity(sf::Mouse::Button::Left, LogicCircle{colorId});
+    LogicCircle logicCircle;
+    logicCircle.setColor(colorId);
+    m_inputHandler.setEntity(sf::Mouse::Button::Left, std::move(logicCircle));
     m_inputHandler.setSelection(sf::Mouse::Button::Left, ToolSelection::EntityAdder);
     m_toolWindow->setAddCircleTool(colorId);
     m_toolPickerWindow->setAddCircleTool(colorId);

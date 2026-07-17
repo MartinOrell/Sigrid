@@ -2,8 +2,7 @@
 
 using namespace sigrid;
 
-LogicCircle::LogicCircle(const int colorId)
-: m_colorId(colorId){}
+LogicCircle::LogicCircle(){}
 
 int LogicCircle::getColorId() const{
     return m_colorId;
