@@ -6,7 +6,7 @@ class LogicArrow{
 
   public:
 
-    LogicArrow(const int colorId);
+    LogicArrow();
     int getColorId() const;
 
     void setColor(const int colorId);
@@ -17,7 +17,7 @@ class LogicArrow{
 
   private:
 
-    int m_colorId;
+    int m_colorId = -1;
 };
 
 }  // namespace sigrid

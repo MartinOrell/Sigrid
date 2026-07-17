@@ -136,7 +136,8 @@ void ToolWindow::setSelectTool(const sf::Mouse::Button button, const ToolSelecti
 
 void ToolWindow::setAddArrowTool(const int colorId){
 
-    LogicArrow arrow{colorId};
+    LogicArrow arrow;
+    arrow.setColor(colorId);
     m_board.removeEntity({0,0});
     m_board.addEntity({0,0}, arrow);
 

@@ -1186,9 +1186,11 @@ void WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sig
     auto& board = board_o.value().get();
 
     auto occupyingArrow_o = board.getLogicArrow({fromCoord, toCoord});
+    LogicArrow logicArrow;
+    logicArrow.setColor(colorId);
 
     if(occupyingArrow_o == std::nullopt){
-        board.addArrow(fromCoord, toCoord, LogicArrow{colorId});
+        board.addArrow(fromCoord, toCoord, logicArrow);
         return;
     }
 
@@ -1198,7 +1200,7 @@ void WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sig
     }
 
     board.removeArrow(fromCoord, toCoord);
-    board.addArrow(fromCoord, toCoord, LogicArrow{colorId});
+    board.addArrow(fromCoord, toCoord, logicArrow);
 }
 
 void WorkWindow::updateBoardLayout(){

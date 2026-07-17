@@ -2,8 +2,7 @@
 
 using namespace sigrid;
 
-LogicArrow::LogicArrow(const int colorId)
-: m_colorId(colorId){}
+LogicArrow::LogicArrow(){}
 
 int LogicArrow::getColorId() const{
     return m_colorId;

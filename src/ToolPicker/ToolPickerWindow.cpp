@@ -371,7 +371,8 @@ void ToolPickerWindow::redrawTexture(){
     //Arrow tool
     if(m_arrowColorId >= 0){
 
-        sigrid::LogicArrow logicArrow{m_arrowColorId};
+        LogicArrow logicArrow;
+        logicArrow.setColor(m_arrowColorId);
         m_board.addEntity({x,y}, logicArrow);
 
         sigrid_action::PickArrow action{m_arrowColorId};
@@ -431,7 +432,8 @@ void ToolPickerWindow::redrawTexture(){
             case ColorDisplay::Arrow:
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
-                    sigrid::LogicArrow logicArrow{colorId};
+                    LogicArrow logicArrow;
+                    logicArrow.setColor(colorId);
                     m_board.addEntity({x,y}, logicArrow);
 
                     sigrid_action::PickArrowColor action{colorId};
