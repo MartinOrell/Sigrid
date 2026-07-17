@@ -9,9 +9,11 @@ class GraphicCircle: public sf::Drawable{
 
   public:
 
-    GraphicCircle();
-    GraphicCircle(const GraphicCircle&);
-    GraphicCircle& operator =(const GraphicCircle&);
+    GraphicCircle() = default;
+    GraphicCircle(const GraphicCircle&) = default;
+    GraphicCircle(GraphicCircle&&) = default;
+    GraphicCircle& operator =(const GraphicCircle&) = default;
+    GraphicCircle& operator =(GraphicCircle&&) = default;
 
     void setPosition(const sf::Vector2f& position);
     void setColor(const sf::Color& color);

@@ -4,17 +4,6 @@
 
 using namespace sigrid;
 
-GraphicCircle::GraphicCircle(){}
-
-GraphicCircle::GraphicCircle(const GraphicCircle& src){
-    m_shape = src.m_shape;
-}
-
-GraphicCircle& GraphicCircle::operator =(const GraphicCircle& src){
-    m_shape = src.m_shape;
-    return *this;
-}
-
 void GraphicCircle::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
 }
