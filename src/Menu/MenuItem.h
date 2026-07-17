@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <memory>
+#include <optional>
 #include <SFML/Graphics/Text.hpp>
 #include "Action/Action.h"
 
@@ -43,7 +43,7 @@ class MenuItem: public sf::Drawable{
     sf::RectangleShape m_shape;
     sigrid_action::Action m_action;
 
-    std::unique_ptr<sf::Text> m_textPtr;
+    std::optional<sf::Text> m_text_o;
     sf::Vector2f m_textOffset = {15.f,5.f};
 
     bool m_isToggled = false;
