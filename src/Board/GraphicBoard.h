@@ -38,9 +38,9 @@ class GraphicBoard: public sf::Drawable{
     
     GraphicBoard() = default;
     GraphicBoard(const GraphicBoard&) = default;
-    GraphicBoard(GraphicBoard&&) = delete;
+    GraphicBoard(GraphicBoard&&) = default;
     GraphicBoard& operator=(const GraphicBoard&);
-    GraphicBoard& operator=(GraphicBoard&&) = delete;
+    GraphicBoard& operator=(GraphicBoard&&) = default;
     
     void setPieceManagerPtr(PieceManager* const managerPtr);
     void setTileColorManagerPtr(ColorManager* const managerPtr);
