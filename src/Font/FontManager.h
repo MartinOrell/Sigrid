@@ -12,7 +12,12 @@ class FontManager{
 
   public:
 
-    FontManager();
+    FontManager() = default;
+    FontManager(const FontManager&) = default;
+    FontManager(FontManager&&) = default;
+    FontManager& operator=(const FontManager&) = default;
+    FontManager& operator=(FontManager&&) = default;
+    
     std::optional<sf::Font*> getFontPtr(const std::string& filename);
 
   private:

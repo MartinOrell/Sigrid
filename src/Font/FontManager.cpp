@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-FontManager::FontManager(){};
-
 std::optional<sf::Font*> FontManager::getFontPtr(const std::string& filename){
 
     auto font_o = m_fonts.at(filename);
