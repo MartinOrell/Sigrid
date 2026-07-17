@@ -22,6 +22,10 @@ class Menu: public sf::Drawable{
   public:
 
     Menu();
+    Menu(const Menu&) = default;
+    Menu(Menu&&) = default;
+    Menu& operator=(const Menu&) = default;
+    Menu& operator=(Menu&&) = default;
 
     void setFontManagerPtr(FontManager* const managerPtr);
 
