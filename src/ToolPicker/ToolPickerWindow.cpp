@@ -413,7 +413,9 @@ void ToolPickerWindow::redrawTexture(){
             case ColorDisplay::Piece:
                 for(int colorId = 0; colorId < m_colorIds.size(); colorId++){
 
-                    LogicPiece logicPiece{m_pieceNotation, colorId};
+                    LogicPiece logicPiece;
+                    logicPiece.setNotation(m_pieceNotation);
+                    logicPiece.setColorId(colorId);
 
                     m_board.addEntity({x,y}, logicPiece);
 
@@ -478,7 +480,9 @@ void ToolPickerWindow::redrawTexture(){
     x = startPieceColumn;
     for(int notationId = 0; notationId < m_pieceNotations.size(); notationId++){
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
-            LogicPiece logicPiece{m_pieceNotations.at(notationId), m_displayedPieceColorIds.at(i)};
+            LogicPiece logicPiece;
+            logicPiece.setNotation(m_pieceNotations.at(notationId));
+            logicPiece.setColorId(m_displayedPieceColorIds.at(i));
 
             m_board.addEntity({x,y}, logicPiece);
 

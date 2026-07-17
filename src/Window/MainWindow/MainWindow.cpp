@@ -404,7 +404,9 @@ void MainWindow::textEnter(const char32_t& unicode){
         pieceNotation.back() = std::toupper(pieceNotation.back());
     }
 
-    LogicPiece logicPiece{pieceNotation, colorId};
+    LogicPiece logicPiece;
+    logicPiece.setNotation(pieceNotation);
+    logicPiece.setColorId(colorId);
 
     if(m_pieceManagerPtr->getGraphicPiece(logicPiece) == std::nullopt){
         return;

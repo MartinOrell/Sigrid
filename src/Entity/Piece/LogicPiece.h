@@ -8,7 +8,11 @@ class LogicPiece{
 
   public:
 
-    LogicPiece(std::string notation, int colorId);
+    LogicPiece();
+
+    void setNotation(const std::string& notation);
+    void setColorId(const int& colorId);
+
     int getColorId() const;
     std::string getNotation() const;
 
@@ -17,8 +21,8 @@ class LogicPiece{
 
   private:
 
-    std::string m_notation;
-    int m_colorId;
+    std::string m_notation = "";
+    int m_colorId = -1;
 };
 
 }  // namespace sigrid

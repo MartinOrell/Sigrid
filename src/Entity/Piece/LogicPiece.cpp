@@ -4,10 +4,15 @@
 
 using namespace sigrid;
 
-LogicPiece::LogicPiece(std::string notation, int colorId)
-: m_notation(notation)
-, m_colorId(colorId){}
+LogicPiece::LogicPiece(){}
 
+void LogicPiece::setNotation(const std::string& notation){
+    m_notation = notation;
+}
+
+void LogicPiece::setColorId(const int& colorId){
+    m_colorId = colorId;
+}
 
 std::string LogicPiece::getNotation() const{
     return m_notation;

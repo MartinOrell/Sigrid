@@ -40,7 +40,10 @@ bool LogicBoard::init(const BoardDataContainer& data){
             std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
-        m_pieceLayer.addEntity(coord, LogicPiece(pieceContainer.name, pieceContainer.colorId));
+        LogicPiece logicPiece;
+        logicPiece.setNotation(pieceContainer.name);
+        logicPiece.setColorId(pieceContainer.colorId);
+        m_pieceLayer.addEntity(coord, std::move(logicPiece));
     }
 
     for(const auto cData : data.logicCircles){

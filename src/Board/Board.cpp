@@ -476,7 +476,9 @@ void Board::loadFen(const std::string& fen){
                 colorId = 1;
             }
             s.at(0) = std::toupper(s.at(0));
-            LogicPiece logicPiece{s, colorId};
+            LogicPiece logicPiece;
+            logicPiece.setNotation(s);
+            logicPiece.setColorId(colorId);
 
             addEntity({x,y}, logicPiece);
             x++;
