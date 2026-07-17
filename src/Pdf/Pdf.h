@@ -11,6 +11,11 @@ class Pdf{
     
     public:
         Pdf();
+        Pdf(const Pdf&) = default;
+        Pdf(Pdf&&) = default;
+        Pdf& operator=(const Pdf&) = default;
+        Pdf& operator=(Pdf&&) = default;
+
         void addImage(const unsigned int imageId, const sigrid_pdf::Image& image);
         bool save(const std::string& filename) const;
 
