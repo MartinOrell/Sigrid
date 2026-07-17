@@ -4,12 +4,12 @@ using namespace sigrid;
 
 LogicCircle::LogicCircle(){}
 
-int LogicCircle::getColorId() const{
-    return m_colorId;
-}
-
 void LogicCircle::setColor(const int colorId){
     m_colorId = colorId;
+}
+
+int LogicCircle::getColorId() const{
+    return m_colorId;
 }
 
 bool LogicCircle::operator<(const LogicCircle& rhs) const{

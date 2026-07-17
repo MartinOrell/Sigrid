@@ -8,9 +8,9 @@ class LogicCircle{
 
     LogicCircle();
 
-    int getColorId() const;
-
     void setColor(const int colorId);
+
+    int getColorId() const;
 
     bool operator<(const LogicCircle& rhs) const;
     bool operator==(const LogicCircle& rhs) const;
