@@ -12,11 +12,7 @@
 
 using namespace sigrid;
 
-GraphicBoard::GraphicBoard(){
-    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
-    setLeftToRight();
-    setBottomToTop();
-}
+GraphicBoard::GraphicBoard(){}
 
 GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
@@ -174,6 +170,20 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
 
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
     
+    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
+    if(m_isLeftToRight){
+        m_tileLayer.setLeftToRight();
+    }
+    else{
+        m_tileLayer.setRightToLeft();
+    }
+    if(m_isTopToBottom){
+        m_tileLayer.setTopToBottom();
+    }
+    else{
+        m_tileLayer.setBottomToTop();
+    }
+
     m_tileLayer.setNumColumns(logicBoard.getNumColumns());
     m_tileLayer.setNumRows(logicBoard.getNumRows());
     m_tileLayer.setTileSize({config.tileWidth, config.tileHeight});

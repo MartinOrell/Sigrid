@@ -213,8 +213,8 @@ class GraphicBoard: public sf::Drawable{
 
     ColorManager* m_arrowColorManagerPtr = nullptr;
 
-    bool m_isLeftToRight;
-    bool m_isTopToBottom;
+    bool m_isLeftToRight = true;
+    bool m_isTopToBottom = false;
 };
 
 }  // namespace sigrid
