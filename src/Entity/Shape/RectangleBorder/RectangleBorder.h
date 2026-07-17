@@ -12,7 +12,7 @@ class RectangleBorder: public sf::Drawable{
     RectangleBorder() = default;
     RectangleBorder(const RectangleBorder&) = default;
     RectangleBorder(RectangleBorder&&) = default;
-    RectangleBorder& operator=(const RectangleBorder&);
+    RectangleBorder& operator=(const RectangleBorder&) = default;
     RectangleBorder& operator=(RectangleBorder&&) = default;
 
     void setThickness(const float& thickness);
