@@ -4,8 +4,6 @@
 
 using namespace sigrid;
 
-LogicPiece::LogicPiece(){}
-
 void LogicPiece::setNotation(const std::string& notation){
     m_notation = notation;
 }

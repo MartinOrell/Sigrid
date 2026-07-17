@@ -8,7 +8,11 @@ class LogicPiece{
 
   public:
 
-    LogicPiece();
+    LogicPiece() = default;
+    LogicPiece(const LogicPiece&) = default;
+    LogicPiece(LogicPiece&&) = default;
+    LogicPiece& operator=(const LogicPiece&) = default;
+    LogicPiece& operator=(LogicPiece&&) = default;
 
     void setNotation(const std::string& notation);
     void setColorId(const int& colorId);
