@@ -12,8 +12,6 @@
 
 using namespace sigrid;
 
-GraphicBoard::GraphicBoard(){}
-
 GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     if(rhs.m_texture.isInitialized()){

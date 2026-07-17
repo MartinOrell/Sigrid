@@ -36,7 +36,7 @@ class GraphicBoard: public sf::Drawable{
 
   public:
     
-    GraphicBoard();
+    GraphicBoard() = default;
     GraphicBoard(const GraphicBoard&) = default;
     GraphicBoard(GraphicBoard&&) = delete;
     GraphicBoard& operator=(const GraphicBoard&);
