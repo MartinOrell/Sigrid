@@ -6,10 +6,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Image.hpp>
-
-namespace sf{
-    class RenderTexture;
-}
+#include <SFML/Graphics/RenderTexture.hpp>
 
 namespace sigrid{
 
@@ -53,7 +50,7 @@ class SigridRenderTexture: public sf::Drawable{
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    std::unique_ptr<sf::RenderTexture> m_texture;
+    sf::RenderTexture m_texture;
     std::unique_ptr<sf::Sprite> m_sprite;
     sf::Color m_backgroundColor = sf::Color{255,255,255,0};
     sf::Vector2f m_position;
