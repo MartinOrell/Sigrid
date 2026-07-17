@@ -14,9 +14,6 @@
 
 using namespace sigrid;
 
-
-WorkWindow::WorkWindow(){}
-
 void WorkWindow::setBoardFilename(const std::string& filename){
 
     if(m_boards.size() == 0){

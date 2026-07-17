@@ -22,7 +22,7 @@ class WorkWindow: public sf::Drawable{
 
   public:
 
-    WorkWindow();
+    WorkWindow() = default;
     WorkWindow(const WorkWindow&) = default;
     WorkWindow(WorkWindow&&) = default;
     WorkWindow& operator=(const WorkWindow&) = default;
