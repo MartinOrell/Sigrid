@@ -17,7 +17,11 @@ class PieceManager{
 
   public:
 
-    PieceManager();
+    PieceManager() = default;
+    PieceManager(const PieceManager&) = default;
+    PieceManager(PieceManager&&) = default;
+    PieceManager& operator=(const PieceManager&) = default;
+    PieceManager& operator=(PieceManager&&) = default;
 
     void setPieceColors(const std::vector<PieceColor>& pieceColors);
 

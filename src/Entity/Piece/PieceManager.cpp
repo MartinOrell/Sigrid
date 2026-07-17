@@ -6,8 +6,6 @@
 
 using namespace sigrid;
 
-PieceManager::PieceManager(){}
-
 void PieceManager::setPieceColors(const std::vector<PieceColor>& pieceColors){
 
     for(const auto& color: pieceColors){
