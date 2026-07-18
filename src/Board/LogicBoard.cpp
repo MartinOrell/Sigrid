@@ -6,7 +6,7 @@
 
 using namespace sigrid;
 
-bool LogicBoard::init(const BoardDataContainer& data){
+bool LogicBoard::load(const BoardDataContainer& data){
 
     m_tileLayer.clear();
     m_pieceLayer.clear();

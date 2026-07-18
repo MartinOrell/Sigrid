@@ -20,7 +20,7 @@ class LogicBoard{
     LogicBoard& operator=(const LogicBoard&) = default;
     LogicBoard& operator=(LogicBoard&&) = default;
 
-    bool init(const BoardDataContainer& data);
+    bool load(const BoardDataContainer& data);
 
     const int getNumColumns() const;
     const int getNumRows() const;

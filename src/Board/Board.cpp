@@ -59,7 +59,7 @@ void Board::setBottomToTop(){
 
 void Board::loadBoardData(const BoardDataContainer& boardData){
 
-    if(m_logicBoard.init(boardData)){
+    if(m_logicBoard.load(boardData)){
         m_graphicBoard.load(m_logicBoard);
     }
     else{
@@ -69,7 +69,7 @@ void Board::loadBoardData(const BoardDataContainer& boardData){
 
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
-    if(m_logicBoard.init(boardData)){
+    if(m_logicBoard.load(boardData)){
         m_graphicBoard.init(m_logicBoard, graphicData);
     }
     else{
