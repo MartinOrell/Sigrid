@@ -18,7 +18,10 @@ bool LogicBoard::init(const BoardDataContainer& data){
         return false;
     }
 
-    m_tileLayer.init(data.columns, data.rows, data.repeatTileColorIds);
+    m_tileLayer.setNumColumns(data.columns);
+    m_tileLayer.setNumRows(data.rows);
+    m_tileLayer.setInsertPattern(data.repeatTileColorIds);
+    m_tileLayer.insertAllTiles();
 
     for(const auto pieceContainer : data.logicPieces){
 

@@ -621,6 +621,7 @@ void GraphicTiles::init(){
 
     int columns = m_tiles.numColumns();
     int rows = m_tiles.numRows();
+    m_tiles.insertAllElements();
 
     for(int y = 0; y < rows; y++){
         for(int x = 0; x < columns; x++){

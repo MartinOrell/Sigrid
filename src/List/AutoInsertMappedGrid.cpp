@@ -10,76 +10,30 @@
 using namespace sigrid_list;
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setInsertPattern(const sigrid_list::Vector<T>& insertPattern){
-
-    m_insertPattern = insertPattern;
-
-    if(m_columns == 0){
-        return;
-    }
-    if(m_rows == 0){
-        return;
-    }
-    if(m_insertPattern.size() == 0){
-        return;
-    }
-
-    refill();
-}
-
-template<typename T>
 void AutoInsertMappedGrid<T>::setNumColumns(const int& columns){
-
     m_columns = columns;
-
-    if(m_columns == 0){
-        return;
-    }
-    if(m_rows == 0){
-        return;
-    }
-    if(m_insertPattern.size() == 0){
-        return;
-    }
-
-    refill();
 }
 
 template<typename T>
 void AutoInsertMappedGrid<T>::setNumRows(const int& rows){
-
     m_rows = rows;
-
-    if(m_columns == 0){
-        return;
-    }
-    if(m_rows == 0){
-        return;
-    }
-    if(m_insertPattern.size() == 0){
-        return;
-    }
-
-    refill();
 }
 
 template<typename T>
-void AutoInsertMappedGrid<T>::setSize(const int& columns, const int& rows){
+void AutoInsertMappedGrid<T>::setInsertPattern(const sigrid_list::Vector<T>& insertPattern){
+    m_insertPattern = insertPattern;
+}
 
-    m_columns = columns;
-    m_rows = rows;
+template<typename T>
+void AutoInsertMappedGrid<T>::insertAllElements(){
 
-    if(m_columns == 0){
-        return;
-    }
-    if(m_rows == 0){
-        return;
-    }
-    if(m_insertPattern.size() == 0){
-        return;
-    }
+    m_map.clear();
 
-    refill();
+    for(int y = 0; y < m_rows; y++){
+        for(int x = 0; x < m_columns; x++){
+            m_map.insert({x,y}, getInsertElement({x,y}));
+        }
+    }
 }
 
 template<typename T>
@@ -426,18 +380,6 @@ T AutoInsertMappedGrid<T>::getInsertElement(const sigrid_coord::Coord& coord) co
         return T{};
     }
     return element_o.value().get();
-}
-
-template<typename T>
-void AutoInsertMappedGrid<T>::refill(){
-
-    m_map.clear();
-
-    for(int y = 0; y < m_rows; y++){
-        for(int x = 0; x < m_columns; x++){
-            m_map.insert({x,y}, getInsertElement({x,y}));
-        }
-    }
 }
 
 template<typename T>

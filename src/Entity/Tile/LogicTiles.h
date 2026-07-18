@@ -19,7 +19,10 @@ class LogicTiles{
     LogicTiles& operator=(const LogicTiles&) = default;
     LogicTiles& operator=(LogicTiles&&) = default;
 
-    void init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds);
+    void setNumColumns(const int& numColumns);
+    void setNumRows(const int& numRows);
+    void setInsertPattern(const std::vector<int>& repeatTileColorIds);
+    void insertAllTiles();
 
     void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
     void removeHighlight(const sigrid_coord::Coord& coord);

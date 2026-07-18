@@ -4,7 +4,15 @@
 
 using namespace sigrid;
 
-void LogicTiles::init(const int& numColumns, const int& numRows, const std::vector<int>& repeatTileColorIds){
+void LogicTiles::setNumColumns(const int& numColumns){
+    m_tiles.setNumColumns(numColumns);
+}
+
+void LogicTiles::setNumRows(const int& numRows){
+    m_tiles.setNumRows(numRows);
+}
+
+void LogicTiles::setInsertPattern(const std::vector<int>& repeatTileColorIds){
 
     sigrid_list::Vector<LogicTile> insertPattern;
     for(const auto& color: repeatTileColorIds){
@@ -14,7 +22,10 @@ void LogicTiles::init(const int& numColumns, const int& numRows, const std::vect
     }
 
     m_tiles.setInsertPattern(insertPattern);
-    m_tiles.setSize(numColumns, numRows);
+}
+
+void LogicTiles::insertAllTiles(){
+    m_tiles.insertAllElements();
 }
 
 void LogicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){

@@ -19,10 +19,10 @@ template <typename T> class AutoInsertMappedGrid{
     AutoInsertMappedGrid& operator=(const AutoInsertMappedGrid&) = default;
     AutoInsertMappedGrid& operator=(AutoInsertMappedGrid&&) = default;
     
-    void setInsertPattern(const Vector<T>& insertPattern);
     void setNumColumns(const int& columns);
     void setNumRows(const int& rows);
-    void setSize(const int& columns, const int& rows);
+    void setInsertPattern(const Vector<T>& insertPattern);
+    void insertAllElements();
 
     bool addColumnLeft();
     bool addColumnRight();
@@ -47,8 +47,6 @@ template <typename T> class AutoInsertMappedGrid{
   private:
 
     T getInsertElement(const sigrid_coord::Coord& coord) const;
-
-    void refill();
 
     void shiftInsertPatternRight();
 
