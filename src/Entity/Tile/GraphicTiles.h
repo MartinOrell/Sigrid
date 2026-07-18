@@ -28,14 +28,12 @@ class GraphicTiles: public sf::Drawable{
     void setTileSize(const sf::Vector2f& tileSize);
     void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
 
-    void unsetNumColumns();
-    void unsetNumRows();
-    void unsetTopLeftPosition();
-
     void setLeftToRight();
     void setRightToLeft();
     void setTopToBottom();
     void setBottomToTop();
+
+    void insertAllTiles();
 
     void setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position);
 
@@ -72,21 +70,6 @@ class GraphicTiles: public sf::Drawable{
     void move(const sf::Vector2f& offset);
 
   private:
-
-    struct IsSet{
-        bool numColumns = false;
-        bool numRows = false;
-        bool tileSize = false;
-        bool topLeftPosition = false;
-        bool horizontalOrientation = false;
-        bool verticalOrientation = false;
-        bool isAllSet();
-    };
-
-    IsSet m_isSet;
-    bool m_isInitialized = false;
-
-    void init();
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

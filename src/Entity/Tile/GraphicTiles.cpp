@@ -16,117 +16,77 @@ void GraphicTiles::setHighlightColorManagerPtr(ColorManager* const managerPtr){
 }
 
 void GraphicTiles::setNumColumns(const int& columns){
-
     m_tiles.setNumColumns(columns);
-    m_isSet.numColumns = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setNumRows(const int& rows){
-
     m_tiles.setNumRows(rows);
-    m_isSet.numRows = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
 
     m_tileSize = tileSize;
 
-    if(m_tileSize.x <= 0.f){
-        return;
-    }
-    if(m_tileSize.y <= 0.f){
-        return;
-    }
-
     GraphicTile tile;
     tile.setSize(m_tileSize);
     sigrid_list::Vector<GraphicTile> insertTiles;
     insertTiles.push_back(tile);
     m_tiles.setInsertPattern(insertTiles);
-
-    m_isSet.tileSize = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
-
     m_topLeftPosition = topLeftPosition;
-    m_isSet.topLeftPosition = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
-}
-
-void GraphicTiles::unsetNumColumns(){
-
-    m_isSet.numColumns = false;
-    m_isInitialized = false;
-}
-
-void GraphicTiles::unsetNumRows(){
-
-    m_isSet.numRows = false;
-    m_isInitialized = false;
-}
-
-void GraphicTiles::unsetTopLeftPosition(){
-
-    m_isSet.topLeftPosition = false;
-    m_isInitialized = false;
 }
 
 void GraphicTiles::setLeftToRight(){
-
     m_isLeftToRight = true;
-    m_isSet.horizontalOrientation = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setRightToLeft(){
-
     m_isLeftToRight = false;
-    m_isSet.horizontalOrientation = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setTopToBottom(){
-
     m_isTopToBottom = true;
-    m_isSet.verticalOrientation = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
 void GraphicTiles::setBottomToTop(){
-
     m_isTopToBottom = false;
-    m_isSet.verticalOrientation = true;
-
-    if(!m_isInitialized && m_isSet.isAllSet()){
-        init();
-    }
 }
 
+void GraphicTiles::insertAllTiles(){
+
+    int columns = m_tiles.numColumns();
+    int rows = m_tiles.numRows();
+    m_tiles.insertAllElements();
+
+    for(int y = 0; y < rows; y++){
+        for(int x = 0; x < columns; x++){
+
+            auto tile_o = m_tiles.at({x,y});
+            if(tile_o == std::nullopt){
+                continue;
+            }
+            auto& tile = tile_o.value().get();
+
+            sf::Vector2f position = m_topLeftPosition;
+            if(m_isLeftToRight){
+                position.x += (float)(x*m_tileSize.x);
+            }
+            else{
+                position.x += (float)((columns-x-1)*m_tileSize.x);
+            }
+            if(m_isTopToBottom){
+                position.y += (float)(y*m_tileSize.y);
+            }
+            else{
+                position.y += (float)((rows-y-1)*m_tileSize.y);
+            }
+
+            tile.setPosition(position);
+        }
+    }
+}
 
 void GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
 
@@ -507,9 +467,7 @@ void GraphicTiles::removeBottomRow(){
 }
 
 void GraphicTiles::clear(){
-
     m_tiles.clear();
-    m_isInitialized = false;
 }
 
 int GraphicTiles::getNumColumns() const{
@@ -605,52 +563,6 @@ void GraphicTiles::move(const sf::Vector2f& offset){
             tile.move(offset);
         }
     }
-}
-
-bool GraphicTiles::IsSet::isAllSet(){
-    return numColumns &&
-        numRows &&
-        tileSize &&
-        topLeftPosition &&
-        horizontalOrientation &&
-        verticalOrientation;
-}
-
-
-void GraphicTiles::init(){
-
-    int columns = m_tiles.numColumns();
-    int rows = m_tiles.numRows();
-    m_tiles.insertAllElements();
-
-    for(int y = 0; y < rows; y++){
-        for(int x = 0; x < columns; x++){
-
-            auto tile_o = m_tiles.at({x,y});
-            if(tile_o == std::nullopt){
-                continue;
-            }
-            auto& tile = tile_o.value().get();
-
-            sf::Vector2f position = m_topLeftPosition;
-            if(m_isLeftToRight){
-                position.x += (float)(x*m_tileSize.x);
-            }
-            else{
-                position.x += (float)((columns-x-1)*m_tileSize.x);
-            }
-            if(m_isTopToBottom){
-                position.y += (float)(y*m_tileSize.y);
-            }
-            else{
-                position.y += (float)((rows-y-1)*m_tileSize.y);
-            }
-
-            tile.setPosition(position);
-        }
-    }
-
-    m_isInitialized = true;
 }
 
 void GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
