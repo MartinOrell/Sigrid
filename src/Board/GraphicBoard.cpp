@@ -166,179 +166,12 @@ void GraphicBoard::load(const LogicBoard& logicBoard){
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
     
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
-    if(m_isLeftToRight){
-        m_tileLayer.setLeftToRight();
-    }
-    else{
-        m_tileLayer.setRightToLeft();
-    }
-    if(m_isTopToBottom){
-        m_tileLayer.setTopToBottom();
-    }
-    else{
-        m_tileLayer.setBottomToTop();
-    }
-
-    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
-    m_tileLayer.setNumRows(logicBoard.getNumRows());
-    m_tileLayer.setTileSize({config.tileWidth, config.tileHeight});
-    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
-    if(m_arrowColorManagerPtr){
-        m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
-    }
-    m_tileLayer.insertAllTiles();
-    
-    if(m_arrowColorManagerPtr){
-        m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
-    }
-    m_pieceLayer.setPieceSize({config.tileWidth, config.tileHeight});
-    m_pieceLayer.setCircleDiameter(config.circleDiameter);
-
-    m_arrowLayer.setThickness(config.arrowThickness);
-    m_arrowLayer.setHeadSize(config.arrowHeadSize);
-    if(m_arrowColorManagerPtr){
-        m_arrowLayer.setColorManagerPtr(m_arrowColorManagerPtr);
-    }
-
-    for(auto& label: config.labels){
-        if(label.isInside){
-            if(label.position == 0){
-                if(label.isVisible){
-                    m_labels.showLeftInside();
-                }
-                else{
-                    m_labels.hideLeftInside();
-                }
-                m_labels.setLeftInsideSize(label.size);
-                m_labels.setLeftInsideFont(label.font);
-            }
-            else if(label.position == 3){
-                if(label.isVisible){
-                    m_labels.showBottomInside();
-                }
-                else{
-                    m_labels.hideBottomInside();
-                }
-                m_labels.setBottomInsideSize(label.size);
-                m_labels.setBottomInsideFont(label.font);
-            }
-            else{
-                std::cerr << "GraphicBoard: Unhandled label position: " << label.position << std::endl;
-            }
-        }
-        else{ // outside
-            if(label.position == 0){
-                if(label.isVisible){
-                    m_labels.showLeftOutside();
-                }
-                else{
-                    m_labels.hideLeftOutside();
-                }
-                m_labels.setLeftOutsideSize(label.size);
-                m_labels.setLeftOutsideFont(label.font);
-            }
-            else if(label.position == 1){
-                if(label.isVisible){
-                    m_labels.showRightOutside();
-                }
-                else{
-                    m_labels.hideRightOutside();
-                }
-                m_labels.setRightOutsideSize(label.size);
-                m_labels.setRightOutsideFont(label.font);
-            }
-            else if(label.position == 2){
-                if(label.isVisible){
-                    m_labels.showTopOutside();
-                }
-                else{
-                    m_labels.hideTopOutside();
-                }
-                m_labels.setTopOutsideSize(label.size);
-                m_labels.setTopOutsideFont(label.font);
-            }
-            else if(label.position == 3){
-                if(label.isVisible){
-                    m_labels.showBottomOutside();
-                }
-                else{
-                    m_labels.hideBottomOutside();
-                }
-                m_labels.setBottomOutsideSize(label.size);
-                m_labels.setBottomOutsideFont(label.font);
-            }
-        }
-    }
-
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
-
-            auto tile_o = logicBoard.getTile({x,y});
-            if(tile_o.has_value()){
-                int colorId = tile_o->getColorId();
-                m_tileLayer.setTileColor({x,y},colorId);
-            }
-
-            auto entity_o = logicBoard.getEntityAt({x,y});
-            if(entity_o != std::nullopt){
-                auto position_o = m_tileLayer.getTileCentrePosition({x,y});
-                m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
-            }
-        }
-    }
-
-    if(m_labels.isLeftInsideVisible()){
-        addLeftInsideLabels_h();
-    }
-    if(m_labels.isBottomInsideVisible()){
-        addBottomInsideLabels_h();
-    }
-    if(m_labels.isLeftOutsideVisible()){
-        updateLeftEdgeWidth();
-        addLeftOutsideLabels_h();
-    }
-    if(m_labels.isRightOutsideVisible()){
-        updateRightEdgeWidth();
-        addRightOutsideLabels_h();
-    }
-    if(m_labels.isTopOutsideVisible()){
-        updateTopEdgeWidth();
-        addTopOutsideLabels_h();
-    }
-    if(m_labels.isBottomOutsideVisible()){
-        updateBottomEdgeWidth();
-        addBottomOutsideLabels_h();
-    }
-
-    if(config.turnToken){
-        initTurnToken(logicBoard.getTurnToMove());
-        m_turnToken.show();
-        updateRightEdgeWidth();
-    }
-    else{
-        m_turnToken.hide();
-    }
-
-    m_border.setThickness(config.borderThickness);
-    m_border.setColor(sf::Color{0,0,0});
-    if(config.border){
-
-        sf::Vector2f boardArea;
-        boardArea.x = config.tileWidth* logicBoard.getNumColumns();
-        boardArea.y = config.tileHeight* logicBoard.getNumRows();
-
-        m_border.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
-        m_border.setEnclosedArea(boardArea);
-        
-        m_border.show();
-    }
-    else{
-        m_border.hide();
-    }
-
-    if(m_border.isVisible()){
-        moveTiles({m_border.getThickness(), m_border.getThickness()});
-    }
+    initTileLayer(logicBoard, config);
+    initPieceLayer(logicBoard, config);
+    initArrowLayer(config);
+    initLabels(config);
+    initTurnToken(logicBoard, config);
+    initBorder(logicBoard, config);
     
     resizeTexture();
     redrawTexture();
@@ -1233,6 +1066,203 @@ void GraphicBoard::setTurnToMove(const int& turnToMove){
     m_turnToken.setTurnToMove(turnToMove);
 
     redrawTexture();
+}
+
+void GraphicBoard::initTileLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+
+    if(m_isLeftToRight){
+        m_tileLayer.setLeftToRight();
+    }
+    else{
+        m_tileLayer.setRightToLeft();
+    }
+    if(m_isTopToBottom){
+        m_tileLayer.setTopToBottom();
+    }
+    else{
+        m_tileLayer.setBottomToTop();
+    }
+
+    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
+    m_tileLayer.setNumRows(logicBoard.getNumRows());
+    m_tileLayer.setTileSize({config.tileWidth, config.tileHeight});
+    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
+    if(m_arrowColorManagerPtr){
+        m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
+    }
+    m_tileLayer.insertAllTiles();
+
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+
+            auto tile_o = logicBoard.getTile({x,y});
+            if(tile_o.has_value()){
+                int colorId = tile_o->getColorId();
+                m_tileLayer.setTileColor({x,y},colorId);
+            }
+        }
+    }
+}
+
+void GraphicBoard::initPieceLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+
+    if(m_arrowColorManagerPtr){
+        m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
+    }
+    m_pieceLayer.setPieceSize({config.tileWidth, config.tileHeight});
+    m_pieceLayer.setCircleDiameter(config.circleDiameter);
+
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+
+            auto entity_o = logicBoard.getEntityAt({x,y});
+            if(entity_o != std::nullopt){
+                auto position_o = m_tileLayer.getTileCentrePosition({x,y});
+                m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
+            }
+        }
+    }
+}
+
+void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
+
+    m_arrowLayer.setThickness(config.arrowThickness);
+    m_arrowLayer.setHeadSize(config.arrowHeadSize);
+    if(m_arrowColorManagerPtr){
+        m_arrowLayer.setColorManagerPtr(m_arrowColorManagerPtr);
+    }
+}
+
+void GraphicBoard::initLabels(const BoardDesignContainer& config){
+
+    for(auto& label: config.labels){
+        if(label.isInside){
+            if(label.position == 0){
+                if(label.isVisible){
+                    m_labels.showLeftInside();
+                }
+                else{
+                    m_labels.hideLeftInside();
+                }
+                m_labels.setLeftInsideSize(label.size);
+                m_labels.setLeftInsideFont(label.font);
+            }
+            else if(label.position == 3){
+                if(label.isVisible){
+                    m_labels.showBottomInside();
+                }
+                else{
+                    m_labels.hideBottomInside();
+                }
+                m_labels.setBottomInsideSize(label.size);
+                m_labels.setBottomInsideFont(label.font);
+            }
+            else{
+                std::cerr << "GraphicBoard: Unhandled label position: " << label.position << std::endl;
+            }
+        }
+        else{ // outside
+            if(label.position == 0){
+                if(label.isVisible){
+                    m_labels.showLeftOutside();
+                }
+                else{
+                    m_labels.hideLeftOutside();
+                }
+                m_labels.setLeftOutsideSize(label.size);
+                m_labels.setLeftOutsideFont(label.font);
+            }
+            else if(label.position == 1){
+                if(label.isVisible){
+                    m_labels.showRightOutside();
+                }
+                else{
+                    m_labels.hideRightOutside();
+                }
+                m_labels.setRightOutsideSize(label.size);
+                m_labels.setRightOutsideFont(label.font);
+            }
+            else if(label.position == 2){
+                if(label.isVisible){
+                    m_labels.showTopOutside();
+                }
+                else{
+                    m_labels.hideTopOutside();
+                }
+                m_labels.setTopOutsideSize(label.size);
+                m_labels.setTopOutsideFont(label.font);
+            }
+            else if(label.position == 3){
+                if(label.isVisible){
+                    m_labels.showBottomOutside();
+                }
+                else{
+                    m_labels.hideBottomOutside();
+                }
+                m_labels.setBottomOutsideSize(label.size);
+                m_labels.setBottomOutsideFont(label.font);
+            }
+        }
+    }
+
+    if(m_labels.isLeftInsideVisible()){
+        addLeftInsideLabels_h();
+    }
+    if(m_labels.isBottomInsideVisible()){
+        addBottomInsideLabels_h();
+    }
+    if(m_labels.isLeftOutsideVisible()){
+        updateLeftEdgeWidth();
+        addLeftOutsideLabels_h();
+    }
+    if(m_labels.isRightOutsideVisible()){
+        updateRightEdgeWidth();
+        addRightOutsideLabels_h();
+    }
+    if(m_labels.isTopOutsideVisible()){
+        updateTopEdgeWidth();
+        addTopOutsideLabels_h();
+    }
+    if(m_labels.isBottomOutsideVisible()){
+        updateBottomEdgeWidth();
+        addBottomOutsideLabels_h();
+    }
+}
+
+void GraphicBoard::initTurnToken(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+
+    if(config.turnToken){
+        initTurnToken(logicBoard.getTurnToMove());
+        m_turnToken.show();
+        updateRightEdgeWidth();
+    }
+    else{
+        m_turnToken.hide();
+    }
+}
+
+void GraphicBoard::initBorder(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+
+    m_border.setThickness(config.borderThickness);
+    m_border.setColor(sf::Color{0,0,0});
+    if(config.border){
+
+        sf::Vector2f boardArea;
+        boardArea.x = config.tileWidth* logicBoard.getNumColumns();
+        boardArea.y = config.tileHeight* logicBoard.getNumRows();
+
+        m_border.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
+        m_border.setEnclosedArea(boardArea);
+        
+        m_border.show();
+    }
+    else{
+        m_border.hide();
+    }
+
+    if(m_border.isVisible()){
+        moveTiles({m_border.getThickness(), m_border.getThickness()});
+    }
 }
 
 void GraphicBoard::initTurnToken(const int& turnToMove){

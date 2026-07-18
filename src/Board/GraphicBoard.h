@@ -151,6 +151,13 @@ class GraphicBoard: public sf::Drawable{
 
   private:
 
+    void initTileLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config);
+    void initPieceLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config);
+    void initArrowLayer(const BoardDesignContainer& config);
+    void initLabels(const BoardDesignContainer& config);
+    void initTurnToken(const LogicBoard& logicBoard, const BoardDesignContainer& config);
+    void initBorder(const LogicBoard& logicBoard, const BoardDesignContainer& config);
+
     void initTurnToken(const int& turnToMove);
 
     const sf::Color& getBackgroundColor() const;
