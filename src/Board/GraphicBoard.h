@@ -156,7 +156,7 @@ class GraphicBoard: public sf::Drawable{
     void initArrowLayer(const BoardDesignContainer& config);
     void initLabels(const BoardDesignContainer& config);
     void initTurnToken(const LogicBoard& logicBoard, const BoardDesignContainer& config);
-    void initBorder(const LogicBoard& logicBoard, const BoardDesignContainer& config);
+    void initBorder(const BoardDesignContainer& config);
 
     void loadBoardState_tileLayer(const LogicBoard& logicBoard);
     void loadBoardState_pieceLayer(const LogicBoard& logicBoard);

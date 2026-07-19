@@ -112,7 +112,7 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     initArrowLayer(config);
     initLabels(config);
     initTurnToken(logicBoard, config);
-    initBorder(logicBoard, config);
+    initBorder(config);
     
     resizeTexture();
     redrawTexture();
@@ -1186,15 +1186,15 @@ void GraphicBoard::initTurnToken(const LogicBoard& logicBoard, const BoardDesign
     }
 }
 
-void GraphicBoard::initBorder(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+void GraphicBoard::initBorder(const BoardDesignContainer& config){
 
     m_border.setThickness(config.borderThickness);
     m_border.setColor(sf::Color{0,0,0});
     if(config.border){
 
         sf::Vector2f boardArea;
-        boardArea.x = config.tileWidth* logicBoard.getNumColumns();
-        boardArea.y = config.tileHeight* logicBoard.getNumRows();
+        boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();
+        boardArea.y = m_tileLayer.getTileHeight() * m_tileLayer.getNumRows();
 
         m_border.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
         m_border.setEnclosedArea(boardArea);
