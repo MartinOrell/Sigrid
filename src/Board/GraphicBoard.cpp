@@ -104,7 +104,7 @@ void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
     redrawTexture();
 }
 
-void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+void GraphicBoard::loadDesign(const BoardDesignContainer& config){
     
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
     initTileLayer(config);
@@ -113,11 +113,6 @@ void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer
     initLabels(config);
     initTurnToken(config);
     initBorder(config);
-    
-    loadBoardState(logicBoard);
-
-    resizeTexture();
-    redrawTexture();
 }
 
 sf::Vector2f GraphicBoard::getTileSize() const{

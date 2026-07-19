@@ -70,7 +70,8 @@ void Board::loadBoardData(const BoardDataContainer& boardData){
 void Board::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
 
     if(m_logicBoard.load(boardData)){
-        m_graphicBoard.init(m_logicBoard, graphicData);
+        m_graphicBoard.loadDesign(graphicData);
+        m_graphicBoard.loadBoardState(m_logicBoard);
     }
     else{
         std::cerr << "Board: Failed to init logicBoard" << std::endl;
