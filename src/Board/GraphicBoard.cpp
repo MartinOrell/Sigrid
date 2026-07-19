@@ -107,13 +107,15 @@ void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
 void GraphicBoard::init(const LogicBoard& logicBoard, const BoardDesignContainer& config){
     
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
-    initTileLayer(logicBoard, config);
-    initPieceLayer(logicBoard, config);
+    initTileLayer(config);
+    initPieceLayer(config);
     initArrowLayer(config);
     initLabels(config);
-    initTurnToken(logicBoard, config);
+    initTurnToken(config);
     initBorder(config);
     
+    loadBoardState(logicBoard);
+
     resizeTexture();
     redrawTexture();
 }
@@ -1009,7 +1011,7 @@ void GraphicBoard::setTurnToMove(const int& turnToMove){
     redrawTexture();
 }
 
-void GraphicBoard::initTileLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+void GraphicBoard::initTileLayer(const BoardDesignContainer& config){
 
     if(m_isLeftToRight){
         m_tileLayer.setLeftToRight();
@@ -1024,49 +1026,19 @@ void GraphicBoard::initTileLayer(const LogicBoard& logicBoard, const BoardDesign
         m_tileLayer.setBottomToTop();
     }
 
-    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
-    m_tileLayer.setNumRows(logicBoard.getNumRows());
     m_tileLayer.setTileSize({config.tileWidth, config.tileHeight});
-    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
     if(m_arrowColorManagerPtr){
         m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
-    m_tileLayer.insertAllTiles();
-
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
-
-            auto tile_o = logicBoard.getTile({x,y});
-            if(tile_o.has_value()){
-                int colorId = tile_o->getColorId();
-                m_tileLayer.setTileColor({x,y},colorId);
-            }
-        }
-    }
-
-    if(m_border.isVisible()){
-        moveTiles({config.borderThickness, config.borderThickness});
-    }
 }
 
-void GraphicBoard::initPieceLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
 
     if(m_arrowColorManagerPtr){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }
     m_pieceLayer.setPieceSize({config.tileWidth, config.tileHeight});
     m_pieceLayer.setCircleDiameter(config.circleDiameter);
-
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
-
-            auto entity_o = logicBoard.getEntityAt({x,y});
-            if(entity_o != std::nullopt){
-                auto position_o = m_tileLayer.getTileCentrePosition({x,y});
-                m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
-            }
-        }
-    }
 }
 
 void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
@@ -1149,35 +1121,12 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
             }
         }
     }
-
-    if(m_labels.isLeftInsideVisible()){
-        addLeftInsideLabels_h();
-    }
-    if(m_labels.isBottomInsideVisible()){
-        addBottomInsideLabels_h();
-    }
-    if(m_labels.isLeftOutsideVisible()){
-        updateLeftEdgeWidth();
-        addLeftOutsideLabels_h();
-    }
-    if(m_labels.isRightOutsideVisible()){
-        updateRightEdgeWidth();
-        addRightOutsideLabels_h();
-    }
-    if(m_labels.isTopOutsideVisible()){
-        updateTopEdgeWidth();
-        addTopOutsideLabels_h();
-    }
-    if(m_labels.isBottomOutsideVisible()){
-        updateBottomEdgeWidth();
-        addBottomOutsideLabels_h();
-    }
 }
 
-void GraphicBoard::initTurnToken(const LogicBoard& logicBoard, const BoardDesignContainer& config){
+void GraphicBoard::initTurnToken(const BoardDesignContainer& config){
 
     if(config.turnToken){
-        initTurnToken(logicBoard.getTurnToMove());
+        initTurnToken(0);
         m_turnToken.show();
         updateRightEdgeWidth();
     }
