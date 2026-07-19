@@ -90,6 +90,17 @@ void GraphicBoard::setBottomToTop(){
     m_tileLayer.setBottomToTop();
 }
 
+void GraphicBoard::loadDesign(const BoardDesignContainer& config){
+    
+    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
+    initTileLayer(config);
+    initPieceLayer(config);
+    initArrowLayer(config);
+    initLabels(config);
+    initTurnToken(config);
+    initBorder(config);
+}
+
 void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
 
     loadBoardState_tileLayer(logicBoard);
@@ -102,17 +113,6 @@ void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
 
     resizeTexture();
     redrawTexture();
-}
-
-void GraphicBoard::loadDesign(const BoardDesignContainer& config){
-    
-    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
-    initTileLayer(config);
-    initPieceLayer(config);
-    initArrowLayer(config);
-    initLabels(config);
-    initTurnToken(config);
-    initBorder(config);
 }
 
 sf::Vector2f GraphicBoard::getTileSize() const{
