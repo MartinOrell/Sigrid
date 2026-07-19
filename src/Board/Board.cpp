@@ -60,7 +60,7 @@ void Board::setBottomToTop(){
 void Board::loadBoardData(const BoardDataContainer& boardData){
 
     if(m_logicBoard.load(boardData)){
-        m_graphicBoard.load(m_logicBoard);
+        m_graphicBoard.loadBoardState(m_logicBoard);
     }
     else{
         std::cerr << "Board: Failed to load logicBoard" << std::endl;

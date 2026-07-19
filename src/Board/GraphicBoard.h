@@ -52,7 +52,7 @@ class GraphicBoard: public sf::Drawable{
     void setTopToBottom();
     void setBottomToTop();
 
-    void load(const LogicBoard& logicBoard);
+    void loadBoardState(const LogicBoard& logicBoard);
 
     void init(const LogicBoard& logicBoard, const BoardDesignContainer& config);
 
@@ -158,9 +158,9 @@ class GraphicBoard: public sf::Drawable{
     void initTurnToken(const LogicBoard& logicBoard, const BoardDesignContainer& config);
     void initBorder(const LogicBoard& logicBoard, const BoardDesignContainer& config);
 
-    void loadTileLayer(const LogicBoard& logicBoard);
-    void loadPieceLayer(const LogicBoard& logicBoard);
-    void loadTurnToken(const LogicBoard& logicBoard);
+    void loadBoardState_tileLayer(const LogicBoard& logicBoard);
+    void loadBoardState_pieceLayer(const LogicBoard& logicBoard);
+    void loadBoardState_turnToken(const LogicBoard& logicBoard);
     void updateBorder();
     void updateLabels();
 

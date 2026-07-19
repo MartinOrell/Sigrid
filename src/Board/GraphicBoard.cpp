@@ -90,12 +90,12 @@ void GraphicBoard::setBottomToTop(){
     m_tileLayer.setBottomToTop();
 }
 
-void GraphicBoard::load(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
 
-    loadTileLayer(logicBoard);
-    loadPieceLayer(logicBoard);
+    loadBoardState_tileLayer(logicBoard);
+    loadBoardState_pieceLayer(logicBoard);
     m_arrowLayer.clear();
-    loadTurnToken(logicBoard);
+    loadBoardState_turnToken(logicBoard);
 
     updateBorder();
     updateLabels();
@@ -1206,7 +1206,7 @@ void GraphicBoard::initBorder(const LogicBoard& logicBoard, const BoardDesignCon
     }
 }
 
-void GraphicBoard::loadTileLayer(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_tileLayer(const LogicBoard& logicBoard){
 
     m_tileLayer.clear();
 
@@ -1231,7 +1231,7 @@ void GraphicBoard::loadTileLayer(const LogicBoard& logicBoard){
     }
 }
 
-void GraphicBoard::loadPieceLayer(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_pieceLayer(const LogicBoard& logicBoard){
 
     m_pieceLayer.clear();
 
@@ -1249,7 +1249,7 @@ void GraphicBoard::loadPieceLayer(const LogicBoard& logicBoard){
     }
 }
 
-void GraphicBoard::loadTurnToken(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_turnToken(const LogicBoard& logicBoard){
 
     if(m_turnToken.isVisible()){
         m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
