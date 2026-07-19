@@ -1043,6 +1043,10 @@ void GraphicBoard::initTileLayer(const LogicBoard& logicBoard, const BoardDesign
             }
         }
     }
+
+    if(m_border.isVisible()){
+        moveTiles({config.borderThickness, config.borderThickness});
+    }
 }
 
 void GraphicBoard::initPieceLayer(const LogicBoard& logicBoard, const BoardDesignContainer& config){
@@ -1199,10 +1203,6 @@ void GraphicBoard::initBorder(const LogicBoard& logicBoard, const BoardDesignCon
     }
     else{
         m_border.hide();
-    }
-
-    if(m_border.isVisible()){
-        moveTiles({m_border.getThickness(), m_border.getThickness()});
     }
 }
 
