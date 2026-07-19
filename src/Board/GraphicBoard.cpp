@@ -92,72 +92,13 @@ void GraphicBoard::setBottomToTop(){
 
 void GraphicBoard::load(const LogicBoard& logicBoard){
 
-    m_tileLayer.clear();
-    m_pieceLayer.clear();
+    loadTileLayer(logicBoard);
+    loadPieceLayer(logicBoard);
     m_arrowLayer.clear();
-    
-    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
-    m_tileLayer.setNumRows(logicBoard.getNumRows());
-    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
-    m_tileLayer.insertAllTiles();
+    loadTurnToken(logicBoard);
 
-    if(m_border.isVisible()){
-        m_tileLayer.move({m_border.getThickness(), m_border.getThickness()});
-    }
-
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
-
-            auto tile_o = logicBoard.getTile({x,y});
-            if(tile_o.has_value()){
-                int colorId = tile_o->getColorId();
-                m_tileLayer.setTileColor({x,y},colorId);
-            }
-
-            auto entity_o = logicBoard.getEntityAt({x,y});
-            if(entity_o != std::nullopt){
-                auto position_o = m_tileLayer.getTileCentrePosition({x,y});
-                if(position_o != std::nullopt){
-                    m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
-                }
-            }
-        }
-    }
-
-    if(m_turnToken.isVisible()){
-        m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
-    }
-
-    {
-        sf::Vector2f boardArea;
-        boardArea.x = m_tileLayer.getTileWidth() * logicBoard.getNumColumns();
-        boardArea.y = m_tileLayer.getTileHeight() * logicBoard.getNumRows();
-        
-        m_border.setEnclosedArea(boardArea);
-    }
-
-    if(m_labels.isLeftInsideVisible()){
-        addLeftInsideLabels_h();
-    }
-    if(m_labels.isBottomInsideVisible()){
-        addBottomInsideLabels_h();
-    }
-    if(m_labels.isLeftOutsideVisible()){
-        updateLeftEdgeWidth();
-        addLeftOutsideLabels_h();
-    }
-    if(m_labels.isRightOutsideVisible()){
-        updateRightEdgeWidth();
-        addRightOutsideLabels_h();
-    }
-    if(m_labels.isTopOutsideVisible()){
-        updateTopEdgeWidth();
-        addTopOutsideLabels_h();
-    }
-    if(m_labels.isBottomOutsideVisible()){
-        updateBottomEdgeWidth();
-        addBottomOutsideLabels_h();
-    }
+    updateBorder();
+    updateLabels();
 
     resizeTexture();
     redrawTexture();
@@ -1262,6 +1203,91 @@ void GraphicBoard::initBorder(const LogicBoard& logicBoard, const BoardDesignCon
 
     if(m_border.isVisible()){
         moveTiles({m_border.getThickness(), m_border.getThickness()});
+    }
+}
+
+void GraphicBoard::loadTileLayer(const LogicBoard& logicBoard){
+
+    m_tileLayer.clear();
+
+    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
+    m_tileLayer.setNumRows(logicBoard.getNumRows());
+    m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
+    m_tileLayer.insertAllTiles();
+
+    if(m_border.isVisible()){
+        m_tileLayer.move({m_border.getThickness(), m_border.getThickness()});
+    }
+
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+
+            auto tile_o = logicBoard.getTile({x,y});
+            if(tile_o.has_value()){
+                int colorId = tile_o->getColorId();
+                m_tileLayer.setTileColor({x,y},colorId);
+            }
+        }
+    }
+}
+
+void GraphicBoard::loadPieceLayer(const LogicBoard& logicBoard){
+
+    m_pieceLayer.clear();
+
+    for(int y = 0; y < logicBoard.getNumRows(); y++){
+        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+
+            auto entity_o = logicBoard.getEntityAt({x,y});
+            if(entity_o != std::nullopt){
+                auto position_o = m_tileLayer.getTileCentrePosition({x,y});
+                if(position_o != std::nullopt){
+                    m_pieceLayer.addEntity({x,y},position_o.value(),entity_o.value());
+                }
+            }
+        }
+    }
+}
+
+void GraphicBoard::loadTurnToken(const LogicBoard& logicBoard){
+
+    if(m_turnToken.isVisible()){
+        m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
+    }
+}
+
+void GraphicBoard::updateBorder(){
+
+    sf::Vector2f boardArea;
+    boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();
+    boardArea.y = m_tileLayer.getTileHeight() * m_tileLayer.getNumRows();
+    
+    m_border.setEnclosedArea(boardArea);
+}
+
+void GraphicBoard::updateLabels(){
+
+    if(m_labels.isLeftInsideVisible()){
+        addLeftInsideLabels_h();
+    }
+    if(m_labels.isBottomInsideVisible()){
+        addBottomInsideLabels_h();
+    }
+    if(m_labels.isLeftOutsideVisible()){
+        updateLeftEdgeWidth();
+        addLeftOutsideLabels_h();
+    }
+    if(m_labels.isRightOutsideVisible()){
+        updateRightEdgeWidth();
+        addRightOutsideLabels_h();
+    }
+    if(m_labels.isTopOutsideVisible()){
+        updateTopEdgeWidth();
+        addTopOutsideLabels_h();
+    }
+    if(m_labels.isBottomOutsideVisible()){
+        updateBottomEdgeWidth();
+        addBottomOutsideLabels_h();
     }
 }
 
