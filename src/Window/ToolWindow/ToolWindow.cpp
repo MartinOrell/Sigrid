@@ -60,7 +60,8 @@ void ToolWindow::init(){
     boardDesign.border = false;
     boardDesign.turnToken = false;
 
-    m_board.init(boardData, boardDesign);
+    m_board.loadGraphicData(boardDesign);
+    m_board.loadBoardData(boardData);
 
     LogicIcon selectIcon;
     selectIcon.setFilename("res/icons/select_object.png");

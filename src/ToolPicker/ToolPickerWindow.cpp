@@ -79,7 +79,8 @@ void ToolPickerWindow::init(const ToolPickerContainer& data){
     boardDesign.border = false;
     boardDesign.turnToken = false;
 
-    m_board.init(boardData, boardDesign);
+    m_board.loadGraphicData(boardDesign);
+    m_board.loadBoardData(boardData);
 
     m_board.setPosition({0.f,0.f});
 

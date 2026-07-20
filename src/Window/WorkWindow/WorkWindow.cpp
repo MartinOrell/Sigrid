@@ -103,7 +103,8 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
     }
     auto& board = board_o.value().get();
 
-    board.init(boardData, graphicData);
+    board.loadGraphicData(graphicData);
+    board.loadBoardData(boardData);
 
     if(!board.isImageFilenameSet()){
         board.setImageFilename(m_defaultBoardImageFilename);

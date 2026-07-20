@@ -33,8 +33,8 @@ class Board: public sf::Drawable{
     void setTopToBottom();
     void setBottomToTop();
 
+    void loadGraphicData(const BoardDesignContainer& graphicData);
     void loadBoardData(const BoardDataContainer& boardData);
-    void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
 
     void setPosition(const sf::Vector2f& position);
 
