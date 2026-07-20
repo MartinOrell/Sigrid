@@ -38,7 +38,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     void setIconManagerPtr(IconManager* const managerPtr);
 
-    void init(const ToolPickerContainer& data);
+    void load(const ToolPickerContainer& data);
 
     void createGraphic(const sf::Vector2f& size);
 

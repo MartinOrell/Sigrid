@@ -32,7 +32,7 @@ void ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
     m_board.setIconManagerPtr(managerPtr); 
 }
 
-void ToolPickerWindow::init(const ToolPickerContainer& data){
+void ToolPickerWindow::load(const ToolPickerContainer& data){
 
     m_columns = data.columns;
     m_rows = data.rows;

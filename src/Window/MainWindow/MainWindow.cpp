@@ -86,7 +86,7 @@ bool MainWindow::init(const MainWindowConfigContainer& config){
     m_toolPickerWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
     m_toolPickerWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_toolPickerWindow->setIconManagerPtr(m_iconManagerPtr.get());
-    m_toolPickerWindow->init(config.toolPickerData);
+    m_toolPickerWindow->load(config.toolPickerData);
 
     BoardDataContainer boardData;
     if(std::filesystem::exists(config.boardFilename)){
