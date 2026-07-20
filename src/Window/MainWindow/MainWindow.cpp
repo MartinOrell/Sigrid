@@ -128,7 +128,7 @@ bool MainWindow::load(const MainWindowConfigContainer& config){
 
     m_menu = std::make_unique<sigrid::Menu>();
     m_menu->setFontManagerPtr(m_fontManagerPtr.get());
-    m_menu->init(config.menuData);
+    m_menu->load(config.menuData);
 
     if(m_workWindow){
         std::string title = m_workWindow->getName();

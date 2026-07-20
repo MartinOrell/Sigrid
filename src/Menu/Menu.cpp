@@ -15,7 +15,7 @@ void Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-void Menu::init(const MenuContainer& menuData){
+void Menu::load(const MenuContainer& menuData){
     m_isPinned = menuData.isPinned;
     m_showItems = menuData.showItems;
     m_fontFilename = menuData.fontName;
