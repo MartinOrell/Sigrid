@@ -86,7 +86,7 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
     }
 }
 
-void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData){
+void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
 
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
@@ -104,6 +104,21 @@ void WorkWindow::init(const BoardDataContainer& boardData, const BoardDesignCont
     auto& board = board_o.value().get();
 
     board.loadGraphicData(graphicData);
+}
+
+void WorkWindow::loadBoardData(const BoardDataContainer& boardData){
+
+    if(m_boards.size() == 0){
+        Board board;
+        m_boards.push_back(std::move(board));
+    }
+
+    auto board_o = m_boards.atSelection();
+    if(board_o == std::nullopt){
+        return;
+    }
+    auto& board = board_o.value().get();
+
     board.loadBoardData(boardData);
 
     if(!board.isImageFilenameSet()){

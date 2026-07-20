@@ -122,7 +122,8 @@ bool MainWindow::load(const MainWindowConfigContainer& config){
     m_workWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
     m_workWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
-    m_workWindow->init(boardData, config.boardData);
+    m_workWindow->loadGraphicData(config.boardData);
+    m_workWindow->loadBoardData(boardData);
     std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
 
     m_menu = std::make_unique<sigrid::Menu>();

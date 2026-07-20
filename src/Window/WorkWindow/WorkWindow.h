@@ -42,7 +42,8 @@ class WorkWindow: public sf::Drawable{
 
     void setFontManagerPtr(FontManager* const managerPtr);
 
-    void init(const BoardDataContainer& boardData, const BoardDesignContainer& graphicData);
+    void loadGraphicData(const BoardDesignContainer& graphicData);
+    void loadBoardData(const BoardDataContainer& boardData);
 
     void createGraphic(const sf::Vector2f& size);
 
