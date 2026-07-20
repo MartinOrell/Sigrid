@@ -8,7 +8,7 @@
 
 using namespace sigrid;
 
-bool MainWindow::init(const MainWindowConfigContainer& config){
+bool MainWindow::load(const MainWindowConfigContainer& config){
     
     m_window.create(sf::VideoMode({(unsigned int)config.windowWidth, (unsigned int)config.windowHeight}), config.windowName);
     m_window.setFramerateLimit(60);

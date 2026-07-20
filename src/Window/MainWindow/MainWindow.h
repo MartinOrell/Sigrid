@@ -33,7 +33,7 @@ class MainWindow{
     MainWindow& operator=(const MainWindow&) = default;
     MainWindow& operator=(MainWindow&&) = default;
 
-    bool init(const MainWindowConfigContainer& config);
+    bool load(const MainWindowConfigContainer& config);
     void run();
 
   private:

@@ -22,7 +22,7 @@ int main()
     }
 
     sigrid::MainWindow mainWindow;
-    if(mainWindow.init(config)){
+    if(mainWindow.load(config)){
         mainWindow.run();
     }
 
