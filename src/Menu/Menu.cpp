@@ -8,9 +8,6 @@
 
 using namespace sigrid;
 
-
-Menu::Menu(){}
-
 void Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }

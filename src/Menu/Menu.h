@@ -21,7 +21,7 @@ class Menu: public sf::Drawable{
 
   public:
 
-    Menu();
+    Menu() = default;
     Menu(const Menu&) = default;
     Menu(Menu&&) = default;
     Menu& operator=(const Menu&) = default;
