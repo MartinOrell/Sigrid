@@ -469,20 +469,24 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
 
     m_tileLayer.addColumnRight(repeatTileColorIds);
 
+    sf::Vector2f offset{m_tileLayer.getTileSize().x,0.f};
+
     if(!m_isLeftToRight){
-        m_pieceLayer.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
-        m_arrowLayer.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+        m_pieceLayer.move(offset);
+        m_arrowLayer.move(offset);
     }
 
     m_border.addWidth(m_tileLayer.getTileSize().x);
 
-    m_turnToken.move(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+    m_turnToken.move(offset);
 
     if(!m_isLeftToRight){
-        m_labels.moveBottomInsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
-        m_labels.moveBottomOutsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveTopOutsideLabels(offset);
+        m_labels.moveBottomInsideLabels(offset);
+        m_labels.moveBottomOutsideLabels(offset);
     }
-    m_labels.moveRightOutsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+    m_labels.moveRightOutsideLabels(offset);
+
     int column = m_tileLayer.getNumColumns()-1;
     if(m_labels.isBottomInsideVisible()){
         addBottomInsideLabel_h(column);
@@ -506,14 +510,18 @@ void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds)
     m_arrowLayer.moveArrowsRight(m_tileLayer.getTileSize().x, m_isLeftToRight);
 
     m_border.addWidth(m_tileLayer.getTileSize().x);
+
+    sf::Vector2f offset{m_tileLayer.getTileSize().x, 0.f};
     
-    m_turnToken.move(sf::Vector2f{m_tileLayer.getTileSize().x, 0.f});
+    m_turnToken.move(offset);
 
     if(!m_isLeftToRight){
-        m_labels.moveBottomInsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
-        m_labels.moveBottomOutsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveTopOutsideLabels(offset);
+        m_labels.moveBottomInsideLabels(offset);
+        m_labels.moveBottomOutsideLabels(offset);
     }
-    m_labels.moveRightOutsideLabels(sf::Vector2f{m_tileLayer.getTileSize().x,0.f});
+    m_labels.moveRightOutsideLabels(offset);
+    
     int column = m_tileLayer.getNumColumns()-1;
     if(m_labels.isBottomInsideVisible()){
         addBottomInsideLabel_h(column);
