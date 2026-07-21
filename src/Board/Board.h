@@ -18,7 +18,7 @@ class Board: public sf::Drawable{
   public:
 
     Board() = default;
-    Board(const Board&);
+    Board(const Board&) = default;
     Board(Board&&) = default;
     Board& operator=(const Board&) = default;
     Board& operator=(Board&&) = default;

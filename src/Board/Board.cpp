@@ -17,10 +17,6 @@
 
 using namespace sigrid;
 
-Board::Board(const Board& src){
-    *this = src;
-}
-
 void Board::setPieceManagerPtr(PieceManager* const managerPtr){
     m_graphicBoard.setPieceManagerPtr(managerPtr);
 }

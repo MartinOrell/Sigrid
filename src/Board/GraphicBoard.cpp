@@ -12,6 +12,10 @@
 
 using namespace sigrid;
 
+GraphicBoard::GraphicBoard(const GraphicBoard& src){
+    *this = src;
+}
+
 GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
 
     if(rhs.m_texture.isInitialized()){
