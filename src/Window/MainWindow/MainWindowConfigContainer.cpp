@@ -95,26 +95,7 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                PieceColor pieceColor;
-                for(std::string s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                    if(s2 == "name:"){
-                        std::string name = readString(is);
-                    }
-                    else if(s2 == "style:"){
-                        std::string style = readString(is);
-                        pieceColor.isLight = style == "light";
-                    }
-                    else if(s2 == "lightModifier:"){
-                        pieceColor.lightModifier = readColor(is);
-                    }
-                    else if(s2 == "darkModifier:"){
-                        pieceColor.darkModifier = readColor(is);
-                    }
-                    else{
-                        std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                        std::cerr << " read in PieceColor object" << std::endl;
-                    }
-                }
+                PieceColor pieceColor = readPieceColor(is);
                 pieceColors.push_back(pieceColor);
             }
         }
@@ -126,22 +107,7 @@ void MainWindowConfigContainer::loadPieces(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                PieceContainer piece;
-                for(std::string s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                    if(s2 == "notation:"){
-                        piece.name = readString(is);
-                    }
-                    else if(s2 == "style:"){
-                        piece.style = readString(is);
-                    }
-                    else if(s2 == "imageFilename:"){
-                        piece.filename = readString(is);
-                    }
-                    else{
-                        std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                        std::cerr << " read in Piece object" << std::endl;
-                    }
-                }
+                PieceContainer piece = readPiece(is);
                 pieces.push_back(piece);
             }
         }
@@ -164,37 +130,7 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
                 menuData.title = readString(is);
             }
             else if(s == "headers:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        menuData.headerNames.push_back(s2);
-                        std::string s3 = readString(is);
-                        if(s3 == "["){
-                            for(s3 = readString(is); s3 != "]"; s3 = readString(is)){
-                                std::string s4 = readString(is);
-                                if(s4 != "["){
-                                    MenuItemContainer item;
-                                    item.headerId = menuData.headerNames.size()-1;
-                                    item.displayNames.push_back(s3);
-                                    item.actionNames.push_back(s4);
-                                    menuData.menuItems.push_back(item);
-                                }
-                                else{
-                                    for(s4 = readString(is); s4 != "]"; s4 = readString(is)){
-                                        MenuItemContainer item;
-                                        item.headerId = menuData.headerNames.size()-1;
-                                        item.keyName = s3;
-                                        item.displayNames.push_back(s4);
-                                        item.actionNames.push_back(readString(is));
-                                        item.displayNames.push_back(readString(is));
-                                        item.actionNames.push_back(readString(is));
-                                        menuData.menuItems.push_back(item);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                loadHeaders(is);
             }
             else{
                 std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
@@ -220,129 +156,30 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
                 is >> toolPickerData.rows;
             }
             else if(s == "MiscBlock:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            bool isVisible = visibilityString == "Visible";
-                            //Currently not used
-                        }
-                        else if(s2 == "position:"){
-                            std::string position = readString(is);
-                            toolPickerData.miscToolBlock.coord = sigrid_coord::Coord(position);
-                        }
-                        else if(s2 == "columns:"){
-                            is >> toolPickerData.miscToolBlock.columns;
-                        }
-                        else if(s2 == "rows:"){
-                            is >> toolPickerData.miscToolBlock.rows;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in MiscBlock object" << std::endl;
-                        }
-                    }
-                }
+                loadMiscBlock(is);
             }
             else if(s == "ColorBlock:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            bool isVisible = visibilityString == "Visible";
-                            toolPickerData.showColors = isVisible;
-                        }
-                        else if(s2 == "position:"){
-                            std::string position = readString(is);
-                            toolPickerData.colorBlock.coord = sigrid_coord::Coord(position);
-                        }
-                        else if(s2 == "columns:"){
-                            is >> toolPickerData.colorBlock.columns;
-                        }
-                        else if(s2 == "rows:"){
-                            is >> toolPickerData.colorBlock.rows;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in ColorBlock object" << std::endl;
-                        }
-                    }
-                }
+                loadColorBlock(is);
             }
             else if(s == "PieceBlocks:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        
-                        if(s2 == "["){
-                            sigrid_coord::CoordBlock pieceBlock;
-                            for(std::string s3 = readString(is); s3 != "]"; s3 = readString(is)){
-
-                                if(s3 == "visibility:"){
-                                    std::string visibilityString = readString(is);
-                                    bool isVisible = visibilityString == "Visible";
-                                    //Currently not used
-                                }
-                                else if(s3 == "position:"){
-                                    std::string position = readString(is);
-                                    pieceBlock.coord = sigrid_coord::Coord{position};
-                                }
-                                else if(s3 == "columns:"){
-                                    is >> pieceBlock.columns;
-                                }
-                                else if(s3 == "rows:"){
-                                    is >> pieceBlock.rows;
-                                }
-                                else{
-                                    std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s3 << "\"";
-                                    std::cerr << " read in PieceBlock object" << std::endl;
-                                }
-                            }
-                            toolPickerData.pieceBlocks.push_back(pieceBlock);
-                        }
-                    }
-                }
+                loadPieceBlocks(is);
             }
             else if(s == "MiscTools:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        toolPickerData.toolNames.push_back(s2);
-                    }
-                }
+                loadMiscTools(is);
+                
             }
             else if(s == "Colors:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        int colorId = std::stoi(s2);
-                        toolPickerData.colorToolIds.push_back(colorId);
-                    }
-                }
+                loadToolColors(is);
+                
             }
             else if(s == "defaultPiece:"){
                 toolPickerData.defaultPieceNotation = readString(is);
             }
             else if(s == "Pieces:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        toolPickerData.pieceNotations.push_back(s2);
-                    }
-                }
+                loadToolPieces(is);
             }
             else if(s == "TileColors:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        int colorId = std::stoi(s2);
-                        toolPickerData.tileColorIds.push_back(colorId);
-                    }
-                }
+                loadToolPickerTileColors(is);
             }
             else{
                 std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
@@ -353,149 +190,27 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "Tile:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "width:"){
-                            is >> boardData.tileWidth;
-                        }
-                        else if(s2 == "height:"){
-                            is >> boardData.tileHeight;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in Square object" << std::endl;
-                        }
-                    }
-                }
+                loadTile(is);
             }
             else if(s == "Arrow:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "thickness:"){
-                            is >> boardData.arrowThickness;
-                        }
-                        else if(s2 == "headSize:"){
-                            is >> boardData.arrowHeadSize;
-                        }
-                        else if(s2 == "defaultColorId:"){
-                            is >> toolPickerData.defaultArrowColorId;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in Arrow object" << std::endl;
-                        }
-                    }
-                }
+                loadArrow(is);
             }
             else if(s == "Circle:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "diameter:"){
-                            is >> boardData.circleDiameter;
-                        }
-                        else if(s2 == "defaultColorId:"){
-                            is >> toolPickerData.defaultCircleColorId;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in Circle object" << std::endl;
-                        }
-                    }
-                }
+                loadCircle(is);
             }
             else if(s == "CoordLabels:"){
-                std::string s2 = readString(is);
-                if( s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "["){
-                            BoardLabelContainer label;
-                            for(std::string s3 = readString(is);s3 != "]"; s3 = readString(is)){
-                                if(s3 == "position:"){
-                                    std::string positionString = readString(is);
-                                    label.isInside = positionString.substr(0,6) == "inside";
-                                    auto spacePos = positionString.find(' ');
-                                    if(spacePos != std::string::npos){
-                                        std::string positionString2 = positionString.substr(spacePos+1);
-                                        if(positionString2 == "left"){
-                                            label.position = 0;
-                                        }
-                                        else if(positionString2 == "right"){
-                                            label.position = 1;
-                                        }
-                                        else if(positionString2 == "top"){
-                                            label.position = 2;
-                                        }
-                                        else if(positionString2 == "bottom"){
-                                            label.position = 3;
-                                        }
-                                        else{
-                                            std::cerr << "MainWindowConfigContainer: Unknown label position: " << positionString2 << std::endl;
-                                        }
-                                    }
-                                }
-                                else if(s3 == "visibility:"){
-                                    std::string visibilityString = readString(is);
-                                    label.isVisible = visibilityString == "Visible";
-                                }
-                                else if(s3 == "size:"){
-                                    float size;
-                                    is >> size;
-                                    is.ignore(1);// ignore % sign
-                                    size = size/100.f;
-                                    label.size = size;
-                                }
-                                else if(s3 == "font:"){
-                                    label.font = readString(is);
-                                }
-                                else{
-                                    std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s3 << "\"";
-                                    std::cerr << " read in CoordLabel object" << std::endl;
-                                }
-                            }
-                            boardData.labels.push_back(label);
-                        }
-                    }
-                }
+                loadCoordLabels(is);
             }
             else if(s == "Border:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            boardData.border = visibilityString == "Visible";
-                        }
-                        else if(s2 == "thickness:"){
-                            is >> boardData.borderThickness;
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in Border object" << std::endl;
-                        }
-                    }
-                }
+                loadBorder(is);
             }
             else if(s == "TurnToken:"){
-                std::string s2 = readString(is);
-                if(s2 == "["){
-                    for(s2 = readString(is); s2 != "]"; s2 = readString(is)){
-                        if(s2 == "visibility:"){
-                            std::string visibilityString = readString(is);
-                            boardData.turnToken = visibilityString == "Visible";
-                        }
-                        else{
-                            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s2 << "\"";
-                            std::cerr << " read in TurnToken object" << std::endl;
-                        }
-                    }
-                }
+                loadTurnToken(is);
             }
             else if(s == "resetFilename:"){
                 resetBoardFilename = readString(is);
@@ -582,3 +297,393 @@ bool MainWindowConfigContainer::load(const std::string& filename){
     return true;
 }
 
+PieceColor MainWindowConfigContainer::readPieceColor(std::istream& is){
+
+    PieceColor pieceColor;
+    for(std::string s = readString(is); s != "]"; s = readString(is)){
+        if(s == "name:"){
+            std::string name = readString(is);
+        }
+        else if(s == "style:"){
+            std::string style = readString(is);
+            pieceColor.isLight = style == "light";
+        }
+        else if(s == "lightModifier:"){
+            pieceColor.lightModifier = readColor(is);
+        }
+        else if(s == "darkModifier:"){
+            pieceColor.darkModifier = readColor(is);
+        }
+        else{
+            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+            std::cerr << " read in PieceColor object" << std::endl;
+        }
+    }
+    return pieceColor;
+}
+
+PieceContainer MainWindowConfigContainer::readPiece(std::istream& is){
+
+    PieceContainer piece;
+    for(std::string s = readString(is); s != "]"; s = readString(is)){
+        if(s == "notation:"){
+            piece.name = readString(is);
+        }
+        else if(s == "style:"){
+            piece.style = readString(is);
+        }
+        else if(s == "imageFilename:"){
+            piece.filename = readString(is);
+        }
+        else{
+            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+            std::cerr << " read in Piece object" << std::endl;
+        }
+    }
+    return piece;
+}
+
+void MainWindowConfigContainer::loadHeaders(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            menuData.headerNames.push_back(s);
+            loadHeaderItems(is);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadHeaderItems(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            loadMenuItem(is, s);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadMenuItem(std::istream& is, const std::string& displayName){
+
+    std::string s = readString(is);
+    if(s != "["){
+        MenuItemContainer item;
+        item.headerId = menuData.headerNames.size()-1;
+        item.displayNames.push_back(displayName);
+        item.actionNames.push_back(s);
+        menuData.menuItems.push_back(item);
+    }
+    else{
+        for(s = readString(is); s != "]"; s = readString(is)){
+            MenuItemContainer item;
+            item.headerId = menuData.headerNames.size()-1;
+            item.keyName = displayName;
+            item.displayNames.push_back(s);
+            item.actionNames.push_back(readString(is));
+            item.displayNames.push_back(readString(is));
+            item.actionNames.push_back(readString(is));
+            menuData.menuItems.push_back(item);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadMiscBlock(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+
+            if(s == "visibility:"){
+                std::string visibilityString = readString(is);
+                bool isVisible = visibilityString == "Visible";
+                //Currently not used
+            }
+            else if(s == "position:"){
+                std::string position = readString(is);
+                toolPickerData.miscToolBlock.coord = sigrid_coord::Coord(position);
+            }
+            else if(s == "columns:"){
+                is >> toolPickerData.miscToolBlock.columns;
+            }
+            else if(s == "rows:"){
+                is >> toolPickerData.miscToolBlock.rows;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in MiscBlock object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadColorBlock(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+
+            if(s == "visibility:"){
+                std::string visibilityString = readString(is);
+                bool isVisible = visibilityString == "Visible";
+                toolPickerData.showColors = isVisible;
+            }
+            else if(s == "position:"){
+                std::string position = readString(is);
+                toolPickerData.colorBlock.coord = sigrid_coord::Coord(position);
+            }
+            else if(s == "columns:"){
+                is >> toolPickerData.colorBlock.columns;
+            }
+            else if(s == "rows:"){
+                is >> toolPickerData.colorBlock.rows;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in ColorBlock object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadPieceBlocks(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "["){
+                sigrid_coord::CoordBlock pieceBlock = readPieceBlock(is);
+                toolPickerData.pieceBlocks.push_back(pieceBlock);
+            }
+        }
+    }
+}
+
+sigrid_coord::CoordBlock MainWindowConfigContainer::readPieceBlock(std::istream& is){
+
+    sigrid_coord::CoordBlock pieceBlock;
+    for(std::string s = readString(is); s != "]"; s = readString(is)){
+
+        if(s == "visibility:"){
+            std::string visibilityString = readString(is);
+            bool isVisible = visibilityString == "Visible";
+            //Currently not used
+        }
+        else if(s == "position:"){
+            std::string position = readString(is);
+            pieceBlock.coord = sigrid_coord::Coord{position};
+        }
+        else if(s == "columns:"){
+            is >> pieceBlock.columns;
+        }
+        else if(s == "rows:"){
+            is >> pieceBlock.rows;
+        }
+        else{
+            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+            std::cerr << " read in PieceBlock object" << std::endl;
+        }
+    }
+    return pieceBlock;
+}
+
+void MainWindowConfigContainer::loadMiscTools(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            toolPickerData.toolNames.push_back(s);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadToolColors(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            int colorId = std::stoi(s);
+            toolPickerData.colorToolIds.push_back(colorId);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadToolPieces(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            toolPickerData.pieceNotations.push_back(s);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadToolPickerTileColors(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            int colorId = std::stoi(s);
+            toolPickerData.tileColorIds.push_back(colorId);
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadTile(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "width:"){
+                is >> boardData.tileWidth;
+            }
+            else if(s == "height:"){
+                is >> boardData.tileHeight;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in Square object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadArrow(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "thickness:"){
+                is >> boardData.arrowThickness;
+            }
+            else if(s == "headSize:"){
+                is >> boardData.arrowHeadSize;
+            }
+            else if(s == "defaultColorId:"){
+                is >> toolPickerData.defaultArrowColorId;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in Arrow object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadCircle(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "diameter:"){
+                is >> boardData.circleDiameter;
+            }
+            else if(s == "defaultColorId:"){
+                is >> toolPickerData.defaultCircleColorId;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in Circle object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadCoordLabels(std::istream& is){
+
+    std::string s = readString(is);
+    if( s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "["){
+                BoardLabelContainer label = readLabel(is);
+                boardData.labels.push_back(label);
+            }
+        }
+    }
+}
+
+BoardLabelContainer MainWindowConfigContainer::readLabel(std::istream& is){
+
+    BoardLabelContainer label;
+    for(std::string s = readString(is);s != "]"; s = readString(is)){
+        if(s == "position:"){
+            std::string positionString = readString(is);
+            label.isInside = positionString.substr(0,6) == "inside";
+            auto spacePos = positionString.find(' ');
+            if(spacePos != std::string::npos){
+                std::string positionString2 = positionString.substr(spacePos+1);
+                if(positionString2 == "left"){
+                    label.position = 0;
+                }
+                else if(positionString2 == "right"){
+                    label.position = 1;
+                }
+                else if(positionString2 == "top"){
+                    label.position = 2;
+                }
+                else if(positionString2 == "bottom"){
+                    label.position = 3;
+                }
+                else{
+                    std::cerr << "MainWindowConfigContainer: Unknown label position: " << positionString2 << std::endl;
+                }
+            }
+        }
+        else if(s == "visibility:"){
+            std::string visibilityString = readString(is);
+            label.isVisible = visibilityString == "Visible";
+        }
+        else if(s == "size:"){
+            float size;
+            is >> size;
+            is.ignore(1);// ignore % sign
+            size = size/100.f;
+            label.size = size;
+        }
+        else if(s == "font:"){
+            label.font = readString(is);
+        }
+        else{
+            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+            std::cerr << " read in CoordLabel object" << std::endl;
+        }
+    }
+    return label;
+}
+
+void MainWindowConfigContainer::loadBorder(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "visibility:"){
+                std::string visibilityString = readString(is);
+                boardData.border = visibilityString == "Visible";
+            }
+            else if(s == "thickness:"){
+                is >> boardData.borderThickness;
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in Border object" << std::endl;
+            }
+        }
+    }
+}
+
+void MainWindowConfigContainer::loadTurnToken(std::istream& is){
+
+    std::string s = readString(is);
+    if(s == "["){
+        for(s = readString(is); s != "]"; s = readString(is)){
+            if(s == "visibility:"){
+                std::string visibilityString = readString(is);
+                boardData.turnToken = visibilityString == "Visible";
+            }
+            else{
+                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+                std::cerr << " read in TurnToken object" << std::endl;
+            }
+        }
+    }
+}
