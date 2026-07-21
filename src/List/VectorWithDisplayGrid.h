@@ -14,7 +14,7 @@ template <typename T> class VectorWithDisplayGrid{
     VectorWithDisplayGrid() = default;
     VectorWithDisplayGrid(const VectorWithDisplayGrid&) = default;
     VectorWithDisplayGrid(VectorWithDisplayGrid&&) = default;
-    VectorWithDisplayGrid& operator=(const VectorWithDisplayGrid) = delete;
+    VectorWithDisplayGrid& operator=(const VectorWithDisplayGrid&) = default;
     VectorWithDisplayGrid& operator=(VectorWithDisplayGrid&&) = default;
 
     void push_back(const T& value);
