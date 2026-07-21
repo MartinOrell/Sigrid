@@ -548,7 +548,13 @@ std::optional<sf::Color> GraphicTiles::getTileColor(const sigrid_coord::Coord& c
     auto& tile = tile_o.value().get();
 
     return tile.getColor();
+}
 
+float GraphicTiles::getRightPosition() const{
+
+    float x = m_topLeftPosition.x;
+    x+= m_tileSize.x * (float)m_tiles.numColumns();
+    return x;
 }
 
 void GraphicTiles::move(const sf::Vector2f& offset){

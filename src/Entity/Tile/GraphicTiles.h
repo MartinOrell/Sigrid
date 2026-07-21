@@ -67,6 +67,8 @@ class GraphicTiles: public sf::Drawable{
 
     std::optional<sf::Color> getTileColor(const sigrid_coord::Coord& coord) const;
 
+    float getRightPosition() const;
+
     void move(const sf::Vector2f& offset);
 
   private:

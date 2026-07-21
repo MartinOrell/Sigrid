@@ -1199,9 +1199,21 @@ void GraphicBoard::loadBoardState_pieceLayer(const LogicBoard& logicBoard){
 
 void GraphicBoard::loadBoardState_turnToken(const LogicBoard& logicBoard){
 
-    if(m_turnToken.isVisible()){
-        m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
+    if(!m_turnToken.isVisible()){
+        return;
     }
+
+    m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
+
+    float x = m_tileLayer.getRightPosition();
+    if(m_border.isVisible()){
+        x += m_border.getThickness();
+    }
+    x += m_rightEdgeWidth/2.f;
+
+    float y = m_topEdgeWidth + m_tileLayer.getTileHeight()/2.f;
+
+    m_turnToken.setCenterPosition({x,y});
 }
 
 void GraphicBoard::updateBorder(){
