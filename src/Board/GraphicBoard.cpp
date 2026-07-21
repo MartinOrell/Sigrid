@@ -778,6 +778,9 @@ void GraphicBoard::flip(){
     if(m_labels.isRightOutsideVisible()){
         addRightOutsideLabels();
     }
+    if(m_labels.isTopOutsideVisible()){
+        addTopOutsideLabels();
+    }
     if(m_labels.isBottomOutsideVisible()){
         addBottomOutsideLabels();
     }
