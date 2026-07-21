@@ -8,12 +8,14 @@ using namespace sigrid;
 
 
 bool readToggle(std::istream& is){
+
     std::string s;
     is >> s;
     return s == "ON";
 }
 
 uint32_t readColor(std::istream& is){
+
     uint32_t colorHex;
     is >> std::hex >> colorHex >> std::ws;
     colorHex = colorHex * 0x100 + 0xff;
@@ -21,6 +23,7 @@ uint32_t readColor(std::istream& is){
 }
 
 uint32_t getColorHex(const std::string& s){
+
     uint32_t colorHex;
     std::stringstream ss;
     ss << std::hex << s;
@@ -30,6 +33,7 @@ uint32_t getColorHex(const std::string& s){
 }
 
 std::string readString(std::istream& is){
+
     std::string s;
     is >> std::ws >> s;
     if(s.front() == '"'){
@@ -50,6 +54,7 @@ std::string readString(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadWindow(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -71,6 +76,7 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadTileColors(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -81,6 +87,7 @@ void MainWindowConfigContainer::loadTileColors(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadArrowColors(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -91,6 +98,7 @@ void MainWindowConfigContainer::loadArrowColors(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadPieceColors(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -103,6 +111,7 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadPieces(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -115,6 +124,7 @@ void MainWindowConfigContainer::loadPieces(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadMenu(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -141,6 +151,7 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadToolPicker(std::istream& is){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -227,6 +238,7 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
 }
 
 void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
+
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
@@ -245,6 +257,7 @@ void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
 }
 
 bool MainWindowConfigContainer::load(const std::string& filename){
+    
     std::ifstream ifs(filename);
 
     if(!ifs.is_open()){
