@@ -116,8 +116,10 @@ void MainConfigContainer::loadPieces(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                PieceContainer piece = readPiece(is);
-                pieces.push_back(piece);
+                PieceContainer piece;
+                if(piece.load(is)){
+                    pieces.push_back(piece);
+                }
             }
         }
     }
@@ -333,27 +335,6 @@ PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-PieceContainer MainConfigContainer::readPiece(std::istream& is){
-
-    PieceContainer piece;
-    for(std::string s = readString(is); s != "]"; s = readString(is)){
-        if(s == "notation:"){
-            piece.name = readString(is);
-        }
-        else if(s == "style:"){
-            piece.style = readString(is);
-        }
-        else if(s == "imageFilename:"){
-            piece.filename = readString(is);
-        }
-        else{
-            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-            std::cerr << " read in Piece object" << std::endl;
-        }
-    }
-    return piece;
 }
 
 void MainConfigContainer::loadHeaders(std::istream& is){

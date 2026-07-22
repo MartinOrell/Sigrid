@@ -11,6 +11,7 @@ set(SRC_FILES
     src/List/AutoInsertMappedGrid.cpp
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
+    src/Config/IO.cpp
     src/Config/MainConfigContainer.cpp
     src/Window/MainWindow/MainWindow.cpp
     src/Menu/Menu.cpp
@@ -27,6 +28,7 @@ set(SRC_FILES
     src/Coord/CoordPair.cpp
     src/Layout/LayoutGrid.cpp
     src/Font/FontManager.cpp
+    src/Entity/Piece/PieceContainer.cpp
     src/Entity/Piece/LogicPiece.cpp
     src/Entity/Piece/GraphicPiece.cpp
     src/Entity/Piece/PieceIdentifier.cpp

@@ -49,7 +49,6 @@ struct MainConfigContainer{
     void loadTool(std::istream& is, ToolContainer& tool);
 
     PieceColor readPieceColor(std::istream& is);
-    PieceContainer readPiece(std::istream& is);
 
     void loadHeaders(std::istream& is);
     void loadHeaderItems(std::istream& is);
