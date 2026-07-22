@@ -18,6 +18,7 @@ struct BoardDesignContainer{
 
     bool loadTile(std::istream& is);
     bool loadArrow(std::istream& is, int& defaultArrowColorId);
+    bool loadCircle(std::istream& is, int& defaultCircleColorId);
 
     float tileWidth = 0.f;
     float tileHeight = 0.f;
