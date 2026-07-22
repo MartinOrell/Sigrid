@@ -47,8 +47,6 @@ struct MainConfigContainer{
     void loadTool(std::istream& is, sigrid::ToolContainer& tool);
 
     sigrid::PieceColor readPieceColor(std::istream& is);
-
-    void loadTurnToken(std::istream& is);
 };
 
 }  // namespace sigrid

@@ -106,6 +106,25 @@ bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
     return true;
 }
 
+bool sigrid::BoardDesignContainer::loadTurnToken(std::istream& is){
+
+    std::string s = sigrid_config::readString(is);
+    if(s == "["){
+        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+            if(s == "visibility:"){
+                std::string visibilityString = sigrid_config::readString(is);
+                turnToken = visibilityString == "Visible";
+            }
+            else{
+                std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
+                std::cerr << ". Failed to load turn token" << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 sigrid::BoardLabelContainer sigrid::BoardDesignContainer::readLabel(std::istream& is){
 
     sigrid::BoardLabelContainer label;

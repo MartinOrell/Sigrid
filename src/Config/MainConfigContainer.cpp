@@ -119,7 +119,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
                 boardData.loadBorder(is);
             }
             else if(s == "TurnToken:"){
-                loadTurnToken(is);
+                boardData.loadTurnToken(is);
             }
             else if(s == "resetFilename:"){
                 resetBoardFilename = readString(is);
@@ -231,21 +231,4 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadTurnToken(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "visibility:"){
-                std::string visibilityString = readString(is);
-                boardData.turnToken = visibilityString == "Visible";
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in TurnToken object" << std::endl;
-            }
-        }
-    }
 }
