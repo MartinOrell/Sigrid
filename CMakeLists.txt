@@ -31,6 +31,7 @@ set(SRC_FILES
     src/Layout/LayoutGrid.cpp
     src/Font/FontManager.cpp
     src/Entity/Piece/PieceContainer.cpp
+    src/Entity/Piece/PieceColor.cpp
     src/Entity/Piece/LogicPiece.cpp
     src/Entity/Piece/GraphicPiece.cpp
     src/Entity/Piece/PieceIdentifier.cpp

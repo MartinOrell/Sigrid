@@ -8,14 +8,6 @@
 
 using namespace sigrid_config;
 
-uint32_t readColor(std::istream& is){
-
-    uint32_t colorHex;
-    is >> std::hex >> colorHex >> std::ws;
-    colorHex = colorHex * 0x100 + 0xff;
-    return colorHex;
-}
-
 uint32_t getColorHex(const std::string& s){
 
     uint32_t colorHex;
@@ -76,7 +68,8 @@ void MainConfigContainer::loadPieceColors(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                sigrid::PieceColor pieceColor = readPieceColor(is);
+                sigrid::PieceColor pieceColor;
+                pieceColor.load(is);
                 pieceColors.push_back(pieceColor);
             }
         }
@@ -187,29 +180,4 @@ bool MainConfigContainer::load(const std::string& filename){
         }
     }
     return true;
-}
-
-sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
-
-    sigrid::PieceColor pieceColor;
-    for(std::string s = readString(is); s != "]"; s = readString(is)){
-        if(s == "name:"){
-            std::string name = readString(is);
-        }
-        else if(s == "style:"){
-            std::string style = readString(is);
-            pieceColor.isLight = style == "light";
-        }
-        else if(s == "lightModifier:"){
-            pieceColor.lightModifier = readColor(is);
-        }
-        else if(s == "darkModifier:"){
-            pieceColor.darkModifier = readColor(is);
-        }
-        else{
-            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-            std::cerr << " read in PieceColor object" << std::endl;
-        }
-    }
-    return pieceColor;
 }
