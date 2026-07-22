@@ -20,3 +20,10 @@ std::string sigrid_config::readString(std::istream& is){
     is >> std::ws;
     return s;
 }
+
+bool sigrid_config::readToggle(std::istream& is){
+
+    std::string s;
+    is >> s;
+    return s == "ON";
+}

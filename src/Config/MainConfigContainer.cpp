@@ -8,13 +8,6 @@
 
 using namespace sigrid_config;
 
-bool readToggle(std::istream& is){
-
-    std::string s;
-    is >> s;
-    return s == "ON";
-}
-
 uint32_t readColor(std::istream& is){
 
     uint32_t colorHex;
@@ -100,33 +93,6 @@ void MainConfigContainer::loadPieces(std::istream& is){
                 if(piece.load(is)){
                     pieces.push_back(piece);
                 }
-            }
-        }
-    }
-}
-
-void MainConfigContainer::loadMenu(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "pin:"){
-                bool isPinned = readToggle(is);
-                menuData.isPinned = isPinned;
-                menuData.showItems = isPinned;
-            }
-            else if(s == "font:"){
-                 menuData.fontName = readString(is);
-            }
-            else if(s == "title:"){
-                menuData.title = readString(is);
-            }
-            else if(s == "headers:"){
-                loadHeaders(is);
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in Menu object" << std::endl;
             }
         }
     }
@@ -270,7 +236,7 @@ bool MainConfigContainer::load(const std::string& filename){
             loadBoardStyle(ifs);
         }
         else if(key == "Menu:"){
-            loadMenu(ifs);
+            menuData.load(ifs);
         }
         else if(key == "ToolPicker:"){
             loadToolPicker(ifs);   
@@ -315,51 +281,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadHeaders(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            menuData.headerNames.push_back(s);
-            loadHeaderItems(is);
-        }
-    }
-}
-
-void MainConfigContainer::loadHeaderItems(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            loadMenuItem(is, s);
-        }
-    }
-}
-
-void MainConfigContainer::loadMenuItem(std::istream& is, const std::string& displayName){
-
-    std::string s = readString(is);
-    if(s != "["){
-        sigrid::MenuItemContainer item;
-        item.headerId = menuData.headerNames.size()-1;
-        item.displayNames.push_back(displayName);
-        item.actionNames.push_back(s);
-        menuData.menuItems.push_back(item);
-    }
-    else{
-        for(s = readString(is); s != "]"; s = readString(is)){
-            sigrid::MenuItemContainer item;
-            item.headerId = menuData.headerNames.size()-1;
-            item.keyName = displayName;
-            item.displayNames.push_back(s);
-            item.actionNames.push_back(readString(is));
-            item.displayNames.push_back(readString(is));
-            item.actionNames.push_back(readString(is));
-            menuData.menuItems.push_back(item);
-        }
-    }
 }
 
 void MainConfigContainer::loadMiscBlock(std::istream& is){
