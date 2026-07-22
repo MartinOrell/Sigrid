@@ -69,8 +69,9 @@ void MainConfigContainer::loadPieceColors(std::istream& is){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
                 sigrid::PieceColor pieceColor;
-                pieceColor.load(is);
-                pieceColors.push_back(pieceColor);
+                if(pieceColor.load(is)){
+                    pieceColors.push_back(pieceColor);
+                }
             }
         }
     }
