@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <istream>
 
 namespace sigrid{
 
@@ -14,6 +15,8 @@ struct BoardLabelContainer{
 };
 
 struct BoardDesignContainer{
+
+    bool loadTile(std::istream& is);
 
     float tileWidth = 0.f;
     float tileHeight = 0.f;

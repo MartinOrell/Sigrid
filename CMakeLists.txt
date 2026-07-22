@@ -21,6 +21,7 @@ set(SRC_FILES
     src/Window/WorkWindow/PdfHandler.cpp
     src/Window/ToolWindow/ToolWindow.cpp
     src/Board/BoardDataContainer.cpp
+    src/Board/BoardDesignContainer.cpp
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp

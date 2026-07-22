@@ -104,7 +104,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "Tile:"){
-                loadTile(is);
+                boardData.loadTile(is);
             }
             else if(s == "Arrow:"){
                 loadArrow(is);
@@ -231,25 +231,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadTile(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "width:"){
-                is >> boardData.tileWidth;
-            }
-            else if(s == "height:"){
-                is >> boardData.tileHeight;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in Square object" << std::endl;
-            }
-        }
-    }
 }
 
 void MainConfigContainer::loadArrow(std::istream& is){
