@@ -116,7 +116,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
                 boardData.loadCoordLabels(is);
             }
             else if(s == "Border:"){
-                loadBorder(is);
+                boardData.loadBorder(is);
             }
             else if(s == "TurnToken:"){
                 loadTurnToken(is);
@@ -231,26 +231,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadBorder(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "visibility:"){
-                std::string visibilityString = readString(is);
-                boardData.border = visibilityString == "Visible";
-            }
-            else if(s == "thickness:"){
-                is >> boardData.borderThickness;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in Border object" << std::endl;
-            }
-        }
-    }
 }
 
 void MainConfigContainer::loadTurnToken(std::istream& is){

@@ -84,6 +84,28 @@ bool sigrid::BoardDesignContainer::loadCoordLabels(std::istream& is){
     return true;
 }
 
+bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
+
+    std::string s = sigrid_config::readString(is);
+    if(s == "["){
+        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+            if(s == "visibility:"){
+                std::string visibilityString = sigrid_config::readString(is);
+                border = visibilityString == "Visible";
+            }
+            else if(s == "thickness:"){
+                is >> borderThickness;
+            }
+            else{
+                std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
+                std::cerr << ". Failed to load border" << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 sigrid::BoardLabelContainer sigrid::BoardDesignContainer::readLabel(std::istream& is){
 
     sigrid::BoardLabelContainer label;

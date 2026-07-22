@@ -48,7 +48,6 @@ struct MainConfigContainer{
 
     sigrid::PieceColor readPieceColor(std::istream& is);
 
-    void loadBorder(std::istream& is);
     void loadTurnToken(std::istream& is);
 };
 
