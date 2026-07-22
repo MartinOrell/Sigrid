@@ -4,8 +4,9 @@
 #include <iostream>
 #include <sstream>
 
-using namespace sigrid;
+#include "Config/IO.h"
 
+using namespace sigrid_config;
 
 bool readToggle(std::istream& is){
 
@@ -30,27 +31,6 @@ uint32_t getColorHex(const std::string& s){
     ss >> colorHex;
     colorHex = colorHex * 0x100 + 0xff;
     return colorHex;
-}
-
-std::string readString(std::istream& is){
-
-    std::string s;
-    is >> std::ws >> s;
-    if(s.front() == '"'){
-        s.erase(0,1); //remove front '"'
-        while(is.peek() != EOF){    
-            std::string s2;
-            is >> s2;
-            s.append(" " + s2);
-            if(s2.back() == '"'){
-                s.pop_back(); //remove back '"'
-                break;
-            }
-        }
-    }
-
-    is >> std::ws;
-    return s;
 }
 
 void MainConfigContainer::loadWindow(std::istream& is){
@@ -103,7 +83,7 @@ void MainConfigContainer::loadPieceColors(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                PieceColor pieceColor = readPieceColor(is);
+                sigrid::PieceColor pieceColor = readPieceColor(is);
                 pieceColors.push_back(pieceColor);
             }
         }
@@ -116,7 +96,7 @@ void MainConfigContainer::loadPieces(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                PieceContainer piece;
+                sigrid::PieceContainer piece;
                 if(piece.load(is)){
                     pieces.push_back(piece);
                 }
@@ -239,7 +219,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
     }
 }
 
-void MainConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
+void MainConfigContainer::loadTool(std::istream& is, sigrid::ToolContainer& tool){
 
     std::string s = readString(is);
     if(s == "["){
@@ -312,9 +292,9 @@ bool MainConfigContainer::load(const std::string& filename){
     return true;
 }
 
-PieceColor MainConfigContainer::readPieceColor(std::istream& is){
+sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
 
-    PieceColor pieceColor;
+    sigrid::PieceColor pieceColor;
     for(std::string s = readString(is); s != "]"; s = readString(is)){
         if(s == "name:"){
             std::string name = readString(is);
@@ -362,7 +342,7 @@ void MainConfigContainer::loadMenuItem(std::istream& is, const std::string& disp
 
     std::string s = readString(is);
     if(s != "["){
-        MenuItemContainer item;
+        sigrid::MenuItemContainer item;
         item.headerId = menuData.headerNames.size()-1;
         item.displayNames.push_back(displayName);
         item.actionNames.push_back(s);
@@ -370,7 +350,7 @@ void MainConfigContainer::loadMenuItem(std::istream& is, const std::string& disp
     }
     else{
         for(s = readString(is); s != "]"; s = readString(is)){
-            MenuItemContainer item;
+            sigrid::MenuItemContainer item;
             item.headerId = menuData.headerNames.size()-1;
             item.keyName = displayName;
             item.displayNames.push_back(s);
@@ -589,16 +569,16 @@ void MainConfigContainer::loadCoordLabels(std::istream& is){
     if( s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if(s == "["){
-                BoardLabelContainer label = readLabel(is);
+                sigrid::BoardLabelContainer label = readLabel(is);
                 boardData.labels.push_back(label);
             }
         }
     }
 }
 
-BoardLabelContainer MainConfigContainer::readLabel(std::istream& is){
+sigrid::BoardLabelContainer MainConfigContainer::readLabel(std::istream& is){
 
-    BoardLabelContainer label;
+    sigrid::BoardLabelContainer label;
     for(std::string s = readString(is);s != "]"; s = readString(is)){
         if(s == "position:"){
             std::string positionString = readString(is);

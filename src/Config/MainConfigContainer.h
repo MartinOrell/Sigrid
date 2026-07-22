@@ -10,7 +10,7 @@
 #include "ToolPicker/ToolPickerContainer.h"
 #include "Tool/ToolContainer.h"
 
-namespace sigrid{
+namespace sigrid_config{
 
 struct MainConfigContainer{
 
@@ -22,16 +22,16 @@ struct MainConfigContainer{
 
     std::vector<uint32_t> tileColors;
     std::vector<uint32_t> arrowColors;
-    std::vector<PieceColor> pieceColors;
-    std::vector<PieceContainer> pieces;
-    BoardDesignContainer boardData;
-    MenuContainer menuData;
-    ToolPickerContainer toolPickerData;
-    ToolContainer leftClickTool;
-    ToolContainer rightClickTool;
-    ToolContainer middleClickTool;
-    ToolContainer extra1ClickTool;
-    ToolContainer extra2ClickTool;
+    std::vector<sigrid::PieceColor> pieceColors;
+    std::vector<sigrid::PieceContainer> pieces;
+    sigrid::BoardDesignContainer boardData;
+    sigrid::MenuContainer menuData;
+    sigrid::ToolPickerContainer toolPickerData;
+    sigrid::ToolContainer leftClickTool;
+    sigrid::ToolContainer rightClickTool;
+    sigrid::ToolContainer middleClickTool;
+    sigrid::ToolContainer extra1ClickTool;
+    sigrid::ToolContainer extra2ClickTool;
 
     std::string resetBoardFilename;
     std::string boardFilename;
@@ -46,9 +46,9 @@ struct MainConfigContainer{
     void loadMenu(std::istream& is);
     void loadToolPicker(std::istream& is);
     void loadBoardStyle(std::istream& is);
-    void loadTool(std::istream& is, ToolContainer& tool);
+    void loadTool(std::istream& is, sigrid::ToolContainer& tool);
 
-    PieceColor readPieceColor(std::istream& is);
+    sigrid::PieceColor readPieceColor(std::istream& is);
 
     void loadHeaders(std::istream& is);
     void loadHeaderItems(std::istream& is);
@@ -67,7 +67,7 @@ struct MainConfigContainer{
     void loadArrow(std::istream& is);
     void loadCircle(std::istream& is);
     void loadCoordLabels(std::istream& is);
-    BoardLabelContainer readLabel(std::istream& is);
+    sigrid::BoardLabelContainer readLabel(std::istream& is);
     void loadBorder(std::istream& is);
     void loadTurnToken(std::istream& is);
 };

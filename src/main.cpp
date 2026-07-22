@@ -6,7 +6,7 @@
 
 int main()
 {
-    sigrid::MainConfigContainer config;
+    sigrid_config::MainConfigContainer config;
 
     std::string setupFilename = "saveData/startup.txt";
 

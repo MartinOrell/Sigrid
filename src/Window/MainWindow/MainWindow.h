@@ -32,7 +32,7 @@ class MainWindow{
     MainWindow& operator=(const MainWindow&) = default;
     MainWindow& operator=(MainWindow&&) = default;
 
-    bool load(const MainConfigContainer& config);
+    bool load(const sigrid_config::MainConfigContainer& config);
     void run();
 
   private:
