@@ -11,10 +11,10 @@
 #include "List/Map.h"
 #include "SigridRenderTexture/SigridRenderTexture.h"
 #include "Menu/MenuItem.h"
+#include "Menu/MenuContainer.h"
 
 namespace sigrid{
 
-class MenuContainer;
 class FontManager;
 
 class Menu: public sf::Drawable{

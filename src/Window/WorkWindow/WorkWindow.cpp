@@ -8,7 +8,6 @@
 #include "Entity/Tile/GraphicTiles.h"
 #include "Entity/GraphicEntities.h"
 #include "Entity/Shape/Arrow/GraphicArrows.h"
-#include "Board/BoardDataContainer.h"
 #include "Board/BoardLabels.h"
 #include "Entity/TurnToken/TurnToken.h"
 

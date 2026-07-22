@@ -2,11 +2,11 @@
 #include <iostream>
 #include <filesystem>
 #include "Window/MainWindow/MainWindow.h"
-#include "Window/MainWindow/MainWindowConfigContainer.h"
+#include "Config/MainConfigContainer.h"
 
 int main()
 {
-    sigrid::MainWindowConfigContainer config;
+    sigrid::MainConfigContainer config;
 
     std::string setupFilename = "saveData/startup.txt";
 

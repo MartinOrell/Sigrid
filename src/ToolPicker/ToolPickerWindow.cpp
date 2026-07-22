@@ -4,7 +4,6 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "ToolPicker/ToolPickerContainer.h"
 #include "Board/BoardDataContainer.h"
 #include "Board/BoardDesignContainer.h"
 #include "Entity/Tile/GraphicTiles.h"

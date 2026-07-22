@@ -5,16 +5,17 @@
 #include <map>
 
 #include <SFML/System/Vector2.hpp>
+
 #include "Action/Action.h"
 #include "Coord/CoordBlock.h"
 #include "Color/ColorManager.h"
 #include "Board/Board.h"
 
 #include "SigridRenderTexture/SigridRenderTexture.h"
+#include "ToolPicker/ToolPickerContainer.h"
 
 namespace sigrid{
 
-class ToolPickerContainer;
 class PieceManager;
 class IconManager;
 

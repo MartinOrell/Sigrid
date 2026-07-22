@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+
 #include "Entity/Piece/PieceColor.h"
 #include "Entity/Piece/PieceContainer.h"
 #include "Board/BoardDesignContainer.h"
@@ -11,7 +12,7 @@
 
 namespace sigrid{
 
-struct MainWindowConfigContainer{
+struct MainConfigContainer{
 
     bool load(const std::string& filename);
 

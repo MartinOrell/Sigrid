@@ -1,4 +1,4 @@
-#include "Window/MainWindow/MainWindowConfigContainer.h"
+#include "Config/MainConfigContainer.h"
 
 #include <fstream>
 #include <iostream>
@@ -53,7 +53,7 @@ std::string readString(std::istream& is){
     return s;
 }
 
-void MainWindowConfigContainer::loadWindow(std::istream& is){
+void MainConfigContainer::loadWindow(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -75,7 +75,7 @@ void MainWindowConfigContainer::loadWindow(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadTileColors(std::istream& is){
+void MainConfigContainer::loadTileColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -86,7 +86,7 @@ void MainWindowConfigContainer::loadTileColors(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadArrowColors(std::istream& is){
+void MainConfigContainer::loadArrowColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -97,7 +97,7 @@ void MainWindowConfigContainer::loadArrowColors(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadPieceColors(std::istream& is){
+void MainConfigContainer::loadPieceColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -110,7 +110,7 @@ void MainWindowConfigContainer::loadPieceColors(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadPieces(std::istream& is){
+void MainConfigContainer::loadPieces(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -123,7 +123,7 @@ void MainWindowConfigContainer::loadPieces(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadMenu(std::istream& is){
+void MainConfigContainer::loadMenu(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -150,7 +150,7 @@ void MainWindowConfigContainer::loadMenu(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadToolPicker(std::istream& is){
+void MainConfigContainer::loadToolPicker(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -200,7 +200,7 @@ void MainWindowConfigContainer::loadToolPicker(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
+void MainConfigContainer::loadBoardStyle(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -237,7 +237,7 @@ void MainWindowConfigContainer::loadBoardStyle(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
+void MainConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
 
     std::string s = readString(is);
     if(s == "["){
@@ -256,7 +256,7 @@ void MainWindowConfigContainer::loadTool(std::istream& is, ToolContainer& tool){
     }
 }
 
-bool MainWindowConfigContainer::load(const std::string& filename){
+bool MainConfigContainer::load(const std::string& filename){
     
     std::ifstream ifs(filename);
 
@@ -310,7 +310,7 @@ bool MainWindowConfigContainer::load(const std::string& filename){
     return true;
 }
 
-PieceColor MainWindowConfigContainer::readPieceColor(std::istream& is){
+PieceColor MainConfigContainer::readPieceColor(std::istream& is){
 
     PieceColor pieceColor;
     for(std::string s = readString(is); s != "]"; s = readString(is)){
@@ -335,7 +335,7 @@ PieceColor MainWindowConfigContainer::readPieceColor(std::istream& is){
     return pieceColor;
 }
 
-PieceContainer MainWindowConfigContainer::readPiece(std::istream& is){
+PieceContainer MainConfigContainer::readPiece(std::istream& is){
 
     PieceContainer piece;
     for(std::string s = readString(is); s != "]"; s = readString(is)){
@@ -356,7 +356,7 @@ PieceContainer MainWindowConfigContainer::readPiece(std::istream& is){
     return piece;
 }
 
-void MainWindowConfigContainer::loadHeaders(std::istream& is){
+void MainConfigContainer::loadHeaders(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -367,7 +367,7 @@ void MainWindowConfigContainer::loadHeaders(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadHeaderItems(std::istream& is){
+void MainConfigContainer::loadHeaderItems(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -377,7 +377,7 @@ void MainWindowConfigContainer::loadHeaderItems(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadMenuItem(std::istream& is, const std::string& displayName){
+void MainConfigContainer::loadMenuItem(std::istream& is, const std::string& displayName){
 
     std::string s = readString(is);
     if(s != "["){
@@ -401,7 +401,7 @@ void MainWindowConfigContainer::loadMenuItem(std::istream& is, const std::string
     }
 }
 
-void MainWindowConfigContainer::loadMiscBlock(std::istream& is){
+void MainConfigContainer::loadMiscBlock(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -430,7 +430,7 @@ void MainWindowConfigContainer::loadMiscBlock(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadColorBlock(std::istream& is){
+void MainConfigContainer::loadColorBlock(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -459,7 +459,7 @@ void MainWindowConfigContainer::loadColorBlock(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadPieceBlocks(std::istream& is){
+void MainConfigContainer::loadPieceBlocks(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -472,7 +472,7 @@ void MainWindowConfigContainer::loadPieceBlocks(std::istream& is){
     }
 }
 
-sigrid_coord::CoordBlock MainWindowConfigContainer::readPieceBlock(std::istream& is){
+sigrid_coord::CoordBlock MainConfigContainer::readPieceBlock(std::istream& is){
 
     sigrid_coord::CoordBlock pieceBlock;
     for(std::string s = readString(is); s != "]"; s = readString(is)){
@@ -500,7 +500,7 @@ sigrid_coord::CoordBlock MainWindowConfigContainer::readPieceBlock(std::istream&
     return pieceBlock;
 }
 
-void MainWindowConfigContainer::loadMiscTools(std::istream& is){
+void MainConfigContainer::loadMiscTools(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -510,7 +510,7 @@ void MainWindowConfigContainer::loadMiscTools(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadToolColors(std::istream& is){
+void MainConfigContainer::loadToolColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -521,7 +521,7 @@ void MainWindowConfigContainer::loadToolColors(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadToolPieces(std::istream& is){
+void MainConfigContainer::loadToolPieces(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -531,7 +531,7 @@ void MainWindowConfigContainer::loadToolPieces(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadToolPickerTileColors(std::istream& is){
+void MainConfigContainer::loadToolPickerTileColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -542,7 +542,7 @@ void MainWindowConfigContainer::loadToolPickerTileColors(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadTile(std::istream& is){
+void MainConfigContainer::loadTile(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -561,7 +561,7 @@ void MainWindowConfigContainer::loadTile(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadArrow(std::istream& is){
+void MainConfigContainer::loadArrow(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -583,7 +583,7 @@ void MainWindowConfigContainer::loadArrow(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadCircle(std::istream& is){
+void MainConfigContainer::loadCircle(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -602,7 +602,7 @@ void MainWindowConfigContainer::loadCircle(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadCoordLabels(std::istream& is){
+void MainConfigContainer::loadCoordLabels(std::istream& is){
 
     std::string s = readString(is);
     if( s == "["){
@@ -615,7 +615,7 @@ void MainWindowConfigContainer::loadCoordLabels(std::istream& is){
     }
 }
 
-BoardLabelContainer MainWindowConfigContainer::readLabel(std::istream& is){
+BoardLabelContainer MainConfigContainer::readLabel(std::istream& is){
 
     BoardLabelContainer label;
     for(std::string s = readString(is);s != "]"; s = readString(is)){
@@ -664,7 +664,7 @@ BoardLabelContainer MainWindowConfigContainer::readLabel(std::istream& is){
     return label;
 }
 
-void MainWindowConfigContainer::loadBorder(std::istream& is){
+void MainConfigContainer::loadBorder(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
@@ -684,7 +684,7 @@ void MainWindowConfigContainer::loadBorder(std::istream& is){
     }
 }
 
-void MainWindowConfigContainer::loadTurnToken(std::istream& is){
+void MainConfigContainer::loadTurnToken(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){

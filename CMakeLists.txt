@@ -11,8 +11,8 @@ set(SRC_FILES
     src/List/AutoInsertMappedGrid.cpp
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
+    src/Config/MainConfigContainer.cpp
     src/Window/MainWindow/MainWindow.cpp
-    src/Window/MainWindow/MainWindowConfigContainer.cpp
     src/Menu/Menu.cpp
     src/Menu/MenuItem.cpp
     src/Window/WorkWindow/WorkWindow.cpp

@@ -1,14 +1,17 @@
 #include "Window/MainWindow/MainWindow.h"
 
-#include "Window/MainWindow/MainWindowConfigContainer.h"
+#include <iostream>
+
+#include <SFML/Window/Clipboard.hpp>
 
 #include "Board/BoardDataContainer.h"
-#include <SFML/Window/Clipboard.hpp>
-#include <iostream>
+#include "Board/BoardDesignContainer.h"
+#include "Menu/MenuContainer.h"
+#include "ToolPicker/ToolPickerContainer.h"
 
 using namespace sigrid;
 
-bool MainWindow::load(const MainWindowConfigContainer& config){
+bool MainWindow::load(const MainConfigContainer& config){
     
     m_window.create(sf::VideoMode({(unsigned int)config.windowWidth, (unsigned int)config.windowHeight}), config.windowName);
     m_window.setFramerateLimit(60);

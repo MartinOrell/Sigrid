@@ -1,7 +1,6 @@
 #include "Menu/Menu.h"
 
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "Menu/MenuContainer.h"
 #include "Font/FontManager.h"
 
 #include <iostream>

@@ -6,12 +6,13 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Mouse.hpp>
-#include "Tool/Tool.h"
 
+#include "Tool/Tool.h"
 #include "Input/InputHandler.h"
 #include "Input/Mouse/Mouse.h"
-
+#include "Config/MainConfigContainer.h"
 #include "Layout/LayoutGrid.h"
+
 #include "Menu/Menu.h"
 #include "Window/WorkWindow/WorkWindow.h"
 #include "Window/ToolWindow/ToolWindow.h"
@@ -20,8 +21,6 @@
 #include "Entity/Icon/IconManager.h"
 
 namespace sigrid{
-
-struct MainWindowConfigContainer;
 
 class MainWindow{
 
@@ -33,7 +32,7 @@ class MainWindow{
     MainWindow& operator=(const MainWindow&) = default;
     MainWindow& operator=(MainWindow&&) = default;
 
-    bool load(const MainWindowConfigContainer& config);
+    bool load(const MainConfigContainer& config);
     void run();
 
   private:

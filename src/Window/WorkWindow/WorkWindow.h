@@ -12,10 +12,11 @@
 #include "PdfHandler.h"
 
 #include "List/VectorWithDisplayGrid.h"
+#include "Board/BoardDataContainer.h"
+#include "Board/BoardDesignContainer.h"
 
 namespace sigrid{
 
-class BoardDataContainer;
 class Tool;
 
 class WorkWindow: public sf::Drawable{
