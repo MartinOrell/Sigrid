@@ -101,10 +101,10 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
                 boardData.loadTile(is);
             }
             else if(s == "Arrow:"){
-                boardData.loadArrow(is, toolPickerData.defaultArrowColorId);
+                boardData.loadArrow(is);
             }
             else if(s == "Circle:"){
-                boardData.loadCircle(is, toolPickerData.defaultCircleColorId);
+                boardData.loadCircle(is);
             }
             else if(s == "CoordLabels:"){
                 boardData.loadCoordLabels(is);

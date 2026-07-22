@@ -288,6 +288,8 @@ ToolPicker: [
     Arrow
     Circle
   ]
+  defaultArrowColor: 0
+  defaultCircleColor: 7
   Colors: [
     0
     1
@@ -324,11 +326,9 @@ BoardStyle: [
   Arrow: [
     thickness: 40
     headSize: 80
-    defaultColorId: 0
   ]
   Circle: [
     diameter: 100
-    defaultColorId: 7
   ]
   CoordLabels: [
     [

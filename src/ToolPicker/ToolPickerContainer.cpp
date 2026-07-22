@@ -31,11 +31,15 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             }
             else if(s == "MiscTools:"){
                 loadMiscTools(is);
-                
+            }
+            else if(s == "defaultArrowColor:"){
+                is >> defaultArrowColorId;
+            }
+            else if(s == "defaultCircleColor:"){
+                is >> defaultCircleColorId;
             }
             else if(s == "Colors:"){
                 loadToolColors(is);
-                
             }
             else if(s == "defaultPiece:"){
                 defaultPieceNotation = sigrid_config::readString(is);

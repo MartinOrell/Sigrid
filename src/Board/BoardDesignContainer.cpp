@@ -25,7 +25,7 @@ bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
     return true;
 }
 
-bool sigrid::BoardDesignContainer::loadArrow(std::istream& is, int& defaultArrowColorId){
+bool sigrid::BoardDesignContainer::loadArrow(std::istream& is){
 
     std::string s = sigrid_config::readString(is);
     if(s == "["){
@@ -35,9 +35,6 @@ bool sigrid::BoardDesignContainer::loadArrow(std::istream& is, int& defaultArrow
             }
             else if(s == "headSize:"){
                 is >> arrowHeadSize;
-            }
-            else if(s == "defaultColorId:"){
-                is >> defaultArrowColorId;
             }
             else{
                 std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
@@ -49,16 +46,13 @@ bool sigrid::BoardDesignContainer::loadArrow(std::istream& is, int& defaultArrow
     return true;
 }
 
-bool sigrid::BoardDesignContainer::loadCircle(std::istream& is, int& defaultCircleColorId){
+bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
 
     std::string s = sigrid_config::readString(is);
     if(s == "["){
         for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
             if(s == "diameter:"){
                 is >> circleDiameter;
-            }
-            else if(s == "defaultColorId:"){
-                is >> defaultCircleColorId;
             }
             else{
                 std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
