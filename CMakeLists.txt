@@ -35,6 +35,7 @@ set(SRC_FILES
     src/Entity/Piece/GraphicPiece.cpp
     src/Entity/Piece/PieceIdentifier.cpp
     src/Entity/Piece/PieceManager.cpp
+    src/Tool/ToolContainer.cpp
     src/Tool/Tool.cpp
     src/ToolPicker/ToolPickerContainer.cpp
     src/ToolPicker/ToolPickerWindow.cpp

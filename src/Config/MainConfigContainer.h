@@ -44,7 +44,6 @@ struct MainConfigContainer{
     void loadPieceColors(std::istream& is);
     void loadPieces(std::istream& is);
     void loadBoardStyle(std::istream& is);
-    void loadTool(std::istream& is, sigrid::ToolContainer& tool);
 
     sigrid::PieceColor readPieceColor(std::istream& is);
 };
