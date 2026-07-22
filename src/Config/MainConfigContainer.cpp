@@ -107,7 +107,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
                 boardData.loadTile(is);
             }
             else if(s == "Arrow:"){
-                loadArrow(is);
+                boardData.loadArrow(is, toolPickerData.defaultArrowColorId);
             }
             else if(s == "Circle:"){
                 loadCircle(is);
@@ -231,28 +231,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadArrow(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "thickness:"){
-                is >> boardData.arrowThickness;
-            }
-            else if(s == "headSize:"){
-                is >> boardData.arrowHeadSize;
-            }
-            else if(s == "defaultColorId:"){
-                is >> toolPickerData.defaultArrowColorId;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in Arrow object" << std::endl;
-            }
-        }
-    }
 }
 
 void MainConfigContainer::loadCircle(std::istream& is){

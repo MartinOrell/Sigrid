@@ -48,7 +48,6 @@ struct MainConfigContainer{
 
     sigrid::PieceColor readPieceColor(std::istream& is);
 
-    void loadArrow(std::istream& is);
     void loadCircle(std::istream& is);
     void loadCoordLabels(std::istream& is);
     sigrid::BoardLabelContainer readLabel(std::istream& is);
