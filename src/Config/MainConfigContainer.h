@@ -43,20 +43,10 @@ struct MainConfigContainer{
     void loadArrowColors(std::istream& is);
     void loadPieceColors(std::istream& is);
     void loadPieces(std::istream& is);
-    void loadToolPicker(std::istream& is);
     void loadBoardStyle(std::istream& is);
     void loadTool(std::istream& is, sigrid::ToolContainer& tool);
 
     sigrid::PieceColor readPieceColor(std::istream& is);
-
-    void loadMiscBlock(std::istream& is);
-    void loadColorBlock(std::istream& is);
-    void loadPieceBlocks(std::istream& is);
-    sigrid_coord::CoordBlock readPieceBlock(std::istream& is);
-    void loadMiscTools(std::istream& is);
-    void loadToolColors(std::istream& is);
-    void loadToolPieces(std::istream& is);
-    void loadToolPickerTileColors(std::istream& is);
 
     void loadTile(std::istream& is);
     void loadArrow(std::istream& is);

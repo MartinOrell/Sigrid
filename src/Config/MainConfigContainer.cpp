@@ -98,56 +98,6 @@ void MainConfigContainer::loadPieces(std::istream& is){
     }
 }
 
-void MainConfigContainer::loadToolPicker(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "visibility:"){
-                std::string visibilityString = readString(is);
-                bool isVisible = visibilityString == "Visible";
-                toolPickerData.show = isVisible;
-            }
-            else if(s == "columns:"){
-                is >> toolPickerData.columns;
-            }
-            else if(s == "rows:"){
-                is >> toolPickerData.rows;
-            }
-            else if(s == "MiscBlock:"){
-                loadMiscBlock(is);
-            }
-            else if(s == "ColorBlock:"){
-                loadColorBlock(is);
-            }
-            else if(s == "PieceBlocks:"){
-                loadPieceBlocks(is);
-            }
-            else if(s == "MiscTools:"){
-                loadMiscTools(is);
-                
-            }
-            else if(s == "Colors:"){
-                loadToolColors(is);
-                
-            }
-            else if(s == "defaultPiece:"){
-                toolPickerData.defaultPieceNotation = readString(is);
-            }
-            else if(s == "Pieces:"){
-                loadToolPieces(is);
-            }
-            else if(s == "TileColors:"){
-                loadToolPickerTileColors(is);
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in ToolPicker object" << std::endl;
-            }
-        }
-    }
-}
-
 void MainConfigContainer::loadBoardStyle(std::istream& is){
 
     std::string s = readString(is);
@@ -239,7 +189,7 @@ bool MainConfigContainer::load(const std::string& filename){
             menuData.load(ifs);
         }
         else if(key == "ToolPicker:"){
-            loadToolPicker(ifs);   
+            toolPickerData.load(ifs);
         }
         else if(key == "LeftClickTool:"){
             loadTool(ifs, leftClickTool);
@@ -281,147 +231,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadMiscBlock(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-
-            if(s == "visibility:"){
-                std::string visibilityString = readString(is);
-                bool isVisible = visibilityString == "Visible";
-                //Currently not used
-            }
-            else if(s == "position:"){
-                std::string position = readString(is);
-                toolPickerData.miscToolBlock.coord = sigrid_coord::Coord(position);
-            }
-            else if(s == "columns:"){
-                is >> toolPickerData.miscToolBlock.columns;
-            }
-            else if(s == "rows:"){
-                is >> toolPickerData.miscToolBlock.rows;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in MiscBlock object" << std::endl;
-            }
-        }
-    }
-}
-
-void MainConfigContainer::loadColorBlock(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-
-            if(s == "visibility:"){
-                std::string visibilityString = readString(is);
-                bool isVisible = visibilityString == "Visible";
-                toolPickerData.showColors = isVisible;
-            }
-            else if(s == "position:"){
-                std::string position = readString(is);
-                toolPickerData.colorBlock.coord = sigrid_coord::Coord(position);
-            }
-            else if(s == "columns:"){
-                is >> toolPickerData.colorBlock.columns;
-            }
-            else if(s == "rows:"){
-                is >> toolPickerData.colorBlock.rows;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in ColorBlock object" << std::endl;
-            }
-        }
-    }
-}
-
-void MainConfigContainer::loadPieceBlocks(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "["){
-                sigrid_coord::CoordBlock pieceBlock = readPieceBlock(is);
-                toolPickerData.pieceBlocks.push_back(pieceBlock);
-            }
-        }
-    }
-}
-
-sigrid_coord::CoordBlock MainConfigContainer::readPieceBlock(std::istream& is){
-
-    sigrid_coord::CoordBlock pieceBlock;
-    for(std::string s = readString(is); s != "]"; s = readString(is)){
-
-        if(s == "visibility:"){
-            std::string visibilityString = readString(is);
-            bool isVisible = visibilityString == "Visible";
-            //Currently not used
-        }
-        else if(s == "position:"){
-            std::string position = readString(is);
-            pieceBlock.coord = sigrid_coord::Coord{position};
-        }
-        else if(s == "columns:"){
-            is >> pieceBlock.columns;
-        }
-        else if(s == "rows:"){
-            is >> pieceBlock.rows;
-        }
-        else{
-            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-            std::cerr << " read in PieceBlock object" << std::endl;
-        }
-    }
-    return pieceBlock;
-}
-
-void MainConfigContainer::loadMiscTools(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            toolPickerData.toolNames.push_back(s);
-        }
-    }
-}
-
-void MainConfigContainer::loadToolColors(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            int colorId = std::stoi(s);
-            toolPickerData.colorToolIds.push_back(colorId);
-        }
-    }
-}
-
-void MainConfigContainer::loadToolPieces(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            toolPickerData.pieceNotations.push_back(s);
-        }
-    }
-}
-
-void MainConfigContainer::loadToolPickerTileColors(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            int colorId = std::stoi(s);
-            toolPickerData.tileColorIds.push_back(colorId);
-        }
-    }
 }
 
 void MainConfigContainer::loadTile(std::istream& is){
