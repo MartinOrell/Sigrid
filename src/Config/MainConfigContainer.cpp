@@ -113,7 +113,7 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
                 boardData.loadCircle(is, toolPickerData.defaultCircleColorId);
             }
             else if(s == "CoordLabels:"){
-                loadCoordLabels(is);
+                boardData.loadCoordLabels(is);
             }
             else if(s == "Border:"){
                 loadBorder(is);
@@ -231,68 +231,6 @@ sigrid::PieceColor MainConfigContainer::readPieceColor(std::istream& is){
         }
     }
     return pieceColor;
-}
-
-void MainConfigContainer::loadCoordLabels(std::istream& is){
-
-    std::string s = readString(is);
-    if( s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "["){
-                sigrid::BoardLabelContainer label = readLabel(is);
-                boardData.labels.push_back(label);
-            }
-        }
-    }
-}
-
-sigrid::BoardLabelContainer MainConfigContainer::readLabel(std::istream& is){
-
-    sigrid::BoardLabelContainer label;
-    for(std::string s = readString(is);s != "]"; s = readString(is)){
-        if(s == "position:"){
-            std::string positionString = readString(is);
-            label.isInside = positionString.substr(0,6) == "inside";
-            auto spacePos = positionString.find(' ');
-            if(spacePos != std::string::npos){
-                std::string positionString2 = positionString.substr(spacePos+1);
-                if(positionString2 == "left"){
-                    label.position = 0;
-                }
-                else if(positionString2 == "right"){
-                    label.position = 1;
-                }
-                else if(positionString2 == "top"){
-                    label.position = 2;
-                }
-                else if(positionString2 == "bottom"){
-                    label.position = 3;
-                }
-                else{
-                    std::cerr << "MainWindowConfigContainer: Unknown label position: " << positionString2 << std::endl;
-                }
-            }
-        }
-        else if(s == "visibility:"){
-            std::string visibilityString = readString(is);
-            label.isVisible = visibilityString == "Visible";
-        }
-        else if(s == "size:"){
-            float size;
-            is >> size;
-            is.ignore(1);// ignore % sign
-            size = size/100.f;
-            label.size = size;
-        }
-        else if(s == "font:"){
-            label.font = readString(is);
-        }
-        else{
-            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-            std::cerr << " read in CoordLabel object" << std::endl;
-        }
-    }
-    return label;
 }
 
 void MainConfigContainer::loadBorder(std::istream& is){

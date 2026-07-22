@@ -19,6 +19,7 @@ struct BoardDesignContainer{
     bool loadTile(std::istream& is);
     bool loadArrow(std::istream& is, int& defaultArrowColorId);
     bool loadCircle(std::istream& is, int& defaultCircleColorId);
+    bool loadCoordLabels(std::istream& is);
 
     float tileWidth = 0.f;
     float tileHeight = 0.f;
@@ -29,6 +30,10 @@ struct BoardDesignContainer{
     bool border = false;
     float borderThickness = 0.f;
     bool turnToken = false;
+
+  private:
+
+    sigrid::BoardLabelContainer readLabel(std::istream& is);
 };
 
 }  // namespace sigrid
