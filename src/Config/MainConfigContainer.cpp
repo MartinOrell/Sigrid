@@ -115,12 +115,6 @@ void MainConfigContainer::loadBoardStyle(std::istream& is){
             else if(s == "TurnToken:"){
                 boardData.loadTurnToken(is);
             }
-            else if(s == "resetFilename:"){
-                resetBoardFilename = readString(is);
-            }
-            else if(s == "defaultImageFilename:"){
-                defaultBoardImageFilename = readString(is);
-            }
             else{
                 std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
                 std::cerr << " read in BoardStyle object" << std::endl;
@@ -154,9 +148,6 @@ bool MainConfigContainer::load(const std::string& filename){
         else if(key == "Pieces:"){
             loadPieces(ifs);
         }
-        else if(key == "boardFilename:"){
-            boardFilename = readString(ifs);
-        }
         else if(key == "BoardStyle:"){
             loadBoardStyle(ifs);
         }
@@ -174,6 +165,15 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "MiddleClickTool:"){
             middleClickTool.load(ifs);
+        }
+        else if(key == "resetFilename:"){
+            resetBoardFilename = readString(ifs);
+        }
+        else if(key == "defaultImageFilename:"){
+            defaultBoardImageFilename = readString(ifs);
+        }
+        else if(key == "boardFilename:"){
+            boardFilename = readString(ifs);
         }
         else{
             std::cerr << "MainWindowConfigContainer: Unknown key: \"" << key << "\"" << std::endl;

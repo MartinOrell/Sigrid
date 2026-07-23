@@ -375,7 +375,7 @@ BoardStyle: [
   TurnToken: [
     visibility: Hidden
   ]
-  resetFilename: res/config/setupBoards/chess.txt
-  defaultImageFilename: saveData/boards/images/board.png
 ]
+resetFilename: res/config/setupBoards/chess.txt
+defaultImageFilename: saveData/boards/images/board.png
 boardFilename: saveData/boards/board.txt
