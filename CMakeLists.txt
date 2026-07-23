@@ -13,6 +13,7 @@ set(SRC_FILES
     src/Input/InputHandler.cpp
     src/Config/IO.cpp
     src/Config/MainConfigContainer.cpp
+    src/Window/WindowContainer.cpp
     src/Window/MainWindow/MainWindow.cpp
     src/Menu/MenuContainer.cpp
     src/Menu/Menu.cpp

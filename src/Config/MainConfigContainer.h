@@ -36,7 +36,6 @@ struct MainConfigContainer{
     std::string defaultBoardImageFilename;
 
   private:
-    void loadWindow(std::istream& is);
     void loadTileColors(std::istream& is);
     void loadArrowColors(std::istream& is);
     void loadPieceColors(std::istream& is);

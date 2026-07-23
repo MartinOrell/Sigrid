@@ -18,28 +18,6 @@ uint32_t getColorHex(const std::string& s){
     return colorHex;
 }
 
-void MainConfigContainer::loadWindow(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if (s == "width:"){
-                is >> mainWindow.width;
-            }
-            else if(s == "height:"){
-                is >> mainWindow.height;
-            }
-            else if(s == "name:"){
-                is >> mainWindow.name;
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in Window object" << std::endl;
-            }
-        }
-    }
-}
-
 void MainConfigContainer::loadTileColors(std::istream& is){
 
     std::string s = readString(is);
@@ -103,7 +81,7 @@ bool MainConfigContainer::load(const std::string& filename){
     std::string key;
     while(ifs >> key){
         if(key == "Window:"){
-            loadWindow(ifs);
+            mainWindow.load(ifs);
         }
         else if(key == "TileColors:"){
             loadTileColors(ifs);
