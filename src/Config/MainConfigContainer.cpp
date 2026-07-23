@@ -24,13 +24,13 @@ void MainConfigContainer::loadWindow(std::istream& is){
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
             if (s == "width:"){
-                is >> windowWidth;
+                is >> mainWindow.width;
             }
             else if(s == "height:"){
-                is >> windowHeight;
+                is >> mainWindow.height;
             }
             else if(s == "name:"){
-                is >> windowName;
+                is >> mainWindow.name;
             }
             else{
                 std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";

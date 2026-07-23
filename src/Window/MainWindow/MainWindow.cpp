@@ -13,12 +13,12 @@ using namespace sigrid;
 
 bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     
-    m_window.create(sf::VideoMode({(unsigned int)config.windowWidth, (unsigned int)config.windowHeight}), config.windowName);
+    m_window.create(sf::VideoMode({(unsigned int)config.mainWindow.width, (unsigned int)config.mainWindow.height}), config.mainWindow.name);
     m_window.setFramerateLimit(60);
 
     m_fontManagerPtr = std::make_unique<FontManager>();
 
-    m_size = sf::Vector2i{config.windowWidth, config.windowHeight};
+    m_size = sf::Vector2i{config.mainWindow.width, config.mainWindow.height};
     m_tileColorManagerPtr = std::make_unique<ColorManager>();
     m_tileColorManagerPtr->setColors(config.tileColors);
     m_arrowColorManagerPtr = std::make_unique<ColorManager>();

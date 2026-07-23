@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "Window/WindowContainer.h"
 #include "Entity/Piece/PieceColor.h"
 #include "Entity/Piece/PieceContainer.h"
 #include "Board/BoardDesignContainer.h"
@@ -16,10 +17,7 @@ struct MainConfigContainer{
 
     bool load(const std::string& filename);
 
-    int windowWidth;
-    int windowHeight;
-    std::string windowName;
-
+    sigrid::WindowContainer mainWindow;
     std::vector<uint32_t> tileColors;
     std::vector<uint32_t> arrowColors;
     std::vector<sigrid::PieceColor> pieceColors;
