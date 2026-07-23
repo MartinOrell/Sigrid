@@ -4,6 +4,39 @@
 
 #include "Config/IO.h"
 
+bool sigrid::BoardDesignContainer::load(std::istream& is){
+
+    std::string s = sigrid_config::readString(is);
+    if(s == "["){
+        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+            if(s == "Tile:"){
+                loadTile(is);
+            }
+            else if(s == "Arrow:"){
+                loadArrow(is);
+            }
+            else if(s == "Circle:"){
+                loadCircle(is);
+            }
+            else if(s == "CoordLabels:"){
+                loadCoordLabels(is);
+            }
+            else if(s == "Border:"){
+                loadBorder(is);
+            }
+            else if(s == "TurnToken:"){
+                loadTurnToken(is);
+            }
+            else{
+                std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
+                std::cerr << ". Failed to load BoardDesignContainer" << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
 
     std::string s = sigrid_config::readString(is);

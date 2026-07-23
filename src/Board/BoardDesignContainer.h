@@ -16,12 +16,7 @@ struct BoardLabelContainer{
 
 struct BoardDesignContainer{
 
-    bool loadTile(std::istream& is);
-    bool loadArrow(std::istream& is);
-    bool loadCircle(std::istream& is);
-    bool loadCoordLabels(std::istream& is);
-    bool loadBorder(std::istream& is);
-    bool loadTurnToken(std::istream& is);
+    bool load(std::istream& is);
 
     float tileWidth = 0.f;
     float tileHeight = 0.f;
@@ -35,6 +30,12 @@ struct BoardDesignContainer{
 
   private:
 
+    bool loadTile(std::istream& is);
+    bool loadArrow(std::istream& is);
+    bool loadCircle(std::istream& is);
+    bool loadCoordLabels(std::istream& is);
+    bool loadBorder(std::istream& is);
+    bool loadTurnToken(std::istream& is);
     sigrid::BoardLabelContainer readLabel(std::istream& is);
 };
 

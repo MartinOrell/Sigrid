@@ -92,37 +92,6 @@ void MainConfigContainer::loadPieces(std::istream& is){
     }
 }
 
-void MainConfigContainer::loadBoardStyle(std::istream& is){
-
-    std::string s = readString(is);
-    if(s == "["){
-        for(s = readString(is); s != "]"; s = readString(is)){
-            if(s == "Tile:"){
-                boardData.loadTile(is);
-            }
-            else if(s == "Arrow:"){
-                boardData.loadArrow(is);
-            }
-            else if(s == "Circle:"){
-                boardData.loadCircle(is);
-            }
-            else if(s == "CoordLabels:"){
-                boardData.loadCoordLabels(is);
-            }
-            else if(s == "Border:"){
-                boardData.loadBorder(is);
-            }
-            else if(s == "TurnToken:"){
-                boardData.loadTurnToken(is);
-            }
-            else{
-                std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
-                std::cerr << " read in BoardStyle object" << std::endl;
-            }
-        }
-    }
-}
-
 bool MainConfigContainer::load(const std::string& filename){
     
     std::ifstream ifs(filename);
@@ -149,7 +118,7 @@ bool MainConfigContainer::load(const std::string& filename){
             loadPieces(ifs);
         }
         else if(key == "BoardStyle:"){
-            loadBoardStyle(ifs);
+            boardData.load(ifs);
         }
         else if(key == "Menu:"){
             menuData.load(ifs);

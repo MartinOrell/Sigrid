@@ -43,7 +43,6 @@ struct MainConfigContainer{
     void loadArrowColors(std::istream& is);
     void loadPieceColors(std::istream& is);
     void loadPieces(std::istream& is);
-    void loadBoardStyle(std::istream& is);
 };
 
 }  // namespace sigrid
