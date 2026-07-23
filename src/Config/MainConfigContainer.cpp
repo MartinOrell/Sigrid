@@ -2,29 +2,20 @@
 
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 #include "Config/IO.h"
+#include "Color/ColorContainer.h"
 
 using namespace sigrid_config;
-
-uint32_t getColorHex(const std::string& s){
-
-    uint32_t colorHex;
-    std::stringstream ss;
-    ss << std::hex << s;
-    ss >> colorHex;
-    colorHex = colorHex * 0x100 + 0xff;
-    return colorHex;
-}
 
 void MainConfigContainer::loadTileColors(std::istream& is){
 
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            uint32_t colorHex = getColorHex(s);
-            tileColors.push_back(colorHex);
+            sigrid::ColorContainer color;
+            color.setValue(s);
+            tileColors.push_back(color.value);
         }
     }
 }
@@ -34,8 +25,9 @@ void MainConfigContainer::loadArrowColors(std::istream& is){
     std::string s = readString(is);
     if(s == "["){
         for(s = readString(is); s != "]"; s = readString(is)){
-            uint32_t colorHex = getColorHex(s);
-            arrowColors.push_back(colorHex);
+            sigrid::ColorContainer color;
+            color.setValue(s);
+            arrowColors.push_back(color.value);
         }
     }
 }
