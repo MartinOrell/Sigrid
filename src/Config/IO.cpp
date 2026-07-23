@@ -27,11 +27,3 @@ bool sigrid_config::readToggle(std::istream& is){
     is >> s;
     return s == "ON";
 }
-
-uint32_t sigrid_config::readColor(std::istream& is){
-
-    uint32_t colorHex;
-    is >> std::hex >> colorHex >> std::ws;
-    colorHex = colorHex * 0x100 + 0xff;
-    return colorHex;
-}

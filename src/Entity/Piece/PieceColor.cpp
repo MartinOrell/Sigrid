@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Config/IO.h"
+#include "Color/ColorContainer.h"
 
 bool sigrid::PieceColor::load(std::istream& is){
 
@@ -15,10 +16,14 @@ bool sigrid::PieceColor::load(std::istream& is){
             isLight = style == "light";
         }
         else if(s == "lightModifier:"){
-            lightModifier = sigrid_config::readColor(is);
+            ColorContainer color;
+            color.load(is);
+            lightModifier = color.value;
         }
         else if(s == "darkModifier:"){
-            darkModifier = sigrid_config::readColor(is);
+            ColorContainer color;
+            color.load(is);
+            darkModifier = color.value;
         }
         else{
             std::cerr << "PieceColor: Unknown key: \"" << s << "\"";
