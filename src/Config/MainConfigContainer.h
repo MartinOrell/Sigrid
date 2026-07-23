@@ -36,10 +36,10 @@ struct MainConfigContainer{
     std::string defaultBoardImageFilename;
 
   private:
-    void loadTileColors(std::istream& is);
-    void loadArrowColors(std::istream& is);
-    void loadPieceColors(std::istream& is);
-    void loadPieces(std::istream& is);
+    bool loadTileColors(std::istream& is);
+    bool loadArrowColors(std::istream& is);
+    bool loadPieceColors(std::istream& is);
+    bool loadPieces(std::istream& is);
 };
 
 }  // namespace sigrid

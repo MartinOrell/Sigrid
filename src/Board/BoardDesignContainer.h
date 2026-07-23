@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <istream>
+#include <optional>
 
 namespace sigrid{
 
@@ -36,7 +37,7 @@ struct BoardDesignContainer{
     bool loadCoordLabels(std::istream& is);
     bool loadBorder(std::istream& is);
     bool loadTurnToken(std::istream& is);
-    sigrid::BoardLabelContainer readLabel(std::istream& is);
+    std::optional<sigrid::BoardLabelContainer> readLabel(std::istream& is);
 };
 
 }  // namespace sigrid

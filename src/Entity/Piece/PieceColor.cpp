@@ -7,12 +7,28 @@
 
 bool sigrid::PieceColor::load(std::istream& is){
 
-    for(std::string s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
-        if(s == "name:"){
-            std::string name = sigrid_config::readString(is);
+    while(auto string_o = sigrid_config::readString(is)){
+        
+        if(string_o == std::nullopt){
+            return false;
+        }
+        std::string s = string_o.value();
+        if(s == "]"){
+            break;
+        }
+        else if(s == "name:"){
+            auto name_o = sigrid_config::readString(is);
+            if(name_o == std::nullopt){
+                return false;
+            }
+            std::string name = name_o.value();
         }
         else if(s == "style:"){
-            std::string style = sigrid_config::readString(is);
+            auto styleString_o = sigrid_config::readString(is);
+            if(styleString_o == std::nullopt){
+                return false;
+            }
+            std::string style = styleString_o.value();
             isLight = style == "light";
         }
         else if(s == "lightModifier:"){

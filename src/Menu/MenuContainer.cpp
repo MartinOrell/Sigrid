@@ -6,18 +6,38 @@
 
 bool sigrid::MenuContainer::load(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
-            if(s == "pin:"){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "pin:"){
                 isPinned = sigrid_config::readToggle(is);
                 showItems = isPinned;
             }
             else if(s == "font:"){
-                fontName = sigrid_config::readString(is);
+                auto fontName_o = sigrid_config::readString(is);
+                if(fontName_o == std::nullopt){
+                    return false;
+                }
+                fontName = fontName_o.value();
             }
             else if(s == "title:"){
-                title = sigrid_config::readString(is);
+                auto title_o = sigrid_config::readString(is);
+                if(title_o == std::nullopt){
+                    return false;
+                }
+                title = title_o.value();
             }
             else if(s == "headers:"){
                 loadHeaders(is);
@@ -34,9 +54,21 @@ bool sigrid::MenuContainer::load(std::istream& is){
 
 bool sigrid::MenuContainer::loadHeaders(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             headerNames.push_back(s);
             loadHeaderItems(is);
         }
@@ -46,9 +78,21 @@ bool sigrid::MenuContainer::loadHeaders(std::istream& is){
 
 bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             loadMenuItem(is, s);
         }
     }
@@ -57,7 +101,11 @@ bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
 
 bool sigrid::MenuContainer::loadMenuItem(std::istream& is, const std::string& displayName){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s != "["){
         sigrid::MenuItemContainer item;
         item.headerId = headerNames.size()-1;
@@ -66,14 +114,43 @@ bool sigrid::MenuContainer::loadMenuItem(std::istream& is, const std::string& di
         menuItems.push_back(item);
     }
     else{
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             sigrid::MenuItemContainer item;
             item.headerId = headerNames.size()-1;
             item.keyName = displayName;
             item.displayNames.push_back(s);
-            item.actionNames.push_back(sigrid_config::readString(is));
-            item.displayNames.push_back(sigrid_config::readString(is));
-            item.actionNames.push_back(sigrid_config::readString(is));
+
+            {
+                auto actionName_o = sigrid_config::readString(is);
+                if(actionName_o == std::nullopt){
+                    return false;
+                }
+                item.actionNames.push_back(actionName_o.value());
+            }
+            
+            {
+                auto displayName_o = sigrid_config::readString(is);
+                if(displayName_o == std::nullopt){
+                    return false;
+                }
+                item.displayNames.push_back(displayName_o.value());
+            }
+            
+            {
+                auto actionName_o = sigrid_config::readString(is);
+                if(actionName_o == std::nullopt){
+                    return false;
+                }
+                item.actionNames.push_back(actionName_o.value());
+            }
             menuItems.push_back(item);
         }
     }

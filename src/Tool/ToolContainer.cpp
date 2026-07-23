@@ -6,11 +6,27 @@
 
 bool sigrid::ToolContainer::load(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
-            if(s == "selection:"){
-                selection = sigrid_config::readString(is);
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "selection:"){
+                auto selection_o = sigrid_config::readString(is);
+                if(selection_o == std::nullopt){
+                    return false;
+                }
+                selection = selection_o.value();
             }
             else if(s == "color:"){
                 is >> colorId;

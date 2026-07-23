@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <istream>
+#include <optional>
 
 #include "Coord/CoordBlock.h"
 
@@ -31,7 +32,7 @@ struct ToolPickerContainer{
     bool loadMiscBlock(std::istream& is);
     bool loadColorBlock(std::istream& is);
     bool loadPieceBlocks(std::istream& is);
-    sigrid_coord::CoordBlock readPieceBlock(std::istream& is);
+    std::optional<sigrid_coord::CoordBlock> readPieceBlock(std::istream& is);
     bool loadMiscTools(std::istream& is);
     bool loadToolColors(std::istream& is);
     bool loadToolPieces(std::istream& is);

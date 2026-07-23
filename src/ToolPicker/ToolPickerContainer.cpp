@@ -6,11 +6,27 @@
 
 bool sigrid::ToolPickerContainer::load(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
-            if(s == "visibility:"){
-                std::string visibilityString = sigrid_config::readString(is);
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "visibility:"){
+                auto visibilityString_o = sigrid_config::readString(is);
+                if(visibilityString_o == std::nullopt){
+                    return false;
+                }
+                std::string visibilityString = visibilityString_o.value();
                 bool isVisible = visibilityString == "Visible";
                 show = isVisible;
             }
@@ -42,7 +58,11 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
                 loadToolColors(is);
             }
             else if(s == "defaultPiece:"){
-                defaultPieceNotation = sigrid_config::readString(is);
+                auto defaultPieceNotation_o = sigrid_config::readString(is);
+                if(defaultPieceNotation_o == std::nullopt){
+                    return false;
+                }
+                defaultPieceNotation = defaultPieceNotation_o.value();
             }
             else if(s == "Pieces:"){
                 loadToolPieces(is);
@@ -62,17 +82,36 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadMiscBlock(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
 
-            if(s == "visibility:"){
-                std::string visibilityString = sigrid_config::readString(is);
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "visibility:"){
+                auto visibilityString_o = sigrid_config::readString(is);
+                if(visibilityString_o == std::nullopt){
+                    return false;
+                }
+                std::string visibilityString = visibilityString_o.value();
                 bool isVisible = visibilityString == "Visible";
                 //Currently not used
             }
             else if(s == "position:"){
-                std::string position = sigrid_config::readString(is);
+                auto positionString_o = sigrid_config::readString(is);
+                if(positionString_o == std::nullopt){
+                    return false;
+                }
+                std::string position = positionString_o.value();
                 miscToolBlock.coord = sigrid_coord::Coord(position);
             }
             else if(s == "columns:"){
@@ -93,17 +132,36 @@ bool sigrid::ToolPickerContainer::loadMiscBlock(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadColorBlock(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
 
-            if(s == "visibility:"){
-                std::string visibilityString = sigrid_config::readString(is);
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "visibility:"){
+                auto visibilityString_o = sigrid_config::readString(is);
+                if(visibilityString_o == std::nullopt){
+                    return false;
+                }
+                std::string visibilityString = visibilityString_o.value();
                 bool isVisible = visibilityString == "Visible";
                 showColors = isVisible;
             }
             else if(s == "position:"){
-                std::string position = sigrid_config::readString(is);
+                auto positionString_o = sigrid_config::readString(is);
+                if(positionString_o == std::nullopt){
+                    return false;
+                }
+                std::string position = positionString_o.value();
                 colorBlock.coord = sigrid_coord::Coord(position);
             }
             else if(s == "columns:"){
@@ -124,11 +182,27 @@ bool sigrid::ToolPickerContainer::loadColorBlock(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadPieceBlocks(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
-            if(s == "["){
-                sigrid_coord::CoordBlock pieceBlock = readPieceBlock(is);
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
+            else if(s == "["){
+                auto pieceBlock_o = readPieceBlock(is);
+                if(pieceBlock_o == std::nullopt){
+                    return false;
+                }
+                sigrid_coord::CoordBlock pieceBlock = pieceBlock_o.value();
                 pieceBlocks.push_back(pieceBlock);
             }
         }
@@ -136,18 +210,33 @@ bool sigrid::ToolPickerContainer::loadPieceBlocks(std::istream& is){
     return true;
 }
 
-sigrid_coord::CoordBlock sigrid::ToolPickerContainer::readPieceBlock(std::istream& is){
+std::optional<sigrid_coord::CoordBlock> sigrid::ToolPickerContainer::readPieceBlock(std::istream& is){
 
     sigrid_coord::CoordBlock pieceBlock;
-    for(std::string s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+    for(auto string_o = sigrid_config::readString(is);; string_o = sigrid_config::readString(is)){
 
+        if(string_o == std::nullopt){
+            return std::nullopt;
+        }
+        std::string s = string_o.value();
+        if(s == "]"){
+            break;
+        }
         if(s == "visibility:"){
-            std::string visibilityString = sigrid_config::readString(is);
+            auto visibilityString_o = sigrid_config::readString(is);
+            if(visibilityString_o == std::nullopt){
+                return std::nullopt;
+            }
+            std::string visibilityString = visibilityString_o.value();
             bool isVisible = visibilityString == "Visible";
             //Currently not used
         }
         else if(s == "position:"){
-            std::string position = sigrid_config::readString(is);
+            auto positionString_o = sigrid_config::readString(is);
+            if(positionString_o == std::nullopt){
+                return std::nullopt;
+            }
+            std::string position = positionString_o.value();
             pieceBlock.coord = sigrid_coord::Coord{position};
         }
         else if(s == "columns:"){
@@ -166,9 +255,21 @@ sigrid_coord::CoordBlock sigrid::ToolPickerContainer::readPieceBlock(std::istrea
 
 bool sigrid::ToolPickerContainer::loadMiscTools(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             toolNames.push_back(s);
         }
     }
@@ -177,9 +278,21 @@ bool sigrid::ToolPickerContainer::loadMiscTools(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadToolColors(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             int colorId = std::stoi(s);
             colorToolIds.push_back(colorId);
         }
@@ -189,9 +302,21 @@ bool sigrid::ToolPickerContainer::loadToolColors(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadToolPieces(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             pieceNotations.push_back(s);
         }
     }
@@ -200,9 +325,21 @@ bool sigrid::ToolPickerContainer::loadToolPieces(std::istream& is){
 
 bool sigrid::ToolPickerContainer::loadToolPickerTileColors(std::istream& is){
 
-    std::string s = sigrid_config::readString(is);
+    auto string_o = sigrid_config::readString(is);
+    if(string_o == std::nullopt){
+        return false;
+    }
+    std::string s = string_o.value();
     if(s == "["){
-        for(s = sigrid_config::readString(is); s != "]"; s = sigrid_config::readString(is)){
+        while(string_o = sigrid_config::readString(is)){
+            
+            if(string_o == std::nullopt){
+                return false;
+            }
+            s = string_o.value();
+            if(s == "]"){
+                break;
+            }
             int colorId = std::stoi(s);
             tileColorIds.push_back(colorId);
         }

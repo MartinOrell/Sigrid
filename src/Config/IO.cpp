@@ -1,14 +1,26 @@
 #include "Config/IO.h"
 
-std::string sigrid_config::readString(std::istream& is){
+std::optional<std::string> sigrid_config::readString(std::istream& is){
 
     std::string s;
-    is >> std::ws >> s;
+    try{
+        is >> std::ws >> s;
+    }
+    catch(...){
+        return std::nullopt;
+    }
+    
     if(s.front() == '"'){
         s.erase(0,1); //remove front '"'
         while(is.peek() != EOF){    
             std::string s2;
-            is >> s2;
+            try{
+                is >> s2;
+            }
+            catch(...){
+                return std::nullopt;
+            }
+            
             s.append(" " + s2);
             if(s2.back() == '"'){
                 s.pop_back(); //remove back '"'
