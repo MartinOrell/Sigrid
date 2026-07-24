@@ -7,23 +7,23 @@
 bool sigrid::BoardDesignContainer::load(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
@@ -58,23 +58,23 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
 bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
@@ -97,23 +97,24 @@ bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
 bool sigrid::BoardDesignContainer::loadArrow(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
+
         if(s == "]"){
             break;
         }
@@ -135,23 +136,23 @@ bool sigrid::BoardDesignContainer::loadArrow(std::istream& is){
 bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
@@ -171,29 +172,30 @@ bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
 bool sigrid::BoardDesignContainer::loadCoordLabels(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
     
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
         }
         else if(s == "["){
-            auto label_o = readLabel(is);
+
+            const auto label_o = readLabel(is);
             if(label_o == std::nullopt){
                 return false;
             }
@@ -207,33 +209,34 @@ bool sigrid::BoardDesignContainer::loadCoordLabels(std::istream& is){
 bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
         }
         else if(s == "visibility:"){
-            auto string_o = sigrid_config::readString(is);
-            if(string_o == std::nullopt){
+
+            const auto visibilityString_o = sigrid_config::readString(is);
+            if(visibilityString_o == std::nullopt){
                 return false;
             }
-            std::string visibilityString = string_o.value();
+            const std::string& visibilityString = visibilityString_o.value();
             border = visibilityString == "Visible";
         }
         else if(s == "thickness:"){
@@ -251,34 +254,34 @@ bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
 bool sigrid::BoardDesignContainer::loadTurnToken(std::istream& is){
 
     {
-        auto string_o = sigrid_config::readString(is);
+        const auto string_o = sigrid_config::readString(is);
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
         }
         else if(s == "visibility:"){
 
-            auto string_o = sigrid_config::readString(is);
-            if(string_o == std::nullopt){
+            const auto visibilityString_o = sigrid_config::readString(is);
+            if(visibilityString_o == std::nullopt){
                 return false;
             }
-            std::string visibilityString = string_o.value();
+            const std::string& visibilityString = visibilityString_o.value();
             turnToken = visibilityString == "Visible";
         }
         else{
@@ -293,23 +296,24 @@ bool sigrid::BoardDesignContainer::loadTurnToken(std::istream& is){
 std::optional<sigrid::BoardLabelContainer> sigrid::BoardDesignContainer::readLabel(std::istream& is){
 
     sigrid::BoardLabelContainer label;
-    while(auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
             return std::nullopt;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
         }
         else if(s == "position:"){
 
-            auto positionString_o = sigrid_config::readString(is);
+            const auto positionString_o = sigrid_config::readString(is);
             if(positionString_o == std::nullopt){
                 return std::nullopt;
             }
-            std::string positionString = positionString_o.value();
+            const std::string& positionString = positionString_o.value();
+
             label.isInside = positionString.substr(0,6) == "inside";
             auto spacePos = positionString.find(' ');
             if(spacePos != std::string::npos){
@@ -333,11 +337,11 @@ std::optional<sigrid::BoardLabelContainer> sigrid::BoardDesignContainer::readLab
         }
         else if(s == "visibility:"){
 
-            auto visibilityString_o = sigrid_config::readString(is);
+            const auto visibilityString_o = sigrid_config::readString(is);
             if(visibilityString_o == std::nullopt){
                 return std::nullopt;
             }
-            std::string visibilityString = visibilityString_o.value();
+            const std::string& visibilityString = visibilityString_o.value();
             label.isVisible = visibilityString == "Visible";
         }
         else if(s == "size:"){
@@ -350,7 +354,7 @@ std::optional<sigrid::BoardLabelContainer> sigrid::BoardDesignContainer::readLab
         }
         else if(s == "font:"){
 
-            auto font_o = sigrid_config::readString(is);
+            const auto font_o = sigrid_config::readString(is);
             if(font_o == std::nullopt){
                 return std::nullopt;
             }
