@@ -42,3 +42,15 @@ std::optional<bool> sigrid_config::readToggle(std::istream& is){
     std::string s = string_o.value();
     return s == "ON";
 }
+
+std::optional<uint32_t> sigrid_config::readHex(std::istream& is){
+
+    uint32_t value;
+    try{
+        is >> std::hex >> value >> std::ws;
+    }
+    catch(...){
+        return std::nullopt;
+    }
+    return value;
+}
