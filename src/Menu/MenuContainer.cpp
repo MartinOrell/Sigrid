@@ -6,16 +6,8 @@
 
 bool sigrid::MenuContainer::load(std::istream& is){
 
-    {
-        const auto string_o = sigrid_config::readString(is);
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(sigrid_config::readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = sigrid_config::readString(is)){
@@ -67,16 +59,8 @@ bool sigrid::MenuContainer::load(std::istream& is){
 
 bool sigrid::MenuContainer::loadHeaders(std::istream& is){
 
-    {
-        const auto string_o = sigrid_config::readString(is);
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(sigrid_config::readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = sigrid_config::readString(is)){
@@ -97,16 +81,8 @@ bool sigrid::MenuContainer::loadHeaders(std::istream& is){
 
 bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
 
-    {
-        const auto string_o = sigrid_config::readString(is);
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(sigrid_config::readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = sigrid_config::readString(is)){

@@ -10,18 +10,8 @@ using namespace sigrid_config;
 
 bool MainConfigContainer::loadTileColors(std::istream& is){
 
-    {
-        const auto string_o = readString(is);
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for TileColors"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = readString(is)){
@@ -46,18 +36,8 @@ bool MainConfigContainer::loadTileColors(std::istream& is){
 
 bool MainConfigContainer::loadArrowColors(std::istream& is){
 
-    {
-        const auto string_o = readString(is);
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for ArrowColors"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = readString(is)){
@@ -81,18 +61,8 @@ bool MainConfigContainer::loadArrowColors(std::istream& is){
 
 bool MainConfigContainer::loadPieceColors(std::istream& is){
 
-    {
-        const auto string_o = readString(is);
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for PieceColors"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = readString(is)){
@@ -119,18 +89,8 @@ bool MainConfigContainer::loadPieceColors(std::istream& is){
 
 bool MainConfigContainer::loadPieces(std::istream& is){
 
-    {
-        const auto string_o = readString(is);
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed loading string for Pieces"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(readString(is) != "["){
+        return false;
     }
 
     while(const auto string_o = readString(is)){

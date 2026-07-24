@@ -6,18 +6,9 @@
 
 bool sigrid::WindowContainer::load(std::istream& is){
 
-    {
-        auto string_o = sigrid_config::readString(is);
-        if(string_o == std::nullopt){
-            return false;
-        }
-        std::string s = string_o.value();
-
-        if(s != "["){
-            return false;
-        }
+    if(sigrid_config::readString(is) != "["){
+        return false;
     }
-    
 
     while(auto string_o = sigrid_config::readString(is)){
         
