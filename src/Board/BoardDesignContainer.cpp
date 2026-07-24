@@ -105,10 +105,20 @@ bool sigrid::BoardDesignContainer::loadArrow(std::istream& is){
             break;
         }
         else if(s == "thickness:"){
-            is >> arrowThickness;
+
+            const auto arrowThickness_o = sigrid_config::readFloat(is);
+            if(arrowThickness_o == std::nullopt){
+                return false;
+            }
+            arrowThickness = arrowThickness_o.value();
         }
         else if(s == "headSize:"){
-            is >> arrowHeadSize;
+
+            const auto arrowHeadSize_o = sigrid_config::readFloat(is);
+            if(arrowHeadSize_o == std::nullopt){
+                return false;
+            }
+            arrowHeadSize = arrowHeadSize_o.value();
         }
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
@@ -136,7 +146,12 @@ bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
             break;
         }
         else if(s == "diameter:"){
-            is >> circleDiameter;
+
+            const auto circleDiameter_o = sigrid_config::readFloat(is);
+            if(circleDiameter_o == std::nullopt){
+                return false;
+            }
+            circleDiameter = circleDiameter_o.value();
         }
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
@@ -202,7 +217,12 @@ bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
             border = visibilityString == "Visible";
         }
         else if(s == "thickness:"){
-            is >> borderThickness;
+
+            const auto borderThickness_o = sigrid_config::readFloat(is);
+            if(borderThickness_o == std::nullopt){
+                return false;
+            }
+            borderThickness = borderThickness_o.value();
         }
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
