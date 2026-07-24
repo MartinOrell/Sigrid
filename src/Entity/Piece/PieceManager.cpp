@@ -6,7 +6,7 @@
 
 using namespace sigrid;
 
-void PieceManager::setPieceColors(const std::vector<PieceColor>& pieceColors){
+void PieceManager::setPieceColors(const sigrid_list::Vector<PieceColor>& pieceColors){
 
     for(const auto& color: pieceColors){
         addPieceColor(color);

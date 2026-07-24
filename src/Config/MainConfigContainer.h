@@ -24,7 +24,7 @@ struct MainConfigContainer{
     sigrid::WindowContainer mainWindow;
     sigrid_list::Vector<uint32_t> tileColors;
     sigrid_list::Vector<uint32_t> arrowColors;
-    std::vector<sigrid::PieceColor> pieceColors;
+    sigrid_list::Vector<sigrid::PieceColor> pieceColors;
     std::vector<sigrid::PieceContainer> pieces;
     sigrid::BoardDesignContainer boardData;
     sigrid::MenuContainer menuData;

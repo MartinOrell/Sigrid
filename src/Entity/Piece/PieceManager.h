@@ -23,7 +23,7 @@ class PieceManager{
     PieceManager& operator=(const PieceManager&) = default;
     PieceManager& operator=(PieceManager&&) = default;
 
-    void setPieceColors(const std::vector<PieceColor>& pieceColors);
+    void setPieceColors(const sigrid_list::Vector<PieceColor>& pieceColors);
 
     void addPieceColor(const PieceColor& newColor);
     void loadImages(const std::vector<PieceContainer>& pieces);
