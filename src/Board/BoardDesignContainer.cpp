@@ -209,12 +209,11 @@ bool sigrid::BoardDesignContainer::loadBorder(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto visibilityString_o = sigrid_config::readString(is);
-            if(visibilityString_o == std::nullopt){
+            const auto isVisible_o = sigrid_config::readVisibility(is);
+            if(isVisible_o == std::nullopt){
                 return false;
             }
-            const std::string& visibilityString = visibilityString_o.value();
-            border = visibilityString == "Visible";
+            border = isVisible_o.value();
         }
         else if(s == "thickness:"){
 
@@ -251,12 +250,11 @@ bool sigrid::BoardDesignContainer::loadTurnToken(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto visibilityString_o = sigrid_config::readString(is);
-            if(visibilityString_o == std::nullopt){
+            const auto isVisible_o = sigrid_config::readVisibility(is);
+            if(isVisible_o == std::nullopt){
                 return false;
             }
-            const std::string& visibilityString = visibilityString_o.value();
-            turnToken = visibilityString == "Visible";
+            turnToken = isVisible_o.value();
         }
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
@@ -311,12 +309,11 @@ std::optional<sigrid::BoardLabelContainer> sigrid::BoardDesignContainer::readLab
         }
         else if(s == "visibility:"){
 
-            const auto visibilityString_o = sigrid_config::readString(is);
-            if(visibilityString_o == std::nullopt){
+            const auto isVisible_o = sigrid_config::readVisibility(is);
+            if(isVisible_o == std::nullopt){
                 return std::nullopt;
             }
-            const std::string& visibilityString = visibilityString_o.value();
-            label.isVisible = visibilityString == "Visible";
+            label.isVisible = isVisible_o.value();
         }
         else if(s == "size:"){
 

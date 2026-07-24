@@ -81,6 +81,16 @@ std::optional<bool> sigrid_config::readToggle(std::istream& is){
     return s == "ON";
 }
 
+std::optional<bool> sigrid_config::readVisibility(std::istream& is){
+
+    auto string_o = readString(is);
+    if(string_o == std::nullopt){
+        return std::nullopt;
+    }
+    std::string s = string_o.value();
+    return s == "Visible";
+}
+
 std::optional<uint32_t> sigrid_config::readHex(std::istream& is){
 
     uint32_t value;
