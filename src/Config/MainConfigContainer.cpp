@@ -126,8 +126,13 @@ bool MainConfigContainer::load(const std::string& filename){
         return false;
     }
 
-    std::string key;
-    while(ifs >> key){
+    while(ifs.peek()!=EOF){
+
+        const auto key_o = sigrid_config::readString(ifs);
+        if(key_o == std::nullopt){
+            return false;
+        }
+        const std::string& key = key_o.value();
         
         if(key == "Window:"){
             mainWindow.load(ifs);
@@ -189,6 +194,7 @@ bool MainConfigContainer::load(const std::string& filename){
         else{
             std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"" << std::endl;
             std::cerr << "read from startup file: \"" << filename << "\"" << std::endl;
+            return false;
         }
     }
     return true;
