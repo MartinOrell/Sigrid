@@ -26,7 +26,7 @@ class PieceManager{
     void setPieceColors(const sigrid_list::Vector<PieceColor>& pieceColors);
 
     void addPieceColor(const PieceColor& newColor);
-    void loadImages(const std::vector<PieceContainer>& pieces);
+    void loadImages(const sigrid_list::Vector<PieceContainer>& pieces);
     std::optional<GraphicPiece> getGraphicPiece(const LogicPiece& logicPiece);
 
   private:

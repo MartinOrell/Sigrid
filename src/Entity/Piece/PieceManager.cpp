@@ -22,7 +22,7 @@ void PieceManager::addPieceColor(const PieceColor& newColor){
 }
 
 
-void PieceManager::loadImages(const std::vector<PieceContainer>& pieces){
+void PieceManager::loadImages(const sigrid_list::Vector<PieceContainer>& pieces){
 
     for(const auto& piece : pieces){
         PieceIdentifier id;

@@ -3,7 +3,6 @@
 #include <cstdint>
 
 #include <string>
-#include <vector>
 
 #include "List/Vector.h"
 
@@ -25,7 +24,7 @@ struct MainConfigContainer{
     sigrid_list::Vector<uint32_t> tileColors;
     sigrid_list::Vector<uint32_t> arrowColors;
     sigrid_list::Vector<sigrid::PieceColor> pieceColors;
-    std::vector<sigrid::PieceContainer> pieces;
+    sigrid_list::Vector<sigrid::PieceContainer> pieces;
     sigrid::BoardDesignContainer boardData;
     sigrid::MenuContainer menuData;
     sigrid::ToolPickerContainer toolPickerData;
