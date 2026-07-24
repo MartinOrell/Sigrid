@@ -59,6 +59,18 @@ std::optional<float> sigrid_config::readFloat(std::istream& is){
     return value;
 }
 
+std::optional<float> sigrid_config::readPercentage(std::istream& is){
+
+    auto float_o = readFloat(is);
+    if(float_o == std::nullopt){
+        return std::nullopt;
+    }
+    float f = float_o.value();
+
+    is.ignore(1);// ignore % sign
+    return f/100.f;
+}
+
 std::optional<bool> sigrid_config::readToggle(std::istream& is){
 
     auto string_o = readString(is);

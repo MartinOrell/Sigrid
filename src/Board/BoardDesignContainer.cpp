@@ -320,11 +320,11 @@ std::optional<sigrid::BoardLabelContainer> sigrid::BoardDesignContainer::readLab
         }
         else if(s == "size:"){
 
-            float size;
-            is >> size;
-            is.ignore(1);// ignore % sign
-            size = size/100.f;
-            label.size = size;
+            const auto size_o = sigrid_config::readPercentage(is);
+            if(size_o == std::nullopt){
+                return std::nullopt;
+            }
+            label.size = size_o.value();
         }
         else if(s == "font:"){
 
