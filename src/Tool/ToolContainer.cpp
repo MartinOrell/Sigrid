@@ -29,7 +29,12 @@ bool sigrid::ToolContainer::load(std::istream& is){
             selection = selection_o.value();
         }
         else if(s == "color:"){
-            is >> colorId;
+
+            const auto colorId_o = sigrid_config::readInt(is);
+            if(colorId_o == std::nullopt){
+                return false;
+            }
+            colorId = colorId_o.value();
         }
         else{
             std::cerr << "ToolContainer: Unknown key: \"" << s << "\"";
