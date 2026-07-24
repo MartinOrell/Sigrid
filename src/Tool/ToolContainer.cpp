@@ -29,7 +29,8 @@ bool sigrid::ToolContainer::load(std::istream& is){
             break;
         }
         else if(s == "selection:"){
-            auto selection_o = sigrid_config::readString(is);
+
+            const auto selection_o = sigrid_config::readString(is);
             if(selection_o == std::nullopt){
                 return false;
             }
