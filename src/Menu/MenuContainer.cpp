@@ -22,7 +22,11 @@ bool sigrid::MenuContainer::load(std::istream& is){
                 break;
             }
             else if(s == "pin:"){
-                isPinned = sigrid_config::readToggle(is);
+                auto isPinned_o = sigrid_config::readToggle(is);
+                if(isPinned_o == std::nullopt){
+                    return false;
+                }
+                isPinned = isPinned_o.value();
                 showItems = isPinned;
             }
             else if(s == "font:"){

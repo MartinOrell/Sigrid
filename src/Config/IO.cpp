@@ -33,9 +33,12 @@ std::optional<std::string> sigrid_config::readString(std::istream& is){
     return s;
 }
 
-bool sigrid_config::readToggle(std::istream& is){
+std::optional<bool> sigrid_config::readToggle(std::istream& is){
 
-    std::string s;
-    is >> s;
+    auto string_o = readString(is);
+    if(string_o == std::nullopt){
+        return std::nullopt;
+    }
+    std::string s = string_o.value();
     return s == "ON";
 }
