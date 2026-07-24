@@ -12,4 +12,6 @@ std::optional<std::string> readString(std::istream& is);
 std::optional<bool> readToggle(std::istream& is);
 std::optional<uint32_t> readHex(std::istream& is);
 
+std::optional<uint32_t> stringToHex(const std::string& s);
+
 }  // namespace sigrid_config

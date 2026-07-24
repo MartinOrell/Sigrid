@@ -1,5 +1,7 @@
 #include "Config/IO.h"
 
+#include <sstream>
+
 std::optional<std::string> sigrid_config::readString(std::istream& is){
 
     std::string s;
@@ -48,6 +50,20 @@ std::optional<uint32_t> sigrid_config::readHex(std::istream& is){
     uint32_t value;
     try{
         is >> std::hex >> value >> std::ws;
+    }
+    catch(...){
+        return std::nullopt;
+    }
+    return value;
+}
+
+std::optional<uint32_t> sigrid_config::stringToHex(const std::string& s){
+
+    uint32_t value;
+    std::stringstream ss;
+    try{
+        ss << std::hex << s;
+        ss >> value;
     }
     catch(...){
         return std::nullopt;
