@@ -64,10 +64,20 @@ bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
             break;
         }
         else if(s == "width:"){
-            is >> tileWidth;
+
+            const auto tileWidth_o = sigrid_config::readFloat(is);
+            if(tileWidth_o == std::nullopt){
+                return false;
+            }
+            tileWidth = tileWidth_o.value();
         }
         else if(s == "height:"){
-            is >> tileHeight;
+
+            const auto tileHeight_o = sigrid_config::readFloat(is);
+            if(tileHeight_o == std::nullopt){
+                return false;
+            }
+            tileHeight = tileHeight_o.value();
         }
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";

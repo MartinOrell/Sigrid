@@ -10,6 +10,7 @@ namespace sigrid_config{
 
 std::optional<std::string> readString(std::istream& is);
 std::optional<int> readInt(std::istream& is);
+std::optional<float> readFloat(std::istream& is);
 std::optional<bool> readToggle(std::istream& is);
 std::optional<uint32_t> readHex(std::istream& is);
 

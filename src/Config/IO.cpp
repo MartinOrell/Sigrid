@@ -47,6 +47,18 @@ std::optional<int> sigrid_config::readInt(std::istream& is){
     return value;
 }
 
+std::optional<float> sigrid_config::readFloat(std::istream& is){
+
+    float value;
+    try{
+        is >> value;
+    }
+    catch(...){
+        return std::nullopt;
+    }
+    return value;
+}
+
 std::optional<bool> sigrid_config::readToggle(std::istream& is){
 
     auto string_o = readString(is);
