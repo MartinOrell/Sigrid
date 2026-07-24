@@ -10,88 +10,105 @@ using namespace sigrid_config;
 
 bool MainConfigContainer::loadTileColors(std::istream& is){
 
-    auto string_o = readString(is);
-    if(string_o == std::nullopt){
-        std::cerr << "MainConfigContainer: Failed reading string for TileColors"
-            << std::endl;
-        return false;
-    }
-    std::string s = string_o.value();
-    if(s == "["){
-        while(string_o = readString(is)){
-            
-            if(string_o == std::nullopt){
-                std::cerr << "MainConfigContainer: Failed reading string for TileColor"
-                    << std::endl;
-                return false;
-            }
-            s = string_o.value();
-            if(s == "]"){
-                break;
-            }
-            sigrid::ColorContainer color;
-            color.setValue(s);
-            tileColors.push_back(color.value);
+    {
+        auto string_o = readString(is);
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for TileColors"
+                << std::endl;
+            return false;
         }
+        std::string s = string_o.value();
+
+        if(s != "["){
+            return false;
+        }
+    }
+
+    while(auto string_o = readString(is)){
+        
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for TileColor"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+
+        if(s == "]"){
+            break;
+        }
+
+        sigrid::ColorContainer color;
+        color.setValue(s);
+        tileColors.push_back(color.value);
     }
     return true;
 }
 
 bool MainConfigContainer::loadArrowColors(std::istream& is){
 
-    auto string_o = readString(is);
-    if(string_o == std::nullopt){
-        std::cerr << "MainConfigContainer: Failed reading string for ArrowColors"
-            << std::endl;
-        return false;
-    }
-    std::string s = string_o.value();
-    if(s == "["){
-        while(string_o = readString(is)){
-            
-            if(string_o == std::nullopt){
-                std::cerr << "MainConfigContainer: Failed reading string for ArrowColor"
-                    << std::endl;
-                return false;
-            }
-            s = string_o.value();
-            if(s == "]"){
-                break;
-            }
-            sigrid::ColorContainer color;
-            color.setValue(s);
-            arrowColors.push_back(color.value);
+    {
+        auto string_o = readString(is);
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for ArrowColors"
+                << std::endl;
+            return false;
         }
+        std::string s = string_o.value();
+
+        if(s != "["){
+            return false;
+        }
+    }
+
+    while(auto string_o = readString(is)){
+        
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for ArrowColor"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+        if(s == "]"){
+            break;
+        }
+        sigrid::ColorContainer color;
+        color.setValue(s);
+        arrowColors.push_back(color.value);
     }
     return true;
 }
 
 bool MainConfigContainer::loadPieceColors(std::istream& is){
 
-    auto string_o = readString(is);
-    if(string_o == std::nullopt){
-        std::cerr << "MainConfigContainer: Failed reading string for PieceColors"
-            << std::endl;
-        return false;
+    {
+        auto string_o = readString(is);
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for PieceColors"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+
+        if(s != "["){
+            return false;
+        }
     }
-    std::string s = string_o.value();
-    if(s == "["){
-        while(string_o = readString(is)){
-            
-            if(string_o == std::nullopt){
-                std::cerr << "MainConfigContainer: Failed reading string for PieceColor"
-                    << std::endl;
-                return false;
-            }
-            s = string_o.value();
-            if(s == "]"){
-                break;
-            }
-            else if(s == "["){
-                sigrid::PieceColor pieceColor;
-                if(pieceColor.load(is)){
-                    pieceColors.push_back(pieceColor);
-                }
+
+    while(auto string_o = readString(is)){
+        
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed reading string for PieceColor"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+        if(s == "]"){
+            break;
+        }
+        else if(s == "["){
+            sigrid::PieceColor pieceColor;
+            if(pieceColor.load(is)){
+                pieceColors.push_back(pieceColor);
             }
         }
     }
@@ -100,33 +117,38 @@ bool MainConfigContainer::loadPieceColors(std::istream& is){
 
 bool MainConfigContainer::loadPieces(std::istream& is){
 
-    auto string_o = readString(is);
-    if(string_o == std::nullopt){
-        std::cerr << "MainConfigContainer: Failed loading string for Pieces"
-            << std::endl;
-        return false;
+    {
+        auto string_o = readString(is);
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed loading string for Pieces"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+
+        if(s != "["){
+            return false;
+        }
     }
-    std::string s = string_o.value();
-    if(s == "["){
-        while(string_o = readString(is)){
-            
-            if(string_o == std::nullopt){
-                std::cerr << "MainConfigContainer: Failed loading string for Piece"
-                    << std::endl;
+
+    while(auto string_o = readString(is)){
+        
+        if(string_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed loading string for Piece"
+                << std::endl;
+            return false;
+        }
+        std::string s = string_o.value();
+        if(s == "]"){
+            break;
+        }
+        else if(s == "["){
+            sigrid::PieceContainer piece;
+            if(piece.load(is)){
+                pieces.push_back(piece);
+            }
+            else{
                 return false;
-            }
-            s = string_o.value();
-            if(s == "]"){
-                break;
-            }
-            else if(s == "["){
-                sigrid::PieceContainer piece;
-                if(piece.load(is)){
-                    pieces.push_back(piece);
-                }
-                else{
-                    return false;
-                }
             }
         }
     }
@@ -178,6 +200,7 @@ bool MainConfigContainer::load(const std::string& filename){
             middleClickTool.load(ifs);
         }
         else if(key == "resetFilename:"){
+
             auto resetBoardFilename_o = readString(ifs);
             if(resetBoardFilename_o == std::nullopt){
                 return false;
@@ -185,6 +208,7 @@ bool MainConfigContainer::load(const std::string& filename){
             resetBoardFilename = resetBoardFilename_o.value();
         }
         else if(key == "defaultImageFilename:"){
+
             auto defaultBoardImageFilename_o = readString(ifs);
             if(defaultBoardImageFilename_o == std::nullopt){
                 return false;
@@ -192,6 +216,7 @@ bool MainConfigContainer::load(const std::string& filename){
             defaultBoardImageFilename = defaultBoardImageFilename_o.value();
         }
         else if(key == "boardFilename:"){
+            
             auto boardFilename_o = readString(ifs);
             if(boardFilename_o == std::nullopt){
                 return false;
