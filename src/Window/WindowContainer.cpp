@@ -21,13 +21,28 @@ bool sigrid::WindowContainer::load(std::istream& is){
             break;
         }
         else if (s == "width:"){
-            is >> width;
+
+            const auto width_o = sigrid_config::readInt(is);
+            if(width_o == std::nullopt){
+                return false;
+            }
+            width = width_o.value();
         }
         else if(s == "height:"){
-            is >> height;
+
+            const auto height_o = sigrid_config::readInt(is);
+            if(height_o == std::nullopt){
+                return false;
+            }
+            height = height_o.value();
         }
         else if(s == "name:"){
-            is >> name;
+
+            const auto name_o = sigrid_config::readString(is);
+            if(name_o == std::nullopt){
+                return false;
+            }
+            name = name_o.value();
         }
         else{
             std::cerr << "WindowContainer: Unknown key: \"" << s << "\"";
