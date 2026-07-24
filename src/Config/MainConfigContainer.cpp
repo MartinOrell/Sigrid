@@ -11,27 +11,27 @@ using namespace sigrid_config;
 bool MainConfigContainer::loadTileColors(std::istream& is){
 
     {
-        auto string_o = readString(is);
+        const auto string_o = readString(is);
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for TileColors"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = readString(is)){
+    while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for TileColor"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s == "]"){
             break;
@@ -47,27 +47,28 @@ bool MainConfigContainer::loadTileColors(std::istream& is){
 bool MainConfigContainer::loadArrowColors(std::istream& is){
 
     {
-        auto string_o = readString(is);
+        const auto string_o = readString(is);
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for ArrowColors"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = readString(is)){
+    while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for ArrowColor"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
+
         if(s == "]"){
             break;
         }
@@ -81,27 +82,28 @@ bool MainConfigContainer::loadArrowColors(std::istream& is){
 bool MainConfigContainer::loadPieceColors(std::istream& is){
 
     {
-        auto string_o = readString(is);
+        const auto string_o = readString(is);
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for PieceColors"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = readString(is)){
+    while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed reading string for PieceColor"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
+
         if(s == "]"){
             break;
         }
@@ -118,27 +120,28 @@ bool MainConfigContainer::loadPieceColors(std::istream& is){
 bool MainConfigContainer::loadPieces(std::istream& is){
 
     {
-        auto string_o = readString(is);
+        const auto string_o = readString(is);
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed loading string for Pieces"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
 
         if(s != "["){
             return false;
         }
     }
 
-    while(auto string_o = readString(is)){
+    while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
             std::cerr << "MainConfigContainer: Failed loading string for Piece"
                 << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        const std::string& s = string_o.value();
+
         if(s == "]"){
             break;
         }
@@ -201,7 +204,7 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "resetFilename:"){
 
-            auto resetBoardFilename_o = readString(ifs);
+            const auto resetBoardFilename_o = readString(ifs);
             if(resetBoardFilename_o == std::nullopt){
                 return false;
             }
@@ -209,15 +212,15 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "defaultImageFilename:"){
 
-            auto defaultBoardImageFilename_o = readString(ifs);
+            const auto defaultBoardImageFilename_o = readString(ifs);
             if(defaultBoardImageFilename_o == std::nullopt){
                 return false;
             }
             defaultBoardImageFilename = defaultBoardImageFilename_o.value();
         }
         else if(key == "boardFilename:"){
-            
-            auto boardFilename_o = readString(ifs);
+
+            const auto boardFilename_o = readString(ifs);
             if(boardFilename_o == std::nullopt){
                 return false;
             }
