@@ -17,7 +17,7 @@ class ColorManager{
     ColorManager& operator=(const ColorManager&) = default;
     ColorManager& operator=(ColorManager&&) = default;
 
-    void setColors(const std::vector<uint32_t>& colors);
+    void setColors(const sigrid_list::Vector<uint32_t>& colors);
 
     std::optional<sf::Color> getSolidColor(const int colorId) const;
     std::optional<sf::Color> getTransparentColor(const int colorId) const;

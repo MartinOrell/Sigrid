@@ -1,13 +1,18 @@
 #pragma once
 
+#include <cstdint>
+
+#include <map>
+
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
 #include "List/Vector.h"
 #include "Coord/CoordPair.h"
-#include <SFML/Graphics/Color.hpp>
+
 #include "Entity/Piece/PieceColor.h"
-#include <map>
 #include "Entity/Piece/PieceIdentifier.h"
 #include "Entity/Piece/GraphicPiece.h"
-#include <SFML/Graphics/Texture.hpp>
 #include "Entity/Tile/LogicTile.h"
 #include "Entity/Tile/GraphicTile.h"
 #include "Board/Board.h"
@@ -16,6 +21,7 @@
 // Add more templates below to support more types
 template class sigrid_list::Vector<int>;
 template class sigrid_list::Vector<float>;
+template class sigrid_list::Vector<uint32_t>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sf::Color>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
