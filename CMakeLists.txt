@@ -23,6 +23,7 @@ set(SRC_FILES
     src/Window/ToolWindow/ToolWindow.cpp
     src/Board/BoardDataContainer.cpp
     src/Board/BoardDesignContainer.cpp
+    src/Board/BoardLabelContainer.cpp
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp

@@ -31,7 +31,6 @@ struct BoardDesignContainer{
     bool loadCoordLabels(std::istream& is);
     bool loadBorder(std::istream& is);
     bool loadTurnToken(std::istream& is);
-    std::optional<sigrid::BoardLabelContainer> readLabel(std::istream& is);
 };
 
 }  // namespace sigrid
