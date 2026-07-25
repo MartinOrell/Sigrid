@@ -24,7 +24,7 @@ struct ToolPickerContainer{
     std::string defaultPieceNotation;
     sigrid_list::Vector<std::string> toolNames;
     sigrid_list::Vector<int> colorToolIds;
-    std::vector<std::string> pieceNotations;
+    sigrid_list::Vector<std::string> pieceNotations;
     int defaultArrowColorId;
     int defaultCircleColorId;
 
