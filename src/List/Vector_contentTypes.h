@@ -19,6 +19,7 @@
 #include "Entity/Tile/GraphicTile.h"
 #include "Board/Board.h"
 #include "Board/BoardLabelContainer.h"
+#include "Menu/MenuContainer.h"
 
 // This class is only included by Vector.cpp
 // Add more templates below to support more types
@@ -36,3 +37,4 @@ template class sigrid_list::Vector<sigrid::LogicTile>;
 template class sigrid_list::Vector<sigrid::GraphicTile>;
 template class sigrid_list::Vector<sigrid::Board>;
 template class sigrid_list::Vector<sigrid::BoardLabelContainer>;
+template class sigrid_list::Vector<sigrid::MenuItemContainer>;

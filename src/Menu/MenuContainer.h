@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include <vector>
-
 #include "List/Vector.h"
 
 namespace sigrid{
@@ -22,7 +20,7 @@ struct MenuContainer{
     std::string fontName;
     std::string title;
     sigrid_list::Vector<std::string> headerNames;
-    std::vector<MenuItemContainer> menuItems;
+    sigrid_list::Vector<MenuItemContainer> menuItems;
     bool isPinned;
     bool showItems;
 
