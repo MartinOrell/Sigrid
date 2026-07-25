@@ -21,7 +21,7 @@ struct MenuContainer{
 
     std::string fontName;
     std::string title;
-    std::vector<std::string> headerNames;
+    sigrid_list::Vector<std::string> headerNames;
     std::vector<MenuItemContainer> menuItems;
     bool isPinned;
     bool showItems;
