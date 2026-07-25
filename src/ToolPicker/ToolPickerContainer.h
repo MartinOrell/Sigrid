@@ -29,7 +29,6 @@ struct ToolPickerContainer{
     int defaultCircleColorId;
 
   private:
-    bool loadMiscBlock(std::istream& is);
     bool loadColorBlock(std::istream& is);
     bool loadPieceBlocks(std::istream& is);
     bool loadMiscTools(std::istream& is);

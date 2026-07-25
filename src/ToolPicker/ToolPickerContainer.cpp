@@ -46,7 +46,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "MiscBlock:"){
 
-            if(!loadMiscBlock(is)){
+            if(!miscToolBlock.load(is)){
                 return false;
             };
         }
@@ -101,63 +101,6 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         else{
             std::cerr << "ToolPickerContainer: Unknown key: \"" << s << "\"";
             std::cerr << ". Failed to load ToolPicker" << std::endl;
-            return false;
-        }
-    }
-    return true;
-}
-
-bool sigrid::ToolPickerContainer::loadMiscBlock(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "visibility:"){
-
-            const auto isVisible_o = sigrid_config::readVisibility(is);
-            if(isVisible_o == std::nullopt){
-                return false;
-            }
-            //Currently not used
-        }
-        else if(s == "position:"){
-
-            sigrid_coord::Coord coord;
-            if(!coord.load(is)){
-                return false;
-            }
-            miscToolBlock.coord = std::move(coord);
-        }
-        else if(s == "columns:"){
-
-            const auto columns_o = sigrid_config::readInt(is);
-            if(columns_o == std::nullopt){
-                return false;
-            }
-            miscToolBlock.columns = columns_o.value();
-        }
-        else if(s == "rows:"){
-
-            const auto rows_o = sigrid_config::readInt(is);
-            if(rows_o == std::nullopt){
-                return false;
-            }
-            miscToolBlock.rows = rows_o.value();
-        }
-        else{
-            std::cerr << "ToolPickerContainer: Unknown key: \"" << s << "\"";
-            std::cerr << ". Failed to load Misc block" << std::endl;
             return false;
         }
     }

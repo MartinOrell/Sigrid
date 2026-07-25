@@ -13,7 +13,10 @@ bool sigrid_coord::CoordBlock::load(std::istream& is){
         }
         const std::string& s = string_o.value();
 
-        if(s == "]"){
+        if(s == "["){
+            continue;
+        }
+        else if(s == "]"){
             break;
         }
         else if(s == "visibility:"){
