@@ -14,7 +14,7 @@ struct ToolPickerContainer{
 
     bool load(std::istream& is);
 
-    std::vector<int> tileColorIds;
+    sigrid_list::Vector<int> tileColorIds;
     int columns;
     int rows;
     ToolBlockContainer miscToolBlock;

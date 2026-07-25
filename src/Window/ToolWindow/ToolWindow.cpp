@@ -39,7 +39,8 @@ void ToolWindow::init(){
     BoardDataContainer boardData;
     boardData.columns = 1;
     boardData.rows = 1;
-    boardData.repeatTileColorIds = std::vector<int>{0};
+    boardData.repeatTileColorIds.clear();
+    boardData.repeatTileColorIds.push_back(0);
 
     BoardDesignContainer boardDesign;
     {

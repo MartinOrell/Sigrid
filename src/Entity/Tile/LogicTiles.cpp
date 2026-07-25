@@ -12,7 +12,7 @@ void LogicTiles::setNumRows(const int& numRows){
     m_tiles.setNumRows(numRows);
 }
 
-void LogicTiles::setInsertPattern(const std::vector<int>& repeatTileColorIds){
+void LogicTiles::setInsertPattern(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     sigrid_list::Vector<LogicTile> insertPattern;
     for(const auto& color: repeatTileColorIds){

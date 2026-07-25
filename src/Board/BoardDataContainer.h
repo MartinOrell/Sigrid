@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "List/Vector.h"
 #include "Entity/Piece/PieceDataContainer.h"
 #include "Entity/Shape/Circle/CircleDataContainer.h"
 
@@ -14,7 +15,7 @@ struct BoardDataContainer{
 
     int columns;
     int rows;
-    std::vector<int> repeatTileColorIds;
+    sigrid_list::Vector<int> repeatTileColorIds;
     std::vector<PieceDataContainer> logicPieces;
     std::vector<CircleDataContainer> logicCircles;
     std::string filename;

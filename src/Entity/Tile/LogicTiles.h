@@ -1,8 +1,8 @@
 #pragma once
 
 #include <optional>
-#include <vector>
 
+#include "list/Vector.h"
 #include "Coord/Coord.h"
 #include "List/AutoInsertMappedGrid.h"
 #include "Entity/Tile/LogicTile.h"
@@ -21,7 +21,7 @@ class LogicTiles{
 
     void setNumColumns(const int& numColumns);
     void setNumRows(const int& numRows);
-    void setInsertPattern(const std::vector<int>& repeatTileColorIds);
+    void setInsertPattern(const sigrid_list::Vector<int>& repeatTileColorIds);
     void insertAllTiles();
 
     void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
