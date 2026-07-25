@@ -45,13 +45,22 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             rows = rows_o.value();
         }
         else if(s == "MiscBlock:"){
-            loadMiscBlock(is);
+
+            if(!loadMiscBlock(is)){
+                return false;
+            };
         }
         else if(s == "ColorBlock:"){
-            loadColorBlock(is);
+
+            if(!loadColorBlock(is)){
+                return false;
+            }
         }
         else if(s == "PieceBlocks:"){
-            loadPieceBlocks(is);
+
+            if(!loadPieceBlocks(is)){
+                return false;
+            }
         }
         else if(s == "MiscTools:"){
             loadMiscTools(is);
@@ -230,68 +239,14 @@ bool sigrid::ToolPickerContainer::loadPieceBlocks(std::istream& is){
         }
         else if(s == "["){
 
-            auto pieceBlock_o = readPieceBlock(is);
-            if(pieceBlock_o == std::nullopt){
+            sigrid_coord::CoordBlock pieceBlock;
+            if(!pieceBlock.load(is)){
                 return false;
             }
-            sigrid_coord::CoordBlock& pieceBlock = pieceBlock_o.value();
             pieceBlocks.push_back(std::move(pieceBlock));
         }
     }
     return true;
-}
-
-std::optional<sigrid_coord::CoordBlock> sigrid::ToolPickerContainer::readPieceBlock(std::istream& is){
-
-    sigrid_coord::CoordBlock pieceBlock;
-    while(const auto string_o = sigrid_config::readString(is)){
-
-        if(string_o == std::nullopt){
-            return std::nullopt;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "visibility:"){
-
-            const auto isVisible_o = sigrid_config::readVisibility(is);
-            if(isVisible_o == std::nullopt){
-                return std::nullopt;
-            }
-            //Currently not used
-        }
-        else if(s == "position:"){
-
-            sigrid_coord::Coord coord;
-            if(!coord.load(is)){
-                return std::nullopt;
-            }
-            pieceBlock.coord = std::move(coord);
-        }
-        else if(s == "columns:"){
-
-            const auto columns_o = sigrid_config::readInt(is);
-            if(columns_o == std::nullopt){
-                return std::nullopt;
-            }
-            pieceBlock.columns = columns_o.value();
-        }
-        else if(s == "rows:"){
-
-            const auto rows_o = sigrid_config::readInt(is);
-            if(rows_o == std::nullopt){
-                return std::nullopt;
-            }
-            pieceBlock.rows = rows_o.value();
-        }
-        else{
-            std::cerr << "ToolPickerContainer: Unknown key: \"" << s << "\"";
-            std::cerr << ". Failed to load PieceBlock" << std::endl;
-        }
-    }
-    return pieceBlock;
 }
 
 bool sigrid::ToolPickerContainer::loadMiscTools(std::istream& is){

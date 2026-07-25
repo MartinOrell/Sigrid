@@ -30,6 +30,7 @@ set(SRC_FILES
     src/Board/BoardLabels.cpp
     src/Coord/Coord.cpp
     src/Coord/CoordPair.cpp
+    src/Coord/CoordBlock.cpp
     src/Layout/LayoutGrid.cpp
     src/Font/FontManager.cpp
     src/Entity/Piece/PieceContainer.cpp
