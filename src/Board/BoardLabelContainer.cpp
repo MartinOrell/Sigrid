@@ -16,9 +16,9 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
         if(s == "]"){
             break;
         }
-        else if(s == "position:"){
+        else if(s == "location:"){
 
-            if(!loadPosition(is)){
+            if(!loadLocation(is)){
                 return false;
             }
         }
@@ -54,32 +54,34 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
     return true;
 }
 
-bool sigrid::BoardLabelContainer::loadPosition(std::istream& is){
+// Location can be "outside/inside left/right/top/bottom"
+// Example: "outside left"
+bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
 
-    const auto positionString_o = sigrid_config::readString(is);
-    if(positionString_o == std::nullopt){
+    const auto location_o = sigrid_config::readString(is);
+    if(location_o == std::nullopt){
         return false;
     }
-    const std::string& positionString = positionString_o.value();
+    const std::string& location = location_o.value();
 
-    isInside = positionString.substr(0,6) == "inside";
-    auto spacePos = positionString.find(' ');
+    isInside = location.substr(0,6) == "inside";
+    auto spacePos = location.find(' ');
     if(spacePos != std::string::npos){
-        std::string positionString2 = positionString.substr(spacePos+1);
-        if(positionString2 == "left"){
+        std::string orientation = location.substr(spacePos+1);
+        if(orientation == "left"){
             position = 0;
         }
-        else if(positionString2 == "right"){
+        else if(orientation == "right"){
             position = 1;
         }
-        else if(positionString2 == "top"){
+        else if(orientation == "top"){
             position = 2;
         }
-        else if(positionString2 == "bottom"){
+        else if(orientation == "bottom"){
             position = 3;
         }
         else{
-            std::cerr << "BoardLabelContainer: Unknown label position: " << positionString2 << std::endl;
+            std::cerr << "BoardLabelContainer: Unknown label orientation: " << orientation << std::endl;
             return false;
         }
     }

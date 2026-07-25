@@ -332,37 +332,37 @@ BoardStyle: [
   ]
   CoordLabels: [
     [
-      position: "outside left"
+      location: "outside left"
       visibility: Visible
       size: 40%
       font: res/fonts/arial.ttf
     ]
     [
-      position: "outside right"
+      location: "outside right"
       visibility: Hidden
       size: 40%
       font: res/fonts/arial.ttf
     ]
     [
-      position: "outside top"
+      location: "outside top"
       visibility: Hidden
       size: 40%
       font: res/fonts/arial.ttf
     ]
     [
-      position: "outside bottom"
+      location: "outside bottom"
       visibility: Visible
       size: 40%
       font: res/fonts/arial.ttf
     ]
     [
-      position: "inside left"
+      location: "inside left"
       visibility: Hidden
       size: 40%
       font: res/fonts/arial.ttf
     ]
     [
-      position: "inside bottom"
+      location: "inside bottom"
       visibility: Hidden
       size: 40%
       font: res/fonts/arial.ttf
