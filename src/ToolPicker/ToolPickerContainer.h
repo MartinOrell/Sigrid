@@ -6,6 +6,7 @@
 #include <optional>
 
 #include "Coord/CoordBlock.h"
+#include "ToolPicker/ToolBlockContainer.h"
 
 namespace sigrid{
 
@@ -17,10 +18,9 @@ struct ToolPickerContainer{
     int columns;
     int rows;
     sigrid_coord::CoordBlock miscToolBlock;
-    sigrid_coord::CoordBlock colorBlock;
+    ToolBlockContainer colorBlock;
     std::vector<sigrid_coord::CoordBlock> pieceBlocks;
     bool show;
-    bool showColors;
     std::string defaultPieceNotation;
     std::vector<std::string> toolNames;
     std::vector<int> colorToolIds;
@@ -29,7 +29,6 @@ struct ToolPickerContainer{
     int defaultCircleColorId;
 
   private:
-    bool loadColorBlock(std::istream& is);
     bool loadPieceBlocks(std::istream& is);
     bool loadMiscTools(std::istream& is);
     bool loadToolColors(std::istream& is);

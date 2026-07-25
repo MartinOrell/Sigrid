@@ -42,6 +42,7 @@ set(SRC_FILES
     src/Tool/ToolContainer.cpp
     src/Tool/Tool.cpp
     src/ToolPicker/ToolPickerContainer.cpp
+    src/ToolPicker/ToolBlockContainer.cpp
     src/ToolPicker/ToolPickerWindow.cpp
     src/Color/ColorContainer.cpp
     src/Color/ColorManager.cpp

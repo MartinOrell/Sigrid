@@ -35,11 +35,11 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
 
     m_columns = data.columns;
     m_rows = data.rows;
-    m_showColors = data.showColors;
+    m_showColors = data.colorBlock.isVisible;
     m_colorIds = data.colorToolIds;
     m_pieceNotation = data.defaultPieceNotation;
     m_miscBlock = data.miscToolBlock;
-    m_colorBlock = data.colorBlock;
+    m_colorBlock = data.colorBlock.block;
     m_pieceBlocks = data.pieceBlocks;
     m_defaultArrowColorId = data.defaultArrowColorId;
     m_defaultCircleColorId = data.defaultCircleColorId;
