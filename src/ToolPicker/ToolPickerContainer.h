@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <istream>
-#include <optional>
 
+#include "List/Vector.h"
 #include "Coord/CoordBlock.h"
 #include "ToolPicker/ToolBlockContainer.h"
 
@@ -22,7 +22,7 @@ struct ToolPickerContainer{
     std::vector<ToolBlockContainer> pieceBlocks;
     bool show;
     std::string defaultPieceNotation;
-    std::vector<std::string> toolNames;
+    sigrid_list::Vector<std::string> toolNames;
     std::vector<int> colorToolIds;
     std::vector<std::string> pieceNotations;
     int defaultArrowColorId;
