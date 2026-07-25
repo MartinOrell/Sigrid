@@ -172,8 +172,12 @@ bool sigrid::ToolPickerContainer::loadToolColors(std::istream& is){
         if(s == "]"){
             break;
         }
-        int colorId = std::stoi(s);
-        colorToolIds.push_back(colorId);
+        
+        auto colorId_o = sigrid_config::stringToInt(s);
+        if(colorId_o == std::nullopt){
+            return false;
+        }
+        colorToolIds.push_back(std::move(colorId_o.value()));
     }
     return true;
 }
@@ -215,8 +219,12 @@ bool sigrid::ToolPickerContainer::loadToolPickerTileColors(std::istream& is){
         if(s == "]"){
             break;
         }
-        int colorId = std::stoi(s);
-        tileColorIds.push_back(colorId);
+
+        auto colorId_o = sigrid_config::stringToInt(s);
+        if(colorId_o == std::nullopt){
+            return false;
+        }
+        tileColorIds.push_back(std::move(colorId_o.value()));
     }
     return true;
 }

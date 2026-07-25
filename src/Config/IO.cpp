@@ -103,6 +103,18 @@ std::optional<uint32_t> sigrid_config::readHex(std::istream& is){
     return value;
 }
 
+std::optional<int> sigrid_config::stringToInt(const std::string& s){
+
+    int value;
+    try{
+        value = std::stoi(s);
+    }
+    catch(...){
+        return std::nullopt;
+    }
+    return value;
+}
+
 std::optional<uint32_t> sigrid_config::stringToHex(const std::string& s){
 
     uint32_t value;
