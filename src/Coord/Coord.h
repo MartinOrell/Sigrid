@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <istream>
 
 namespace sigrid_coord{
 
@@ -15,7 +16,11 @@ struct Coord{
     bool operator==(const Coord& rhs) const;
     bool operator!=(const Coord& rhs) const;
 
+    bool set(const std::string& notation);
+
     std::string getNotation() const;
+
+    bool load(std::istream& is);
 
     int x;
     int y;

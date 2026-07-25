@@ -124,12 +124,11 @@ bool sigrid::ToolPickerContainer::loadMiscBlock(std::istream& is){
         }
         else if(s == "position:"){
 
-            const auto positionString_o = sigrid_config::readString(is);
-            if(positionString_o == std::nullopt){
+            sigrid_coord::Coord coord;
+            if(!coord.load(is)){
                 return false;
             }
-            const std::string& position = positionString_o.value();
-            miscToolBlock.coord = sigrid_coord::Coord(position);
+            miscToolBlock.coord = std::move(coord);
         }
         else if(s == "columns:"){
 
@@ -182,13 +181,11 @@ bool sigrid::ToolPickerContainer::loadColorBlock(std::istream& is){
         }
         else if(s == "position:"){
 
-            const auto positionString_o = sigrid_config::readString(is);
-            if(positionString_o == std::nullopt){
+            sigrid_coord::Coord coord;
+            if(!coord.load(is)){
                 return false;
             }
-            const std::string& position = positionString_o.value();
-
-            colorBlock.coord = sigrid_coord::Coord(position);
+            colorBlock.coord = std::move(coord);
         }
         else if(s == "columns:"){
 
@@ -267,12 +264,11 @@ std::optional<sigrid_coord::CoordBlock> sigrid::ToolPickerContainer::readPieceBl
         }
         else if(s == "position:"){
 
-            const auto positionString_o = sigrid_config::readString(is);
-            if(positionString_o == std::nullopt){
+            sigrid_coord::Coord coord;
+            if(!coord.load(is)){
                 return std::nullopt;
             }
-            const std::string& position = positionString_o.value();
-            pieceBlock.coord = sigrid_coord::Coord{position};
+            pieceBlock.coord = std::move(coord);
         }
         else if(s == "columns:"){
 
