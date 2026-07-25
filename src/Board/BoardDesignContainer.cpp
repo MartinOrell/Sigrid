@@ -180,12 +180,11 @@ bool sigrid::BoardDesignContainer::loadCoordLabels(std::istream& is){
         }
         else if(s == "["){
 
-            const auto label_o = readLabel(is);
+            auto label_o = readLabel(is);
             if(label_o == std::nullopt){
                 return false;
             }
-            sigrid::BoardLabelContainer label = label_o.value();
-            labels.push_back(label);
+            labels.push_back(std::move(label_o.value()));
         }
     }
     return true;
