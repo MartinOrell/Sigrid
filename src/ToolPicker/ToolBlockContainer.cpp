@@ -6,10 +6,6 @@
 
 bool sigrid::ToolBlockContainer::load(std::istream& is){
 
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
     while(const auto string_o = sigrid_config::readString(is)){
 
         if(string_o == std::nullopt){
@@ -17,7 +13,10 @@ bool sigrid::ToolBlockContainer::load(std::istream& is){
         }
         const std::string& s = string_o.value();
 
-        if(s == "]"){
+        if(s == "["){
+            continue;
+        }
+        else if(s == "]"){
             break;
         }
         else if(s == "visibility:"){

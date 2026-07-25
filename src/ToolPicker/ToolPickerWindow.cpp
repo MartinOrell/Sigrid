@@ -38,11 +38,14 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
     m_showColors = data.colorBlock.isVisible;
     m_colorIds = data.colorToolIds;
     m_pieceNotation = data.defaultPieceNotation;
-    m_miscBlock = data.miscToolBlock;
+    m_miscBlock = data.miscToolBlock.block;
     m_colorBlock = data.colorBlock.block;
-    m_pieceBlocks = data.pieceBlocks;
     m_defaultArrowColorId = data.defaultArrowColorId;
     m_defaultCircleColorId = data.defaultCircleColorId;
+
+    for(auto& pieceBlock : data.pieceBlocks){
+        m_pieceBlocks.push_back(pieceBlock.block);
+    }
 
     if(data.show){
         m_texture.show();

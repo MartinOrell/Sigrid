@@ -125,7 +125,7 @@ bool sigrid::ToolPickerContainer::loadPieceBlocks(std::istream& is){
         }
         else if(s == "["){
 
-            sigrid_coord::CoordBlock pieceBlock;
+            ToolBlockContainer pieceBlock;
             if(!pieceBlock.load(is)){
                 return false;
             }
