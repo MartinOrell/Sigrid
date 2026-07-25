@@ -12,7 +12,7 @@ struct MenuItemContainer{
     int headerId;
     std::string keyName;
     sigrid_list::Vector<std::string> displayNames;
-    std::vector<std::string> actionNames;
+    sigrid_list::Vector<std::string> actionNames;
 };
 
 struct MenuContainer{

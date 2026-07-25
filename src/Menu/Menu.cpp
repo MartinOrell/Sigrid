@@ -24,7 +24,13 @@ bool Menu::load(const MenuContainer& menuData){
     for(const auto& menuItem : menuData.menuItems){
         if(menuItem.displayNames.size() == 1){
 
-            auto action_o = sigrid_action::getAction(menuItem.actionNames.at(0));
+            auto actionName_o = menuItem.actionNames.at(0);
+            if(actionName_o == std::nullopt){
+                return false;
+            }
+            const std::string& actionName = actionName_o.value().get();
+
+            auto action_o = sigrid_action::getAction(actionName);
             if(action_o == std::nullopt){
                 continue;
             }
@@ -39,13 +45,26 @@ bool Menu::load(const MenuContainer& menuData){
         }
         else if(menuItem.displayNames.size() == 2){
 
-            auto actionA_o = sigrid_action::getAction(menuItem.actionNames.at(0));
-            if(actionA_o == std::nullopt){
-                continue;
+            auto actionAName_o = menuItem.actionNames.at(0);
+            if(actionAName_o == std::nullopt){
+                return false;
             }
-            auto actionB_o = sigrid_action::getAction(menuItem.actionNames.at(1));
+            const std::string& actionAName = actionAName_o.value().get();
+
+            auto actionA_o = sigrid_action::getAction(actionAName);
+            if(actionA_o == std::nullopt){
+                return false;
+            }
+
+            auto actionBName_o = menuItem.actionNames.at(1);
+            if(actionBName_o == std::nullopt){
+                return false;
+            }
+            const std::string& actionBName = actionBName_o.value().get();
+
+            auto actionB_o = sigrid_action::getAction(actionBName);
             if(actionB_o == std::nullopt){
-                continue;
+                return false;
             }
             auto& actionA = actionA_o.value();
             auto& actionB = actionB_o.value();
