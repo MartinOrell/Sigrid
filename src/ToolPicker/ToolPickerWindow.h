@@ -126,7 +126,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     bool m_showColors = false;
 
-    std::vector<int> m_colorIds;
+    sigrid_list::Vector<int> m_colorIds;
 
     sigrid_coord::CoordBlock m_miscBlock;
     sigrid_coord::CoordBlock m_colorBlock;
