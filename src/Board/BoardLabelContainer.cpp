@@ -65,25 +65,29 @@ bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
     const std::string& location = location_o.value();
 
     isInside = location.substr(0,6) == "inside";
+    
     auto spacePos = location.find(' ');
-    if(spacePos != std::string::npos){
-        std::string orientation = location.substr(spacePos+1);
-        if(orientation == "left"){
-            position = 0;
-        }
-        else if(orientation == "right"){
-            position = 1;
-        }
-        else if(orientation == "top"){
-            position = 2;
-        }
-        else if(orientation == "bottom"){
-            position = 3;
-        }
-        else{
-            std::cerr << "BoardLabelContainer: Unknown label orientation: " << orientation << std::endl;
-            return false;
-        }
+    if(spacePos == std::string::npos){
+        return false;
+    }
+    
+    std::string orientation = location.substr(spacePos+1);
+
+    if(orientation == "left"){
+        position = 0;
+    }
+    else if(orientation == "right"){
+        position = 1;
+    }
+    else if(orientation == "top"){
+        position = 2;
+    }
+    else if(orientation == "bottom"){
+        position = 3;
+    }
+    else{
+        std::cerr << "BoardLabelContainer: Unknown label orientation: " << orientation << std::endl;
+        return false;
     }
     return true;
 }
