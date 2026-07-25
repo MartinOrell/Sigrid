@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <istream>
 
 #include "List/Vector.h"
@@ -19,7 +18,7 @@ struct ToolPickerContainer{
     int rows;
     ToolBlockContainer miscToolBlock;
     ToolBlockContainer colorBlock;
-    std::vector<ToolBlockContainer> pieceBlocks;
+    sigrid_list::Vector<ToolBlockContainer> pieceBlocks;
     bool show;
     std::string defaultPieceNotation;
     sigrid_list::Vector<std::string> toolNames;

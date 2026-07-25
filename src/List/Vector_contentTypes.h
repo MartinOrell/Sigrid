@@ -20,6 +20,7 @@
 #include "Board/Board.h"
 #include "Board/BoardLabelContainer.h"
 #include "Menu/MenuContainer.h"
+#include "ToolPicker/ToolBlockContainer.h"
 
 // This class is only included by Vector.cpp
 // Add more templates below to support more types
@@ -38,3 +39,4 @@ template class sigrid_list::Vector<sigrid::GraphicTile>;
 template class sigrid_list::Vector<sigrid::Board>;
 template class sigrid_list::Vector<sigrid::BoardLabelContainer>;
 template class sigrid_list::Vector<sigrid::MenuItemContainer>;
+template class sigrid_list::Vector<sigrid::ToolBlockContainer>;
