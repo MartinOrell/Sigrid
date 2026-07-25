@@ -4,12 +4,14 @@
 
 #include <vector>
 
+#include "List/Vector.h"
+
 namespace sigrid{
 
 struct MenuItemContainer{
     int headerId;
     std::string keyName;
-    std::vector<std::string> displayNames;
+    sigrid_list::Vector<std::string> displayNames;
     std::vector<std::string> actionNames;
 };
 

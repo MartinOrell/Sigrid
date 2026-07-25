@@ -11,7 +11,7 @@ void Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-void Menu::load(const MenuContainer& menuData){
+bool Menu::load(const MenuContainer& menuData){
     m_isPinned = menuData.isPinned;
     m_showItems = menuData.showItems;
     m_fontFilename = menuData.fontName;
@@ -30,7 +30,12 @@ void Menu::load(const MenuContainer& menuData){
             }
             auto& action = action_o.value();
 
-            addItem(menuItem.displayNames.at(0), menuItem.headerId, action);
+            auto displayName_o = menuItem.displayNames.at(0);
+            if(displayName_o == std::nullopt){
+                return false;
+            }
+            std::string displayName = displayName_o.value().get();
+            addItem(std::move(displayName), menuItem.headerId, action);
         }
         else if(menuItem.displayNames.size() == 2){
 
@@ -45,12 +50,22 @@ void Menu::load(const MenuContainer& menuData){
             auto& actionA = actionA_o.value();
             auto& actionB = actionB_o.value();
 
+            auto activeDisplayName_o = menuItem.displayNames.at(0);
+            if(activeDisplayName_o == std::nullopt){
+                return false;
+            }
+
+            auto inactiveDisplayName_o = menuItem.displayNames.at(1);
+            if(inactiveDisplayName_o == std::nullopt){
+                return false;
+            }
+
             addToggleItem(
                 menuItem.keyName,
                 menuItem.headerId,
-                menuItem.displayNames.at(0),
+                std::move(activeDisplayName_o.value().get()),
                 actionA,
-                menuItem.displayNames.at(1),
+                std::move(inactiveDisplayName_o.value().get()),
                 actionB
             );
         }
@@ -59,6 +74,7 @@ void Menu::load(const MenuContainer& menuData){
                 << menuItem.displayNames.size() << " states" << std::endl;
         }
     }
+    return true;
 }
 
 void Menu::createGraphic(const sf::Vector2f& size){
