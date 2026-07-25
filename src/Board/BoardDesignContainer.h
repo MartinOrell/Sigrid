@@ -1,9 +1,8 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <istream>
-#include <optional>
+
+#include "List/Vector.h"
 
 #include "Board/BoardLabelContainer.h"
 
@@ -18,7 +17,7 @@ struct BoardDesignContainer{
     float arrowThickness = 0.f;
     float arrowHeadSize = 0.f;
     float circleDiameter = 0.f;
-    std::vector<BoardLabelContainer> labels;
+    sigrid_list::Vector<BoardLabelContainer> labels;
     bool border = false;
     float borderThickness = 0.f;
     bool turnToken = false;
