@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Config/IO.h"
+#include "Config/LoadContainers.h"
 
 bool sigrid::BoardDesignContainer::load(std::istream& is){
 
@@ -30,7 +31,7 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
             loadCircle(is);
         }
         else if(s == "CoordLabels:"){
-            loadCoordLabels(is);
+            sigrid_config::loadContainers<BoardLabelContainer>(labels, is);
         }
         else if(s == "Border:"){
             loadBorder(is);
@@ -157,34 +158,6 @@ bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
             std::cerr << ". Failed to load circle" << std::endl;
             return false;
-        }
-    }
-    return true;
-}
-
-bool sigrid::BoardDesignContainer::loadCoordLabels(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-    
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "["){
-
-            BoardLabelContainer newLabel;
-            if(!newLabel.load(is)){
-                return false;
-            }
-            labels.push_back(std::move(newLabel));
         }
     }
     return true;

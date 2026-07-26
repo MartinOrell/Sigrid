@@ -27,7 +27,6 @@ struct BoardDesignContainer{
     bool loadTile(std::istream& is);
     bool loadArrow(std::istream& is);
     bool loadCircle(std::istream& is);
-    bool loadCoordLabels(std::istream& is);
     bool loadBorder(std::istream& is);
     bool loadTurnToken(std::istream& is);
 };
