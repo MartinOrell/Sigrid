@@ -60,34 +60,6 @@ bool MainConfigContainer::loadArrowColors(std::istream& is){
     return true;
 }
 
-bool MainConfigContainer::loadPieceColors(std::istream& is){
-
-    if(readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = readString(is)){
-        
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for PieceColor"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "["){
-            sigrid::PieceColor pieceColor;
-            if(pieceColor.load(is)){
-                pieceColors.push_back(pieceColor);
-            }
-        }
-    }
-    return true;
-}
-
 bool MainConfigContainer::load(const std::string& filename){
     
     std::ifstream ifs(filename);
@@ -114,7 +86,7 @@ bool MainConfigContainer::load(const std::string& filename){
             loadArrowColors(ifs);
         }
         else if(key == "PieceColors:"){
-            loadPieceColors(ifs);
+            loadContainers<sigrid::PieceColor>(pieceColors, ifs);
         }
         else if(key == "Pieces:"){
             loadContainers<sigrid::PieceContainer>(pieces, ifs);

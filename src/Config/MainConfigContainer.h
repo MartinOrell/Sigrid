@@ -41,7 +41,6 @@ struct MainConfigContainer{
   private:
     bool loadTileColors(std::istream& is);
     bool loadArrowColors(std::istream& is);
-    bool loadPieceColors(std::istream& is);
 };
 
 }  // namespace sigrid
