@@ -16,6 +16,7 @@
 #include "Entity/Piece/PieceColor.h"
 #include "Entity/Piece/PieceIdentifier.h"
 #include "Entity/Piece/GraphicPiece.h"
+#include "Entity/Shape/Circle/CircleDataContainer.h"
 #include "Entity/Tile/LogicTile.h"
 #include "Entity/Tile/GraphicTile.h"
 #include "Board/Board.h"
@@ -36,6 +37,7 @@ template class sigrid_list::Vector<sigrid::PieceDataContainer>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
+template class sigrid_list::Vector<sigrid::CircleDataContainer>;
 template class sigrid_list::Vector<sigrid::LogicTile>;
 template class sigrid_list::Vector<sigrid::GraphicTile>;
 template class sigrid_list::Vector<sigrid::Board>;

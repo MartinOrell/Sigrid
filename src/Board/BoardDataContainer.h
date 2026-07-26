@@ -17,7 +17,7 @@ struct BoardDataContainer{
     int rows;
     sigrid_list::Vector<int> repeatTileColorIds;
     sigrid_list::Vector<PieceDataContainer> logicPieces;
-    std::vector<CircleDataContainer> logicCircles;
+    sigrid_list::Vector<CircleDataContainer> logicCircles;
     std::string filename;
     std::string imageFilename;
 };
