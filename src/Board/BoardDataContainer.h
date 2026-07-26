@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 #include "List/Vector.h"
 #include "Entity/Piece/PieceDataContainer.h"
