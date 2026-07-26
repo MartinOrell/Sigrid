@@ -24,6 +24,7 @@
 #include "Board/Board.h"
 #include "Board/BoardLabelContainer.h"
 #include "Menu/MenuContainer.h"
+#include "Tool/ToolStruct.h"
 #include "ToolPicker/ToolBlockContainer.h"
 
 // This class is only included by Vector.cpp
@@ -47,4 +48,5 @@ template class sigrid_list::Vector<sigrid::GraphicTile>;
 template class sigrid_list::Vector<sigrid::Board>;
 template class sigrid_list::Vector<sigrid::BoardLabelContainer>;
 template class sigrid_list::Vector<sigrid::MenuItemContainer>;
+template class sigrid_list::Vector<sigrid::ToolStruct>;
 template class sigrid_list::Vector<sigrid::ToolBlockContainer>;

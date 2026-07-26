@@ -357,9 +357,15 @@ void ToolPickerWindow::redrawTexture(){
     int i;
     for(i = 0; i < m_miscTools.size(); i++){
 
-        m_board.addEntity({x,y}, m_miscTools.at(i).icon);
+        const auto toolStruct_o = m_miscTools.at(i);
+        if(toolStruct_o == std::nullopt){
+            continue;
+        }
+        const ToolStruct& toolStruct = toolStruct_o.value().get();
 
-        m_clickActions.insert_or_assign({x,y}, m_miscTools.at(i).action);
+        m_board.addEntity({x,y}, toolStruct.icon);
+
+        m_clickActions.insert_or_assign({x,y}, toolStruct.action);
         if((i+1)%m_miscBlock.columns == 0){
             x = m_miscBlock.coord.x;
             y++;

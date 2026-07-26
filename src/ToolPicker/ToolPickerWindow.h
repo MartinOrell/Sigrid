@@ -104,7 +104,7 @@ class ToolPickerWindow: public sf::Drawable{
     int m_columns = 1;
     int m_rows = 1;
 
-    std::vector<ToolStruct> m_miscTools;
+    sigrid_list::Vector<ToolStruct> m_miscTools;
 
     ColorDisplay m_colorDisplay{ColorDisplay::Piece};
 
