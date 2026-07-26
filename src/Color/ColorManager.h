@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "List/Vector.h"
+#include "Color/ColorContainer.h"
 
 namespace sigrid{
 
@@ -17,7 +18,7 @@ class ColorManager{
     ColorManager& operator=(const ColorManager&) = default;
     ColorManager& operator=(ColorManager&&) = default;
 
-    void setColors(const sigrid_list::Vector<uint32_t>& colors);
+    void setColors(const sigrid_list::Vector<ColorContainer>& colors);
 
     std::optional<sf::Color> getSolidColor(const int colorId) const;
     std::optional<sf::Color> getTransparentColor(const int colorId) const;

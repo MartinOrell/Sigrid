@@ -30,7 +30,7 @@ bool MainConfigContainer::loadTileColors(std::istream& is){
 
         sigrid::ColorContainer color;
         color.setValue(s);
-        tileColors.push_back(color.value);
+        tileColors.push_back(std::move(color));
     }
     return true;
 }
@@ -55,7 +55,7 @@ bool MainConfigContainer::loadArrowColors(std::istream& is){
         }
         sigrid::ColorContainer color;
         color.setValue(s);
-        arrowColors.push_back(color.value);
+        arrowColors.push_back(std::move(color));
     }
     return true;
 }

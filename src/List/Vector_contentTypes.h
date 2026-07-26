@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 #include <string>
 #include <map>
 
@@ -13,6 +11,7 @@
 #include "Coord/CoordPair.h"
 #include "Coord/CoordBlock.h"
 
+#include "Color/ColorContainer.h"
 #include "Entity/Piece/PieceContainer.h"
 #include "Entity/Piece/PieceDataContainer.h"
 #include "Entity/Piece/PieceColor.h"
@@ -31,12 +30,12 @@
 // Add more templates below to support more types
 template class sigrid_list::Vector<int>;
 template class sigrid_list::Vector<float>;
-template class sigrid_list::Vector<uint32_t>;
 template class sigrid_list::Vector<std::string>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sigrid_coord::CoordBlock>;
 template class sigrid_list::Vector<sf::Color>;
 template class sigrid_list::Vector<sf::Text>;
+template class sigrid_list::Vector<sigrid::ColorContainer>;
 template class sigrid_list::Vector<sigrid::PieceContainer>;
 template class sigrid_list::Vector<sigrid::PieceDataContainer>;
 template class sigrid_list::Vector<sigrid::PieceColor>;

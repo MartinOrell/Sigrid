@@ -2,10 +2,10 @@
 
 using namespace sigrid;
 
-void ColorManager::setColors(const sigrid_list::Vector<uint32_t>& colors){
+void ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& colors){
 
     for(const auto& colorHex : colors){
-        m_colors.push_back(sf::Color(colorHex));
+        m_colors.push_back(sf::Color(colorHex.value));
     }
 }
 

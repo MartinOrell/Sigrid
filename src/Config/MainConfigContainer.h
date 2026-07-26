@@ -13,6 +13,7 @@
 #include "Menu/MenuContainer.h"
 #include "ToolPicker/ToolPickerContainer.h"
 #include "Tool/ToolContainer.h"
+#include "Color/ColorContainer.h"
 
 namespace sigrid_config{
 
@@ -21,8 +22,8 @@ struct MainConfigContainer{
     bool load(const std::string& filename);
 
     sigrid::WindowContainer mainWindow;
-    sigrid_list::Vector<uint32_t> tileColors;
-    sigrid_list::Vector<uint32_t> arrowColors;
+    sigrid_list::Vector<sigrid::ColorContainer> tileColors;
+    sigrid_list::Vector<sigrid::ColorContainer> arrowColors;
     sigrid_list::Vector<sigrid::PieceColor> pieceColors;
     sigrid_list::Vector<sigrid::PieceContainer> pieces;
     sigrid::BoardDesignContainer boardData;
