@@ -481,8 +481,15 @@ void ToolPickerWindow::redrawTexture(){
     x = startPieceColumn;
     for(int notationId = 0; notationId < m_pieceNotations.size(); notationId++){
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
+
+            const auto pieceNotation_o = m_pieceNotations.at(notationId);
+            if(pieceNotation_o == std::nullopt){
+                continue;
+            }
+            const std::string& pieceNotation = pieceNotation_o.value().get();
+
             LogicPiece logicPiece;
-            logicPiece.setNotation(m_pieceNotations.at(notationId));
+            logicPiece.setNotation(pieceNotation);
             logicPiece.setColorId(m_displayedPieceColorIds.at(i));
 
             m_board.addEntity({x,y}, logicPiece);

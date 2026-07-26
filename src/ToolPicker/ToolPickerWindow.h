@@ -6,6 +6,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "List/Vector.h"
 #include "Action/Action.h"
 #include "Coord/CoordBlock.h"
 #include "Color/ColorManager.h"
@@ -122,7 +123,7 @@ class ToolPickerWindow: public sf::Drawable{
     int m_circleColorId = -1;
     std::string m_pieceNotation = "";
 
-    std::vector<std::string> m_pieceNotations;
+    sigrid_list::Vector<std::string> m_pieceNotations;
 
     bool m_showColors = false;
 
