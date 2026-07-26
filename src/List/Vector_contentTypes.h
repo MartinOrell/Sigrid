@@ -12,6 +12,7 @@
 #include "Coord/CoordPair.h"
 
 #include "Entity/Piece/PieceContainer.h"
+#include "Entity/Piece/PieceDataContainer.h"
 #include "Entity/Piece/PieceColor.h"
 #include "Entity/Piece/PieceIdentifier.h"
 #include "Entity/Piece/GraphicPiece.h"
@@ -31,6 +32,7 @@ template class sigrid_list::Vector<std::string>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sf::Color>;
 template class sigrid_list::Vector<sigrid::PieceContainer>;
+template class sigrid_list::Vector<sigrid::PieceDataContainer>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
