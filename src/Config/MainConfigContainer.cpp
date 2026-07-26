@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Config/IO.h"
+#include "Config/LoadContainers.h"
 #include "Color/ColorContainer.h"
 
 using namespace sigrid_config;
@@ -87,37 +88,6 @@ bool MainConfigContainer::loadPieceColors(std::istream& is){
     return true;
 }
 
-bool MainConfigContainer::loadPieces(std::istream& is){
-
-    if(readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = readString(is)){
-        
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed loading string for Piece"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "["){
-            sigrid::PieceContainer piece;
-            if(piece.load(is)){
-                pieces.push_back(piece);
-            }
-            else{
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 bool MainConfigContainer::load(const std::string& filename){
     
     std::ifstream ifs(filename);
@@ -147,7 +117,7 @@ bool MainConfigContainer::load(const std::string& filename){
             loadPieceColors(ifs);
         }
         else if(key == "Pieces:"){
-            loadPieces(ifs);
+            loadContainers<sigrid::PieceContainer>(pieces, ifs);
         }
         else if(key == "BoardStyle:"){
             boardData.load(ifs);
