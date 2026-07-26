@@ -465,7 +465,7 @@ void GraphicBoard::clearArrows(){
     redrawTexture();
 }
 
-void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnRight(repeatTileColorIds);
 
@@ -502,7 +502,7 @@ void GraphicBoard::addTileColumnRight(const std::vector<int>& repeatTileColorIds
     redrawTexture();
 }
 
-void GraphicBoard::addTileColumnLeft(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnLeft(repeatTileColorIds);
 
@@ -585,7 +585,7 @@ void GraphicBoard::removeLeftTileColumn(){
     redrawTexture();
 }
 
-void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowUp(repeatTileColorIds);
     m_pieceLayer.moveEntitiesDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
@@ -618,7 +618,7 @@ void GraphicBoard::addTileRowUp(const std::vector<int>& repeatTileColorIds){
     redrawTexture();
 }
 
-void GraphicBoard::addTileRowDown(const std::vector<int>& repeatTileColorIds){
+void GraphicBoard::addTileRowDown(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowDown(repeatTileColorIds);
 

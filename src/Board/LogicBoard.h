@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "List/Vector.h"
 #include "Entity/Tile/LogicTiles.h"
 #include "Entity/LogicEntities.h"
 #include "Entity/Shape/Arrow/LogicArrows.h"
@@ -32,7 +33,7 @@ class LogicBoard{
     std::optional<LogicArrow> getArrowAt(const sigrid_coord::CoordPair& coordPair) const;
     std::string getFen() const;
     int getTurnToMove() const;
-    std::vector<int> getRepeatColorIds() const;
+    sigrid_list::Vector<int> getRepeatColorIds() const;
 
     void setTurnToMove(const int& turnToMove);
 

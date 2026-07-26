@@ -30,7 +30,7 @@ class LogicTiles{
     int getNumColumns() const;
     int getNumRows() const;
 
-    std::vector<int> getRepeatColorIds() const;
+    sigrid_list::Vector<int> getRepeatColorIds() const;
 
     bool addColumnRight();
     bool addColumnLeft();

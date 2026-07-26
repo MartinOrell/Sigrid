@@ -4,6 +4,7 @@
 
 #include "Coord/Coord.h"
 #include "Coord/CoordPair.h"
+#include "List/Vector.h"
 
 #include "Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "Board/BoardLabels.h"
@@ -110,13 +111,13 @@ class GraphicBoard: public sf::Drawable{
     void clearEntities();
     void clearArrows();
 
-    void addTileColumnRight(const std::vector<int>& repeatTileColorIds);
-    void addTileColumnLeft(const std::vector<int>& repeatTileColorIds);
+    void addTileColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds);
+    void addTileColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds);
     void removeRightTileColumn();
     void removeLeftTileColumn();
 
-    void addTileRowUp(const std::vector<int>& repeatTileColorIds);
-    void addTileRowDown(const std::vector<int>& repeatTileColorIds);
+    void addTileRowUp(const sigrid_list::Vector<int>& repeatTileColorIds);
+    void addTileRowDown(const sigrid_list::Vector<int>& repeatTileColorIds);
     void removeTopTileRow();
     void removeBottomTileRow();
 

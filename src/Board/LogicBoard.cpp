@@ -167,7 +167,7 @@ int LogicBoard::getTurnToMove() const{
     return m_turnToMove;
 }
 
-std::vector<int> LogicBoard::getRepeatColorIds() const{
+sigrid_list::Vector<int> LogicBoard::getRepeatColorIds() const{
     return m_tileLayer.getRepeatColorIds();
 }
 

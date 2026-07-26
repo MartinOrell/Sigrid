@@ -42,12 +42,12 @@ class GraphicTiles: public sf::Drawable{
     void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
     void removeHighlight(const sigrid_coord::Coord& coord);
 
-    void addColumnRight(const std::vector<int>& repeatTileColorIds);
-    void addColumnLeft(const std::vector<int>& repeatTileColorIds);
+    void addColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds);
+    void addColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds);
     void removeRightColumn();
     void removeLeftColumn();
-    void addRowUp(const std::vector<int>& repeatTileColorIds);
-    void addRowDown(const std::vector<int>& repeatTileColorIds);
+    void addRowUp(const sigrid_list::Vector<int>& repeatTileColorIds);
+    void addRowDown(const sigrid_list::Vector<int>& repeatTileColorIds);
     void removeTopRow();
     void removeBottomRow();
 

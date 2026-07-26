@@ -58,9 +58,9 @@ int LogicTiles::getNumRows() const{
     return m_tiles.numRows();
 }
 
-std::vector<int> LogicTiles::getRepeatColorIds() const{
+sigrid_list::Vector<int> LogicTiles::getRepeatColorIds() const{
 
-    std::vector<int> repeatColorIds;
+    sigrid_list::Vector<int> repeatColorIds;
 
     for(auto& tile: m_tiles.getInsertPattern()){
         repeatColorIds.push_back(tile.getColorId());
