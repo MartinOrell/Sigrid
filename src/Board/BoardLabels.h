@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <SFML/Graphics/Text.hpp>
+
+#include "List/Vector.h"
 
 namespace sigrid{
 
@@ -98,7 +99,7 @@ class BoardLabels: public sf::Drawable{
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     struct SideLabels{
-        std::vector<sf::Text> labels;
+        sigrid_list::Vector<sf::Text> labels;
         bool isVisible = false;
         std::string fontFilename = "";
         float labelSizeFactor = 0.f; //fraction of tileHeight

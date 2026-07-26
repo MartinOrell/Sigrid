@@ -6,6 +6,7 @@
 #include <map>
 
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 #include "List/Vector.h"
@@ -32,6 +33,7 @@ template class sigrid_list::Vector<uint32_t>;
 template class sigrid_list::Vector<std::string>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sf::Color>;
+template class sigrid_list::Vector<sf::Text>;
 template class sigrid_list::Vector<sigrid::PieceContainer>;
 template class sigrid_list::Vector<sigrid::PieceDataContainer>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
