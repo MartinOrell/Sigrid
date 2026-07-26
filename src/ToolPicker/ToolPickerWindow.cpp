@@ -474,8 +474,14 @@ void ToolPickerWindow::redrawTexture(){
     }
 
     //Pieces
-    int startPieceColumn = m_pieceBlocks.at(0).coord.x;
-    int startPieceRow = m_pieceBlocks.at(0).coord.y;
+    const auto pieceBlock_o = m_pieceBlocks.at(0);
+    if(pieceBlock_o == std::nullopt){
+        return;
+    }
+    const sigrid_coord::CoordBlock& pieceBlock = pieceBlock_o.value().get();
+
+    int startPieceColumn = pieceBlock.coord.x;
+    int startPieceRow = pieceBlock.coord.y;
     
     y = startPieceRow;
     x = startPieceColumn;

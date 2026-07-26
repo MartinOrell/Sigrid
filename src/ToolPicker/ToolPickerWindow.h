@@ -131,7 +131,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     sigrid_coord::CoordBlock m_miscBlock;
     sigrid_coord::CoordBlock m_colorBlock;
-    std::vector<sigrid_coord::CoordBlock> m_pieceBlocks;
+    sigrid_list::Vector<sigrid_coord::CoordBlock> m_pieceBlocks;
 
     int m_defaultArrowColorId = 0;
     int m_defaultCircleColorId = 0;

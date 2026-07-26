@@ -11,6 +11,7 @@
 
 #include "List/Vector.h"
 #include "Coord/CoordPair.h"
+#include "Coord/CoordBlock.h"
 
 #include "Entity/Piece/PieceContainer.h"
 #include "Entity/Piece/PieceDataContainer.h"
@@ -32,6 +33,7 @@ template class sigrid_list::Vector<float>;
 template class sigrid_list::Vector<uint32_t>;
 template class sigrid_list::Vector<std::string>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
+template class sigrid_list::Vector<sigrid_coord::CoordBlock>;
 template class sigrid_list::Vector<sf::Color>;
 template class sigrid_list::Vector<sf::Text>;
 template class sigrid_list::Vector<sigrid::PieceContainer>;
