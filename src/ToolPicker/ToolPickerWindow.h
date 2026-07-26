@@ -10,6 +10,7 @@
 #include "Action/Action.h"
 #include "Coord/CoordBlock.h"
 #include "Color/ColorManager.h"
+#include "Tool/ToolStruct.h"
 #include "Board/Board.h"
 
 #include "SigridRenderTexture/SigridRenderTexture.h"
@@ -98,11 +99,6 @@ class ToolPickerWindow: public sf::Drawable{
         Piece,
         Arrow,
         Circle
-    };
-
-    struct ToolStruct{
-        LogicIcon icon;
-        sigrid_action::Action action;
     };
 
     int m_columns = 1;
