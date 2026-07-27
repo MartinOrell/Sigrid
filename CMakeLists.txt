@@ -62,6 +62,7 @@ set(SRC_FILES
     src/Entity/Shape/Arrow/GraphicArrow.cpp
     src/Entity/Shape/Arrow/LogicArrows.cpp
     src/Entity/Shape/Arrow/GraphicArrows.cpp
+    src/Entity/Shape/RectangleBorder/RectangleBorderContainer.cpp
     src/Entity/Shape/RectangleBorder/RectangleBorder.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp

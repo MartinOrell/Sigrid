@@ -8,6 +8,7 @@
 #include "Entity/Shape/Circle/CircleContainer.h"
 #include "Entity/Shape/Arrow/ArrowContainer.h"
 #include "Board/BoardLabelContainer.h"
+#include "Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
 
 namespace sigrid{
 
@@ -19,13 +20,11 @@ struct BoardDesignContainer{
     CircleContainer circle;
     ArrowContainer arrow;
     sigrid_list::Vector<BoardLabelContainer> labels;
-    bool border = false;
-    float borderThickness = 0.f;
+    RectangleBorderContainer border;
     bool turnToken = false;
 
   private:
 
-    bool loadBorder(std::istream& is);
     bool loadTurnToken(std::istream& is);
 };
 

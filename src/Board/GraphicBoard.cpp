@@ -1147,9 +1147,9 @@ void GraphicBoard::initTurnToken(const BoardDesignContainer& config){
 
 void GraphicBoard::initBorder(const BoardDesignContainer& config){
 
-    m_border.setThickness(config.borderThickness);
+    m_border.setThickness(config.border.thickness);
     m_border.setColor(sf::Color{0,0,0});
-    if(config.border){
+    if(config.border.isVisible){
 
         sf::Vector2f boardArea;
         boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();

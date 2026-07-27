@@ -58,7 +58,7 @@ void ToolWindow::init(){
     boardDesign.arrow.thickness = 40;
     boardDesign.arrow.headSize = 80;
     boardDesign.circle.diameter = 100;
-    boardDesign.border = false;
+    boardDesign.border.isVisible = false;
     boardDesign.turnToken = false;
 
     m_board.loadGraphicData(boardDesign);
