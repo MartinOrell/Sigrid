@@ -55,8 +55,8 @@ void ToolWindow::init(){
         boardDesign.tile.width = tileWidth;
         boardDesign.tile.height = tileHeight;
     }
-    boardDesign.arrowThickness = 40;
-    boardDesign.arrowHeadSize = 80;
+    boardDesign.arrow.thickness = 40;
+    boardDesign.arrow.headSize = 80;
     boardDesign.circleDiameter = 100;
     boardDesign.border = false;
     boardDesign.turnToken = false;

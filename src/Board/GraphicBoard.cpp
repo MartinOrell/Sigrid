@@ -1053,8 +1053,8 @@ void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
 
 void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
 
-    m_arrowLayer.setThickness(config.arrowThickness);
-    m_arrowLayer.setHeadSize(config.arrowHeadSize);
+    m_arrowLayer.setThickness(config.arrow.thickness);
+    m_arrowLayer.setHeadSize(config.arrow.headSize);
     if(m_arrowColorManagerPtr){
         m_arrowLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }

@@ -56,6 +56,7 @@ set(SRC_FILES
     src/Entity/Icon/IconManager.cpp
     src/Entity/Shape/Circle/LogicCircle.cpp
     src/Entity/Shape/Circle/GraphicCircle.cpp
+    src/Entity/Shape/Arrow/ArrowContainer.cpp
     src/Entity/Shape/Arrow/LogicArrow.cpp
     src/Entity/Shape/Arrow/GraphicArrow.cpp
     src/Entity/Shape/Arrow/LogicArrows.cpp
