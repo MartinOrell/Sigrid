@@ -1135,7 +1135,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
 
 void GraphicBoard::initTurnToken(const BoardDesignContainer& config){
 
-    if(config.turnToken){
+    if(config.turnToken.isVisible){
         initTurnToken(0);
         m_turnToken.show();
         updateRightEdgeWidth();

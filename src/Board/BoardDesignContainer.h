@@ -9,6 +9,7 @@
 #include "Entity/Shape/Arrow/ArrowContainer.h"
 #include "Board/BoardLabelContainer.h"
 #include "Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
+#include "Entity/TurnToken/TurnTokenContainer.h"
 
 namespace sigrid{
 
@@ -21,11 +22,7 @@ struct BoardDesignContainer{
     ArrowContainer arrow;
     sigrid_list::Vector<BoardLabelContainer> labels;
     RectangleBorderContainer border;
-    bool turnToken = false;
-
-  private:
-
-    bool loadTurnToken(std::istream& is);
+    TurnTokenContainer turnToken;
 };
 
 }  // namespace sigrid

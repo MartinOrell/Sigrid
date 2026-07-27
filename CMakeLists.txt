@@ -66,6 +66,7 @@ set(SRC_FILES
     src/Entity/Shape/RectangleBorder/RectangleBorder.cpp
     src/Entity/LogicEntities.cpp
     src/Entity/GraphicEntities.cpp
+    src/Entity/TurnToken/TurnTokenContainer.cpp
     src/Entity/TurnToken/TurnToken.cpp
     src/Pdf/Pdf.cpp
     src/Pdf/Object.cpp
