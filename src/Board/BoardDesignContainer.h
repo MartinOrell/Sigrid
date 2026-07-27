@@ -5,6 +5,7 @@
 #include "List/Vector.h"
 
 #include "Entity/Tile/TileContainer.h"
+#include "Entity/Shape/Circle/CircleContainer.h"
 #include "Entity/Shape/Arrow/ArrowContainer.h"
 #include "Board/BoardLabelContainer.h"
 
@@ -15,8 +16,8 @@ struct BoardDesignContainer{
     bool load(std::istream& is);
 
     TileContainer tile;
+    CircleContainer circle;
     ArrowContainer arrow;
-    float circleDiameter = 0.f;
     sigrid_list::Vector<BoardLabelContainer> labels;
     bool border = false;
     float borderThickness = 0.f;
@@ -24,7 +25,6 @@ struct BoardDesignContainer{
 
   private:
 
-    bool loadCircle(std::istream& is);
     bool loadBorder(std::istream& is);
     bool loadTurnToken(std::istream& is);
 };

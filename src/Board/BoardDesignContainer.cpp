@@ -34,7 +34,10 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
             }
         }
         else if(s == "Circle:"){
-            loadCircle(is);
+
+            if(!circle.load(is)){
+                return false;
+            }
         }
         else if(s == "CoordLabels:"){
             sigrid_config::loadContainers<BoardLabelContainer>(labels, is);
@@ -48,39 +51,6 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
             std::cerr << ". Failed to load BoardDesignContainer" << std::endl;
-            return false;
-        }
-    }
-    return true;
-}
-
-bool sigrid::BoardDesignContainer::loadCircle(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "diameter:"){
-
-            const auto circleDiameter_o = sigrid_config::readFloat(is);
-            if(circleDiameter_o == std::nullopt){
-                return false;
-            }
-            circleDiameter = circleDiameter_o.value();
-        }
-        else{
-            std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
-            std::cerr << ". Failed to load circle" << std::endl;
             return false;
         }
     }

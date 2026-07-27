@@ -1048,7 +1048,7 @@ void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }
     m_pieceLayer.setPieceSize({config.tile.width, config.tile.height});
-    m_pieceLayer.setCircleDiameter(config.circleDiameter);
+    m_pieceLayer.setCircleDiameter(config.circle.diameter);
 }
 
 void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
