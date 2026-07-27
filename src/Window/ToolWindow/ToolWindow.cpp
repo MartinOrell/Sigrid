@@ -52,8 +52,8 @@ void ToolWindow::init(){
         else{
             tileWidth = tileHeight;
         }
-        boardDesign.tileWidth = tileWidth;
-        boardDesign.tileHeight = tileHeight;
+        boardDesign.tile.width = tileWidth;
+        boardDesign.tile.height = tileHeight;
     }
     boardDesign.arrowThickness = 40;
     boardDesign.arrowHeadSize = 80;

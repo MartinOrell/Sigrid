@@ -1036,7 +1036,7 @@ void GraphicBoard::initTileLayer(const BoardDesignContainer& config){
         m_tileLayer.setBottomToTop();
     }
 
-    m_tileLayer.setTileSize({config.tileWidth, config.tileHeight});
+    m_tileLayer.setTileSize({config.tile.width, config.tile.height});
     if(m_arrowColorManagerPtr){
         m_tileLayer.setHighlightColorManagerPtr(m_arrowColorManagerPtr);
     }
@@ -1047,7 +1047,7 @@ void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
     if(m_arrowColorManagerPtr){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
     }
-    m_pieceLayer.setPieceSize({config.tileWidth, config.tileHeight});
+    m_pieceLayer.setPieceSize({config.tile.width, config.tile.height});
     m_pieceLayer.setCircleDiameter(config.circleDiameter);
 }
 

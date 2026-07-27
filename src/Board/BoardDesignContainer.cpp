@@ -22,7 +22,10 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
             break;
         }
         else if(s == "Tile:"){
-            loadTile(is);
+
+            if(!tile.load(is)){
+                return false;
+            }
         }
         else if(s == "Arrow:"){
             loadArrow(is);
@@ -42,47 +45,6 @@ bool sigrid::BoardDesignContainer::load(std::istream& is){
         else{
             std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
             std::cerr << ". Failed to load BoardDesignContainer" << std::endl;
-            return false;
-        }
-    }
-    return true;
-}
-
-bool sigrid::BoardDesignContainer::loadTile(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        else if(s == "width:"){
-
-            const auto tileWidth_o = sigrid_config::readFloat(is);
-            if(tileWidth_o == std::nullopt){
-                return false;
-            }
-            tileWidth = tileWidth_o.value();
-        }
-        else if(s == "height:"){
-
-            const auto tileHeight_o = sigrid_config::readFloat(is);
-            if(tileHeight_o == std::nullopt){
-                return false;
-            }
-            tileHeight = tileHeight_o.value();
-        }
-        else{
-            std::cerr << "BoardDesignContainer: Unknown key: \"" << s << "\"";
-            std::cerr << ". Failed to load tile" << std::endl;
             return false;
         }
     }

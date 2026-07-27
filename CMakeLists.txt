@@ -46,6 +46,7 @@ set(SRC_FILES
     src/Color/ColorContainer.cpp
     src/Color/ColorManager.cpp
     src/Action/Action.cpp
+    src/Entity/Tile/TileContainer.cpp
     src/Entity/Tile/LogicTile.cpp
     src/Entity/Tile/GraphicTile.cpp
     src/Entity/Tile/LogicTiles.cpp
