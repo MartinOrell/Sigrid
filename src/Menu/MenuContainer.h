@@ -3,15 +3,9 @@
 #include <string>
 
 #include "List/Vector.h"
+#include "Menu/MenuItemContainer.h"
 
 namespace sigrid{
-
-struct MenuItemContainer{
-    int headerId;
-    std::string keyName;
-    sigrid_list::Vector<std::string> displayNames;
-    sigrid_list::Vector<std::string> actionNames;
-};
 
 struct MenuContainer{
 
