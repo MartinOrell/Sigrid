@@ -17,81 +17,91 @@ bool Menu::load(const MenuContainer& menuData){
     m_fontFilename = menuData.fontName;
 
     addSuperHeader(menuData.title);
-    for(const auto& headerName : menuData.headerNames){
-        addHeader(headerName);
+    for(const auto& header : menuData.headers){
+        addHeader(header.name);
     }
 
-    for(const auto& menuItem : menuData.menuItems){
-        if(menuItem.displayNames.size() == 1){
+    for(int i = 0; i < menuData.headers.size(); i++){
 
-            auto actionName_o = menuItem.actionNames.at(0);
-            if(actionName_o == std::nullopt){
-                return false;
-            }
-            const std::string& actionName = actionName_o.value().get();
-
-            auto action_o = sigrid_action::getAction(actionName);
-            if(action_o == std::nullopt){
-                continue;
-            }
-            auto& action = action_o.value();
-
-            auto displayName_o = menuItem.displayNames.at(0);
-            if(displayName_o == std::nullopt){
-                return false;
-            }
-            std::string displayName = displayName_o.value().get();
-            addItem(std::move(displayName), menuItem.headerId, action);
+        const auto header_o = menuData.headers.at(i);
+        if(header_o == std::nullopt){
+            continue;
         }
-        else if(menuItem.displayNames.size() == 2){
+        const auto& header = header_o.value().get();
 
-            auto actionAName_o = menuItem.actionNames.at(0);
-            if(actionAName_o == std::nullopt){
-                return false;
+        for(const auto& menuItem : header.items){
+            if(menuItem.displayNames.size() == 1){
+
+                auto actionName_o = menuItem.actionNames.at(0);
+                if(actionName_o == std::nullopt){
+                    return false;
+                }
+                const std::string& actionName = actionName_o.value().get();
+
+                auto action_o = sigrid_action::getAction(actionName);
+                if(action_o == std::nullopt){
+                    continue;
+                }
+                auto& action = action_o.value();
+
+                auto displayName_o = menuItem.displayNames.at(0);
+                if(displayName_o == std::nullopt){
+                    return false;
+                }
+                std::string displayName = displayName_o.value().get();
+                addItem(std::move(displayName), i, action);
             }
-            const std::string& actionAName = actionAName_o.value().get();
+            else if(menuItem.displayNames.size() == 2){
 
-            auto actionA_o = sigrid_action::getAction(actionAName);
-            if(actionA_o == std::nullopt){
-                return false;
+                auto actionAName_o = menuItem.actionNames.at(0);
+                if(actionAName_o == std::nullopt){
+                    return false;
+                }
+                const std::string& actionAName = actionAName_o.value().get();
+
+                auto actionA_o = sigrid_action::getAction(actionAName);
+                if(actionA_o == std::nullopt){
+                    return false;
+                }
+
+                auto actionBName_o = menuItem.actionNames.at(1);
+                if(actionBName_o == std::nullopt){
+                    return false;
+                }
+                const std::string& actionBName = actionBName_o.value().get();
+
+                auto actionB_o = sigrid_action::getAction(actionBName);
+                if(actionB_o == std::nullopt){
+                    return false;
+                }
+                auto& actionA = actionA_o.value();
+                auto& actionB = actionB_o.value();
+
+                auto activeDisplayName_o = menuItem.displayNames.at(0);
+                if(activeDisplayName_o == std::nullopt){
+                    return false;
+                }
+
+                auto inactiveDisplayName_o = menuItem.displayNames.at(1);
+                if(inactiveDisplayName_o == std::nullopt){
+                    return false;
+                }
+
+                addToggleItem(
+                    menuItem.keyName,
+                    i,
+                    std::move(activeDisplayName_o.value().get()),
+                    actionA,
+                    std::move(inactiveDisplayName_o.value().get()),
+                    actionB
+                );
             }
-
-            auto actionBName_o = menuItem.actionNames.at(1);
-            if(actionBName_o == std::nullopt){
-                return false;
+            else{
+                std::cerr << "Menu: Unable to handle menuItem with "
+                    << menuItem.displayNames.size() << " states" << std::endl;
             }
-            const std::string& actionBName = actionBName_o.value().get();
-
-            auto actionB_o = sigrid_action::getAction(actionBName);
-            if(actionB_o == std::nullopt){
-                return false;
-            }
-            auto& actionA = actionA_o.value();
-            auto& actionB = actionB_o.value();
-
-            auto activeDisplayName_o = menuItem.displayNames.at(0);
-            if(activeDisplayName_o == std::nullopt){
-                return false;
-            }
-
-            auto inactiveDisplayName_o = menuItem.displayNames.at(1);
-            if(inactiveDisplayName_o == std::nullopt){
-                return false;
-            }
-
-            addToggleItem(
-                menuItem.keyName,
-                menuItem.headerId,
-                std::move(activeDisplayName_o.value().get()),
-                actionA,
-                std::move(inactiveDisplayName_o.value().get()),
-                actionB
-            );
         }
-        else{
-            std::cerr << "Menu: Unable to handle menuItem with "
-                << menuItem.displayNames.size() << " states" << std::endl;
-        }
+    
     }
     return true;
 }

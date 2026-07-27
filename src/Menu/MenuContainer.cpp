@@ -73,13 +73,15 @@ bool sigrid::MenuContainer::loadHeaders(std::istream& is){
         if(s == "]"){
             break;
         }
-        headerNames.push_back(s);
-        loadHeaderItems(is);
+        HeaderContainer header;
+        header.name = s;
+        loadHeaderItems(is, header);
+        headers.push_back(std::move(header));
     }
     return true;
 }
 
-bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
+bool sigrid::MenuContainer::loadHeaderItems(std::istream& is, HeaderContainer& header){
 
     if(sigrid_config::readString(is) != "["){
         return false;
@@ -100,8 +102,7 @@ bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
         if(!item.load(is, s)){
             return false;
         }
-        item.headerId = headerNames.size()-1;
-        menuItems.push_back(item);
+        header.items.push_back(item);
     }
     return true;
 }

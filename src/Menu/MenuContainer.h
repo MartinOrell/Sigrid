@@ -4,6 +4,7 @@
 
 #include "List/Vector.h"
 #include "Menu/MenuItemContainer.h"
+#include "Menu/HeaderContainer.h"
 
 namespace sigrid{
 
@@ -13,14 +14,13 @@ struct MenuContainer{
 
     std::string fontName;
     std::string title;
-    sigrid_list::Vector<std::string> headerNames;
-    sigrid_list::Vector<MenuItemContainer> menuItems;
+    sigrid_list::Vector<HeaderContainer> headers;
     bool isPinned;
     bool showItems;
 
   private:
     bool loadHeaders(std::istream& is);
-    bool loadHeaderItems(std::istream& is);
+    bool loadHeaderItems(std::istream& is, HeaderContainer& header);
 };
 
 }  // namespace sigrid
