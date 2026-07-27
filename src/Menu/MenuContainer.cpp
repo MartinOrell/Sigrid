@@ -95,68 +95,12 @@ bool sigrid::MenuContainer::loadHeaderItems(std::istream& is){
         if(s == "]"){
             break;
         }
-        loadMenuItem(is, s);
-    }
-    return true;
-}
 
-bool sigrid::MenuContainer::loadMenuItem(std::istream& is, const std::string& displayName){
-
-    {
-        const auto string_o = sigrid_config::readString(is);
-        if(string_o == std::nullopt){
+        MenuItemContainer item;
+        if(!item.load(is, s)){
             return false;
         }
-        const std::string& s = string_o.value();
-
-        if(s != "["){
-            sigrid::MenuItemContainer item;
-            item.headerId = headerNames.size()-1;
-            item.displayNames.push_back(displayName);
-            item.actionNames.push_back(s);
-            menuItems.push_back(item);
-            return true;
-        }
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        sigrid::MenuItemContainer item;
         item.headerId = headerNames.size()-1;
-        item.keyName = displayName;
-        item.displayNames.push_back(s);
-
-        {
-            const auto actionName_o = sigrid_config::readString(is);
-            if(actionName_o == std::nullopt){
-                return false;
-            }
-            item.actionNames.push_back(actionName_o.value());
-        }
-        
-        {
-            const auto displayName_o = sigrid_config::readString(is);
-            if(displayName_o == std::nullopt){
-                return false;
-            }
-            item.displayNames.push_back(displayName_o.value());
-        }
-        
-        {
-            const auto actionName_o = sigrid_config::readString(is);
-            if(actionName_o == std::nullopt){
-                return false;
-            }
-            item.actionNames.push_back(actionName_o.value());
-        }
         menuItems.push_back(item);
     }
     return true;

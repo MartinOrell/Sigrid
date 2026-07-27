@@ -21,7 +21,6 @@ struct MenuContainer{
   private:
     bool loadHeaders(std::istream& is);
     bool loadHeaderItems(std::istream& is);
-    bool loadMenuItem(std::istream& is, const std::string& displayName);
 };
 
 }  // namespace sigrid
