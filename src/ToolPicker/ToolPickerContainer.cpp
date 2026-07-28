@@ -3,8 +3,9 @@
 #include <iostream>
 
 #include "Config/IO.h"
-#include "Config/LoadContainers.h"
+#include "Config/loadStrings.h"
 #include "Config/LoadValues.h"
+#include "Config/LoadContainers.h"
 
 bool sigrid::ToolPickerContainer::load(std::istream& is){
 
@@ -65,7 +66,10 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             }
         }
         else if(s == "MiscTools:"){
-            loadMiscTools(is);
+
+            if(!sigrid_config::loadStrings(toolNames, is)){
+                return false;
+            }
         }
         else if(s == "defaultArrowColor:"){
 
@@ -111,27 +115,6 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             std::cerr << ". Failed to load ToolPicker" << std::endl;
             return false;
         }
-    }
-    return true;
-}
-
-bool sigrid::ToolPickerContainer::loadMiscTools(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        toolNames.push_back(s);
     }
     return true;
 }

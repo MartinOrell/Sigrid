@@ -12,6 +12,7 @@ set(SRC_FILES
     src/Input/Mouse/Mouse.cpp
     src/Input/InputHandler.cpp
     src/Config/IO.cpp
+    src/Config/LoadStrings.cpp
     src/Config/MainConfigContainer.cpp
     src/Window/WindowContainer.cpp
     src/Window/MainWindow/MainWindow.cpp
