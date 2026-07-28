@@ -38,9 +38,6 @@ struct MainConfigContainer{
     std::string resetBoardFilename;
     std::string boardFilename;
     std::string defaultBoardImageFilename;
-
-  private:
-    bool loadArrowColors(std::istream& is);
 };
 
 }  // namespace sigrid

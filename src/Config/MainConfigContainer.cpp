@@ -10,31 +10,6 @@
 
 using namespace sigrid_config;
 
-bool MainConfigContainer::loadArrowColors(std::istream& is){
-
-    if(readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = readString(is)){
-        
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for ArrowColor"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        sigrid::ColorContainer color;
-        color.setValue(s);
-        arrowColors.push_back(std::move(color));
-    }
-    return true;
-}
-
 bool MainConfigContainer::load(const std::string& filename){
     
     std::ifstream ifs(filename);
@@ -61,7 +36,10 @@ bool MainConfigContainer::load(const std::string& filename){
             }
         }
         else if(key == "ArrowColors:"){
-            loadArrowColors(ifs);
+
+            if(!loadValueContainers<sigrid::ColorContainer>(arrowColors, ifs)){
+                return false;
+            }
         }
         else if(key == "PieceColors:"){
             loadContainers<sigrid::PieceColor>(pieceColors, ifs);
