@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Config/IO.h"
+#include "Config/LoadNamedContainers.h"
 
 bool sigrid::MenuContainer::load(std::istream& is){
 
@@ -47,7 +48,7 @@ bool sigrid::MenuContainer::load(std::istream& is){
         }
         else if(s == "headers:"){
 
-            if(!(loadHeaders(is))){
+        if(!(sigrid_config::loadNamedContainers<HeaderContainer>(headers, is))){
                 return false;
             }
         }
@@ -56,32 +57,6 @@ bool sigrid::MenuContainer::load(std::istream& is){
             std::cerr << " read in Menu object" << std::endl;
             return false;
         }
-    }
-    return true;
-}
-
-bool sigrid::MenuContainer::loadHeaders(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        HeaderContainer header;
-        header.name = s;
-        if(!header.load(is)){
-            return false;
-        }
-        headers.push_back(std::move(header));
     }
     return true;
 }

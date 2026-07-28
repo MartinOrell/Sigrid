@@ -17,9 +17,6 @@ struct MenuContainer{
     sigrid_list::Vector<HeaderContainer> headers;
     bool isPinned;
     bool showItems;
-
-  private:
-    bool loadHeaders(std::istream& is);
 };
 
 }  // namespace sigrid
