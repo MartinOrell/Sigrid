@@ -48,7 +48,7 @@ bool sigrid::MenuContainer::load(std::istream& is){
         }
         else if(s == "headers:"){
 
-        if(!(sigrid_config::loadNamedContainers<HeaderContainer>(headers, is))){
+            if(!(sigrid_config::loadNamedContainers<HeaderContainer>(headers, is))){
                 return false;
             }
         }
