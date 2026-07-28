@@ -26,9 +26,6 @@ struct ToolPickerContainer{
     sigrid_list::Vector<std::string> pieceNotations;
     int defaultArrowColorId;
     int defaultCircleColorId;
-
-  private:
-    bool loadToolPieces(std::istream& is);
 };
 
 }  // namespace sigrid

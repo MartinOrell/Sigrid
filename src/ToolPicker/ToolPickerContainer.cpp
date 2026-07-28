@@ -102,7 +102,10 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             defaultPieceNotation = defaultPieceNotation_o.value();
         }
         else if(s == "Pieces:"){
-            loadToolPieces(is);
+
+            if(!sigrid_config::loadStrings(pieceNotations, is)){
+                return false;
+            }
         }
         else if(s == "TileColors:"){
 
@@ -115,27 +118,6 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             std::cerr << ". Failed to load ToolPicker" << std::endl;
             return false;
         }
-    }
-    return true;
-}
-
-bool sigrid::ToolPickerContainer::loadToolPieces(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        pieceNotations.push_back(s);
     }
     return true;
 }
