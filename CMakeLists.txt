@@ -16,6 +16,7 @@ set(SRC_FILES
     src/Window/WindowContainer.cpp
     src/Window/MainWindow/MainWindow.cpp
     src/Menu/MenuContainer.cpp
+    src/Menu/HeaderContainer.cpp
     src/Menu/MenuItemContainer.cpp
     src/Menu/Menu.cpp
     src/Menu/MenuItem.cpp

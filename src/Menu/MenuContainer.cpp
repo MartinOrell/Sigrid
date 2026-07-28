@@ -46,10 +46,13 @@ bool sigrid::MenuContainer::load(std::istream& is){
             title = title_o.value();
         }
         else if(s == "headers:"){
-            loadHeaders(is);
+
+            if(!(loadHeaders(is))){
+                return false;
+            }
         }
         else{
-            std::cerr << "MainWindowConfigContainer: Unknown key: \"" << s << "\"";
+            std::cerr << "MenuContainer: Unknown key: \"" << s << "\"";
             std::cerr << " read in Menu object" << std::endl;
             return false;
         }
@@ -75,34 +78,10 @@ bool sigrid::MenuContainer::loadHeaders(std::istream& is){
         }
         HeaderContainer header;
         header.name = s;
-        loadHeaderItems(is, header);
+        if(!header.load(is)){
+            return false;
+        }
         headers.push_back(std::move(header));
-    }
-    return true;
-}
-
-bool sigrid::MenuContainer::loadHeaderItems(std::istream& is, HeaderContainer& header){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-
-        MenuItemContainer item;
-        if(!item.load(is, s)){
-            return false;
-        }
-        header.items.push_back(item);
     }
     return true;
 }
