@@ -88,7 +88,7 @@ bool Menu::load(const MenuContainer& menuData){
                 }
 
                 addToggleItem(
-                    menuItem.keyName,
+                    menuItem.name,
                     i,
                     std::move(activeDisplayName_o.value().get()),
                     actionA,

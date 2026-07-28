@@ -8,9 +8,9 @@ namespace sigrid{
 
 struct MenuItemContainer{
 
-    bool load(std::istream& is, const std::string& displayName);
+    bool load(std::istream& is);
 
-    std::string keyName;
+    std::string name;
     sigrid_list::Vector<std::string> displayNames;
     sigrid_list::Vector<std::string> actionNames;
 };

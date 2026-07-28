@@ -2,7 +2,7 @@
 
 #include "Config/IO.h"
 
-bool sigrid::MenuItemContainer::load(std::istream& is, const std::string& displayName){
+bool sigrid::MenuItemContainer::load(std::istream& is){
 
     {
         const auto string_o = sigrid_config::readString(is);
@@ -12,7 +12,7 @@ bool sigrid::MenuItemContainer::load(std::istream& is, const std::string& displa
         const std::string& s = string_o.value();
 
         if(s != "["){
-            displayNames.push_back(displayName);
+            displayNames.push_back(name);
             actionNames.push_back(s);
             return true;
         }
@@ -28,7 +28,6 @@ bool sigrid::MenuItemContainer::load(std::istream& is, const std::string& displa
         if(s == "]"){
             break;
         }
-        keyName = displayName;
         displayNames.push_back(s);
 
         {

@@ -20,7 +20,8 @@ bool sigrid::HeaderContainer::load(std::istream& is){
         }
 
         MenuItemContainer item;
-        if(!item.load(is, s)){
+        item.name = s;
+        if(!item.load(is)){
             return false;
         }
         items.push_back(std::move(item));
