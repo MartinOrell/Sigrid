@@ -4,6 +4,7 @@
 
 #include "Config/IO.h"
 #include "Config/LoadContainers.h"
+#include "Config/LoadValues.h"
 
 bool sigrid::ToolPickerContainer::load(std::istream& is){
 
@@ -83,7 +84,10 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
             defaultCircleColorId = defaultCircleColorId_o.value();
         }
         else if(s == "Colors:"){
-            loadToolColors(is);
+
+            if(!(sigrid_config::loadValues<int>(colorToolIds ,is))){
+                return false;
+            }
         }
         else if(s == "defaultPiece:"){
 
@@ -125,32 +129,6 @@ bool sigrid::ToolPickerContainer::loadMiscTools(std::istream& is){
             break;
         }
         toolNames.push_back(s);
-    }
-    return true;
-}
-
-bool sigrid::ToolPickerContainer::loadToolColors(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = sigrid_config::readString(is)){
-        
-        if(string_o == std::nullopt){
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-        
-        auto colorId_o = sigrid_config::stringToInt(s);
-        if(colorId_o == std::nullopt){
-            return false;
-        }
-        colorToolIds.push_back(std::move(colorId_o.value()));
     }
     return true;
 }
