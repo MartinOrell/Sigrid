@@ -6,34 +6,9 @@
 #include "Config/IO.h"
 #include "Config/LoadContainers.h"
 #include "Color/ColorContainer.h"
+#include "Config/LoadValueContainers.h"
 
 using namespace sigrid_config;
-
-bool MainConfigContainer::loadTileColors(std::istream& is){
-
-    if(readString(is) != "["){
-        return false;
-    }
-
-    while(const auto string_o = readString(is)){
-        
-        if(string_o == std::nullopt){
-            std::cerr << "MainConfigContainer: Failed reading string for TileColor"
-                << std::endl;
-            return false;
-        }
-        const std::string& s = string_o.value();
-
-        if(s == "]"){
-            break;
-        }
-
-        sigrid::ColorContainer color;
-        color.setValue(s);
-        tileColors.push_back(std::move(color));
-    }
-    return true;
-}
 
 bool MainConfigContainer::loadArrowColors(std::istream& is){
 
@@ -80,7 +55,10 @@ bool MainConfigContainer::load(const std::string& filename){
             mainWindow.load(ifs);
         }
         else if(key == "TileColors:"){
-            loadTileColors(ifs);
+
+            if(!loadValueContainers<sigrid::ColorContainer>(tileColors, ifs)){
+                return false;
+            }
         }
         else if(key == "ArrowColors:"){
             loadArrowColors(ifs);

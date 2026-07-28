@@ -40,7 +40,6 @@ struct MainConfigContainer{
     std::string defaultBoardImageFilename;
 
   private:
-    bool loadTileColors(std::istream& is);
     bool loadArrowColors(std::istream& is);
 };
 
