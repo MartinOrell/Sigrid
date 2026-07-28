@@ -30,7 +30,6 @@ struct ToolPickerContainer{
   private:
     bool loadMiscTools(std::istream& is);
     bool loadToolPieces(std::istream& is);
-    bool loadToolPickerTileColors(std::istream& is);
 };
 
 }  // namespace sigrid
