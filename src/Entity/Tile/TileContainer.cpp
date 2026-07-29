@@ -7,12 +7,18 @@
 bool sigrid::TileContainer::load(std::istream& is){
 
     if(sigrid_config::readString(is) != "["){
+
+        std::cerr << "TileContainer: Failed to load initial \"[\"."
+            << " Failed to load TileContainer" << std::endl;
         return false;
     }
 
     while(const auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
+
+            std::cerr << "TileContainer: Failed to read string."
+                << " Failed to load TileContainer" << std::endl;
             return false;
         }
         const std::string& s = string_o.value();
@@ -22,23 +28,29 @@ bool sigrid::TileContainer::load(std::istream& is){
         }
         else if(s == "width:"){
 
-            const auto tileWidth_o = sigrid_config::readFloat(is);
-            if(tileWidth_o == std::nullopt){
+            const auto width_o = sigrid_config::readFloat(is);
+            if(width_o == std::nullopt){
+
+                std::cerr << "TileContainer: Failed to read float for width."
+                    << " Failed to load TileContainer" << std::endl;
                 return false;
             }
-            width = tileWidth_o.value();
+            width = width_o.value();
         }
         else if(s == "height:"){
 
-            const auto tileHeight_o = sigrid_config::readFloat(is);
-            if(tileHeight_o == std::nullopt){
+            const auto height_o = sigrid_config::readFloat(is);
+            if(height_o == std::nullopt){
+
+                std::cerr << "TileContainer: Failed to read float for height."
+                    << " Failed to load TileContainer" << std::endl;
                 return false;
             }
-            height = tileHeight_o.value();
+            height = height_o.value();
         }
         else{
-            std::cerr << "TileContainer: Unknown key: \"" << s << "\"";
-            std::cerr << ". Failed to load tile" << std::endl;
+            std::cerr << "TileContainer: Unknown key: \"" << s << "\".";
+            std::cerr << " Failed to load tileContainer" << std::endl;
             return false;
         }
     }
