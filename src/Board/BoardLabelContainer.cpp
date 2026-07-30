@@ -93,23 +93,23 @@ bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
         return false;
     }
     
-    std::string orientation = location.substr(spacePos+1);
+    std::string orientationString = location.substr(spacePos+1);
 
-    if(orientation == "left"){
-        position = 0;
+    if(orientationString == "left"){
+        orientation = sigrid_coord::Orientation::LEFT;
     }
-    else if(orientation == "right"){
-        position = 1;
+    else if(orientationString == "right"){
+        orientation = sigrid_coord::Orientation::RIGHT;
     }
-    else if(orientation == "top"){
-        position = 2;
+    else if(orientationString == "top"){
+        orientation = sigrid_coord::Orientation::TOP;
     }
-    else if(orientation == "bottom"){
-        position = 3;
+    else if(orientationString == "bottom"){
+        orientation = sigrid_coord::Orientation::BOTTOM;
     }
     else{
         std::cerr << "BoardLabelContainer::loadLocation: Unknown label orientation: \""
-            << orientation << "\"."
+            << orientationString << "\"."
             << " Failed to load location for BoardLabelContainer" << std::endl;
         return false;
     }
