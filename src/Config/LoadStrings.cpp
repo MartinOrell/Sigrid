@@ -9,6 +9,9 @@
 bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, std::istream& is){
 
     if(readString(is) != "["){
+
+        std::cerr << "loadStrings: Failed to load initial \"[\"."
+            << " Failed to load strings" << std::endl;
         return false;
     }
 
