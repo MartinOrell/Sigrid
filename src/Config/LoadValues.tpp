@@ -9,14 +9,18 @@ template <typename T>
 bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, std::istream& is){
 
     if(readString(is) != "["){
+
+        std::cerr << "loadValues: Failed to read initial \"[\"."
+            << " Failed to load values" << std::endl;
         return false;
     }
 
     while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
-            std::cerr << "LoadValues: Failed loading string for value"
-                << std::endl;
+
+            std::cerr << "loadValues: Failed to load string."
+                << " Failed to load values" << std::endl;
             return false;
         }
         const std::string& s = string_o.value();
@@ -27,6 +31,10 @@ bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, std::istream& is)
 
         std::optional<T> value_o = sigrid_config::stringToValue(s);
         if(value_o == std::nullopt){
+
+            std::cerr << "loadValues: Failed to set value from string \""
+                << s << "\"."
+                << " Failed to load values" << std::endl;
             return false;
         }
         values.push_back(std::move(value_o.value()));
