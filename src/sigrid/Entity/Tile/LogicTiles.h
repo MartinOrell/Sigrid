@@ -1,0 +1,55 @@
+#pragma once
+
+#include <optional>
+
+#include "sigrid/List/Vector.h"
+#include "sigrid/Coord/Coord.h"
+#include "sigrid/List/AutoInsertMappedGrid.h"
+#include "sigrid/Entity/Tile/LogicTile.h"
+
+namespace sigrid{
+
+class LogicTiles{
+
+  public:
+
+    LogicTiles() = default;
+    LogicTiles(const LogicTiles&) = default;
+    LogicTiles(LogicTiles&&) = default;
+    LogicTiles& operator=(const LogicTiles&) = default;
+    LogicTiles& operator=(LogicTiles&&) = default;
+
+    void setNumColumns(const int& numColumns);
+    void setNumRows(const int& numRows);
+    void setInsertPattern(const sigrid_list::Vector<int>& repeatTileColorIds);
+    void insertAllTiles();
+
+    void setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId);
+    void removeHighlight(const sigrid_coord::Coord& coord);
+    
+    int getNumColumns() const;
+    int getNumRows() const;
+
+    sigrid_list::Vector<int> getRepeatColorIds() const;
+
+    bool addColumnRight();
+    bool addColumnLeft();
+    bool removeRightColumn();
+    bool removeLeftColumn();
+    bool addRowUp();
+    bool addRowDown();
+    bool removeTopRow();
+    bool removeBottomRow();
+
+    void clear();
+
+    std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
+
+    friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
+
+  private:
+
+    sigrid_list::AutoInsertMappedGrid<LogicTile> m_tiles;
+};
+
+}  // namespace sigrid

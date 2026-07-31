@@ -1,0 +1,29 @@
+#pragma once
+
+#include <optional>
+
+#include <string>
+#include <SFML/Graphics/Texture.hpp>
+
+#include "sigrid/List/Map.h"
+
+namespace sigrid{
+
+class IconManager{
+
+  public:
+
+    IconManager() = default;
+    IconManager(const IconManager&) = default;
+    IconManager(IconManager&&) = default;
+    IconManager& operator=(const IconManager&) = default;
+    IconManager& operator=(IconManager&&) = default;
+
+    std::optional<sf::Texture*> getTexturePtr(const std::string& filename);
+    
+  private:
+
+    sigrid_list::Map<std::string, sf::Texture> m_textures;
+};
+
+}  // namespace sigrid

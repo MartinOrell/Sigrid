@@ -1,0 +1,11 @@
+#pragma once
+
+#include "sigrid/Pdf/Object.h"
+
+namespace sigrid_pdf{
+
+struct ProcedureSet : Object{
+    std::string getString() const override;
+};
+
+}  // namespace sigrid_pdf
