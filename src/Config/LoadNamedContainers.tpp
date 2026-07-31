@@ -9,14 +9,18 @@ template <typename T>
 bool sigrid_config::loadNamedContainers(sigrid_list::Vector<T>& containers, std::istream& is){
 
     if(readString(is) != "["){
+
+        std::cerr << "loadNamedContainers: Failed to load initial \"[\"."
+            << "Failed to load namedContainers" << std::endl;
         return false;
     }
 
     while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
-            std::cerr << "LoadNamedContainers: Failed loading string for container"
-                << std::endl;
+
+            std::cerr << "loadNamedContainers: Failed to load string."
+                << "Failed to load namedContainers" << std::endl;
             return false;
         }
         const std::string& s = string_o.value();
@@ -28,6 +32,9 @@ bool sigrid_config::loadNamedContainers(sigrid_list::Vector<T>& containers, std:
         T container;
         container.name = s;
         if(!(container.load(is))){
+
+            std::cerr << "loadNamedContainers: Failed to load container."
+                << "Failed to load namedContainers" << std::endl;
             return false;
         }
         containers.push_back(std::move(container));
