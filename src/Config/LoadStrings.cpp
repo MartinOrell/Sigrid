@@ -15,8 +15,8 @@ bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, std::
     while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
-            std::cerr << "LoadValues: Failed loading string for value"
-                << std::endl;
+            std::cerr << "loadStrings: Failed to load string."
+                << " Failed to load strings" << std::endl;
             return false;
         }
         const std::string& s = string_o.value();
