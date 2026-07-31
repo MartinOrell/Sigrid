@@ -15,8 +15,9 @@ bool sigrid_config::loadValueContainers(sigrid_list::Vector<T>& containers, std:
     while(const auto string_o = readString(is)){
         
         if(string_o == std::nullopt){
-            std::cerr << "LoadValueContainers: Failed loading string for container"
-                << std::endl;
+
+            std::cerr << "loadValueContainers: Failed to load string."
+                << " Failed to load valueContainers" << std::endl;
             return false;
         }
         const std::string& s = string_o.value();
@@ -27,6 +28,10 @@ bool sigrid_config::loadValueContainers(sigrid_list::Vector<T>& containers, std:
 
         T container;
         if(!container.setValue(s)){
+
+            std::cerr << "loadValueContainers: Failed to set value from string \""
+                << s << "\"."
+                << " Failed to load valueContainers" << std::endl;
             return false;
         }
         containers.push_back(std::move(container));
