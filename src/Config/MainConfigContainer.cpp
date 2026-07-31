@@ -15,8 +15,10 @@ bool MainConfigContainer::load(const std::string& filename){
     std::ifstream ifs(filename);
 
     if(!ifs.is_open()){
-        std::cerr << "MainConfigContainer: Failed opening " << filename
-            << " loading failed" << std::endl;
+
+        std::cerr << "MainConfigContainer: Failed to open \"" << filename << "\"."
+            << " Failed to load MainConfigContainer from file: \""
+            << filename << "\"" << std::endl;
         return false;
     }
 
@@ -25,8 +27,9 @@ bool MainConfigContainer::load(const std::string& filename){
         const auto key_o = sigrid_config::readString(ifs);
         if(key_o == std::nullopt){
 
-            std::cerr << "MainConfigContainer: Failed reading string."
-                << " loading failed" << std::endl;
+            std::cerr << "MainConfigContainer: Failed to read string."
+                << " Failed to load MainConfigContainer from file: \""
+                << filename << "\"" << std::endl;
             return false;
         }
         const std::string& key = key_o.value();
@@ -35,56 +38,69 @@ bool MainConfigContainer::load(const std::string& filename){
 
             if(!mainWindow.load(ifs)){
 
-                std::cerr << "MainConfigContainer: Failed loading Window."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to load Window."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "TileColors:"){
 
             if(!loadValueContainers<sigrid::ColorContainer>(tileColors, ifs)){
-                std::cerr << "MainConfigContainer: Failed loading tileColors."
-                    << " loading failed" << std::endl;
+                
+                std::cerr << "MainConfigContainer: Failed to load tileColors."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "ArrowColors:"){
 
             if(!loadValueContainers<sigrid::ColorContainer>(arrowColors, ifs)){
-                std::cerr << "MainConfigContainer: Failed loading arrowColors."
-                    << " loading failed" << std::endl;
+                
+                std::cerr << "MainConfigContainer: Failed to load arrowColors."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "PieceColors:"){
 
             if(!loadContainers<sigrid::PieceColor>(pieceColors, ifs)){
-                std::cerr << "MainConfigContainer: Failed loading pieceColors."
-                    << " loading failed" << std::endl;
+                
+                std::cerr << "MainConfigContainer: Failed to load pieceColors."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "Pieces:"){
 
             if(!loadContainers<sigrid::PieceContainer>(pieces, ifs)){
-                std::cerr << "MainConfigContainer: Failed loading pieces."
-                    << " loading failed" << std::endl;
+                
+                std::cerr << "MainConfigContainer: Failed to load pieces."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "BoardStyle:"){
 
             if(!boardData.load(ifs)){
-                std::cerr << "MainConfigContainer: Failed loading boardStyle."
-                    << " loading failed" << std::endl;
+
+                std::cerr << "MainConfigContainer: Failed to load boardStyle."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
         else if(key == "Menu:"){
 
             if(!menuData.load(ifs)){
-                std::cerr << "MainConfigContainer: Failed loading Menu."
-                    << " loading failed" << std::endl;
+                
+                std::cerr << "MainConfigContainer: Failed to load Menu."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
@@ -92,8 +108,9 @@ bool MainConfigContainer::load(const std::string& filename){
 
             if(!toolPickerData.load(ifs)){
 
-                std::cerr << "MainConfigContainer: Failed loading toolPicker."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to load toolPicker."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
@@ -101,8 +118,9 @@ bool MainConfigContainer::load(const std::string& filename){
 
             if(!leftClickTool.load(ifs)){
 
-                std::cerr << "MainConfigContainer: Failed loading leftClickTool."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to load leftClickTool."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
@@ -110,8 +128,9 @@ bool MainConfigContainer::load(const std::string& filename){
 
             if(!rightClickTool.load(ifs)){
 
-                std::cerr << "MainConfigContainer: Failed loading rightClickTool."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to load rightClickTool."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
@@ -119,8 +138,9 @@ bool MainConfigContainer::load(const std::string& filename){
 
             if(!middleClickTool.load(ifs)){
 
-                std::cerr << "MainConfigContainer: Failed loading middleClickTool."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to load middleClickTool."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
         }
@@ -129,8 +149,9 @@ bool MainConfigContainer::load(const std::string& filename){
             const auto resetBoardFilename_o = readString(ifs);
             if(resetBoardFilename_o == std::nullopt){
 
-                std::cerr << "MainConfigContainer: Failed reading string for resetBoardFilename."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to read string for resetBoardFilename."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
             resetBoardFilename = resetBoardFilename_o.value();
@@ -140,8 +161,9 @@ bool MainConfigContainer::load(const std::string& filename){
             const auto defaultBoardImageFilename_o = readString(ifs);
             if(defaultBoardImageFilename_o == std::nullopt){
 
-                std::cerr << "MainConfigContainer: Failed reading string for defaultBoardImageFilename."
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to read read string for defaultBoardImageFilename."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
             defaultBoardImageFilename = defaultBoardImageFilename_o.value();
@@ -151,15 +173,17 @@ bool MainConfigContainer::load(const std::string& filename){
             const auto boardFilename_o = readString(ifs);
             if(boardFilename_o == std::nullopt){
 
-                std::cerr << "MainConfigContainer: Failed reading string for boardFilename"
-                    << " loading failed" << std::endl;
+                std::cerr << "MainConfigContainer: Failed to read string for boardFilename."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
             boardFilename = boardFilename_o.value();
         }
         else{
-            std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"" << std::endl;
-            std::cerr << " read from startup file: \"" << filename << "\"" << std::endl;
+            std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"."
+                << " Failed to load MainConfigContainer from file: \""
+                << filename << "\"" << std::endl;
             return false;
         }
     }
