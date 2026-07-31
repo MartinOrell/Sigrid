@@ -3,7 +3,7 @@
 #include <string>
 #include <istream>
 
-#include "Coord/Orientation.h"
+#include "Board/BoardLabelLocationContainer.h"
 
 namespace sigrid{
 
@@ -11,8 +11,7 @@ struct BoardLabelContainer{
 
     bool load(std::istream& is);
 
-    bool isInside = true;
-    sigrid_coord::Orientation orientation = sigrid_coord::Orientation::UNDEFINED;
+    BoardLabelLocationContainer location;
     bool isVisible = false;
     float size = 0.f;
     std::string font = "";

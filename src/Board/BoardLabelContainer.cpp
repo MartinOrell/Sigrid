@@ -74,18 +74,18 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
 // Example: "outside left"
 bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
 
-    const auto location_o = sigrid_config::readString(is);
-    if(location_o == std::nullopt){
+    const auto locationString_o = sigrid_config::readString(is);
+    if(locationString_o == std::nullopt){
 
         std::cerr << "BoardLabelContainer::loadLocation: Failed to read string."
             << " Failed to load location for BoardLabelContainer" << std::endl;
         return false;
     }
-    const std::string& location = location_o.value();
+    const std::string& locationString = locationString_o.value();
 
-    isInside = location.substr(0,6) == "inside";
+    location.isInside = locationString.substr(0,6) == "inside";
     
-    auto spacePos = location.find(' ');
+    auto spacePos = locationString.find(' ');
     if(spacePos == std::string::npos){
 
         std::cerr << "BoardLabelContainer::loadLocation: Failed to find spacebar"
@@ -93,19 +93,19 @@ bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
         return false;
     }
     
-    std::string orientationString = location.substr(spacePos+1);
+    std::string orientationString = locationString.substr(spacePos+1);
 
     if(orientationString == "left"){
-        orientation = sigrid_coord::Orientation::LEFT;
+        location.orientation = sigrid_coord::Orientation::LEFT;
     }
     else if(orientationString == "right"){
-        orientation = sigrid_coord::Orientation::RIGHT;
+        location.orientation = sigrid_coord::Orientation::RIGHT;
     }
     else if(orientationString == "top"){
-        orientation = sigrid_coord::Orientation::TOP;
+        location.orientation = sigrid_coord::Orientation::TOP;
     }
     else if(orientationString == "bottom"){
-        orientation = sigrid_coord::Orientation::BOTTOM;
+        location.orientation = sigrid_coord::Orientation::BOTTOM;
     }
     else{
         std::cerr << "BoardLabelContainer::loadLocation: Unknown label orientation: \""

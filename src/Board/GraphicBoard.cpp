@@ -1063,8 +1063,8 @@ void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
 void GraphicBoard::initLabels(const BoardDesignContainer& config){
 
     for(auto& label: config.labels){
-        if(label.isInside){
-            if(label.orientation == sigrid_coord::Orientation::LEFT){
+        if(label.location.isInside){
+            if(label.location.orientation == sigrid_coord::Orientation::LEFT){
                 if(label.isVisible){
                     m_labels.showLeftInside();
                 }
@@ -1074,7 +1074,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
                 m_labels.setLeftInsideSize(label.size);
                 m_labels.setLeftInsideFont(label.font);
             }
-            else if(label.orientation == sigrid_coord::Orientation::BOTTOM){
+            else if(label.location.orientation == sigrid_coord::Orientation::BOTTOM){
                 if(label.isVisible){
                     m_labels.showBottomInside();
                 }
@@ -1085,11 +1085,11 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
                 m_labels.setBottomInsideFont(label.font);
             }
             else{
-                std::cerr << "GraphicBoard::initLabels: Unhandled inside label orientation: " << label.orientation << std::endl;
+                std::cerr << "GraphicBoard::initLabels: Unhandled inside label orientation: " << label.location.orientation << std::endl;
             }
         }
         else{ // outside
-            if(label.orientation == sigrid_coord::Orientation::LEFT){
+            if(label.location.orientation == sigrid_coord::Orientation::LEFT){
                 if(label.isVisible){
                     m_labels.showLeftOutside();
                 }
@@ -1099,7 +1099,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
                 m_labels.setLeftOutsideSize(label.size);
                 m_labels.setLeftOutsideFont(label.font);
             }
-            else if(label.orientation == sigrid_coord::Orientation::RIGHT){
+            else if(label.location.orientation == sigrid_coord::Orientation::RIGHT){
                 if(label.isVisible){
                     m_labels.showRightOutside();
                 }
@@ -1109,7 +1109,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
                 m_labels.setRightOutsideSize(label.size);
                 m_labels.setRightOutsideFont(label.font);
             }
-            else if(label.orientation == sigrid_coord::Orientation::TOP){
+            else if(label.location.orientation == sigrid_coord::Orientation::TOP){
                 if(label.isVisible){
                     m_labels.showTopOutside();
                 }
@@ -1119,7 +1119,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
                 m_labels.setTopOutsideSize(label.size);
                 m_labels.setTopOutsideFont(label.font);
             }
-            else if(label.orientation == sigrid_coord::Orientation::BOTTOM){
+            else if(label.location.orientation == sigrid_coord::Orientation::BOTTOM){
                 if(label.isVisible){
                     m_labels.showBottomOutside();
                 }
