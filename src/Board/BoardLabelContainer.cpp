@@ -21,10 +21,10 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
         }
         else if(s == "location:"){
 
-            if(!loadLocation(is)){
+            if(!location.load(is)){
 
                 std::cerr << "BoardLabelContainer: Failed to load location."
-                    << " Failed to load BoardLavelContainer" << std::endl;
+                    << " Failed to load BoardLabelContainer" << std::endl;
                 return false;
             }
         }
@@ -66,52 +66,6 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
             std::cerr << " Failed to load BoardLabelContainer" << std::endl;
             return false;
         }
-    }
-    return true;
-}
-
-// Location can be "outside/inside left/right/top/bottom"
-// Example: "outside left"
-bool sigrid::BoardLabelContainer::loadLocation(std::istream& is){
-
-    const auto locationString_o = sigrid_config::readString(is);
-    if(locationString_o == std::nullopt){
-
-        std::cerr << "BoardLabelContainer::loadLocation: Failed to read string."
-            << " Failed to load location for BoardLabelContainer" << std::endl;
-        return false;
-    }
-    const std::string& locationString = locationString_o.value();
-
-    location.isInside = locationString.substr(0,6) == "inside";
-    
-    auto spacePos = locationString.find(' ');
-    if(spacePos == std::string::npos){
-
-        std::cerr << "BoardLabelContainer::loadLocation: Failed to find spacebar"
-            << " Failed to load location for BoardLabelContainer" << std::endl;
-        return false;
-    }
-    
-    std::string orientationString = locationString.substr(spacePos+1);
-
-    if(orientationString == "left"){
-        location.orientation = sigrid_coord::Orientation::LEFT;
-    }
-    else if(orientationString == "right"){
-        location.orientation = sigrid_coord::Orientation::RIGHT;
-    }
-    else if(orientationString == "top"){
-        location.orientation = sigrid_coord::Orientation::TOP;
-    }
-    else if(orientationString == "bottom"){
-        location.orientation = sigrid_coord::Orientation::BOTTOM;
-    }
-    else{
-        std::cerr << "BoardLabelContainer::loadLocation: Unknown label orientation: \""
-            << orientationString << "\"."
-            << " Failed to load location for BoardLabelContainer" << std::endl;
-        return false;
     }
     return true;
 }

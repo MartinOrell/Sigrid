@@ -15,9 +15,6 @@ struct BoardLabelContainer{
     bool isVisible = false;
     float size = 0.f;
     std::string font = "";
-
-  private:
-    bool loadLocation(std::istream& is);
 };
 
 }  // namespace sigrid

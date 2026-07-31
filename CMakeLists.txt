@@ -27,6 +27,7 @@ set(SRC_FILES
     src/Board/BoardDataContainer.cpp
     src/Board/BoardDesignContainer.cpp
     src/Board/BoardLabelContainer.cpp
+    src/Board/BoardLabelLocationContainer.cpp
     src/Board/Board.cpp
     src/Board/GraphicBoard.cpp
     src/Board/LogicBoard.cpp
