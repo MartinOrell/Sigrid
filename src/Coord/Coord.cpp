@@ -72,11 +72,13 @@ bool Coord::set(const std::string& notation){
     }
     
     if(i == 0){
-        std::cerr << "Coord: Invalid coordinate: " << notation << std::endl;
+        std::cerr << "Coord: Invalid coordinate: " << notation
+            << ". Failed to set Coord" << std::endl;
         return false;
     }
     if(i == notation.length()){
-        std::cerr << "Coord: Invalid coordinate: " << notation << std::endl;
+        std::cerr << "Coord: Invalid coordinate: " << notation
+            << ". Failed to set Coord" << std::endl;
         return false;
     }
 
@@ -100,11 +102,20 @@ bool Coord::load(std::istream& is){
 
     const auto positionString_o = sigrid_config::readString(is);
     if(positionString_o == std::nullopt){
+
+        std::cerr << "Coord: Failed to read string."
+            << " Failed to load Coord" << std::endl;
         return false;
     }
     const std::string& positionString = positionString_o.value();
 
-    return set(positionString);
+    if(!set(positionString)){
+
+        std::cerr << "Coord: Failed to set from string \"" << positionString << "\"."
+            << " Failed to load Coord" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 std::string sigrid_coord::getColumnNotation(const int& x){
