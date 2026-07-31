@@ -8,7 +8,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
 
     if(sigrid_config::readString(is) != "["){
 
-        std::cerr << "WindowContainer: Failed reading first \"[\"."
+        std::cerr << "WindowContainer: Failed to read initial \"[\"."
             << " Failed to load WindowContainer" << std::endl;
         return false;
     }
@@ -16,8 +16,8 @@ bool sigrid::WindowContainer::load(std::istream& is){
     while(auto string_o = sigrid_config::readString(is)){
         
         if(string_o == std::nullopt){
-            
-            std::cerr << "WindowContainer: Failed reading string."
+
+            std::cerr << "WindowContainer: Failed to read string."
                 << " Failed to load WindowContainer" << std::endl;
             return false;
         }
@@ -31,7 +31,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
             const auto width_o = sigrid_config::readInt(is);
             if(width_o == std::nullopt){
 
-                std::cerr << "WindowContainer: Failed reading width."
+                std::cerr << "WindowContainer: Failed to read width."
                     << " Failed to load WindowContainer" << std::endl;
                 return false;
             }
@@ -42,7 +42,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
             const auto height_o = sigrid_config::readInt(is);
             if(height_o == std::nullopt){
 
-                std::cerr << "WindowContainer: Failed reading height."
+                std::cerr << "WindowContainer: Failed to read height."
                     << " Failed to load WindowContainer" << std::endl;
                 return false;
             }
@@ -53,7 +53,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
             const auto name_o = sigrid_config::readString(is);
             if(name_o == std::nullopt){
 
-                std::cerr << "WindowContainer: Failed reading name."
+                std::cerr << "WindowContainer: Failed to read name."
                     << " Failed to load WindowContainer" << std::endl;
                 return false;
             }
