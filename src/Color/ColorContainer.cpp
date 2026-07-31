@@ -9,7 +9,7 @@ bool sigrid::ColorContainer::load(std::istream& is){
     auto inputHex_o = sigrid_config::readHex(is);
     if(inputHex_o == std::nullopt){
 
-        std::cerr << "ColorContainer: Failed reading hex value."
+        std::cerr << "ColorContainer: Failed to read hex value."
             << " Failed to load ColorContainer" << std::endl;
         return false;
     }
