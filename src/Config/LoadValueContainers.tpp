@@ -9,6 +9,9 @@ template <typename T>
 bool sigrid_config::loadValueContainers(sigrid_list::Vector<T>& containers, std::istream& is){
 
     if(readString(is) != "["){
+
+        std::cerr << "loadValueContainers: Failed to load initial \"[\"."
+            << " Failed to load valueContainers" << std::endl; 
         return false;
     }
 
