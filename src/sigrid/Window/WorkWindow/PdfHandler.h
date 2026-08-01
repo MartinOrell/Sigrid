@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sigrid/List/VectorWithDisplayGrid.h"
+#include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
 #include "sigrid/Board/Board.h"
 #include "sigrid/Layout/LayoutGrid.h"
 

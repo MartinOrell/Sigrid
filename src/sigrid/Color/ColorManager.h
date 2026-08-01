@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <optional>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Color/ColorContainer.h"
 
 namespace sigrid{

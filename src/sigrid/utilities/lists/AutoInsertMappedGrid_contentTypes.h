@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sigrid/List/AutoInsertMappedGrid.h"
+#include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/LogicTile.h"
 #include "sigrid/Entity/Tile/GraphicTile.h"
 

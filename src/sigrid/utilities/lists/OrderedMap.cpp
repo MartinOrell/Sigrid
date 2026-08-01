@@ -1,5 +1,5 @@
-#include "sigrid/List/OrderedMap.h"
-#include "sigrid/List/OrderedMap_contentTypes.h"
+#include "sigrid/utilities/lists/OrderedMap.h"
+#include "sigrid/utilities/lists/OrderedMap_contentTypes.h"
 // Any type used must be added in the OrderedMap_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

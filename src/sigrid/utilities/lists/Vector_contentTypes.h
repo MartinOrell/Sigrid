@@ -7,7 +7,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/utilities/Coord/CoordBlock.h"
 

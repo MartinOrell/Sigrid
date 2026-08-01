@@ -3,7 +3,7 @@
 #include <string>
 #include <SFML/Graphics/Text.hpp>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 
 namespace sigrid{
 

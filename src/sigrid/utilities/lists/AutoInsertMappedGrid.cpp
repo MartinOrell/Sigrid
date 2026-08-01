@@ -1,5 +1,5 @@
-#include "sigrid/List/AutoInsertMappedGrid.h"
-#include "sigrid/List/AutoInsertMappedGrid_contentTypes.h"
+#include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
+#include "sigrid/utilities/lists/AutoInsertMappedGrid_contentTypes.h"
 // Any type used must be added in the AutoInsertMappedGrid_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

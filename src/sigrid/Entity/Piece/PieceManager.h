@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "sigrid/List/Map.h"
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Map.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Entity/Piece/LogicPiece.h"
 #include "sigrid/Entity/Piece/GraphicPiece.h"
 #include "sigrid/Entity/Piece/PieceColor.h"

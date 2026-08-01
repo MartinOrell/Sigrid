@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Input/InputStream.h"
 
 namespace sigrid_config{

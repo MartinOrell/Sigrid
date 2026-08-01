@@ -5,7 +5,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 
-#include "sigrid/List/Map.h"
+#include "sigrid/utilities/lists/Map.h"
 
 namespace sigrid{
 

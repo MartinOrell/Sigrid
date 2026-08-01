@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Coord/Coord.h"
-#include "sigrid/List/AutoInsertMappedGrid.h"
+#include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/LogicTile.h"
 
 namespace sigrid{

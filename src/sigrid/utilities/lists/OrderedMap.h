@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sigrid/List/Map.h"
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Map.h"
+#include "sigrid/utilities/lists/Vector.h"
 
 namespace sigrid_list{
 

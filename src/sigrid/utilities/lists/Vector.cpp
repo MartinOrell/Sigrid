@@ -1,5 +1,5 @@
-#include "sigrid/List/Vector.h"
-#include "sigrid/List/Vector_contentTypes.h"
+#include "sigrid/utilities/lists/Vector.h"
+#include "sigrid/utilities/lists/Vector_contentTypes.h"
 // Any type used must be added in the Vector_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

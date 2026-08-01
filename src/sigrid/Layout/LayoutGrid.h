@@ -2,8 +2,8 @@
 
 #include <optional>
 
-#include "sigrid/List/Vector.h"
-#include "sigrid/List/Map.h"
+#include "sigrid/utilities/lists/Vector.h"
+#include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 

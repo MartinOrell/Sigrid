@@ -3,7 +3,7 @@
 #include <string>
 
 #include "sigrid/Input/InputStream.h"
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Menu/MenuItemContainer.h"
 
 namespace sigrid{

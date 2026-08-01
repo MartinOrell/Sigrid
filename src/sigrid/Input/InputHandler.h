@@ -3,7 +3,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "sigrid/List/Map.h"
+#include "sigrid/utilities/lists/Map.h"
 #include "sigrid/Tool/Tool.h"
 #include "sigrid/Action/Action.h"
 

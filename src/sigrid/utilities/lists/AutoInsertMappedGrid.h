@@ -3,8 +3,8 @@
 #include <optional>
 #include <functional> //Reference wrapper
 
-#include "sigrid/List/Map.h"
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Map.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Coord/Coord.h"
 
 namespace sigrid_list{

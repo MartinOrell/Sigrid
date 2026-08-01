@@ -1,5 +1,5 @@
-#include "sigrid/List/VectorWithDisplayGrid.h"
-#include "sigrid/List/VectorWithDisplayGrid_contentTypes.h"
+#include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
+#include "sigrid/utilities/lists/VectorWithDisplayGrid_contentTypes.h"
 // Any type used must be added in the VectorWithDisplayGrid_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

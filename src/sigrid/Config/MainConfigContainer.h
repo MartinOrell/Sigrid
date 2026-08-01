@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 
 #include "sigrid/Window/WindowContainer.h"
 #include "sigrid/Entity/Piece/PieceColor.h"

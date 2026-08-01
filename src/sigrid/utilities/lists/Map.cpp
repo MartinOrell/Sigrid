@@ -1,5 +1,5 @@
-#include "sigrid/List/Map.h"
-#include "sigrid/List/Map_contentTypes.h"
+#include "sigrid/utilities/lists/Map.h"
+#include "sigrid/utilities/lists/Map_contentTypes.h"
 // Any type used must be added in the Map_contentTypes.h file
 // Reasoning being that I want this code in a cpp file
 // If this should work with any class, then it is possible by

@@ -6,7 +6,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Action/Action.h"
 #include "sigrid/utilities/Coord/CoordBlock.h"
 #include "sigrid/Color/ColorManager.h"

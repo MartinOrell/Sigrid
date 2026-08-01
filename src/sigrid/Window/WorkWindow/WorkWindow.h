@@ -11,7 +11,7 @@
 
 #include "sigrid/Window/WorkWindow/PdfHandler.h"
 
-#include "sigrid/List/VectorWithDisplayGrid.h"
+#include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
 #include "sigrid/Board/BoardDataContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 

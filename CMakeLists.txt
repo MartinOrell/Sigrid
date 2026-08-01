@@ -4,11 +4,11 @@ project(sigrid LANGUAGES CXX)
 set(SRC_FILES
     src/sigrid/main.cpp
     src/sigrid/SigridRenderTexture/SigridRenderTexture.cpp
-    src/sigrid/List/Vector.cpp
-    src/sigrid/List/Map.cpp
-    src/sigrid/List/OrderedMap.cpp
-    src/sigrid/List/VectorWithDisplayGrid.cpp
-    src/sigrid/List/AutoInsertMappedGrid.cpp
+    src/sigrid/utilities/lists/Vector.cpp
+    src/sigrid/utilities/lists/Map.cpp
+    src/sigrid/utilities/lists/OrderedMap.cpp
+    src/sigrid/utilities/lists/VectorWithDisplayGrid.cpp
+    src/sigrid/utilities/lists/AutoInsertMappedGrid.cpp
     src/sigrid/Input/InputStream.cpp
     src/sigrid/Input/Mouse/Mouse.cpp
     src/sigrid/Input/InputHandler.cpp

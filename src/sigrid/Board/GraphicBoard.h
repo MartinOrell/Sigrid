@@ -4,7 +4,7 @@
 
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
-#include "sigrid/List/Vector.h"
+#include "sigrid/utilities/lists/Vector.h"
 
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "sigrid/Board/BoardLabels.h"
