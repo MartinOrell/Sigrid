@@ -1,4 +1,4 @@
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 
 #include <iostream>
 

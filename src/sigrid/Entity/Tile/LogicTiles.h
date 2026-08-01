@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "sigrid/List/Vector.h"
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/List/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/LogicTile.h"
 

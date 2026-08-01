@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sigrid/Input/InputStream.h"
-#include "sigrid/Coord/CoordBlock.h"
+#include "sigrid/utilities/Coord/CoordBlock.h"
 
 namespace sigrid{
 

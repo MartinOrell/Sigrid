@@ -9,8 +9,8 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "sigrid/Coord/Coord.h"
-#include "sigrid/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/Coord.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/Action/Action.h"
 #include "sigrid/Tool/Tool.h"
 #include "sigrid/Entity/Piece/PieceIdentifier.h"

@@ -5,7 +5,7 @@
 
 #include "sigrid/List/Map.h"
 #include "sigrid/List/Vector.h"
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 
 namespace sigrid_list{
 

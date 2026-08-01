@@ -2,7 +2,7 @@
 
 #include <istream>
 
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 
 namespace sigrid_coord{
 

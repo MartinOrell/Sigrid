@@ -8,8 +8,8 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include "sigrid/List/Vector.h"
-#include "sigrid/Coord/CoordPair.h"
-#include "sigrid/Coord/CoordBlock.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/CoordBlock.h"
 
 #include "sigrid/Color/ColorContainer.h"
 #include "sigrid/Entity/Piece/PieceContainer.h"

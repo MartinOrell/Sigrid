@@ -1,4 +1,4 @@
-#include "sigrid/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
 
 #include <cctype>
 

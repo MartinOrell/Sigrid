@@ -5,7 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "sigrid/Font/FontManager.h"
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 
 using namespace sigrid;
 

@@ -4,7 +4,7 @@
 
 #include "sigrid/List/Vector.h"
 #include "sigrid/List/Map.h"
-#include "sigrid/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
 #include <SFML/System/Vector2.hpp>
 
 namespace sigrid{

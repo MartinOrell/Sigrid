@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sigrid/List/OrderedMap.h"
-#include "sigrid/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/Entity/Shape/Arrow/LogicArrow.h"
 #include "sigrid/Entity/Shape/Arrow/GraphicArrow.h"
 

@@ -4,7 +4,7 @@
 
 #include "sigrid/Input/InputStream.h"
 #include "sigrid/List/Vector.h"
-#include "sigrid/Coord/CoordBlock.h"
+#include "sigrid/utilities/Coord/CoordBlock.h"
 #include "sigrid/ToolPicker/ToolBlockContainer.h"
 
 namespace sigrid{

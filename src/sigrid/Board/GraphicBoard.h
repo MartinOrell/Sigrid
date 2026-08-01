@@ -2,8 +2,8 @@
 
 #include <optional>
 
-#include "sigrid/Coord/Coord.h"
-#include "sigrid/Coord/CoordPair.h"
+#include "sigrid/utilities/Coord/Coord.h"
+#include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/List/Vector.h"
 
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorder.h"

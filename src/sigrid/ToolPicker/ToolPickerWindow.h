@@ -8,7 +8,7 @@
 
 #include "sigrid/List/Vector.h"
 #include "sigrid/Action/Action.h"
-#include "sigrid/Coord/CoordBlock.h"
+#include "sigrid/utilities/Coord/CoordBlock.h"
 #include "sigrid/Color/ColorManager.h"
 #include "sigrid/Tool/ToolStruct.h"
 #include "sigrid/Board/Board.h"

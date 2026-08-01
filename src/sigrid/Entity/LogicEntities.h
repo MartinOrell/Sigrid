@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "sigrid/List/Map.h"
-#include "sigrid/Coord/Coord.h"
+#include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/Entity/LogicEntity.h"
 #include "sigrid/Entity/Piece/LogicPiece.h"
 #include "sigrid/Entity/Shape/Circle/LogicCircle.h"
