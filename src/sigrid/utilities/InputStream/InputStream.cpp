@@ -1,4 +1,4 @@
-#include "sigrid/Input/InputStream.h"
+#include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid{
 

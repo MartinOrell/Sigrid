@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sigrid/utilities/lists/Vector.h"
-#include "sigrid/Input/InputStream.h"
+#include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid_config{
 

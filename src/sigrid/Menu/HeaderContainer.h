@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "sigrid/Input/InputStream.h"
+#include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Menu/MenuItemContainer.h"
 

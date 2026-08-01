@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "sigrid/Input/InputStream.h"
+#include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/Config/LoadContainers.h"
 #include "sigrid/Color/ColorContainer.h"
 #include "sigrid/Config/LoadValueContainers.h"

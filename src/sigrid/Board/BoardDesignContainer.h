@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sigrid/utilities/lists/Vector.h"
-#include "sigrid/Input/InputStream.h"
+#include "sigrid/utilities/InputStream/InputStream.h"
 
 #include "sigrid/Entity/Tile/TileContainer.h"
 #include "sigrid/Entity/Shape/Circle/CircleContainer.h"
