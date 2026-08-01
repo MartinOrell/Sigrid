@@ -2,21 +2,20 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
 #include "sigrid/Config/loadStrings.h"
 #include "sigrid/Config/LoadValues.h"
 #include "sigrid/Config/LoadContainers.h"
 
-bool sigrid::ToolPickerContainer::load(std::istream& is){
+bool sigrid::ToolPickerContainer::load(InputStream& is){
 
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "ToolPickerContainer: Failed to read initial \"[\"."
             << " Failed to load ToolPickerContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -31,7 +30,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto isVisible_o = sigrid_config::readVisibility(is);
+            const auto isVisible_o = is.readVisibility();
             if(isVisible_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read visibility."
@@ -42,7 +41,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "columns:"){
 
-            const auto columns_o = sigrid_config::readInt(is);
+            const auto columns_o = is.readInt();
             if(columns_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read int for columns."
@@ -53,7 +52,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "rows:"){
 
-            const auto rows_o = sigrid_config::readInt(is);
+            const auto rows_o = is.readInt();
             if(rows_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read int for rows."
@@ -100,7 +99,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "defaultArrowColor:"){
 
-            const auto defaultArrowColorId_o = sigrid_config::readInt(is);
+            const auto defaultArrowColorId_o = is.readInt();
             if(defaultArrowColorId_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read int for defaultArrowColor."
@@ -111,7 +110,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "defaultCircleColor:"){
 
-            const auto defaultCircleColorId_o = sigrid_config::readInt(is);
+            const auto defaultCircleColorId_o = is.readInt();
             if(defaultCircleColorId_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read int for defaultCircleColor."
@@ -131,7 +130,7 @@ bool sigrid::ToolPickerContainer::load(std::istream& is){
         }
         else if(s == "defaultPiece:"){
 
-            const auto defaultPieceNotation_o = sigrid_config::readString(is);
+            const auto defaultPieceNotation_o = is.readString();
             if(defaultPieceNotation_o == std::nullopt){
 
                 std::cerr << "ToolPickerContainer: Failed to read defaultPiece."

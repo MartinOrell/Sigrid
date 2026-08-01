@@ -6,16 +6,16 @@
 #include "sigrid/Config/IO.h"
 
 template <typename T>
-bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, std::istream& is){
+bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, sigrid::InputStream& is){
 
-    if(readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "loadValues: Failed to read initial \"[\"."
             << " Failed to load values" << std::endl;
         return false;
     }
 
-    while(const auto string_o = readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 

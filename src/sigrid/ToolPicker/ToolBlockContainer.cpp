@@ -2,11 +2,9 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::ToolBlockContainer::load(InputStream& is){
 
-bool sigrid::ToolBlockContainer::load(std::istream& is){
-
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
 
         if(string_o == std::nullopt){
 
@@ -24,7 +22,7 @@ bool sigrid::ToolBlockContainer::load(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto isVisible_o = sigrid_config::readVisibility(is);
+            const auto isVisible_o = is.readVisibility();
             if(isVisible_o == std::nullopt){
                 
                 std::cerr << "ToolBlockContainer: Failed to read visibility."
@@ -46,7 +44,7 @@ bool sigrid::ToolBlockContainer::load(std::istream& is){
         }
         else if(s == "columns:"){
 
-            const auto columns_o = sigrid_config::readInt(is);
+            const auto columns_o = is.readInt();
             if(columns_o == std::nullopt){
 
                 std::cerr << "ToolBlockContainer: Failed to read int for columns."
@@ -57,7 +55,7 @@ bool sigrid::ToolBlockContainer::load(std::istream& is){
         }
         else if(s == "rows:"){
 
-            const auto rows_o = sigrid_config::readInt(is);
+            const auto rows_o = is.readInt();
             if(rows_o == std::nullopt){
 
                 std::cerr << "ToolBlockContainer: Failed to read int for rows."

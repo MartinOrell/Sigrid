@@ -1,12 +1,12 @@
 #pragma once
 
-#include <istream>
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
     struct ArrowContainer{
 
-        bool load(std::istream& is);
+        bool load(InputStream& is);
 
         float thickness = 0.f;
         float headSize = 0.f;

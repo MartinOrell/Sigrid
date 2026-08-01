@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "sigrid/Input/InputStream.h"
 #include "sigrid/List/Vector.h"
 #include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/Menu/HeaderContainer.h"
@@ -10,7 +11,7 @@ namespace sigrid{
 
 struct MenuContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     std::string fontName;
     std::string title;

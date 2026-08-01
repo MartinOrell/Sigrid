@@ -1,14 +1,13 @@
 #pragma once
 
-#include <istream>
-
+#include "sigrid/Input/InputStream.h"
 #include "sigrid/Coord/CoordBlock.h"
 
 namespace sigrid{
 
 struct ToolBlockContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     sigrid_coord::CoordBlock block;
     bool isVisible = true;

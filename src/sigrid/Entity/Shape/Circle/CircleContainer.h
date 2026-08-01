@@ -1,12 +1,12 @@
 #pragma once
 
-#include <istream>
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
     struct CircleContainer{
 
-        bool load(std::istream& is);
+        bool load(InputStream& is);
 
         float diameter = 0.f;
     };

@@ -2,11 +2,9 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::BoardLabelContainer::load(InputStream& is){
 
-bool sigrid::BoardLabelContainer::load(std::istream& is){
-
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -30,7 +28,7 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto isVisible_o = sigrid_config::readVisibility(is);
+            const auto isVisible_o = is.readVisibility();
             if(isVisible_o == std::nullopt){
 
                 std::cerr << "BoardLabelContainer: Failed to read visibility."
@@ -41,7 +39,7 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
         }
         else if(s == "size:"){
 
-            const auto size_o = sigrid_config::readPercentage(is);
+            const auto size_o = is.readPercentage();
             if(size_o == std::nullopt){
 
                 std::cerr << "BoardLabelContainer: Failed to read percentage for size."
@@ -52,7 +50,7 @@ bool sigrid::BoardLabelContainer::load(std::istream& is){
         }
         else if(s == "font:"){
 
-            const auto font_o = sigrid_config::readString(is);
+            const auto font_o = is.readString();
             if(font_o == std::nullopt){
 
                 std::cerr << "BoardLabelContainer: Failed to read font."

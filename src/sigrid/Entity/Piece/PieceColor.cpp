@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
 #include "sigrid/Color/ColorContainer.h"
 
-bool sigrid::PieceColor::load(std::istream& is){
+bool sigrid::PieceColor::load(InputStream& is){
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -22,7 +21,7 @@ bool sigrid::PieceColor::load(std::istream& is){
         }
         else if(s == "name:"){
 
-            auto name_o = sigrid_config::readString(is);
+            auto name_o = is.readString();
             if(name_o == std::nullopt){
 
                 std::cerr << "PieceColor: Failed to read name."
@@ -33,7 +32,7 @@ bool sigrid::PieceColor::load(std::istream& is){
         }
         else if(s == "style:"){
 
-            auto styleString_o = sigrid_config::readString(is);
+            auto styleString_o = is.readString();
             if(styleString_o == std::nullopt){
 
                 std::cerr << "PieceColor: Failed to read style."

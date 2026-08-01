@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
 using namespace sigrid_coord;
 
 Coord::Coord()
@@ -98,9 +96,9 @@ std::string Coord::getNotation() const{
     return notation;
 }
 
-bool Coord::load(std::istream& is){
+bool Coord::load(sigrid::InputStream& is){
 
-    const auto positionString_o = sigrid_config::readString(is);
+    const auto positionString_o = is.readString();
     if(positionString_o == std::nullopt){
 
         std::cerr << "Coord: Failed to read string."

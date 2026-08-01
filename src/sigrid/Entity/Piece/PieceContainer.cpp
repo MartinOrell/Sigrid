@@ -2,13 +2,11 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
 using namespace sigrid;
 
-bool PieceContainer::load(std::istream& is){
+bool PieceContainer::load(InputStream& is){
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -21,7 +19,7 @@ bool PieceContainer::load(std::istream& is){
             break;
         }
         else if(s == "notation:"){
-            auto name_o = sigrid_config::readString(is);
+            auto name_o = is.readString();
             if(name_o == std::nullopt){
 
                 std::cerr << "PieceContainer: Failed to read notation."
@@ -31,7 +29,7 @@ bool PieceContainer::load(std::istream& is){
             name = name_o.value();
         }
         else if(s == "style:"){
-            auto style_o = sigrid_config::readString(is);
+            auto style_o = is.readString();
             if(style_o == std::nullopt){
 
                 std::cerr << "PieceContainer: Failed to read style."
@@ -41,7 +39,7 @@ bool PieceContainer::load(std::istream& is){
             style = style_o.value();
         }
         else if(s == "imageFilename:"){
-            auto filename_o = sigrid_config::readString(is);
+            auto filename_o = is.readString();
             if(filename_o == std::nullopt){
 
                 std::cerr << "PieceContainer: Failed to read imageFilename"

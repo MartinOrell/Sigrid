@@ -2,12 +2,10 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
-bool sigrid::MenuItemContainer::load(std::istream& is){
+bool sigrid::MenuItemContainer::load(InputStream& is){
 
     {
-        const auto string_o = sigrid_config::readString(is);
+        const auto string_o = is.readString();
         if(string_o == std::nullopt){
 
             std::cerr << "MenuItemContainer: Failed to read initial string."
@@ -23,7 +21,7 @@ bool sigrid::MenuItemContainer::load(std::istream& is){
         }
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -38,7 +36,7 @@ bool sigrid::MenuItemContainer::load(std::istream& is){
         }
         displayNames.push_back(s);
 
-        const auto actionName_o = sigrid_config::readString(is);
+        const auto actionName_o = is.readString();
         if(actionName_o == std::nullopt){
 
             std::cerr << "MenuItemContainer: Failed to read string for actionName."

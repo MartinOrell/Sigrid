@@ -2,19 +2,18 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
 #include "sigrid/Config/LoadContainers.h"
 
-bool sigrid::BoardDesignContainer::load(std::istream& is){
+bool sigrid::BoardDesignContainer::load(InputStream& is){
 
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "BoardDesignContainer: Failed to read initial \"[\"."
             << " Failed to load BoardDesignContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 

@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::RectangleBorderContainer::load(InputStream& is){
 
-bool sigrid::RectangleBorderContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "RectangleBorderContainer: Failed to read initial \"[\"."
             << " Failed to load RectangleBorderContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::RectangleBorderContainer::load(std::istream& is){
         }
         else if(s == "visibility:"){
 
-            const auto isVisible_o = sigrid_config::readVisibility(is);
+            const auto isVisible_o = is.readVisibility();
             if(isVisible_o == std::nullopt){
 
                 std::cerr << "RectangleBorderContainer: Failed to read visibility."
@@ -39,7 +37,7 @@ bool sigrid::RectangleBorderContainer::load(std::istream& is){
         }
         else if(s == "thickness:"){
 
-            const auto thickness_o = sigrid_config::readFloat(is);
+            const auto thickness_o = is.readFloat();
             if(thickness_o == std::nullopt){
 
                 std::cerr << "RectangleBorderContainer: Failed to read thickness."

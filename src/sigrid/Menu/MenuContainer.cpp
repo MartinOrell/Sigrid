@@ -2,19 +2,18 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
 #include "sigrid/Config/LoadNamedContainers.h"
 
-bool sigrid::MenuContainer::load(std::istream& is){
+bool sigrid::MenuContainer::load(InputStream& is){
 
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "MenuContainer: Failed to read initial \"[\"."
             << " Failed to load MenuContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -29,7 +28,7 @@ bool sigrid::MenuContainer::load(std::istream& is){
         }
         else if(s == "pin:"){
 
-            const auto isPinned_o = sigrid_config::readToggle(is);
+            const auto isPinned_o = is.readToggle();
             if(isPinned_o == std::nullopt){
 
                 std::cerr << "MenuContainer: Failed to read toggle for pin."
@@ -41,7 +40,7 @@ bool sigrid::MenuContainer::load(std::istream& is){
         }
         else if(s == "font:"){
 
-            const auto fontName_o = sigrid_config::readString(is);
+            const auto fontName_o = is.readString();
             if(fontName_o == std::nullopt){
 
                 std::cerr << "MenuContainer: Failed to read string for font."
@@ -52,7 +51,7 @@ bool sigrid::MenuContainer::load(std::istream& is){
         }
         else if(s == "title:"){
 
-            const auto title_o = sigrid_config::readString(is);
+            const auto title_o = is.readString();
             if(title_o == std::nullopt){
 
                 std::cerr << "MenuContainer: Failed to read string for title."

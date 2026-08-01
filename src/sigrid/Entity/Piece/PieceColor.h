@@ -1,12 +1,12 @@
 #pragma once
 
-#include <istream>
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
 struct PieceColor{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     bool isLight;
     uint32_t lightModifier;

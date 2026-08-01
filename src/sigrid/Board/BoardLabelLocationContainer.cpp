@@ -2,13 +2,11 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
 // Location can be "outside/inside left/right/top/bottom"
 // Example: "outside left"
-bool sigrid::BoardLabelLocationContainer::load(std::istream& is){
+bool sigrid::BoardLabelLocationContainer::load(InputStream& is){
 
-    const auto locationString_o = sigrid_config::readString(is);
+    const auto locationString_o = is.readString();
     if(locationString_o == std::nullopt){
 
         std::cerr << "BoardLabelLocationContainer: Failed to read string."

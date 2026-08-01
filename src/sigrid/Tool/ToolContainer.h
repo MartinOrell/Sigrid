@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
-#include <istream>
+
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
 struct ToolContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     std::string selection = "Select";
     int colorId = 0;

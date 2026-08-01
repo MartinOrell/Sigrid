@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
-#include <istream>
+
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
     struct WindowContainer{
 
-        bool load(std::istream& is);
+        bool load(InputStream& is);
 
         int width;
         int height;

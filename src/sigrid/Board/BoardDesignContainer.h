@@ -1,8 +1,7 @@
 #pragma once
 
-#include <istream>
-
 #include "sigrid/List/Vector.h"
+#include "sigrid/Input/InputStream.h"
 
 #include "sigrid/Entity/Tile/TileContainer.h"
 #include "sigrid/Entity/Shape/Circle/CircleContainer.h"
@@ -15,7 +14,7 @@ namespace sigrid{
 
 struct BoardDesignContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     TileContainer tile;
     CircleContainer circle;

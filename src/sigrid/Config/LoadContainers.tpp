@@ -3,19 +3,17 @@
 #include <string>
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
 template <typename T>
-bool sigrid_config::loadContainers(sigrid_list::Vector<T>& containers, std::istream& is){
+bool sigrid_config::loadContainers(sigrid_list::Vector<T>& containers, sigrid::InputStream& is){
 
-    if(readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "loadContainers: Failed to load initial \"[\"."
             << " Failed to load Containers" << std::endl;
         return false;
     }
 
-    while(const auto string_o = readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 

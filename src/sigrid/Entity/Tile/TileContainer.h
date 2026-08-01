@@ -1,12 +1,12 @@
 #pragma once
 
-#include <istream>
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
     struct TileContainer{
 
-        bool load(std::istream& is);
+        bool load(InputStream& is);
 
         float width = 0.f;
         float height = 0.f;

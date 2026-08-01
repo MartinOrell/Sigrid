@@ -9,6 +9,7 @@ set(SRC_FILES
     src/sigrid/List/OrderedMap.cpp
     src/sigrid/List/VectorWithDisplayGrid.cpp
     src/sigrid/List/AutoInsertMappedGrid.cpp
+    src/sigrid/Input/InputStream.cpp
     src/sigrid/Input/Mouse/Mouse.cpp
     src/sigrid/Input/InputHandler.cpp
     src/sigrid/Config/IO.cpp

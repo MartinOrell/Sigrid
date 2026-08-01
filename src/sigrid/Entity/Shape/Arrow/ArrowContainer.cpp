@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::ArrowContainer::load(InputStream& is){
 
-bool sigrid::ArrowContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "ArrowContainer: Failed to read initial \"[\"."
             << " Failed to load ArrowContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::ArrowContainer::load(std::istream& is){
         }
         else if(s == "thickness:"){
 
-            const auto thickness_o = sigrid_config::readFloat(is);
+            const auto thickness_o = is.readFloat();
             if(thickness_o == std::nullopt){
 
                 std::cerr << "ArrowContainer: Failed to read float for thickness."
@@ -39,7 +37,7 @@ bool sigrid::ArrowContainer::load(std::istream& is){
         }
         else if(s == "headSize:"){
 
-            const auto headSize_o = sigrid_config::readFloat(is);
+            const auto headSize_o = is.readFloat();
             if(headSize_o == std::nullopt){
 
                 std::cerr << "ArrowContainer: Failed to read float for headSize."

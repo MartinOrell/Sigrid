@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::TileContainer::load(InputStream& is){
 
-bool sigrid::TileContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "TileContainer: Failed to load initial \"[\"."
             << " Failed to load TileContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::TileContainer::load(std::istream& is){
         }
         else if(s == "width:"){
 
-            const auto width_o = sigrid_config::readFloat(is);
+            const auto width_o = is.readFloat();
             if(width_o == std::nullopt){
 
                 std::cerr << "TileContainer: Failed to read float for width."
@@ -39,7 +37,7 @@ bool sigrid::TileContainer::load(std::istream& is){
         }
         else if(s == "height:"){
 
-            const auto height_o = sigrid_config::readFloat(is);
+            const auto height_o = is.readFloat();
             if(height_o == std::nullopt){
 
                 std::cerr << "TileContainer: Failed to read float for height."

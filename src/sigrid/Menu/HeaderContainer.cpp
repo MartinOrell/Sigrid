@@ -2,7 +2,7 @@
 
 #include "sigrid/Config/LoadNamedContainers.h"
 
-bool sigrid::HeaderContainer::load(std::istream& is){
+bool sigrid::HeaderContainer::load(InputStream& is){
 
     if(!sigrid_config::loadNamedContainers<MenuItemContainer>(items, is)){
 

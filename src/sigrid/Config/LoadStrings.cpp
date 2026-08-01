@@ -3,18 +3,16 @@
 #include <string>
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, sigrid::InputStream& is){
 
-bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, std::istream& is){
-
-    if(readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "loadStrings: Failed to load initial \"[\"."
             << " Failed to load strings" << std::endl;
         return false;
     }
 
-    while(const auto string_o = readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
             std::cerr << "loadStrings: Failed to load string."

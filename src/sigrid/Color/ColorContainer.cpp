@@ -4,9 +4,9 @@
 
 #include "sigrid/Config/IO.h"
 
-bool sigrid::ColorContainer::load(std::istream& is){
+bool sigrid::ColorContainer::load(InputStream& is){
 
-    auto inputHex_o = sigrid_config::readHex(is);
+    auto inputHex_o = is.readHex();
     if(inputHex_o == std::nullopt){
 
         std::cerr << "ColorContainer: Failed to read hex value."

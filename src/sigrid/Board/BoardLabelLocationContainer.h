@@ -1,14 +1,13 @@
 #pragma once
 
-#include <istream>
-
+#include "sigrid/Input/InputStream.h"
 #include "sigrid/Coord/Orientation.h"
 
 namespace sigrid{
 
     struct BoardLabelLocationContainer{
 
-        bool load(std::istream& is);
+        bool load(InputStream& is);
 
         bool isInside = true;
         sigrid_coord::Orientation orientation = sigrid_coord::Orientation::UNDEFINED;

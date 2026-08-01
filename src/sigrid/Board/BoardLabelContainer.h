@@ -1,15 +1,15 @@
 #pragma once
 
 #include <string>
-#include <istream>
 
+#include "sigrid/Input/InputStream.h"
 #include "sigrid/Board/BoardLabelLocationContainer.h"
 
 namespace sigrid{
 
 struct BoardLabelContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     BoardLabelLocationContainer location;
     bool isVisible = false;

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include <istream>
+
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid_coord{
 
@@ -20,7 +21,7 @@ struct Coord{
 
     std::string getNotation() const;
 
-    bool load(std::istream& is);
+    bool load(sigrid::InputStream& is);
 
     int x;
     int y;

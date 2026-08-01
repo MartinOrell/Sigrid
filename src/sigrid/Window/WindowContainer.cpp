@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::WindowContainer::load(InputStream& is){
 
-bool sigrid::WindowContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "WindowContainer: Failed to read initial \"[\"."
             << " Failed to load WindowContainer" << std::endl;
         return false;
     }
 
-    while(auto string_o = sigrid_config::readString(is)){
+    while(auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
         }
         else if (s == "width:"){
 
-            const auto width_o = sigrid_config::readInt(is);
+            const auto width_o = is.readInt();
             if(width_o == std::nullopt){
 
                 std::cerr << "WindowContainer: Failed to read width."
@@ -39,7 +37,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
         }
         else if(s == "height:"){
 
-            const auto height_o = sigrid_config::readInt(is);
+            const auto height_o = is.readInt();
             if(height_o == std::nullopt){
 
                 std::cerr << "WindowContainer: Failed to read height."
@@ -50,7 +48,7 @@ bool sigrid::WindowContainer::load(std::istream& is){
         }
         else if(s == "name:"){
 
-            const auto name_o = sigrid_config::readString(is);
+            const auto name_o = is.readString();
             if(name_o == std::nullopt){
 
                 std::cerr << "WindowContainer: Failed to read name."

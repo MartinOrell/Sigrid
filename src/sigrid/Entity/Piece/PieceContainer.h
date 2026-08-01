@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
-#include <istream>
+
+#include "sigrid/Input/InputStream.h"
 
 namespace sigrid{
 
 struct PieceContainer{
 
-    bool load(std::istream& is);
+    bool load(InputStream& is);
 
     std::string name;
     std::string style;

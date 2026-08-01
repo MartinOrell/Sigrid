@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::CircleContainer::load(InputStream& is){
 
-bool sigrid::CircleContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "CircleContainer: Failed to read initial \"[\"."
             << " Failed to load CircleContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::CircleContainer::load(std::istream& is){
         }
         else if(s == "diameter:"){
 
-            const auto diameter_o = sigrid_config::readFloat(is);
+            const auto diameter_o = is.readFloat();
             if(diameter_o == std::nullopt){
 
                 std::cerr << "CircleContainer: Failed to read float for diameter."

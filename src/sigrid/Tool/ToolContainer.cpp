@@ -2,18 +2,16 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+bool sigrid::ToolContainer::load(InputStream& is){
 
-bool sigrid::ToolContainer::load(std::istream& is){
-
-    if(sigrid_config::readString(is) != "["){
+    if(is.readString() != "["){
 
         std::cerr << "ToolContainer: Failed to read initial \"[\"."
             << " Failed to load ToolContainer" << std::endl;
         return false;
     }
 
-    while(const auto string_o = sigrid_config::readString(is)){
+    while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
 
@@ -28,7 +26,7 @@ bool sigrid::ToolContainer::load(std::istream& is){
         }
         else if(s == "selection:"){
 
-            const auto selection_o = sigrid_config::readString(is);
+            const auto selection_o = is.readString();
             if(selection_o == std::nullopt){
 
                 std::cerr << "ToolContainer: Failed to read string for selection."
@@ -39,7 +37,7 @@ bool sigrid::ToolContainer::load(std::istream& is){
         }
         else if(s == "color:"){
 
-            const auto colorId_o = sigrid_config::readInt(is);
+            const auto colorId_o = is.readInt();
             if(colorId_o == std::nullopt){
 
                 std::cerr << "ToolContainer: Failed read int for color."
