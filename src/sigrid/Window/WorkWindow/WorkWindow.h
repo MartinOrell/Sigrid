@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
 #include "sigrid/Layout/LayoutGrid.h"
 #include "sigrid/Board/Board.h"
@@ -29,11 +30,11 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(const WorkWindow&) = default;
     WorkWindow& operator=(WorkWindow&&) = default;
 
-    void setBoardFilename(const std::string& filename);
+    void setBoardFilename(const sigrid::String& filename);
 
-    void setResetBoardFilename(const std::string& filename);
+    void setResetBoardFilename(const sigrid::String& filename);
 
-    void setDefaultBoardImageFilename(const std::string& filename);
+    void setDefaultBoardImageFilename(const sigrid::String& filename);
 
     void setTileColorManagerPtr(ColorManager* const managerPtr);
 
@@ -48,13 +49,13 @@ class WorkWindow: public sf::Drawable{
 
     void createGraphic(const sf::Vector2f& size);
 
-    void loadFen(const std::string& fen);
+    void loadFen(const sigrid::String& fen);
 
-    std::string getName() const;
+    sigrid::String getName() const;
 
-    std::string getSaveFilename() const;
+    sigrid::String getSaveFilename() const;
 
-    std::string getFen() const;
+    sigrid::String getFen() const;
     
     void setPosition(const sf::Vector2f& position);
 
@@ -141,7 +142,7 @@ class WorkWindow: public sf::Drawable{
 
   private:
 
-    std::string getUniqueName(const std::string& name);
+    sigrid::String getUniqueName(const sigrid::String& name);
 
     void useAddTileHighlightTool(const sigrid_coord::Coord& coord, const int& colorId);
     void useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId);
@@ -163,8 +164,8 @@ class WorkWindow: public sf::Drawable{
 
     PdfHandler m_pdfHandler;
 
-    std::string m_resetBoardFilename = "";
-    std::string m_defaultBoardImageFilename = "";
+    sigrid::String m_resetBoardFilename;
+    sigrid::String m_defaultBoardImageFilename;
 };
 
 }  // namespace sigrid

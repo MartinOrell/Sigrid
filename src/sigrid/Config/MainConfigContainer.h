@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 
 #include "sigrid/Window/WindowContainer.h"
@@ -35,9 +34,9 @@ struct MainConfigContainer{
     sigrid::ToolContainer extra1ClickTool;
     sigrid::ToolContainer extra2ClickTool;
 
-    std::string resetBoardFilename;
-    std::string boardFilename;
-    std::string defaultBoardImageFilename;
+    sigrid::String resetBoardFilename;
+    sigrid::String boardFilename;
+    sigrid::String defaultBoardImageFilename;
 };
 
 }  // namespace sigrid

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
@@ -11,9 +10,9 @@ struct MenuItemContainer{
 
     bool load(InputStream& is);
 
-    std::string name;
-    sigrid_list::Vector<std::string> displayNames;
-    sigrid_list::Vector<std::string> actionNames;
+    sigrid::String name;
+    sigrid_list::Vector<sigrid::String> displayNames;
+    sigrid_list::Vector<sigrid::String> actionNames;
 };
 
 }  // namespace sigrid

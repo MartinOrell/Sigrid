@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
+
 bool sigrid::CircleContainer::load(InputStream& is){
 
     if(is.readString() != "["){
@@ -19,7 +21,7 @@ bool sigrid::CircleContainer::load(InputStream& is){
                 << " Failed to load CircleContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

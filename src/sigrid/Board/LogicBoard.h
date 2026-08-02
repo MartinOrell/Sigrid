@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Entity/Tile/LogicTiles.h"
 #include "sigrid/Entity/LogicEntities.h"
@@ -31,7 +32,7 @@ class LogicBoard{
     std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
     std::optional<LogicEntity> getEntityAt(const sigrid_coord::Coord& coord) const;
     std::optional<LogicArrow> getArrowAt(const sigrid_coord::CoordPair& coordPair) const;
-    std::string getFen() const;
+    sigrid::String getFen() const;
     int getTurnToMove() const;
     sigrid_list::Vector<int> getRepeatColorIds() const;
 

@@ -1,9 +1,8 @@
 #include "sigrid/Config/LoadValues.h"
 
-#include <string>
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
+#include "sigrid/utilities/String/String.h"
 
 template <typename T>
 bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, sigrid::InputStream& is){
@@ -23,13 +22,13 @@ bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, sigrid::InputStre
                 << " Failed to load values" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;
         }
 
-        std::optional<T> value_o = sigrid_config::stringToValue(s);
+        std::optional<T> value_o = s.toValue();
         if(value_o == std::nullopt){
 
             std::cerr << "loadValues: Failed to set value from string \""

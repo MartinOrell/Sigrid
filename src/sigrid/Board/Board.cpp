@@ -79,11 +79,11 @@ void Board::setScale(const float scale){
     m_graphicBoard.setScale(scale);
 }
 
-void Board::setFilename(const std::string& filename){
+void Board::setFilename(const sigrid::String& filename){
     m_filename = filename;
 }
 
-void Board::setImageFilename(const std::string& filename){
+void Board::setImageFilename(const sigrid::String& filename){
     m_imageFilename = filename;
 }
 
@@ -119,29 +119,41 @@ float Board::getDisplayHeight() const{
     return m_graphicBoard.getDisplayHeight();
 }
 
-std::string Board::getName() const{
-    if(m_filename.size() == 0){
+sigrid::String Board::getName() const{
+
+    if(m_filename.length() == 0){
         return "";
     }
-    auto end = m_filename.rfind('.');
-    if(end == std::string::npos){
-        end = m_filename.size()-1;
+    int end;
+    auto end_o = m_filename.rfind('.');
+    if(end_o == std::nullopt){
+        end = m_filename.length()-1;
     }
-    auto begin = m_filename.rfind('/');
-    if(begin == std::string::npos){
+    else{
+        end = end_o.value();
+    }
+
+    int begin;
+    auto begin_o = m_filename.rfind('/');
+    if(begin_o == std::nullopt){
         begin = 0;
     }
     else{
-        begin++;
+        begin = begin_o.value() + 1;
     }
-    return m_filename.substr(begin, (end-begin));
+
+    auto name_o = m_filename.substr(begin, (end-begin));
+    if(name_o == std::nullopt){
+        return "";
+    }
+    return name_o.value();
 }
 
-std::string Board::getFilename() const{
+sigrid::String Board::getFilename() const{
     return m_filename;
 }
 
-std::string Board::getImageFilename() const{
+sigrid::String Board::getImageFilename() const{
     return m_imageFilename;
 }
 
@@ -194,7 +206,7 @@ std::optional<LogicArrow> Board::getLogicArrow(const sigrid_coord::CoordPair& co
     return arrow_o.value();
 }
 
-std::string Board::getFen() const{
+sigrid::String Board::getFen() const{
     return m_logicBoard.getFen();
 }
 
@@ -437,7 +449,7 @@ void Board::removeDragArrow(){
     m_graphicBoard.removeDragArrow();
 }
 
-void Board::loadFen(const std::string& fen){
+void Board::loadFen(const sigrid::String& fen){
 
     std::cout << "Loading position from FEN: \"" << fen << "\"" << std::endl;
 
@@ -445,13 +457,23 @@ void Board::loadFen(const std::string& fen){
     int x = 0;
     int y = m_logicBoard.getNumRows()-1;
     int i;
-    for(i = 0; i < fen.size(); i++){
-        std::string s = fen.substr(i, 1);
+    for(i = 0; i < fen.length(); i++){
+        auto string_o = fen.substr(i, 1);
+        if(string_o == std::nullopt){
+            return;
+        }
+        sigrid::String s = string_o.value();
+
         if(s == " "){
             break;
         }
-        else if(std::isdigit(s.at(0))){
-            x+= std::stoi(s);
+        else if(s.isDigits()){
+            auto digit_o = s.toInt();
+            if(digit_o == std::nullopt){
+                return;
+            }
+            int digit = digit_o.value();
+            x+= digit;
         }
         else if(s == "/"){
             x = 0;
@@ -459,13 +481,13 @@ void Board::loadFen(const std::string& fen){
         }
         else{
             int colorId;
-            if(std::isupper(s.back())){
+            if(s.isUpper()){
                 colorId = 0;
             }
             else{
                 colorId = 1;
             }
-            s.at(0) = std::toupper(s.at(0));
+            s.toUpper();
             LogicPiece logicPiece;
             logicPiece.setNotation(s);
             logicPiece.setColorId(colorId);
@@ -475,7 +497,12 @@ void Board::loadFen(const std::string& fen){
         }
     }
     if(fen.length() >= i+1){
-        char activeColorChar = fen.at(i+1);
+        auto activeColorChar_o = fen.at(i+i);
+        if(activeColorChar_o == std::nullopt){
+            return;
+        }
+        char activeColorChar = activeColorChar_o.value().get();
+        
         if(activeColorChar == 'b'){
             m_logicBoard.setTurnToMove(1);
             m_graphicBoard.setTurnToMove(1);
@@ -487,15 +514,23 @@ void Board::loadFen(const std::string& fen){
     }
 }
 
-bool createFolderForFile(const std::string filename){
-    int endPos = filename.find('/',1);
-    while(endPos != filename.npos){
-        
-        std::string folder = filename.substr(0,endPos);
+bool createFolderForFile(const sigrid::String filename){
 
-        if(!std::filesystem::exists(folder)){
+    auto endPos_o = filename.find('/',1);
+
+    while(endPos_o != std::nullopt){
+
+        int endPos = endPos_o.value();
+
+        auto folder_o = filename.substr(0,endPos);
+        if(folder_o == std::nullopt){
+            return false;
+        }
+        sigrid::String folder = folder_o.value();
+
+        if(!std::filesystem::exists(folder.getStdString())){
             bool createFolderIsSuccessful;
-            createFolderIsSuccessful = std::filesystem::create_directory(folder);
+            createFolderIsSuccessful = std::filesystem::create_directory(folder.getStdString());
             if(createFolderIsSuccessful){
                 std::cout << "Created folder: " << folder << std::endl;
             }
@@ -505,7 +540,7 @@ bool createFolderForFile(const std::string filename){
             }
         }
 
-        endPos = filename.find('/',endPos+1);
+        endPos_o = filename.find('/',endPos+1);
     }
     return true;
 }
@@ -524,7 +559,7 @@ void Board::save(){
         return;
     }
 
-    std::ofstream out(m_filename);
+    std::ofstream out(m_filename.getStdString());
 
     if(!out.is_open()){
         std::cerr << "Board: Failed to open " << m_filename << std::endl;

@@ -6,8 +6,9 @@
 using namespace sigrid;
 
 
-bool BoardDataContainer::load(const std::string& filename){
-    std::ifstream ifs(filename);
+bool BoardDataContainer::load(const sigrid::String& filename){
+
+    std::ifstream ifs(filename.getStdString());
 
     if(!ifs.is_open()){
         std::cerr << "BoardDataContainer: Failed to open board from file: " << filename;
@@ -36,18 +37,33 @@ bool BoardDataContainer::load(const std::string& filename){
             else if(key == "Piece:"){
                 sigrid::PieceDataContainer pieceContainer;
                 ifs >> pieceContainer.colorId;
-                ifs >> pieceContainer.name;
-                ifs >> pieceContainer.position;
+                {
+                    std::string stdName;
+                    ifs >> stdName;
+                    pieceContainer.name.set(std::move(stdName));    
+                }
+                
+                {
+                    std::string stdPosition;
+                    ifs >> stdPosition;
+                    pieceContainer.position.set(std::move(stdPosition));
+                }
                 logicPieces.push_back(pieceContainer);
             }
             else if(key == "Circle:"){
                 sigrid::CircleDataContainer circleContainer;
                 ifs >> circleContainer.colorId;
-                ifs >> circleContainer.position;
+                {
+                    std::string stdPosition;
+                    ifs >> stdPosition;
+                    circleContainer.position.set(std::move(stdPosition));
+                }
                 logicCircles.push_back(circleContainer);
             }
             else if(key == "ImageFilename:"){
-                ifs >> imageFilename;
+                std::string imageFilenameStdString;
+                ifs >> imageFilenameStdString;
+                imageFilename.set(std::move(imageFilenameStdString));
             }
             else{
                 std::cerr << "BoardDataContainer: Unknown key: " << key << std::endl;

@@ -8,6 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "sigrid/Action/Action.h"
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
 #include "sigrid/Menu/MenuItem.h"
@@ -52,19 +53,19 @@ class Menu: public sf::Drawable{
 
     void toggleHeader(const int headerId);
 
-    void addSuperHeader(const std::string&);
+    void addSuperHeader(const sigrid::String&);
 
-    void addHeader(const std::string&);
+    void addHeader(const sigrid::String&);
 
-    void addItem(const std::string&, const int index, const sigrid_action::Action);
+    void addItem(const sigrid::String&, const int index, const sigrid_action::Action);
 
-    void addToggleItem(const std::string& key, const int index, const std::string& text0, const sigrid_action::Action action0, const std::string& text1, const sigrid_action::Action action1);
+    void addToggleItem(const sigrid::String& key, const int index, const sigrid::String& text0, const sigrid_action::Action action0, const sigrid::String& text1, const sigrid_action::Action action1);
 
-    void toggleItem(const std::string& key);
+    void toggleItem(const sigrid::String& key);
 
-    void hideItem(const std::string& key);
+    void hideItem(const sigrid::String& key);
 
-    void showItem(const std::string& key);
+    void showItem(const sigrid::String& key);
 
     struct LayoutItem{
         int headerIndex = -1;
@@ -96,16 +97,16 @@ class Menu: public sf::Drawable{
 
     MenuItem m_superHeader;
 
-    sigrid_list::Map<std::string, MenuItem> m_items;
+    sigrid_list::Map<sigrid::String, MenuItem> m_items;
 
-    std::vector<std::vector<std::string>> m_itemKeys;
+    std::vector<std::vector<sigrid::String>> m_itemKeys;
 
-    sigrid_list::Map<std::string, LayoutItem> m_layoutItems;
+    sigrid_list::Map<sigrid::String, LayoutItem> m_layoutItems;
 
     float m_lineHeight = 0.f;
     float m_itemOffsetX = 0.f;
 
-    std::string m_fontFilename = "";
+    sigrid::String m_fontFilename;
 
     bool m_isPinned = false;
     bool m_showItems = true;

@@ -3,6 +3,7 @@
 #include <string>
 #include <ostream>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 
 namespace sigrid_coord{
@@ -16,7 +17,7 @@ struct CoordPair{
     bool operator==(const CoordPair& rhs) const;
     bool operator!=(const CoordPair& rhs) const;
 
-    std::string getNotation() const;
+    sigrid::String getNotation() const;
     friend std::ostream& operator<<(std::ostream& out, const CoordPair& coordPair);
 };
 

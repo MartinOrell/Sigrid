@@ -12,7 +12,7 @@ Coord::Coord(const int x, const int y)
 : x(x)
 , y(y){}
 
-Coord::Coord(const std::string& notation){
+Coord::Coord(const sigrid::String& notation){
     set(notation);
 }
 
@@ -56,17 +56,26 @@ bool Coord::operator!=(const Coord& rhs) const{
     return false;
 }
 
-bool Coord::set(const std::string& notation){
+bool Coord::set(const sigrid::String& notation){
 
     int nx = 0; // character notation where 'a' = 1, 'z' = 26, 'aa' = 27
     int ny = 0;
 
     int i;
     for(i = 0; i < notation.length(); i++){
-        if(std::isdigit(notation.at(i))){
+        auto xChar_o = notation.at(i);
+        if(xChar_o == std::nullopt){
+            std::cerr << "Coord: Failed to read char from \""
+                << notation << "\" at position " << i << "."
+                << " Failed to set Coord" << std::endl;
+            return false;
+        } 
+        char xChar = xChar_o.value().get();
+
+        if(std::isdigit(xChar)){
             break;
         }
-        nx = nx*('z'-'a'+1) + notation.at(i)-'a'+1;
+        nx = nx*('z'-'a'+1) + xChar-'a'+1;
     }
     
     if(i == 0){
@@ -80,16 +89,38 @@ bool Coord::set(const std::string& notation){
         return false;
     }
 
-    ny = std::stoi(notation.substr(i));
+    auto yString_o = notation.substr(i);
+    if(yString_o == std::nullopt){
+        std::cerr << "Coord: Failed to get yString from \""
+            << notation << "\" at position " << i << "."
+            << " Failed to set Coord" << std::endl;
+        return false;
+    }
+    sigrid::String yString = yString_o.value();
+    if(yString.length() == 0){
+        std::cerr << "Coord: yString is empty after getting substring from \""
+            << notation << "\" at position " << i << "."
+            << " Failed to set Coord" << std::endl;
+        return false;
+    }
+    
+    auto y_o = yString.toInt();
+    if(y_o == std::nullopt){
+        std::cerr << "Coord: Failed to convert yString \""
+            << yString << "\" to int."
+            << " Failed to set Coord" << std::endl;
+        return false;
+    }
+    ny = y_o.value();
 
     x = nx - 1;
     y = ny - 1;
     return true;
 }
 
-std::string Coord::getNotation() const{
+sigrid::String Coord::getNotation() const{
 
-    std::string notation;
+    sigrid::String notation;
     notation.append(getColumnNotation(x));
     notation.append(getRowNotation(y));
     
@@ -105,7 +136,7 @@ bool Coord::load(sigrid::InputStream& is){
             << " Failed to load Coord" << std::endl;
         return false;
     }
-    const std::string& positionString = positionString_o.value();
+    const sigrid::String& positionString = positionString_o.value();
 
     if(!set(positionString)){
 
@@ -116,8 +147,9 @@ bool Coord::load(sigrid::InputStream& is){
     return true;
 }
 
-std::string sigrid_coord::getColumnNotation(const int& x){
-    std::string notation = "";
+sigrid::String sigrid_coord::getColumnNotation(const int& x){
+
+    sigrid::String notation = "";
 
     int base = 'z' - 'a'+1;
     for(int i{x}; i>=0; i = i / base-1){
@@ -126,6 +158,10 @@ std::string sigrid_coord::getColumnNotation(const int& x){
     return notation;
 }
 
-std::string sigrid_coord::getRowNotation(const int& y){
-    return std::to_string(y+1);
+sigrid::String sigrid_coord::getRowNotation(const int& y){
+
+    std::string stdString = std::to_string(y+1);
+    sigrid::String sigridString;
+    sigridString.set(std::move(stdString));
+    return sigridString;
 }

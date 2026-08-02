@@ -36,7 +36,7 @@ bool MainConfigContainer::load(const std::string& filename){
                 << filename << "\"" << std::endl;
             return false;
         }
-        const std::string& key = key_o.value();
+        const sigrid::String& key = key_o.value();
         
         if(key == "Window:"){
 

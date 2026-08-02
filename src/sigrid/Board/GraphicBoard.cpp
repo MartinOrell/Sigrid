@@ -444,10 +444,11 @@ void GraphicBoard::unhighlight(){
     redrawTexture();
 }
 
-void GraphicBoard::saveImage(const std::string& fileName){
+void GraphicBoard::saveImage(const sigrid::String& fileName){
+
     std::cout << "Saving board image: " << fileName << std::endl;
-    auto success = m_texture.getImage().saveToFile(fileName);
-    if(success && std::filesystem::exists(fileName)){
+    auto success = m_texture.getImage().saveToFile(fileName.getStdString());
+    if(success && std::filesystem::exists(fileName.getStdString())){
         std::cout << "board image: " << fileName << " saved" << std::endl;
     }
     else{

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
 #include <SFML/Graphics/Text.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 
 namespace sigrid{
@@ -40,12 +40,12 @@ class BoardLabels: public sf::Drawable{
     void setTopOutsideSize(const float& size);
     void setBottomOutsideSize(const float& size);
 
-    void setLeftInsideFont(const std::string& fontFilename);
-    void setBottomInsideFont(const std::string& fontFilename);
-    void setLeftOutsideFont(const std::string& fontFilename);
-    void setRightOutsideFont(const std::string& fontFilename);
-    void setTopOutsideFont(const std::string& fontFilename);
-    void setBottomOutsideFont(const std::string& fontFilename);
+    void setLeftInsideFont(const sigrid::String& fontFilename);
+    void setBottomInsideFont(const sigrid::String& fontFilename);
+    void setLeftOutsideFont(const sigrid::String& fontFilename);
+    void setRightOutsideFont(const sigrid::String& fontFilename);
+    void setTopOutsideFont(const sigrid::String& fontFilename);
+    void setBottomOutsideFont(const sigrid::String& fontFilename);
 
     void setLeftOutsideWorkWidth(const float& width);
     void setRightOutsideWorkWidth(const float& width);
@@ -101,7 +101,7 @@ class BoardLabels: public sf::Drawable{
     struct SideLabels{
         sigrid_list::Vector<sf::Text> labels;
         bool isVisible = false;
-        std::string fontFilename = "";
+        sigrid::String fontFilename;
         float labelSizeFactor = 0.f; //fraction of tileHeight
     };
 

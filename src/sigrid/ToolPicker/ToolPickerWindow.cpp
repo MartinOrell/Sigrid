@@ -151,7 +151,7 @@ void ToolPickerWindow::addCircleTool(const int colorId){
     m_circleColorId = colorId;
 }
 
-void ToolPickerWindow::addPieceTool(const std::string& notation){
+void ToolPickerWindow::addPieceTool(const sigrid::String& notation){
     m_pieceNotations.push_back(notation);
 }
 
@@ -206,7 +206,7 @@ std::optional<sigrid_action::Action> ToolPickerWindow::clicked(const sigrid::Too
     return std::nullopt;
 }
 
-void ToolPickerWindow::setPieceColorTools(const std::string& pieceNotation){
+void ToolPickerWindow::setPieceColorTools(const sigrid::String& pieceNotation){
 
     if(!m_showColors){
         return;
@@ -497,7 +497,7 @@ void ToolPickerWindow::redrawTexture(){
         if(pieceNotation_o == std::nullopt){
             continue;
         }
-        const std::string& pieceNotation = pieceNotation_o.value().get();
+        const sigrid::String& pieceNotation = pieceNotation_o.value().get();
 
         for(int i = 0; i < m_displayedPieceColorIds.size(); i++){
 

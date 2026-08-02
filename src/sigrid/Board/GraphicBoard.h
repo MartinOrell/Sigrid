@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/utilities/lists/Vector.h"
@@ -105,8 +106,7 @@ class GraphicBoard: public sf::Drawable{
 
     void unhighlight();
     
-
-    void saveImage(const std::string& fileName);
+    void saveImage(const sigrid::String& fileName);
 
     void clearEntities();
     void clearArrows();

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
 #include <map>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/utilities/Coord/CoordBlock.h"
@@ -31,7 +31,7 @@
 // Add more templates below to support more types
 template class sigrid_list::Vector<int>;
 template class sigrid_list::Vector<float>;
-template class sigrid_list::Vector<std::string>;
+template class sigrid_list::Vector<sigrid::String>;
 template class sigrid_list::Vector<sigrid_coord::CoordPair>;
 template class sigrid_list::Vector<sigrid_coord::CoordBlock>;
 template class sigrid_list::Vector<sf::Color>;

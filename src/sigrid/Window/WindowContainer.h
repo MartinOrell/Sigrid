@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid{
@@ -12,6 +11,6 @@ namespace sigrid{
 
         int width;
         int height;
-        std::string name;
+        sigrid::String name;
     };
 }  // namespace sigrid

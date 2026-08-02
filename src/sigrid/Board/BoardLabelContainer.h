@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/Board/BoardLabelLocationContainer.h"
 
@@ -14,7 +13,7 @@ struct BoardLabelContainer{
     BoardLabelLocationContainer location;
     bool isVisible = false;
     float size = 0.f;
-    std::string font = "";
+    sigrid::String font;
 };
 
 }  // namespace sigrid

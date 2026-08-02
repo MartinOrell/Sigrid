@@ -75,7 +75,7 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
         }
         auto& pieceImageFileName = pieceImageFileName_o.value().get();
 
-        sf::Image newImage{pieceImageFileName};
+        sf::Image newImage{pieceImageFileName.getStdString()};
 
         sf::Color lightModifier = sf::Color(color.lightModifier);
         sf::Color darkModifier = sf::Color(color.darkModifier);

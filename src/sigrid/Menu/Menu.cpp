@@ -36,7 +36,7 @@ bool Menu::load(const MenuContainer& menuData){
                 if(actionName_o == std::nullopt){
                     return false;
                 }
-                const std::string& actionName = actionName_o.value().get();
+                const sigrid::String& actionName = actionName_o.value().get();
 
                 auto action_o = sigrid_action::getAction(actionName);
                 if(action_o == std::nullopt){
@@ -48,7 +48,8 @@ bool Menu::load(const MenuContainer& menuData){
                 if(displayName_o == std::nullopt){
                     return false;
                 }
-                std::string displayName = displayName_o.value().get();
+                sigrid::String displayName = displayName_o.value().get();
+
                 addItem(std::move(displayName), i, action);
             }
             else if(menuItem.displayNames.size() == 2){
@@ -57,7 +58,7 @@ bool Menu::load(const MenuContainer& menuData){
                 if(actionAName_o == std::nullopt){
                     return false;
                 }
-                const std::string& actionAName = actionAName_o.value().get();
+                const sigrid::String& actionAName = actionAName_o.value().get();
 
                 auto actionA_o = sigrid_action::getAction(actionAName);
                 if(actionA_o == std::nullopt){
@@ -68,7 +69,7 @@ bool Menu::load(const MenuContainer& menuData){
                 if(actionBName_o == std::nullopt){
                     return false;
                 }
-                const std::string& actionBName = actionBName_o.value().get();
+                const sigrid::String& actionBName = actionBName_o.value().get();
 
                 auto actionB_o = sigrid_action::getAction(actionBName);
                 if(actionB_o == std::nullopt){
@@ -222,7 +223,7 @@ void Menu::toggleHeader(const int headerId){
     redrawTexture();
 }
 
-void Menu::addSuperHeader(const std::string& name){
+void Menu::addSuperHeader(const sigrid::String& name){
     
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add superHeader " << name << std::endl;
@@ -250,7 +251,7 @@ void Menu::addSuperHeader(const std::string& name){
     }
 }
 
-void Menu::addHeader(const std::string& name){
+void Menu::addHeader(const sigrid::String& name){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add header " << name << std::endl;
@@ -276,7 +277,7 @@ void Menu::addHeader(const std::string& name){
 
     m_items.insert(name, std::move(newItem));
 
-    std::vector<std::string> itemKeyList;
+    std::vector<sigrid::String> itemKeyList;
     itemKeyList.push_back(name);
     m_itemKeys.push_back(itemKeyList);
 
@@ -290,7 +291,7 @@ void Menu::addHeader(const std::string& name){
     }
 }
 
-void Menu::addItem(const std::string& name, const int headerIndex, const sigrid_action::Action action){
+void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigrid_action::Action action){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add item " << name << std::endl;
@@ -329,7 +330,7 @@ void Menu::addItem(const std::string& name, const int headerIndex, const sigrid_
     }
 }
 
-void Menu::addToggleItem(const std::string& key, const int headerIndex, const std::string& text0, const sigrid_action::Action action0, const std::string& text1, const sigrid_action::Action action1){
+void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const sigrid::String& text0, const sigrid_action::Action action0, const sigrid::String& text1, const sigrid_action::Action action1){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add toggle item " << key << std::endl;
@@ -371,7 +372,7 @@ void Menu::addToggleItem(const std::string& key, const int headerIndex, const st
 }
 
 
-void Menu::toggleItem(const std::string& key){
+void Menu::toggleItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 
@@ -386,7 +387,7 @@ void Menu::toggleItem(const std::string& key){
     redrawTexture();
 }
 
-void Menu::hideItem(const std::string& key){
+void Menu::hideItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 
@@ -405,7 +406,7 @@ void Menu::hideItem(const std::string& key){
     }
 }
 
-void Menu::showItem(const std::string& key){
+void Menu::showItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 

@@ -5,6 +5,7 @@
 
 #include <SFML/Window/Mouse.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/Entity/LogicEntity.h"
 #include "sigrid/Entity/GraphicEntity.h"
 #include "sigrid/Entity/Piece/LogicPiece.h"
@@ -157,6 +158,6 @@ typedef std::variant<
     sigrid_action::RemoveTurnToken
 > Action;
 
-std::optional<Action> getAction(const std::string& s);
+std::optional<Action> getAction(const sigrid::String& s);
 
 }  // namespace sigrid_action

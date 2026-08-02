@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid{
@@ -10,9 +9,9 @@ struct PieceContainer{
 
     bool load(InputStream& is);
 
-    std::string name;
-    std::string style;
-    std::string filename;
+    sigrid::String name;
+    sigrid::String style;
+    sigrid::String filename;
 };
 
 }  // namespace sigrid

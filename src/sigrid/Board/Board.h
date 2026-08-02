@@ -1,8 +1,8 @@
 #pragma once
 
 #include <optional>
-#include <string>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/Board/GraphicBoard.h"
 #include "sigrid/Board/LogicBoard.h"
 #include "sigrid/Entity/Piece/PieceManager.h"
@@ -42,9 +42,9 @@ class Board: public sf::Drawable{
 
     void setScale(const float scale);
 
-    void setFilename(const std::string& filename);
+    void setFilename(const sigrid::String& filename);
 
-    void setImageFilename(const std::string& filename);
+    void setImageFilename(const sigrid::String& filename);
 
     int getNumColumns() const;
 
@@ -60,11 +60,11 @@ class Board: public sf::Drawable{
     float getDisplayWidth() const;
     float getDisplayHeight() const;
 
-    std::string getName() const;
+    sigrid::String getName() const;
 
-    std::string getFilename() const;
+    sigrid::String getFilename() const;
 
-    std::string getImageFilename() const;
+    sigrid::String getImageFilename() const;
 
     bool contains(const sf::Vector2f& point) const;
 
@@ -84,7 +84,7 @@ class Board: public sf::Drawable{
 
     std::optional<LogicArrow> getLogicArrow(const sigrid_coord::CoordPair& coordPair);
 
-    std::string getFen() const;
+    sigrid::String getFen() const;
 
     void select(const sigrid_coord::Coord& coord);
 
@@ -105,7 +105,7 @@ class Board: public sf::Drawable{
     void updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId);
     void removeDragArrow();
 
-    void loadFen(const std::string& fen);
+    void loadFen(const sigrid::String& fen);
 
     void save();
 
@@ -166,8 +166,8 @@ class Board: public sf::Drawable{
 
     std::optional<sigrid_coord::Coord> m_selection_o = std::nullopt;
 
-    std::string m_filename;
-    std::string m_imageFilename;
+    sigrid::String m_filename;
+    sigrid::String m_imageFilename;
 };
 
 }  // Namespace sigrid

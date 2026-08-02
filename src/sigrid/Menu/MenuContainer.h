@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Menu/MenuItemContainer.h"
@@ -13,8 +12,8 @@ struct MenuContainer{
 
     bool load(InputStream& is);
 
-    std::string fontName;
-    std::string title;
+    sigrid::String fontName;
+    sigrid::String title;
     sigrid_list::Vector<HeaderContainer> headers;
     bool isPinned;
     bool showItems;

@@ -81,27 +81,27 @@ void BoardLabels::setBottomOutsideSize(const float& size){
     m_bottomOutsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setLeftInsideFont(const std::string& fontFilename){
+void BoardLabels::setLeftInsideFont(const sigrid::String& fontFilename){
     m_leftInsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setBottomInsideFont(const std::string& fontFilename){
+void BoardLabels::setBottomInsideFont(const sigrid::String& fontFilename){
     m_bottomInsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setLeftOutsideFont(const std::string& fontFilename){
+void BoardLabels::setLeftOutsideFont(const sigrid::String& fontFilename){
     m_leftOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setRightOutsideFont(const std::string& fontFilename){
+void BoardLabels::setRightOutsideFont(const sigrid::String& fontFilename){
     m_rightOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setTopOutsideFont(const std::string& fontFilename){
+void BoardLabels::setTopOutsideFont(const sigrid::String& fontFilename){
     m_topOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setBottomOutsideFont(const std::string& fontFilename){
+void BoardLabels::setBottomOutsideFont(const sigrid::String& fontFilename){
     m_bottomOutsideCoordLabels.fontFilename = fontFilename;
 }
 
@@ -185,7 +185,7 @@ bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf:
         return false;
     }
 
-    if(m_leftInsideCoordLabels.fontFilename.size() == 0){
+    if(m_leftInsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -205,9 +205,9 @@ bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf:
     }
 
     int i = m_leftInsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getRowNotation(i);
+    sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftInsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -236,7 +236,7 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
         return false;
     }
 
-    if(m_bottomInsideCoordLabels.fontFilename.size() == 0){
+    if(m_bottomInsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -256,9 +256,9 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
     }
 
     int i = m_bottomInsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getColumnNotation(i);
+    sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomInsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     sf::Vector2f position;
     position.x =
@@ -292,7 +292,7 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
         return false;
     }
 
-    if(m_leftOutsideCoordLabels.fontFilename.size() == 0){
+    if(m_leftOutsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -312,9 +312,9 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
     }
 
     int i = m_leftOutsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getRowNotation(i);
+    sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftOutsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -340,7 +340,7 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
         return false;
     }
 
-    if(m_rightOutsideCoordLabels.fontFilename.size() == 0){
+    if(m_rightOutsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add right outside label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -360,9 +360,9 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
     }
 
     int i = m_rightOutsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getRowNotation(i);
+    sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_rightOutsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -388,7 +388,7 @@ bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf:
         return false;
     }
 
-    if(m_topOutsideCoordLabels.fontFilename.size() == 0){
+    if(m_topOutsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add top outside label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -408,9 +408,9 @@ bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf:
     }
 
     int i = m_topOutsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getColumnNotation(i);
+    sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_topOutsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     label.setOrigin({0.f,0.f});
 
@@ -440,7 +440,7 @@ bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const 
         return false;
     }
 
-    if(m_bottomOutsideCoordLabels.fontFilename.size() == 0){
+    if(m_bottomOutsideCoordLabels.fontFilename.length() == 0){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
         std::cerr << "Font file name not set" << std::endl;
         return false;
@@ -460,9 +460,9 @@ bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const 
     }
 
     int i = m_bottomOutsideCoordLabels.labels.size();
-    std::string notation = sigrid_coord::getColumnNotation(i);
+    sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomOutsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation, labelSize};
+    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
 
     sf::Vector2f position;
     position.x =

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
+
 // Location can be "outside/inside left/right/top/bottom"
 // Example: "outside left"
 bool sigrid::BoardLabelLocationContainer::load(InputStream& is){
@@ -13,19 +15,28 @@ bool sigrid::BoardLabelLocationContainer::load(InputStream& is){
             << " Failed to load BoardLabelLocationContainer" << std::endl;
         return false;
     }
-    const std::string& locationString = locationString_o.value();
+    const sigrid::String& locationString = locationString_o.value();
 
     isInside = locationString.substr(0,6) == "inside";
     
-    auto spacePos = locationString.find(' ');
-    if(spacePos == std::string::npos){
+    auto spacePos_o = locationString.find(' ');
+    if(spacePos_o == std::nullopt){
 
         std::cerr << "BoardLabelLocationContainer: Failed to find spacebar."
             << " Failed to load BoardLabelLocationContainer" << std::endl;
         return false;
     }
+    int spacePos = spacePos_o.value();
     
-    std::string orientationString = locationString.substr(spacePos+1);
+    auto orientationString_o = locationString.substr(spacePos+1);
+
+    if(orientationString_o == std::nullopt){
+
+        std::cerr << "BoardLabelLocationContainer: Failed to get orientationString from LocationString."
+            << " Failed to load BoardLabelLocationContainer" << std::endl;
+        return false;
+    }
+    sigrid::String orientationString = orientationString_o.value();
 
     if(orientationString == "left"){
         orientation = sigrid_coord::Orientation::LEFT;

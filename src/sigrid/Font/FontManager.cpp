@@ -4,7 +4,7 @@
 
 using namespace sigrid;
 
-std::optional<sf::Font*> FontManager::getFontPtr(const std::string& filename){
+std::optional<sf::Font*> FontManager::getFontPtr(const sigrid::String& filename){
 
     auto font_o = m_fonts.at(filename);
     if(font_o != std::nullopt){
@@ -12,7 +12,7 @@ std::optional<sf::Font*> FontManager::getFontPtr(const std::string& filename){
     }
 
     sf::Font newFont;
-    if(!newFont.openFromFile(filename)){
+    if(!newFont.openFromFile(filename.getStdString())){
         std::cerr << "FontManager: Failed to load font: "
             << filename << std::endl;
         return std::nullopt;

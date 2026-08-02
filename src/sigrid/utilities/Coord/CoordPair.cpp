@@ -22,9 +22,9 @@ bool CoordPair::operator!=(const CoordPair& rhs) const{
     return !(*this == rhs);
 }
 
-std::string CoordPair::getNotation() const{
+sigrid::String CoordPair::getNotation() const{
 
-    std::string notation = from.getNotation();
+    sigrid::String notation = from.getNotation();
     notation.push_back('-');
     notation.append(to.getNotation());
     return notation;

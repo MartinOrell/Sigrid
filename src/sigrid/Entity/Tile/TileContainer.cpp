@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
+
 bool sigrid::TileContainer::load(InputStream& is){
 
     if(is.readString() != "["){
@@ -19,7 +21,7 @@ bool sigrid::TileContainer::load(InputStream& is){
                 << " Failed to load TileContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

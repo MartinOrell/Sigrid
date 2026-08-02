@@ -2,13 +2,13 @@
 
 #include "sigrid/utilities/lists/Map.h"
 
-#include <string>
 #include <optional>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/Action/Action.h"
@@ -29,9 +29,9 @@
 
 // This class is only included by Map.cpp
 // Add more templates below to support more types
-template class sigrid_list::Map<std::string, sf::Texture>;
-template class sigrid_list::Map<std::string, sf::Font>;
-template class sigrid_list::Map<sigrid::PieceIdentifier, std::string>;
+template class sigrid_list::Map<sigrid::String, sf::Texture>;
+template class sigrid_list::Map<sigrid::String, sf::Font>;
+template class sigrid_list::Map<sigrid::PieceIdentifier, sigrid::String>;
 template class sigrid_list::Map<sigrid_coord::CoordPair, sigrid::LogicArrow>;
 template class sigrid_list::Map<sigrid_coord::Coord, sigrid::GraphicTile>;
 template class sigrid_list::Map<sigrid_coord::Coord, sigrid::GraphicPiece>;
@@ -48,5 +48,5 @@ template class sigrid_list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>>;
 template class sigrid_list::Map<sf::Mouse::Button, sigrid::Tool>;
 template class sigrid_list::Map<sf::Keyboard::Key, sigrid_action::Action>;
 template class sigrid_list::Map<int, sigrid_coord::CoordPair>;
-template class sigrid_list::Map<std::string, sigrid::MenuItem>;
-template class sigrid_list::Map<std::string, sigrid::Menu::LayoutItem>;
+template class sigrid_list::Map<sigrid::String, sigrid::MenuItem>;
+template class sigrid_list::Map<sigrid::String, sigrid::Menu::LayoutItem>;

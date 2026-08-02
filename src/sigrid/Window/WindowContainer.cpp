@@ -19,7 +19,7 @@ bool sigrid::WindowContainer::load(InputStream& is){
                 << " Failed to load WindowContainer" << std::endl;
             return false;
         }
-        std::string s = string_o.value();
+        sigrid::String s = string_o.value();
         
         if(s == "]"){
             break;

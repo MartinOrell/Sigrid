@@ -1,12 +1,14 @@
 #include "sigrid/Tool/Tool.h"
 
-#include "sigrid/Tool/ToolContainer.h"
-
 #include <iostream>
+
+#include "sigrid/utilities/String/String.h"
+#include "sigrid/Tool/ToolContainer.h"
 
 using namespace sigrid;
 
-sigrid::ToolSelection getTool(const std::string& toolname){
+sigrid::ToolSelection getTool(const sigrid::String& toolname){
+    
     if(toolname == "Select"){
         return sigrid::ToolSelection::Select;
     }

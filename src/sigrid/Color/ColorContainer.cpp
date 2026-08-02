@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "sigrid/Config/IO.h"
-
 bool sigrid::ColorContainer::load(InputStream& is){
 
     auto inputHex_o = is.readHex();
@@ -20,9 +18,9 @@ bool sigrid::ColorContainer::load(InputStream& is){
 }
 
 
-bool sigrid::ColorContainer::setValue(const std::string& s){
+bool sigrid::ColorContainer::setValue(const sigrid::String& s){
 
-    auto inputHex_o = sigrid_config::stringToHex(s);
+    auto inputHex_o = s.toHex();
     if(inputHex_o == std::nullopt){
 
         std::cerr << "ColorContainer: Failed to convert \"" << s << "\"."

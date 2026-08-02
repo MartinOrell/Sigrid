@@ -1,12 +1,11 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid_config{
 
-bool loadStrings(sigrid_list::Vector<std::string>& strings, sigrid::InputStream& is);
+bool loadStrings(sigrid_list::Vector<sigrid::String>& strings, sigrid::InputStream& is);
 
 }  // namespace sigrid_config

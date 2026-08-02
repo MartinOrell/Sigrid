@@ -4,7 +4,7 @@
 
 using namespace sigrid;
 
-std::optional<sf::Texture*> IconManager::getTexturePtr(const std::string& filename){
+std::optional<sf::Texture*> IconManager::getTexturePtr(const sigrid::String& filename){
 
     auto m_texture_o = m_textures.at(filename);
 
@@ -14,7 +14,7 @@ std::optional<sf::Texture*> IconManager::getTexturePtr(const std::string& filena
     }
 
     sf::Texture newTexture;
-    if(!newTexture.loadFromFile(filename)){
+    if(!newTexture.loadFromFile(filename.getStdString())){
         std::cerr << "IconManager: failed to load from file: " << filename << std::endl;
         return std::nullopt;
     }

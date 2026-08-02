@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, sigrid::InputStream& is){
+bool sigrid_config::loadStrings(sigrid_list::Vector<sigrid::String>& strings, sigrid::InputStream& is){
 
     if(is.readString() != "["){
 
@@ -19,7 +19,7 @@ bool sigrid_config::loadStrings(sigrid_list::Vector<std::string>& strings, sigri
                 << " Failed to load strings" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

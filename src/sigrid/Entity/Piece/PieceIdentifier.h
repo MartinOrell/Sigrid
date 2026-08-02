@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
+#include "sigrid/utilities/String/String.h"
 
 namespace sigrid{
 
 struct PieceIdentifier{
-    std::string name;
-    std::string style;
+    sigrid::String name;
+    sigrid::String style;
 
     bool operator<(const PieceIdentifier& rhs) const;
 };

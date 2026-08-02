@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid_coord{
@@ -9,7 +8,7 @@ namespace sigrid_coord{
 struct Coord{
     Coord();
     Coord(const int x, const int y);
-    Coord(const std::string& notation);
+    Coord(const sigrid::String& notation);
 
     Coord& operator=(const Coord& rhs);
 
@@ -17,9 +16,9 @@ struct Coord{
     bool operator==(const Coord& rhs) const;
     bool operator!=(const Coord& rhs) const;
 
-    bool set(const std::string& notation);
+    bool set(const sigrid::String& notation);
 
-    std::string getNotation() const;
+    sigrid::String getNotation() const;
 
     bool load(sigrid::InputStream& is);
 
@@ -27,7 +26,7 @@ struct Coord{
     int y;
 };
 
-std::string getColumnNotation(const int& x);
-std::string getRowNotation(const int& y);
+sigrid::String getColumnNotation(const int& x);
+sigrid::String getRowNotation(const int& y);
 
 }  // namespace sigrid_coord

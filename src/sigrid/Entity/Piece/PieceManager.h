@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Entity/Piece/LogicPiece.h"
@@ -31,7 +32,7 @@ class PieceManager{
 
   private:
 
-    sigrid_list::Map<PieceIdentifier, std::string> m_pieceImageFilenames;
+    sigrid_list::Map<PieceIdentifier, sigrid::String> m_pieceImageFilenames;
 
     sigrid_list::Vector<PieceColor> m_colors;
     sigrid_list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;

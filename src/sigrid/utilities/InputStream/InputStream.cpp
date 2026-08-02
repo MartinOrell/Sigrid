@@ -10,7 +10,7 @@ bool InputStream::isEndOfFile(){
     return m_is.peek() == EOF;
 }
 
-std::optional<std::string> InputStream::readString(){
+std::optional<sigrid::String> InputStream::readString(){
 
     std::string s;
     try{
@@ -40,7 +40,10 @@ std::optional<std::string> InputStream::readString(){
     }
 
     m_is >> std::ws;
-    return s;
+
+    sigrid::String retVal;
+    retVal.set(std::move(s));
+    return retVal;
 }
 
 std::optional<int> InputStream::readInt(){
@@ -97,7 +100,7 @@ std::optional<bool> InputStream::readToggle(){
     if(string_o == std::nullopt){
         return std::nullopt;
     }
-    std::string s = string_o.value();
+    sigrid::String s = string_o.value();
     return s == "ON";
 }
 
@@ -107,7 +110,7 @@ std::optional<bool> InputStream::readVisibility(){
     if(string_o == std::nullopt){
         return std::nullopt;
     }
-    std::string s = string_o.value();
+    sigrid::String s = string_o.value();
     return s == "Visible";
 }
 

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
+
 bool sigrid::RectangleBorderContainer::load(InputStream& is){
 
     if(is.readString() != "["){
@@ -19,7 +21,7 @@ bool sigrid::RectangleBorderContainer::load(InputStream& is){
                 << " Failed to load RectangleBorderContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

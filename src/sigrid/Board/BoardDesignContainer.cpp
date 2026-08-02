@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/Config/LoadContainers.h"
 
 bool sigrid::BoardDesignContainer::load(InputStream& is){
@@ -21,7 +22,7 @@ bool sigrid::BoardDesignContainer::load(InputStream& is){
                 << " Failed to load BoardDesignContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

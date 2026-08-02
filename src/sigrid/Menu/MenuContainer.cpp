@@ -21,7 +21,7 @@ bool sigrid::MenuContainer::load(InputStream& is){
                 << " Failed to load MenuContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

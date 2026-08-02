@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid{
@@ -11,7 +10,7 @@ namespace sigrid{
 struct ColorContainer{
 
     bool load(InputStream& is);
-    bool setValue(const std::string& s);
+    bool setValue(const sigrid::String& s);
 
     uint32_t value;
 };

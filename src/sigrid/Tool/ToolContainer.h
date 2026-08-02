@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
 namespace sigrid{
@@ -10,7 +9,7 @@ struct ToolContainer{
 
     bool load(InputStream& is);
 
-    std::string selection = "Select";
+    sigrid::String selection = "Select";
     int colorId = 0;
 };
 

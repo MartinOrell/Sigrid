@@ -1,7 +1,8 @@
 #include "sigrid/Config/LoadValueContainers.h"
 
-#include <string>
 #include <iostream>
+
+#include "sigrid/utilities/String/String.h"
 
 template <typename T>
 bool sigrid_config::loadValueContainers(sigrid_list::Vector<T>& containers, sigrid::InputStream& is){
@@ -21,7 +22,7 @@ bool sigrid_config::loadValueContainers(sigrid_list::Vector<T>& containers, sigr
                 << " Failed to load valueContainers" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

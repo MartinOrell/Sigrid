@@ -6,6 +6,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Action/Action.h"
 #include "sigrid/utilities/Coord/CoordBlock.h"
@@ -51,7 +52,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     void addCircleTool(const int colorId);
 
-    void addPieceTool(const std::string& notation);
+    void addPieceTool(const sigrid::String& notation);
 
     virtual void setPosition(const sf::Vector2f& position);
 
@@ -68,7 +69,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
 
-    void setPieceColorTools(const std::string& pieceNotation);
+    void setPieceColorTools(const sigrid::String& pieceNotation);
 
     void setPieceTools(const int colorId);
 
@@ -117,9 +118,9 @@ class ToolPickerWindow: public sf::Drawable{
     sigrid_list::Vector<int> m_displayedPieceColorIds;
     int m_arrowColorId = -1;
     int m_circleColorId = -1;
-    std::string m_pieceNotation = "";
+    sigrid::String m_pieceNotation;
 
-    sigrid_list::Vector<std::string> m_pieceNotations;
+    sigrid_list::Vector<sigrid::String> m_pieceNotations;
 
     bool m_showColors = false;
 

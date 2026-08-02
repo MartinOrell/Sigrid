@@ -4,17 +4,30 @@
 
 using namespace sigrid_action;
 
-std::optional<Action> sigrid_action::getAction(const std::string& s){
-    std::string name;
-    std::string content;
+std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
 
-    auto nameEndPos = s.find('(');
-    if(nameEndPos == std::string::npos){
+    sigrid::String name;
+    sigrid::String content;
+
+    auto nameEndPos_o = s.find('(');
+    if(nameEndPos_o == std::nullopt){
         name = s;
     }
     else{
-        name = s.substr(0,nameEndPos);
-        content = s.substr(nameEndPos+1);
+        
+        int nameEndPos = nameEndPos_o.value();
+
+        auto name_o = s.substr(0, nameEndPos);
+        if(name_o == std::nullopt){
+            return std::nullopt;
+        }
+        name = name_o.value();
+
+        auto content_o = s.substr(nameEndPos+1);
+        if(content_o == std::nullopt){
+            return std::nullopt;
+        }
+        content = content_o.value();
         content.pop_back(); //remove ')'
     }
 
@@ -82,9 +95,16 @@ std::optional<Action> sigrid_action::getAction(const std::string& s){
         return sigrid_action::RemoveBottomOutsideLabels{};
     }
     else if(name == "setCoordinateSize"){
-        std::string number = content;
-        number.pop_back(); //remove '%'
-        float size = std::stof(number)/100.f;
+
+        sigrid::String numberString = content;
+        numberString.pop_back(); //remove '%'
+        auto number_o = numberString.toInt();
+        if(number_o == std::nullopt){
+            return std::nullopt;
+        }
+        int number = number_o.value();
+
+        float size = (float)number/100.f;
         return sigrid_action::SetCoordinateSize{size};
     }
     else if(name == "addTileColumnRight"){

@@ -4,6 +4,7 @@
 
 #include <SFML/Window/Clipboard.hpp>
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/Board/BoardDataContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Menu/MenuContainer.h"
@@ -13,7 +14,7 @@ using namespace sigrid;
 
 bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     
-    m_window.create(sf::VideoMode({(unsigned int)config.mainWindow.width, (unsigned int)config.mainWindow.height}), config.mainWindow.name);
+    m_window.create(sf::VideoMode({(unsigned int)config.mainWindow.width, (unsigned int)config.mainWindow.height}), config.mainWindow.name.getStdString());
     m_window.setFramerateLimit(60);
 
     m_fontManagerPtr = std::make_unique<FontManager>();
@@ -92,7 +93,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_toolPickerWindow->load(config.toolPickerData);
 
     BoardDataContainer boardData;
-    if(std::filesystem::exists(config.boardFilename)){
+    if(std::filesystem::exists(config.boardFilename.getStdString())){
         
         if(boardData.load(config.boardFilename)){
             std:: cout << "Board data: " << config.boardFilename << " loaded" << std::endl;
@@ -134,9 +135,9 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_menu->load(config.menuData);
 
     if(m_workWindow){
-        std::string title = m_workWindow->getName();
-        if(title.size() > 0){
-            m_window.setTitle(title);
+        sigrid::String title = m_workWindow->getName();
+        if(title.length() > 0){
+            m_window.setTitle(title.getStdString());
         }
     }
 
@@ -304,7 +305,7 @@ void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse:
 
     if(m_workWindow && m_workWindow->contains(scaledPosition)){
         m_workWindow->mousePress(scaledPosition);
-        m_window.setTitle(m_workWindow->getName());
+        m_window.setTitle(m_workWindow->getName().getStdString());
     }
 }
 
@@ -334,7 +335,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
                     auto& action = action_o.value();
                     handleAction(action);
                 }
-                m_window.setTitle(m_workWindow->getName());
+                m_window.setTitle(m_workWindow->getName().getStdString());
             }
         }
     }
@@ -396,16 +397,20 @@ void MainWindow::textEnter(const char32_t& unicode){
         return;
     }
 
-    sf::String text{unicode};
-    std::string pieceNotation{text};
+    sigrid::String pieceNotation;
+    {
+        sf::String text{unicode};
+        std::string stdText{text};
+        pieceNotation.set(std::move(stdText));
+    }
 
     int colorId;
-    if(std::isupper(pieceNotation.back())){
+    if(pieceNotation.isUpper()){
         colorId = 0;
     }
     else{
         colorId = 1;
-        pieceNotation.back() = std::toupper(pieceNotation.back());
+        pieceNotation.toUpper();
     }
 
     LogicPiece logicPiece;
@@ -1026,8 +1031,8 @@ void MainWindow::newBoard(){
     }
 
     m_workWindow->newBoard();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 
 }
 
@@ -1039,8 +1044,8 @@ void MainWindow::addBoardColumn(){
     }
 
     m_workWindow->addBoardColumn();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::removeBoardColumn(){
@@ -1051,8 +1056,8 @@ void MainWindow::removeBoardColumn(){
     }
 
     m_workWindow->removeBoardColumn();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::addBoardRow(){
@@ -1063,8 +1068,8 @@ void MainWindow::addBoardRow(){
     }
 
     m_workWindow->addBoardRow();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::removeBoardRow(){
@@ -1075,8 +1080,8 @@ void MainWindow::removeBoardRow(){
     }
 
     m_workWindow->removeBoardRow();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::shiftBoardsLeft(){
@@ -1086,8 +1091,8 @@ void MainWindow::shiftBoardsLeft(){
     }
 
     m_workWindow->shiftBoardsLeft();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::shiftBoardsRight(){
@@ -1097,8 +1102,8 @@ void MainWindow::shiftBoardsRight(){
     }
 
     m_workWindow->shiftBoardsRight();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::gotoRightBoard(){
@@ -1108,8 +1113,8 @@ void MainWindow::gotoRightBoard(){
     }
 
     m_workWindow->gotoRightBoard();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::gotoLeftBoard(){
@@ -1119,8 +1124,8 @@ void MainWindow::gotoLeftBoard(){
     }
 
     m_workWindow->gotoLeftBoard();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::gotoUpBoard(){
@@ -1130,8 +1135,8 @@ void MainWindow::gotoUpBoard(){
     }
 
     m_workWindow->gotoUpBoard();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::gotoDownBoard(){
@@ -1141,8 +1146,8 @@ void MainWindow::gotoDownBoard(){
     }
 
     m_workWindow->gotoDownBoard();
-    std::string title = m_workWindow->getName();
-    m_window.setTitle(title);
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::saveBoard(){
@@ -1173,7 +1178,9 @@ void MainWindow::pasteFen(){
         return;
     }
 
-    std::string fen = std::string(sf::Clipboard::getString());
+    std::string stdFen = std::string(sf::Clipboard::getString());
+    sigrid::String fen;
+    fen.set(std::move(stdFen));
     m_workWindow->loadFen(fen);
 }
 
@@ -1184,8 +1191,8 @@ void MainWindow::copyFen(){
         return;
     }
 
-    std::string fen = m_workWindow->getFen();
-    sf::Clipboard::setString(sf::String(fen));
+    sigrid::String fen = m_workWindow->getFen();
+    sf::Clipboard::setString(sf::String(fen.getStdString()));
     std::cout << "Copied Fen: \"" << fen << "\"" << std::endl;
 }
 

@@ -19,7 +19,7 @@ bool sigrid::ToolContainer::load(InputStream& is){
                 << " Failed to load ToolContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "]"){
             break;

@@ -2,7 +2,8 @@
 
 #include <fstream>
 #include <optional>
-#include <string>
+
+#include "sigrid/utilities/String/String.h"
 
 namespace sigrid{
 
@@ -20,7 +21,7 @@ class InputStream{
     
     bool isEndOfFile();
 
-    std::optional<std::string> readString();
+    std::optional<sigrid::String> readString();
     std::optional<int> readInt();
     std::optional<float> readFloat();
     std::optional<float> readPercentage();

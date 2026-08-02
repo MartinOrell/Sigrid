@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "sigrid/utilities/String/String.h"
 
 namespace sigrid{
 
@@ -14,18 +14,18 @@ class LogicPiece{
     LogicPiece& operator=(const LogicPiece&) = default;
     LogicPiece& operator=(LogicPiece&&) = default;
 
-    void setNotation(const std::string& notation);
+    void setNotation(const sigrid::String& notation);
     void setColorId(const int& colorId);
 
     int getColorId() const;
-    std::string getNotation() const;
+    sigrid::String getNotation() const;
 
     bool operator==(const LogicPiece& rhs) const;
     bool operator!=(const LogicPiece& rhs) const;
 
   private:
 
-    std::string m_notation = "";
+    sigrid::String m_notation;
     int m_colorId = -1;
 };
 

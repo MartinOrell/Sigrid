@@ -20,10 +20,10 @@ void MenuItem::createGraphic(const int height){
     text.setCharacterSize(characterSize);
     text.setFillColor(sf::Color(0,0,0));
     if(m_isToggled){
-        text.setString(m_toggledName);
+        text.setString(m_toggledName.getStdString());
     }
     else{
-        text.setString(m_name);
+        text.setString(m_name.getStdString());
     }
 
     sf::FloatRect rect = text.getLocalBounds();
@@ -37,7 +37,7 @@ void MenuItem::createGraphic(const int height){
     m_shape.setOutlineThickness(-2.f);
 }
 
-void MenuItem::setName(const std::string& name){
+void MenuItem::setName(const sigrid::String& name){
     m_name = name;
 }
 
@@ -67,7 +67,7 @@ void MenuItem::setAction(const sigrid_action::Action& action){
     m_action = action;
 }
 
-void MenuItem::setText(const std::string& s){
+void MenuItem::setText(const sigrid::String& s){
     
     if(m_text_o == std::nullopt){
         return;
@@ -75,7 +75,7 @@ void MenuItem::setText(const std::string& s){
     auto& text = m_text_o.value();
 
     m_name = s;
-    text.setString(s);
+    text.setString(s.getStdString());
     sf::FloatRect rect = text.getLocalBounds();
 
     float newHeight = m_shape.getSize().y;
@@ -121,7 +121,7 @@ sigrid_action::Action MenuItem::getAction(){
     return m_action;
 }
 
-std::string MenuItem::getName(){
+sigrid::String MenuItem::getName(){
 
     if(m_isToggled){
         return m_toggledName;
@@ -129,7 +129,7 @@ std::string MenuItem::getName(){
     return m_name;
 }
 
-void MenuItem::addToggle(const std::string& name, const sigrid_action::Action& action){
+void MenuItem::addToggle(const sigrid::String& name, const sigrid_action::Action& action){
 
     m_toggledName = name;
     m_toggledAction = action;
@@ -145,10 +145,10 @@ void MenuItem::toggle(){
     auto& text = m_text_o.value();
 
     if(m_isToggled){
-        text.setString(m_toggledName);
+        text.setString(m_toggledName.getStdString());
     }
     else{
-        text.setString(m_name);
+        text.setString(m_name.getStdString());
     }
     sf::FloatRect rect = text.getLocalBounds();
     

@@ -118,9 +118,9 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const sigrid_coord::CoordPair& 
     return arrow_o.value();
 }
 
-std::string LogicBoard::getFen() const{
+sigrid::String LogicBoard::getFen() const{
 
-    std::string fen;
+    sigrid::String fen;
 
     for(int y = getNumRows()-1; y >= 0; y--){
         int i = 0;
@@ -133,19 +133,29 @@ std::string LogicBoard::getFen() const{
             }
             
             if(i > 0){
-                fen.append(std::to_string(i));
+
+                std::string stdString = std::to_string(i);
+                sigrid::String sigridString;
+                sigridString.set(std::move(stdString));
+
+                fen.append(sigridString);
                 i = 0;
             }
             LogicPiece piece = std::get<LogicPiece>(entity_o.value());
-            std::string s = piece.getNotation();
+            sigrid::String s = piece.getNotation();
             if(piece.getColorId() == 1){
-                s.front() = tolower(s.front());
+                s.toLower();
             }
             fen.append(s);
             
         }
         if(i > 0){
-            fen.append(std::to_string(i));
+
+            std::string stdString = std::to_string(i);
+            sigrid::String sigridString;
+            sigridString.set(std::move(stdString));
+
+            fen.append(sigridString);
         }
         if(y > 0){
             fen.append("/");

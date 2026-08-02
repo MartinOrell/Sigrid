@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "sigrid/utilities/String/String.h"
 
 namespace sigrid{
 
@@ -14,15 +14,15 @@ class LogicIcon{
     LogicIcon& operator=(const LogicIcon&) = default;
     LogicIcon& operator=(LogicIcon&&) = default;
 
-    void setFilename(const std::string& name);
-    std::string getFilename() const;
+    void setFilename(const sigrid::String& name);
+    sigrid::String getFilename() const;
 
     bool operator==(const LogicIcon& rhs) const;
     bool operator!=(const LogicIcon& rhs) const;
 
   private:
 
-    std::string m_filename;
+    sigrid::String m_filename;
 };
 
 }  // namespace sigrid

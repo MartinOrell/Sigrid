@@ -4,7 +4,7 @@
 
 using namespace sigrid;
 
-void LogicPiece::setNotation(const std::string& notation){
+void LogicPiece::setNotation(const sigrid::String& notation){
     m_notation = notation;
 }
 
@@ -12,7 +12,7 @@ void LogicPiece::setColorId(const int& colorId){
     m_colorId = colorId;
 }
 
-std::string LogicPiece::getNotation() const{
+sigrid::String LogicPiece::getNotation() const{
     return m_notation;
 }
 
@@ -30,13 +30,7 @@ bool LogicPiece::operator==(const LogicPiece& rhs) const{
         return false;
     }
 
-    for(int i = 0; i < m_notation.length(); i++){
-        if(std::toupper(m_notation[i]) != std::toupper(rhs.m_notation[i])){
-            return false;
-        }
-    }
-
-    return true;
+    return m_notation.getUpper() == rhs.m_notation.getUpper();
 }
 
 bool LogicPiece::operator!=(const LogicPiece& rhs) const{

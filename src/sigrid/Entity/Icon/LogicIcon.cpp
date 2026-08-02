@@ -2,11 +2,11 @@
 
 using namespace sigrid;
 
-void LogicIcon::setFilename(const std::string& filename){
+void LogicIcon::setFilename(const sigrid::String& filename){
     m_filename = filename;
 }
 
-std::string LogicIcon::getFilename() const{
+sigrid::String LogicIcon::getFilename() const{
     return m_filename;
 }
 

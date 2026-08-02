@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/String/String.h"
+
 bool sigrid::ToolBlockContainer::load(InputStream& is){
 
     while(const auto string_o = is.readString()){
@@ -12,7 +14,7 @@ bool sigrid::ToolBlockContainer::load(InputStream& is){
                 << " Failed to load ToolBlockContainer" << std::endl;
             return false;
         }
-        const std::string& s = string_o.value();
+        const sigrid::String& s = string_o.value();
 
         if(s == "["){
             continue;

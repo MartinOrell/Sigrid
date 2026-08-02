@@ -129,7 +129,7 @@ void GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vect
             return;
         }
 
-        std::string filename = std::get<LogicIcon>(entity).getFilename();
+        sigrid::String filename = std::get<LogicIcon>(entity).getFilename();
 
         auto texturePtr_o = m_iconManagerPtr->getTexturePtr(filename);
 

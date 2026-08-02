@@ -13,7 +13,7 @@
 
 using namespace sigrid;
 
-void WorkWindow::setBoardFilename(const std::string& filename){
+void WorkWindow::setBoardFilename(const sigrid::String& filename){
 
     if(m_boards.size() == 0){
         Board board;
@@ -29,11 +29,11 @@ void WorkWindow::setBoardFilename(const std::string& filename){
     board.setFilename(filename);
 }
 
-void WorkWindow::setResetBoardFilename(const std::string& filename){
+void WorkWindow::setResetBoardFilename(const sigrid::String& filename){
     m_resetBoardFilename = filename;
 }
 
-void WorkWindow::setDefaultBoardImageFilename(const std::string& filename){
+void WorkWindow::setDefaultBoardImageFilename(const sigrid::String& filename){
     m_defaultBoardImageFilename = filename;
 }
 
@@ -230,7 +230,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
     updateTexture();
 }
 
-void WorkWindow::loadFen(const std::string& fen){
+void WorkWindow::loadFen(const sigrid::String& fen){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -241,7 +241,7 @@ void WorkWindow::loadFen(const std::string& fen){
     board.loadFen(fen);
 }
 
-std::string WorkWindow::getName() const{
+sigrid::String WorkWindow::getName() const{
 
     if(m_boards.size() == 0){
         return "";
@@ -266,7 +266,7 @@ std::string WorkWindow::getName() const{
         std::to_string(m_boards.size()) + ")";
 }
 
-std::string WorkWindow::getSaveFilename() const{
+sigrid::String WorkWindow::getSaveFilename() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -277,7 +277,7 @@ std::string WorkWindow::getSaveFilename() const{
     return board.getFilename();
 }
 
-std::string WorkWindow::getFen() const{
+sigrid::String WorkWindow::getFen() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -540,8 +540,8 @@ void WorkWindow::newBoard(){
         newBoard = activeBoard_o.value().get();
     }
 
-    std::string newName = getUniqueName(newBoard.getFilename());
-    std::string newImageName = getUniqueName(newBoard.getImageFilename());
+    sigrid::String newName = getUniqueName(newBoard.getFilename());
+    sigrid::String newImageName = getUniqueName(newBoard.getImageFilename());
 
     std::cout << "New board name " << newName << std::endl;
     std::cout << "New image name " << newImageName << std::endl;    
@@ -1114,8 +1114,9 @@ void WorkWindow::updateTexture(){
     m_texture.display();
 }
 
-std::string WorkWindow::getUniqueName(const std::string& name){
-    std::string newName(name);
+sigrid::String WorkWindow::getUniqueName(const sigrid::String& name){
+    
+    sigrid::String newName(name);
     while(true){
         
         bool exists = false;
@@ -1126,28 +1127,49 @@ std::string WorkWindow::getUniqueName(const std::string& name){
             }
         }
         if(!exists){
-            if(!std::filesystem::exists(newName)){
+            if(!std::filesystem::exists(newName.getStdString())){
                 break;
             }
         }
 
-        auto endPos = newName.rfind('.');
-        if(endPos == newName.npos){
+        auto endPos_o = newName.rfind('.');
+        if(endPos_o == std::nullopt){
             std::cerr << "WorkWindow: No . in getUniqueName";
             return newName;
         }
+        int endPos = endPos_o.value();
+
         auto startPos = endPos;
-        while(std::isdigit(newName.at(startPos-1))){
+
+        auto startChar_o = newName.at(startPos-1);
+
+        while(startChar_o != std::nullopt){
+            char startChar = startChar_o.value();
+            if(!std::isdigit(startChar)){
+                break;
+            }
             startPos--;
+            startChar_o = newName.at(startPos-1);
         }
         if(startPos == endPos){
             newName.insert(startPos, "2");
         }
         else{
-            std::string digitString = newName.substr(startPos,endPos-startPos);
-            int digit = std::stoi(digitString);
+            auto digitString_o = newName.substr(startPos,endPos-startPos);
+            if(digitString_o == std::nullopt){
+                return "";
+            }
+            sigrid::String digitString = digitString_o.value();
+
+            auto digit_o = digitString.toInt();
+            if(digit_o == std::nullopt){
+                return "";
+            }
+            int digit = digit_o.value();
+
             digit++;
-            digitString = std::to_string(digit);
+            std::string stdDigitString = std::to_string(digit);
+            digitString.set(std::move(stdDigitString));
             newName.erase(startPos,endPos-startPos);
             newName.insert(startPos, digitString);
         }
