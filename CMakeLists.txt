@@ -31,7 +31,7 @@ set(SRC_FILES
     src/sigrid/Board/BoardLabelLocationContainer.cpp
     src/sigrid/Board/Board.cpp
     src/sigrid/Board/GraphicBoard.cpp
-    src/sigrid/Board/LogicBoard.cpp
+    src/sigrid/Board/BoardState.cpp
     src/sigrid/Board/BoardLabels.cpp
     src/sigrid/utilities/Coord/Coord.cpp
     src/sigrid/utilities/Coord/CoordPair.cpp

@@ -59,8 +59,8 @@ void Board::loadGraphicData(const BoardDesignContainer& graphicData){
 
 void Board::loadBoardData(const BoardDataContainer& boardData){
 
-    if(m_logicBoard.load(boardData)){
-        m_graphicBoard.loadBoardState(m_logicBoard);
+    if(m_state.load(boardData)){
+        m_graphicBoard.loadBoardState(m_state);
     }
     else{
         std::cerr << "Board: Failed to load logicBoard" << std::endl;
@@ -88,7 +88,7 @@ void Board::setImageFilename(const sigrid::String& filename){
 }
 
 int Board::getNumColumns() const{
-    return m_logicBoard.getNumColumns();
+    return m_state.getNumColumns();
 }
 
 int Board::getImageWidth() const{
@@ -162,7 +162,7 @@ bool Board::contains(const sf::Vector2f& point) const{
 }
 
 bool Board::isEmptyTile(const sigrid_coord::Coord& coord) const{
-    return m_logicBoard.isEmptyTile(coord);
+    return m_state.isEmptyTile(coord);
 }
 
 bool Board::isCoordinatesOutside() const{
@@ -182,7 +182,7 @@ std::optional<sigrid_coord::Coord> Board::getTileCoord(const sf::Vector2f& point
 }
 
 std::optional<LogicEntity> Board::getLogicEntity(const sigrid_coord::Coord& coord){
-    auto entity_o = m_logicBoard.getEntityAt(coord);
+    auto entity_o = m_state.getEntityAt(coord);
     if(entity_o == std::nullopt){
         return std::nullopt;
     }
@@ -191,7 +191,7 @@ std::optional<LogicEntity> Board::getLogicEntity(const sigrid_coord::Coord& coor
 
 
 std::optional<LogicTile> Board::getTile(const sigrid_coord::Coord& coord){
-    auto tile_o = m_logicBoard.getTile(coord);
+    auto tile_o = m_state.getTile(coord);
     if(tile_o == std::nullopt){
         return std::nullopt;
     }
@@ -199,7 +199,7 @@ std::optional<LogicTile> Board::getTile(const sigrid_coord::Coord& coord){
 }
 
 std::optional<LogicArrow> Board::getLogicArrow(const sigrid_coord::CoordPair& coordPair){
-    auto arrow_o = m_logicBoard.getArrowAt(coordPair);
+    auto arrow_o = m_state.getArrowAt(coordPair);
     if(arrow_o == std::nullopt){
         return std::nullopt;
     }
@@ -207,7 +207,7 @@ std::optional<LogicArrow> Board::getLogicArrow(const sigrid_coord::CoordPair& co
 }
 
 sigrid::String Board::getFen() const{
-    return m_logicBoard.getFen();
+    return m_state.getFen();
 }
 
 void Board::select(const sigrid_coord::Coord& newCoord){
@@ -225,13 +225,13 @@ void Board::select(const sigrid_coord::Coord& newCoord){
         return;
     }
 
-    if(m_logicBoard.isEmptyTile(oldCoord)){
+    if(m_state.isEmptyTile(oldCoord)){
         m_selection_o = newCoord;
         m_graphicBoard.highlightTile(newCoord);
         return;
     }
 
-    if(m_logicBoard.moveEntity(oldCoord, newCoord)){
+    if(m_state.moveEntity(oldCoord, newCoord)){
         m_graphicBoard.moveEntity(oldCoord, newCoord);
     }
 
@@ -246,13 +246,13 @@ void Board::deselect(){
 
 void Board::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
 
-    if(!m_logicBoard.isWithinBoard(coord)){
+    if(!m_state.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard.getEntityAt(coord);
+    auto occupyingEntity_o = m_state.getEntityAt(coord);
 
     if(occupyingEntity_o != std::nullopt){
         std::cerr << "Board: Failed to add Entity at " << coord.getNotation() << std::endl;
@@ -260,20 +260,20 @@ void Board::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& newEn
         return;
     }
 
-    if(m_logicBoard.addEntity(coord, newEntity)){
+    if(m_state.addEntity(coord, newEntity)){
         m_graphicBoard.addEntity(coord, newEntity);
     }
 }
 
 void Board::removeEntity(const sigrid_coord::Coord& coord){
 
-    if(!m_logicBoard.isWithinBoard(coord)){
+    if(!m_state.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard.getEntityAt(coord);
+    auto occupyingEntity_o = m_state.getEntityAt(coord);
 
     if(occupyingEntity_o == std::nullopt){
         std::cerr << "Board: Failed to remove Entity at " << coord.getNotation() << std::endl;
@@ -281,7 +281,7 @@ void Board::removeEntity(const sigrid_coord::Coord& coord){
         return;
     }
 
-    if(m_logicBoard.removeEntity(coord)){
+    if(m_state.removeEntity(coord)){
         m_graphicBoard.removeEntity(coord);
     }
 }
@@ -300,14 +300,14 @@ void Board::addEntityAtSelection(const LogicEntity& newEntity){
 
 void Board::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId){
 
-    if(!m_logicBoard.isWithinBoard(coord)){
+    if(!m_state.isWithinBoard(coord)){
         std::cerr << "Board: Failed to add highlight at "
             << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto tile_o = m_logicBoard.getTile(coord);
+    auto tile_o = m_state.getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "Board: Failed to add highlight at "
@@ -325,21 +325,21 @@ void Board::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorI
         return;
     }
 
-    if(m_logicBoard.addTileHighlight(coord, colorId)){
+    if(m_state.addTileHighlight(coord, colorId)){
         m_graphicBoard.addTileHighlight(coord, colorId);
     }
 }
 
 void Board::removeTileHighlight(const sigrid_coord::Coord& coord){
 
-    if(!m_logicBoard.isWithinBoard(coord)){
+    if(!m_state.isWithinBoard(coord)){
         std::cerr << "Board: Failed to remove highlight at "
             << coord.getNotation() << std::endl;
         std::cerr << "because it is out of bounds" << std::endl;
         return;
     }
 
-    auto tile_o = m_logicBoard.getTile(coord);
+    auto tile_o = m_state.getTile(coord);
 
     if(tile_o == std::nullopt){
         std::cerr << "Board: Failed to remove highlight at "
@@ -357,7 +357,7 @@ void Board::removeTileHighlight(const sigrid_coord::Coord& coord){
         return;
     }
 
-    if(m_logicBoard.removeTileHighlight(coord)){
+    if(m_state.removeTileHighlight(coord)){
         m_graphicBoard.removeTileHighlight(coord);
     }
 }
@@ -365,11 +365,11 @@ void Board::removeTileHighlight(const sigrid_coord::Coord& coord){
 void Board::dragAndDrop(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
     assert(fromCoord != toCoord);
 
-    if(m_logicBoard.isEmptyTile(fromCoord)){
+    if(m_state.isEmptyTile(fromCoord)){
         return;
     }
 
-    if(m_logicBoard.moveEntity(fromCoord, toCoord)){
+    if(m_state.moveEntity(fromCoord, toCoord)){
         m_graphicBoard.moveEntity(fromCoord, toCoord);
     }
     
@@ -377,7 +377,7 @@ void Board::dragAndDrop(const sigrid_coord::Coord& fromCoord, const sigrid_coord
 
 void Board::addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const LogicArrow& newArrow){
 
-    if(!m_logicBoard.isWithinBoard(fromCoord)){
+    if(!m_state.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -385,7 +385,7 @@ void Board::addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::C
         return;
     }
 
-    if(!m_logicBoard.isWithinBoard(toCoord)){
+    if(!m_state.isWithinBoard(toCoord)){
         std::cerr << "Board: Unable to add arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -393,7 +393,7 @@ void Board::addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::C
         return;
     }
 
-    auto occupyingArrow_o = m_logicBoard.getArrowAt({fromCoord, toCoord});
+    auto occupyingArrow_o = m_state.getArrowAt({fromCoord, toCoord});
 
     if(occupyingArrow_o != std::nullopt){
         std::cerr << "Board: Unable to remove arrow "
@@ -403,14 +403,14 @@ void Board::addArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::C
         return;
     }
 
-    if(m_logicBoard.addArrow({fromCoord, toCoord}, newArrow)){
+    if(m_state.addArrow({fromCoord, toCoord}, newArrow)){
         m_graphicBoard.addArrow({fromCoord, toCoord}, newArrow);
     }
 }
 
 void Board::removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
 
-    if(!m_logicBoard.isWithinBoard(fromCoord)){
+    if(!m_state.isWithinBoard(fromCoord)){
         std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -418,7 +418,7 @@ void Board::removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord
         return;
     }
 
-    if(!m_logicBoard.isWithinBoard(toCoord)){
+    if(!m_state.isWithinBoard(toCoord)){
         std::cerr << "Board: Unable to remove arrow "
             << fromCoord.getNotation() << "-"
             << toCoord.getNotation() << std::endl;
@@ -426,7 +426,7 @@ void Board::removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord
         return;
     }
 
-    auto occupyingEntity_o = m_logicBoard.getArrowAt({fromCoord, toCoord});
+    auto occupyingEntity_o = m_state.getArrowAt({fromCoord, toCoord});
 
     if(occupyingEntity_o == std::nullopt){
         std::cerr << "Board: Unable to remove arrow "
@@ -436,7 +436,7 @@ void Board::removeArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord
         return;
     }
 
-    if(m_logicBoard.removeArrow({fromCoord, toCoord})){
+    if(m_state.removeArrow({fromCoord, toCoord})){
         m_graphicBoard.removeArrow({fromCoord, toCoord});
     }
 }
@@ -455,7 +455,7 @@ void Board::loadFen(const sigrid::String& fen){
 
     clearEntities();
     int x = 0;
-    int y = m_logicBoard.getNumRows()-1;
+    int y = m_state.getNumRows()-1;
     int i;
     for(i = 0; i < fen.length(); i++){
         auto string_o = fen.substr(i, 1);
@@ -504,11 +504,11 @@ void Board::loadFen(const sigrid::String& fen){
         char activeColorChar = activeColorChar_o.value().get();
         
         if(activeColorChar == 'b'){
-            m_logicBoard.setTurnToMove(1);
+            m_state.setTurnToMove(1);
             m_graphicBoard.setTurnToMove(1);
         }
         else{
-            m_logicBoard.setTurnToMove(0);
+            m_state.setTurnToMove(0);
             m_graphicBoard.setTurnToMove(0);
         }
     }
@@ -567,7 +567,7 @@ void Board::save(){
         return;
     }
 
-    out << m_logicBoard;    
+    out << m_state;    
 
     std::cout << "Saved " << m_filename << std::endl;
 
@@ -587,17 +587,17 @@ void Board::save(){
 }
 
 void Board::clearEntities(){
-    m_logicBoard.clearEntities();
+    m_state.clearEntities();
     m_graphicBoard.clearEntities();
 }
 
 void Board::clearArrows(){
-    m_logicBoard.clearArrows();
+    m_state.clearArrows();
     m_graphicBoard.clearArrows();
 }
 
 void Board::print(){
-    m_logicBoard.print();
+    m_state.print();
 }
 
 void Board::flipBoard(){
@@ -659,13 +659,13 @@ void Board::setCoordinateSize(const float& size){
 void Board::addTileColumnRight(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.addTileColumnRight()){
-            m_graphicBoard.addTileColumnRight(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileColumnRight()){
+            m_graphicBoard.addTileColumnRight(m_state.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addTileColumnLeft()){
-            m_graphicBoard.addTileColumnLeft(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileColumnLeft()){
+            m_graphicBoard.addTileColumnLeft(m_state.getRepeatColorIds());
         }
     }
     
@@ -675,13 +675,13 @@ void Board::addTileColumnRight(){
 void Board::addTileColumnLeft(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.addTileColumnLeft()){
-            m_graphicBoard.addTileColumnLeft(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileColumnLeft()){
+            m_graphicBoard.addTileColumnLeft(m_state.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addTileColumnRight()){
-            m_graphicBoard.addTileColumnRight(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileColumnRight()){
+            m_graphicBoard.addTileColumnRight(m_state.getRepeatColorIds());
         }
     }
     
@@ -691,12 +691,12 @@ void Board::addTileColumnLeft(){
 void Board::removeRightTileColumn(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeRightTileColumn()){
+        if(m_state.removeRightTileColumn()){
             m_graphicBoard.removeRightTileColumn();
         }
     }
     else{
-        if(m_logicBoard.removeLeftTileColumn()){
+        if(m_state.removeLeftTileColumn()){
             m_graphicBoard.removeLeftTileColumn();
         }
     }
@@ -707,12 +707,12 @@ void Board::removeRightTileColumn(){
 void Board::removeLeftTileColumn(){
 
     if(m_graphicBoard.isLeftToRight()){
-        if(m_logicBoard.removeLeftTileColumn()){
+        if(m_state.removeLeftTileColumn()){
             m_graphicBoard.removeLeftTileColumn();
         }
     }
     else{
-        if(m_logicBoard.removeRightTileColumn()){
+        if(m_state.removeRightTileColumn()){
             m_graphicBoard.removeRightTileColumn();
         }
     }
@@ -723,13 +723,13 @@ void Board::removeLeftTileColumn(){
 void Board::addTileRowUp(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.addTileRowUp()){
-            m_graphicBoard.addTileRowUp(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileRowUp()){
+            m_graphicBoard.addTileRowUp(m_state.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addTileRowDown()){
-            m_graphicBoard.addTileRowDown(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileRowDown()){
+            m_graphicBoard.addTileRowDown(m_state.getRepeatColorIds());
         }
     }
     
@@ -739,13 +739,13 @@ void Board::addTileRowUp(){
 void Board::addTileRowDown(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.addTileRowDown()){
-            m_graphicBoard.addTileRowDown(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileRowDown()){
+            m_graphicBoard.addTileRowDown(m_state.getRepeatColorIds());
         }
     }
     else{
-        if(m_logicBoard.addTileRowUp()){
-            m_graphicBoard.addTileRowUp(m_logicBoard.getRepeatColorIds());
+        if(m_state.addTileRowUp()){
+            m_graphicBoard.addTileRowUp(m_state.getRepeatColorIds());
         }
     }
     
@@ -755,12 +755,12 @@ void Board::addTileRowDown(){
 void Board::removeTopTileRow(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeTopTileRow()){
+        if(m_state.removeTopTileRow()){
             m_graphicBoard.removeTopTileRow();
         }
     }
     else{
-        if(m_logicBoard.removeBottomTileRow()){
+        if(m_state.removeBottomTileRow()){
             m_graphicBoard.removeBottomTileRow();
         }
     }
@@ -771,12 +771,12 @@ void Board::removeTopTileRow(){
 void Board::removeBottomTileRow(){
 
     if(m_graphicBoard.isTopToBottom()){
-        if(m_logicBoard.removeBottomTileRow()){
+        if(m_state.removeBottomTileRow()){
             m_graphicBoard.removeBottomTileRow();
         }
     }
     else{
-        if(m_logicBoard.removeTopTileRow()){
+        if(m_state.removeTopTileRow()){
             m_graphicBoard.removeTopTileRow();
         }
     }
@@ -793,7 +793,7 @@ void Board::removeBorder(){
 }
 
 void Board::addTurnToken(){
-    m_graphicBoard.addTurnToken(m_logicBoard.getTurnToMove());
+    m_graphicBoard.addTurnToken(m_state.getTurnToMove());
 }
 
 void Board::removeTurnToken(){
@@ -801,13 +801,13 @@ void Board::removeTurnToken(){
 }
 
 void Board::toggleTurnToken(){
-    int turnToMove = m_logicBoard.getTurnToMove();
+    int turnToMove = m_state.getTurnToMove();
     if(turnToMove == 0){
-        m_logicBoard.setTurnToMove(1);
+        m_state.setTurnToMove(1);
         m_graphicBoard.setTurnToMove(1);
     }
     else if(turnToMove == 1){
-        m_logicBoard.setTurnToMove(0);
+        m_state.setTurnToMove(0);
         m_graphicBoard.setTurnToMove(0);
     }
 }

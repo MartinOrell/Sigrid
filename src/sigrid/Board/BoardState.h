@@ -12,15 +12,15 @@ namespace sigrid{
 
 class BoardDataContainer;
 
-class LogicBoard{
+class BoardState{
 
   public:
 
-    LogicBoard() = default;
-    LogicBoard(const LogicBoard&) = default;
-    LogicBoard(LogicBoard&&) = default;
-    LogicBoard& operator=(const LogicBoard&) = default;
-    LogicBoard& operator=(LogicBoard&&) = default;
+    BoardState() = default;
+    BoardState(const BoardState&) = default;
+    BoardState(BoardState&&) = default;
+    BoardState& operator=(const BoardState&) = default;
+    BoardState& operator=(BoardState&&) = default;
 
     bool load(const BoardDataContainer& data);
 
@@ -61,7 +61,7 @@ class LogicBoard{
     void clearEntities();
     void clearArrows();
 
-    friend std::ostream& operator<<(std::ostream& out, const LogicBoard& board);
+    friend std::ostream& operator<<(std::ostream& out, const BoardState& board);
 
   private:
     

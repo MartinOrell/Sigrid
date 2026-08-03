@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "sigrid/Board/LogicBoard.h"
+#include "sigrid/Board/BoardState.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Color/ColorManager.h"
 
@@ -105,12 +105,12 @@ void GraphicBoard::loadDesign(const BoardDesignContainer& config){
     initBorder(config);
 }
 
-void GraphicBoard::loadBoardState(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState(const BoardState& boardState){
 
-    loadBoardState_tileLayer(logicBoard);
-    loadBoardState_pieceLayer(logicBoard);
+    loadBoardState_tileLayer(boardState);
+    loadBoardState_pieceLayer(boardState);
     m_arrowLayer.clear();
-    loadBoardState_turnToken(logicBoard);
+    loadBoardState_turnToken(boardState);
 
     updateBorder();
     updateLabels();
@@ -1166,12 +1166,12 @@ void GraphicBoard::initBorder(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::loadBoardState_tileLayer(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_tileLayer(const BoardState& boardState){
 
     m_tileLayer.clear();
 
-    m_tileLayer.setNumColumns(logicBoard.getNumColumns());
-    m_tileLayer.setNumRows(logicBoard.getNumRows());
+    m_tileLayer.setNumColumns(boardState.getNumColumns());
+    m_tileLayer.setNumRows(boardState.getNumRows());
     m_tileLayer.setTopLeftPosition({m_leftEdgeWidth, m_topEdgeWidth});
     m_tileLayer.insertAllTiles();
 
@@ -1179,10 +1179,10 @@ void GraphicBoard::loadBoardState_tileLayer(const LogicBoard& logicBoard){
         m_tileLayer.move({m_border.getThickness(), m_border.getThickness()});
     }
 
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+    for(int y = 0; y < boardState.getNumRows(); y++){
+        for(int x = 0; x < boardState.getNumColumns(); x++){
 
-            auto tile_o = logicBoard.getTile({x,y});
+            auto tile_o = boardState.getTile({x,y});
             if(tile_o.has_value()){
                 int colorId = tile_o->getColorId();
                 m_tileLayer.setTileColor({x,y},colorId);
@@ -1191,14 +1191,14 @@ void GraphicBoard::loadBoardState_tileLayer(const LogicBoard& logicBoard){
     }
 }
 
-void GraphicBoard::loadBoardState_pieceLayer(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_pieceLayer(const BoardState& boardState){
 
     m_pieceLayer.clear();
 
-    for(int y = 0; y < logicBoard.getNumRows(); y++){
-        for(int x = 0; x < logicBoard.getNumColumns(); x++){
+    for(int y = 0; y < boardState.getNumRows(); y++){
+        for(int x = 0; x < boardState.getNumColumns(); x++){
 
-            auto entity_o = logicBoard.getEntityAt({x,y});
+            auto entity_o = boardState.getEntityAt({x,y});
             if(entity_o != std::nullopt){
                 auto position_o = m_tileLayer.getTileCentrePosition({x,y});
                 if(position_o != std::nullopt){
@@ -1209,13 +1209,13 @@ void GraphicBoard::loadBoardState_pieceLayer(const LogicBoard& logicBoard){
     }
 }
 
-void GraphicBoard::loadBoardState_turnToken(const LogicBoard& logicBoard){
+void GraphicBoard::loadBoardState_turnToken(const BoardState& boardState){
 
     if(!m_turnToken.isVisible()){
         return;
     }
 
-    m_turnToken.setTurnToMove(logicBoard.getTurnToMove());
+    m_turnToken.setTurnToMove(boardState.getTurnToMove());
 
     float x = m_tileLayer.getRightPosition();
     if(m_border.isVisible()){

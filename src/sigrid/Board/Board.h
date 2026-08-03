@@ -4,7 +4,7 @@
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Board/GraphicBoard.h"
-#include "sigrid/Board/LogicBoard.h"
+#include "sigrid/Board/BoardState.h"
 #include "sigrid/Entity/Piece/PieceManager.h"
 
 namespace sigrid{
@@ -160,7 +160,7 @@ class Board: public sf::Drawable{
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    LogicBoard m_logicBoard;
+    BoardState m_state;
 
     GraphicBoard m_graphicBoard;
 

@@ -1,4 +1,4 @@
-#include "sigrid/Board/LogicBoard.h"
+#include "sigrid/Board/BoardState.h"
 
 #include "sigrid/Board/BoardDataContainer.h"
 
@@ -6,7 +6,7 @@
 
 using namespace sigrid;
 
-bool LogicBoard::load(const BoardDataContainer& data){
+bool BoardState::load(const BoardDataContainer& data){
 
     m_tileLayer.clear();
     m_pieceLayer.clear();
@@ -14,7 +14,7 @@ bool LogicBoard::load(const BoardDataContainer& data){
     m_turnToMove = 0;
 
     if(data.repeatTileColorIds.size() == 0){
-        std::cerr << "LogicBoard: Failed to setup LogicBoard: Default tile colors not set" << std::endl;
+        std::cerr << "BoardState: Failed to setup LogicBoard: Default tile colors not set" << std::endl;
         return false;
     }
 
@@ -28,19 +28,19 @@ bool LogicBoard::load(const BoardDataContainer& data){
         sigrid_coord::Coord coord{pieceContainer.position};
 
         if(coord.y < 0){
-            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "BoardState: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.y >= getNumRows()){
-            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
+            std::cerr << "BoardState: Failed to set piece at " << coord.getNotation() << ", missing row on board" << std::endl;
             continue;
         }
         if(coord.x < 0){
-            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "BoardState: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         if(coord.x >= getNumColumns()){
-            std::cerr << "LogicBoard: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
+            std::cerr << "BoardState: Failed to set piece at " << coord.getNotation() << ", missing column on board" << std::endl;
             continue;
         }
         LogicPiece logicPiece;
@@ -67,15 +67,15 @@ bool LogicBoard::load(const BoardDataContainer& data){
     return true;
 }
 
-const int LogicBoard::getNumColumns() const{
+const int BoardState::getNumColumns() const{
     return m_tileLayer.getNumColumns();
 }
 
-const int LogicBoard::getNumRows() const{
+const int BoardState::getNumRows() const{
     return m_tileLayer.getNumRows();
 }
 
-bool LogicBoard::isWithinBoard(const sigrid_coord::Coord& coord) const{
+bool BoardState::isWithinBoard(const sigrid_coord::Coord& coord) const{
     if(coord.x >= getNumColumns()){
         return false;
     }
@@ -85,14 +85,14 @@ bool LogicBoard::isWithinBoard(const sigrid_coord::Coord& coord) const{
     return true;
 }
 
-bool LogicBoard::isEmptyTile(const sigrid_coord::Coord& coord) const{
+bool BoardState::isEmptyTile(const sigrid_coord::Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
     return m_pieceLayer.getEntityAt(coord) == std::nullopt;
 }
 
-std::optional<LogicTile> LogicBoard::getTile(const sigrid_coord::Coord& coord) const{
+std::optional<LogicTile> BoardState::getTile(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tileLayer.getTile(coord);
 
@@ -103,11 +103,11 @@ std::optional<LogicTile> LogicBoard::getTile(const sigrid_coord::Coord& coord) c
     return tile_o.value();
 }
 
-std::optional<LogicEntity> LogicBoard::getEntityAt(const sigrid_coord::Coord& coord) const{
+std::optional<LogicEntity> BoardState::getEntityAt(const sigrid_coord::Coord& coord) const{
     return m_pieceLayer.getEntityAt(coord);
 }
 
-std::optional<LogicArrow> LogicBoard::getArrowAt(const sigrid_coord::CoordPair& coordPair) const{
+std::optional<LogicArrow> BoardState::getArrowAt(const sigrid_coord::CoordPair& coordPair) const{
 
     auto arrow_o = m_arrowLayer.getArrow(coordPair);
 
@@ -118,7 +118,7 @@ std::optional<LogicArrow> LogicBoard::getArrowAt(const sigrid_coord::CoordPair& 
     return arrow_o.value();
 }
 
-sigrid::String LogicBoard::getFen() const{
+sigrid::String BoardState::getFen() const{
 
     sigrid::String fen;
 
@@ -173,28 +173,28 @@ sigrid::String LogicBoard::getFen() const{
     return fen;
 }
 
-int LogicBoard::getTurnToMove() const{
+int BoardState::getTurnToMove() const{
     return m_turnToMove;
 }
 
-sigrid_list::Vector<int> LogicBoard::getRepeatColorIds() const{
+sigrid_list::Vector<int> BoardState::getRepeatColorIds() const{
     return m_tileLayer.getRepeatColorIds();
 }
 
-void LogicBoard::setTurnToMove(const int& turnToMove){
+void BoardState::setTurnToMove(const int& turnToMove){
     m_turnToMove = turnToMove;
 }
 
-bool LogicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
+bool BoardState::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
 
     if(!isWithinBoard(coord)){
-        std::cerr << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to add entity at " << coord.getNotation() << std::endl;
         std::cerr << "The tile is outside of the board" << std::endl;
         return false;
     }
 
     if(m_pieceLayer.getEntityAt(coord) != std::nullopt){
-        std::cerr << "LogicBoard: Unable to add entity at " << coord.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to add entity at " << coord.getNotation() << std::endl;
         std::cerr << "The tile is already occupied" << std::endl;
         return false;
     }
@@ -203,16 +203,16 @@ bool LogicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& 
     return true;
 }
 
-bool LogicBoard::removeEntity(const sigrid_coord::Coord& coord){
+bool BoardState::removeEntity(const sigrid_coord::Coord& coord){
 
     if(!isWithinBoard(coord)){
-        std::cerr << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to remove entity at " << coord.getNotation() << std::endl;
         std::cerr << "The tile is outside of the board" << std::endl;
         return false;
     }
 
     if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
-        std::cerr << "LogicBoard: Unable to remove entity at " << coord.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to remove entity at " << coord.getNotation() << std::endl;
         std::cerr << "There is no entity there" << std::endl;
         return false;
     }
@@ -221,31 +221,31 @@ bool LogicBoard::removeEntity(const sigrid_coord::Coord& coord){
     return true;
 }
 
-bool LogicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
+bool BoardState::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
 
     if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
-        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "BoardState: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
         std::cerr << "both coordinates are the same" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(fromCoord)){
-        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "BoardState: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
         std::cerr << "starting tile is out of bounds" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(toCoord)){
-        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation()
+        std::cerr << "BoardState: Unable to move entity from " << fromCoord.getNotation()
             << " to " << toCoord.getNotation() << std::endl;
         std::cerr << "destination tile is out of bounds" << std::endl;
         return false;
     }
 
     if(isEmptyTile(fromCoord)){
-        std::cerr << "LogicBoard: Unable to move entity from " << fromCoord.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to move entity from " << fromCoord.getNotation() << std::endl;
         std::cerr << "No piece is standing there" << std::endl;
         return false;
     }
@@ -258,10 +258,10 @@ bool LogicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_c
     return true;
 }
 
-bool LogicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& highlightColorId){
+bool BoardState::addTileHighlight(const sigrid_coord::Coord& coord, const int& highlightColorId){
 
     if(highlightColorId < 0){
-        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "BoardState: Unable to add highlight." << std::endl;
         std::cerr << "ColorId is not set (value: " << highlightColorId << ")" << std::endl;
         return false;
     }
@@ -269,7 +269,7 @@ bool LogicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& h
     auto tile_o = m_tileLayer.getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "BoardState: Unable to add highlight." << std::endl;
         std::cerr << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
@@ -278,12 +278,12 @@ bool LogicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& h
     return true;
 }
 
-bool LogicBoard::removeTileHighlight(const sigrid_coord::Coord& coord){
+bool BoardState::removeTileHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tileLayer.getTile(coord);
 
     if(tile_o == std::nullopt){
-        std::cerr << "LogicBoard: Unable to add highlight." << std::endl;
+        std::cerr << "BoardState: Unable to add highlight." << std::endl;
         std::cerr << "Coord is not a valid tile (value:" << coord.getNotation() << ")" << std::endl;
         return false;
     }
@@ -292,22 +292,22 @@ bool LogicBoard::removeTileHighlight(const sigrid_coord::Coord& coord){
     return true;
 }
 
-bool LogicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
+bool BoardState::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
 
     if(!isWithinBoard(coordPair.from)){
-        std::cerr << "LogicBoard: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
         std::cerr << "Starting tile is outside of the board" << std::endl;
         return false;
     }
 
     if(!isWithinBoard(coordPair.to)){
-        std::cerr << "LogicBoard: Unable to add arrow to tile: " << coordPair.to.getNotation() << std::endl;
+        std::cerr << "BoardState: Unable to add arrow to tile: " << coordPair.to.getNotation() << std::endl;
         std::cerr << "Destination tile is outside of the board" << std::endl;
         return false;
     }
 
     if(arrow.getColorId() < 0){
-        std::cerr << "LogicBoard: Unable to add arrow" << std::endl;
+        std::cerr << "BoardState: Unable to add arrow" << std::endl;
         std::cerr << "ColorId is not set (value: " << arrow.getColorId() << ")" << std::endl;
         return false;
     }
@@ -315,7 +315,7 @@ bool LogicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicA
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o != std::nullopt){
-        std::cerr << "LogicBoard: Unable to add arrow at "
+        std::cerr << "BoardState: Unable to add arrow at "
             << coordPair.getNotation() << std::endl;
         std::cerr << "There is already an arrow there" << std::endl;
         return false;
@@ -326,12 +326,12 @@ bool LogicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicA
 }
 
 
-bool LogicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
+bool BoardState::removeArrow(const sigrid_coord::CoordPair& coordPair){
 
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
     if(occupyingArrow_o == std::nullopt){
-        std::cerr << "LogicBoard: Unable to remove arrow at "
+        std::cerr << "BoardState: Unable to remove arrow at "
             << coordPair.getNotation() << std::endl;
         std::cerr << "There is no arrow there" << std::endl;
         return false;
@@ -341,11 +341,11 @@ bool LogicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
     return true;
 }
 
-bool LogicBoard::addTileColumnRight(){
+bool BoardState::addTileColumnRight(){
     return m_tileLayer.addColumnRight();
 }
 
-bool LogicBoard::addTileColumnLeft(){
+bool BoardState::addTileColumnLeft(){
     if(!m_tileLayer.addColumnLeft()){
         return false;
     }
@@ -354,7 +354,7 @@ bool LogicBoard::addTileColumnLeft(){
     return true;
 }
 
-bool LogicBoard::removeRightTileColumn(){
+bool BoardState::removeRightTileColumn(){
     if(!m_tileLayer.removeRightColumn()){
         return false;
     }
@@ -364,7 +364,7 @@ bool LogicBoard::removeRightTileColumn(){
     return true;
 }
 
-bool LogicBoard::removeLeftTileColumn(){
+bool BoardState::removeLeftTileColumn(){
     if(!m_tileLayer.removeLeftColumn()){
         return false;
     }
@@ -375,7 +375,7 @@ bool LogicBoard::removeLeftTileColumn(){
     return true;
 }
 
-bool LogicBoard::addTileRowUp(){
+bool BoardState::addTileRowUp(){
     if(!m_tileLayer.addRowUp()){
         return false;
     }
@@ -384,11 +384,11 @@ bool LogicBoard::addTileRowUp(){
     return true;
 }
 
-bool LogicBoard::addTileRowDown(){
+bool BoardState::addTileRowDown(){
     return m_tileLayer.addRowDown();
 }
 
-bool LogicBoard::removeTopTileRow(){
+bool BoardState::removeTopTileRow(){
     if(!m_tileLayer.removeTopRow()){
         return false;
     }
@@ -399,7 +399,7 @@ bool LogicBoard::removeTopTileRow(){
     return true;
 }
 
-bool LogicBoard::removeBottomTileRow(){
+bool BoardState::removeBottomTileRow(){
     if(!m_tileLayer.removeBottomRow()){
         return false;
     }
@@ -409,7 +409,7 @@ bool LogicBoard::removeBottomTileRow(){
     return true;
 }
 
-void LogicBoard::print(){
+void BoardState::print(){
     std::cout << "Printing board" << std::endl;
     std::cout << "Number of columns: " << getNumColumns() << std::endl;
     std::cout << "Number of rows: " << getNumRows() << std::endl;
@@ -429,15 +429,15 @@ void LogicBoard::print(){
     }
 }
 
-void LogicBoard::clearEntities(){
+void BoardState::clearEntities(){
     m_pieceLayer.clear();
 }
 
-void LogicBoard::clearArrows(){
+void BoardState::clearArrows(){
     m_arrowLayer.clear();
 }
 
-std::ostream& sigrid::operator<<(std::ostream &out, const LogicBoard &board)
+std::ostream& sigrid::operator<<(std::ostream &out, const BoardState &board)
 {
     out << board.m_tileLayer;
     out << board.m_pieceLayer;

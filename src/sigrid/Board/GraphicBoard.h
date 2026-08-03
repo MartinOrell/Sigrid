@@ -28,7 +28,7 @@
 
 namespace sigrid{
 
-class LogicBoard;
+class BoardState;
 class BoardDesignContainer;
 class PieceManager;
 class ColorManager;
@@ -55,7 +55,7 @@ class GraphicBoard: public sf::Drawable{
     void setBottomToTop();
 
     void loadDesign(const BoardDesignContainer& config);
-    void loadBoardState(const LogicBoard& logicBoard);
+    void loadBoardState(const BoardState& boardState);
 
     sf::Vector2f getTileSize() const;
 
@@ -158,9 +158,9 @@ class GraphicBoard: public sf::Drawable{
     void initTurnToken(const BoardDesignContainer& config);
     void initBorder(const BoardDesignContainer& config);
 
-    void loadBoardState_tileLayer(const LogicBoard& logicBoard);
-    void loadBoardState_pieceLayer(const LogicBoard& logicBoard);
-    void loadBoardState_turnToken(const LogicBoard& logicBoard);
+    void loadBoardState_tileLayer(const BoardState& boardState);
+    void loadBoardState_pieceLayer(const BoardState& boardState);
+    void loadBoardState_turnToken(const BoardState& boardState);
     void updateBorder();
     void updateLabels();
 
