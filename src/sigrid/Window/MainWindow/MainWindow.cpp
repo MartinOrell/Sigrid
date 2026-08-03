@@ -5,7 +5,7 @@
 #include <SFML/Window/Clipboard.hpp>
 
 #include "sigrid/utilities/String/String.h"
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Menu/MenuContainer.h"
 #include "sigrid/ToolPicker/ToolPickerContainer.h"
@@ -92,13 +92,13 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_toolPickerWindow->setIconManagerPtr(m_iconManagerPtr.get());
     m_toolPickerWindow->load(config.toolPickerData);
 
-    BoardDataContainer boardData;
+    BoardStateContainer boardStateData;
     if(std::filesystem::exists(config.boardFilename.getStdString())){
         
-        if(boardData.load(config.boardFilename)){
+        if(boardStateData.load(config.boardFilename)){
             std:: cout << "Board data: " << config.boardFilename << " loaded" << std::endl;
         }
-        else if (boardData.load(config.resetBoardFilename)){
+        else if (boardStateData.load(config.resetBoardFilename)){
             std::cerr << "MainWindow: Failed reading Board data: " << config.boardFilename << std::endl;
             std::cerr << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
         }
@@ -109,7 +109,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
             return false;
         }
     }
-    else if (boardData.load(config.resetBoardFilename)){
+    else if (boardStateData.load(config.resetBoardFilename)){
         std::cout << "Board data: " << config.resetBoardFilename << " loaded" << std::endl;
     }
     else{
@@ -127,7 +127,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_workWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
     m_workWindow->loadGraphicData(config.boardData);
-    m_workWindow->loadBoardData(boardData);
+    m_workWindow->loadBoardState(boardStateData);
     std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
 
     m_menu = std::make_unique<sigrid::Menu>();

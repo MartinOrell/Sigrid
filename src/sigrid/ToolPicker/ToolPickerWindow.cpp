@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
 #include "sigrid/Entity/GraphicEntities.h"
@@ -57,10 +57,10 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
     m_board.setLeftToRight();
     m_board.setTopToBottom();
 
-    BoardDataContainer boardData;
-    boardData.columns = data.columns;
-    boardData.rows = data.rows;
-    boardData.repeatTileColorIds = data.tileColorIds;
+    BoardStateContainer boardStateData;
+    boardStateData.columns = data.columns;
+    boardStateData.rows = data.rows;
+    boardStateData.repeatTileColorIds = data.tileColorIds;
 
     BoardDesignContainer boardDesign;
     {
@@ -82,7 +82,7 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
     boardDesign.turnToken.isVisible = false;
 
     m_board.loadGraphicData(boardDesign);
-    m_board.loadBoardData(boardData);
+    m_board.loadBoardState(boardStateData);
 
     m_board.setPosition({0.f,0.f});
 

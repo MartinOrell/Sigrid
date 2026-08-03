@@ -1,4 +1,4 @@
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 
 #include <fstream>
 #include <iostream>
@@ -6,12 +6,12 @@
 using namespace sigrid;
 
 
-bool BoardDataContainer::load(const sigrid::String& filename){
+bool BoardStateContainer::load(const sigrid::String& filename){
 
     std::ifstream ifs(filename.getStdString());
 
     if(!ifs.is_open()){
-        std::cerr << "BoardDataContainer: Failed to open board from file: " << filename;
+        std::cerr << "BoardStateContainer: Failed to open board from file: " << filename;
         return false;
     }
 
@@ -66,13 +66,13 @@ bool BoardDataContainer::load(const sigrid::String& filename){
                 imageFilename.set(std::move(imageFilenameStdString));
             }
             else{
-                std::cerr << "BoardDataContainer: Unknown key: " << key << std::endl;
+                std::cerr << "BoardStateContainer: Unknown key: " << key << std::endl;
                 std::cerr << "found in board file: " << filename << std::endl;
             }
         }
     }
     catch(...){
-        std::cerr << "BoardDataContainer: Failed reading board from file: " << filename << std::endl;
+        std::cerr << "BoardStateContainer: Failed reading board from file: " << filename << std::endl;
         return false;
     }
     return true;

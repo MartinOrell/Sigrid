@@ -1,12 +1,12 @@
 #include "sigrid/Board/BoardState.h"
 
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 
 #include <iostream>
 
 using namespace sigrid;
 
-bool BoardState::load(const BoardDataContainer& data){
+bool BoardState::load(const BoardStateContainer& data){
 
     m_tileLayer.clear();
     m_pieceLayer.clear();

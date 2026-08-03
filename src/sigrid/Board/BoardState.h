@@ -10,7 +10,7 @@
 
 namespace sigrid{
 
-class BoardDataContainer;
+class BoardStateContainer;
 
 class BoardState{
 
@@ -22,7 +22,7 @@ class BoardState{
     BoardState& operator=(const BoardState&) = default;
     BoardState& operator=(BoardState&&) = default;
 
-    bool load(const BoardDataContainer& data);
+    bool load(const BoardStateContainer& data);
 
     const int getNumColumns() const;
     const int getNumRows() const;

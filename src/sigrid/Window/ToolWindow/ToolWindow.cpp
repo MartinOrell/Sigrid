@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
 #include "sigrid/Entity/GraphicEntities.h"
@@ -36,11 +36,11 @@ void ToolWindow::init(){
     m_board.setLeftToRight();
     m_board.setTopToBottom();
 
-    BoardDataContainer boardData;
-    boardData.columns = 1;
-    boardData.rows = 1;
-    boardData.repeatTileColorIds.clear();
-    boardData.repeatTileColorIds.push_back(0);
+    BoardStateContainer boardStateData;
+    boardStateData.columns = 1;
+    boardStateData.rows = 1;
+    boardStateData.repeatTileColorIds.clear();
+    boardStateData.repeatTileColorIds.push_back(0);
 
     BoardDesignContainer boardDesign;
     {
@@ -62,7 +62,7 @@ void ToolWindow::init(){
     boardDesign.turnToken.isVisible = false;
 
     m_board.loadGraphicData(boardDesign);
-    m_board.loadBoardData(boardData);
+    m_board.loadBoardState(boardStateData);
 
     LogicIcon selectIcon;
     selectIcon.setFilename("res/icons/select_object.png");

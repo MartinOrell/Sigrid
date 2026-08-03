@@ -7,7 +7,7 @@
 
 namespace sigrid{
 
-struct BoardDataContainer{
+struct BoardStateContainer{
 
     bool load(const sigrid::String& filename);
 

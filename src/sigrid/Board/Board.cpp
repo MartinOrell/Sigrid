@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Image.hpp>
 
-#include "sigrid/Board/BoardDataContainer.h"
+#include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
 #include "sigrid/Entity/GraphicEntities.h"
 #include "sigrid/Entity/Shape/Arrow/GraphicArrows.h"
@@ -57,13 +57,13 @@ void Board::loadGraphicData(const BoardDesignContainer& graphicData){
     m_graphicBoard.loadDesign(graphicData);
 }
 
-void Board::loadBoardData(const BoardDataContainer& boardData){
+void Board::loadBoardState(const BoardStateContainer& boardStateData){
 
-    if(m_state.load(boardData)){
+    if(m_state.load(boardStateData)){
         m_graphicBoard.loadBoardState(m_state);
     }
     else{
-        std::cerr << "Board: Failed to load logicBoard" << std::endl;
+        std::cerr << "Board: Failed to load boardState" << std::endl;
     }
 }
 

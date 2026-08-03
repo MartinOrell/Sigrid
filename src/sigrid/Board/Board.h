@@ -9,7 +9,7 @@
 
 namespace sigrid{
 
-class BoardDataContainer;
+class BoardStateContainer;
 class LogicTile;
 class IconManager;
 
@@ -34,7 +34,7 @@ class Board: public sf::Drawable{
     void setBottomToTop();
 
     void loadGraphicData(const BoardDesignContainer& graphicData);
-    void loadBoardData(const BoardDataContainer& boardData);
+    void loadBoardState(const BoardStateContainer& boardStateData);
 
     void setPosition(const sf::Vector2f& position);
 

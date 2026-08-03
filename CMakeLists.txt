@@ -25,7 +25,7 @@ set(SRC_FILES
     src/sigrid/Window/WorkWindow/WorkWindow.cpp
     src/sigrid/Window/WorkWindow/PdfHandler.cpp
     src/sigrid/Window/ToolWindow/ToolWindow.cpp
-    src/sigrid/Board/BoardDataContainer.cpp
+    src/sigrid/Board/BoardStateContainer.cpp
     src/sigrid/Board/BoardDesignContainer.cpp
     src/sigrid/Board/BoardLabelContainer.cpp
     src/sigrid/Board/BoardLabelLocationContainer.cpp

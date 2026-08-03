@@ -105,7 +105,7 @@ void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
     board.loadGraphicData(graphicData);
 }
 
-void WorkWindow::loadBoardData(const BoardDataContainer& boardData){
+void WorkWindow::loadBoardState(const BoardStateContainer& boardStateData){
 
     if(m_boards.size() == 0){
         Board board;
@@ -118,7 +118,7 @@ void WorkWindow::loadBoardData(const BoardDataContainer& boardData){
     }
     auto& board = board_o.value().get();
 
-    board.loadBoardData(boardData);
+    board.loadBoardState(boardStateData);
 
     if(!board.isImageFilenameSet()){
         board.setImageFilename(m_defaultBoardImageFilename);
@@ -500,9 +500,9 @@ void WorkWindow::reset(){
     }
     auto& board = board_o.value().get();
 
-    BoardDataContainer boardData;
-    boardData.load(m_resetBoardFilename);
-    board.loadBoardData(boardData);
+    BoardStateContainer boardStateData;
+    boardStateData.load(m_resetBoardFilename);
+    board.loadBoardState(boardStateData);
 }
 
 void WorkWindow::clear(){
