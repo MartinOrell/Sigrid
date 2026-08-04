@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "sigrid/Config/loadStrings.h"
+#include "sigrid/utilities/lists/listLoaders/LoadStrings.h"
 #include "sigrid/Config/LoadValues.h"
 #include "sigrid/Config/LoadContainers.h"
 
@@ -90,7 +90,7 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
         }
         else if(s == "MiscTools:"){
 
-            if(!sigrid_config::loadStrings(toolNames, is)){
+            if(!sigrid::loadStrings(toolNames, is)){
 
                 std::cerr << "ToolPickerContainer: Failed to load strings for toolnames."
                     << " Failed to load ToolPickerContainer" << std::endl;
@@ -141,7 +141,7 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
         }
         else if(s == "Pieces:"){
 
-            if(!sigrid_config::loadStrings(pieceNotations, is)){
+            if(!sigrid::loadStrings(pieceNotations, is)){
 
                 std::cerr << "ToolPickerContainer: Failed to load pieces."
                     << " Failed to load ToolPickerContainer" << std::endl;

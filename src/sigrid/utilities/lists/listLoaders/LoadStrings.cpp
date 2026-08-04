@@ -1,9 +1,9 @@
-#include "sigrid/Config/LoadStrings.h"
+#include "sigrid/utilities/lists/listLoaders/LoadStrings.h"
 
 #include <string>
 #include <iostream>
 
-bool sigrid_config::loadStrings(sigrid_list::Vector<sigrid::String>& strings, sigrid::InputStream& is){
+bool sigrid::loadStrings(sigrid_list::Vector<sigrid::String>& strings, sigrid::InputStream& is){
 
     if(is.readString() != "["){
 

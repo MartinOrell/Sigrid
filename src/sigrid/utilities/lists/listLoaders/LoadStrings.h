@@ -4,7 +4,7 @@
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
-namespace sigrid_config{
+namespace sigrid{
 
 bool loadStrings(sigrid_list::Vector<sigrid::String>& strings, sigrid::InputStream& is);
 
