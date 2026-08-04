@@ -44,8 +44,8 @@ bool BoardStateContainer::load(const sigrid::String& filename){
             if(columns_o == std::nullopt){
 
                 std::cerr << "BoardStateContainer: Failed to read columns."
-                << " Failed to load BoardStateContainer from file: \""
-                << filename << "\"" << std::endl;
+                    << " Failed to load BoardStateContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
             columns = columns_o.value();
@@ -56,8 +56,8 @@ bool BoardStateContainer::load(const sigrid::String& filename){
             if(rows_o == std::nullopt){
 
                 std::cerr << "BoardStateContainer: Failed to read rows."
-                << " Failed to load BoardStateContainer from file: \""
-                << filename << "\"" << std::endl;
+                    << " Failed to load BoardStateContainer from file: \""
+                    << filename << "\"" << std::endl;
                 return false;
             }
             rows = rows_o.value();
@@ -69,8 +69,8 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                 if(colorId_o == std::nullopt){
 
                     std::cerr << "BoardStateContainer: Failed to read colorId for RepeatTileColors."
-                    << " Failed to load BoardStateContainer from file: \""
-                    << filename << "\"" << std::endl;
+                        << " Failed to load BoardStateContainer from file: \""
+                        << filename << "\"" << std::endl;
                     return false;
                 }
                 repeatTileColorIds.push_back(colorId_o.value());
@@ -79,40 +79,14 @@ bool BoardStateContainer::load(const sigrid::String& filename){
         else if(key == "Piece:"){
 
             sigrid::PieceDataContainer pieceContainer;
+            if(!pieceContainer.load(is)){
 
-            auto colorId_o = is.readInt();
-            if(colorId_o == std::nullopt){
-
-                std::cerr << "BoardStateContainer: Failed to read colorId for Piece."
+                std::cerr << "BoardStateContainer: Failed to load Piece."
                     << " Failed to load BoardStateContainer from file: \""
                     << filename << "\"" << std::endl;
-                    return false;
-            }
-            pieceContainer.colorId = colorId_o.value();
-
-            {
-                auto name_o = is.readString();
-                if(name_o == std::nullopt){
-
-                    std::cerr << "BoardStateContainer: Failed to read Piece name."
-                    << " Failed to load BoardStateContainer from file: \""
-                    << filename << "\"" << std::endl;
-                    return false;
-                }
-                pieceContainer.name = name_o.value(); 
+                return false;
             }
             
-            {
-                auto positionString_o = is.readString();
-                if(positionString_o == std::nullopt){
-
-                    std::cerr << "BoardStateContainer: Failed to read Piece position string."
-                    << " Failed to load BoardStateContainer from file: \""
-                    << filename << "\"" << std::endl;
-                    return false;
-                }
-                pieceContainer.position = positionString_o.value();
-            }
             logicPieces.push_back(pieceContainer);
         }
         else if(key == "Circle:"){
@@ -125,7 +99,7 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                 std::cerr << "BoardStateContainer: Failed to read colorId for Circle."
                     << " Failed to load BoardStateContainer from file: \""
                     << filename << "\"" << std::endl;
-                    return false;
+                return false;
             }
             circleContainer.colorId = colorId_o.value();
 

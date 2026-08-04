@@ -38,6 +38,7 @@ set(SRC_FILES
     src/sigrid/utilities/Layout/LayoutGrid.cpp
     src/sigrid/Font/FontManager.cpp
     src/sigrid/Entity/Piece/PieceContainer.cpp
+    src/sigrid/Entity/Piece/PieceDataContainer.cpp
     src/sigrid/Entity/Piece/PieceColor.cpp
     src/sigrid/Entity/Piece/LogicPiece.cpp
     src/sigrid/Entity/Piece/GraphicPiece.cpp
