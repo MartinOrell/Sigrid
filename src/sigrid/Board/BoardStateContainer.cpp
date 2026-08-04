@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "sigrid/utilities/InputStream/InputStream.h"
+#include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 
 using namespace sigrid;
 
@@ -64,16 +65,12 @@ bool BoardStateContainer::load(const sigrid::String& filename){
         }
         else if(key == "RepeatTileColors:"){
 
-            for(int i = 0; i < 2; i++){
-                auto colorId_o = is.readInt();
-                if(colorId_o == std::nullopt){
+            if(!sigrid::loadValues<int>(repeatTileColorIds, is)){
 
-                    std::cerr << "BoardStateContainer: Failed to read colorId for RepeatTileColors."
-                        << " Failed to load BoardStateContainer from file: \""
-                        << filename << "\"" << std::endl;
-                    return false;
-                }
-                repeatTileColorIds.push_back(colorId_o.value());
+                std::cerr << "BoardStateContainer: Failed to load RepeatTileColors."
+                    << " Failed to load BoardStateContainer from file: \""
+                    << filename << "\"" << std::endl;
+                return false;
             }
         }
         else if(key == "Piece:"){
