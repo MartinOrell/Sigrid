@@ -3,11 +3,11 @@
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
 
-namespace sigrid_config{
+namespace sigrid{
 
 template <typename T>
 bool loadValueContainers(sigrid_list::Vector<T>& containers, sigrid::InputStream& is);
 
 }  // namespace sigrid_config
 
-#include "sigrid/Config/LoadValueContainers.tpp"
+#include "sigrid/utilities/lists/listLoaders/LoadValueContainers.tpp"

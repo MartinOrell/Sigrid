@@ -6,7 +6,7 @@
 #include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 #include "sigrid/Color/ColorContainer.h"
-#include "sigrid/Config/LoadValueContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadValueContainers.h"
 
 using namespace sigrid_config;
 
@@ -50,7 +50,7 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "TileColors:"){
 
-            if(!loadValueContainers<sigrid::ColorContainer>(tileColors, is)){
+            if(!sigrid::loadValueContainers<sigrid::ColorContainer>(tileColors, is)){
                 
                 std::cerr << "MainConfigContainer: Failed to load tileColors."
                     << " Failed to load MainConfigContainer from file: \""
@@ -60,7 +60,7 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "ArrowColors:"){
 
-            if(!loadValueContainers<sigrid::ColorContainer>(arrowColors, is)){
+            if(!sigrid::loadValueContainers<sigrid::ColorContainer>(arrowColors, is)){
                 
                 std::cerr << "MainConfigContainer: Failed to load arrowColors."
                     << " Failed to load MainConfigContainer from file: \""
