@@ -35,7 +35,7 @@ set(SRC_FILES
     src/sigrid/Board/BoardLabels.cpp
     src/sigrid/utilities/Coord/Coord.cpp
     src/sigrid/utilities/Coord/CoordPair.cpp
-    src/sigrid/Layout/LayoutGrid.cpp
+    src/sigrid/utilities/Layout/LayoutGrid.cpp
     src/sigrid/Font/FontManager.cpp
     src/sigrid/Entity/Piece/PieceContainer.cpp
     src/sigrid/Entity/Piece/PieceColor.cpp

@@ -4,7 +4,7 @@
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
-#include "sigrid/Layout/LayoutGrid.h"
+#include "sigrid/utilities/Layout/LayoutGrid.h"
 #include "sigrid/Board/Board.h"
 #include "sigrid/Action/Action.h"
 

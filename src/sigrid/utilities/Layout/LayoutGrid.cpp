@@ -1,4 +1,4 @@
-#include "sigrid/Layout/LayoutGrid.h"
+#include "sigrid/utilities/Layout/LayoutGrid.h"
 
 using namespace sigrid;
 

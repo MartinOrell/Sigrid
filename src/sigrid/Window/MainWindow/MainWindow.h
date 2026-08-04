@@ -11,7 +11,7 @@
 #include "sigrid/Input/InputHandler.h"
 #include "sigrid/Input/Mouse/Mouse.h"
 #include "sigrid/Config/MainConfigContainer.h"
-#include "sigrid/Layout/LayoutGrid.h"
+#include "sigrid/utilities/Layout/LayoutGrid.h"
 
 #include "sigrid/Menu/Menu.h"
 #include "sigrid/Window/WorkWindow/WorkWindow.h"

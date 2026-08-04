@@ -2,7 +2,7 @@
 
 #include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
 #include "sigrid/Board/Board.h"
-#include "sigrid/Layout/LayoutGrid.h"
+#include "sigrid/utilities/Layout/LayoutGrid.h"
 
 namespace sigrid{
 
