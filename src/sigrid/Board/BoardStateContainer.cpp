@@ -86,34 +86,20 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                     << filename << "\"" << std::endl;
                 return false;
             }
-            
+
             logicPieces.push_back(pieceContainer);
         }
         else if(key == "Circle:"){
 
             sigrid::CircleDataContainer circleContainer;
+            if(!circleContainer.load(is)){
 
-            auto colorId_o = is.readInt();
-            if(colorId_o == std::nullopt){
-
-                std::cerr << "BoardStateContainer: Failed to read colorId for Circle."
+                std::cerr << "BoardStateContainer: Failed to load Circle."
                     << " Failed to load BoardStateContainer from file: \""
                     << filename << "\"" << std::endl;
                 return false;
             }
-            circleContainer.colorId = colorId_o.value();
 
-            {
-                auto positionString_o = is.readString();
-                if(positionString_o == std::nullopt){
-
-                    std::cerr << "BoardStateContainer: Failed to read Circle position string."
-                        << " Failed to load BoardStateContainer from file: \""
-                        << filename << "\"" << std::endl;
-                    return false;
-                }
-                circleContainer.position = positionString_o.value();
-            }
             logicCircles.push_back(circleContainer);
         }
         else if(key == "ImageFilename:"){
