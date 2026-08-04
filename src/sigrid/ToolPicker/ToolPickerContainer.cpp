@@ -4,7 +4,7 @@
 
 #include "sigrid/utilities/lists/listLoaders/LoadStrings.h"
 #include "sigrid/Config/LoadValues.h"
-#include "sigrid/Config/LoadContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 
 bool sigrid::ToolPickerContainer::load(InputStream& is){
 
@@ -81,7 +81,7 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
         }
         else if(s == "PieceBlocks:"){
 
-            if(!sigrid_config::loadContainers<ToolBlockContainer>(pieceBlocks, is)){
+            if(!sigrid::loadContainers<ToolBlockContainer>(pieceBlocks, is)){
 
                 std::cerr << "ToolPickerContainer: Failed to load PieceBlocks."
                     << " Failed to load ToolPickerContainer" << std::endl;

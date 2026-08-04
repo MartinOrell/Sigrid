@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "sigrid/utilities/InputStream/InputStream.h"
-#include "sigrid/Config/LoadContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 #include "sigrid/Color/ColorContainer.h"
 #include "sigrid/Config/LoadValueContainers.h"
 
@@ -70,7 +70,7 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "PieceColors:"){
 
-            if(!loadContainers<sigrid::PieceColor>(pieceColors, is)){
+            if(!sigrid::loadContainers<sigrid::PieceColor>(pieceColors, is)){
                 
                 std::cerr << "MainConfigContainer: Failed to load pieceColors."
                     << " Failed to load MainConfigContainer from file: \""
@@ -80,7 +80,7 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "Pieces:"){
 
-            if(!loadContainers<sigrid::PieceContainer>(pieces, is)){
+            if(!sigrid::loadContainers<sigrid::PieceContainer>(pieces, is)){
                 
                 std::cerr << "MainConfigContainer: Failed to load pieces."
                     << " Failed to load MainConfigContainer from file: \""

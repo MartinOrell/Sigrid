@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "sigrid/utilities/String/String.h"
-#include "sigrid/Config/LoadContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 
 bool sigrid::BoardDesignContainer::load(InputStream& is){
 
@@ -56,7 +56,7 @@ bool sigrid::BoardDesignContainer::load(InputStream& is){
         }
         else if(s == "CoordLabels:"){
 
-            if(!sigrid_config::loadContainers<BoardLabelContainer>(labels, is)){
+            if(!sigrid::loadContainers<BoardLabelContainer>(labels, is)){
 
                 std::cerr << "BoardDesignContainer: Failed to load CoorcLabels."
                     << " Failed to load BoardDesignContainer" << std::endl;
