@@ -1,11 +1,11 @@
-#include "sigrid/Config/LoadNamedContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadNamedContainers.h"
 
 #include <iostream>
 
 #include "sigrid/utilities/String/String.h"
 
 template <typename T>
-bool sigrid_config::loadNamedContainers(sigrid_list::Vector<T>& containers, sigrid::InputStream& is){
+bool sigrid::loadNamedContainers(sigrid_list::Vector<T>& containers, sigrid::InputStream& is){
 
     if(is.readString() != "["){
 

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "sigrid/Config/LoadNamedContainers.h"
+#include "sigrid/utilities/lists/listLoaders/LoadNamedContainers.h"
 
 bool sigrid::MenuContainer::load(InputStream& is){
 
@@ -62,7 +62,7 @@ bool sigrid::MenuContainer::load(InputStream& is){
         }
         else if(s == "headers:"){
 
-            if(!(sigrid_config::loadNamedContainers<HeaderContainer>(headers, is))){
+            if(!(sigrid::loadNamedContainers<HeaderContainer>(headers, is))){
 
                 std::cerr << "MenuContainer: Failed to load headers."
                     << " Failed to load MenuContainer" << std::endl;
