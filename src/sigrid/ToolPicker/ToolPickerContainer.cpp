@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "sigrid/utilities/lists/listLoaders/LoadStrings.h"
-#include "sigrid/Config/LoadValues.h"
+#include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 
 bool sigrid::ToolPickerContainer::load(InputStream& is){
@@ -121,7 +121,7 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
         }
         else if(s == "Colors:"){
 
-            if(!(sigrid_config::loadValues<int>(colorToolIds, is))){
+            if(!(sigrid::loadValues<int>(colorToolIds, is))){
 
                 std::cerr << "ToolPickerContainer: Failed to load colors"
                     << " Failed to load ToolPickerContainer" << std::endl;
@@ -150,7 +150,7 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
         }
         else if(s == "TileColors:"){
 
-            if(!(sigrid_config::loadValues<int>(tileColorIds, is))){
+            if(!(sigrid::loadValues<int>(tileColorIds, is))){
 
                 std::cerr << "ToolPickerContainer: Failed to load TileColors."
                     << " Failed to load ToolPickerContainer" << std::endl;

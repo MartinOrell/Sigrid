@@ -1,11 +1,11 @@
-#include "sigrid/Config/LoadValues.h"
+#include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 
 #include <iostream>
 
 #include "sigrid/utilities/String/String.h"
 
 template <typename T>
-bool sigrid_config::loadValues(sigrid_list::Vector<T>& values, sigrid::InputStream& is){
+bool sigrid::loadValues(sigrid_list::Vector<T>& values, sigrid::InputStream& is){
 
     if(is.readString() != "["){
 
