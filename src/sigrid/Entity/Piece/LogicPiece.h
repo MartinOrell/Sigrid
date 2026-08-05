@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/Entity/Piece/PieceDataContainer.h"
 
 namespace sigrid{
 
@@ -19,6 +20,7 @@ class LogicPiece{
 
     int getColorId() const;
     sigrid::String getNotation() const;
+    PieceDataContainer getContainer() const;
 
     bool operator==(const LogicPiece& rhs) const;
     bool operator!=(const LogicPiece& rhs) const;

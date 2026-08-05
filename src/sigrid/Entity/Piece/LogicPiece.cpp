@@ -16,6 +16,14 @@ sigrid::String LogicPiece::getNotation() const{
     return m_notation;
 }
 
+sigrid::PieceDataContainer sigrid::LogicPiece::getContainer() const{
+    
+    sigrid::PieceDataContainer container;
+    container.colorId = m_colorId;
+    container.name = m_notation;
+    return container;
+}
+
 int LogicPiece::getColorId() const{
     return m_colorId;
 }

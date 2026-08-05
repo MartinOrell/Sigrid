@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/Entity/Piece/PieceDataContainer.h"
+
 using namespace sigrid;
 
 void LogicEntities::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
@@ -370,9 +372,10 @@ void LogicEntities::moveEntitiesDown(){
 std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)
 {
     for(const auto& piece: entities.m_pieces){
-        out << "\nPiece: " << piece.second.getColorId()
-            << " " << piece.second.getNotation()
-            << " " << piece.first.getNotation();
+
+        PieceDataContainer pieceData = piece.second.getContainer();
+        pieceData.position = piece.first.getNotation();
+        out << "\n" << pieceData;
     }
     for(const auto& circle: entities.m_circles){
         out << "\nCircle: " << circle.second.getColorId()
