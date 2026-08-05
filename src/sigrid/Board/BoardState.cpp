@@ -441,5 +441,6 @@ std::ostream& sigrid::operator<<(std::ostream &out, const BoardState &board)
 {
     out << board.m_tileLayer;
     out << board.m_pieceLayer;
+    out << board.m_arrowLayer;
     return out;
 }

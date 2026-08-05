@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sigrid/Entity/Shape/Arrow/ArrowDataContainer.h"
+
 namespace sigrid{
 
 class LogicArrow{
@@ -15,6 +17,7 @@ class LogicArrow{
     void setColor(const int colorId);
 
     int getColorId() const;
+    ArrowDataContainer getContainer() const;
 
     bool operator<(const LogicArrow& rhs) const;
     bool operator==(const LogicArrow& rhs) const;

@@ -65,6 +65,7 @@ set(SRC_FILES
     src/sigrid/Entity/Shape/Circle/LogicCircle.cpp
     src/sigrid/Entity/Shape/Circle/GraphicCircle.cpp
     src/sigrid/Entity/Shape/Arrow/ArrowContainer.cpp
+    src/sigrid/Entity/Shape/Arrow/ArrowDataContainer.cpp
     src/sigrid/Entity/Shape/Arrow/LogicArrow.cpp
     src/sigrid/Entity/Shape/Arrow/GraphicArrow.cpp
     src/sigrid/Entity/Shape/Arrow/LogicArrows.cpp

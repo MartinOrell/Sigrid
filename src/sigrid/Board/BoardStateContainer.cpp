@@ -99,6 +99,19 @@ bool BoardStateContainer::load(const sigrid::String& filename){
 
             logicCircles.push_back(circleContainer);
         }
+        else if(key == "Arrow:"){
+
+            sigrid::ArrowDataContainer arrowContainer;
+            if(!arrowContainer.load(is)){
+
+                std::cerr << "BoardStateContainer: Failed to load Arrow."
+                    << " Failed to load BoardStateContainer from file: \""
+                    << filename << "\"" << std::endl;
+                return false;
+            }
+
+            logicArrows.push_back(arrowContainer);
+        }
         else if(key == "ImageFilename:"){
 
             auto imageFilename_o = is.readString();

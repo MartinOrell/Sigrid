@@ -1,5 +1,9 @@
 #include "sigrid/Entity/Shape/Arrow/LogicArrows.h"
 
+#include <iostream>
+
+#include "sigrid/Entity/Shape/Arrow/ArrowDataContainer.h"
+
 using namespace sigrid;
 
 void LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
@@ -323,4 +327,34 @@ void LogicArrows::moveArrowsDown(){
 
 void LogicArrows::clear(){
     m_arrows.clear();
+}
+
+std::ostream& sigrid::operator<<(std::ostream &out, const LogicArrows &arrows)
+{
+
+    for(int i = 0; i < arrows.m_arrows.size(); i++){
+        
+        const auto& arrow_o = arrows.m_arrows.atPosition(i);
+        if(arrow_o == std::nullopt){
+            std::cerr << "LogicArrows: failed getting arrow at index " << i << "."
+                << " Writing with operator << failed" << std::endl;
+            return out;
+        }
+        const LogicArrow& arrow = arrow_o.value();
+
+        const auto coordPair_o = arrows.m_arrows.keyAt(i);
+        if(coordPair_o == std::nullopt){
+            std::cerr << "LogicArrows: failed getting coordPair for arrow at index " << i << "."
+                << " Writing with operator << failed" << std::endl;
+            return out;
+        }
+        const sigrid_coord::CoordPair& coordPair = coordPair_o.value();
+
+        ArrowDataContainer arrowData = arrow.getContainer();
+        arrowData.position = coordPair.getNotation();
+
+        out << "\n" << arrowData;
+    }
+
+    return out;
 }

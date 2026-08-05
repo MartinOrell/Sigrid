@@ -1,23 +1,28 @@
 #include "sigrid/Entity/Shape/Arrow/LogicArrow.h"
 
-using namespace sigrid;
-
-void LogicArrow::setColor(const int colorId){
+void sigrid::LogicArrow::setColor(const int colorId){
     m_colorId = colorId;
 }
 
-int LogicArrow::getColorId() const{
+int sigrid::LogicArrow::getColorId() const{
     return m_colorId;
 }
 
-bool LogicArrow::operator<(const LogicArrow& rhs) const{
+sigrid::ArrowDataContainer sigrid::LogicArrow::getContainer() const{
+
+    sigrid::ArrowDataContainer container;
+    container.colorId = m_colorId;
+    return container;
+}
+
+bool sigrid::LogicArrow::operator<(const sigrid::LogicArrow& rhs) const{
     return m_colorId < rhs.m_colorId;
 }
 
-bool LogicArrow::operator==(const LogicArrow& rhs) const{
+bool sigrid::LogicArrow::operator==(const sigrid::LogicArrow& rhs) const{
     return m_colorId == rhs.m_colorId;
 }
 
-bool LogicArrow::operator!=(const LogicArrow& rhs) const{
+bool sigrid::LogicArrow::operator!=(const sigrid::LogicArrow& rhs) const{
     return !(*this == rhs);
 }

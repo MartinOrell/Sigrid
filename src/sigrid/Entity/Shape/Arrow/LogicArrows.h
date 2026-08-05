@@ -33,6 +33,8 @@ class LogicArrows{
 
     void clear();
 
+    friend std::ostream& operator<<(std::ostream& out, const LogicArrows& arrows);
+
   private:
 
     sigrid_list::OrderedMap<sigrid_coord::CoordPair, LogicArrow> m_arrows;
