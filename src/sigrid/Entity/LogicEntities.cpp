@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "sigrid/Entity/Piece/PieceDataContainer.h"
+#include "sigrid/Entity/Shape/Circle/CircleDataContainer.h"
 
 using namespace sigrid;
 
@@ -378,8 +379,10 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entitie
         out << "\n" << pieceData;
     }
     for(const auto& circle: entities.m_circles){
-        out << "\nCircle: " << circle.second.getColorId()
-            << " " << circle.first.getNotation();
+
+        CircleDataContainer circleData = circle.second.getContainer();
+        circleData.position = circle.first.getNotation();
+        out << "\n" << circleData;
     }
     for(const auto& arrow: entities.m_arrows){
         out << "\nArrow: " << arrow.second.getColorId()

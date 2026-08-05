@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sigrid/Entity/Shape/Circle/CircleDataContainer.h"
+
 namespace sigrid{
 
 class LogicCircle{
@@ -15,6 +17,7 @@ class LogicCircle{
     void setColor(const int colorId);
 
     int getColorId() const;
+    CircleDataContainer getContainer() const;
 
     bool operator<(const LogicCircle& rhs) const;
     bool operator==(const LogicCircle& rhs) const;

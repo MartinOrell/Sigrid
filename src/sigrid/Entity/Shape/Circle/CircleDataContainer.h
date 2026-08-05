@@ -8,6 +8,7 @@ namespace sigrid{
 struct CircleDataContainer{
 
     bool load(sigrid::InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const CircleDataContainer& circle);
 
     int colorId; //0 = white, 1 = black
     sigrid::String position; //example: a2
