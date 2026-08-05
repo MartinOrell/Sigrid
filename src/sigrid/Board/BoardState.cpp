@@ -64,6 +64,27 @@ bool BoardState::load(const BoardStateContainer& data){
         m_pieceLayer.addEntity(coord, std::move(logicCircle));
     }
 
+    for(const auto arrowData : data.logicArrows){
+
+        sigrid_coord::CoordPair coordPair{arrowData.position};
+
+        if(!isWithinBoard(coordPair.from)){
+            std::cerr << "LogicBoard constructor: Failed to set arrow at " << coordPair.getNotation() << std::endl;
+            std::cerr << "Starting coordinate is outside of board" << std::endl;
+            continue;
+        }
+
+        if(!isWithinBoard(coordPair.to)){
+            std::cerr << "LogicBoard constructor: Failed to set arrow at " << coordPair.getNotation() << std::endl;
+            std::cerr << "End coordinate is outside of board" << std::endl;
+            continue;
+        }
+
+        LogicArrow logicArrow;
+        logicArrow.setColor(arrowData.colorId);
+        m_arrowLayer.addArrow(coordPair, std::move(logicArrow));
+    }
+
     return true;
 }
 
@@ -105,6 +126,26 @@ std::optional<LogicTile> BoardState::getTile(const sigrid_coord::Coord& coord) c
 
 std::optional<LogicEntity> BoardState::getEntityAt(const sigrid_coord::Coord& coord) const{
     return m_pieceLayer.getEntityAt(coord);
+}
+
+std::optional<LogicArrow> BoardState::getArrowAtIndex(const int& index) const{
+
+    auto arrow_o = m_arrowLayer.getArrowAtIndex(index);
+
+    if(arrow_o == std::nullopt){
+        return std::nullopt;
+    }
+    return arrow_o.value();
+}
+
+std::optional<sigrid_coord::CoordPair> BoardState::getArrowKeyAtIndex(const int& index) const{
+
+    auto coordPair_o = m_arrowLayer.getArrowKeyAtIndex(index);
+
+    if(coordPair_o == std::nullopt){
+        return std::nullopt;
+    }
+    return coordPair_o.value();
 }
 
 std::optional<LogicArrow> BoardState::getArrowAt(const sigrid_coord::CoordPair& coordPair) const{
@@ -179,6 +220,10 @@ int BoardState::getTurnToMove() const{
 
 sigrid_list::Vector<int> BoardState::getRepeatColorIds() const{
     return m_tileLayer.getRepeatColorIds();
+}
+
+int BoardState::getNumArrows() const{
+    return m_arrowLayer.size();
 }
 
 void BoardState::setTurnToMove(const int& turnToMove){

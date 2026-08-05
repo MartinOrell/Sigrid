@@ -21,6 +21,9 @@ class LogicArrows{
     void addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
     void removeArrow(const sigrid_coord::CoordPair& coordPair);
     
+    int size() const;
+    std::optional<LogicArrow> getArrowAtIndex(const int& index) const;
+    std::optional<sigrid_coord::CoordPair> getArrowKeyAtIndex(const int& index) const;
     std::optional<LogicArrow> getArrow(const sigrid_coord::CoordPair& coordPair) const;
 
     void removeColumn(const int& columnId);

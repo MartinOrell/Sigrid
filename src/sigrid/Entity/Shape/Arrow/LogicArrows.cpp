@@ -13,6 +13,30 @@ void LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const Logic
 void LogicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
     m_arrows.erase(coordPair);
 }
+
+int LogicArrows::size() const{
+    return m_arrows.size();
+}
+
+std::optional<LogicArrow> LogicArrows::getArrowAtIndex(const int& index) const{
+
+    auto arrow_o = m_arrows.atPosition(index);
+
+    if(arrow_o == std::nullopt){
+        return std::nullopt;
+    }
+    return arrow_o.value().get();
+}
+
+std::optional<sigrid_coord::CoordPair> LogicArrows::getArrowKeyAtIndex(const int& index) const{
+
+    auto coordPair_o = m_arrows.keyAt(index);
+
+    if(coordPair_o == std::nullopt){
+        return std::nullopt;
+    }
+    return coordPair_o.value().get();
+}
             
 std::optional<LogicArrow> LogicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
 

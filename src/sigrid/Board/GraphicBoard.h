@@ -160,6 +160,7 @@ class GraphicBoard: public sf::Drawable{
 
     void loadBoardState_tileLayer(const BoardState& boardState);
     void loadBoardState_pieceLayer(const BoardState& boardState);
+    void loadBoardState_arrowLayer(const BoardState& boardState);
     void loadBoardState_turnToken(const BoardState& boardState);
     void updateBorder();
     void updateLabels();

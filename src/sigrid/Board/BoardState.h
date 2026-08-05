@@ -31,10 +31,13 @@ class BoardState{
     bool isEmptyTile(const sigrid_coord::Coord& coord) const;
     std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
     std::optional<LogicEntity> getEntityAt(const sigrid_coord::Coord& coord) const;
+    std::optional<LogicArrow> getArrowAtIndex(const int& index) const;
+    std::optional<sigrid_coord::CoordPair> getArrowKeyAtIndex(const int& index) const;
     std::optional<LogicArrow> getArrowAt(const sigrid_coord::CoordPair& coordPair) const;
     sigrid::String getFen() const;
     int getTurnToMove() const;
     sigrid_list::Vector<int> getRepeatColorIds() const;
+    int getNumArrows() const;
 
     void setTurnToMove(const int& turnToMove);
 

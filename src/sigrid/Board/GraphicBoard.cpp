@@ -109,7 +109,7 @@ void GraphicBoard::loadBoardState(const BoardState& boardState){
 
     loadBoardState_tileLayer(boardState);
     loadBoardState_pieceLayer(boardState);
-    m_arrowLayer.clear();
+    loadBoardState_arrowLayer(boardState);
     loadBoardState_turnToken(boardState);
 
     updateBorder();
@@ -1206,6 +1206,32 @@ void GraphicBoard::loadBoardState_pieceLayer(const BoardState& boardState){
                 }
             }
         }
+    }
+}
+
+void GraphicBoard::loadBoardState_arrowLayer(const BoardState& boardState){
+
+    m_arrowLayer.clear();
+
+    for(int i = 0; i < boardState.getNumArrows(); i++){
+        const auto arrow_o = boardState.getArrowAtIndex(i);
+
+        if(arrow_o == std::nullopt){
+            std::cerr << "GraphicBoard: Fail to get arrow at index " << i << "."
+                << " Failed to load arrow at index " << i << std::endl;
+            continue;
+        }
+        sigrid::LogicArrow logicArrow = arrow_o.value();
+        
+        const auto coordPair_o = boardState.getArrowKeyAtIndex(i);
+        if(coordPair_o == std::nullopt){
+            std::cerr << "GraphicBoard: Fail to get arrow key at index " << i << "."
+                << " Failed to load arrow at index " << i << std::endl;
+            continue;
+        }
+        sigrid_coord::CoordPair coordPair = coordPair_o.value();
+
+        addArrow(coordPair, logicArrow);
     }
 }
 
