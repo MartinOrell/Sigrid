@@ -88,6 +88,18 @@ bool BoardState::load(const BoardStateContainer& data){
     return true;
 }
 
+BoardStateContainer BoardState::getContainer() const{
+
+    BoardStateContainer container;
+    container.columns = m_tileLayer.getNumColumns();
+    container.rows = m_tileLayer.getNumRows();
+    container.repeatTileColorIds = m_tileLayer.getRepeatColorIds();
+    container.logicPieces = m_pieceLayer.getPiecesContainer();
+    container.logicCircles = m_pieceLayer.getCirclesContainer();
+    container.logicArrows = m_arrowLayer.getContainer();
+    return container;
+}
+
 const int BoardState::getNumColumns() const{
     return m_tileLayer.getNumColumns();
 }
@@ -480,12 +492,4 @@ void BoardState::clearEntities(){
 
 void BoardState::clearArrows(){
     m_arrowLayer.clear();
-}
-
-std::ostream& sigrid::operator<<(std::ostream &out, const BoardState &board)
-{
-    out << board.m_tileLayer;
-    out << board.m_pieceLayer;
-    out << board.m_arrowLayer;
-    return out;
 }

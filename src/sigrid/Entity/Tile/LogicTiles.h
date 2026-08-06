@@ -45,8 +45,6 @@ class LogicTiles{
 
     std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord) const;
 
-    friend std::ostream& operator<<(std::ostream& out, const LogicTiles& tiles);
-
   private:
 
     sigrid_list::AutoInsertMappedGrid<LogicTile> m_tiles;

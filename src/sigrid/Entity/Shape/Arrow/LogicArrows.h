@@ -18,6 +18,8 @@ class LogicArrows{
     LogicArrows& operator=(const LogicArrows&) = default;
     LogicArrows& operator=(LogicArrows&&) = default;
 
+    sigrid_list::Vector<ArrowDataContainer> getContainer() const;
+
     void addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow);
     void removeArrow(const sigrid_coord::CoordPair& coordPair);
     
@@ -35,8 +37,6 @@ class LogicArrows{
     void moveArrowsDown();
 
     void clear();
-
-    friend std::ostream& operator<<(std::ostream& out, const LogicArrows& arrows);
 
   private:
 

@@ -133,3 +133,31 @@ bool BoardStateContainer::load(const sigrid::String& filename){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& boardState){
+
+    out << "Columns: " << boardState.columns << "\n";
+    out << "Rows: " << boardState.rows << "\n";
+    out << "RepeatTileColors: [";
+
+    for(auto& tileId: boardState.repeatTileColorIds){
+        out << " " << tileId;
+    }
+    out << " ]";
+
+    for(const auto& pieceData: boardState.logicPieces){
+        out << "\n" << pieceData;
+    }
+
+    for(const auto& circleData: boardState.logicCircles){
+        out << "\n" << circleData;
+    }
+
+    for(const auto& arrowData: boardState.logicArrows){
+        out << "\n" << arrowData;
+    }
+
+    out << "\nImageFilename: " << boardState.imageFilename;
+
+    return out;
+}

@@ -567,7 +567,10 @@ void Board::save(){
         return;
     }
 
-    out << m_state;    
+    BoardStateContainer boardStateContainer = m_state.getContainer();
+    boardStateContainer.imageFilename = m_imageFilename;
+
+    out << boardStateContainer;
 
     std::cout << "Saved " << m_filename << std::endl;
 
@@ -575,8 +578,6 @@ void Board::save(){
         std::cerr << "Board: Unable to save board image, filename is not set" << std::endl;
         return;
     }
-
-    out << "\nImageFilename: " << m_imageFilename;
 
     if(!(createFolderForFile(m_imageFilename))){
         std::cerr << "Board: Saving board image failed" << std::endl;

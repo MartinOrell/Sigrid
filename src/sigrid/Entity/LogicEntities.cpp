@@ -9,6 +9,32 @@
 
 using namespace sigrid;
 
+sigrid_list::Vector<PieceDataContainer> LogicEntities::getPiecesContainer() const{
+
+    sigrid_list::Vector<PieceDataContainer> pieceContainers;
+
+    for(const auto& piece: m_pieces){
+
+        PieceDataContainer pieceData = piece.second.getContainer();
+        pieceData.position = piece.first.getNotation();
+        pieceContainers.push_back(pieceData);
+    }
+    return pieceContainers;
+}
+
+sigrid_list::Vector<CircleDataContainer> LogicEntities::getCirclesContainer() const{
+
+    sigrid_list::Vector<CircleDataContainer> circleContainers;
+
+    for(const auto& circle: m_circles){
+
+        CircleDataContainer circleData = circle.second.getContainer();
+        circleData.position = circle.first.getNotation();
+        circleContainers.push_back(circleData);
+    }
+    return circleContainers;
+}
+
 void LogicEntities::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         m_pieces.insert(coord, std::get<LogicPiece>(entity));
@@ -370,33 +396,4 @@ void LogicEntities::moveEntitiesDown(){
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicCircle>>(m_circles);
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicArrow>>(m_arrows);
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, LogicIcon>>(m_icons);
-}
-
-std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entities)
-{
-    for(const auto& piece: entities.m_pieces){
-
-        PieceDataContainer pieceData = piece.second.getContainer();
-        pieceData.position = piece.first.getNotation();
-        out << "\n" << pieceData;
-    }
-    for(const auto& circle: entities.m_circles){
-
-        CircleDataContainer circleData = circle.second.getContainer();
-        circleData.position = circle.first.getNotation();
-        out << "\n" << circleData;
-    }
-    for(const auto& arrow: entities.m_arrows){
-
-        ArrowDataContainer arrowData = arrow.second.getContainer();
-        arrowData.position = arrow.first.getNotation();
-        out << "\n" << arrowData;
-    }
-    for(const auto& icon: entities.m_icons){
-
-        IconDataContainer iconData = icon.second.getContainer();
-        iconData.position = icon.first.getNotation();
-        out << "\n" << iconData;
-    }
-    return out;
 }

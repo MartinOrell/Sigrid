@@ -24,6 +24,7 @@ class BoardState{
 
     bool load(const BoardStateContainer& data);
 
+    BoardStateContainer getContainer() const;
     const int getNumColumns() const;
     const int getNumRows() const;
 
@@ -63,8 +64,6 @@ class BoardState{
     void print();
     void clearEntities();
     void clearArrows();
-
-    friend std::ostream& operator<<(std::ostream& out, const BoardState& board);
 
   private:
     

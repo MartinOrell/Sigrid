@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/Entity/LogicEntity.h"
@@ -20,6 +21,9 @@ class LogicEntities{
     LogicEntities& operator=(const LogicEntities&) = default;
     LogicEntities& operator=(LogicEntities&&) = default;
 
+    sigrid_list::Vector<PieceDataContainer> getPiecesContainer() const;
+    sigrid_list::Vector<CircleDataContainer> getCirclesContainer() const;
+
     void addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity);
     void removeEntity(const sigrid_coord::Coord& coord);
     void moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord);
@@ -35,8 +39,6 @@ class LogicEntities{
     void moveEntitiesLeft();
     void moveEntitiesUp();
     void moveEntitiesDown();
-
-    friend std::ostream& operator<<(std::ostream& out, const LogicEntities& entities);
 
   private:
 

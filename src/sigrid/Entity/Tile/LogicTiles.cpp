@@ -108,18 +108,3 @@ void LogicTiles::clear(){
 std::optional<LogicTile> LogicTiles::getTile(const sigrid_coord::Coord& coord) const{
     return m_tiles.at(coord);
 }
-
-std::ostream& sigrid::operator<<(std::ostream &out, const LogicTiles &tiles)
-{
-
-    out << "Columns: " << tiles.m_tiles.numColumns() << "\n";
-    out << "Rows: " << tiles.m_tiles.numRows() << "\n";
-    out << "RepeatTileColors: [";
-
-    for(auto& tile: tiles.m_tiles.getInsertPattern()){
-        out << " " << tile.getColorId();
-    }
-    out << " ]";
-
-    return out;
-}

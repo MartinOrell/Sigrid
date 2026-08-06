@@ -11,6 +11,7 @@ namespace sigrid{
 struct BoardStateContainer{
 
     bool load(const sigrid::String& filename);
+    friend std::ostream& operator<<(std::ostream& out, const BoardStateContainer& boardState);
 
     int columns;
     int rows;
