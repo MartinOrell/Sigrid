@@ -1,19 +1,24 @@
 #include "sigrid/Entity/Icon/LogicIcon.h"
 
-using namespace sigrid;
-
-void LogicIcon::setFilename(const sigrid::String& filename){
+void sigrid::LogicIcon::setFilename(const sigrid::String& filename){
     m_filename = filename;
 }
 
-sigrid::String LogicIcon::getFilename() const{
+sigrid::IconDataContainer sigrid::LogicIcon::getContainer() const{
+
+    sigrid::IconDataContainer container;
+    container.imageFilename = m_filename;
+    return container;
+}
+
+sigrid::String sigrid::LogicIcon::getFilename() const{
     return m_filename;
 }
 
-bool LogicIcon::operator==(const LogicIcon& rhs) const{
+bool sigrid::LogicIcon::operator==(const sigrid::LogicIcon& rhs) const{
     return m_filename == rhs.m_filename;
 }
 
-bool LogicIcon::operator!=(const LogicIcon& rhs) const{
+bool sigrid::LogicIcon::operator!=(const sigrid::LogicIcon& rhs) const{
     return !(*this == rhs);
 }

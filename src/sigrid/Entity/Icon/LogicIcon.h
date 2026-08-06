@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/Entity/Icon/IconDataContainer.h"
 
 namespace sigrid{
 
@@ -15,6 +16,8 @@ class LogicIcon{
     LogicIcon& operator=(LogicIcon&&) = default;
 
     void setFilename(const sigrid::String& name);
+
+    IconDataContainer getContainer() const;
     sigrid::String getFilename() const;
 
     bool operator==(const LogicIcon& rhs) const;

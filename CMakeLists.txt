@@ -57,6 +57,7 @@ set(SRC_FILES
     src/sigrid/Entity/Tile/GraphicTile.cpp
     src/sigrid/Entity/Tile/LogicTiles.cpp
     src/sigrid/Entity/Tile/GraphicTiles.cpp
+    src/sigrid/Entity/Icon/IconDataContainer.cpp
     src/sigrid/Entity/Icon/LogicIcon.cpp
     src/sigrid/Entity/Icon/Icon.cpp
     src/sigrid/Entity/Icon/IconManager.cpp

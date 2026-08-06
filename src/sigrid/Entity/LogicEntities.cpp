@@ -4,6 +4,8 @@
 
 #include "sigrid/Entity/Piece/PieceDataContainer.h"
 #include "sigrid/Entity/Shape/Circle/CircleDataContainer.h"
+#include "sigrid/Entity/Shape/Arrow/ArrowDataContainer.h"
+#include "sigrid/Entity/Icon/IconDataContainer.h"
 
 using namespace sigrid;
 
@@ -391,8 +393,10 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entitie
         out << "\n" << arrowData;
     }
     for(const auto& icon: entities.m_icons){
-        out << "\nIcon: " << icon.second.getFilename()
-            << " " << icon.first.getNotation();
+
+        IconDataContainer iconData = icon.second.getContainer();
+        iconData.position = icon.first.getNotation();
+        out << "\n" << iconData;
     }
     return out;
 }
