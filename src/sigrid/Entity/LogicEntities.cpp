@@ -385,8 +385,10 @@ std::ostream& sigrid::operator<<(std::ostream &out, const LogicEntities &entitie
         out << "\n" << circleData;
     }
     for(const auto& arrow: entities.m_arrows){
-        out << "\nArrow: " << arrow.second.getColorId()
-            << " " << arrow.first.getNotation();
+
+        ArrowDataContainer arrowData = arrow.second.getContainer();
+        arrowData.position = arrow.first.getNotation();
+        out << "\n" << arrowData;
     }
     for(const auto& icon: entities.m_icons){
         out << "\nIcon: " << icon.second.getFilename()
