@@ -142,8 +142,5 @@ std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& b
     for(const auto& arrowData: boardState.logicArrows){
         out << "\n" << arrowData;
     }
-
-    // out << "\nImageFilename: " << boardState.imageFilename;
-
     return out;
 }
