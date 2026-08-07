@@ -25,8 +25,6 @@ bool BoardStateContainer::load(const sigrid::String& filename){
         is.set(std::move(ifs));
     }
 
-    this->filename = filename;
-
     while(!(is.isEndOfFile())){
 
         const auto key_o = is.readString();
