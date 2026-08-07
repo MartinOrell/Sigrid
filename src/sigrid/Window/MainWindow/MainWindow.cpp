@@ -625,6 +625,10 @@ void MainWindow::handleAction(const sigrid_action::Action action){
         saveBoard();
         return;
     }
+    else if(std::holds_alternative<sigrid_action::SaveSettings>(action)){
+        saveSettings();
+        return;
+    }
     else if(std::holds_alternative<sigrid_action::SavePdf>(action)){
         savePdf();
         return;
@@ -1158,7 +1162,30 @@ void MainWindow::saveBoard(){
     }
 
     m_workWindow->saveBoard();
+}
 
+void MainWindow::saveSettings(){
+
+    sigrid::String filename = "saveData/startupIncomplete.txt";
+
+    std::cout << "Saving settings at \"" << filename << "\"" << std::endl;
+
+    std::ofstream out(filename.getStdString());
+
+    if(!out.is_open()){
+        std::cerr << "Board: Failed to open \"" << filename << "\".";
+        std::cerr << " Failed to save settings" << std::endl;
+        return;
+    }
+
+    sigrid_config::MainConfigContainer settingsContainer;
+    settingsContainer.mainWindow.width = 1440;
+    settingsContainer.mainWindow.height = 1080;
+    settingsContainer.mainWindow.name = "Sigrid";
+
+    out << settingsContainer;
+
+    std::cout << "Saved \"" << filename << "\"" << std::endl;
 }
 
 void MainWindow::savePdf(){

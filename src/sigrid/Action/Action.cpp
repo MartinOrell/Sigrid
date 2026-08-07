@@ -34,6 +34,9 @@ std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
     if(name == "save"){
         return sigrid_action::SaveBoard{};
     }
+    else if(name == "saveSettings"){
+        return sigrid_action::SaveSettings{};
+    }
     else if(name == "savePdf"){
         return sigrid_action::SavePdf{};
     }

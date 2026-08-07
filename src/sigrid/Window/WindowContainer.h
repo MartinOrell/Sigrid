@@ -5,12 +5,14 @@
 
 namespace sigrid{
 
-    struct WindowContainer{
+struct WindowContainer{
 
-        bool load(InputStream& is);
+    bool load(InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const WindowContainer& windowContainer);
 
-        int width;
-        int height;
-        sigrid::String name;
-    };
+    int width;
+    int height;
+    sigrid::String name;
+};
+
 }  // namespace sigrid

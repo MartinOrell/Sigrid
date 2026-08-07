@@ -80,6 +80,7 @@ class MainWindow{
     void gotoUpBoard();
     void gotoDownBoard();
     void saveBoard();
+    void saveSettings();
     void savePdf();
     void pasteFen();
     void copyFen();

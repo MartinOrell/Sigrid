@@ -62,6 +62,7 @@ struct GotoRightBoard{};
 struct GotoUpBoard{};
 struct GotoDownBoard{};
 struct SaveBoard{};
+struct SaveSettings{};
 struct SavePdf{};
 struct PasteFen{};
 struct CopyFen{};
@@ -127,6 +128,7 @@ typedef std::variant<
     sigrid_action::GotoUpBoard,
     sigrid_action::GotoDownBoard,
     sigrid_action::SaveBoard,
+    sigrid_action::SaveSettings,
     sigrid_action::SavePdf,
     sigrid_action::PasteFen,
     sigrid_action::CopyFen,

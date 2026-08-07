@@ -193,3 +193,10 @@ bool MainConfigContainer::load(const std::string& filename){
     }
     return true;
 }
+
+std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer){
+
+    out << mainConfigContainer.mainWindow;
+
+    return out;
+}

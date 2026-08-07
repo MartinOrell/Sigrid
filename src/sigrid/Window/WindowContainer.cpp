@@ -65,3 +65,14 @@ bool sigrid::WindowContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const WindowContainer& windowContainer){
+
+    out << "Window: ["
+        << "\n  width: " << windowContainer.width
+        << "\n  height: " << windowContainer.height
+        << "\n  name: "  << windowContainer.name
+        << "\n]";
+
+    return out;
+}

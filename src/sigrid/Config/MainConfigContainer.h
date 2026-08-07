@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
@@ -19,6 +20,7 @@ namespace sigrid_config{
 struct MainConfigContainer{
 
     bool load(const std::string& filename);
+    friend std::ostream& operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer);
 
     sigrid::WindowContainer mainWindow;
     sigrid_list::Vector<sigrid::ColorContainer> tileColors;

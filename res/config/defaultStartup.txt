@@ -175,6 +175,7 @@ Menu: [
     File [
       New new
       Save save
+      "Save Settings" saveSettings
       "Save Pdf" savePdf
     ]
     Edit [
