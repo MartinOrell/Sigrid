@@ -19,7 +19,6 @@ struct BoardStateContainer{
     sigrid_list::Vector<PieceDataContainer> logicPieces;
     sigrid_list::Vector<CircleDataContainer> logicCircles;
     sigrid_list::Vector<ArrowDataContainer> logicArrows;
-    sigrid::String imageFilename;
 };
 
 }  // namespace sigrid

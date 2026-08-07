@@ -110,18 +110,6 @@ bool BoardStateContainer::load(const sigrid::String& filename){
 
             logicArrows.push_back(arrowContainer);
         }
-        else if(key == "ImageFilename:"){
-
-            auto imageFilename_o = is.readString();
-            if(imageFilename_o == std::nullopt){
-
-                std::cerr << "BoardStateContainer: Failed to read imageFilename."
-                    << " Failed to load BoardStateContainer from file: \""
-                    << filename << "\"" << std::endl;
-                return false;
-            }
-            imageFilename = imageFilename_o.value();
-        }
         else{
             std::cerr << "BoardStateContainer: Unknown key: \"" << key << "\"."
                 << " Failed to load BoardStateContainer from file: \""
@@ -155,7 +143,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& b
         out << "\n" << arrowData;
     }
 
-    out << "\nImageFilename: " << boardState.imageFilename;
+    // out << "\nImageFilename: " << boardState.imageFilename;
 
     return out;
 }

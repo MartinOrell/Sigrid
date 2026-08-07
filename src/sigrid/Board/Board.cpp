@@ -568,7 +568,6 @@ void Board::save(){
     }
 
     BoardStateContainer boardStateContainer = m_state.getContainer();
-    boardStateContainer.imageFilename = m_imageFilename;
 
     out << boardStateContainer;
 
