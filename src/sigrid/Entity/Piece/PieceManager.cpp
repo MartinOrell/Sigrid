@@ -13,6 +13,18 @@ void PieceManager::setPieceColors(const sigrid_list::Vector<PieceColor>& pieceCo
     }
 }
 
+sigrid_list::Vector<PieceColor> PieceManager::getContainer() const{
+
+    sigrid_list::Vector<PieceColor> containers;
+    for(auto& color: m_colors){
+        PieceColor container = color;
+        container.darkModifier = color.darkModifier/0x100;
+        container.lightModifier = color.lightModifier/0x100;
+        containers.push_back(container);
+    }
+    return containers;
+}
+
 void PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
     std::map<PieceIdentifier, GraphicPiece> coloredPieces;

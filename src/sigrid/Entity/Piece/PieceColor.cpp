@@ -1,6 +1,7 @@
 #include "sigrid/Entity/Piece/PieceColor.h"
 
 #include <iostream>
+#include <iomanip>
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Color/ColorContainer.h"
@@ -29,7 +30,7 @@ bool sigrid::PieceColor::load(InputStream& is){
                     << " Failed to load PieceColor" << std::endl;
                 return false;
             }
-            sigrid::String name = name_o.value();
+            this->name = name_o.value();
         }
         else if(s == "style:"){
 
@@ -72,4 +73,24 @@ bool sigrid::PieceColor::load(InputStream& is){
         }
     }
     return true;
+}
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::PieceColor& color){
+
+    std::string styleString;
+    if(color.isLight){
+        styleString = "light";
+    }
+    else{
+        styleString = "dark";
+    }
+
+    out << "["
+        << "\n    name: " << color.name
+        << "\n    style: " << styleString
+        << "\n    lightModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.lightModifier
+        << "\n    darkModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.darkModifier
+        << "\n  ]";
+
+    return out;
 }

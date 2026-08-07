@@ -199,7 +199,8 @@ std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigConta
 
     out << mainConfigContainer.mainWindow
         << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors)
-        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors);
+        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors)
+        << "\nPieceColors: " << sigrid::ListSaver(mainConfigContainer.pieceColors);
 
     return out;
 }
