@@ -1184,6 +1184,7 @@ void MainWindow::saveSettings(){
     settingsContainer.mainWindow.name = "Sigrid";
 
     settingsContainer.tileColors = m_tileColorManagerPtr->getContainer();
+    settingsContainer.arrowColors = m_arrowColorManagerPtr->getContainer();
 
     out << settingsContainer;
 

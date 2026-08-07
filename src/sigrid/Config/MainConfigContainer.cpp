@@ -198,7 +198,8 @@ bool MainConfigContainer::load(const std::string& filename){
 std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer){
 
     out << mainConfigContainer.mainWindow
-        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors);
+        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors)
+        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors);
 
     return out;
 }
