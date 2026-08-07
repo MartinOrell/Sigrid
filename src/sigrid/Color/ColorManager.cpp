@@ -9,6 +9,18 @@ void ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& colors){
     }
 }
 
+sigrid_list::Vector<ColorContainer> ColorManager::getContainer(){
+
+    sigrid_list::Vector<ColorContainer> containers;
+    for(const auto& color: m_colors){
+        ColorContainer container;
+        container.value = color.toInteger() / 0x100;
+        containers.push_back(container);
+    }
+
+    return containers;
+}
+
 std::optional<sf::Color> ColorManager::getSolidColor(const int colorId) const{
 
     auto color_o = m_colors.at(colorId);

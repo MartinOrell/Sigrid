@@ -10,6 +10,8 @@ namespace sigrid{
 struct ColorContainer{
 
     bool load(InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const ColorContainer& colorContainer);
+
     bool setValue(const sigrid::String& s);
 
     uint32_t value;

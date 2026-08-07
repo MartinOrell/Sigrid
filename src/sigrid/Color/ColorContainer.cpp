@@ -17,6 +17,12 @@ bool sigrid::ColorContainer::load(InputStream& is){
     return true;
 }
 
+std::ostream& sigrid::operator<<(std::ostream& out, const ColorContainer& colorContainer){
+
+    out << std::hex << colorContainer.value;
+
+    return out;
+}
 
 bool sigrid::ColorContainer::setValue(const sigrid::String& s){
 

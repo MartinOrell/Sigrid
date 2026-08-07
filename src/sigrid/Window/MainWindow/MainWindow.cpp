@@ -1183,6 +1183,8 @@ void MainWindow::saveSettings(){
     settingsContainer.mainWindow.height = 1080;
     settingsContainer.mainWindow.name = "Sigrid";
 
+    settingsContainer.tileColors = m_tileColorManagerPtr->getContainer();
+
     out << settingsContainer;
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;

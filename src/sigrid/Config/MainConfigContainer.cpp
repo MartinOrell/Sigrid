@@ -7,6 +7,7 @@
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 #include "sigrid/Color/ColorContainer.h"
 #include "sigrid/utilities/lists/listLoaders/LoadValueContainers.h"
+#include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
 using namespace sigrid_config;
 
@@ -196,7 +197,8 @@ bool MainConfigContainer::load(const std::string& filename){
 
 std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer){
 
-    out << mainConfigContainer.mainWindow;
+    out << mainConfigContainer.mainWindow
+        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors);
 
     return out;
 }

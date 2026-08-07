@@ -10,6 +10,7 @@ set(SRC_FILES
     src/sigrid/utilities/lists/VectorWithDisplayGrid.cpp
     src/sigrid/utilities/lists/AutoInsertMappedGrid.cpp
     src/sigrid/utilities/lists/listLoaders/LoadStrings.cpp
+    src/sigrid/utilities/lists/listSavers/ListSaver.cpp
     src/sigrid/utilities/String/String.cpp
     src/sigrid/utilities/InputStream/InputStream.cpp
     src/sigrid/Input/Mouse/Mouse.cpp

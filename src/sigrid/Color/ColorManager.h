@@ -19,6 +19,7 @@ class ColorManager{
     ColorManager& operator=(ColorManager&&) = default;
 
     void setColors(const sigrid_list::Vector<ColorContainer>& colors);
+    sigrid_list::Vector<ColorContainer> getContainer();
 
     std::optional<sf::Color> getSolidColor(const int colorId) const;
     std::optional<sf::Color> getTransparentColor(const int colorId) const;
