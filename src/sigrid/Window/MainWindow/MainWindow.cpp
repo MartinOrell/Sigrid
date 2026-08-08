@@ -1186,6 +1186,7 @@ void MainWindow::saveSettings(){
     settingsContainer.tileColors = m_tileColorManagerPtr->getContainer();
     settingsContainer.arrowColors = m_arrowColorManagerPtr->getContainer();
     settingsContainer.pieceColors = m_pieceManagerPtr->getContainer();
+    settingsContainer.pieces = m_pieceManagerPtr->getPieceContainer();
 
     out << settingsContainer;
 

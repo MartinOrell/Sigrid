@@ -44,6 +44,19 @@ void PieceManager::loadImages(const sigrid_list::Vector<PieceContainer>& pieces)
     }
 }
 
+sigrid_list::Vector<PieceContainer> PieceManager::getPieceContainer() const{
+
+    sigrid_list::Vector<PieceContainer> containers;
+    for(const auto& piece: m_pieceImageFilenames){
+        PieceContainer container;
+        container.name = piece.first.name;
+        container.style = piece.first.style;
+        container.filename = piece.second;
+        containers.push_back(container);
+    }
+    return containers;
+}
+
 // Get the piece matching the value of the logicPiece
 // If the piece does not exist, create it together with its texture
 std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logicPiece){

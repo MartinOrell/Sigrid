@@ -57,3 +57,14 @@ bool PieceContainer::load(InputStream& is){
 
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream &out, const PieceContainer &piece)
+{
+    out << "["
+        << "\n    notation: " << piece.name
+        << "\n    style: " << piece.style
+        << "\n    imageFilename: " << piece.filename
+        << "\n  ]";
+
+    return out;
+}
