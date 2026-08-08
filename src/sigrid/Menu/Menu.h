@@ -31,6 +31,7 @@ class Menu: public sf::Drawable{
     void setFontManagerPtr(FontManager* const managerPtr);
 
     bool load(const MenuContainer& menuData);
+    MenuContainer getContainer() const;
 
     void createGraphic(const sf::Vector2f& size);
 

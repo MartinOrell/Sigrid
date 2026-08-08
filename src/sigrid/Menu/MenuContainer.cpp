@@ -77,3 +77,23 @@ bool sigrid::MenuContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuContainer& menu){
+
+    std::string pinString;
+    if(menu.isPinned){
+        pinString = "ON";
+    }
+    else{
+        pinString = "OFF";
+    }
+
+    out << "["
+        << "\n  pin: " << pinString
+        << "\n  font " << menu.fontName
+        << "\n  title: " << menu.title
+        << "\n  headers: []"
+        << "\n]";
+
+    return out;
+}

@@ -107,6 +107,16 @@ bool Menu::load(const MenuContainer& menuData){
     return true;
 }
 
+MenuContainer Menu::getContainer() const{
+    
+    MenuContainer container;
+    container.isPinned = m_isPinned;
+    container.fontName = m_fontFilename;
+    container.title = m_superHeader.getName();
+
+    return container;
+}
+
 void Menu::createGraphic(const sf::Vector2f& size){
 
     if(size.x == 0.f){

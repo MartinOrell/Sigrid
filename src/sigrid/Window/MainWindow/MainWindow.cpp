@@ -1206,6 +1206,8 @@ void MainWindow::saveSettings(){
         settingsContainer.middleClickTool = middleClickTool.getContainer();
     }
 
+    settingsContainer.menuData = m_menu->getContainer();
+
     out << settingsContainer;
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;

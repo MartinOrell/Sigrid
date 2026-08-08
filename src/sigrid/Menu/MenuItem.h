@@ -31,12 +31,12 @@ class MenuItem: public sf::Drawable{
     void setPosition(const sf::Vector2f& position);
     void setAction(const sigrid_action::Action& action);
     void setText(const sigrid::String& text);
-    float getPositionLeft();
-    float getPositionRight();
-    float getPositionTop();
-    bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos);
-    sigrid_action::Action getAction();
-    sigrid::String getName();
+    float getPositionLeft() const;
+    float getPositionRight() const;
+    float getPositionTop() const;
+    bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const;
+    sigrid_action::Action getAction() const;
+    sigrid::String getName() const;
     void addToggle(const sigrid::String& text, const sigrid_action::Action&);
     void toggle();
 

@@ -83,19 +83,19 @@ void MenuItem::setText(const sigrid::String& s){
     m_shape.setSize({newWidth, newHeight});
 }
 
-float MenuItem::getPositionLeft(){
+float MenuItem::getPositionLeft() const{
     return m_shape.getPosition().x;
 }
 
-float MenuItem::getPositionRight(){
+float MenuItem::getPositionRight() const{
     return m_shape.getPosition().x + m_shape.getSize().x;
 }
 
-float MenuItem::getPositionTop(){
+float MenuItem::getPositionTop() const{
     return m_shape.getPosition().y;
 }
 
-bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos){    
+bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const{
 
     if(point.x < m_shape.getPosition().x){
         return false;
@@ -113,7 +113,7 @@ bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const f
     return true;
 }
 
-sigrid_action::Action MenuItem::getAction(){
+sigrid_action::Action MenuItem::getAction() const{
 
     if(m_isToggled){
         return m_toggledAction;
@@ -121,7 +121,7 @@ sigrid_action::Action MenuItem::getAction(){
     return m_action;
 }
 
-sigrid::String MenuItem::getName(){
+sigrid::String MenuItem::getName() const{
 
     if(m_isToggled){
         return m_toggledName;
