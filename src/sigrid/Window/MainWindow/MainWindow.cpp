@@ -1200,6 +1200,12 @@ void MainWindow::saveSettings(){
         settingsContainer.rightClickTool = rightClickTool.getContainer();
     }
 
+    auto middleClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Middle);
+    if(middleClickToolPtr_o != std::nullopt){
+        const sigrid::Tool& middleClickTool = *middleClickToolPtr_o.value();
+        settingsContainer.middleClickTool = middleClickTool.getContainer();
+    }
+
     out << settingsContainer;
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;
