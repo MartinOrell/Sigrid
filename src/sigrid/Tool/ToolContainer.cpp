@@ -54,3 +54,13 @@ bool sigrid::ToolContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ToolContainer& tool){
+
+    out << "["
+        << "\n  selection: " << tool.selection
+        << "\n  color: " << tool.colorId
+        << "\n]";
+
+    return out;
+}

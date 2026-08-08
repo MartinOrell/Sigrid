@@ -1188,6 +1188,12 @@ void MainWindow::saveSettings(){
     settingsContainer.pieceColors = m_pieceManagerPtr->getContainer();
     settingsContainer.pieces = m_pieceManagerPtr->getPieceContainer();
 
+    auto leftClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Left);
+    if(leftClickToolPtr_o != std::nullopt){
+        const sigrid::Tool& leftClickTool = *leftClickToolPtr_o.value();
+        settingsContainer.leftClickTool = leftClickTool.getContainer();
+    }
+
     out << settingsContainer;
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;

@@ -20,6 +20,8 @@ class Tool{
     Tool& operator=(Tool&&) = default;
 
     Tool(const ToolContainer& data);
+
+    ToolContainer getContainer() const;
     
     const ToolSelection selection() const;
     std::optional<LogicEntity> getEntity() const;

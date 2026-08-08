@@ -28,6 +28,32 @@ Tool::Tool(const ToolContainer& data)
 : m_selection(getTool(data.selection))
 , m_arrowColorId(data.colorId){}
 
+ToolContainer Tool::getContainer() const{
+
+    ToolContainer container;
+
+    switch(m_selection){
+        case ToolSelection::Select:
+            container.selection = "Select";
+            break;
+        case ToolSelection::DrawArrow:
+            container.selection = "DrawArrow";
+            break;
+        case ToolSelection::EntityPicker:
+            container.selection = "EntityPicker";
+            break;
+        default:
+            std::cerr << "Tool: Unknown tool name with id " << m_selection << "."
+                << " toolname set to unknown." << std::endl;
+            container.selection = "unknown";
+            break;
+    }
+
+    container.colorId = m_arrowColorId;
+
+    return container;
+}
+
 const ToolSelection Tool::selection() const{
     return m_selection;
 }
