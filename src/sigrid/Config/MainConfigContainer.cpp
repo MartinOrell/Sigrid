@@ -202,7 +202,8 @@ std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigConta
         << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors)
         << "\nPieceColors: " << sigrid::ListSaver(mainConfigContainer.pieceColors)
         << "\nPieces: " << sigrid::ListSaver(mainConfigContainer.pieces)
-        << "\nLeftClickTool: " << mainConfigContainer.leftClickTool;
+        << "\nLeftClickTool: " << mainConfigContainer.leftClickTool
+        << "\nRightClickTool: " << mainConfigContainer.rightClickTool;
 
     return out;
 }

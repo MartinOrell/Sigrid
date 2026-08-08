@@ -1194,6 +1194,12 @@ void MainWindow::saveSettings(){
         settingsContainer.leftClickTool = leftClickTool.getContainer();
     }
 
+    auto rightClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Right);
+    if(rightClickToolPtr_o != std::nullopt){
+        const sigrid::Tool& rightClickTool = *rightClickToolPtr_o.value();
+        settingsContainer.rightClickTool = rightClickTool.getContainer();
+    }
+
     out << settingsContainer;
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;
