@@ -12,3 +12,10 @@ bool sigrid::HeaderContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::HeaderContainer& menu){
+
+    out << menu.name << " []";
+
+    return out;
+}

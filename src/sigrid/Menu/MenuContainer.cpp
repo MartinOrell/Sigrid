@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "sigrid/utilities/lists/listLoaders/LoadNamedContainers.h"
+#include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
 bool sigrid::MenuContainer::load(InputStream& is){
 
@@ -92,7 +93,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuContainer&
         << "\n  pin: " << pinString
         << "\n  font " << menu.fontName
         << "\n  title: " << menu.title
-        << "\n  headers: []"
+        << "\n  headers: " << sigrid::ListSaver(menu.headers)
         << "\n]";
 
     return out;

@@ -47,3 +47,14 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ListSaver<sigr
 
     return out;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ListSaver<sigrid::HeaderContainer>& listSaver){
+
+    out << "[";
+    for(const auto& container: listSaver.m_containers){
+        out << "\n    " << container;
+    }
+    out << "\n  ]";
+
+    return out;
+}
