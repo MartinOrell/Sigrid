@@ -161,5 +161,6 @@ typedef std::variant<
 > Action;
 
 std::optional<Action> getAction(const sigrid::String& s);
+sigrid::String getString(const Action& action);
 
 }  // namespace sigrid_action

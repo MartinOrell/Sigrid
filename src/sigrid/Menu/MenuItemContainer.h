@@ -9,6 +9,7 @@ namespace sigrid{
 struct MenuItemContainer{
 
     bool load(InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const MenuItemContainer& item);
 
     sigrid::String name;
     sigrid_list::Vector<sigrid::String> displayNames;

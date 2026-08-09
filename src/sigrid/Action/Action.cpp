@@ -180,3 +180,199 @@ std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
     std::cerr << "Action: Unidentified Action: " << s << std::endl;
     return std::nullopt;
 }
+
+sigrid::String sigrid_action::getString(const Action& action){
+
+    if(std::holds_alternative<sigrid_action::PinMenu>(action)){
+        return "pinMenu";
+    }
+    else if(std::holds_alternative<sigrid_action::UnPinMenu>(action)){
+        return "unpinMenu";
+    }
+    else if(std::holds_alternative<sigrid_action::ShowMenu>(action)){
+        return "showMenu";
+    }
+    else if(std::holds_alternative<sigrid_action::HideMenu>(action)){
+        return "hideMenu";
+    }
+    else if(std::holds_alternative<sigrid_action::ToggleHeader>(action)){
+        return "toggleHeader";
+    }
+    else if(std::holds_alternative<sigrid_action::Reset>(action)){
+        return "reset";
+    }
+    else if(std::holds_alternative<sigrid_action::Clear>(action)){
+        return "clear";
+    }
+    else if(std::holds_alternative<sigrid_action::Print>(action)){
+        return "print";
+    }
+    else if(std::holds_alternative<sigrid_action::PickEntity>(action)){
+        return "pickEntity";
+    }
+    else if(std::holds_alternative<sigrid_action::PickPieceColor>(action)){
+        return "pickPieceColor";
+    }
+    else if(std::holds_alternative<sigrid_action::PickArrow>(action)){
+        return "pickArrow";
+    }
+    else if(std::holds_alternative<sigrid_action::PickArrowColor>(action)){
+        return "pickArrowColor";
+    }
+    else if(std::holds_alternative<sigrid_action::PickCircle>(action)){
+        return "pickCircle";
+    }
+    else if(std::holds_alternative<sigrid_action::PickCircleColor>(action)){
+        return "pickCircleColor";
+    }
+    else if(std::holds_alternative<sigrid_action::SetTool>(action)){
+        return "setTool";
+    }
+    else if(std::holds_alternative<sigrid_action::ShowColorTools>(action)){
+        return "showColorTools";
+    }
+    else if(std::holds_alternative<sigrid_action::HideColorTools>(action)){
+        return "hideColorTools";
+    }
+    else if(std::holds_alternative<sigrid_action::ShowTools>(action)){
+        return "showTools";
+    }
+    else if(std::holds_alternative<sigrid_action::HideTools>(action)){
+        return "hideTools";
+    }
+    else if(std::holds_alternative<sigrid_action::NewBoard>(action)){
+        return "new";
+    }
+    else if(std::holds_alternative<sigrid_action::AddBoardColumn>(action)){
+        return "addBoardColumn";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBoardColumn>(action)){
+        return "removeBoardColumn";
+    }
+    else if(std::holds_alternative<sigrid_action::AddBoardRow>(action)){
+        return "addBoardRow";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBoardRow>(action)){
+        return "removeBoardRow";
+    }
+    else if(std::holds_alternative<sigrid_action::ShiftBoardsLeft>(action)){
+        return "shiftBoardsLeft";
+    }
+    else if(std::holds_alternative<sigrid_action::ShiftBoardsRight>(action)){
+        return "shiftBoardsRight";
+    }
+    else if(std::holds_alternative<sigrid_action::GotoLeftBoard>(action)){
+        return "gotoLeftBoard";
+    }
+    else if(std::holds_alternative<sigrid_action::GotoRightBoard>(action)){
+        return "gotoRightBoard";
+    }
+    else if(std::holds_alternative<sigrid_action::GotoUpBoard>(action)){
+        return "gotoUpBoard";
+    }
+    else if(std::holds_alternative<sigrid_action::GotoDownBoard>(action)){
+        return "gotoDownBoard";
+    }
+    else if(std::holds_alternative<sigrid_action::SaveBoard>(action)){
+        return "save";
+    }
+    else if(std::holds_alternative<sigrid_action::SaveSettings>(action)){
+        return "saveSettings";
+    }
+    else if(std::holds_alternative<sigrid_action::SavePdf>(action)){
+        return "savePdf";
+    }
+    else if(std::holds_alternative<sigrid_action::PasteFen>(action)){
+        return "pasteFen";
+    }
+    else if(std::holds_alternative<sigrid_action::CopyFen>(action)){
+        return "copyFen";
+    }
+    else if(std::holds_alternative<sigrid_action::FlipBoard>(action)){
+        return "flipBoard";
+    }
+    else if(std::holds_alternative<sigrid_action::AddLeftInsideLabels>(action)){
+        return "addLeftInsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::AddBottomInsideLabels>(action)){
+        return "addBottomInsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::AddLeftOutsideLabels>(action)){
+        return "addLeftOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::AddRightOutsideLabels>(action)){
+        return "addRightOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::AddTopOutsideLabels>(action)){
+        return "addTopOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::AddBottomOutsideLabels>(action)){
+        return "addBottomOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveLeftInsideLabels>(action)){
+        return "removeLeftInsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBottomInsideLabels>(action)){
+        return "removeBottomInsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveLeftOutsideLabels>(action)){
+        return "removeLeftOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveRightOutsideLabels>(action)){
+        return "removeRightOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveTopOutsideLabels>(action)){
+        return "removeTopOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBottomOutsideLabels>(action)){
+        return "removeBottomOutsideLabels";
+    }
+    else if(std::holds_alternative<sigrid_action::SetCoordinateSize>(action)){
+
+        float size = std::get<sigrid_action::SetCoordinateSize>(action).size;
+        int percentSize = size*100;
+        std::string stdString = "setCoordinateSize(" + std::to_string(percentSize) + "%)";
+        sigrid::String s;
+        s.set(std::move(stdString));
+        return s;
+    }
+    else if(std::holds_alternative<sigrid_action::AddTileColumnRight>(action)){
+        return "addTileColumnRight";
+    }
+    else if(std::holds_alternative<sigrid_action::AddTileColumnLeft>(action)){
+        return "addTileColumnLeft";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveRightTileColumn>(action)){
+        return "removeRightTileColumn";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveLeftTileColumn>(action)){
+        return "removeLeftTilColumn";
+    }
+    else if(std::holds_alternative<sigrid_action::AddTileRowUp>(action)){
+        return "addTileRowUp";
+    }
+    else if(std::holds_alternative<sigrid_action::AddTileRowDown>(action)){
+        return "addTileRowDown";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveTopTileRow>(action)){
+        return "removeTopTileRow";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBottomTileRow>(action)){
+        return "removeBottomTileRow";
+    }
+    else if(std::holds_alternative<sigrid_action::AddBoardBorder>(action)){
+        return "addBoardBorder";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveBoardBorder>(action)){
+        return "removeBoardBorder";
+    }
+    else if(std::holds_alternative<sigrid_action::AddTurnToken>(action)){
+        return "addTurnToken";
+    }
+    else if(std::holds_alternative<sigrid_action::RemoveTurnToken>(action)){
+        return "removeTurnToken";
+    }
+
+    std::cerr << "Action: Unknown action. Failed to get String" << std::endl;
+    return "none";
+}

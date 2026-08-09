@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics/Text.hpp>
 
+#include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Action/Action.h"
 
@@ -23,6 +24,8 @@ class MenuItem: public sf::Drawable{
     MenuItem(MenuItem&&) = default;
     MenuItem& operator=(const MenuItem&) = default;
     MenuItem& operator=(MenuItem&&) = default;
+
+    MenuItemContainer getContainer() const;
 
     void createGraphic(const int height);
 

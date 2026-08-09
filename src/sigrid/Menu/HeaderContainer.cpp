@@ -1,6 +1,7 @@
 #include "sigrid/Menu/HeaderContainer.h"
 
 #include "sigrid/utilities/lists/listLoaders/LoadNamedContainers.h"
+#include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
 bool sigrid::HeaderContainer::load(InputStream& is){
 
@@ -15,7 +16,8 @@ bool sigrid::HeaderContainer::load(InputStream& is){
 
 std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::HeaderContainer& menu){
 
-    out << menu.name << " []";
+    out << menu.name
+        << " " << sigrid::ListSaver(menu.items);
 
     return out;
 }

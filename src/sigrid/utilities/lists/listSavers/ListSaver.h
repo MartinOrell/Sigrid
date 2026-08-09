@@ -28,4 +28,3 @@ class ListSaver{
 };
 
 }  // namespace sigrid
-

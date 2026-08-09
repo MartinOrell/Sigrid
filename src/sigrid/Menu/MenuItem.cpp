@@ -7,6 +7,19 @@
 
 using namespace sigrid;
 
+MenuItemContainer MenuItem::getContainer() const{
+
+    MenuItemContainer container;
+    container.displayNames.push_back(m_name);
+    container.actionNames.push_back(sigrid_action::getString(m_action));
+    if(m_toggledName != ""){
+        container.displayNames.push_back(m_toggledName);
+        container.actionNames.push_back(sigrid_action::getString(m_toggledAction));
+    }
+
+    return container;
+}
+
 void MenuItem::createGraphic(const int height){
     
     if(m_text_o == std::nullopt){

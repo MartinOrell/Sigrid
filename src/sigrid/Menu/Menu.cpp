@@ -117,7 +117,25 @@ MenuContainer Menu::getContainer() const{
     for(const auto& header: m_itemKeys){
         HeaderContainer headerContainer;
         headerContainer.name = header.front();
-        menuContainer.headers.push_back(headerContainer);
+
+        for(int i = 1; i < header.size(); ++i){
+
+            sigrid::String itemKey = header.at(i);
+            const auto item_o = m_items.at(itemKey);
+            if(item_o == std::nullopt){
+                std::cerr << "Menu: item at " << itemKey << " not found."
+                    << " continue getting MenuContainer without that item." << std::endl;
+                continue;
+            }
+            const MenuItem& item = item_o.value();
+            MenuItemContainer itemContainer = item.getContainer();
+            itemContainer.name = itemKey;
+
+            headerContainer.items.push_back(std::move(itemContainer));
+        }
+        auto headerItems_o = m_items.at(header.front());
+
+        menuContainer.headers.push_back(std::move(headerContainer));
     }
 
     return menuContainer;
