@@ -93,7 +93,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuContainer&
         << "\n  pin: " << pinString
         << "\n  font " << menu.fontName
         << "\n  title: " << menu.title
-        << "\n  headers: " << sigrid::ListSaver(menu.headers)
+        << "\n  headers: " << sigrid::ListSaver(menu.headers, 1)
         << "\n]";
 
     return out;

@@ -198,10 +198,10 @@ bool MainConfigContainer::load(const std::string& filename){
 std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer){
 
     out << mainConfigContainer.mainWindow
-        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors)
-        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors)
-        << "\nPieceColors: " << sigrid::ListSaver(mainConfigContainer.pieceColors)
-        << "\nPieces: " << sigrid::ListSaver(mainConfigContainer.pieces)
+        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors, 0)
+        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors, 0)
+        << "\nPieceColors: " << sigrid::ListSaver(mainConfigContainer.pieceColors, 0)
+        << "\nPieces: " << sigrid::ListSaver(mainConfigContainer.pieces, 0)
         << "\nLeftClickTool: " << mainConfigContainer.leftClickTool
         << "\nRightClickTool: " << mainConfigContainer.rightClickTool
         << "\nMiddleClickTool: " << mainConfigContainer.middleClickTool

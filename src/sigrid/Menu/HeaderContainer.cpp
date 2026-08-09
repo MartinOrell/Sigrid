@@ -17,7 +17,7 @@ bool sigrid::HeaderContainer::load(InputStream& is){
 std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::HeaderContainer& menu){
 
     out << menu.name
-        << " " << sigrid::ListSaver(menu.items);
+        << " " << sigrid::ListSaver(menu.items, 2);
 
     return out;
 }
