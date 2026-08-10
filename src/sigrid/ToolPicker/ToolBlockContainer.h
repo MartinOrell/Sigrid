@@ -12,6 +12,7 @@ struct ToolBlockContainer{
 
     sigrid_coord::CoordBlock block;
     bool isVisible = true;
+    int indentLevel = 0;
 };
 
 }  // namespace sigrid

@@ -85,12 +85,19 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ToolBlockConta
         visibilityString = "Hidden";
     }
 
+    std::string indent0 = "";
+    for(int i = 0; i < toolBlockContainer.indentLevel; i++){
+        indent0.append("  ");
+    }
+    std::string indent1 = indent0;
+    indent1.append("  ");
+
     out << "["
-        << "\n    visibility: " << visibilityString
-        << "\n    position: " << toolBlockContainer.block.coord.getNotation()
-        << "\n    columns: " << toolBlockContainer.block.columns
-        << "\n    rows: " << toolBlockContainer.block.rows
-        << "\n  ]";
+        << "\n" << indent1 << "visibility: " << visibilityString
+        << "\n" << indent1 << "position: " << toolBlockContainer.block.coord.getNotation()
+        << "\n" << indent1 << "columns: " << toolBlockContainer.block.columns
+        << "\n" << indent1 << "rows: " << toolBlockContainer.block.rows
+        << "\n" << indent0 << "]";
 
     return out;
 }

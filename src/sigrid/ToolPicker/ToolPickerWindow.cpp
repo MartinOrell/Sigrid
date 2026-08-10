@@ -117,9 +117,21 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
 
     container.miscToolBlock.block = m_miscBlock;
     container.miscToolBlock.isVisible = true;
+    container.miscToolBlock.indentLevel = 1;
 
     container.colorBlock.block = m_colorBlock;
     container.colorBlock.isVisible = m_showColors;
+    container.colorBlock.indentLevel = 1;
+
+    for(const auto& pieceBlock: m_pieceBlocks){
+        
+        ToolBlockContainer pieceBlockContainer;
+        pieceBlockContainer.block = pieceBlock;
+        pieceBlockContainer.isVisible = true;
+        pieceBlockContainer.indentLevel = 2;
+
+        container.pieceBlocks.push_back(std::move(pieceBlockContainer));
+    }
 
     container.defaultArrowColorId = m_defaultArrowColorId;
     container.defaultCircleColorId = m_defaultCircleColorId;

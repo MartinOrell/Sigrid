@@ -7,9 +7,11 @@
 #include "sigrid/Entity/Piece/PieceContainer.h"
 #include "sigrid/Menu/HeaderContainer.h"
 #include "sigrid/Menu/MenuItemContainer.h"
+#include "sigrid/ToolPicker/ToolBlockContainer.h"
 
 template class sigrid::ListSaver<sigrid::ColorContainer>;
 template class sigrid::ListSaver<sigrid::PieceColor>;
 template class sigrid::ListSaver<sigrid::PieceContainer>;
 template class sigrid::ListSaver<sigrid::HeaderContainer>;
 template class sigrid::ListSaver<sigrid::MenuItemContainer>;
+template class sigrid::ListSaver<sigrid::ToolBlockContainer>;

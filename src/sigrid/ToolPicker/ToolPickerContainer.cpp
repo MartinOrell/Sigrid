@@ -5,6 +5,7 @@
 #include "sigrid/utilities/lists/listLoaders/LoadStrings.h"
 #include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
+#include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
 bool sigrid::ToolPickerContainer::load(InputStream& is){
 
@@ -182,7 +183,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& t
         << "\n  rows: " << toolPickerContainer.rows
         << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock
         << "\n  ColorBlock: " << toolPickerContainer.colorBlock
-        << "\n  PieceBlocks: []"
+        << "\n  PieceBlocks: " << sigrid::ListSaver(toolPickerContainer.pieceBlocks, 1)
         << "\n  MiscTools: []"
         << "\n  defaultArrowColor: " << toolPickerContainer.defaultArrowColorId
         << "\n  defaultCircleColor: " << toolPickerContainer.defaultCircleColorId
