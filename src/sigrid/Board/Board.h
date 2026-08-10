@@ -68,6 +68,8 @@ class Board: public sf::Drawable{
 
     bool contains(const sf::Vector2f& point) const;
 
+    sigrid_list::Vector<int> getRepeatTileColorIds() const; 
+
     bool isEmptyTile(const sigrid_coord::Coord& coord) const;
 
     bool isCoordinatesOutside() const;

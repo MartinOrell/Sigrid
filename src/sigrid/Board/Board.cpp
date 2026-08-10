@@ -161,6 +161,10 @@ bool Board::contains(const sf::Vector2f& point) const{
     return m_graphicBoard.contains(point);
 }
 
+sigrid_list::Vector<int> Board::getRepeatTileColorIds() const{
+    return m_state.getRepeatColorIds();
+}
+
 bool Board::isEmptyTile(const sigrid_coord::Coord& coord) const{
     return m_state.isEmptyTile(coord);
 }

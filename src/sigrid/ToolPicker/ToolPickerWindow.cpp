@@ -143,6 +143,7 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
     container.colorToolIds = m_colorIds;
     container.defaultPieceNotation = m_pieceNotation;
     container.pieceNotations = m_pieceNotations;
+    container.tileColorIds = m_board.getRepeatTileColorIds();
 
     return container;
 }
