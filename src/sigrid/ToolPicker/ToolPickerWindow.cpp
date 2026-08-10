@@ -118,6 +118,9 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
     container.miscToolBlock.block = m_miscBlock;
     container.miscToolBlock.isVisible = true;
 
+    container.colorBlock.block = m_colorBlock;
+    container.colorBlock.isVisible = m_showColors;
+
     container.defaultArrowColorId = m_defaultArrowColorId;
     container.defaultCircleColorId = m_defaultCircleColorId;
     container.defaultPieceNotation = m_pieceNotation;

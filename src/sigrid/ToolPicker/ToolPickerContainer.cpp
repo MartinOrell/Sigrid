@@ -181,7 +181,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& t
         << "\n  columns: " << toolPickerContainer.columns
         << "\n  rows: " << toolPickerContainer.rows
         << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock
-        << "\n  ColorBlock: []"
+        << "\n  ColorBlock: " << toolPickerContainer.colorBlock
         << "\n  PieceBlocks: []"
         << "\n  MiscTools: []"
         << "\n  defaultArrowColor: " << toolPickerContainer.defaultArrowColorId
