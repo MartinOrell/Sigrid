@@ -74,3 +74,23 @@ bool sigrid::ToolBlockContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ToolBlockContainer& toolBlockContainer){
+
+    std::string visibilityString;
+    if (toolBlockContainer.isVisible){
+        visibilityString = "Visible";
+    }
+    else{
+        visibilityString = "Hidden";
+    }
+
+    out << "["
+        << "\n    visibility: " << visibilityString
+        << "\n    position: " << toolBlockContainer.block.coord.getNotation()
+        << "\n    columns: " << toolBlockContainer.block.columns
+        << "\n    rows: " << toolBlockContainer.block.rows
+        << "\n  ]";
+
+    return out;
+}

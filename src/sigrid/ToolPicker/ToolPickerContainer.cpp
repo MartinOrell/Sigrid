@@ -180,7 +180,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& t
         << "\n  visibility: " << visibilityString
         << "\n  columns: " << toolPickerContainer.columns
         << "\n  rows: " << toolPickerContainer.rows
-        << "\n  MiscBlock: []"
+        << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock
         << "\n  ColorBlock: []"
         << "\n  PieceBlocks: []"
         << "\n  MiscTools: []"

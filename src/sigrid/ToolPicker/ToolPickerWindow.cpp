@@ -114,6 +114,10 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
     container.show = m_texture.isVisible();
     container.columns = m_columns;
     container.rows = m_rows;
+
+    container.miscToolBlock.block = m_miscBlock;
+    container.miscToolBlock.isVisible = true;
+
     container.defaultArrowColorId = m_defaultArrowColorId;
     container.defaultCircleColorId = m_defaultCircleColorId;
     container.defaultPieceNotation = m_pieceNotation;
