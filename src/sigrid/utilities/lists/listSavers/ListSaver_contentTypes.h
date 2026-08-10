@@ -2,6 +2,7 @@
 
 #include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
+#include "sigrid/utilities/String/String.h"
 #include "sigrid/Color/ColorContainer.h"
 #include "sigrid/Entity/Piece/PieceColor.h"
 #include "sigrid/Entity/Piece/PieceContainer.h"
@@ -9,6 +10,7 @@
 #include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/ToolPicker/ToolBlockContainer.h"
 
+template class sigrid::ListSaver<sigrid::String>;
 template class sigrid::ListSaver<sigrid::ColorContainer>;
 template class sigrid::ListSaver<sigrid::PieceColor>;
 template class sigrid::ListSaver<sigrid::PieceContainer>;

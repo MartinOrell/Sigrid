@@ -135,6 +135,11 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
 
     container.defaultArrowColorId = m_defaultArrowColorId;
     container.defaultCircleColorId = m_defaultCircleColorId;
+
+    container.toolNames.push_back("Select");
+    container.toolNames.push_back("Arrow");
+    container.toolNames.push_back("Circle");
+
     container.defaultPieceNotation = m_pieceNotation;
 
     return container;
