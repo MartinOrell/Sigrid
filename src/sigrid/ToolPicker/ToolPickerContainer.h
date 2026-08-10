@@ -13,6 +13,7 @@ namespace sigrid{
 struct ToolPickerContainer{
 
     bool load(InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const ToolPickerContainer& ToolPickerContainer);
 
     sigrid_list::Vector<int> tileColorIds;
     int columns;

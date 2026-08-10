@@ -1207,6 +1207,7 @@ void MainWindow::saveSettings(){
     }
 
     settingsContainer.menuData = m_menu->getContainer();
+    settingsContainer.toolPickerData = m_toolPickerWindow->getContainer();
 
     out << settingsContainer;
 

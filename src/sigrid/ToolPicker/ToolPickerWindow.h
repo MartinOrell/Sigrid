@@ -44,6 +44,8 @@ class ToolPickerWindow: public sf::Drawable{
 
     void load(const ToolPickerContainer& data);
 
+    ToolPickerContainer getContainer() const;
+
     void createGraphic(const sf::Vector2f& size);
 
     void addSelectTool();

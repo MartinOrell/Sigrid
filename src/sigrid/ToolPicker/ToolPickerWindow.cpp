@@ -108,6 +108,19 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
     }
 }
 
+ToolPickerContainer ToolPickerWindow::getContainer() const{
+
+    ToolPickerContainer container;
+    container.show = m_texture.isVisible();
+    container.columns = m_columns;
+    container.rows = m_rows;
+    container.defaultArrowColorId = m_defaultArrowColorId;
+    container.defaultCircleColorId = m_defaultCircleColorId;
+    container.defaultPieceNotation = m_pieceNotation;
+
+    return container;
+}
+
 void ToolPickerWindow::createGraphic(const sf::Vector2f& size){
 
     m_texture.setSize(size);

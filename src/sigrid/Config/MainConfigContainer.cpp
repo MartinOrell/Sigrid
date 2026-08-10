@@ -205,7 +205,8 @@ std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigConta
         << "\nLeftClickTool: " << mainConfigContainer.leftClickTool
         << "\nRightClickTool: " << mainConfigContainer.rightClickTool
         << "\nMiddleClickTool: " << mainConfigContainer.middleClickTool
-        << "\nMenu: " << mainConfigContainer.menuData;
+        << "\nMenu: " << mainConfigContainer.menuData
+        << "\nToolPicker: " << mainConfigContainer.toolPickerData;
 
     return out;
 }

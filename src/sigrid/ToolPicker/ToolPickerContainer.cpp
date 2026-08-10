@@ -165,3 +165,32 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& toolPickerContainer){
+
+    std::string visibilityString;
+    if(toolPickerContainer.show){
+        visibilityString = "Visible";
+    }
+    else{
+        visibilityString = "Hidden";
+    }
+
+    out << "["
+        << "\n  visibility: " << visibilityString
+        << "\n  columns: " << toolPickerContainer.columns
+        << "\n  rows: " << toolPickerContainer.rows
+        << "\n  MiscBlock: []"
+        << "\n  ColorBlock: []"
+        << "\n  PieceBlocks: []"
+        << "\n  MiscTools: []"
+        << "\n  defaultArrowColor: " << toolPickerContainer.defaultArrowColorId
+        << "\n  defaultCircleColor: " << toolPickerContainer.defaultCircleColorId
+        << "\n  Colors: []"
+        << "\n  defaultPiece: " << toolPickerContainer.defaultPieceNotation
+        << "\n  Pieces: []"
+        << "\n  TileColors: []"
+        << "\n]";
+
+    return out;
+}
