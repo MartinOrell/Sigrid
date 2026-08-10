@@ -20,7 +20,7 @@ bool sigrid::ColorContainer::load(InputStream& is){
 
 std::ostream& sigrid::operator<<(std::ostream& out, const ColorContainer& colorContainer){
 
-    out << std::hex << std::setw(6) << std::setfill('0') << colorContainer.value;
+    out << std::hex << std::setw(6) << std::setfill('0') << colorContainer.value << std::dec;
 
     return out;
 }

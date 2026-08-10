@@ -10,6 +10,7 @@
 #include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/ToolPicker/ToolBlockContainer.h"
 
+template class sigrid::ListSaver<int>;
 template class sigrid::ListSaver<sigrid::String>;
 template class sigrid::ListSaver<sigrid::ColorContainer>;
 template class sigrid::ListSaver<sigrid::PieceColor>;

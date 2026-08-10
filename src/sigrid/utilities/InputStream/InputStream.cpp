@@ -86,7 +86,7 @@ std::optional<uint32_t> InputStream::readHex(){
 
     uint32_t value;
     try{
-        m_is >> std::hex >> value >> std::ws;
+        m_is >> std::hex >> value >> std::ws >> std::dec;
     }
     catch(...){
         return std::nullopt;

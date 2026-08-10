@@ -25,6 +25,17 @@ sigrid::String getIndentSpace(const int& indentLevel){
     return s;
 }
 
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ListSaver<int>& listSaver){
+
+    out << "[";
+    for(const auto& container: listSaver.m_containers){
+        out << "\n" << getIndentSpace(listSaver.m_indentLevel+1) << container;
+    }
+    out << "\n" << getIndentSpace(listSaver.m_indentLevel) << "]";
+
+    return out;
+}
+
 std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ListSaver<sigrid::String>& listSaver){
 
     out << "[";

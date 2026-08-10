@@ -89,7 +89,7 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::PieceColor& co
         << "\n    name: " << color.name
         << "\n    style: " << styleString
         << "\n    lightModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.lightModifier
-        << "\n    darkModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.darkModifier
+        << "\n    darkModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.darkModifier << std::dec
         << "\n  ]";
 
     return out;

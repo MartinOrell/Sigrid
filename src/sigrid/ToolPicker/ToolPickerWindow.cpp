@@ -140,6 +140,8 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
     container.toolNames.push_back("Arrow");
     container.toolNames.push_back("Circle");
 
+    container.colorToolIds = m_colorIds;
+
     container.defaultPieceNotation = m_pieceNotation;
 
     return container;
