@@ -20,7 +20,7 @@ namespace sigrid_config{
 struct MainConfigContainer{
 
     bool load(const std::string& filename);
-    friend std::ostream& operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer);
+    sigrid::String getString(const int& indentLevel);
 
     sigrid::WindowContainer mainWindow;
     sigrid_list::Vector<sigrid::ColorContainer> tileColors;

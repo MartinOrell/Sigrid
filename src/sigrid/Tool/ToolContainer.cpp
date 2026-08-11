@@ -55,12 +55,35 @@ bool sigrid::ToolContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ToolContainer& tool){
+sigrid::String sigrid::ToolContainer::getString(const int& indentLevel){
 
-    out << "["
-        << "\n  selection: " << tool.selection
-        << "\n  color: " << tool.colorId
-        << "\n]";
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String colorIdString;
+    colorIdString.set(std::to_string(this->colorId));
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("selection: ");
+    out.append(this->selection);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("color: ");
+    out.append(colorIdString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

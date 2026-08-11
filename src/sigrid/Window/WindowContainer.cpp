@@ -66,13 +66,43 @@ bool sigrid::WindowContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const WindowContainer& windowContainer){
+sigrid::String sigrid::WindowContainer::getString(const int& indentLevel){
 
-    out << "Window: ["
-        << "\n  width: " << windowContainer.width
-        << "\n  height: " << windowContainer.height
-        << "\n  name: "  << windowContainer.name
-        << "\n]";
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String widthString;
+    widthString.set(std::to_string(this->width));
+
+    sigrid::String heightString;
+    heightString.set(std::to_string(this->height));
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("width: ");
+    out.append(widthString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("height: ");
+    out.append(heightString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("name: ");
+    out.append(this->name);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

@@ -90,16 +90,52 @@ bool sigrid::BoardDesignContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::BoardDesignContainer& boardStyle){
+sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
 
-    out << "["
-        << "\n  Tile: []"
-        << "\n  Arrow: []"
-        << "\n  Circle: []"
-        << "\n  CoordLabels: []"
-        << "\n  Border: []"
-        << "\n  TurnToken: []"
-        << "\n]";
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String out;
+    
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Tile: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Arrow: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Circle: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("CoordLabels: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Border: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("TurnToken: ");
+    out.append("[]");
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

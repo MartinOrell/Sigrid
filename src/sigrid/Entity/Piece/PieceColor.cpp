@@ -104,7 +104,7 @@ sigrid::String sigrid::PieceColor::getString(const int& indentLevel) const{
     for(int i = 0; i < indentLevel; ++i){
         indent0.append("  ");
     }
-    sigrid::String indent1;
+    sigrid::String indent1 = indent0;
     indent1.append("  ");
 
     sigrid::String out;

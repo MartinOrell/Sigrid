@@ -169,31 +169,107 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& toolPickerContainer){
+sigrid::String sigrid::ToolPickerContainer::getString(const int& indentLevel){
 
-    std::string visibilityString;
-    if(toolPickerContainer.show){
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String visibilityString;
+    if(this->show){
         visibilityString = "Visible";
     }
     else{
         visibilityString = "Hidden";
     }
 
-    out << "["
-        << "\n  visibility: " << visibilityString
-        << "\n  columns: " << toolPickerContainer.columns
-        << "\n  rows: " << toolPickerContainer.rows
-        << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock.getString(1)
-        << "\n  ColorBlock: " << toolPickerContainer.colorBlock.getString(1)
-        << "\n  PieceBlocks: " << sigrid::ListSaver(toolPickerContainer.pieceBlocks).getMultiLineString(1)
-        << "\n  MiscTools: " << sigrid::StringListSaver(toolPickerContainer.toolNames).getMultiLineString(1)
-        << "\n  defaultArrowColor: " << toolPickerContainer.defaultArrowColorId
-        << "\n  defaultCircleColor: " << toolPickerContainer.defaultCircleColorId
-        << "\n  Colors: " << sigrid::IntListSaver(toolPickerContainer.colorToolIds).getMultiLineString(1)
-        << "\n  defaultPiece: " << toolPickerContainer.defaultPieceNotation
-        << "\n  Pieces: " << sigrid::StringListSaver(toolPickerContainer.pieceNotations).getMultiLineString(1)
-        << "\n  TileColors: " << sigrid::IntListSaver(toolPickerContainer.tileColorIds).getMultiLineString(1)
-        << "\n]";
+    sigrid::String columnsString;
+    columnsString.set(std::to_string(this->columns));
+
+    sigrid::String rowsString;
+    rowsString.set(std::to_string(this->rows));
+
+    sigrid::String defaultArrowColorIdString;
+    defaultArrowColorIdString.set(std::to_string(this->defaultArrowColorId));
+
+    sigrid::String defaultCircleColorIdString;
+    defaultCircleColorIdString.set(std::to_string(this->defaultCircleColorId));
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("visibility: ");
+    out.append(visibilityString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("columns: ");
+    out.append(columnsString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("rows: ");
+    out.append(rowsString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("MiscBlock: ");
+    out.append(this->miscToolBlock.getString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("ColorBlock: ");
+    out.append(this->colorBlock.getString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("PieceBlocks: ");
+    out.append(sigrid::ListSaver(this->pieceBlocks).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("MiscTools: ");
+    out.append(sigrid::StringListSaver(this->toolNames).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("defaultArrowColor: ");
+    out.append(defaultArrowColorIdString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("defaultCircleColor: ");
+    out.append(defaultCircleColorIdString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Colors: ");
+    out.append(sigrid::IntListSaver(this->colorToolIds).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("defaultPiece: ");
+    out.append(this->defaultPieceNotation);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("Pieces");
+    out.append(sigrid::StringListSaver(this->pieceNotations).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("TileColors: ");
+    out.append(sigrid::IntListSaver(this->tileColorIds).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

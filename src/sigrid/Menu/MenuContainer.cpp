@@ -79,22 +79,50 @@ bool sigrid::MenuContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuContainer& menu){
+sigrid::String sigrid::MenuContainer::getString(const int& indentLevel){
 
-    std::string pinString;
-    if(menu.isPinned){
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String pinString;
+    if(this->isPinned){
         pinString = "ON";
     }
     else{
         pinString = "OFF";
     }
 
-    out << "["
-        << "\n  pin: " << pinString
-        << "\n  font " << menu.fontName
-        << "\n  title: " << menu.title
-        << "\n  headers: " << sigrid::ListSaver(menu.headers).getMultiLineString(1)
-        << "\n]";
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("pin: ");
+    out.append(pinString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("font: ");
+    out.append(this->fontName);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("title: ");
+    out.append(this->fontName);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("headers: ");
+    out.append(sigrid::ListSaver(this->headers).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

@@ -11,7 +11,7 @@ namespace sigrid{
 struct MenuContainer{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const MenuContainer& menu);
+    sigrid::String getString(const int& indentLevel);
 
     sigrid::String fontName;
     sigrid::String title;

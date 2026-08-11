@@ -8,7 +8,7 @@ namespace sigrid{
 struct WindowContainer{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const WindowContainer& windowContainer);
+    sigrid::String getString(const int& indentLevel);
 
     int width;
     int height;

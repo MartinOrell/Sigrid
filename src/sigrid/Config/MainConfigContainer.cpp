@@ -195,19 +195,68 @@ bool MainConfigContainer::load(const std::string& filename){
     return true;
 }
 
-std::ostream& sigrid_config::operator<<(std::ostream& out, const MainConfigContainer& mainConfigContainer){
+sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLevel){
 
-    out << mainConfigContainer.mainWindow
-        << "\nTileColors: " << sigrid::ListSaver(mainConfigContainer.tileColors).getMultiLineString(0)
-        << "\nArrowColors: " << sigrid::ListSaver(mainConfigContainer.arrowColors).getMultiLineString(0)
-        << "\nPieceColors: " << sigrid::ListSaver(mainConfigContainer.pieceColors).getMultiLineString(0)
-        << "\nPieces: " << sigrid::ListSaver(mainConfigContainer.pieces).getMultiLineString(0)
-        << "\nLeftClickTool: " << mainConfigContainer.leftClickTool
-        << "\nRightClickTool: " << mainConfigContainer.rightClickTool
-        << "\nMiddleClickTool: " << mainConfigContainer.middleClickTool
-        << "\nMenu: " << mainConfigContainer.menuData
-        << "\nToolPicker: " << mainConfigContainer.toolPickerData
-        << "\nBoardStyle: " << mainConfigContainer.boardData;
+    sigrid::String indent0;
+
+    for(int i = 0; i < indentLevel; i++){
+        indent0.append("  ");
+    }
+
+    sigrid::String out;
+
+    out.append("Window: ");
+    out.append(this->mainWindow.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("TileColors: ");
+    out.append(sigrid::ListSaver(this->tileColors).getMultiLineString(indentLevel));
+    
+    out.append("\n");
+    out.append(indent0);
+    out.append("ArrowColors: ");
+    out.append(sigrid::ListSaver(this->arrowColors).getMultiLineString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("PieceColors: ");
+    out.append(sigrid::ListSaver(this->pieceColors).getMultiLineString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("Pieces: ");
+    out.append(sigrid::ListSaver(this->pieces).getMultiLineString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("LeftClickTool: ");
+    out.append(this->leftClickTool.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("RightClickTool: ");
+    out.append(this->rightClickTool.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("MiddleClickTool: ");
+    out.append(this->middleClickTool.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("Menu: ");
+    out.append(this->menuData.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("ToolPicker: ");
+    out.append(this->toolPickerData.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("BoardStyle: ");
+    out.append(this->boardData.getString(indentLevel));
 
     return out;
 }

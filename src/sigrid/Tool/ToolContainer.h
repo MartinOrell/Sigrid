@@ -8,7 +8,7 @@ namespace sigrid{
 struct ToolContainer{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const ToolContainer& tool);
+    sigrid::String getString(const int& indentLevel);
 
     sigrid::String selection = "Select";
     int colorId = 0;
