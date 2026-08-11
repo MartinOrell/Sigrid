@@ -15,6 +15,7 @@ namespace sigrid{
 struct BoardDesignContainer{
 
     bool load(InputStream& is);
+    friend std::ostream& operator<<(std::ostream& out, const BoardDesignContainer& boardStyle);
 
     TileContainer tile;
     CircleContainer circle;

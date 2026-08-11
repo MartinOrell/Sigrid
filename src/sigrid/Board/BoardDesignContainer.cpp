@@ -89,3 +89,17 @@ bool sigrid::BoardDesignContainer::load(InputStream& is){
     }
     return true;
 }
+
+std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::BoardDesignContainer& boardStyle){
+
+    out << "["
+        << "\n  Tile: []"
+        << "\n  Arrow: []"
+        << "\n  Circle: []"
+        << "\n  CoordLabels: []"
+        << "\n  Border: []"
+        << "\n  TurnToken: []"
+        << "\n]";
+
+    return out;
+}
