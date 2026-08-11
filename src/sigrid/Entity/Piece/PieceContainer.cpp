@@ -58,13 +58,37 @@ bool PieceContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream &out, const PieceContainer &piece)
-{
-    out << "["
-        << "\n    notation: " << piece.name
-        << "\n    style: " << piece.style
-        << "\n    imageFilename: " << piece.filename
-        << "\n  ]";
+sigrid::String sigrid::PieceContainer::getString(const int& indentLevel) const{
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("notation: ");
+    out.append(this->name);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("style: ");
+    out.append(this->style);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("imageFilename: ");
+    out.append(this->filename);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

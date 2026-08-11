@@ -1,8 +1,7 @@
 #pragma once
 
-#include <iostream>
-
 #include "sigrid/utilities/lists/Vector.h"
+#include "sigrid/utilities/String/String.h"
 
 namespace sigrid{
 
@@ -17,15 +16,14 @@ class ListSaver{
     ListSaver& operator=(const ListSaver&) = delete;
     ListSaver& operator=(ListSaver&&) = delete;
 
-    ListSaver(const sigrid_list::Vector<T>, const int& indentLevel);
+    ListSaver(const sigrid_list::Vector<T>);
     ListSaver& operator=(const sigrid_list::Vector<T>);
 
-    friend std::ostream& operator<<(std::ostream& out, const ListSaver& listSaver);
+    sigrid::String getMultiLineString(const int& indentLevel) const;
 
   private:
 
     sigrid_list::Vector<T> m_containers;
-    int m_indentLevel;
 
 };
 

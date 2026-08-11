@@ -8,7 +8,7 @@ namespace sigrid{
 struct PieceColor{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const PieceColor& color);
+    sigrid::String getString(const int& indentLevel) const;
 
     sigrid::String name;
     bool isLight;

@@ -48,67 +48,83 @@ bool sigrid::MenuItemContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuItemContainer& item){
-    
-    if(item.displayNames.size() == 0){
+sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) const{
+
+    if(this->displayNames.size() == 0){
         std::cerr << "MenuItemContainer: No displayNames found."
-            << " printing empty list with << operator" << std::endl; 
-        out << "[]";
-        return out;
+            << " Failed getting string. returning empty list" << std::endl;
+
+        return sigrid::String{"[]"};
     }
 
-    if(item.displayNames.size() == 1){
+    if(this->displayNames.size() == 1){
         
-        const auto displayName_o = item.displayNames.front();
+        const auto displayName_o = this->displayNames.front();
         if(displayName_o == std::nullopt){
             std::cerr << "MenuItemContainer: Failed receiving first displayName."
-                << " printing empty list with << operator" << std::endl;
-            out << "[]";
-            return out;
+                << " Failed getting string. returning empty list" << std::endl;
+            
+            return sigrid::String{"[]"};
         }
 
-        const auto actionName_o = item.actionNames.front();
+        const auto actionName_o = this->actionNames.front();
         if(actionName_o == std::nullopt){
             std::cerr << "MenuItemContainer: Failed receiving first action."
-                << " printing empty list with << operator" << std::endl;
-            out << "[]";
-            return out;
+                << " Failed getting string. returning empty list" << std::endl;
+            
+            return sigrid::String{"[]"};
         }
 
         const sigrid::String& displayName = displayName_o.value().get();
         const sigrid::String& actionName = actionName_o.value().get();
 
-        std::string printName;
+        sigrid::String printName;
         if(displayName.find(' ') != std::nullopt){
-            printName = "\"" + displayName.getStdString() + "\"";
+            printName.set("\"" + std::move(displayName.getStdString()) + "\"");
         }
         else{
-            printName = displayName.getStdString();
+            printName.set(std::move(displayName.getStdString()));
         }
 
-        std::string printAction;
+        sigrid::String printAction;
         if(actionName.find(' ') != std::nullopt){
-            printAction = "\"" + actionName.getStdString() + "\"";
+            printAction.set("\"" + std::move(actionName.getStdString()) + "\"");
         }
         else{
-            printAction = actionName.getStdString();
+            printAction.set(std::move(actionName.getStdString()));
         }
 
-        out << printName << " " << printAction;
+        sigrid::String out;
+        out.append(printName);
+        out.append(" ");
+        out.append(printAction);
+
         return out;
     }
 
-    out << item.name << " [";
-    for(int i = 0; i < item.displayNames.size(); i++){
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
 
-        const auto displayName_o = item.displayNames.at(i);
+    sigrid::String out;
+
+    out.append(this->name);
+    out.append(" ");
+    out.append(" [");
+
+    for(int i = 0; i < this->displayNames.size(); i++){
+
+        const auto displayName_o = this->displayNames.at(i);
         if(displayName_o == std::nullopt){
             std::cerr << "MenuItemContainer: Failed receiving displayName " << i << "."
                 << std::endl;
             continue;
         }
 
-        const auto actionName_o = item.actionNames.at(i);
+        const auto actionName_o = this->actionNames.at(i);
         if(actionName_o == std::nullopt){
             std::cerr << "MenuItemContainer: Failed receiving action " << i << "."
                 << std::endl;
@@ -118,25 +134,32 @@ std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::MenuItemContai
         const sigrid::String& displayName = displayName_o.value().get();
         const sigrid::String& actionName = actionName_o.value().get();
 
-        std::string printName;
+        sigrid::String printName;
         if(displayName.find(' ') != std::nullopt){
-            printName = "\"" + displayName.getStdString() + "\"";
+            printName.set("\"" + std::move(displayName.getStdString()) + "\"");
         }
         else{
-            printName = displayName.getStdString();
+            printName.set(std::move(displayName.getStdString()));
         }
 
-        std::string printAction;
+        sigrid::String printAction;
         if(actionName.find(' ') != std::nullopt){
-            printAction = "\"" + actionName.getStdString() + "\"";
+            printAction.set("\"" + std::move(actionName.getStdString()) + "\"");
         }
         else{
-            printAction = actionName.getStdString();
+            printAction.set(std::move(actionName.getStdString()));
         }
 
-        out << "\n        " << printName << " " << printAction;
+        out.append("\n");
+        out.append(indent1);
+        out.append(printName);
+        out.append(" ");
+        out.append(printAction);
     }
-    out << "\n      ]";
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

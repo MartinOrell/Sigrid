@@ -10,7 +10,7 @@ namespace sigrid{
 struct HeaderContainer{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const HeaderContainer& header);
+    sigrid::String getString(const int& indentLevel) const;
 
     sigrid::String name;
     sigrid_list::Vector<MenuItemContainer> items;

@@ -1,22 +1,18 @@
-#include "sigrid/utilities/lists/listSavers/ListSaver.h"
-#include "sigrid/utilities/lists/listSavers/ListSaver_contentTypes.h"
+#include "sigrid/utilities/lists/listSavers/IntListSaver.h"
 
 #include "sigrid/utilities/lists/Vector.h"
 
-template<typename T>
-sigrid::ListSaver<T>::ListSaver(const sigrid_list::Vector<T> src){
+sigrid::IntListSaver::IntListSaver(const sigrid_list::Vector<int>& src){
     m_containers = src;
 }
 
-template<typename T>
-sigrid::ListSaver<T>& sigrid::ListSaver<T>::operator=(const sigrid_list::Vector<T> rhs){
+sigrid::IntListSaver& sigrid::IntListSaver::operator=(const sigrid_list::Vector<int>& rhs){
 
     m_containers = rhs;
     return *this;
 }
 
-template<typename T>
-sigrid::String sigrid::ListSaver<T>::getMultiLineString(const int& indentLevel) const{
+sigrid::String sigrid::IntListSaver::getMultiLineString(const int& indentLevel) const{
 
     sigrid::String out;
 
@@ -28,12 +24,14 @@ sigrid::String sigrid::ListSaver<T>::getMultiLineString(const int& indentLevel) 
     indent1.append("  ");
 
     out.append("[");
-
     for(const auto& container: m_containers){
+
+        sigrid::String containerString;
+        containerString.set(std::to_string(container));
 
         out.append("\n");
         out.append(indent1);
-        out.append(container.getString(indentLevel+1));
+        out.append(containerString);
     }
     out.append("\n");
     out.append(indent0);

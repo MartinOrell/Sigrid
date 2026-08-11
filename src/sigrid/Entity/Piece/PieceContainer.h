@@ -8,7 +8,7 @@ namespace sigrid{
 struct PieceContainer{
 
     bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const PieceContainer& piece);
+    sigrid::String getString(const int& indentLevel) const;
 
     sigrid::String name;
     sigrid::String style;

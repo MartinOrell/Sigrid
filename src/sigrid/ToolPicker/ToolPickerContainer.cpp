@@ -6,6 +6,8 @@
 #include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
 #include "sigrid/utilities/lists/listSavers/ListSaver.h"
+#include "sigrid/utilities/lists/listSavers/StringListSaver.h"
+#include "sigrid/utilities/lists/listSavers/IntListSaver.h"
 
 bool sigrid::ToolPickerContainer::load(InputStream& is){
 
@@ -181,16 +183,16 @@ std::ostream& sigrid::operator<<(std::ostream& out, const ToolPickerContainer& t
         << "\n  visibility: " << visibilityString
         << "\n  columns: " << toolPickerContainer.columns
         << "\n  rows: " << toolPickerContainer.rows
-        << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock
-        << "\n  ColorBlock: " << toolPickerContainer.colorBlock
-        << "\n  PieceBlocks: " << sigrid::ListSaver(toolPickerContainer.pieceBlocks, 1)
-        << "\n  MiscTools: " << sigrid::ListSaver(toolPickerContainer.toolNames, 1)
+        << "\n  MiscBlock: " << toolPickerContainer.miscToolBlock.getString(1)
+        << "\n  ColorBlock: " << toolPickerContainer.colorBlock.getString(1)
+        << "\n  PieceBlocks: " << sigrid::ListSaver(toolPickerContainer.pieceBlocks).getMultiLineString(1)
+        << "\n  MiscTools: " << sigrid::StringListSaver(toolPickerContainer.toolNames).getMultiLineString(1)
         << "\n  defaultArrowColor: " << toolPickerContainer.defaultArrowColorId
         << "\n  defaultCircleColor: " << toolPickerContainer.defaultCircleColorId
-        << "\n  Colors: " << sigrid::ListSaver(toolPickerContainer.colorToolIds, 1)
+        << "\n  Colors: " << sigrid::IntListSaver(toolPickerContainer.colorToolIds).getMultiLineString(1)
         << "\n  defaultPiece: " << toolPickerContainer.defaultPieceNotation
-        << "\n  Pieces: " << sigrid::ListSaver(toolPickerContainer.pieceNotations, 1)
-        << "\n  TileColors: " << sigrid::ListSaver(toolPickerContainer.tileColorIds, 1)
+        << "\n  Pieces: " << sigrid::StringListSaver(toolPickerContainer.pieceNotations).getMultiLineString(1)
+        << "\n  TileColors: " << sigrid::IntListSaver(toolPickerContainer.tileColorIds).getMultiLineString(1)
         << "\n]";
 
     return out;

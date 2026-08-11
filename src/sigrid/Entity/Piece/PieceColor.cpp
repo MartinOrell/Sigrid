@@ -1,6 +1,7 @@
 #include "sigrid/Entity/Piece/PieceColor.h"
 
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 
 #include "sigrid/utilities/String/String.h"
@@ -75,22 +76,63 @@ bool sigrid::PieceColor::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::PieceColor& color){
+sigrid::String sigrid::PieceColor::getString(const int& indentLevel) const{
 
-    std::string styleString;
-    if(color.isLight){
+    sigrid::String styleString;
+    if(this->isLight){
         styleString = "light";
     }
     else{
         styleString = "dark";
     }
 
-    out << "["
-        << "\n    name: " << color.name
-        << "\n    style: " << styleString
-        << "\n    lightModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.lightModifier
-        << "\n    darkModifier: " << std::hex << std::setw(6) << std::setfill('0') << color.darkModifier << std::dec
-        << "\n  ]";
+    sigrid::String lightModifierString;
+    {
+        std::stringstream ss;
+        ss << std::hex << std::setw(6) << std::setfill('0') << this->lightModifier;
+        lightModifierString.set(std::move(ss.str()));
+    }
+
+    sigrid::String darkModifierString;
+    {
+        std::stringstream ss;
+        ss << std::hex << std::setw(6) << std::setfill('0') << this->darkModifier;
+        darkModifierString.set(std::move(ss.str()));
+    }
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1;
+    indent1.append("  ");
+
+    sigrid::String out;
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("name: ");
+    out.append(this->name);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("style: ");
+    out.append(styleString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("lightModifier: ");
+    out.append(lightModifierString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("darkModifier: ");
+    out.append(darkModifierString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

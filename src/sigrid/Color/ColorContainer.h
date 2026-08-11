@@ -9,8 +9,8 @@ namespace sigrid{
 
 struct ColorContainer{
 
-    bool load(InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const ColorContainer& colorContainer);
+    bool load(sigrid::InputStream& is);
+    sigrid::String getString(const unsigned int& indentLevel) const;
 
     bool setValue(const sigrid::String& s);
 

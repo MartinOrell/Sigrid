@@ -75,29 +75,56 @@ bool sigrid::ToolBlockContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ToolBlockContainer& toolBlockContainer){
+sigrid::String sigrid::ToolBlockContainer::getString(const int& indentLevel) const{
 
-    std::string visibilityString;
-    if (toolBlockContainer.isVisible){
+    sigrid::String visibilityString;
+    if (this->isVisible){
         visibilityString = "Visible";
     }
     else{
         visibilityString = "Hidden";
     }
 
-    std::string indent0 = "";
-    for(int i = 0; i < toolBlockContainer.indentLevel; i++){
+    sigrid::String columnsString;
+    columnsString.set(std::to_string(this->block.columns));
+    
+    sigrid::String rowsString;
+    rowsString.set(std::to_string(this->block.rows));
+
+    sigrid::String indent0 = "";
+    for(int i = 0; i < indentLevel; ++i){
         indent0.append("  ");
     }
-    std::string indent1 = indent0;
+    sigrid::String indent1 = indent0;
     indent1.append("  ");
 
-    out << "["
-        << "\n" << indent1 << "visibility: " << visibilityString
-        << "\n" << indent1 << "position: " << toolBlockContainer.block.coord.getNotation()
-        << "\n" << indent1 << "columns: " << toolBlockContainer.block.columns
-        << "\n" << indent1 << "rows: " << toolBlockContainer.block.rows
-        << "\n" << indent0 << "]";
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("visibility: ");
+    out.append(visibilityString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("position: ");
+    out.append(this->block.coord.getNotation());
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("columns: ");
+    out.append(columnsString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("rows: ");
+    out.append(rowsString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
 
     return out;
 }

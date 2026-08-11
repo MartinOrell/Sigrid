@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 bool sigrid::ColorContainer::load(InputStream& is){
 
@@ -18,9 +19,13 @@ bool sigrid::ColorContainer::load(InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const ColorContainer& colorContainer){
+sigrid::String sigrid::ColorContainer::getString(const unsigned int& indentLevel) const{
 
-    out << std::hex << std::setw(6) << std::setfill('0') << colorContainer.value << std::dec;
+    std::stringstream ss;
+    ss << std::hex << std::setw(6) << std::setfill('0') << this->value;
+
+    sigrid::String out;
+    out.set(std::move(ss.str()));
 
     return out;
 }
