@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Image.hpp>
 
+#include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
 #include "sigrid/Entity/GraphicEntities.h"
@@ -55,6 +56,10 @@ void Board::setBottomToTop(){
 
 void Board::loadGraphicData(const BoardDesignContainer& graphicData){
     m_graphicBoard.loadDesign(graphicData);
+}
+
+BoardDesignContainer Board::getStyleContainer() const{
+    return m_graphicBoard.getStyleContainer();
 }
 
 void Board::loadBoardState(const BoardStateContainer& boardStateData){

@@ -105,6 +105,15 @@ void GraphicBoard::loadDesign(const BoardDesignContainer& config){
     initBorder(config);
 }
 
+BoardDesignContainer GraphicBoard::getStyleContainer() const{
+
+    BoardDesignContainer container;
+
+    container.tile = m_tileLayer.getTileContainer();
+
+    return container;
+}
+
 void GraphicBoard::loadBoardState(const BoardState& boardState){
 
     loadBoardState_tileLayer(boardState);

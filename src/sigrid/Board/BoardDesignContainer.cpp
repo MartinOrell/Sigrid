@@ -106,7 +106,7 @@ sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
     out.append("\n");
     out.append(indent1);
     out.append("Tile: ");
-    out.append("[]");
+    out.append(this->tile.getString(indentLevel+1));
 
     out.append("\n");
     out.append(indent1);

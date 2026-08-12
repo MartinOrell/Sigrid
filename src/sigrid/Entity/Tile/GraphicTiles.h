@@ -5,6 +5,7 @@
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/GraphicTile.h"
+#include "sigrid/Entity/Tile/TileContainer.h"
 
 namespace sigrid{
     
@@ -19,6 +20,8 @@ class GraphicTiles: public sf::Drawable{
     GraphicTiles(GraphicTiles&&) = default;
     GraphicTiles& operator=(const GraphicTiles&) = default;
     GraphicTiles& operator=(GraphicTiles&&) = default;
+
+    TileContainer getTileContainer() const;
 
     void setColorManagerPtr(ColorManager* const managerPtr);
     void setHighlightColorManagerPtr(ColorManager* const managerPtr);

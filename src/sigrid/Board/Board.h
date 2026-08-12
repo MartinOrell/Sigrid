@@ -34,6 +34,8 @@ class Board: public sf::Drawable{
     void setBottomToTop();
 
     void loadGraphicData(const BoardDesignContainer& graphicData);
+    BoardDesignContainer getStyleContainer() const;
+
     void loadBoardState(const BoardStateContainer& boardStateData);
 
     void setPosition(const sf::Vector2f& position);

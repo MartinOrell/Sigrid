@@ -55,6 +55,8 @@ class GraphicBoard: public sf::Drawable{
     void setBottomToTop();
 
     void loadDesign(const BoardDesignContainer& config);
+    BoardDesignContainer getStyleContainer() const;
+
     void loadBoardState(const BoardState& boardState);
 
     sf::Vector2f getTileSize() const;

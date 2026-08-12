@@ -1209,6 +1209,11 @@ void MainWindow::saveSettings(){
     settingsContainer.menuData = m_menu->getContainer();
     settingsContainer.toolPickerData = m_toolPickerWindow->getContainer();
 
+    auto boardStyleContainer_o = m_workWindow->getBoardStyleContainer();
+    if(boardStyleContainer_o != std::nullopt){
+        settingsContainer.boardData = std::move(boardStyleContainer_o.value());
+    }
+
     out << settingsContainer.getString(0);
 
     std::cout << "Saved \"" << filename << "\"" << std::endl;

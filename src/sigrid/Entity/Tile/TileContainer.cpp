@@ -1,6 +1,7 @@
 #include "sigrid/Entity/Tile/TileContainer.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "sigrid/utilities/String/String.h"
 
@@ -55,4 +56,48 @@ bool sigrid::TileContainer::load(InputStream& is){
         }
     }
     return true;
+}
+
+sigrid::String sigrid::TileContainer::getString(const int& indentLevel){
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String widthString;
+    {
+        std::ostringstream ss;
+        ss << this->width;
+        widthString.set(std::move(ss.str()));
+    }
+
+    sigrid::String heightString;
+    {
+        std::ostringstream ss;
+        ss << this->height;
+        heightString.set(std::move(ss.str()));
+    }
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("width: ");
+    out.append(widthString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("height: ");
+    out.append(heightString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
+
+    return out;
 }

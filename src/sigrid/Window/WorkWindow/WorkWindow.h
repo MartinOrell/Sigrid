@@ -45,6 +45,8 @@ class WorkWindow: public sf::Drawable{
     void setFontManagerPtr(FontManager* const managerPtr);
 
     void loadGraphicData(const BoardDesignContainer& graphicData);
+    std::optional<BoardDesignContainer> getBoardStyleContainer() const;
+
     void loadBoardState(const BoardStateContainer& boardStateData);
 
     void createGraphic(const sf::Vector2f& size);

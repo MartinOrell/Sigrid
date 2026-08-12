@@ -105,6 +105,17 @@ void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
     board.loadGraphicData(graphicData);
 }
 
+std::optional<BoardDesignContainer> WorkWindow::getBoardStyleContainer() const{
+
+    const auto board_o = m_boards.atSelection();
+    if(board_o == std::nullopt){
+        return std::nullopt;
+    }
+    auto& board = board_o.value().get();
+
+    return board.getStyleContainer();
+}
+
 void WorkWindow::loadBoardState(const BoardStateContainer& boardStateData){
 
     if(m_boards.size() == 0){

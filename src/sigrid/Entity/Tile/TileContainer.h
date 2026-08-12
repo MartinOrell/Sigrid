@@ -7,6 +7,7 @@ namespace sigrid{
     struct TileContainer{
 
         bool load(InputStream& is);
+        sigrid::String getString(const int& indentLevel);
 
         float width = 0.f;
         float height = 0.f;

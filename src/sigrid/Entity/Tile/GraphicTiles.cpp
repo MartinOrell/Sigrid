@@ -7,6 +7,15 @@
 
 using namespace sigrid;
 
+TileContainer GraphicTiles::getTileContainer() const{
+
+    TileContainer container;
+    container.width = m_tileSize.x;
+    container.height = m_tileSize.y;
+
+    return container;
+}
+
 void GraphicTiles::setColorManagerPtr(ColorManager* const managerPtr){
     m_tileColorManagerPtr = managerPtr;
 }
