@@ -9,6 +9,7 @@
 #include "sigrid/Entity/GraphicEntity.h"
 #include "sigrid/Entity/Piece/GraphicPiece.h"
 #include "sigrid/Entity/Shape/Circle/GraphicCircle.h"
+#include "sigrid/Entity/Shape/Circle/CircleContainer.h"
 
 namespace sigrid{
 
@@ -31,6 +32,8 @@ class GraphicEntities: public sf::Drawable{
     void setIconManagerPtr(IconManager* const managerPtr);
     void setPieceSize(const sf::Vector2f& pieceSize);
     void setCircleDiameter(const float& diameter);
+
+    CircleContainer getCircleContainer() const;
 
     void addEntity(const sigrid_coord::Coord& coord, const sf::Vector2f position, const LogicEntity& entity);
     void removeEntity(const sigrid_coord::Coord& coord);

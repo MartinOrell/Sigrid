@@ -1,6 +1,7 @@
 #include "sigrid/Entity/Shape/Circle/CircleContainer.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "sigrid/utilities/String/String.h"
 
@@ -44,4 +45,36 @@ bool sigrid::CircleContainer::load(InputStream& is){
         }
     }
     return true;
+}
+
+sigrid::String sigrid::CircleContainer::getString(const int& indentLevel){
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String diameterString;
+    {
+        std::ostringstream ss;
+        ss << this->diameter;
+        diameterString.set(std::move(ss.str()));
+    }
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("diameter: ");
+    out.append(diameterString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
+
+    return out;
 }

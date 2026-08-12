@@ -4,11 +4,12 @@
 
 namespace sigrid{
 
-    struct CircleContainer{
+struct CircleContainer{
 
-        bool load(InputStream& is);
+    bool load(InputStream& is);
+    sigrid::String getString(const int& indentLevel);
 
-        float diameter = 0.f;
-    };
+    float diameter = 0.f;
+};
 
 }  // namespace sigrid

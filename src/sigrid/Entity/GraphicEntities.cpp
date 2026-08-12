@@ -29,6 +29,14 @@ void GraphicEntities::setCircleDiameter(const float& diameter){
     m_circleDiameter = diameter;
 }
 
+CircleContainer GraphicEntities::getCircleContainer() const{
+
+    CircleContainer container;
+    container.diameter = m_circleDiameter;
+
+    return container;
+}
+
 void GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         if(m_pieceManagerPtr == nullptr){

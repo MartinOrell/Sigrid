@@ -116,7 +116,7 @@ sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
     out.append("\n");
     out.append(indent1);
     out.append("Circle: ");
-    out.append("[]");
+    out.append(this->circle.getString(indentLevel+1));
 
     out.append("\n");
     out.append(indent1);
