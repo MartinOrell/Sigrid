@@ -45,3 +45,36 @@ bool sigrid::TurnTokenContainer::load(InputStream& is){
     }
     return true;
 }
+
+sigrid::String sigrid::TurnTokenContainer::getString(const int& indentLevel) const{
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String visibilityString;
+    if(this->isVisible){
+        visibilityString = "Visible";
+    }
+    else{
+        visibilityString = "Hidden";
+    }
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("visibility: ");
+    out.append(visibilityString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
+
+    return out;
+}

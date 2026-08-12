@@ -4,6 +4,14 @@
 
 using namespace sigrid;
 
+TurnTokenContainer TurnToken::getContainer() const{
+
+    TurnTokenContainer container;
+    container.isVisible = this->m_isVisible;
+
+    return container;
+}
+
 void TurnToken::setRadius(const float& radius){
 
     m_shape.setRadius(radius);

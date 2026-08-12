@@ -4,11 +4,12 @@
 
 namespace sigrid{
 
-    struct TurnTokenContainer{
+struct TurnTokenContainer{
 
-        bool load(InputStream& is);
+    bool load(InputStream& is);
+    sigrid::String getString(const int& indentLevel) const;
 
-        bool isVisible = false;
-    };
+    bool isVisible = false;
+};
 
 }  // namespace sigrid

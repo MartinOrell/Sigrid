@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "sigrid/Entity/TurnToken/TurnTokenContainer.h"
+
 namespace sf{
     template <typename T> class Vector2;
     using Vector2f = Vector2<float>;
@@ -20,6 +22,8 @@ class TurnToken: public sf::Drawable{
     TurnToken(TurnToken&&) = default;
     TurnToken& operator=(const TurnToken&) = default;
     TurnToken& operator=(TurnToken&&) = default;
+
+    TurnTokenContainer getContainer() const;
 
     void setRadius(const float& radius);
 
