@@ -58,3 +58,41 @@ bool sigrid::BoardLabelLocationContainer::load(InputStream& is){
     }
     return true;
 }
+
+sigrid::String sigrid::BoardLabelLocationContainer::getString() const{
+
+    sigrid::String isInsideString;
+    if(this->isInside){
+        isInsideString = "inside";
+    }
+    else{
+        isInsideString = "outside";
+    }
+
+    sigrid::String orientationString;
+    switch(this->orientation){
+        case sigrid_coord::Orientation::LEFT:
+            orientationString = "left";
+            break;
+        case sigrid_coord::Orientation::RIGHT:
+            orientationString = "right";
+            break;
+        case sigrid_coord::Orientation::TOP:
+            orientationString = "top";
+            break;
+        case sigrid_coord::Orientation::BOTTOM:
+            orientationString = "bottom";
+            break;
+        default:
+            return "[]";
+    }
+
+    sigrid::String out;
+    out.append("\"");
+    out.append(isInsideString);
+    out.append(" ");
+    out.append(orientationString);
+    out.append("\"");
+
+    return out;
+}

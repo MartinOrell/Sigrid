@@ -4,6 +4,7 @@
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/listLoaders/LoadContainers.h"
+#include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
 bool sigrid::BoardDesignContainer::load(InputStream& is){
 
@@ -121,7 +122,7 @@ sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
     out.append("\n");
     out.append(indent1);
     out.append("CoordLabels: ");
-    out.append("[]");
+    out.append(sigrid::ListSaver(this->labels).getMultiLineString(indentLevel+1));
 
     out.append("\n");
     out.append(indent1);

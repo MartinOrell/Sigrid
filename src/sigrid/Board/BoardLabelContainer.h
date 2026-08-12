@@ -9,6 +9,7 @@ namespace sigrid{
 struct BoardLabelContainer{
 
     bool load(InputStream& is);
+    sigrid::String getString(const int& indentLevel) const;
 
     BoardLabelLocationContainer location;
     bool isVisible = false;

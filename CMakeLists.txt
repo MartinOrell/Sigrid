@@ -36,6 +36,7 @@ set(SRC_FILES
     src/sigrid/Board/GraphicBoard.cpp
     src/sigrid/Board/BoardState.cpp
     src/sigrid/Board/BoardLabels.cpp
+    src/sigrid/Board/SideLabels.cpp
     src/sigrid/utilities/Coord/Coord.cpp
     src/sigrid/utilities/Coord/CoordPair.cpp
     src/sigrid/utilities/Layout/LayoutGrid.cpp

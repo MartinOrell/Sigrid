@@ -8,6 +8,7 @@ namespace sigrid{
     struct BoardLabelLocationContainer{
 
         bool load(InputStream& is);
+        sigrid::String getString() const;
 
         bool isInside = true;
         sigrid_coord::Orientation orientation = sigrid_coord::Orientation::UNDEFINED;

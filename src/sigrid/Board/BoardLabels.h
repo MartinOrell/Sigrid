@@ -5,6 +5,9 @@
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 
+#include "sigrid/Board/BoardLabelContainer.h"
+#include "sigrid/Board/SideLabels.h"
+
 namespace sigrid{
 
 class FontManager;
@@ -18,6 +21,8 @@ class BoardLabels: public sf::Drawable{
     BoardLabels(BoardLabels&&) = default;
     BoardLabels& operator=(const BoardLabels&) = default;
     BoardLabels& operator=(BoardLabels&&) = default;
+
+    sigrid_list::Vector<BoardLabelContainer> getContainer() const;
 
     void showLeftInside();
     void showBottomInside();
@@ -97,13 +102,6 @@ class BoardLabels: public sf::Drawable{
   private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    struct SideLabels{
-        sigrid_list::Vector<sf::Text> labels;
-        bool isVisible = false;
-        sigrid::String fontFilename;
-        float labelSizeFactor = 0.f; //fraction of tileHeight
-    };
 
     FontManager* m_fontManagerPtr = nullptr;
     SideLabels m_leftInsideCoordLabels;

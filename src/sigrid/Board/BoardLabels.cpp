@@ -9,6 +9,55 @@
 
 using namespace sigrid;
 
+sigrid_list::Vector<BoardLabelContainer> BoardLabels::getContainer() const{
+
+    sigrid_list::Vector<BoardLabelContainer> containers;
+
+    {
+        sigrid::BoardLabelContainer container = m_leftOutsideCoordLabels.getContainer();
+        container.location.isInside = false;
+        container.location.orientation = sigrid_coord::Orientation::LEFT;
+        containers.push_back(container);
+    }
+
+    {
+        sigrid::BoardLabelContainer container = m_rightOutsideCoordLabels.getContainer();
+        container.location.isInside = false;
+        container.location.orientation = sigrid_coord::Orientation::RIGHT;
+        containers.push_back(container);
+    }
+
+    {
+        sigrid::BoardLabelContainer container = m_topOutsideCoordLabels.getContainer();
+        container.location.isInside = false;
+        container.location.orientation = sigrid_coord::Orientation::TOP;
+        containers.push_back(container);
+    }
+
+    {
+        sigrid::BoardLabelContainer container = m_bottomOutsideCoordLabels.getContainer();
+        container.location.isInside = false;
+        container.location.orientation = sigrid_coord::Orientation::BOTTOM;
+        containers.push_back(container);
+    }
+
+    {
+        sigrid::BoardLabelContainer container = m_leftInsideCoordLabels.getContainer();
+        container.location.isInside = true;
+        container.location.orientation = sigrid_coord::Orientation::LEFT;
+        containers.push_back(container);
+    }
+
+    {
+        sigrid::BoardLabelContainer container = m_bottomInsideCoordLabels.getContainer();
+        container.location.isInside = true;
+        container.location.orientation = sigrid_coord::Orientation::BOTTOM;
+        containers.push_back(container);
+    }
+
+    return containers;
+}
+
 void BoardLabels::showLeftInside(){
     m_leftInsideCoordLabels.isVisible = true;
 }

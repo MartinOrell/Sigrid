@@ -1,6 +1,7 @@
 #include "sigrid/Board/BoardLabelContainer.h"
 
 #include <iostream>
+#include <sstream>
 
 bool sigrid::BoardLabelContainer::load(InputStream& is){
 
@@ -66,4 +67,60 @@ bool sigrid::BoardLabelContainer::load(InputStream& is){
         }
     }
     return true;
+}
+
+sigrid::String sigrid::BoardLabelContainer::getString(const int& indentLevel) const{
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; i++){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String visibilityString;
+    if(this->isVisible){
+        visibilityString = "Visible";
+    }
+    else{
+        visibilityString = "Hidden";
+    }
+
+    sigrid::String sizeString;
+    {
+        std::ostringstream ss;
+        float percentSize = this->size * 100.f;
+        ss << percentSize << "%";
+        sizeString.set(std::move(ss.str()));
+    }
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("location: ");
+    out.append(location.getString());
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("visibility: ");
+    out.append(visibilityString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("size: ");
+    out.append(sizeString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("font: ");
+    out.append(this->font);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
+
+    return out;
 }
