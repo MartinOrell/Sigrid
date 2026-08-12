@@ -259,7 +259,7 @@ sigrid::String sigrid::ToolPickerContainer::getString(const int& indentLevel){
 
     out.append("\n");
     out.append(indent1);
-    out.append("Pieces");
+    out.append("Pieces: ");
     out.append(sigrid::StringListSaver(this->pieceNotations).getMultiLineString(indentLevel+1));
 
     out.append("\n");

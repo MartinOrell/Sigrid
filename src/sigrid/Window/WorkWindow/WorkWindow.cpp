@@ -29,12 +29,32 @@ void WorkWindow::setBoardFilename(const sigrid::String& filename){
     board.setFilename(filename);
 }
 
+std::optional<sigrid::String> WorkWindow::getActiveBoardFilename() const{
+
+    const auto activeBoard_o = m_boards.atSelection();
+
+    if(activeBoard_o == std::nullopt){
+        return std::nullopt;
+    }
+    const sigrid::Board& activeBoard = activeBoard_o.value().get();
+
+    return activeBoard.getFilename();
+}
+
 void WorkWindow::setResetBoardFilename(const sigrid::String& filename){
     m_resetBoardFilename = filename;
 }
 
+const sigrid::String& WorkWindow::getResetBoardFilename() const{
+    return m_resetBoardFilename;
+}
+
 void WorkWindow::setDefaultBoardImageFilename(const sigrid::String& filename){
     m_defaultBoardImageFilename = filename;
+}
+
+const sigrid::String& WorkWindow::getDefaultBoardImageFilename() const{
+    return m_defaultBoardImageFilename;
 }
 
 void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){

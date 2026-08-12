@@ -113,7 +113,7 @@ sigrid::String sigrid::MenuContainer::getString(const int& indentLevel){
     out.append("\n");
     out.append(indent1);
     out.append("title: ");
-    out.append(this->fontName);
+    out.append(this->title);
 
     out.append("\n");
     out.append(indent1);

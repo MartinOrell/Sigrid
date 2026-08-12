@@ -258,5 +258,20 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
     out.append("BoardStyle: ");
     out.append(this->boardData.getString(indentLevel));
 
+    out.append("\n");
+    out.append(indent0);
+    out.append("resetFilename: ");
+    out.append(this->resetBoardFilename);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("defaultImageFilename: ");
+    out.append(this->defaultBoardImageFilename);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("boardFilename: ");
+    out.append(this->boardFilename);
+
     return out;
 }

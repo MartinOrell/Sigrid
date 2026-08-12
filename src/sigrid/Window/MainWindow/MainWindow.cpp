@@ -1166,7 +1166,7 @@ void MainWindow::saveBoard(){
 
 void MainWindow::saveSettings(){
 
-    sigrid::String filename = "saveData/startupIncomplete.txt";
+    sigrid::String filename = "saveData/startup.txt";
 
     std::cout << "Saving settings at \"" << filename << "\"" << std::endl;
 
@@ -1212,6 +1212,14 @@ void MainWindow::saveSettings(){
     auto boardStyleContainer_o = m_workWindow->getBoardStyleContainer();
     if(boardStyleContainer_o != std::nullopt){
         settingsContainer.boardData = std::move(boardStyleContainer_o.value());
+    }
+
+    settingsContainer.resetBoardFilename = m_workWindow->getResetBoardFilename();
+    settingsContainer.defaultBoardImageFilename = m_workWindow->getDefaultBoardImageFilename();
+    
+    auto boardFilename_o = m_workWindow->getActiveBoardFilename();
+    if(boardFilename_o != std::nullopt){
+        settingsContainer.boardFilename = std::move(boardFilename_o.value());
     }
 
     out << settingsContainer.getString(0);

@@ -31,10 +31,13 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(WorkWindow&&) = default;
 
     void setBoardFilename(const sigrid::String& filename);
+    std::optional<sigrid::String> getActiveBoardFilename() const;
 
     void setResetBoardFilename(const sigrid::String& filename);
+    const sigrid::String& getResetBoardFilename() const;
 
     void setDefaultBoardImageFilename(const sigrid::String& filename);
+    const sigrid::String& getDefaultBoardImageFilename() const;
 
     void setTileColorManagerPtr(ColorManager* const managerPtr);
 

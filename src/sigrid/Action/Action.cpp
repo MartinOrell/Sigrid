@@ -235,10 +235,10 @@ sigrid::String sigrid_action::getString(const Action& action){
         return "hideColorTools";
     }
     else if(std::holds_alternative<sigrid_action::ShowTools>(action)){
-        return "showTools";
+        return "showToolWindow";
     }
     else if(std::holds_alternative<sigrid_action::HideTools>(action)){
-        return "hideTools";
+        return "hideToolWindow";
     }
     else if(std::holds_alternative<sigrid_action::NewBoard>(action)){
         return "new";
@@ -346,7 +346,7 @@ sigrid::String sigrid_action::getString(const Action& action){
         return "removeRightTileColumn";
     }
     else if(std::holds_alternative<sigrid_action::RemoveLeftTileColumn>(action)){
-        return "removeLeftTilColumn";
+        return "removeLeftTileColumn";
     }
     else if(std::holds_alternative<sigrid_action::AddTileRowUp>(action)){
         return "addTileRowUp";
