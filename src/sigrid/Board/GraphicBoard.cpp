@@ -110,6 +110,7 @@ BoardDesignContainer GraphicBoard::getStyleContainer() const{
     BoardDesignContainer container;
 
     container.tile = m_tileLayer.getTileContainer();
+    container.arrow = m_arrowLayer.getArrowContainer();
 
     return container;
 }

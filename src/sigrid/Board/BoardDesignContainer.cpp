@@ -111,7 +111,7 @@ sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
     out.append("\n");
     out.append(indent1);
     out.append("Arrow: ");
-    out.append("[]");
+    out.append(this->arrow.getString(indentLevel+1));
 
     out.append("\n");
     out.append(indent1);

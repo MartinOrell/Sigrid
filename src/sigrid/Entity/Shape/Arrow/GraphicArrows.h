@@ -6,6 +6,7 @@
 
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/Entity/Shape/Arrow/GraphicArrow.h"
+#include "sigrid/Entity/Shape/Arrow/ArrowContainer.h"
 
 namespace sigrid{
 
@@ -21,6 +22,8 @@ class GraphicArrows: public sf::Drawable{
     GraphicArrows(GraphicArrows&&) = default;
     GraphicArrows& operator=(const GraphicArrows&) = default;
     GraphicArrows& operator=(GraphicArrows&&) = default;
+
+    ArrowContainer getArrowContainer() const;
 
     void setThickness(const float& thickness);
     void setHeadSize(const float& headSize);

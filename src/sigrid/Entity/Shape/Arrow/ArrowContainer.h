@@ -4,12 +4,13 @@
 
 namespace sigrid{
 
-    struct ArrowContainer{
+struct ArrowContainer{
 
-        bool load(InputStream& is);
+    bool load(InputStream& is);
+    sigrid::String getString(const int& indentLevel);
 
-        float thickness = 0.f;
-        float headSize = 0.f;
-    };
+    float thickness = 0.f;
+    float headSize = 0.f;
+};
 
 }  // namespace sigrid

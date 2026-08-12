@@ -8,6 +8,15 @@
 
 using namespace sigrid;
 
+ArrowContainer GraphicArrows::getArrowContainer() const{
+
+    ArrowContainer container;
+    container.thickness = m_arrowThickness;
+    container.headSize = m_arrowHeadSize;
+
+    return container;
+}
+
 void GraphicArrows::setThickness(const float& thickness){
     m_arrowThickness = thickness;
 }

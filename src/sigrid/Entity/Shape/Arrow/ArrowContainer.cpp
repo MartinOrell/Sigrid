@@ -1,6 +1,7 @@
 #include "sigrid/Entity/Shape/Arrow/ArrowContainer.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "sigrid/utilities/String/String.h"
 
@@ -55,4 +56,48 @@ bool sigrid::ArrowContainer::load(InputStream& is){
         }
     }
     return true;
+}
+
+sigrid::String sigrid::ArrowContainer::getString(const int& indentLevel){
+
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
+    }
+    sigrid::String indent1 = indent0;
+    indent1.append("  ");
+
+    sigrid::String thicknessString;
+    {
+        std::ostringstream ss;
+        ss << this->thickness;
+        thicknessString.set(std::move(ss.str()));
+    }
+
+    sigrid::String headSizeString;
+    {
+        std::ostringstream ss;
+        ss << this->headSize;
+        headSizeString.set(std::move(ss.str()));
+    }
+
+    sigrid::String out;
+
+    out.append("[");
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("thickness: ");
+    out.append(thicknessString);
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("headSize: ");
+    out.append(headSizeString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("]");
+
+    return out;
 }
