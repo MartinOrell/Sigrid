@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
+
 namespace sigrid{
 
 class RectangleBorder: public sf::Drawable{
@@ -14,6 +16,8 @@ class RectangleBorder: public sf::Drawable{
     RectangleBorder(RectangleBorder&&) = default;
     RectangleBorder& operator=(const RectangleBorder&) = default;
     RectangleBorder& operator=(RectangleBorder&&) = default;
+
+    RectangleBorderContainer getContainer() const;
 
     void setThickness(const float& thickness);
 

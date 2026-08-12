@@ -113,6 +113,7 @@ BoardDesignContainer GraphicBoard::getStyleContainer() const{
     container.arrow = m_arrowLayer.getArrowContainer();
     container.circle = m_pieceLayer.getCircleContainer();
     container.labels = m_labels.getContainer();
+    container.border = m_border.getContainer();
 
     return container;
 }

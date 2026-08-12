@@ -6,6 +6,15 @@ using namespace sigrid;
 
 #include <iostream>
 
+RectangleBorderContainer RectangleBorder::getContainer() const{
+
+    RectangleBorderContainer container;
+    container.isVisible = this->m_isVisible;
+    container.thickness = this->m_thickness;
+
+    return container;
+}
+
 void RectangleBorder::setThickness(const float& thickness){
 
     m_thickness = thickness;
