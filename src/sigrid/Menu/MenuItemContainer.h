@@ -12,6 +12,7 @@ struct MenuItemContainer{
     sigrid::String getString(const int& indentLevel) const;
 
     sigrid::String name;
+    bool isVisible;
     sigrid_list::Vector<sigrid::String> displayNames;
     sigrid_list::Vector<sigrid::String> actionNames;
 };

@@ -8,7 +8,7 @@ bool sigrid::HeaderContainer::load(InputStream& is){
     if(!sigrid::loadNamedContainers<MenuItemContainer>(items, is)){
 
         std::cerr << "HeaderContainer: Failed to load items."
-            << " Failed to load HeaderContainer" << std::endl;
+            << " Failed to load HeaderContainer named \"" << name << "\"" << std::endl;
         return false;
     }
     return true;

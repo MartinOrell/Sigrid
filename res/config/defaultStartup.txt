@@ -173,84 +173,255 @@ Menu: [
   title: Menu
   headers: [
     File [
-      New new
-      Save save
-      "Save Settings" saveSettings
-      "Save Pdf" savePdf
+      New [
+        visibility: Visible
+        text: New
+        action: new
+      ]
+      Save [
+        visibility: Visible
+        text: Save
+        action: save
+      ]
+      "Save Settings" [
+        visibility: Visible
+        text: "Save Settings"
+        action: saveSettings
+      ]
+      "Save Pdf" [
+        visibility: Visible
+        text: "Save Pdf"
+        action: savePdf
+      ]
     ]
     Edit [
-      Reset reset
-      Clear clear
-      "Flip Board" flipBoard
+      Reset [
+        visibility: Visible
+        text: Reset
+        action: reset
+      ]
+      Clear [
+        visibility: Visible
+        text: Clear
+        action: clear
+      ]
+      "Flip Board" [
+        visibility: Visible
+        text: "Flip Board"
+        action: flipBoard
+      ]
       LeftInsideLabels [
-        "Add left inside labels" addLeftInsideLabels
-        "Remove left inside labels" removeLeftInsideLabels
+        visibility: Visible
+        [
+          text: "Add left inside labels"
+          action: addLeftInsideLabels
+        ]
+        [
+          text: "Remove left inside labels"
+          action: removeLeftInsideLabels
+        ]
       ]
       BottomInsideLabels [
-        "Add bottom inside labels" addBottomInsideLabels
-        "Remove bottom inside labels" removeBottomInsideLabels
+        visibility: Visible
+        [
+          text: "Add bottom inside labels"
+          action: addBottomInsideLabels
+        ]
+        [
+          text: "Remove bottom inside labels"
+          action: removeBottomInsideLabels
+        ]
       ]
       LeftOutsideLabels [
-        "Remove left outside labels" removeLeftOutsideLabels
-        "Add left outside labels" addLeftOutsideLabels
+        visibility: Visible
+        [
+          text: "Remove left outside labels"
+          action: removeLeftOutsideLabels
+        ]
+        [
+          text: "Add left outside labels"
+          action: addLeftOutsideLabels
+        ]
       ]
       RightOutsideLabels [
-        "Add right outside labels" addRightOutsideLabels
-        "Remove right outside labels" removeRightOutsideLabels
+        visibility: Visible
+        [
+          text: "Add right outside labels"
+          action: addRightOutsideLabels
+        ]
+        [
+          text: "Remove right outside labels"
+          action: removeRightOutsideLabels
+        ]
       ]
       TopOutsideLabels [
-        "Add top outside labels" addTopOutsideLabels
-        "Remove top outside labels" removeTopOutsideLabels
+        visibility: Visible
+        [
+          text: "Add top outside labels"
+          action: addTopOutsideLabels
+        ]
+        [
+          text: "Remove top outside labels"
+          action: removeTopOutsideLabels
+        ]
       ]
       BottomOutsideLabels [
-        "Remove bottom outside labels" removeBottomOutsideLabels
-        "Add bottom outside labels" addBottomOutsideLabels
+        visibility: Visible
+        [
+          text: "Remove bottom outside labels"
+          action: removeBottomOutsideLabels
+        [
+          text: "Add bottom outside labels"
+          action: addBottomOutsideLabels
+        ]
       ]
       SetCoordinateSize [
-        "Set Big Coordinates" setCoordinateSize(60%)
-        "Set Small Coordinates" setCoordinateSize(40%)
+        visibility: Visible
+        [
+          text: "Set Big Coordinates"
+          action: setCoordinateSize(60%)
+        ]
+        [
+          text: "Set Small Coordinates"
+          action: setCoordinateSize(40%)
+        ]
       ]
-      "Insert Column Right" addTileColumnRight
-      "Insert Column Left" addTileColumnLeft
-      "Remove Right Column" removeRightTileColumn
-      "Remove Left Column" removeLeftTileColumn
-      "Insert Row Up" addTileRowUp
-      "Insert Row Down" addTileRowDown
-      "Remove Top Row" removeTopTileRow
-      "Remove Bottom Row" removeBottomTileRow
+      "Insert Column Right" [
+        visibility: Visible
+        text: "Insert Column Right"
+        action: addTileColumnRight
+      ]
+      "Insert Column Left" [
+        visibility: Visible
+        text: "Insert Column Left"
+        action: addTileColumnLeft
+      ]
+      "Remove Right Column" [
+        visibility: Visible
+        text: "Remove Right Column"
+        action: removeRightTileColumn
+      ]
+      "Remove Left Column" [
+        visibility: Visible
+        text: "Remove Left Column"
+        action: removeLeftTileColumn
+      ]
+      "Insert Row Up" [
+        visibility: Visible
+        text: "Insert Row Up"
+        action: addTileRowUp
+      ]
+      "Insert Row Down" [
+        visibility: Visible
+        text: "Insert Row Down"
+        action: addTileRowDown
+      ]
+      "Remove Top Row" [ 
+         visibility: Visible 
+         text: "Remove Top Row"
+         action: removeTopTileRow
+      ]
+      "Remove Bottom Row" [
+        visibility: Visible
+        text: "Remove Bottom Row"
+        action: removeBottomTileRow
+      ]
       ToggleBoardBorder [
-        "Remove Border" removeBoardBorder
-        "Add Border" addBoardBorder
+        visibility: Visible
+        [
+          text: "Remove Border"
+          action: removeBoardBorder
+        ]
+        [
+          text: "Add Border"
+          action: addBoardBorder
+        ]
       ]
       ToggleAddTurnToken [
-        "Add turn token" addTurnToken
-        "Remove turn token" removeTurnToken
+        visibility: Visible
+        [
+          text: "Add turn token"
+          action: addTurnToken
+        ]
+        [
+          text: "Remove turn token"
+          action: removeTurnToken
+        ]
       ]
-      "Paste FEN" pasteFen
-      "Copy FEN" copyFen
+      "Paste FEN" [
+        visibility: Visible
+        text: "Paste FEN"
+        action: pasteFen
+      ]
+      "Copy FEN" [
+        visibility: Visible
+        text: "Copy FEN"
+        action: copyFen
+      ]
     ]
     View [
       PinMenu [
-        "Pin Menu" pinMenu
-        "Unpin Menu" unpinMenu
+        visibility: Visible
+        [
+          text: "Pin Menu"
+          action: pinMenu
+        ]
+        [
+          text: "Unpin Menu"
+          action: unpinMenu
+        ]
       ]
       ShowToolWindow [
-        "Hide Tool Window" hideToolWindow
-        "Show Tool Window" showToolWindow
+        visibility: Visible
+        [ 
+          text: "Hide Tool Window"
+          action: hideToolWindow
+        ]
+        [
+          text: "Show Tool Window"
+          action: showToolWindow
+        ]
       ]
       ShowColorTools [
-        "Show Color Tools" showColorTools
-        "Hide Color Tools" hideColorTools
+        visibility: Visible
+        [
+          text: "Show Color Tools"
+          action: showColorTools
+        ]
+        [
+          text: "Hide Color Tools"
+          action: hideColorTools
+        ]
       ]
-      "Add Column" addBoardColumn
-      "Remove Column" removeBoardColumn
-      "Add Row" addBoardRow
-      "Remove Row" removeBoardRow
+      "Add Column" [
+        visibility: Visible
+        text: "Add Column"
+        action: addBoardColumn
+      ]
+      "Remove Column" [
+        visibility: Visible
+        text: "Remove Column"
+        action: removeBoardColumn
+      ]
+      "Add Row" [
+        visibility: Visible
+        text: "Add Row"
+        action: addBoardRow
+      ]
+      "Remove Row" [
+        visibility: Visible
+        text: "Remove Row"
+        action: removeBoardRow
+      ]
     ]
     Settings [
     ]
     Help [
-      "Print to console" print
+      "Print to console" [
+        visibility: Visible
+        text: "Print to console"
+        action: print
+      ]
     ]
   ]
 ]
