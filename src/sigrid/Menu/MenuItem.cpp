@@ -9,13 +9,27 @@ using namespace sigrid;
 
 MenuItemContainer MenuItem::getContainer() const{
 
-    MenuItemContainer container;
-    container.displayNames.push_back(m_name);
-    container.actionNames.push_back(sigrid_action::getString(m_action));
-    if(m_toggledName != ""){
-        container.displayNames.push_back(m_toggledName);
-        container.actionNames.push_back(sigrid_action::getString(m_toggledAction));
+    if(m_toggledName == ""){
+        MenuItemContainer container;
+        container.displayNames.push_back(m_name);
+        container.actionNames.push_back(sigrid_action::getString(m_action));
+        return container;
     }
+
+    if(!m_isToggled){
+        MenuItemContainer container;
+        container.displayNames.push_back(m_name);
+        container.displayNames.push_back(m_toggledName);
+        container.actionNames.push_back(sigrid_action::getString(m_action));
+        container.actionNames.push_back(sigrid_action::getString(m_toggledAction));
+        return container;
+    }
+
+    MenuItemContainer container;
+    container.displayNames.push_back(m_toggledName);
+    container.displayNames.push_back(m_name);
+    container.actionNames.push_back(sigrid_action::getString(m_toggledAction));
+    container.actionNames.push_back(sigrid_action::getString(m_action));
 
     return container;
 }
