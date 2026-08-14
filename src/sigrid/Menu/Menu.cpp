@@ -114,12 +114,14 @@ MenuContainer Menu::getContainer() const{
     menuContainer.fontName = m_fontFilename;
     menuContainer.title = m_superHeader.getName();
 
+    int nextPriority = m_itemKeys.size()-1;
     for(const auto& header: m_itemKeys){
         HeaderContainer headerContainer;
         headerContainer.name = header.front();
 
         for(int i = 1; i < header.size(); ++i){
 
+            ++nextPriority;
             sigrid::String itemKey = header.at(i);
             const auto item_o = m_items.at(itemKey);
             if(item_o == std::nullopt){
@@ -128,8 +130,51 @@ MenuContainer Menu::getContainer() const{
                 continue;
             }
             const MenuItem& item = item_o.value();
+
+            const auto layoutItem_o = m_layoutItems.at(itemKey);
+            if(layoutItem_o == std::nullopt){
+                std::cerr << "Menu: unable to find layout for " << itemKey << "."
+                    << " continue getting MenuContainer without that item." << std::endl;
+                continue;
+            }
+            const LayoutItem& layoutItem = layoutItem_o.value().get();
+
+            //Add hidden items that are before the current item
+            for(;nextPriority < layoutItem.priority; ++nextPriority){
+                
+                for(const auto& [lookupName, lookupItem]: m_items){
+                    
+                    const auto lookupLayout_o = m_layoutItems.at(lookupName);
+                    if(lookupLayout_o == std::nullopt){
+                        std::cerr << "Menu: unable to find layout for " << lookupName << "."
+                            << " continue getting MenuContainer without that hidden item." << std::endl;
+                        continue;
+                    }
+                    const auto& lookupLayout = lookupLayout_o.value().get();
+
+                    if(lookupLayout.priority == nextPriority){
+
+                        const auto hiddenItem_o = m_items.at(lookupName);
+                        if(hiddenItem_o == std::nullopt){
+                            std::cerr << "Menu: hidden item at " << lookupName << " not found."
+                                << " continue getting MenuContainer without that hidden item." << std::endl;
+                            break;
+                        }
+                        const MenuItem& hiddenItem = hiddenItem_o.value();
+
+                        MenuItemContainer hiddenItemContainer = hiddenItem.getContainer();
+                        hiddenItemContainer.name = lookupName;
+                        hiddenItemContainer.isVisible = false;
+
+                        headerContainer.items.push_back(std::move(hiddenItemContainer));
+                        break;
+                    }
+                }
+            }
+
             MenuItemContainer itemContainer = item.getContainer();
             itemContainer.name = itemKey;
+            itemContainer.isVisible = true;
 
             headerContainer.items.push_back(std::move(itemContainer));
         }
