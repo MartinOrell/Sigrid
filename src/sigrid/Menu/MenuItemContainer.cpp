@@ -146,6 +146,14 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
         containerName = this->name;
     }
 
+    sigrid::String visibilityString;
+    if(this->isVisible){
+        visibilityString = "Visible";
+    }
+    else{
+        visibilityString = "Hidden";
+    }
+
     if(this->displayNames.size() == 1){
         
         const auto displayName_o = this->displayNames.front();
@@ -191,7 +199,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
         out.append("\n");
         out.append(indent1);
         out.append("visibility: ");
-        out.append("Visible");
+        out.append(visibilityString);
 
         out.append("\n");
         out.append(indent1);
@@ -221,7 +229,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
     out.append("\n");
     out.append(indent1);
     out.append("visibility: ");
-    out.append("Visible");
+    out.append(visibilityString);
 
     for(int i = 0; i < this->displayNames.size(); i++){
 
