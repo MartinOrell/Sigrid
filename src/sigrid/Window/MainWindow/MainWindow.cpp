@@ -81,7 +81,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_toolWindow->setIconManagerPtr(m_iconManagerPtr.get());
     m_toolWindow->setPieceManagerPtr(m_pieceManagerPtr.get());
     m_toolWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
-    m_toolWindow->init();
+    m_toolWindow->load(config.toolWindow);
 
     m_pieceManagerPtr->loadImages(config.pieces);
 
@@ -1207,6 +1207,7 @@ void MainWindow::saveSettings(){
     }
 
     settingsContainer.menuData = m_menu->getContainer();
+    settingsContainer.toolWindow = m_toolWindow->getContainer();
     settingsContainer.toolPickerData = m_toolPickerWindow->getContainer();
 
     auto boardStyleContainer_o = m_workWindow->getBoardStyleContainer();

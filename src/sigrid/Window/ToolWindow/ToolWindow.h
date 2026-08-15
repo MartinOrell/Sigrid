@@ -9,6 +9,8 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "sigrid/Window/ToolWindow/ToolWindowContainer.h"
+
 #include "sigrid/Action/Action.h"
 #include "sigrid/Board/Board.h"
 
@@ -34,7 +36,8 @@ class ToolWindow: public sf::Drawable{
 
     void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
-    void init();
+    bool load(const ToolWindowContainer& container);
+    ToolWindowContainer getContainer() const;
 
     void createGraphic(const sf::Vector2f& size);
 

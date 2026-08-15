@@ -31,7 +31,7 @@ void ToolWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
     m_board.setArrowColorManagerPtr(managerPtr);
 }
 
-void ToolWindow::init(){
+bool ToolWindow::load(const ToolWindowContainer& container){
 
     m_board.setLeftToRight();
     m_board.setTopToBottom();
@@ -67,6 +67,20 @@ void ToolWindow::init(){
     LogicIcon selectIcon;
     selectIcon.setFilename("res/icons/select_object.png");
     m_board.addEntity({0,0}, selectIcon);
+
+    if(!container.isVisible){
+        hide();
+    }
+
+    return true;
+}
+
+  ToolWindowContainer ToolWindow::getContainer() const{
+
+    ToolWindowContainer container;
+    container.isVisible = m_texture.isVisible();
+
+    return container;
 }
 
 void ToolWindow::createGraphic(const sf::Vector2f& size){
