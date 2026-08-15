@@ -101,6 +101,10 @@ bool Menu::load(const MenuContainer& menuData){
                 std::cerr << "Menu: Unable to handle menuItem with "
                     << menuItem.displayNames.size() << " states" << std::endl;
             }
+
+            if(!menuItem.isVisible){
+                hideItem(menuItem.name);
+            }
         }
     
     }
