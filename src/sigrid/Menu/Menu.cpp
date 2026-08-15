@@ -533,7 +533,7 @@ void Menu::showItem(const sigrid::String& key){
 
             int nextcmpPriority = nextCmpLayoutItem.priority;
             if(priority < nextcmpPriority){
-                m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
+                m_itemKeys.at(layoutItem.headerIndex).insert((it2+1), key);
                 return;
             }
         }
