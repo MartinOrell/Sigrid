@@ -28,16 +28,36 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_pieceManagerPtr->setPieceColors(config.pieceColors);
     m_iconManagerPtr = std::make_unique<IconManager>();
 
-    sigrid::Tool leftClickTool{config.leftClickTool};
-    m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
-    sigrid::Tool rightClickTool{config.rightClickTool};
-    m_inputHandler.addTool(sf::Mouse::Button::Right, std::move(rightClickTool));
-    sigrid::Tool middleClickTool{config.middleClickTool};
-    m_inputHandler.addTool(sf::Mouse::Button::Middle, std::move(middleClickTool));
-    sigrid::Tool extra1ClickTool{config.extra1ClickTool};
-    m_inputHandler.addTool(sf::Mouse::Button::Extra1, std::move(extra1ClickTool));
-    sigrid::Tool extra2ClickTool{config.extra2ClickTool};
-    m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
+    {
+        sigrid::Tool leftClickTool;
+        if(leftClickTool.load(config.leftClickTool)){
+            m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
+        }
+    }
+    {
+        sigrid::Tool rightClickTool;
+        if(rightClickTool.load(config.rightClickTool)){
+            m_inputHandler.addTool(sf::Mouse::Button::Right, std::move(rightClickTool));
+        }
+    }
+    {
+        sigrid::Tool middleClickTool;
+        if(middleClickTool.load(config.middleClickTool)){
+            m_inputHandler.addTool(sf::Mouse::Button::Middle, std::move(middleClickTool));
+        }
+    }
+    {
+        sigrid::Tool extra1ClickTool;
+        if(extra1ClickTool.load(config.extra1ClickTool)){
+            m_inputHandler.addTool(sf::Mouse::Button::Extra1, std::move(extra1ClickTool));
+        }
+    }
+    {
+        sigrid::Tool extra2ClickTool;
+        if(extra2ClickTool.load(config.extra2ClickTool)){
+            m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
+        }
+    }
 
     sigrid_action::Action spaceBarTool(sigrid_action::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
     m_inputHandler.addTool(sf::Keyboard::Key::Space, std::move(spaceBarTool));

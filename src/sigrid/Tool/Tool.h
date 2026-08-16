@@ -19,8 +19,7 @@ class Tool{
     Tool& operator=(const Tool&) = default;
     Tool& operator=(Tool&&) = default;
 
-    Tool(const ToolContainer& data);
-
+    bool load(const ToolContainer& data);
     ToolContainer getContainer() const;
     
     const ToolSelection selection() const;

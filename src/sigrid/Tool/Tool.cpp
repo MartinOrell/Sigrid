@@ -24,9 +24,13 @@ sigrid::ToolSelection getTool(const sigrid::String& toolname){
     }
 }
 
-Tool::Tool(const ToolContainer& data)
-: m_selection(getTool(data.selection))
-, m_arrowColorId(data.colorId){}
+bool sigrid::Tool::load(const ToolContainer& data){
+    
+    m_selection = getTool(data.selection);
+    m_arrowColorId = data.colorId;
+
+    return true;
+}
 
 ToolContainer Tool::getContainer() const{
 
