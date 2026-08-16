@@ -1230,20 +1230,47 @@ void MainWindow::saveSettings(){
 
     auto leftClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Left);
     if(leftClickToolPtr_o != std::nullopt){
+
         const sigrid::Tool& leftClickTool = *leftClickToolPtr_o.value();
-        settingsContainer.leftClickTool = leftClickTool.getContainer();
+        const auto& toolContainer_o = leftClickTool.getContainer();
+        if(toolContainer_o == std::nullopt){
+            ToolContainer defaultToolContainer;
+            defaultToolContainer.selection = "Select";
+            settingsContainer.leftClickTool = defaultToolContainer;
+        }
+        else{
+            settingsContainer.leftClickTool = toolContainer_o.value();
+        }
     }
 
     auto rightClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Right);
     if(rightClickToolPtr_o != std::nullopt){
+
         const sigrid::Tool& rightClickTool = *rightClickToolPtr_o.value();
-        settingsContainer.rightClickTool = rightClickTool.getContainer();
+        const auto& toolContainer_o = rightClickTool.getContainer();
+        if(toolContainer_o == std::nullopt){
+            ToolContainer defaultToolContainer;
+            defaultToolContainer.selection = "Select";
+            settingsContainer.rightClickTool = defaultToolContainer;
+        }
+        else{
+            settingsContainer.rightClickTool = toolContainer_o.value();
+        }
     }
 
     auto middleClickToolPtr_o = m_inputHandler.getToolPtr(sf::Mouse::Button::Middle);
     if(middleClickToolPtr_o != std::nullopt){
+
         const sigrid::Tool& middleClickTool = *middleClickToolPtr_o.value();
-        settingsContainer.middleClickTool = middleClickTool.getContainer();
+        const auto& toolContainer_o = middleClickTool.getContainer();
+        if(toolContainer_o == std::nullopt){
+            ToolContainer defaultToolContainer;
+            defaultToolContainer.selection = "Select";
+            settingsContainer.middleClickTool = defaultToolContainer;
+        }
+        else{
+            settingsContainer.middleClickTool = toolContainer_o.value();
+        }
     }
 
     settingsContainer.menuData = m_menu->getContainer();

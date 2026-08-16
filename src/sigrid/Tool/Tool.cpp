@@ -40,7 +40,7 @@ bool sigrid::Tool::load(const ToolContainer& data){
     return true;
 }
 
-ToolContainer Tool::getContainer() const{
+std::optional<ToolContainer> Tool::getContainer() const{
 
     ToolContainer container;
 
@@ -55,9 +55,7 @@ ToolContainer Tool::getContainer() const{
             container.selection = "EntityPicker";
             break;
         default:
-            std::cerr << "Tool: Unknown tool name with id " << m_selection << "."
-                << " toolname set to unknown." << std::endl;
-            container.selection = "unknown";
+            return std::nullopt;
             break;
     }
 
