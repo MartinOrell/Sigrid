@@ -7,7 +7,7 @@
 
 using namespace sigrid;
 
-sigrid::ToolSelection getTool(const sigrid::String& toolname){
+std::optional<sigrid::ToolSelection> getToolSelection(const sigrid::String& toolname){
     
     if(toolname == "Select"){
         return sigrid::ToolSelection::Select;
@@ -19,14 +19,22 @@ sigrid::ToolSelection getTool(const sigrid::String& toolname){
         return sigrid::EntityPicker;
     }
     else{
-        std::cerr << "Tool: Unknown tool name: " << toolname <<std::endl;
-        return sigrid::ToolSelection::Select;
+        return std::nullopt;
     }
 }
 
 bool sigrid::Tool::load(const ToolContainer& data){
     
-    m_selection = getTool(data.selection);
+    const auto selection_o = getToolSelection(data.selection);
+    if(selection_o == std::nullopt){
+        std::cerr << "Tool: Unknown tool name: \"" << data.selection << "\"."
+            << " Failed to load Tool" << std::endl;
+        return false;
+    }
+    else{
+        m_selection = selection_o.value();
+    }
+
     m_arrowColorId = data.colorId;
 
     return true;

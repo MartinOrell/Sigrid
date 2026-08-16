@@ -30,33 +30,53 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
 
     {
         sigrid::Tool leftClickTool;
-        if(leftClickTool.load(config.leftClickTool)){
-            m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
+        if(!leftClickTool.load(config.leftClickTool)){
+
+            std::cerr << "MainWindow: Failed to load leftClickTool."
+                << " Setting leftClickTool to Select instead" << std::endl;
+            leftClickTool.setSelection(sigrid::ToolSelection::Select);
         }
+        m_inputHandler.addTool(sf::Mouse::Button::Left, std::move(leftClickTool));
     }
     {
         sigrid::Tool rightClickTool;
-        if(rightClickTool.load(config.rightClickTool)){
-            m_inputHandler.addTool(sf::Mouse::Button::Right, std::move(rightClickTool));
+        if(!rightClickTool.load(config.rightClickTool)){
+            
+            std::cerr << "MainWindow: Failed to load rightClickTool."
+                << " Setting rightClickTool to Select instead" << std::endl;
+            rightClickTool.setSelection(sigrid::ToolSelection::Select);
         }
+        m_inputHandler.addTool(sf::Mouse::Button::Right, std::move(rightClickTool));
     }
     {
         sigrid::Tool middleClickTool;
-        if(middleClickTool.load(config.middleClickTool)){
-            m_inputHandler.addTool(sf::Mouse::Button::Middle, std::move(middleClickTool));
+        if(!middleClickTool.load(config.middleClickTool)){
+            
+            std::cerr << "MainWindow: Failed to load middleClickTool."
+                << " Setting middleClickTool to Select instead" << std::endl;
+            middleClickTool.setSelection(sigrid::ToolSelection::Select);
         }
+        m_inputHandler.addTool(sf::Mouse::Button::Middle, std::move(middleClickTool));
     }
     {
         sigrid::Tool extra1ClickTool;
-        if(extra1ClickTool.load(config.extra1ClickTool)){
-            m_inputHandler.addTool(sf::Mouse::Button::Extra1, std::move(extra1ClickTool));
+        if(!extra1ClickTool.load(config.extra1ClickTool)){
+            
+            std::cerr << "MainWindow: Failed to load extra1ClickTool."
+                << " Setting extra1ClickTool to Select instead" << std::endl;
+            extra1ClickTool.setSelection(sigrid::ToolSelection::Select);
         }
+        m_inputHandler.addTool(sf::Mouse::Button::Extra1, std::move(extra1ClickTool));
     }
     {
         sigrid::Tool extra2ClickTool;
-        if(extra2ClickTool.load(config.extra2ClickTool)){
-            m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
+        if(!extra2ClickTool.load(config.extra2ClickTool)){
+            
+            std::cerr << "MainWindow: Failed to load extra2ClickTool."
+                << " Setting extra2ClickTool to Select instead" << std::endl;
+            extra2ClickTool.setSelection(sigrid::ToolSelection::Select);
         }
+        m_inputHandler.addTool(sf::Mouse::Button::Extra2, std::move(extra2ClickTool));
     }
 
     sigrid_action::Action spaceBarTool(sigrid_action::SetTool{sf::Mouse::Button::Left, ToolSelection::Select});
