@@ -160,6 +160,15 @@ bool sigrid::ToolPickerContainer::load(InputStream& is){
                 return false;
             }
         }
+        else if(s == "PieceBlockColors:"){
+
+            if(!(sigrid::loadValues<int>(pieceBlockColors, is))){
+
+                std::cerr << "ToolPickerContainer: Failed to load PieceBlockColors."
+                    << " Failed to load ToolPickerContainer" << std::endl;
+                return false;
+            }
+        }
         else{
             std::cerr << "ToolPickerContainer: Unknown key: \"" << s << "\".";
             std::cerr << " Failed to load ToolPickerContainer" << std::endl;
@@ -266,6 +275,11 @@ sigrid::String sigrid::ToolPickerContainer::getString(const int& indentLevel){
     out.append(indent1);
     out.append("TileColors: ");
     out.append(sigrid::IntListSaver(this->tileColorIds).getMultiLineString(indentLevel+1));
+
+    out.append("\n");
+    out.append(indent1);
+    out.append("PieceBlockColors: ");
+    out.append(sigrid::IntListSaver(this->pieceBlockColors).getMultiLineString(indentLevel+1));
 
     out.append("\n");
     out.append(indent0);

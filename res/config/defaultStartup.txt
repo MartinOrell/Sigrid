@@ -97,34 +97,9 @@ PieceColors: [
 ]
 Pieces: [
   [
-    notation: P
-    style: light
-    imageFilename: res/pieces/standard/white_pawn.png
-  ]
-  [
-    notation: P
+    notation: B
     style: dark
-    imageFilename: res/pieces/standard/black_pawn.png
-  ]
-  [
-    notation: R
-    style: light
-    imageFilename: res/pieces/standard/white_rook.png
-  ]
-  [
-    notation: R
-    style: dark
-    imageFilename: res/pieces/standard/black_rook.png
-  ]
-  [
-    notation: N
-    style: light
-    imageFilename: res/pieces/standard/white_knight.png
-  ]
-  [
-    notation: N
-    style: dark
-    imageFilename: res/pieces/standard/black_knight.png
+    imageFilename: res/pieces/standard/black_bishop.png
   ]
   [
     notation: B
@@ -132,19 +107,9 @@ Pieces: [
     imageFilename: res/pieces/standard/white_bishop.png
   ]
   [
-    notation: B
+    notation: K
     style: dark
-    imageFilename: res/pieces/standard/black_bishop.png
-  ]
-  [
-    notation: Q
-    style: light
-    imageFilename: res/pieces/standard/white_queen.png
-  ]
-  [
-    notation: Q
-    style: dark
-    imageFilename: res/pieces/standard/black_queen.png
+    imageFilename: res/pieces/standard/black_king.png
   ]
   [
     notation: K
@@ -152,13 +117,49 @@ Pieces: [
     imageFilename: res/pieces/standard/white_king.png
   ]
   [
-    notation: K
+    notation: N
     style: dark
-    imageFilename: res/pieces/standard/black_king.png
+    imageFilename: res/pieces/standard/black_knight.png
+  ]
+  [
+    notation: N
+    style: light
+    imageFilename: res/pieces/standard/white_knight.png
+  ]
+  [
+    notation: P
+    style: dark
+    imageFilename: res/pieces/standard/black_pawn.png
+  ]
+  [
+    notation: P
+    style: light
+    imageFilename: res/pieces/standard/white_pawn.png
+  ]
+  [
+    notation: Q
+    style: dark
+    imageFilename: res/pieces/standard/black_queen.png
+  ]
+  [
+    notation: Q
+    style: light
+    imageFilename: res/pieces/standard/white_queen.png
+  ]
+  [
+    notation: R
+    style: dark
+    imageFilename: res/pieces/standard/black_rook.png
+  ]
+  [
+    notation: R
+    style: light
+    imageFilename: res/pieces/standard/white_rook.png
   ]
 ]
 LeftClickTool: [
   selection: Select
+  color: 0
 ]
 RightClickTool: [
   selection: DrawArrow
@@ -166,6 +167,7 @@ RightClickTool: [
 ]
 MiddleClickTool: [
   selection: EntityPicker
+  color: 0
 ]
 Menu: [
   pin: OFF
@@ -270,6 +272,7 @@ Menu: [
         [
           text: "Remove bottom outside labels"
           action: removeBottomOutsideLabels
+        ]
         [
           text: "Add bottom outside labels"
           action: addBottomOutsideLabels
@@ -316,10 +319,10 @@ Menu: [
         text: "Insert Row Down"
         action: addTileRowDown
       ]
-      "Remove Top Row" [ 
-         visibility: Visible 
-         text: "Remove Top Row"
-         action: removeTopTileRow
+      "Remove Top Row" [
+        visibility: Visible
+        text: "Remove Top Row"
+        action: removeTopTileRow
       ]
       "Remove Bottom Row" [
         visibility: Visible
@@ -373,7 +376,7 @@ Menu: [
       ]
       ShowToolWindow [
         visibility: Visible
-        [ 
+        [
           text: "Hide Tool Window"
           action: hideToolWindow
         ]
@@ -424,6 +427,9 @@ Menu: [
       ]
     ]
   ]
+]
+ToolWindow: [
+  visibility: Visible
 ]
 ToolPicker: [
   visibility: Visible
@@ -486,6 +492,10 @@ ToolPicker: [
     K
   ]
   TileColors: [
+    0
+    1
+  ]
+  PieceBlockColors: [
     0
     1
   ]

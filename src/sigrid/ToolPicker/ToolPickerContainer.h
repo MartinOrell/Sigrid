@@ -21,6 +21,7 @@ struct ToolPickerContainer{
     ToolBlockContainer miscToolBlock;
     ToolBlockContainer colorBlock;
     sigrid_list::Vector<ToolBlockContainer> pieceBlocks;
+    sigrid_list::Vector<int> pieceBlockColors;
     bool show;
     sigrid::String defaultPieceNotation;
     sigrid_list::Vector<sigrid::String> toolNames;

@@ -86,8 +86,7 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
 
     m_board.setPosition({0.f,0.f});
 
-    m_displayedPieceColorIds.push_back(0);
-    m_displayedPieceColorIds.push_back(1);
+    m_displayedPieceColorIds = data.pieceBlockColors;
 
     for(const auto& toolName: data.toolNames){
         if(toolName == "Select"){
@@ -129,6 +128,7 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
 
         container.pieceBlocks.push_back(std::move(pieceBlockContainer));
     }
+    container.pieceBlockColors = m_displayedPieceColorIds;
 
     container.defaultArrowColorId = m_defaultArrowColorId;
     container.defaultCircleColorId = m_defaultCircleColorId;
