@@ -13,14 +13,24 @@
 
 using namespace sigrid;
 
-void WorkWindow::setBoardFilename(const sigrid::String& filename){
+void WorkWindow::setBoardFilename(const int& id, const sigrid::String& filename){
 
     if(m_boards.size() == 0){
         Board board;
         m_boards.push_back(std::move(board));
     }
 
-    auto board_o = m_boards.atSelection();
+    while(m_boards.size() <= id){
+        auto newBoard_o = m_boards.at(0);
+        if(newBoard_o == std::nullopt){
+            std::cerr << "WorkWindow: Failed to get defaultBoard."
+                << " loadBoardState failed" << std::endl;
+            return;
+        }
+        m_boards.push_back(std::move(newBoard_o.value()));
+    }
+
+    auto board_o = m_boards.at(id);
     if(board_o == std::nullopt){
         return;
     }
@@ -124,15 +134,27 @@ std::optional<BoardDesignContainer> WorkWindow::getBoardStyleContainer() const{
     return board.getStyleContainer();
 }
 
-void WorkWindow::loadBoardState(const BoardStateContainer& boardStateData){
+void WorkWindow::loadBoardState(const int& id, const BoardStateContainer& boardStateData){
 
     if(m_boards.size() == 0){
         Board board;
         m_boards.push_back(std::move(board));
     }
 
-    auto board_o = m_boards.atSelection();
+    while(m_boards.size() <= id){
+        auto newBoard_o = m_boards.at(0);
+        if(newBoard_o == std::nullopt){
+            std::cerr << "WorkWindow: Failed to get defaultBoard."
+                << " Filed to load BoardState" << std::endl;
+            return;
+        }
+        m_boards.push_back(std::move(newBoard_o.value()));
+    }
+
+    auto board_o = m_boards.at(id);
     if(board_o == std::nullopt){
+        std::cerr << "WorkWindow: Failed to load board with id " << id << "."
+            << " Failed to load BoardState" << std::endl;
         return;
     }
     auto& board = board_o.value().get();
@@ -147,15 +169,13 @@ void WorkWindow::loadBoardState(const BoardStateContainer& boardStateData){
     m_pdfHandler.updateLayout();
 }
 
-std::optional<sigrid::BoardContainer> WorkWindow::getActiveBoardContainer() const{
+sigrid_list::Vector<sigrid::BoardContainer> WorkWindow::getBoardContainers() const{
 
-    const auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return std::nullopt;
+    sigrid_list::Vector<sigrid::BoardContainer> boardContainers;
+    for(auto& board: m_boards){
+        boardContainers.push_back(board.getContainer());
     }
-    auto& board = board_o.value().get();
-
-    return board.getContainer();
+    return boardContainers;
 }
 
 void WorkWindow::createGraphic(const sf::Vector2f& size)

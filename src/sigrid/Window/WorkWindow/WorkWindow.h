@@ -31,7 +31,7 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(const WorkWindow&) = default;
     WorkWindow& operator=(WorkWindow&&) = default;
 
-    void setBoardFilename(const sigrid::String& filename);
+    void setBoardFilename(const int& id, const sigrid::String& filename);
 
     void setResetBoardFilename(const sigrid::String& filename);
     const sigrid::String& getResetBoardFilename() const;
@@ -50,9 +50,9 @@ class WorkWindow: public sf::Drawable{
     void loadGraphicData(const BoardDesignContainer& graphicData);
     std::optional<BoardDesignContainer> getBoardStyleContainer() const;
 
-    void loadBoardState(const BoardStateContainer& boardStateData);
+    void loadBoardState(const int& id, const BoardStateContainer& boardStateData);
 
-    std::optional<BoardContainer> getActiveBoardContainer() const;
+    sigrid_list::Vector<BoardContainer> getBoardContainers() const;
 
     void createGraphic(const sf::Vector2f& size);
 

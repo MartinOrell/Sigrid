@@ -4,13 +4,6 @@
 
 bool sigrid::BoardContainer::load(sigrid::InputStream& is){
 
-    if(is.readString() != "["){
-
-        std::cerr << "BoardContainer: Failed to read initial \"[\"."
-            << " Failed to load BoardContainer" << std::endl;
-        return false;
-    }
-
     while(const auto string_o = is.readString()){
         
         if(string_o == std::nullopt){
@@ -21,7 +14,10 @@ bool sigrid::BoardContainer::load(sigrid::InputStream& is){
         }
         const sigrid::String& s = string_o.value();
 
-        if(s == "]"){
+        if(s == "["){
+            continue;
+        }
+        else if(s == "]"){
             break;
         }
         else if(s == "stateFilename:"){

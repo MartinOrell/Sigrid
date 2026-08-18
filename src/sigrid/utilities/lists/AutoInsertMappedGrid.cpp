@@ -374,6 +374,10 @@ const sigrid_list::Vector<T>& AutoInsertMappedGrid<T>::getInsertPattern() const{
 template<typename T>
 T AutoInsertMappedGrid<T>::getInsertElement(const sigrid_coord::Coord& coord) const{
 
+    if(m_insertPattern.size() == 0){
+        return T{};
+    }
+
     auto element_o = m_insertPattern.at((coord.x+coord.y)%m_insertPattern.size());
 
     if(element_o == std::nullopt){

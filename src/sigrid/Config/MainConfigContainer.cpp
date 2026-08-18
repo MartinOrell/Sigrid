@@ -196,6 +196,17 @@ bool MainConfigContainer::load(const std::string& filename){
             }
             this->boards.push_back(std::move(board));
         }
+        else if(key == "Boards:"){
+
+            this->boards.clear();
+            if(!sigrid::loadContainers<sigrid::BoardContainer>(this->boards, is)){
+                
+                std::cerr << "MainConfigContainer: Failed to load boards."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
+                return false;
+            }
+        }
         else{
             std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"."
                 << " Failed to load MainConfigContainer from file: \""
@@ -300,7 +311,11 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
         out.append(board.getString(indentLevel));
     }
     else{
-        std::cerr << "Multiple boards not yet handled" << std::endl;
+
+        out.append("\n");
+        out.append(indent0);
+        out.append("Boards: ");
+        out.append(sigrid::ListSaver(this->boards).getMultiLineString(indentLevel));
     }
 
     return out;

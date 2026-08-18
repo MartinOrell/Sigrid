@@ -132,45 +132,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_toolPickerWindow->setIconManagerPtr(m_iconManagerPtr.get());
     m_toolPickerWindow->load(config.toolPickerData);
 
-    BoardStateContainer boardStateData;
-
-    sigrid::BoardContainer boardContainer;
-    {
-        const auto board_o = config.boards.front();
-        if(board_o == std::nullopt){
-            std::cerr << "MainWindow: Failed receiving first board."
-                << " Failed to load MainWindow" << std::endl;
-            return false;
-        }
-        boardContainer = board_o.value();
-    }
-    if(std::filesystem::exists(boardContainer.stateFilename.getStdString())){
-        
-        if(boardStateData.load(boardContainer.stateFilename)){
-            std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
-        }
-        else if (boardStateData.load(config.resetBoardFilename)){
-            std::cerr << "MainWindow: Failed reading Board data: " << boardContainer.stateFilename << std::endl;
-            std::cerr << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
-        }
-        else{
-            std::cerr << "MainWindow: Failed reading both " << boardContainer.stateFilename
-            << " and " << config.resetBoardFilename << "." << std::endl;
-            std::cerr << "Main Window failed creating board." << std::endl;
-            return false;
-        }
-    }
-    else if (boardStateData.load(config.resetBoardFilename)){
-        std::cout << "Board data: " << config.resetBoardFilename << " loaded" << std::endl;
-    }
-    else{
-        std::cerr << "MainWindow: Failed reading " << config.resetBoardFilename << std::endl;
-        std::cerr << "MainWindow: Failed creating board." << std::endl;
-        return false;
-    }
-
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->setBoardFilename(boardContainer.stateFilename);
     m_workWindow->setResetBoardFilename(config.resetBoardFilename);
     m_workWindow->setDefaultBoardImageFilename(config.defaultBoardImageFilename);
     m_workWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
@@ -178,8 +140,45 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_workWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
     m_workWindow->loadGraphicData(config.boardData);
-    m_workWindow->loadBoardState(boardStateData);
-    std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
+
+    {
+        int id = 0;
+        for(const auto& boardContainer: config.boards){
+
+            BoardStateContainer boardStateData;
+
+            if(std::filesystem::exists(boardContainer.stateFilename.getStdString())){
+            
+                if(boardStateData.load(boardContainer.stateFilename)){
+                    std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
+                }
+                else if (boardStateData.load(config.resetBoardFilename)){
+                    std::cerr << "MainWindow: Failed reading Board data: " << boardContainer.stateFilename << std::endl;
+                    std::cerr << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
+                }
+                else{
+                    std::cerr << "MainWindow: Failed reading both " << boardContainer.stateFilename
+                    << " and " << config.resetBoardFilename << "." << std::endl;
+                    std::cerr << "Main Window failed creating board." << std::endl;
+                    return false;
+                }
+            }
+            else if (boardStateData.load(config.resetBoardFilename)){
+                std::cout << "Board data: " << config.resetBoardFilename << " loaded" << std::endl;
+            }
+            else{
+                std::cerr << "MainWindow: Failed reading " << config.resetBoardFilename << std::endl;
+                std::cerr << "MainWindow: Failed creating board." << std::endl;
+                return false;
+            }
+
+            m_workWindow->setBoardFilename(id, boardContainer.stateFilename);
+            m_workWindow->loadBoardState(id, boardStateData);
+            std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
+
+            ++id;
+        }
+    }
 
     m_menu = std::make_unique<sigrid::Menu>();
     m_menu->setFontManagerPtr(m_fontManagerPtr.get());
@@ -1296,10 +1295,7 @@ void MainWindow::saveSettings(){
     settingsContainer.resetBoardFilename = m_workWindow->getResetBoardFilename();
     settingsContainer.defaultBoardImageFilename = m_workWindow->getDefaultBoardImageFilename();
     
-    auto boardContainer_o = m_workWindow->getActiveBoardContainer();
-    if(boardContainer_o != std::nullopt){
-        settingsContainer.boards.push_back(std::move(boardContainer_o.value()));
-    }
+    settingsContainer.boards = m_workWindow->getBoardContainers();
 
     out << settingsContainer.getString(0);
 
