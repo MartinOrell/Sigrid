@@ -15,6 +15,7 @@
 #include "sigrid/ToolPicker/ToolPickerContainer.h"
 #include "sigrid/Tool/ToolContainer.h"
 #include "sigrid/Color/ColorContainer.h"
+#include "sigrid/Board/BoardContainer.h"
 
 namespace sigrid_config{
 
@@ -38,8 +39,8 @@ struct MainConfigContainer{
     sigrid::ToolContainer extra1ClickTool;
     sigrid::ToolContainer extra2ClickTool;
 
+    sigrid::BoardContainer board;
     sigrid::String resetBoardFilename;
-    sigrid::String boardFilename;
     sigrid::String defaultBoardImageFilename;
 };
 

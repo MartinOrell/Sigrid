@@ -54,6 +54,15 @@ void Board::setBottomToTop(){
     m_graphicBoard.setBottomToTop();
 }
 
+BoardContainer Board::getContainer() const{
+
+    sigrid::BoardContainer container;
+    container.stateFilename = m_filename;
+    container.imageFilename = m_imageFilename;
+
+    return container;
+}
+
 void Board::loadGraphicData(const BoardDesignContainer& graphicData){
     m_graphicBoard.loadDesign(graphicData);
 }

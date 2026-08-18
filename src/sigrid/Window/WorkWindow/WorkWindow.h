@@ -13,6 +13,7 @@
 #include "sigrid/Window/WorkWindow/PdfHandler.h"
 
 #include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
+#include "sigrid/Board/BoardContainer.h"
 #include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 
@@ -31,7 +32,6 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(WorkWindow&&) = default;
 
     void setBoardFilename(const sigrid::String& filename);
-    std::optional<sigrid::String> getActiveBoardFilename() const;
 
     void setResetBoardFilename(const sigrid::String& filename);
     const sigrid::String& getResetBoardFilename() const;
@@ -51,6 +51,8 @@ class WorkWindow: public sf::Drawable{
     std::optional<BoardDesignContainer> getBoardStyleContainer() const;
 
     void loadBoardState(const BoardStateContainer& boardStateData);
+
+    std::optional<BoardContainer> getActiveBoardContainer() const;
 
     void createGraphic(const sf::Vector2f& size);
 

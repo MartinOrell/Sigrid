@@ -560,4 +560,7 @@ BoardStyle: [
 ]
 resetFilename: res/config/setupBoards/chess.txt
 defaultImageFilename: saveData/boards/images/board.png
-boardFilename: saveData/boards/board.txt
+Board: [
+  stateFilename: saveData/boards/board.txt
+  imageFilename: saveData/boards/images/board.png
+]

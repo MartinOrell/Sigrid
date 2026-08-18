@@ -6,6 +6,7 @@
 #include "sigrid/Board/GraphicBoard.h"
 #include "sigrid/Board/BoardState.h"
 #include "sigrid/Entity/Piece/PieceManager.h"
+#include "sigrid/Board/BoardContainer.h"
 
 namespace sigrid{
 
@@ -32,6 +33,8 @@ class Board: public sf::Drawable{
     void setRightToLeft();
     void setTopToBottom();
     void setBottomToTop();
+
+    BoardContainer getContainer() const;
 
     void loadGraphicData(const BoardDesignContainer& graphicData);
     BoardDesignContainer getStyleContainer() const;

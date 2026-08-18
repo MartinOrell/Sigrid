@@ -133,17 +133,17 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_toolPickerWindow->load(config.toolPickerData);
 
     BoardStateContainer boardStateData;
-    if(std::filesystem::exists(config.boardFilename.getStdString())){
+    if(std::filesystem::exists(config.board.stateFilename.getStdString())){
         
-        if(boardStateData.load(config.boardFilename)){
-            std:: cout << "Board data: " << config.boardFilename << " loaded" << std::endl;
+        if(boardStateData.load(config.board.stateFilename)){
+            std:: cout << "Board data: " << config.board.stateFilename << " loaded" << std::endl;
         }
         else if (boardStateData.load(config.resetBoardFilename)){
-            std::cerr << "MainWindow: Failed reading Board data: " << config.boardFilename << std::endl;
+            std::cerr << "MainWindow: Failed reading Board data: " << config.board.stateFilename << std::endl;
             std::cerr << "Board data: " << config.resetBoardFilename << " loaded instead" << std::endl;
         }
         else{
-            std::cerr << "MainWindow: Failed reading both " << config.boardFilename
+            std::cerr << "MainWindow: Failed reading both " << config.board.stateFilename
             << " and " << config.resetBoardFilename << "." << std::endl;
             std::cerr << "Main Window failed creating board." << std::endl;
             return false;
@@ -159,7 +159,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     }
 
     m_workWindow = std::make_unique<sigrid::WorkWindow>();
-    m_workWindow->setBoardFilename(config.boardFilename);
+    m_workWindow->setBoardFilename(config.board.stateFilename);
     m_workWindow->setResetBoardFilename(config.resetBoardFilename);
     m_workWindow->setDefaultBoardImageFilename(config.defaultBoardImageFilename);
     m_workWindow->setTileColorManagerPtr(m_tileColorManagerPtr.get());
@@ -1285,9 +1285,9 @@ void MainWindow::saveSettings(){
     settingsContainer.resetBoardFilename = m_workWindow->getResetBoardFilename();
     settingsContainer.defaultBoardImageFilename = m_workWindow->getDefaultBoardImageFilename();
     
-    auto boardFilename_o = m_workWindow->getActiveBoardFilename();
-    if(boardFilename_o != std::nullopt){
-        settingsContainer.boardFilename = std::move(boardFilename_o.value());
+    auto boardContainer_o = m_workWindow->getActiveBoardContainer();
+    if(boardContainer_o != std::nullopt){
+        settingsContainer.board = std::move(boardContainer_o.value());
     }
 
     out << settingsContainer.getString(0);

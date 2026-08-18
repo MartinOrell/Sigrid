@@ -183,17 +183,15 @@ bool MainConfigContainer::load(const std::string& filename){
             }
             defaultBoardImageFilename = defaultBoardImageFilename_o.value();
         }
-        else if(key == "boardFilename:"){
+        else if(key == "Board:"){
 
-            const auto boardFilename_o = is.readString();
-            if(boardFilename_o == std::nullopt){
+            if(!board.load(is)){
 
-                std::cerr << "MainConfigContainer: Failed to read string for boardFilename."
+                std::cerr << "MainConfigContainer: Failed to load Board."
                     << " Failed to load MainConfigContainer from file: \""
                     << filename << "\"" << std::endl;
                 return false;
             }
-            boardFilename = boardFilename_o.value();
         }
         else{
             std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"."
@@ -285,8 +283,8 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
 
     out.append("\n");
     out.append(indent0);
-    out.append("boardFilename: ");
-    out.append(this->boardFilename);
+    out.append("Board: ");
+    out.append(this->board.getString(indentLevel));
 
     return out;
 }
