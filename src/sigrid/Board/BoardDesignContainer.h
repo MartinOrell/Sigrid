@@ -16,7 +16,7 @@ namespace sigrid{
 struct BoardDesignContainer{
 
     bool load(InputStream& is);
-    sigrid::String getString(const int& indentLevel);
+    sigrid::String getString(const int& indentLevel) const;
 
     TileContainer tile;
     CircleContainer circle;

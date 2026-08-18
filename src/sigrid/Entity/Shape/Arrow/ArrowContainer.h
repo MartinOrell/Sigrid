@@ -7,7 +7,7 @@ namespace sigrid{
 struct ArrowContainer{
 
     bool load(InputStream& is);
-    sigrid::String getString(const int& indentLevel);
+    sigrid::String getString(const int& indentLevel) const;
 
     float thickness = 0.f;
     float headSize = 0.f;

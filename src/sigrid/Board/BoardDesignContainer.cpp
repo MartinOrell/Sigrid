@@ -91,7 +91,7 @@ bool sigrid::BoardDesignContainer::load(InputStream& is){
     return true;
 }
 
-sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel){
+sigrid::String sigrid::BoardDesignContainer::getString(const int& indentLevel) const{
 
     sigrid::String indent0;
     for(int i = 0; i < indentLevel; ++i){

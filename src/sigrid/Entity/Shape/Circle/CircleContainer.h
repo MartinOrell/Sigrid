@@ -7,7 +7,7 @@ namespace sigrid{
 struct CircleContainer{
 
     bool load(InputStream& is);
-    sigrid::String getString(const int& indentLevel);
+    sigrid::String getString(const int& indentLevel) const;
 
     float diameter = 0.f;
 };
