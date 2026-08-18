@@ -13,7 +13,7 @@ namespace sigrid{
 struct ToolPickerContainer{
 
     bool load(InputStream& is);
-    sigrid::String getString(const int& indentLevel);
+    sigrid::String getString(const int& indentLevel) const;
 
     sigrid_list::Vector<int> tileColorIds;
     int columns;

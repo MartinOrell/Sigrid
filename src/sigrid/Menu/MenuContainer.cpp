@@ -79,7 +79,7 @@ bool sigrid::MenuContainer::load(InputStream& is){
     return true;
 }
 
-sigrid::String sigrid::MenuContainer::getString(const int& indentLevel){
+sigrid::String sigrid::MenuContainer::getString(const int& indentLevel) const{
 
     sigrid::String indent0;
     for(int i = 0; i < indentLevel; ++i){

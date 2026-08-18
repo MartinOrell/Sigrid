@@ -203,7 +203,7 @@ bool MainConfigContainer::load(const std::string& filename){
     return true;
 }
 
-sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLevel){
+sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLevel) const{
 
     sigrid::String indent0;
 

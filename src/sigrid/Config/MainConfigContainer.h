@@ -22,7 +22,7 @@ namespace sigrid_config{
 struct MainConfigContainer{
 
     bool load(const std::string& filename);
-    sigrid::String getString(const int& indentLevel);
+    sigrid::String getString(const int& indentLevel) const;
 
     sigrid::WindowContainer mainWindow;
     sigrid_list::Vector<sigrid::ColorContainer> tileColors;
