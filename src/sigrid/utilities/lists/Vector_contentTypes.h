@@ -53,3 +53,4 @@ template class sigrid_list::Vector<sigrid::HeaderContainer>;
 template class sigrid_list::Vector<sigrid::MenuItemContainer>;
 template class sigrid_list::Vector<sigrid::ToolStruct>;
 template class sigrid_list::Vector<sigrid::ToolBlockContainer>;
+template class sigrid_list::Vector<sigrid::BoardContainer>;

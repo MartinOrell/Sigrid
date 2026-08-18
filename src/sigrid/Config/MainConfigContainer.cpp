@@ -185,6 +185,8 @@ bool MainConfigContainer::load(const std::string& filename){
         }
         else if(key == "Board:"){
 
+            this->boards.clear();
+            sigrid::BoardContainer board;
             if(!board.load(is)){
 
                 std::cerr << "MainConfigContainer: Failed to load Board."
@@ -192,6 +194,7 @@ bool MainConfigContainer::load(const std::string& filename){
                     << filename << "\"" << std::endl;
                 return false;
             }
+            this->boards.push_back(std::move(board));
         }
         else{
             std::cerr << "MainConfigContainer: Unknown key: \"" << key << "\"."
@@ -281,10 +284,24 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
     out.append("defaultImageFilename: ");
     out.append(this->defaultBoardImageFilename);
 
-    out.append("\n");
-    out.append(indent0);
-    out.append("Board: ");
-    out.append(this->board.getString(indentLevel));
+    if(this->boards.size() == 1){
+
+        const auto board_o = this->boards.front();
+        if(board_o == std::nullopt){
+            std::cerr << "MainConfigContainer: Failed to receive a single board."
+                << " return incomplete string in getString()";
+            return out;
+        }
+        const sigrid::BoardContainer& board = board_o.value();
+
+        out.append("\n");
+        out.append(indent0);
+        out.append("Board: ");
+        out.append(board.getString(indentLevel));
+    }
+    else{
+        std::cerr << "Multiple boards not yet handled" << std::endl;
+    }
 
     return out;
 }
