@@ -65,6 +65,24 @@ bool VectorWithDisplayGrid<T>::removeRow(){
 }
 
 template<typename T>
+bool VectorWithDisplayGrid<T>::setSize(const int& columns, const int& rows){
+
+    if(columns < 1){
+        return false;
+    }
+
+    if(rows < 1){
+        return false;
+    }
+
+    m_displayColumns = columns;
+    m_displayRows = rows;
+
+    displayLastElements();
+    return true;
+}
+
+template<typename T>
 bool VectorWithDisplayGrid<T>::selectLast(){
 
     const int displaySize = m_displayIds.size();

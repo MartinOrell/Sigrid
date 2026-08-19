@@ -23,6 +23,8 @@ template <typename T> class VectorWithDisplayGrid{
     bool removeColumn();
     bool removeRow();
 
+    bool setSize(const int& columns, const int& rows);
+
     bool selectLast();
     bool select(const int& displayPosition);
 

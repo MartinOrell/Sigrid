@@ -179,17 +179,16 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
             ++id;
         }
     }
+    m_workWindow->load(config.workWindow);
+
+    sigrid::String title = m_workWindow->getName();
+    if(title.length() > 0){
+        m_window.setTitle(title.getStdString());
+    }
 
     m_menu = std::make_unique<sigrid::Menu>();
     m_menu->setFontManagerPtr(m_fontManagerPtr.get());
     m_menu->load(config.menuData);
-
-    if(m_workWindow){
-        sigrid::String title = m_workWindow->getName();
-        if(title.length() > 0){
-            m_window.setTitle(title.getStdString());
-        }
-    }
 
     m_layout.setFromXCoord(LayoutItem::MENU, 0);
     if(m_menu && m_menu->isCollapsed()){
@@ -1284,6 +1283,7 @@ void MainWindow::saveSettings(){
     }
 
     settingsContainer.menuData = m_menu->getContainer();
+    settingsContainer.workWindow = m_workWindow->getContainer();
     settingsContainer.toolWindow = m_toolWindow->getContainer();
     settingsContainer.toolPickerData = m_toolPickerWindow->getContainer();
 

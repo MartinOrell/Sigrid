@@ -11,6 +11,7 @@
 #include "sigrid/Entity/Piece/PieceContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Menu/MenuContainer.h"
+#include "sigrid/Window/WorkWindow/WorkWindowContainer.h"
 #include "sigrid/Window/ToolWindow/ToolWindowContainer.h"
 #include "sigrid/ToolPicker/ToolPickerContainer.h"
 #include "sigrid/Tool/ToolContainer.h"
@@ -31,6 +32,7 @@ struct MainConfigContainer{
     sigrid_list::Vector<sigrid::PieceContainer> pieces;
     sigrid::BoardDesignContainer boardData;
     sigrid::MenuContainer menuData;
+    sigrid::WorkWindowContainer workWindow;
     sigrid::ToolWindowContainer toolWindow;
     sigrid::ToolPickerContainer toolPickerData;
     sigrid::ToolContainer leftClickTool;

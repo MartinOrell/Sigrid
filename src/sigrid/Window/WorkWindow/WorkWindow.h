@@ -13,6 +13,7 @@
 #include "sigrid/Window/WorkWindow/PdfHandler.h"
 
 #include "sigrid/utilities/lists/VectorWithDisplayGrid.h"
+#include "sigrid/Window/WorkWindow/WorkWindowContainer.h"
 #include "sigrid/Board/BoardContainer.h"
 #include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
@@ -46,6 +47,9 @@ class WorkWindow: public sf::Drawable{
     void setArrowColorManagerPtr(ColorManager* const managerPtr);
 
     void setFontManagerPtr(FontManager* const managerPtr);
+
+    bool load(const WorkWindowContainer& container);
+    WorkWindowContainer getContainer() const;
 
     void loadGraphicData(const BoardDesignContainer& graphicData);
     std::optional<BoardDesignContainer> getBoardStyleContainer() const;

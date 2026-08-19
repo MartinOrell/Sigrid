@@ -103,6 +103,31 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
     }
 }
 
+bool WorkWindow::load(const WorkWindowContainer& container){
+
+    if(!m_boards.setSize(container.boardColumns, container.boardRows)){
+        return false;
+    }
+
+    updateBoardLayout();
+
+    m_boards.selectLast();
+
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getTextureSize());
+    }
+    return true;
+}
+
+WorkWindowContainer WorkWindow::getContainer() const{
+
+    WorkWindowContainer container;
+    container.boardColumns = m_boards.currentDisplayColumns();
+    container.boardRows = m_boards.currentDisplayRows();
+
+    return container;
+}
+
 void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
 
     m_boardSelectHighlight.hide();

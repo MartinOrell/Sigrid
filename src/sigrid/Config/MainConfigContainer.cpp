@@ -109,6 +109,16 @@ bool MainConfigContainer::load(const std::string& filename){
                 return false;
             }
         }
+        else if(key == "WorkWindow:"){
+
+            if(!workWindow.load(is)){
+
+                std::cerr << "MainConfigContainer: Failed to load WorkWindow."
+                    << " Failed to load MainConfigContainer from file: \""
+                    << filename << "\"" << std::endl;
+                return false;
+            }
+        }
         else if(key == "ToolWindow:"){
 
             if(!toolWindow.load(is)){
@@ -255,6 +265,11 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
     out.append(indent0);
     out.append("Menu: ");
     out.append(this->menuData.getString(indentLevel));
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("WorkWindow: ");
+    out.append(this->workWindow.getString(indentLevel));
 
     out.append("\n");
     out.append(indent0);
