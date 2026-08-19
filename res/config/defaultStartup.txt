@@ -558,8 +558,10 @@ BoardStyle: [
     visibility: Hidden
   ]
 ]
-resetFilename: res/config/setupBoards/chess.txt
-defaultImageFilename: saveData/boards/images/board.png
+DefaultBoard: [
+  stateFilename: res/config/setupBoards/chess.txt
+  imageFilename: saveData/boards/images/board.png
+]
 Board: [
   stateFilename: saveData/boards/board.txt
   imageFilename: saveData/boards/images/board.png

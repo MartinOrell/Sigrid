@@ -159,29 +159,15 @@ bool MainConfigContainer::load(const std::string& filename){
                 return false;
             }
         }
-        else if(key == "resetFilename:"){
+        else if(key == "DefaultBoard:"){
 
-            const auto resetBoardFilename_o = is.readString();
-            if(resetBoardFilename_o == std::nullopt){
+            if(!this->defaultBoard.load(is)){
 
-                std::cerr << "MainConfigContainer: Failed to read string for resetBoardFilename."
+                std::cerr << "MainConfigContainer: Failed to load default Board."
                     << " Failed to load MainConfigContainer from file: \""
                     << filename << "\"" << std::endl;
                 return false;
             }
-            resetBoardFilename = resetBoardFilename_o.value();
-        }
-        else if(key == "defaultImageFilename:"){
-
-            const auto defaultBoardImageFilename_o = is.readString();
-            if(defaultBoardImageFilename_o == std::nullopt){
-
-                std::cerr << "MainConfigContainer: Failed to read read string for defaultBoardImageFilename."
-                    << " Failed to load MainConfigContainer from file: \""
-                    << filename << "\"" << std::endl;
-                return false;
-            }
-            defaultBoardImageFilename = defaultBoardImageFilename_o.value();
         }
         else if(key == "Board:"){
 
@@ -287,13 +273,8 @@ sigrid::String sigrid_config::MainConfigContainer::getString(const int& indentLe
 
     out.append("\n");
     out.append(indent0);
-    out.append("resetFilename: ");
-    out.append(this->resetBoardFilename);
-
-    out.append("\n");
-    out.append(indent0);
-    out.append("defaultImageFilename: ");
-    out.append(this->defaultBoardImageFilename);
+    out.append("DefaultBoard: ");
+    out.append(defaultBoard.getString(indentLevel));
 
     if(this->boards.size() == 1){
 

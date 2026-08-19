@@ -39,9 +39,8 @@ struct MainConfigContainer{
     sigrid::ToolContainer extra1ClickTool;
     sigrid::ToolContainer extra2ClickTool;
 
+    sigrid::BoardContainer defaultBoard;
     sigrid_list::Vector<sigrid::BoardContainer> boards;
-    sigrid::String resetBoardFilename;
-    sigrid::String defaultBoardImageFilename;
 };
 
 }  // namespace sigrid
