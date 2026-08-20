@@ -48,7 +48,7 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                     << filename << "\"" << std::endl;
                 return false;
             }
-            columns = columns_o.value();
+            this->columns = columns_o.value();
         }
         else if(key == "Rows:"){
 
@@ -60,11 +60,11 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                     << filename << "\"" << std::endl;
                 return false;
             }
-            rows = rows_o.value();
+            this->rows = rows_o.value();
         }
         else if(key == "RepeatTileColors:"){
 
-            if(!sigrid::loadValues<int>(repeatTileColorIds, is)){
+            if(!sigrid::loadValues<int>(this->repeatTileColorIds, is)){
 
                 std::cerr << "BoardStateContainer: Failed to load RepeatTileColors."
                     << " Failed to load BoardStateContainer from file: \""
@@ -83,7 +83,7 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                 return false;
             }
 
-            logicPieces.push_back(pieceContainer);
+            this->logicPieces.push_back(pieceContainer);
         }
         else if(key == "Circle:"){
 
@@ -96,7 +96,7 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                 return false;
             }
 
-            logicCircles.push_back(circleContainer);
+            this->logicCircles.push_back(circleContainer);
         }
         else if(key == "Arrow:"){
 
@@ -109,7 +109,19 @@ bool BoardStateContainer::load(const sigrid::String& filename){
                 return false;
             }
 
-            logicArrows.push_back(arrowContainer);
+            this->logicArrows.push_back(arrowContainer);
+        }
+        else if(key == "TurnToMove:"){
+
+            const auto turnToMove_o = is.readInt();
+            if(turnToMove_o == std::nullopt){
+
+                std::cerr << "BoardStateContainer: Failed to read turnToMove."
+                    << " Failed to load BoardStateContainer from file: \""
+                    << filename << "\"" << std::endl;
+                return false;
+            }
+            this->turnToMove = turnToMove_o.value();
         }
         else{
             std::cerr << "BoardStateContainer: Unknown key: \"" << key << "\"."
@@ -143,6 +155,9 @@ std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& b
     for(const auto& arrowData: boardState.logicArrows){
         out << "\n" << arrowData;
     }
+
+    out << "\nTurnToMove: " << boardState.turnToMove;
+
     return out;
 }
 
@@ -152,4 +167,5 @@ void sigrid::BoardStateContainer::clear(){
     logicPieces.clear();
     logicCircles.clear();
     logicArrows.clear();
+    turnToMove = 0;
 }

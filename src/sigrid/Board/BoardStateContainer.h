@@ -20,6 +20,7 @@ struct BoardStateContainer{
     sigrid_list::Vector<PieceDataContainer> logicPieces;
     sigrid_list::Vector<CircleDataContainer> logicCircles;
     sigrid_list::Vector<ArrowDataContainer> logicArrows;
+    int turnToMove = 0;
 };
 
 }  // namespace sigrid

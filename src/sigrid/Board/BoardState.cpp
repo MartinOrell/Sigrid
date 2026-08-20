@@ -11,7 +11,7 @@ bool BoardState::load(const BoardStateContainer& data){
     m_tileLayer.clear();
     m_pieceLayer.clear();
     m_arrowLayer.clear();
-    m_turnToMove = 0;
+    m_turnToMove = data.turnToMove;
 
     if(data.repeatTileColorIds.size() == 0){
         std::cerr << "BoardState: Failed to setup LogicBoard: Default tile colors not set" << std::endl;
@@ -97,6 +97,7 @@ BoardStateContainer BoardState::getContainer() const{
     container.logicPieces = m_pieceLayer.getPiecesContainer();
     container.logicCircles = m_pieceLayer.getCirclesContainer();
     container.logicArrows = m_arrowLayer.getContainer();
+    container.turnToMove = m_turnToMove;
     return container;
 }
 
