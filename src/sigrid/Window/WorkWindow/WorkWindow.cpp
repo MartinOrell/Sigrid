@@ -13,6 +13,47 @@
 
 using namespace sigrid;
 
+bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardContainers){
+
+    int id = 0;
+    for(const auto& boardContainer: boardContainers){
+
+        BoardStateContainer boardStateData;
+
+        if(std::filesystem::exists(boardContainer.stateFilename.getStdString())){
+        
+            if(boardStateData.load(boardContainer.stateFilename)){
+                std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
+            }
+            else if (boardStateData.load(m_resetBoardFilename)){
+                std::cerr << "WorkWindow: Failed reading Board data: " << boardContainer.stateFilename << std::endl;
+                std::cerr << "Board data: " << m_resetBoardFilename << " loaded instead" << std::endl;
+            }
+            else{
+                std::cerr << "WorkWindow: Failed reading both " << boardContainer.stateFilename
+                << " and " << m_resetBoardFilename << "." << std::endl;
+                std::cerr << "Main Window failed creating board." << std::endl;
+                return false;
+            }
+        }
+        else if (boardStateData.load(m_resetBoardFilename)){
+            std::cout << "Board data: " << m_resetBoardFilename << " loaded" << std::endl;
+        }
+        else{
+            std::cerr << "WorkWindow: Failed reading " << m_resetBoardFilename << std::endl;
+            std::cerr << "WorkWindow: Failed creating board." << std::endl;
+            return false;
+        }
+
+        loadBoard(id, boardContainer);
+        loadBoardState(id, boardStateData);
+        std::cout << "Save location: " << getSaveFilename() << std::endl;
+
+        ++id;
+    }
+    return true;
+}
+
 void WorkWindow::loadBoard(const int& id, const BoardContainer& container){
 
     if(m_boards.size() == 0){

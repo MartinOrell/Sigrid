@@ -140,45 +140,12 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     m_workWindow->setArrowColorManagerPtr(m_arrowColorManagerPtr.get());
     m_workWindow->setFontManagerPtr(m_fontManagerPtr.get());
     m_workWindow->loadGraphicData(config.boardData);
-
-    {
-        int id = 0;
-        for(const auto& boardContainer: config.boards){
-
-            BoardStateContainer boardStateData;
-
-            if(std::filesystem::exists(boardContainer.stateFilename.getStdString())){
-            
-                if(boardStateData.load(boardContainer.stateFilename)){
-                    std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
-                }
-                else if (boardStateData.load(config.defaultBoard.stateFilename)){
-                    std::cerr << "MainWindow: Failed reading Board data: " << boardContainer.stateFilename << std::endl;
-                    std::cerr << "Board data: " << config.defaultBoard.stateFilename << " loaded instead" << std::endl;
-                }
-                else{
-                    std::cerr << "MainWindow: Failed reading both " << boardContainer.stateFilename
-                    << " and " << config.defaultBoard.stateFilename << "." << std::endl;
-                    std::cerr << "Main Window failed creating board." << std::endl;
-                    return false;
-                }
-            }
-            else if (boardStateData.load(config.defaultBoard.stateFilename)){
-                std::cout << "Board data: " << config.defaultBoard.stateFilename << " loaded" << std::endl;
-            }
-            else{
-                std::cerr << "MainWindow: Failed reading " << config.defaultBoard.stateFilename << std::endl;
-                std::cerr << "MainWindow: Failed creating board." << std::endl;
-                return false;
-            }
-
-            m_workWindow->loadBoard(id, boardContainer);
-            m_workWindow->loadBoardState(id, boardStateData);
-            std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
-
-            ++id;
-        }
+    
+    if(!m_workWindow->loadBoards(config.boards)){
+        std::cerr << "MainWindow: Failed to load boards" << std::endl;
+        return false;
     }
+    
     m_workWindow->load(config.workWindow);
 
     sigrid::String title = m_workWindow->getName();

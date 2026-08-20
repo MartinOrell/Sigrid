@@ -32,6 +32,8 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(const WorkWindow&) = default;
     WorkWindow& operator=(WorkWindow&&) = default;
 
+    bool loadBoards(const sigrid_list::Vector<BoardContainer> boardContainers);
+
     void loadBoard(const int& id, const BoardContainer& container);
 
     void setResetBoardFilename(const sigrid::String& filename);
