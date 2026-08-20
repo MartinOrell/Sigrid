@@ -26,13 +26,13 @@ bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardConta
                 std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
             }
             else if (boardStateData.load(m_resetBoardFilename)){
-                std::cerr << "WorkWindow: Failed reading Board data: " << boardContainer.stateFilename << std::endl;
+                std::cerr << "WorkWindow: Failed to read Board data: " << boardContainer.stateFilename << std::endl;
                 std::cerr << "Board data: " << m_resetBoardFilename << " loaded instead" << std::endl;
             }
             else{
-                std::cerr << "WorkWindow: Failed reading both " << boardContainer.stateFilename
+                std::cerr << "WorkWindow: Failed to read both " << boardContainer.stateFilename
                 << " and " << m_resetBoardFilename << "." << std::endl;
-                std::cerr << "Main Window failed creating board." << std::endl;
+                std::cerr << "WorkWindow: Failed to load board." << std::endl;
                 return false;
             }
         }
@@ -40,8 +40,8 @@ bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardConta
             std::cout << "Board data: " << m_resetBoardFilename << " loaded" << std::endl;
         }
         else{
-            std::cerr << "WorkWindow: Failed reading " << m_resetBoardFilename << std::endl;
-            std::cerr << "WorkWindow: Failed creating board." << std::endl;
+            std::cerr << "WorkWindow: Failed to read " << m_resetBoardFilename << std::endl;
+            std::cerr << "WorkWindow: Failed to load board." << std::endl;
             return false;
         }
 

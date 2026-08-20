@@ -12,6 +12,7 @@ struct BoardStateContainer{
 
     bool load(const sigrid::String& filename);
     friend std::ostream& operator<<(std::ostream& out, const BoardStateContainer& boardState);
+    void clear();
 
     int columns;
     int rows;

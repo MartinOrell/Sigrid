@@ -25,6 +25,7 @@ bool BoardStateContainer::load(const sigrid::String& filename){
         is.set(std::move(ifs));
     }
 
+    clear();
     while(!(is.isEndOfFile())){
 
         const auto key_o = is.readString();
@@ -143,4 +144,12 @@ std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& b
         out << "\n" << arrowData;
     }
     return out;
+}
+
+void sigrid::BoardStateContainer::clear(){
+
+    repeatTileColorIds.clear();
+    logicPieces.clear();
+    logicCircles.clear();
+    logicArrows.clear();
 }
