@@ -172,7 +172,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
                 return false;
             }
 
-            m_workWindow->setBoardFilename(id, boardContainer.stateFilename);
+            m_workWindow->loadBoard(id, boardContainer);
             m_workWindow->loadBoardState(id, boardStateData);
             std::cout << "Save location: " << m_workWindow->getSaveFilename() << std::endl;
 

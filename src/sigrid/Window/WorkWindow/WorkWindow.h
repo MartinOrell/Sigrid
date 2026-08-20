@@ -32,7 +32,7 @@ class WorkWindow: public sf::Drawable{
     WorkWindow& operator=(const WorkWindow&) = default;
     WorkWindow& operator=(WorkWindow&&) = default;
 
-    void setBoardFilename(const int& id, const sigrid::String& filename);
+    void loadBoard(const int& id, const BoardContainer& container);
 
     void setResetBoardFilename(const sigrid::String& filename);
     const sigrid::String& getResetBoardFilename() const;

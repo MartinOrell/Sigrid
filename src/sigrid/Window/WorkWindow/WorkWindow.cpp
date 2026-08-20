@@ -13,7 +13,7 @@
 
 using namespace sigrid;
 
-void WorkWindow::setBoardFilename(const int& id, const sigrid::String& filename){
+void WorkWindow::loadBoard(const int& id, const BoardContainer& container){
 
     if(m_boards.size() == 0){
         Board board;
@@ -36,7 +36,8 @@ void WorkWindow::setBoardFilename(const int& id, const sigrid::String& filename)
     }
     auto& board = board_o.value().get();
 
-    board.setFilename(filename);
+    board.setFilename(container.stateFilename);
+    board.setImageFilename(container.imageFilename);
 }
 
 void WorkWindow::setResetBoardFilename(const sigrid::String& filename){
