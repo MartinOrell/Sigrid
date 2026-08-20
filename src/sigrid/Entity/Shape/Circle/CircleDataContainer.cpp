@@ -25,9 +25,15 @@ bool sigrid::CircleDataContainer::load(sigrid::InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::CircleDataContainer& circle){
+sigrid::String sigrid::CircleDataContainer::getString() const{
 
-    out << "Circle: " << circle.colorId
-        << " " << circle.position;
+    sigrid::String colorIdString;
+    colorIdString.set(std::to_string(this->colorId));
+
+    sigrid::String out;
+    out.append(colorIdString);
+    out.append(" ");
+    out.append(this->position);
+
     return out;
 }

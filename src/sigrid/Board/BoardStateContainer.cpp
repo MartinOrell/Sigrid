@@ -6,10 +6,7 @@
 #include "sigrid/utilities/InputStream/InputStream.h"
 #include "sigrid/utilities/lists/listLoaders/LoadValues.h"
 
-using namespace sigrid;
-
-
-bool BoardStateContainer::load(const sigrid::String& filename){
+bool sigrid::BoardStateContainer::load(const sigrid::String& filename){
 
     sigrid::InputStream is;
     {
@@ -133,30 +130,72 @@ bool BoardStateContainer::load(const sigrid::String& filename){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const BoardStateContainer& boardState){
+sigrid::String sigrid::BoardStateContainer::getString(const int& indentLevel) const{
 
-    out << "Columns: " << boardState.columns << "\n";
-    out << "Rows: " << boardState.rows << "\n";
-    out << "RepeatTileColors: [";
-
-    for(auto& tileId: boardState.repeatTileColorIds){
-        out << " " << tileId;
-    }
-    out << " ]";
-
-    for(const auto& pieceData: boardState.logicPieces){
-        out << "\n" << pieceData;
+    sigrid::String indent0;
+    for(int i = 0; i < indentLevel; ++i){
+        indent0.append("  ");
     }
 
-    for(const auto& circleData: boardState.logicCircles){
-        out << "\n" << circleData;
+    sigrid::String columnsString;
+    columnsString.set(std::to_string(this->columns));
+
+    sigrid::String rowsString;
+    rowsString.set(std::to_string(this->rows));
+
+    sigrid::String turnToMoveString;
+    turnToMoveString.set(std::to_string(this->turnToMove));
+
+    sigrid::String out;
+
+    out.append("Columns: ");
+    out.append(columnsString);
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("Rows: ");
+    out.append(rowsString);
+
+    if(this->repeatTileColorIds.size() > 0){
+        out.append("\n");
+        out.append(indent0);
+        out.append("RepeatTileColors: [");
+        for(auto& tileId: this->repeatTileColorIds){
+
+            sigrid::String tileIdString;
+            tileIdString.set(std::to_string(tileId));
+
+            out.append(" ");
+            out.append(tileIdString);
+        }
+        out.append(" ]");
+    }
+    
+    for(const auto& pieceData: this->logicPieces){
+        out.append("\n");
+        out.append(indent0);
+        out.append("Piece: ");
+        out.append(pieceData.getString());
     }
 
-    for(const auto& arrowData: boardState.logicArrows){
-        out << "\n" << arrowData;
+    for(const auto& circleData: this->logicCircles){
+        out.append("\n");
+        out.append(indent0);
+        out.append("Circle: ");
+        out.append(circleData.getString());
     }
 
-    out << "\nTurnToMove: " << boardState.turnToMove;
+    for(const auto& arrowData: this->logicArrows){
+        out.append("\n");
+        out.append(indent0);
+        out.append("Arrow: ");
+        out.append(arrowData.getString());
+    }
+
+    out.append("\n");
+    out.append(indent0);
+    out.append("TurnToMove: ");
+    out.append(turnToMoveString);
 
     return out;
 }

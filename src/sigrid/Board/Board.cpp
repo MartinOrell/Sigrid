@@ -587,7 +587,7 @@ void Board::save(){
 
     BoardStateContainer boardStateContainer = m_state.getContainer();
 
-    out << boardStateContainer;
+    out << boardStateContainer.getString(0).getStdString();
 
     std::cout << "Saved " << m_filename << std::endl;
 

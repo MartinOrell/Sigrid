@@ -34,11 +34,17 @@ bool sigrid::PieceDataContainer::load(sigrid::InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream &out, const PieceDataContainer &piece)
-{
-    out << "Piece: " << piece.colorId
-        << " " << piece.name
-        << " " << piece.position;
+sigrid::String sigrid::PieceDataContainer::getString() const{
+
+    sigrid::String colorIdString;
+    colorIdString.set(std::to_string(this->colorId));
+
+    sigrid::String out;
+    out.append(colorIdString);
+    out.append(" ");
+    out.append(this->name);
+    out.append(" ");
+    out.append(this->position);
 
     return out;
 }

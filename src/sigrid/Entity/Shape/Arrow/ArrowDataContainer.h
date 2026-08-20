@@ -8,7 +8,7 @@ namespace sigrid{
 struct ArrowDataContainer{
 
     bool load(sigrid::InputStream& is);
-    friend std::ostream& operator<<(std::ostream& out, const ArrowDataContainer& arrow);
+    sigrid::String getString() const;
 
     int colorId;
     sigrid::String position;

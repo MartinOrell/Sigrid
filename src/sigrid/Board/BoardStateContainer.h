@@ -11,7 +11,7 @@ namespace sigrid{
 struct BoardStateContainer{
 
     bool load(const sigrid::String& filename);
-    friend std::ostream& operator<<(std::ostream& out, const BoardStateContainer& boardState);
+    sigrid::String getString(const int& indentLevel) const;
     void clear();
 
     int columns;

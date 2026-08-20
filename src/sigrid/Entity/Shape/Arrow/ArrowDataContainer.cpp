@@ -25,9 +25,15 @@ bool sigrid::ArrowDataContainer::load(sigrid::InputStream& is){
     return true;
 }
 
-std::ostream& sigrid::operator<<(std::ostream& out, const sigrid::ArrowDataContainer& arrow){
+sigrid::String sigrid::ArrowDataContainer::getString() const{
 
-    out << "Arrow: " << arrow.colorId
-        << " " << arrow.position;
+    sigrid::String colorIdString;
+    colorIdString.set(std::to_string(this->colorId));
+
+    sigrid::String out;
+    out.append(colorIdString);
+    out.append(" ");
+    out.append(this->position);
+
     return out;
 }
