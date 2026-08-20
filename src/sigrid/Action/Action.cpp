@@ -32,7 +32,7 @@ std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
     }
 
     if(name == "save"){
-        return sigrid_action::SaveBoard{};
+        return sigrid_action::SaveAll{};
     }
     else if(name == "saveSettings"){
         return sigrid_action::SaveSettings{};
@@ -273,7 +273,7 @@ sigrid::String sigrid_action::getString(const Action& action){
     else if(std::holds_alternative<sigrid_action::GotoDownBoard>(action)){
         return "gotoDownBoard";
     }
-    else if(std::holds_alternative<sigrid_action::SaveBoard>(action)){
+    else if(std::holds_alternative<sigrid_action::SaveAll>(action)){
         return "save";
     }
     else if(std::holds_alternative<sigrid_action::SaveSettings>(action)){

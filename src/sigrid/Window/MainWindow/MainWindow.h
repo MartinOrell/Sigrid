@@ -79,6 +79,7 @@ class MainWindow{
     void gotoLeftBoard();
     void gotoUpBoard();
     void gotoDownBoard();
+    void saveAll();
     void saveBoard();
     void saveSettings();
     void savePdf();

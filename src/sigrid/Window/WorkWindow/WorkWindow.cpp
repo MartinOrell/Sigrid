@@ -830,6 +830,13 @@ void WorkWindow::gotoDownBoard(){
     }
 }
 
+void WorkWindow::saveBoards(){
+
+    for(auto& board: m_boards){
+        board.save();
+    }
+}
+
 void WorkWindow::saveBoard(){
 
     auto board_o = m_boards.atSelection();

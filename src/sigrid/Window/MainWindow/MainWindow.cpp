@@ -92,7 +92,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
 
     sigrid_action::Action ctrlNTool(sigrid_action::NewBoard{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::N, std::move(ctrlNTool));
-    sigrid_action::Action ctrlSTool(sigrid_action::SaveBoard{});
+    sigrid_action::Action ctrlSTool(sigrid_action::SaveAll{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::S, std::move(ctrlSTool));
     sigrid_action::Action ctrlCTool(sigrid_action::CopyFen{});
     m_inputHandler.addCtrlTool(sf::Keyboard::Key::C, std::move(ctrlCTool));
@@ -670,6 +670,10 @@ void MainWindow::handleAction(const sigrid_action::Action action){
         gotoDownBoard();
         return;
     }
+    else if(std::holds_alternative<sigrid_action::SaveAll>(action)){
+        saveAll();
+        return;
+    }
     else if(std::holds_alternative<sigrid_action::SaveBoard>(action)){
         saveBoard();
         return;
@@ -1201,6 +1205,17 @@ void MainWindow::gotoDownBoard(){
     m_workWindow->gotoDownBoard();
     sigrid::String title = m_workWindow->getName();
     m_window.setTitle(title.getStdString());
+}
+
+void MainWindow::saveAll(){
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to save boards, workwindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->saveBoards();
+    saveSettings();
 }
 
 void MainWindow::saveBoard(){

@@ -101,6 +101,7 @@ class WorkWindow: public sf::Drawable{
     void gotoUpBoard();
     void gotoDownBoard();
 
+    void saveBoards();
     void saveBoard();
     void savePdf();
 
