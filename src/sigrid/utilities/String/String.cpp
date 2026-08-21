@@ -191,7 +191,7 @@ bool String::isUpper(){
 void String::toUpper(){
 
     for(auto& c: m_string){
-        std::toupper(c);
+        c = std::toupper(c);
     }
 }
 
@@ -205,7 +205,7 @@ sigrid::String String::getUpper() const{
 void String::toLower(){
 
     for(auto& c: m_string){
-        std::tolower(c);
+        c = std::tolower(c);
     }
 }
 
