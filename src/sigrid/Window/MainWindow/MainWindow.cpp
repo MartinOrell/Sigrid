@@ -1264,7 +1264,11 @@ void MainWindow::saveSettings(){
         }
     }
 
-    settingsContainer.menuData = m_menu->getContainer();
+    auto menuDataContainer_o = m_menu->getContainer();
+    if(menuDataContainer_o != std::nullopt){
+        settingsContainer.menuData = std::move(menuDataContainer_o.value());
+    }
+
     settingsContainer.workWindow = m_workWindow->getContainer();
     settingsContainer.toolWindow = m_toolWindow->getContainer();
     settingsContainer.toolPickerData = m_toolPickerWindow->getContainer();

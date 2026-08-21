@@ -8,7 +8,9 @@
 #include <SFML/System/Vector2.hpp>
 #include "sigrid/Action/Action.h"
 
+#include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/utilities/lists/Vector2D.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
 #include "sigrid/Menu/MenuItem.h"
@@ -31,7 +33,7 @@ class Menu: public sf::Drawable{
     void setFontManagerPtr(FontManager* const managerPtr);
 
     bool load(const MenuContainer& menuData);
-    MenuContainer getContainer() const;
+    std::optional<MenuContainer> getContainer() const;
 
     void createGraphic(const sf::Vector2f& size);
 
@@ -75,11 +77,6 @@ class Menu: public sf::Drawable{
 
   private:
 
-    struct PosIndex{
-        int x = -1;
-        int y = -1;
-    };
-
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     void addSuperHeaderGraphic();
@@ -90,7 +87,9 @@ class Menu: public sf::Drawable{
 
     float getTopPos();
     float getBottomPos();
-    std::optional<PosIndex> getMenuItemPosIndex(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getMenuItemPosIndex(const sf::Vector2f& point);
+
+    void printItemKeys() const;
 
     FontManager* m_fontManagerPtr = nullptr;
 
@@ -100,7 +99,7 @@ class Menu: public sf::Drawable{
 
     sigrid_list::Map<sigrid::String, MenuItem> m_items;
 
-    std::vector<std::vector<sigrid::String>> m_itemKeys;
+    sigrid_list::Vector2D<sigrid::String> m_itemKeys;
 
     sigrid_list::Map<sigrid::String, LayoutItem> m_layoutItems;
 

@@ -111,22 +111,38 @@ bool Menu::load(const MenuContainer& menuData){
     return true;
 }
 
-MenuContainer Menu::getContainer() const{
+std::optional<MenuContainer> Menu::getContainer() const{
     
     MenuContainer menuContainer;
     menuContainer.isPinned = m_isPinned;
     menuContainer.fontName = m_fontFilename;
     menuContainer.title = m_superHeader.getName();
 
-    int nextPriority = m_itemKeys.size()-1;
-    for(const auto& header: m_itemKeys){
-        HeaderContainer headerContainer;
-        headerContainer.name = header.front();
+    int nextPriority = m_itemKeys.numColumns()-1;
+    for(int x = 0; x < m_itemKeys.numColumns(); ++x){
 
-        for(int i = 1; i < header.size(); ++i){
+        HeaderContainer headerContainer;
+
+        auto headerName_o = m_itemKeys.at({x,0});
+        if(headerName_o == std::nullopt){
+            std::cerr << "Menu: Failed to get headername " << x << "."
+                << " Failed to get MenuContainer" << std::endl;
+            return std::nullopt;
+        }
+        sigrid::String headerName = headerName_o.value();
+
+        headerContainer.name = headerName;
+
+        for(int y = 1; y < m_itemKeys.numRows(x); y++){
 
             ++nextPriority;
-            sigrid::String itemKey = header.at(i);
+            auto itemKey_o = m_itemKeys.at({x,y});
+            if(itemKey_o == std::nullopt){
+                std::cerr << "Menu: Failed to get itemKey " << sigrid_coord::Coord{x,y}.getNotation() << "."
+                    << " Failed to get MenuContainer" << std::endl;
+                return std::nullopt;
+            }
+            sigrid::String itemKey = itemKey_o.value();
             const auto item_o = m_items.at(itemKey);
             if(item_o == std::nullopt){
                 std::cerr << "Menu: item at " << itemKey << " not found."
@@ -182,7 +198,8 @@ MenuContainer Menu::getContainer() const{
 
             headerContainer.items.push_back(std::move(itemContainer));
         }
-        auto headerItems_o = m_items.at(header.front());
+
+        auto headerItems_o = m_items.at(headerName);
 
         menuContainer.headers.push_back(std::move(headerContainer));
     }
@@ -207,10 +224,10 @@ void Menu::createGraphic(const sf::Vector2f& size){
 
     addSuperHeaderGraphic();
 
-    for(int i = 0; i < m_itemKeys.size(); i++){
-        addHeaderGraphic(i);
-        for(int j = 1; j < m_itemKeys.at(i).size(); j++){
-            addItemGraphic(i,j);
+    for(int x = 0; x < m_itemKeys.numColumns(); ++x){
+        addHeaderGraphic(x);
+        for(int y = 1; y < m_itemKeys.numRows(x); ++y){
+            addItemGraphic(x,y);
         }
     }
 
@@ -236,7 +253,7 @@ bool Menu::isCollapsed() const{
 
 std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position){
 
-    std::optional<sigrid::Menu::PosIndex> itemId_o = getMenuItemPosIndex(position);
+    std::optional<sigrid_coord::Coord> itemId_o = getMenuItemPosIndex(position);
     if(itemId_o == std::nullopt){
         if(m_showHeaderIndex != -1){
             m_showHeaderIndex = -1;
@@ -244,7 +261,8 @@ std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position)
         }
         return std::nullopt;
     }
-    sigrid::Menu::PosIndex id = itemId_o.value();
+
+    sigrid_coord::Coord id = itemId_o.value();
     if(id.x == -1){
         if(m_isPinned){
             return std::nullopt;
@@ -257,7 +275,15 @@ std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position)
         redrawTexture();
     }
 
-    auto item_o = m_items.at(m_itemKeys.at(id.x).at(id.y));
+    auto itemKey_o = m_itemKeys.at(id);
+    if(itemKey_o == std::nullopt){
+        std::cerr << "Menu: Failed to get itemKey " << id.getNotation() << "."
+            << " Failed to get action from click on Menu" << std::endl;
+        return std::nullopt;
+    }
+    sigrid::String itemKey = itemKey_o.value();
+
+    auto item_o = m_items.at(itemKey);
 
     if(item_o == std::nullopt){
         return std::nullopt;
@@ -360,9 +386,11 @@ void Menu::addHeader(const sigrid::String& name){
 
     m_items.insert(name, std::move(newItem));
 
-    std::vector<sigrid::String> itemKeyList;
-    itemKeyList.push_back(name);
-    m_itemKeys.push_back(itemKeyList);
+    {
+        int x = m_itemKeys.numColumns();
+        m_itemKeys.addColumn();
+        m_itemKeys.push_back(x, name);
+    }
 
     LayoutItem layoutItem;
     layoutItem.headerIndex = id;
@@ -390,9 +418,6 @@ void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigr
         return;
     }
 
-    assert(m_itemKeys.size()-1 >= headerIndex);
-    assert(m_itemKeys.at(headerIndex).size() > 0);
-
     MenuItem newItem;
     newItem.setName(name);
     newItem.setFont(*(fontPtr_o.value()));
@@ -400,7 +425,7 @@ void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigr
 
     m_items.insert(name, std::move(newItem));
 
-    m_itemKeys.at(headerIndex).push_back(name);
+    m_itemKeys.push_back(headerIndex, name);
 
     LayoutItem layoutItem;
     layoutItem.headerIndex = headerIndex;
@@ -408,7 +433,7 @@ void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigr
     m_layoutItems.insert(name, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
-        int itemIndex = m_itemKeys.at(headerIndex).size()-1;
+        int itemIndex = m_itemKeys.numRows(headerIndex)-1;
         addItemGraphic(headerIndex, itemIndex);
     }
 }
@@ -429,9 +454,6 @@ void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const
         return;
     }
 
-    assert(m_itemKeys.size()-1 >= headerIndex);
-    assert(m_itemKeys.at(headerIndex).size() > 0);
-
     MenuItem newItem;
     newItem.setName(text0);
     newItem.setFont(*(fontPtr_o.value()));
@@ -440,7 +462,7 @@ void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const
 
     m_items.insert(key, std::move(newItem));
 
-    m_itemKeys.at(headerIndex).push_back(key);
+    m_itemKeys.push_back(headerIndex,key);
 
     LayoutItem layoutItem;
     layoutItem.headerIndex = headerIndex;
@@ -448,7 +470,7 @@ void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const
     m_layoutItems.insert(key, std::move(layoutItem));
 
     if(m_texture.isInitialized()){
-        int itemIndex = m_itemKeys.at(headerIndex).size()-1;
+        int itemIndex = m_itemKeys.numRows(headerIndex)-1;
         addItemGraphic(headerIndex, itemIndex);
     }
 
@@ -479,10 +501,20 @@ void Menu::hideItem(const sigrid::String& key){
         return;
     }
 
-    for(int i = 0; i < m_itemKeys.size(); i++){
-        for(auto it2 = m_itemKeys.at(i).begin(); it2 != m_itemKeys.at(i).end(); it2++){
-            if(*it2 == key){
-                m_itemKeys.at(i).erase(it2);
+    for(int x = 0; x < m_itemKeys.numColumns(); ++x){
+        for(int y = 1; y < m_itemKeys.numRows(x); ++y){
+            
+            auto itemKey_o = m_itemKeys.at({x,y});
+            if(itemKey_o == std::nullopt){
+                std::cerr << "Menu: Failed to get item key "
+                    << sigrid_coord::Coord{x,y}.getNotation() << "."
+                    << " Failed to hide item" << std::endl;
+                continue;
+            }
+            sigrid::String& itemKey = itemKey_o.value().get();
+
+            if(itemKey == key){
+                m_itemKeys.erase({x,y});
                 return;
             }
         }
@@ -504,15 +536,25 @@ void Menu::showItem(const sigrid::String& key){
     }
     auto& layoutItem = layoutItem_o.value().get();
 
-    if(m_itemKeys.at(layoutItem.headerIndex).size() == 0){
-        m_itemKeys.at(layoutItem.headerIndex).push_back(key);
+    if(m_itemKeys.numRows(layoutItem.headerIndex) == 0){
+        m_itemKeys.push_back(layoutItem.headerIndex, key);
         return;
     }
 
     int priority = layoutItem.priority;
-    for(auto it2 = m_itemKeys.at(layoutItem.headerIndex).begin(); it2 != m_itemKeys.at(layoutItem.headerIndex).end(); it2++){
-        
-        auto cmpLayoutItem_o = m_layoutItems.at(*it2);
+
+    for(int y = 0; y < m_itemKeys.numRows(layoutItem.headerIndex); ++y){
+
+        auto itemKey_o = m_itemKeys.at({layoutItem.headerIndex, y});
+        if(itemKey_o == std::nullopt){
+            std::cerr << "Menu: Failed to get item key "
+                << sigrid_coord::Coord{layoutItem.headerIndex,y}.getNotation() << "."
+                << " Failed to show item" << std::endl;
+            continue;
+        }
+        sigrid::String& itemKey = itemKey_o.value().get();
+
+        auto cmpLayoutItem_o = m_layoutItems.at(itemKey);
         if(cmpLayoutItem_o == std::nullopt){
             continue;
         }
@@ -520,12 +562,21 @@ void Menu::showItem(const sigrid::String& key){
         
         int cmpPriority = cmpLayoutItem.priority;
         if(priority > cmpPriority){
-            if(it2+1 == m_itemKeys.at(layoutItem.headerIndex).end()){
-                m_itemKeys.at(layoutItem.headerIndex).insert(it2, key);
+            if(y+1 == m_itemKeys.numRows(layoutItem.headerIndex)){
+                m_itemKeys.insert({layoutItem.headerIndex, y}, key);
                 return;
             }
 
-            auto nextCmpLayoutItem_o = m_layoutItems.at(*(it2+1));
+            auto nextItemKey_o = m_itemKeys.at({layoutItem.headerIndex, y+1});
+            if(nextItemKey_o == std::nullopt){
+                std::cerr << "Menu: Failed to get next item key "
+                    << sigrid_coord::Coord{layoutItem.headerIndex,y+1}.getNotation() << "."
+                    << " Failed to show item" << std::endl;
+                continue;
+            }
+            sigrid::String& nextItemKey = nextItemKey_o.value().get();
+
+            auto nextCmpLayoutItem_o = m_layoutItems.at(nextItemKey);
             if(nextCmpLayoutItem_o == std::nullopt){
                 continue;
             }
@@ -533,11 +584,12 @@ void Menu::showItem(const sigrid::String& key){
 
             int nextcmpPriority = nextCmpLayoutItem.priority;
             if(priority < nextcmpPriority){
-                m_itemKeys.at(layoutItem.headerIndex).insert((it2+1), key);
+                m_itemKeys.insert({layoutItem.headerIndex,y+1}, key);
                 return;
             }
         }
     }
+
     std::cerr << "Menu: Unable to find position to show item " << key << std::endl;
 }
 
@@ -562,7 +614,17 @@ void Menu::addHeaderGraphic(const int id){
         return;
     }
 
-    auto header_o = m_items.at(m_itemKeys.at(id).at(0));
+    auto itemKey_o = m_itemKeys.at({id,0});
+    if(itemKey_o == std::nullopt){
+
+        std::cerr << "Menu: Failed to get item key "
+            << sigrid_coord::Coord{id,0}.getNotation() << "."
+            << " Failed to add headerGraphic" << std::endl;
+        return;
+    }
+    sigrid::String itemKey = itemKey_o.value().get();
+
+    auto header_o = m_items.at(itemKey);
     if(header_o == std::nullopt){
         std::cerr << "Menu: Unable to add header graphic. Header id "
             << id << " not found" << std::endl;
@@ -581,7 +643,17 @@ void Menu::addHeaderGraphic(const int id){
         }
     }   
     else{
-        auto leftHeader_o = m_items.at(m_itemKeys.at(id-1).at(0));
+        auto leftHeaderKey_o = m_itemKeys.at({id-1, 0});
+        if(leftHeaderKey_o == std::nullopt){
+
+            std::cerr << "Menu: Failed to get left header key "
+                << sigrid_coord::Coord{id-1,0}.getNotation() << "."
+                << " Failed to add headerGraphic" << std::endl;
+            return;
+        }
+        sigrid::String& leftHeaderKey = leftHeaderKey_o.value().get();
+
+        auto leftHeader_o = m_items.at(leftHeaderKey);
         if(leftHeader_o != std::nullopt){
             auto& leftHeader = leftHeader_o.value().get();
             posX = leftHeader.getPositionRight() + m_itemOffsetX;
@@ -596,7 +668,17 @@ void Menu::addHeaderGraphic(const int id){
 
 void Menu::addItemGraphic(const int headerIndex, const int itemIndex){
 
-    auto item_o = m_items.at(m_itemKeys.at(headerIndex).at(itemIndex));
+    auto itemKey_o = m_itemKeys.at({headerIndex, itemIndex});
+    if(itemKey_o == std::nullopt){
+
+        std::cerr << "Menu: Failed to get item key "
+            << sigrid_coord::Coord{headerIndex,itemIndex}.getNotation() << "."
+            << " Failed to add item graphic" << std::endl;
+        return;
+    }
+    sigrid::String& itemKey = itemKey_o.value().get();
+
+    auto item_o = m_items.at(itemKey);
 
     if(item_o == std::nullopt){
         std::cerr << "Menu: Unable to add item graphic. Item not found." << std::endl;
@@ -604,7 +686,17 @@ void Menu::addItemGraphic(const int headerIndex, const int itemIndex){
     }
     auto& item = item_o.value().get();
 
-    auto header_o = m_items.at(m_itemKeys.at(headerIndex).at(0));
+    auto headerKey_o = m_itemKeys.at({headerIndex, 0});
+    if(headerKey_o == std::nullopt){
+
+        std::cerr << "Menu: Failed to get header key "
+            << sigrid_coord::Coord{headerIndex,0}.getNotation() << "."
+            << " Failed to add item graphic" << std::endl;
+        return;
+    }
+    sigrid::String& headerKey = headerKey_o.value().get();
+
+    auto header_o = m_items.at(headerKey);
     if(header_o == std::nullopt){
         std::cerr << "Menu: Unable to add item graphic. Header not found." << std::endl;
         return;
@@ -631,15 +723,36 @@ void sigrid::Menu::redrawTexture(){
     }
 
     int numRows;
-    if(m_showHeaderIndex >= 0 && m_showHeaderIndex < m_itemKeys.size()){
-        numRows = m_itemKeys.at(m_showHeaderIndex).size();
+    if(m_showHeaderIndex >= 0 && m_showHeaderIndex < m_itemKeys.numColumns()){
+        numRows = m_itemKeys.numRows(m_showHeaderIndex);
     }
     else{
         numRows = 1;
     }
 
+    if(numRows <= 0){
+
+        std::cerr << "Menu: Invalid number of item rows: " << numRows
+            << " redraw Menu texture failed." << std::endl;
+        return;
+    }
+
     float textureSizeX = m_texture.getTextureSize().x;
     float textureSizeY = m_lineHeight*(float)numRows;
+
+    if(textureSizeX <= 0.f){
+        std::cerr << "Menu: texture width is " << textureSizeX
+            << " which is an invalid width."
+            << " redraw Menu texture failed." << std::endl;
+        return;
+    }
+
+    if(textureSizeY <= 0.f){
+        std::cerr << "Menu: texture height is " << textureSizeY
+            << " which is an invalid height."
+            << " redraw Menu texture failed." << std::endl;
+        return;
+    }
 
     m_texture.setSize(sf::Vector2f{textureSizeX, textureSizeY});
 
@@ -654,8 +767,18 @@ void sigrid::Menu::redrawTexture(){
         return;
     }
 
-    for(int i = 0; i < m_itemKeys.size(); i++){
-        auto item_o = m_items.at(m_itemKeys.at(i).at(0));
+    for(int i = 0; i < m_itemKeys.numColumns(); i++){
+
+        auto itemKey_o = m_itemKeys.at({i,0});
+        if(itemKey_o == std::nullopt){
+            std::cerr << "Menu: Failed to get header key "
+                << sigrid_coord::Coord{i,0}.getNotation() << "."
+                << " Failed to redraw texture" << std::endl;
+            continue;
+        }
+        sigrid::String& itemKey = itemKey_o.value().get();
+
+        auto item_o = m_items.at(itemKey);
         if(item_o == std::nullopt){
             std::cerr << "Menu: Missing header " << i << std::endl;
             continue;
@@ -669,8 +792,19 @@ void sigrid::Menu::redrawTexture(){
         return;
     }
 
-    for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
-        auto item_o = m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i));
+    for(int i = 1; i < m_itemKeys.numRows(m_showHeaderIndex); i++){
+
+        auto itemKey_o = m_itemKeys.at({m_showHeaderIndex, i});
+        if(itemKey_o == std::nullopt){
+
+            std::cerr << "Menu: Failed to get item key "
+                << sigrid_coord::Coord{m_showHeaderIndex,i}.getNotation() << "."
+                << " Failed to redrawTexture" << std::endl;
+            continue;
+        }
+        sigrid::String& itemKey = itemKey_o.value().get();
+
+        auto item_o = m_items.at(itemKey);
         if(item_o == std::nullopt){
             std::cerr << "Menu: Missing item "
                 << m_showHeaderIndex << " " << i << std::endl;
@@ -691,9 +825,10 @@ float sigrid::Menu::getBottomPos(){
     return m_texture.getBottomPosition();
 }
 
-std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> Menu::getMenuItemPosIndex(const sf::Vector2f& point){
+    
     if(!m_isPinned && m_superHeader.isWithin(point, getTopPos(), getBottomPos())){
-        sigrid::Menu::PosIndex id{-1,0};
+        sigrid_coord::Coord id{-1,0};
         return id;
     }
 
@@ -701,8 +836,19 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
         return std::nullopt;
     }
 
-    for(int i = 0; i < m_itemKeys.size(); i++){
-        auto item_o = m_items.at(m_itemKeys.at(i).at(0));
+    for(int i = 0; i < m_itemKeys.numColumns(); i++){
+
+        auto itemKey_o = m_itemKeys.at({i, 0});
+        if(itemKey_o == std::nullopt){
+
+            std::cerr << "Menu: Failed to get header key "
+                << sigrid_coord::Coord{i,0}.getNotation() << "."
+                << " Failed to get Menu Item Pos Index" << std::endl;
+            continue;
+        }
+        sigrid::String& itemKey = itemKey_o.value().get();
+
+        auto item_o = m_items.at(itemKey);
 
         if(item_o == std::nullopt){
             return std::nullopt;
@@ -710,7 +856,7 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
         auto& item = item_o.value().get();
 
         if(item.isWithin(point, getTopPos(), getBottomPos())){
-            sigrid::Menu::PosIndex id{i,0};
+            sigrid_coord::Coord id{i,0};
             return id;
         }
     }
@@ -719,9 +865,18 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
         return std::nullopt;
     }
 
-    for(int i = 1; i < m_itemKeys.at(m_showHeaderIndex).size(); i++){
+    for(int i = 1; i < m_itemKeys.numRows(m_showHeaderIndex); i++){
 
-        auto item_o = m_items.at(m_itemKeys.at(m_showHeaderIndex).at(i));
+        auto itemKey_o = m_itemKeys.at({m_showHeaderIndex, i});
+        if(itemKey_o == std::nullopt){
+            std::cerr << "Menu: Failed to get item key "
+                << sigrid_coord::Coord{m_showHeaderIndex,i}.getNotation() << "."
+                << " Failed to get Menu Item Pos Index" << std::endl;
+            continue;
+        }
+        sigrid::String& itemKey = itemKey_o.value().get();
+
+        auto item_o = m_items.at(itemKey);
 
         if(item_o == std::nullopt){
             continue;
@@ -729,10 +884,33 @@ std::optional<sigrid::Menu::PosIndex> Menu::getMenuItemPosIndex(const sf::Vector
         auto& item = item_o.value().get();
 
         if(item.isWithin(point, getTopPos(), getBottomPos())){
-            sigrid::Menu::PosIndex id{m_showHeaderIndex,i};
+            sigrid_coord::Coord id{m_showHeaderIndex,i};
             return id;
         }
     }
 
     return std::nullopt;
+}
+
+void sigrid::Menu::printItemKeys() const{
+
+    std::cout << "Item keys:" << std::endl;
+    std::cout << "width: " << m_itemKeys.numColumns() << std::endl;
+    for(int x = 0; x < m_itemKeys.numColumns(); ++x){
+        
+        std::cout << "height: " << m_itemKeys.numRows(x) << std::endl;
+        std::cout << "[";
+        for(int y = 0; y < m_itemKeys.numRows(x); ++y){
+            
+            auto itemKey_o = m_itemKeys.at({x,y});
+            if(itemKey_o == std::nullopt){
+                std::cout << " null";
+                continue;
+            }
+            const sigrid::String& itemKey = itemKey_o.value().get();
+            std::cout << " \"" << itemKey << "\"";
+        }
+        std::cout << " ]";
+    }
+    std::cout << std::endl;
 }
