@@ -181,13 +181,9 @@ void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
         m_boards.push_back(std::move(board));
     }
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.loadGraphicData(graphicData);
     }
-    auto& board = board_o.value().get();
-
-    board.loadGraphicData(graphicData);
 }
 
 std::optional<BoardDesignContainer> WorkWindow::getBoardStyleContainer() const{
@@ -907,145 +903,93 @@ void WorkWindow::flipBoard(){
 
 void WorkWindow::addLeftInsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addLeftInsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addLeftInsideLabels();
 }
 
 void WorkWindow::addBottomInsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addBottomInsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addBottomInsideLabels();
 }
 
 void WorkWindow::addLeftOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addLeftOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addLeftOutsideLabels();
 }
 
 void WorkWindow::addRightOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addRightOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addRightOutsideLabels();
 }
 
 void WorkWindow::addTopOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addTopOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addTopOutsideLabels();
 }
 
 void WorkWindow::addBottomOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addBottomOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.addBottomOutsideLabels();
 }
 
 void WorkWindow::removeLeftInsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeLeftInsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeLeftInsideLabels();
 }
 
 void WorkWindow::removeBottomInsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeBottomInsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeBottomInsideLabels();
 }
 
 void WorkWindow::removeLeftOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeLeftOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeLeftOutsideLabels();
 }
 
 void WorkWindow::removeRightOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeRightOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeRightOutsideLabels();
 }
 
 void WorkWindow::removeTopOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeTopOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeTopOutsideLabels();
 }
 
 void WorkWindow::removeBottomOutsideLabels(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeBottomOutsideLabels();
     }
-    auto& board = board_o.value().get();
-
-    board.removeBottomOutsideLabels();
 }
 
 void WorkWindow::setCoordinateSize(const float& size){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.setCoordinateSize(size);    
     }
-    auto& board = board_o.value().get();
-
-    board.setCoordinateSize(size);    
 }
 
 void WorkWindow::addTileColumnRight(){
@@ -1138,46 +1082,30 @@ void WorkWindow::removeBottomTileRow(){
 
 void WorkWindow::addBoardBorder(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addBorder();
     }
-    auto& board = board_o.value().get();
-
-    board.addBorder();
 }
 
 void WorkWindow::removeBoardBorder(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeBorder();
     }
-    auto& board = board_o.value().get();
-
-    board.removeBorder();
 }
 
 void WorkWindow::addTurnToken(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.addTurnToken();
     }
-    auto& board = board_o.value().get();
-
-    board.addTurnToken();
 }
 
 void WorkWindow::removeTurnToken(){
 
-    auto board_o = m_boards.atSelection();
-    if(board_o == std::nullopt){
-        return;
+    for(auto& board: m_boards){
+        board.removeTurnToken();
     }
-    auto& board = board_o.value().get();
-
-    board.removeTurnToken();
 }
 
 void WorkWindow::useAddEntityTool(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
