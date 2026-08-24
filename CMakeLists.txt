@@ -16,6 +16,7 @@ set(SRC_FILES
     src/sigrid/utilities/lists/listSavers/StringListSaver.cpp
     src/sigrid/utilities/String/String.cpp
     src/sigrid/utilities/InputStream/InputStream.cpp
+    src/sigrid/utilities/FileSystem/FileSystem.cpp
     src/sigrid/Input/Mouse/Mouse.cpp
     src/sigrid/Input/InputHandler.cpp
     src/sigrid/Config/MainConfigContainer.cpp
@@ -102,6 +103,11 @@ set(SRC_FILES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
+FetchContent_Declare(nfd
+    GIT_REPOSITORY https://github.com/btzy/nativefiledialog-extended
+    GIT_SHALLOW ON)
+FetchContent_MakeAvailable(nfd)
+
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 3.0.1
@@ -114,4 +120,6 @@ add_executable(main ${SRC_FILES})
 target_include_directories(main PRIVATE src)
 set_target_properties(main PROPERTIES OUTPUT_NAME "sigrid")
 target_compile_features(main PRIVATE cxx_std_17)
+
+target_link_libraries(main PRIVATE nfd)
 target_link_libraries(main PRIVATE SFML::Graphics)

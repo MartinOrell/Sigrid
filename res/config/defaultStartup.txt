@@ -180,6 +180,11 @@ Menu: [
         text: New
         action: new
       ]
+      "Load Board" [
+        visibility: Visible
+        text: "Load Board"
+        action: loadBoard
+      ]
       Save [
         visibility: Visible
         text: Save

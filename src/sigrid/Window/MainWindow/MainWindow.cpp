@@ -5,6 +5,8 @@
 #include <SFML/Window/Clipboard.hpp>
 
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/utilities/FileSystem/Filesystem.h"
+
 #include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Menu/MenuContainer.h"
@@ -645,6 +647,10 @@ void MainWindow::handleAction(const sigrid_action::Action action){
         saveBoard();
         return;
     }
+    else if(std::holds_alternative<sigrid_action::LoadBoard>(action)){
+        loadBoard();
+        return;
+    }
     else if(std::holds_alternative<sigrid_action::SaveSettings>(action)){
         saveSettings();
         return;
@@ -1193,6 +1199,28 @@ void MainWindow::saveBoard(){
     }
 
     m_workWindow->saveBoard();
+}
+
+void MainWindow::loadBoard(){
+
+    auto boardFilename_o = sigrid_filesystem::getFilenameFromDialog();
+    if(boardFilename_o == std::nullopt){
+
+        // This is expected if the user selects "cancel".
+        return;
+    }
+    const sigrid::String& boardFilename = boardFilename_o.value();
+
+    if(!m_workWindow){
+        std::cerr << "MainWindow: Unable to load board, workWindow does not exist" << std::endl;
+        return;
+    }
+
+    m_workWindow->addBoard(boardFilename);
+    createGraphic();
+
+    sigrid::String title = m_workWindow->getName();
+    m_window.setTitle(title.getStdString());
 }
 
 void MainWindow::saveSettings(){

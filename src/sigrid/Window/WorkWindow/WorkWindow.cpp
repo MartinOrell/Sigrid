@@ -672,6 +672,39 @@ void WorkWindow::newBoard(){
     }
 }
 
+void WorkWindow::addBoard(const sigrid::String& boardFilename){
+
+    auto activeBoard_o = m_boards.atSelection();
+
+    if(activeBoard_o){
+        activeBoard_o.value().get().deselect();
+    }
+    Board newBoard;
+    if(activeBoard_o){
+        newBoard = activeBoard_o.value().get();
+    }
+
+    sigrid::String newImageName = getUniqueName(newBoard.getImageFilename());
+
+    std::cout << "New board name " << boardFilename << std::endl;
+    std::cout << "New image name " << newImageName << std::endl;    
+    
+    newBoard.setFilename(boardFilename);
+    newBoard.setImageFilename(newImageName);
+
+    sigrid::BoardStateContainer boardContainer;
+    boardContainer.load(boardFilename);
+
+    newBoard.loadBoardState(boardContainer);
+
+    m_boards.push_back(std::move(newBoard));
+    m_boards.selectLast();
+
+    if(m_texture.isInitialized()){
+        createGraphic(m_texture.getTextureSize());
+    }
+}
+
 void WorkWindow::addBoardColumn(){
 
     auto activeBoard_o = m_boards.atSelection();

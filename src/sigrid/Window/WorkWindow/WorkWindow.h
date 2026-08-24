@@ -89,6 +89,7 @@ class WorkWindow: public sf::Drawable{
     void print();
 
     void newBoard();
+    void addBoard(const sigrid::String& boardFilename);
 
     void addBoardColumn();
     void removeBoardColumn();

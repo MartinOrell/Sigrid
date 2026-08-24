@@ -43,6 +43,9 @@ std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
     else if(name == "new"){
         return sigrid_action::NewBoard{};
     }
+    else if(name == "loadBoard"){
+        return sigrid_action::LoadBoard{};
+    }
     else if(name == "addBoardColumn"){
         return sigrid_action::AddBoardColumn{};
     }
@@ -275,6 +278,9 @@ sigrid::String sigrid_action::getString(const Action& action){
     }
     else if(std::holds_alternative<sigrid_action::SaveAll>(action)){
         return "save";
+    }
+    else if(std::holds_alternative<sigrid_action::LoadBoard>(action)){
+        return "loadBoard";
     }
     else if(std::holds_alternative<sigrid_action::SaveSettings>(action)){
         return "saveSettings";
