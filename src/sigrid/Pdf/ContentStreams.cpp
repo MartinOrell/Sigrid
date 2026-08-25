@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/ContentStreams.h"
 
-using namespace sigrid_pdf;
-
-std::string ContentStreams::getString() const{
+std::string sigrid_pdf::ContentStreams::getString() const{
 
     std::string s;
     s.append("  [\n");
