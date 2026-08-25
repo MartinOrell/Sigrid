@@ -5,13 +5,11 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-void Menu::setFontManagerPtr(FontManager* const managerPtr){
+void sigrid::Menu::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-bool Menu::load(const MenuContainer& menuData){
+bool sigrid::Menu::load(const MenuContainer& menuData){
     m_isPinned = menuData.isPinned;
     m_showItems = menuData.showItems;
     m_fontFilename = menuData.fontName;
@@ -111,7 +109,7 @@ bool Menu::load(const MenuContainer& menuData){
     return true;
 }
 
-std::optional<MenuContainer> Menu::getContainer() const{
+std::optional<sigrid::MenuContainer> sigrid::Menu::getContainer() const{
     
     MenuContainer menuContainer;
     menuContainer.isPinned = m_isPinned;
@@ -207,7 +205,7 @@ std::optional<MenuContainer> Menu::getContainer() const{
     return menuContainer;
 }
 
-void Menu::createGraphic(const sf::Vector2f& size){
+void sigrid::Menu::createGraphic(const sf::Vector2f& size){
 
     if(size.x == 0.f){
         std::cerr << "Menu: Unable to create menu graphic with 0 width" << std::endl;
@@ -234,24 +232,24 @@ void Menu::createGraphic(const sf::Vector2f& size){
     redrawTexture();
 }
 
-void Menu::setPosition(const sf::Vector2f& position){
+void sigrid::Menu::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-bool Menu::contains(const sf::Vector2f& point) const{
+bool sigrid::Menu::contains(const sf::Vector2f& point) const{
     return m_texture.contains(point);
 }
 
-bool Menu::isPinned() const{
+bool sigrid::Menu::isPinned() const{
     return m_isPinned;
 }
 
-bool Menu::isCollapsed() const{
+bool sigrid::Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position){
+std::optional<sigrid_action::Action> sigrid::Menu::clicked(const sf::Vector2f& position){
 
     std::optional<sigrid_coord::Coord> itemId_o = getMenuItemPosIndex(position);
     if(itemId_o == std::nullopt){
@@ -293,17 +291,17 @@ std::optional<sigrid_action::Action> Menu::clicked(const sf::Vector2f& position)
     return item.getAction();
 }
 
-void Menu::pinMenu(){
+void sigrid::Menu::pinMenu(){
     m_isPinned = true;
     redrawTexture();
 }
 
-void Menu::unPinMenu(){
+void sigrid::Menu::unPinMenu(){
     m_isPinned = false;
     redrawTexture();
 }
 
-void Menu::showMenu(){
+void sigrid::Menu::showMenu(){
 
     m_showItems = true;
     m_showHeaderIndex = -1;
@@ -312,7 +310,7 @@ void Menu::showMenu(){
     redrawTexture();
 }
 
-void Menu::hideMenu(){
+void sigrid::Menu::hideMenu(){
     
     m_showItems = false;
     m_showHeaderIndex = -1;
@@ -321,7 +319,7 @@ void Menu::hideMenu(){
     redrawTexture();
 }
 
-void Menu::toggleHeader(const int headerId){
+void sigrid::Menu::toggleHeader(const int headerId){
 
     if(m_showHeaderIndex != headerId){
         m_showHeaderIndex = headerId;
@@ -332,7 +330,7 @@ void Menu::toggleHeader(const int headerId){
     redrawTexture();
 }
 
-void Menu::addSuperHeader(const sigrid::String& name){
+void sigrid::Menu::addSuperHeader(const sigrid::String& name){
     
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add superHeader " << name << std::endl;
@@ -360,7 +358,7 @@ void Menu::addSuperHeader(const sigrid::String& name){
     }
 }
 
-void Menu::addHeader(const sigrid::String& name){
+void sigrid::Menu::addHeader(const sigrid::String& name){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add header " << name << std::endl;
@@ -402,7 +400,7 @@ void Menu::addHeader(const sigrid::String& name){
     }
 }
 
-void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigrid_action::Action action){
+void sigrid::Menu::addItem(const sigrid::String& name, const int headerIndex, const sigrid_action::Action action){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add item " << name << std::endl;
@@ -438,7 +436,7 @@ void Menu::addItem(const sigrid::String& name, const int headerIndex, const sigr
     }
 }
 
-void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const sigrid::String& text0, const sigrid_action::Action action0, const sigrid::String& text1, const sigrid_action::Action action1){
+void sigrid::Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const sigrid::String& text0, const sigrid_action::Action action0, const sigrid::String& text1, const sigrid_action::Action action1){
 
     if(!m_fontManagerPtr){
         std::cerr << "Menu: Failed to add toggle item " << key << std::endl;
@@ -477,7 +475,7 @@ void Menu::addToggleItem(const sigrid::String& key, const int headerIndex, const
 }
 
 
-void Menu::toggleItem(const sigrid::String& key){
+void sigrid::Menu::toggleItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 
@@ -492,7 +490,7 @@ void Menu::toggleItem(const sigrid::String& key){
     redrawTexture();
 }
 
-void Menu::hideItem(const sigrid::String& key){
+void sigrid::Menu::hideItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 
@@ -521,7 +519,7 @@ void Menu::hideItem(const sigrid::String& key){
     }
 }
 
-void Menu::showItem(const sigrid::String& key){
+void sigrid::Menu::showItem(const sigrid::String& key){
 
     auto item_o = m_items.at(key);
 
@@ -593,7 +591,7 @@ void Menu::showItem(const sigrid::String& key){
     std::cerr << "Menu: Unable to find position to show item " << key << std::endl;
 }
 
-void Menu::addSuperHeaderGraphic(){
+void sigrid::Menu::addSuperHeaderGraphic(){
 
     if(!m_texture.isInitialized()){
         std::cerr << "Menu: Unable to add super header graphic, menu texture does not exist" << std::endl;
@@ -607,7 +605,7 @@ void Menu::addSuperHeaderGraphic(){
     redrawTexture();
 }
 
-void Menu::addHeaderGraphic(const int id){
+void sigrid::Menu::addHeaderGraphic(const int id){
 
     if(m_lineHeight <= 0){
         std::cerr << "Menu: Height not set, unable to add header graphic" << std::endl;
@@ -666,7 +664,7 @@ void Menu::addHeaderGraphic(const int id){
     }
 }
 
-void Menu::addItemGraphic(const int headerIndex, const int itemIndex){
+void sigrid::Menu::addItemGraphic(const int headerIndex, const int itemIndex){
 
     auto itemKey_o = m_itemKeys.at({headerIndex, itemIndex});
     if(itemKey_o == std::nullopt){
@@ -712,7 +710,7 @@ void Menu::addItemGraphic(const int headerIndex, const int itemIndex){
     }
 }
 
-void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_texture);
 }
 
@@ -825,7 +823,7 @@ float sigrid::Menu::getBottomPos(){
     return m_texture.getBottomPosition();
 }
 
-std::optional<sigrid_coord::Coord> Menu::getMenuItemPosIndex(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> sigrid::Menu::getMenuItemPosIndex(const sf::Vector2f& point){
     
     if(!m_isPinned && m_superHeader.isWithin(point, getTopPos(), getBottomPos())){
         sigrid_coord::Coord id{-1,0};
