@@ -6,6 +6,7 @@
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
 #include "sigrid/utilities/lists/Vector.h"
+#include "sigrid/utilities/Image/Image.h"
 
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorder.h"
 #include "sigrid/Board/BoardLabels.h"
@@ -71,7 +72,7 @@ class GraphicBoard: public sf::Drawable{
 
     float getImageHeight() const;
 
-    sf::Image getImage(const int maxWidth, const int maxHeight) const;
+    sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 
     const sf::Vector2f& getTopLeftPosition() const;
 

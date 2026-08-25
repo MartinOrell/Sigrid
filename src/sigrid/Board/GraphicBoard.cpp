@@ -164,7 +164,7 @@ float GraphicBoard::getImageHeight() const{
     return m_texture.getTextureSize().y;
 }
 
-sf::Image GraphicBoard::getImage(const int maxWidth, const int maxHeight) const{
+sigrid::Image GraphicBoard::getImage(const int maxWidth, const int maxHeight) const{
     return m_texture.getImage(maxWidth, maxHeight);
 }
 
@@ -463,7 +463,7 @@ void GraphicBoard::unhighlight(){
 void GraphicBoard::saveImage(const sigrid::String& fileName){
 
     std::cout << "Saving board image: " << fileName << std::endl;
-    auto success = m_texture.getImage().saveToFile(fileName.getStdString());
+    auto success = m_texture.getImage().saveToFile(fileName);
     if(success && sigrid_filesystem::exists(fileName)){
         std::cout << "board image: " << fileName << " saved" << std::endl;
     }

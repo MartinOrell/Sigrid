@@ -5,8 +5,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
+
+#include "sigrid/utilities/Image/Image.h"
 
 namespace sigrid{
 
@@ -34,8 +35,8 @@ class SigridRenderTexture: public sf::Drawable{
     const float& getScale() const;
     sf::Vector2f getTextureSize() const;
     sf::Vector2f getDisplaySize() const;
-    sf::Image getImage() const;
-    sf::Image getImage(const int maxWidth, const int maxHeight) const;
+    sigrid::Image getImage() const;
+    sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 
     bool isInitialized() const;
     bool isVisible() const;

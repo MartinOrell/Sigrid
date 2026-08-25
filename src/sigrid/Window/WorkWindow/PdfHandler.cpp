@@ -85,8 +85,9 @@ void PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>
         }
         auto& board = board_o.value().get();
 
-        sf::Image sfImage = board.getImage(entitledWidth*quality, entitledHeight*quality);
-        
+        sigrid::Image sigridImage = board.getImage(entitledWidth*quality, entitledHeight*quality);
+        sf::Image sfImage = sigridImage.getSfImage();
+
         pdImage.displayWidth = sfImage.getSize().x/quality;
         pdImage.displayHeight = sfImage.getSize().y/quality;
         pdImage.dataWidth = sfImage.getSize().x;

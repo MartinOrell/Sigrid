@@ -17,6 +17,7 @@ set(SRC_FILES
     src/sigrid/utilities/String/String.cpp
     src/sigrid/utilities/InputStream/InputStream.cpp
     src/sigrid/utilities/FileSystem/FileSystem.cpp
+    src/sigrid/utilities/Image/Image.cpp
     src/sigrid/Input/Mouse/Mouse.cpp
     src/sigrid/Input/InputHandler.cpp
     src/sigrid/Config/MainConfigContainer.cpp

@@ -1,57 +1,55 @@
 #include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
 
-using namespace sigrid;
-
-void SigridRenderTexture::setBackgroundColor(const sf::Color& color){
+void sigrid::SigridRenderTexture::setBackgroundColor(const sf::Color& color){
     m_backgroundColor = color;
 }
 
-bool SigridRenderTexture::setSize(const sf::Vector2f& size){
+bool sigrid::SigridRenderTexture::setSize(const sf::Vector2f& size){
 
     sf::Vector2u sizeU{(unsigned int)size.x, (unsigned int)size.y};
     return m_texture.resize(sizeU);
 }
 
-void SigridRenderTexture::setPosition(const sf::Vector2f& position){
+void sigrid::SigridRenderTexture::setPosition(const sf::Vector2f& position){
     m_position = position;
 }
 
-void SigridRenderTexture::setScale(const float& scale){
+void sigrid::SigridRenderTexture::setScale(const float& scale){
     m_scale = scale;
 }
 
-void SigridRenderTexture::show(){
+void sigrid::SigridRenderTexture::show(){
     m_show = true;
 }
 
-void SigridRenderTexture::hide(){
+void sigrid::SigridRenderTexture::hide(){
     m_show = false;
 }
 
-const sf::Color& SigridRenderTexture::getBackgroundColor() const{
+const sf::Color& sigrid::SigridRenderTexture::getBackgroundColor() const{
     return m_backgroundColor;
 }
 
-const sf::Vector2f& SigridRenderTexture::getPosition() const{
+const sf::Vector2f& sigrid::SigridRenderTexture::getPosition() const{
     return m_position;
 }
 
-const float& SigridRenderTexture::getTopPosition() const{
+const float& sigrid::SigridRenderTexture::getTopPosition() const{
     return m_position.y;
 }
 
-float SigridRenderTexture::getBottomPosition() const{
+float sigrid::SigridRenderTexture::getBottomPosition() const{
 
     float y = m_position.y;
     y += m_scale*(float)m_texture.getSize().y;
     return y;
 }
 
-const float& SigridRenderTexture::getScale() const{
+const float& sigrid::SigridRenderTexture::getScale() const{
     return m_scale;
 }
 
-sf::Vector2f SigridRenderTexture::getTextureSize() const{
+sf::Vector2f sigrid::SigridRenderTexture::getTextureSize() const{
 
     if(!m_show){
         return {0.f, 0.f};
@@ -61,19 +59,22 @@ sf::Vector2f SigridRenderTexture::getTextureSize() const{
     return sf::Vector2f{(float)size.x, (float)size.y};
 }
 
-sf::Vector2f SigridRenderTexture::getDisplaySize() const{
+sf::Vector2f sigrid::SigridRenderTexture::getDisplaySize() const{
     
     return m_scale*getTextureSize();
 }
 
-sf::Image SigridRenderTexture::getImage() const{
+sigrid::Image sigrid::SigridRenderTexture::getImage() const{
 
-    auto image = m_texture.getTexture().copyToImage();
-    image.flipVertically();
+    auto sfImage = m_texture.getTexture().copyToImage();
+    sfImage.flipVertically();
+
+    sigrid::Image image;
+    image.set(std::move(sfImage));
     return image;
 }
 
-sf::Image SigridRenderTexture::getImage(const int maxWidth, const int maxHeight) const{
+sigrid::Image sigrid::SigridRenderTexture::getImage(const int maxWidth, const int maxHeight) const{
 
     const auto& size = m_texture.getSize();
     float oldWidth = size.x;
@@ -106,22 +107,26 @@ sf::Image SigridRenderTexture::getImage(const int maxWidth, const int maxHeight)
     sf::RenderTexture newRenderTexture{sf::Vector2u{newWidth, newHeight}};
     newRenderTexture.clear(sf::Color::White);
     newRenderTexture.draw(sprite);
-    return newRenderTexture.getTexture().copyToImage();
+
+    auto sfImage = newRenderTexture.getTexture().copyToImage();
+    sigrid::Image image;
+    image.set(std::move(sfImage));
+    return image;
 }
 
-bool SigridRenderTexture::isInitialized() const{
+bool sigrid::SigridRenderTexture::isInitialized() const{
     return m_texture.getSize().x > 0 && m_texture.getSize().y > 0;
 }
 
-bool SigridRenderTexture::isVisible() const{
+bool sigrid::SigridRenderTexture::isVisible() const{
     return m_show;
 }
 
-bool SigridRenderTexture::isHidden() const{
+bool sigrid::SigridRenderTexture::isHidden() const{
     return !m_show;
 }
 
-bool SigridRenderTexture::contains(const sf::Vector2f& point) const{
+bool sigrid::SigridRenderTexture::contains(const sf::Vector2f& point) const{
 
     if(!m_show){
         return false;
@@ -133,15 +138,15 @@ bool SigridRenderTexture::contains(const sf::Vector2f& point) const{
     return rect.contains(point/m_scale);
 }
 
-void SigridRenderTexture::clear(){
+void sigrid::SigridRenderTexture::clear(){
     m_texture.clear(m_backgroundColor);
 }
 
-void SigridRenderTexture::draw(const sf::Drawable& drawable){
+void sigrid::SigridRenderTexture::draw(const sf::Drawable& drawable){
     m_texture.draw(drawable);
 }
 
-void SigridRenderTexture::display(){
+void sigrid::SigridRenderTexture::display(){
 
     m_sprite_o = sf::Sprite{m_texture.getTexture()};
     auto& sprite = m_sprite_o.value();
@@ -150,7 +155,7 @@ void SigridRenderTexture::display(){
     sprite.setScale({m_scale, -m_scale});
 }
 
-void SigridRenderTexture::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::SigridRenderTexture::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_show){
         return;

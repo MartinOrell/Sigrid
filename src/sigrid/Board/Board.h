@@ -57,7 +57,7 @@ class Board: public sf::Drawable{
 
     int getImageHeight() const;
 
-    sf::Image getImage(const int maxWidth, const int maxHeight) const;
+    sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 
     const sf::Vector2f& getTopLeftPosition() const;
 

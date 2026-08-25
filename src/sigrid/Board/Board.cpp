@@ -114,7 +114,7 @@ int Board::getImageHeight() const{
     return m_graphicBoard.getImageHeight();
 }
 
-sf::Image Board::getImage(const int maxWidth, const int maxHeight) const{
+sigrid::Image Board::getImage(const int maxWidth, const int maxHeight) const{
     return m_graphicBoard.getImage(maxWidth, maxHeight);
 }
 
