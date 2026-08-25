@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-bool PieceContainer::load(InputStream& is){
+bool sigrid::PieceContainer::load(InputStream& is){
 
     while(auto string_o = is.readString()){
         
