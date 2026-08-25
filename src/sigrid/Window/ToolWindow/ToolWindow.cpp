@@ -13,25 +13,23 @@
 #include "sigrid/Board/BoardLabels.h"
 #include "sigrid/Entity/TurnToken/TurnToken.h"
 
-using namespace sigrid;
-
-void ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::ToolWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
 }
 
-void ToolWindow::setIconManagerPtr(IconManager* const managerPtr){
+void sigrid::ToolWindow::setIconManagerPtr(IconManager* const managerPtr){
     m_board.setIconManagerPtr(managerPtr);
 }
 
-void ToolWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+void sigrid::ToolWindow::setPieceManagerPtr(PieceManager* const managerPtr){
     m_board.setPieceManagerPtr(managerPtr);
 }
 
-void ToolWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::ToolWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
     m_board.setArrowColorManagerPtr(managerPtr);
 }
 
-bool ToolWindow::load(const ToolWindowContainer& container){
+bool sigrid::ToolWindow::load(const ToolWindowContainer& container){
 
     m_board.setLeftToRight();
     m_board.setTopToBottom();
@@ -75,7 +73,7 @@ bool ToolWindow::load(const ToolWindowContainer& container){
     return true;
 }
 
-  ToolWindowContainer ToolWindow::getContainer() const{
+sigrid::ToolWindowContainer sigrid::ToolWindow::getContainer() const{
 
     ToolWindowContainer container;
     container.isVisible = m_texture.isVisible();
@@ -83,7 +81,7 @@ bool ToolWindow::load(const ToolWindowContainer& container){
     return container;
 }
 
-void ToolWindow::createGraphic(const sf::Vector2f& size){
+void sigrid::ToolWindow::createGraphic(const sf::Vector2f& size){
 
     m_texture.setSize(size);
 
@@ -107,30 +105,30 @@ void ToolWindow::createGraphic(const sf::Vector2f& size){
     redrawTexture();
 }
 
-void ToolWindow::setPosition(const sf::Vector2f& position){
+void sigrid::ToolWindow::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-bool ToolWindow::isVisible() const{
+bool sigrid::ToolWindow::isVisible() const{
     return m_texture.isVisible();
 }
 
-bool ToolWindow::isHidden() const{
+bool sigrid::ToolWindow::isHidden() const{
     return m_texture.isHidden();
 }
 
-bool ToolWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::ToolWindow::contains(const sf::Vector2f& point) const{
     return m_texture.contains(point);
 }
 
-void ToolWindow::setSetPieceTool(const LogicPiece& logicPiece){
+void sigrid::ToolWindow::setSetPieceTool(const LogicPiece& logicPiece){
     m_board.removeEntity({0,0});
     m_board.addEntity({0,0},logicPiece);
     redrawTexture();
 }
 
-void ToolWindow::setSelectTool(const sf::Mouse::Button button, const ToolSelection selection){
+void sigrid::ToolWindow::setSelectTool(const sf::Mouse::Button button, const ToolSelection selection){
 
     m_board.removeEntity({0,0});
     switch(selection){
@@ -148,7 +146,7 @@ void ToolWindow::setSelectTool(const sf::Mouse::Button button, const ToolSelecti
     redrawTexture();
 }
 
-void ToolWindow::setAddArrowTool(const int colorId){
+void sigrid::ToolWindow::setAddArrowTool(const int colorId){
 
     LogicArrow arrow;
     arrow.setColor(colorId);
@@ -158,7 +156,7 @@ void ToolWindow::setAddArrowTool(const int colorId){
     redrawTexture();
 }
 
-void ToolWindow::setAddCircleTool(const int colorId){
+void sigrid::ToolWindow::setAddCircleTool(const int colorId){
 
     LogicCircle circle;
     circle.setColor(colorId);
@@ -168,19 +166,19 @@ void ToolWindow::setAddCircleTool(const int colorId){
     redrawTexture();
 }
 
-void ToolWindow::show(){
+void sigrid::ToolWindow::show(){
     m_texture.show();
 }
 
-void ToolWindow::hide(){
+void sigrid::ToolWindow::hide(){
     m_texture.hide();
 }
 
-void ToolWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::ToolWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_texture);
 }
 
-void ToolWindow::redrawTexture(){
+void sigrid::ToolWindow::redrawTexture(){
 
     if(!m_texture.isInitialized()){
         return;
