@@ -3,19 +3,17 @@
 #include <iostream>
 #include <cctype>
 
-using namespace sigrid_coord;
-
-CoordPair::CoordPair(const Coord& from, const Coord& to){
+sigrid_coord::CoordPair::CoordPair(const Coord& from, const Coord& to){
     
     this->from = from;
     this->to = to;
 }
 
-CoordPair::CoordPair(const sigrid::String& notation){
+sigrid_coord::CoordPair::CoordPair(const sigrid::String& notation){
     set(notation);
 }
 
-bool CoordPair::operator<(const CoordPair& rhs) const{
+bool sigrid_coord::CoordPair::operator<(const CoordPair& rhs) const{
     if(from < rhs.from){
         return true;
     }
@@ -25,15 +23,15 @@ bool CoordPair::operator<(const CoordPair& rhs) const{
     return to < rhs.to;
 }
 
-bool CoordPair::operator==(const CoordPair& rhs) const{
+bool sigrid_coord::CoordPair::operator==(const CoordPair& rhs) const{
     return from == rhs.from && to == rhs.to;
 }
 
-bool CoordPair::operator!=(const CoordPair& rhs) const{
+bool sigrid_coord::CoordPair::operator!=(const CoordPair& rhs) const{
     return !(*this == rhs);
 }
 
-bool CoordPair::set(const sigrid::String& notation){
+bool sigrid_coord::CoordPair::set(const sigrid::String& notation){
 
     auto dashPosition_o = notation.find('-');
     if(dashPosition_o == std::nullopt){
@@ -79,7 +77,7 @@ bool CoordPair::set(const sigrid::String& notation){
     return true;
 }
 
-sigrid::String CoordPair::getNotation() const{
+sigrid::String sigrid_coord::CoordPair::getNotation() const{
 
     sigrid::String notation = from.getNotation();
     notation.push_back('-');
