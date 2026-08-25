@@ -2,9 +2,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-using namespace sigrid;
-
-TurnTokenContainer TurnToken::getContainer() const{
+sigrid::TurnTokenContainer sigrid::TurnToken::getContainer() const{
 
     TurnTokenContainer container;
     container.isVisible = this->m_isVisible;
@@ -12,31 +10,31 @@ TurnTokenContainer TurnToken::getContainer() const{
     return container;
 }
 
-void TurnToken::setRadius(const float& radius){
+void sigrid::TurnToken::setRadius(const float& radius){
 
     m_shape.setRadius(radius);
     m_shape.setOrigin({radius, radius});
 }
 
-void TurnToken::setCenterPosition(const sf::Vector2f& centerPosition){
+void sigrid::TurnToken::setCenterPosition(const sf::Vector2f& centerPosition){
 
     m_shape.setPosition(centerPosition);
 }
 
-void TurnToken::setTurnToMove(const int& turnToMove){
+void sigrid::TurnToken::setTurnToMove(const int& turnToMove){
 
     m_shape.setFillColor(getColor(turnToMove));
 }
 
-bool TurnToken::isVisible() const{
+bool sigrid::TurnToken::isVisible() const{
     return m_isVisible;
 }
 
-bool TurnToken::isHidden() const{
+bool sigrid::TurnToken::isHidden() const{
     return !m_isVisible;
 }
 
-bool TurnToken::isWithin(const sf::Vector2f& point) const{
+bool sigrid::TurnToken::isWithin(const sf::Vector2f& point) const{
 
     if(!m_isVisible){
         return false;
@@ -55,15 +53,15 @@ bool TurnToken::isWithin(const sf::Vector2f& point) const{
     return (x-center.x)*(x-center.x)+(y-center.y)*(y-center.y) < radius*radius;
 }
 
-float TurnToken::getRadius() const{
+float sigrid::TurnToken::getRadius() const{
     return m_shape.getRadius();
 }
 
-sf::Vector2f TurnToken::getCenterPosition() const{
+sf::Vector2f sigrid::TurnToken::getCenterPosition() const{
     return m_shape.getPosition();
 }
 
-void TurnToken::show(){
+void sigrid::TurnToken::show(){
 
     m_isVisible = true;
 
@@ -72,15 +70,15 @@ void TurnToken::show(){
     }
 }
 
-void TurnToken::hide(){
+void sigrid::TurnToken::hide(){
     m_isVisible = false;
 }
 
-void TurnToken::move(const sf::Vector2f& offset){
+void sigrid::TurnToken::move(const sf::Vector2f& offset){
     m_shape.move(offset);
 }
 
-void TurnToken::init(){
+void sigrid::TurnToken::init(){
 
     m_shape.setPointCount(30);
     m_shape.setOutlineColor(sf::Color{0,0,0,255});
@@ -88,7 +86,7 @@ void TurnToken::init(){
     m_isInitialized = true;
 }
 
-sf::Color TurnToken::getColor(const int& turnToMove) const{
+sf::Color sigrid::TurnToken::getColor(const int& turnToMove) const{
 
     if(turnToMove == 1){
         return sf::Color{0,0,0,255};
@@ -98,7 +96,7 @@ sf::Color TurnToken::getColor(const int& turnToMove) const{
     }
 }
 
-void TurnToken::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::TurnToken::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_isInitialized){
         return;
