@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-using namespace sigrid_action;
-
-std::optional<Action> sigrid_action::getAction(const sigrid::String& s){
+std::optional<sigrid_action::Action> sigrid_action::getAction(const sigrid::String& s){
 
     sigrid::String name;
     sigrid::String content;
