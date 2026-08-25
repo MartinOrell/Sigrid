@@ -5,9 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-using namespace sigrid;
-
-MenuItemContainer MenuItem::getContainer() const{
+sigrid::MenuItemContainer sigrid::MenuItem::getContainer() const{
 
     if(m_toggledName == ""){
         MenuItemContainer container;
@@ -34,7 +32,7 @@ MenuItemContainer MenuItem::getContainer() const{
     return container;
 }
 
-void MenuItem::createGraphic(const int height){
+void sigrid::MenuItem::createGraphic(const int height){
     
     if(m_text_o == std::nullopt){
         std::cerr << "MenuItem " << m_name << ": Failed creating graphic: missing text (most likely font is missing)" << std::endl;
@@ -64,11 +62,11 @@ void MenuItem::createGraphic(const int height){
     m_shape.setOutlineThickness(-2.f);
 }
 
-void MenuItem::setName(const sigrid::String& name){
+void sigrid::MenuItem::setName(const sigrid::String& name){
     m_name = name;
 }
 
-void MenuItem::setFont(const sf::Font& font){
+void sigrid::MenuItem::setFont(const sf::Font& font){
 
     if(m_text_o == std::nullopt){
         m_text_o = sf::Text{font};
@@ -79,7 +77,7 @@ void MenuItem::setFont(const sf::Font& font){
     text.setFont(font);
 }
 
-void MenuItem::setPosition(const sf::Vector2f& position){
+void sigrid::MenuItem::setPosition(const sf::Vector2f& position){
 
     m_shape.setPosition(position);
     if(m_text_o == std::nullopt){
@@ -90,11 +88,11 @@ void MenuItem::setPosition(const sf::Vector2f& position){
     text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
 }
 
-void MenuItem::setAction(const sigrid_action::Action& action){
+void sigrid::MenuItem::setAction(const sigrid_action::Action& action){
     m_action = action;
 }
 
-void MenuItem::setText(const sigrid::String& s){
+void sigrid::MenuItem::setText(const sigrid::String& s){
     
     if(m_text_o == std::nullopt){
         return;
@@ -110,19 +108,19 @@ void MenuItem::setText(const sigrid::String& s){
     m_shape.setSize({newWidth, newHeight});
 }
 
-float MenuItem::getPositionLeft() const{
+float sigrid::MenuItem::getPositionLeft() const{
     return m_shape.getPosition().x;
 }
 
-float MenuItem::getPositionRight() const{
+float sigrid::MenuItem::getPositionRight() const{
     return m_shape.getPosition().x + m_shape.getSize().x;
 }
 
-float MenuItem::getPositionTop() const{
+float sigrid::MenuItem::getPositionTop() const{
     return m_shape.getPosition().y;
 }
 
-bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const{
+bool sigrid::MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const{
 
     if(point.x < m_shape.getPosition().x){
         return false;
@@ -140,7 +138,7 @@ bool MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const f
     return true;
 }
 
-sigrid_action::Action MenuItem::getAction() const{
+sigrid_action::Action sigrid::MenuItem::getAction() const{
 
     if(m_isToggled){
         return m_toggledAction;
@@ -148,7 +146,7 @@ sigrid_action::Action MenuItem::getAction() const{
     return m_action;
 }
 
-sigrid::String MenuItem::getName() const{
+sigrid::String sigrid::MenuItem::getName() const{
 
     if(m_isToggled){
         return m_toggledName;
@@ -156,13 +154,13 @@ sigrid::String MenuItem::getName() const{
     return m_name;
 }
 
-void MenuItem::addToggle(const sigrid::String& name, const sigrid_action::Action& action){
+void sigrid::MenuItem::addToggle(const sigrid::String& name, const sigrid_action::Action& action){
 
     m_toggledName = name;
     m_toggledAction = action;
 }
 
-void MenuItem::toggle(){
+void sigrid::MenuItem::toggle(){
 
     m_isToggled = !m_isToggled;
 
@@ -184,7 +182,7 @@ void MenuItem::toggle(){
     m_shape.setSize({newWidth, newHeight});
 }
 
-void MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     target.draw(m_shape);
     if(m_text_o != std::nullopt){
