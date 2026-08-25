@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/MediaBox.h"
 
-using namespace sigrid_pdf;
-
-std::string MediaBox::getString() const{
+std::string sigrid_pdf::MediaBox::getString() const{
     
     std::string s;
     s.append("  [");
