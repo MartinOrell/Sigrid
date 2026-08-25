@@ -4,54 +4,52 @@
 #include <sstream>
 #include <cctype> //isdigit
 
-namespace sigrid{
-
-String::String(const char* cString){
+sigrid::String::String(const char* cString){
     *this = cString;
 }
 
-String& String::operator=(const char* cString){
+sigrid::String& sigrid::String::operator=(const char* cString){
     m_string = cString;
     return *this;
 }
 
-void String::set(std::string&& string){
+void sigrid::String::set(std::string&& string){
     m_string = std::move(string);
 }
 
-bool String::operator==(const String& rhs) const{
+bool sigrid::String::operator==(const String& rhs) const{
     return m_string == rhs.m_string;
 }
 
-bool String::operator==(const char* cString) const{
+bool sigrid::String::operator==(const char* cString) const{
     return m_string == cString;
 }
 
-bool String::operator!=(const String& rhs) const{
+bool sigrid::String::operator!=(const String& rhs) const{
     return m_string != rhs.m_string;
 }
 
-bool String::operator!=(const char* cString) const{
+bool sigrid::String::operator!=(const char* cString) const{
     return m_string != cString;
 }
 
-bool String::operator<(const String& rhs) const{
+bool sigrid::String::operator<(const String& rhs) const{
     return m_string < rhs.m_string;
 }
 
-bool String::operator<(const char* cString) const{
+bool sigrid::String::operator<(const char* cString) const{
     return m_string < cString;
 }
 
-bool String::operator>(const String& rhs) const{
+bool sigrid::String::operator>(const String& rhs) const{
     return m_string > rhs.m_string;
 }
 
-bool String::operator>(const char* cString) const{
+bool sigrid::String::operator>(const char* cString) const{
     return m_string > cString;
 }
 
-sigrid::String operator+(const sigrid::String& lhs, const sigrid::String& rhs){
+sigrid::String sigrid::operator+(const sigrid::String& lhs, const sigrid::String& rhs){
 
     std::string stdResult = lhs.m_string + rhs.m_string;
     sigrid::String result;
@@ -59,7 +57,7 @@ sigrid::String operator+(const sigrid::String& lhs, const sigrid::String& rhs){
     return result;
 }
 
-sigrid::String operator+(const sigrid::String& lhs, const std::string& rhs){
+sigrid::String sigrid::operator+(const sigrid::String& lhs, const std::string& rhs){
 
     std::string stdResult = lhs.m_string + rhs;
     sigrid::String result;
@@ -67,7 +65,7 @@ sigrid::String operator+(const sigrid::String& lhs, const std::string& rhs){
     return result;
 }
 
-sigrid::String operator+(const sigrid::String& lhs, const char* rhs){
+sigrid::String sigrid::operator+(const sigrid::String& lhs, const char* rhs){
 
     std::string stdResult = lhs.m_string + rhs;
     sigrid::String result;
@@ -75,15 +73,15 @@ sigrid::String operator+(const sigrid::String& lhs, const char* rhs){
     return result;
 }
 
-std::ostream& operator<<(std::ostream& os, const sigrid::String& s){
+std::ostream& sigrid::operator<<(std::ostream& os, const sigrid::String& s){
     return os << s.m_string;
 }
 
-int String::length() const{
+int sigrid::String::length() const{
     return (int)m_string.length();
 }
 
-const std::optional<std::reference_wrapper<const char>> String::at(const int& position) const{
+const std::optional<std::reference_wrapper<const char>> sigrid::String::at(const int& position) const{
 
     if(position < 0){
         return std::nullopt;
@@ -96,15 +94,15 @@ const std::optional<std::reference_wrapper<const char>> String::at(const int& po
     return m_string.at(position);
 }
 
-std::string String::getStdString() const{
+std::string sigrid::String::getStdString() const{
     return m_string;
 }
 
-void String::append(const sigrid::String& s){
+void sigrid::String::append(const sigrid::String& s){
     m_string.append(s.getStdString());
 }
 
- bool String::insert(const int& index, const int& count, const char& c){
+bool sigrid::String::insert(const int& index, const int& count, const char& c){
 
     if(index < 0){
         return false;
@@ -123,7 +121,7 @@ void String::append(const sigrid::String& s){
     return true;
  }
 
-bool String::insert(const int& index, const sigrid::String& s){
+bool sigrid::String::insert(const int& index, const sigrid::String& s){
 
     if(index < 0){
         return false;
@@ -133,7 +131,7 @@ bool String::insert(const int& index, const sigrid::String& s){
     return true;
 }
 
-bool String::erase(const int& index, const int& count){
+bool sigrid::String::erase(const int& index, const int& count){
 
     std::string::size_type stdIndex;
     try{
@@ -165,11 +163,11 @@ bool String::erase(const int& index, const int& count){
     return true;
 }
 
-void String::push_back(const char& c){
+void sigrid::String::push_back(const char& c){
     m_string.push_back(c);
 }
 
-bool String::pop_back(){
+bool sigrid::String::pop_back(){
 
     if(m_string.size() == 0){
         return false;
@@ -178,7 +176,7 @@ bool String::pop_back(){
     return true;
 }
 
-bool String::isUpper(){
+bool sigrid::String::isUpper(){
 
     for(auto& c: m_string){
         if(!std::isupper(c)){
@@ -188,28 +186,28 @@ bool String::isUpper(){
     return true;
 }
 
-void String::toUpper(){
+void sigrid::String::toUpper(){
 
     for(auto& c: m_string){
         c = std::toupper(c);
     }
 }
 
-sigrid::String String::getUpper() const{
+sigrid::String sigrid::String::getUpper() const{
 
     sigrid::String upper{*this};
     upper.toUpper();
     return upper;
 }
 
-void String::toLower(){
+void sigrid::String::toLower(){
 
     for(auto& c: m_string){
         c = std::tolower(c);
     }
 }
 
-bool String::isDigits() const{
+bool sigrid::String::isDigits() const{
 
     if(m_string.length() == 0){
         return false;
@@ -223,7 +221,7 @@ bool String::isDigits() const{
     return true;
 }
 
-std::optional<int> String::toInt() const{
+std::optional<int> sigrid::String::toInt() const{
 
     int value;
     try{
@@ -235,11 +233,11 @@ std::optional<int> String::toInt() const{
     return value;
 }
 
-std::optional<int> String::toValue() const{
+std::optional<int> sigrid::String::toValue() const{
     return toInt();
 }
 
-std::optional<uint32_t> String::toHex() const{
+std::optional<uint32_t> sigrid::String::toHex() const{
 
     uint32_t value;
     std::stringstream ss;
@@ -253,7 +251,7 @@ std::optional<uint32_t> String::toHex() const{
     return value;
 }
 
-std::optional<int> String::find(const char& c, const int& pos) const{
+std::optional<int> sigrid::String::find(const char& c, const int& pos) const{
 
     auto stdResult = m_string.find(c, pos);
     if(stdResult == std::string::npos){
@@ -262,7 +260,7 @@ std::optional<int> String::find(const char& c, const int& pos) const{
     return (int)stdResult;
 }
 
-std::optional<int> String::rfind(const char& c) const{
+std::optional<int> sigrid::String::rfind(const char& c) const{
 
     auto stdResult = m_string.rfind(c);
     if(stdResult == std::string::npos){
@@ -271,7 +269,7 @@ std::optional<int> String::rfind(const char& c) const{
     return (int)stdResult;
 }
 
-std::optional<String> String::substr(const int& pos, const int& count) const{
+std::optional<sigrid::String> sigrid::String::substr(const int& pos, const int& count) const{
 
     std::string::size_type stdPos;
     try{
@@ -324,5 +322,3 @@ std::optional<String> String::substr(const int& pos, const int& count) const{
     substr.set(std::move(stdSubstr));
     return substr;
 }
-
-}  // namespace sigrid
