@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/Object.h"
 
-using namespace sigrid_pdf;
-
-std::string Object::getObjectString() const{
+std::string sigrid_pdf::Object::getObjectString() const{
 
     std::string s;
     s.append(std::to_string(objectNumber));
