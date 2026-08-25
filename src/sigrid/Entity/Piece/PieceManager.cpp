@@ -1,6 +1,8 @@
 #include "sigrid/Entity/Piece/PieceManager.h"
 
-#include <SFML/Graphics/Image.hpp>
+#include <iostream>
+
+#include "sigrid/utilities/Image/Image.h"
 
 #include "sigrid/Entity/Piece/PieceContainer.h"
 
@@ -94,33 +96,26 @@ std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logi
     }
 
     {
-        auto pieceImageFileName_o = m_pieceImageFilenames.at(id);
-        if(pieceImageFileName_o == std::nullopt){
+        auto pieceImageFilename_o = m_pieceImageFilenames.at(id);
+        if(pieceImageFilename_o == std::nullopt){
             return std::nullopt;
         }
-        auto& pieceImageFileName = pieceImageFileName_o.value().get();
+        auto& pieceImageFilename = pieceImageFilename_o.value().get();
 
-        sf::Image newImage{pieceImageFileName.getStdString()};
+        sigrid::Image newImage;
+        if(!newImage.loadFromFile(pieceImageFilename)){
+            std::cerr << "PieceManager: Failed to load from file \""
+                << pieceImageFilename << "\"."
+                << " Failed to get GraphicPiece" << std::endl;
+            return std::nullopt;
+        }
 
         sf::Color lightModifier = sf::Color(color.lightModifier);
         sf::Color darkModifier = sf::Color(color.darkModifier);
 
-        for(unsigned int x = 0; x < newImage.getSize().x; x++){
-            for(unsigned int y = 0; y < newImage.getSize().y; y++){
-                sf::Color color = newImage.getPixel({x,y});
-                color.r = (color.r * lightModifier.r) / 255;
-                color.g = (color.g * lightModifier.g) / 255;
-                color.b = (color.b * lightModifier.b) / 255;
+        newImage.modifyColor(lightModifier, darkModifier);
 
-                color.r = color.r + (darkModifier.r * (255-color.r)) / 255;
-                color.g = color.g + (darkModifier.g * (255-color.g)) / 255;
-                color.b = color.b + (darkModifier.b * (255-color.b)) / 255;
-
-                newImage.setPixel({x,y},color);
-            }
-        }
-
-        sf::Texture newTexture{newImage};
+        sf::Texture newTexture{newImage.getSfImage()};
         auto pieceTexture_o = m_pieceTextures.at(colorId);
         if(pieceTexture_o == std::nullopt){
             return std::nullopt;

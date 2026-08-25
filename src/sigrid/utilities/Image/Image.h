@@ -17,11 +17,16 @@ class Image{
 
     void set(sf::Image&&);
 
+    sf::Image getSfImage() const;
+
     int getWidth() const;
     int getHeight() const;
     sigrid::String getAsciiHexStream() const;
 
+    bool loadFromFile(const sigrid::String& filename);
     bool saveToFile(const sigrid::String& filename) const;
+
+    void modifyColor(const sf::Color& lightModifier, const sf::Color& darkModifier);
 
   private:
 
