@@ -4,9 +4,7 @@
 
 #include "sigrid/Entity/Shape/Arrow/ArrowDataContainer.h"
 
-using namespace sigrid;
-
-sigrid_list::Vector<ArrowDataContainer> LogicArrows::getContainer() const{
+sigrid_list::Vector<sigrid::ArrowDataContainer> sigrid::LogicArrows::getContainer() const{
 
     sigrid_list::Vector<ArrowDataContainer> containers;
 
@@ -36,19 +34,19 @@ sigrid_list::Vector<ArrowDataContainer> LogicArrows::getContainer() const{
     return containers;
 }
 
-void LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
+void sigrid::LogicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
     m_arrows.push_back(coordPair, arrow);
 }
             
-void LogicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
+void sigrid::LogicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
     m_arrows.erase(coordPair);
 }
 
-int LogicArrows::size() const{
+int sigrid::LogicArrows::size() const{
     return m_arrows.size();
 }
 
-std::optional<LogicArrow> LogicArrows::getArrowAtIndex(const int& index) const{
+std::optional<sigrid::LogicArrow> sigrid::LogicArrows::getArrowAtIndex(const int& index) const{
 
     auto arrow_o = m_arrows.atPosition(index);
 
@@ -58,7 +56,7 @@ std::optional<LogicArrow> LogicArrows::getArrowAtIndex(const int& index) const{
     return arrow_o.value().get();
 }
 
-std::optional<sigrid_coord::CoordPair> LogicArrows::getArrowKeyAtIndex(const int& index) const{
+std::optional<sigrid_coord::CoordPair> sigrid::LogicArrows::getArrowKeyAtIndex(const int& index) const{
 
     auto coordPair_o = m_arrows.keyAt(index);
 
@@ -68,7 +66,7 @@ std::optional<sigrid_coord::CoordPair> LogicArrows::getArrowKeyAtIndex(const int
     return coordPair_o.value().get();
 }
             
-std::optional<LogicArrow> LogicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
+std::optional<sigrid::LogicArrow> sigrid::LogicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
 
     auto arrow_o = m_arrows.atKey(coordPair);
 
@@ -78,7 +76,7 @@ std::optional<LogicArrow> LogicArrows::getArrow(const sigrid_coord::CoordPair& c
     return arrow_o.value().get();
 }
 
-void LogicArrows::removeColumn(const int& columnId){
+void sigrid::LogicArrows::removeColumn(const int& columnId){
 
     for(int i = 0; i < m_arrows.size();){
         auto coordPair_o = m_arrows.keyAt(i);
@@ -102,7 +100,7 @@ void LogicArrows::removeColumn(const int& columnId){
     }
 }
 
-void LogicArrows::removeRow(const int& rowId){
+void sigrid::LogicArrows::removeRow(const int& rowId){
 
     for(int i = 0; i < m_arrows.size();){
         auto coordPair_o = m_arrows.keyAt(i);
@@ -126,7 +124,7 @@ void LogicArrows::removeRow(const int& rowId){
     }
 }
 
-void LogicArrows::moveArrowsRight(){
+void sigrid::LogicArrows::moveArrowsRight(){
 
     if(m_arrows.size() == 0){
         return;
@@ -189,7 +187,7 @@ void LogicArrows::moveArrowsRight(){
     }
 }
 
-void LogicArrows::moveArrowsLeft(){
+void sigrid::LogicArrows::moveArrowsLeft(){
 
     if(m_arrows.size() == 0){
         return;
@@ -253,7 +251,7 @@ void LogicArrows::moveArrowsLeft(){
     }
 }
 
-void LogicArrows::moveArrowsUp(){
+void sigrid::LogicArrows::moveArrowsUp(){
 
     if(m_arrows.size() == 0){
         return;
@@ -316,7 +314,7 @@ void LogicArrows::moveArrowsUp(){
     }
 }
 
-void LogicArrows::moveArrowsDown(){
+void sigrid::LogicArrows::moveArrowsDown(){
 
     if(m_arrows.size() == 0){
         return;
@@ -379,6 +377,6 @@ void LogicArrows::moveArrowsDown(){
     }
 }
 
-void LogicArrows::clear(){
+void sigrid::LogicArrows::clear(){
     m_arrows.clear();
 }
