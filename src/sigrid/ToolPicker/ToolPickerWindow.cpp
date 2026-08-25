@@ -13,25 +13,23 @@
 #include "sigrid/Board/BoardLabels.h"
 #include "sigrid/Entity/TurnToken/TurnToken.h"
 
-using namespace sigrid;
-
-void ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::ToolPickerWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_board.setTileColorManagerPtr(managerPtr);
 }
 
-void ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+void sigrid::ToolPickerWindow::setPieceManagerPtr(PieceManager* const managerPtr){
     m_board.setPieceManagerPtr(managerPtr);
 }
 
-void ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::ToolPickerWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
     m_board.setArrowColorManagerPtr(managerPtr);
 }
 
-void ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
+void sigrid::ToolPickerWindow::setIconManagerPtr(IconManager* const managerPtr){
     m_board.setIconManagerPtr(managerPtr); 
 }
 
-void ToolPickerWindow::load(const ToolPickerContainer& data){
+void sigrid::ToolPickerWindow::load(const ToolPickerContainer& data){
 
     m_columns = data.columns;
     m_rows = data.rows;
@@ -107,7 +105,7 @@ void ToolPickerWindow::load(const ToolPickerContainer& data){
     }
 }
 
-ToolPickerContainer ToolPickerWindow::getContainer() const{
+sigrid::ToolPickerContainer sigrid::ToolPickerWindow::getContainer() const{
 
     ToolPickerContainer container;
     container.show = m_texture.isVisible();
@@ -145,7 +143,7 @@ ToolPickerContainer ToolPickerWindow::getContainer() const{
     return container;
 }
 
-void ToolPickerWindow::createGraphic(const sf::Vector2f& size){
+void sigrid::ToolPickerWindow::createGraphic(const sf::Vector2f& size){
 
     m_texture.setSize(size);
 
@@ -169,7 +167,7 @@ void ToolPickerWindow::createGraphic(const sf::Vector2f& size){
     redrawTexture();
 }
 
-void ToolPickerWindow::addSelectTool(){
+void sigrid::ToolPickerWindow::addSelectTool(){
 
     ToolStruct tool;
     LogicIcon icon;
@@ -180,49 +178,49 @@ void ToolPickerWindow::addSelectTool(){
     m_miscTools.push_back(tool);
 }
 
-void ToolPickerWindow::addArrowTool(const int colorId){
+void sigrid::ToolPickerWindow::addArrowTool(const int colorId){
     m_arrowColorId = colorId;
 }
 
-void ToolPickerWindow::addCircleTool(const int colorId){
+void sigrid::ToolPickerWindow::addCircleTool(const int colorId){
     m_circleColorId = colorId;
 }
 
-void ToolPickerWindow::addPieceTool(const sigrid::String& notation){
+void sigrid::ToolPickerWindow::addPieceTool(const sigrid::String& notation){
     m_pieceNotations.push_back(notation);
 }
 
-void ToolPickerWindow::setPosition(const sf::Vector2f& position){
+void sigrid::ToolPickerWindow::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-bool ToolPickerWindow::isVisible() const{
+bool sigrid::ToolPickerWindow::isVisible() const{
     return m_texture.isVisible();
 }
 
-bool ToolPickerWindow::isHidden() const{
+bool sigrid::ToolPickerWindow::isHidden() const{
     return m_texture.isHidden();
 }
 
-sf::Vector2f ToolPickerWindow::getSize() const{
+sf::Vector2f sigrid::ToolPickerWindow::getSize() const{
     return m_texture.getTextureSize();
 }
 
-int ToolPickerWindow::getNumColumns() const{
+int sigrid::ToolPickerWindow::getNumColumns() const{
     return m_columns;
 }
 
-int ToolPickerWindow::getNumRows() const{
+int sigrid::ToolPickerWindow::getNumRows() const{
     return m_rows;
 }
 
-bool ToolPickerWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::ToolPickerWindow::contains(const sf::Vector2f& point) const{
     return m_texture.contains(point);
 }
 
 
-std::optional<sigrid_action::Action> ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
+std::optional<sigrid_action::Action> sigrid::ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
 
     if(m_texture.isHidden()){
         return std::nullopt;
@@ -243,7 +241,7 @@ std::optional<sigrid_action::Action> ToolPickerWindow::clicked(const sigrid::Too
     return std::nullopt;
 }
 
-void ToolPickerWindow::setPieceColorTools(const sigrid::String& pieceNotation){
+void sigrid::ToolPickerWindow::setPieceColorTools(const sigrid::String& pieceNotation){
 
     if(!m_showColors){
         return;
@@ -256,7 +254,7 @@ void ToolPickerWindow::setPieceColorTools(const sigrid::String& pieceNotation){
     redrawTexture();
 }
 
-void ToolPickerWindow::setPieceTools(const int colorId){
+void sigrid::ToolPickerWindow::setPieceTools(const int colorId){
 
     if(colorId == m_displayedPieceColorIds.back()){
         return;
@@ -268,7 +266,7 @@ void ToolPickerWindow::setPieceTools(const int colorId){
     redrawTexture();
 }
 
-void ToolPickerWindow::setArrowColors(){
+void sigrid::ToolPickerWindow::setArrowColors(){
 
     if(!m_showColors){
         return;
@@ -279,7 +277,7 @@ void ToolPickerWindow::setArrowColors(){
     redrawTexture();
 }
 
-void ToolPickerWindow::setCircleColors(){
+void sigrid::ToolPickerWindow::setCircleColors(){
 
     if(!m_showColors){
         return;
@@ -290,21 +288,21 @@ void ToolPickerWindow::setCircleColors(){
     redrawTexture();
 }
 
-void ToolPickerWindow::setAddArrowTool(const int colorId){
+void sigrid::ToolPickerWindow::setAddArrowTool(const int colorId){
 
     m_arrowColorId = colorId;
 
     redrawTexture();
 }
 
-void ToolPickerWindow::setAddCircleTool(const int colorId){
+void sigrid::ToolPickerWindow::setAddCircleTool(const int colorId){
 
     m_circleColorId = colorId;
 
     redrawTexture();
 }
 
-void ToolPickerWindow::hideColorTools(){
+void sigrid::ToolPickerWindow::hideColorTools(){
 
     if(!m_texture.isInitialized()){
         return;
@@ -333,7 +331,7 @@ void ToolPickerWindow::hideColorTools(){
     redrawTexture();
 }
 
-void ToolPickerWindow::showColorTools(){
+void sigrid::ToolPickerWindow::showColorTools(){
 
     if(!m_texture.isInitialized()){
         return;
@@ -376,15 +374,15 @@ void ToolPickerWindow::showColorTools(){
 }
 
 
-void ToolPickerWindow::hide(){
+void sigrid::ToolPickerWindow::hide(){
     m_texture.hide();
 }
 
-void ToolPickerWindow::show(){
+void sigrid::ToolPickerWindow::show(){
     m_texture.show();
 }
 
-void ToolPickerWindow::redrawTexture(){
+void sigrid::ToolPickerWindow::redrawTexture(){
 
     m_board.clearEntities();
 
@@ -569,6 +567,6 @@ void ToolPickerWindow::redrawTexture(){
     m_texture.display();
 }
 
-void ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::ToolPickerWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_texture);
 }
