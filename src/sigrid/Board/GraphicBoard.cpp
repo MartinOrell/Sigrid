@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "sigrid/utilities/FileSystem/FileSystem.h"
+
 #include "sigrid/Board/BoardState.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Color/ColorManager.h"
@@ -462,7 +464,7 @@ void GraphicBoard::saveImage(const sigrid::String& fileName){
 
     std::cout << "Saving board image: " << fileName << std::endl;
     auto success = m_texture.getImage().saveToFile(fileName.getStdString());
-    if(success && std::filesystem::exists(fileName.getStdString())){
+    if(success && sigrid_filesystem::exists(fileName)){
         std::cout << "board image: " << fileName << " saved" << std::endl;
     }
     else{

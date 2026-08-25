@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
-#include <filesystem>
+
+#include "sigrid/utilities/FileSystem/FileSystem.h"
 #include "sigrid/Window/MainWindow/MainWindow.h"
 #include "sigrid/Config/MainConfigContainer.h"
 
@@ -8,9 +9,9 @@ int main()
 {
     sigrid_config::MainConfigContainer config;
 
-    std::string setupFilename = "saveData/startup.txt";
+    sigrid::String setupFilename = "saveData/startup.txt";
 
-    if(!std::filesystem::exists(setupFilename)){
+    if(!sigrid_filesystem::exists(setupFilename)){
         std::cout << "Running program with default settings" << std::endl;
         setupFilename = "res/config/defaultStartup.txt";
     }

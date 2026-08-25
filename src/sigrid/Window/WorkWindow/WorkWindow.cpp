@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include "sigrid/utilities/FileSystem/FileSystem.h"
 #include "sigrid/Tool/Tool.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
 #include "sigrid/Entity/GraphicEntities.h"
@@ -20,7 +21,7 @@ bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardConta
 
         BoardStateContainer boardStateData;
 
-        if(std::filesystem::exists(boardContainer.stateFilename.getStdString())){
+        if(sigrid_filesystem::exists(boardContainer.stateFilename)){
         
             if(boardStateData.load(boardContainer.stateFilename)){
                 std:: cout << "Board data: " << boardContainer.stateFilename << " loaded" << std::endl;
@@ -1212,7 +1213,7 @@ sigrid::String WorkWindow::getUniqueName(const sigrid::String& name){
             }
         }
         if(!exists){
-            if(!std::filesystem::exists(newName.getStdString())){
+            if(!sigrid_filesystem::exists(newName)){
                 break;
             }
         }

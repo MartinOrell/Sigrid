@@ -1,8 +1,14 @@
 #include "sigrid/utilities/FileSystem/FileSystem.h"
 
+#include <filesystem>
 #include <iostream>
 
 #include <nfd.h> // nativefiledialog-extended
+
+bool sigrid_filesystem::exists(const sigrid::String& filename){
+
+    return std::filesystem::exists(filename.getStdString());
+}
 
 std::optional<sigrid::String> sigrid_filesystem::getFilenameFromDialog(){
 

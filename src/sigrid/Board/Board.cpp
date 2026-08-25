@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Image.hpp>
 
+#include "sigrid/utilities/FileSystem/FileSystem.h"
 #include "sigrid/Board/BoardDesignContainer.h"
 #include "sigrid/Board/BoardStateContainer.h"
 #include "sigrid/Entity/Tile/GraphicTiles.h"
@@ -546,7 +547,7 @@ bool createFolderForFile(const sigrid::String filename){
         }
         sigrid::String folder = folder_o.value();
 
-        if(!std::filesystem::exists(folder.getStdString())){
+        if(!sigrid_filesystem::exists(folder)){
             bool createFolderIsSuccessful;
             createFolderIsSuccessful = std::filesystem::create_directory(folder.getStdString());
             if(createFolderIsSuccessful){

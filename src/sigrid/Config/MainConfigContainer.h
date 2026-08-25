@@ -22,7 +22,7 @@ namespace sigrid_config{
 
 struct MainConfigContainer{
 
-    bool load(const std::string& filename);
+    bool load(const sigrid::String& filename);
     sigrid::String getString(const int& indentLevel) const;
 
     sigrid::WindowContainer mainWindow;

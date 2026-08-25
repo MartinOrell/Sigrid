@@ -11,11 +11,11 @@
 
 using namespace sigrid_config;
 
-bool MainConfigContainer::load(const std::string& filename){
+bool MainConfigContainer::load(const sigrid::String& filename){
     
     sigrid::InputStream is;
     {
-        std::ifstream ifs(filename);
+        std::ifstream ifs(filename.getStdString());
 
         if(!ifs.is_open()){
 
