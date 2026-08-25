@@ -2,8 +2,6 @@
 
 #include "sigrid/Pdf/ProcedureSet.h"
 
-using namespace sigrid_pdf;
-
-std::string ProcedureSet::getString() const{
+std::string sigrid_pdf::ProcedureSet::getString() const{
     return "  [/PDF /Text /ImageB /ImageC ImageI]\n";
 }
