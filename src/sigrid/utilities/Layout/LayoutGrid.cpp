@@ -1,8 +1,6 @@
 #include "sigrid/utilities/Layout/LayoutGrid.h"
 
-using namespace sigrid;
-
-void LayoutGrid::setPx(const int& x, const float& px){
+void sigrid::LayoutGrid::setPx(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -12,7 +10,7 @@ void LayoutGrid::setPx(const int& x, const float& px){
     xCoord = px;
 }
 
-void LayoutGrid::setPy(const int& y, const float& py){
+void sigrid::LayoutGrid::setPy(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -22,7 +20,7 @@ void LayoutGrid::setPy(const int& y, const float& py){
     yCoord = py;
 }
 
-void LayoutGrid::setPxIfLess(const int& x, const float& px){
+void sigrid::LayoutGrid::setPxIfLess(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -34,7 +32,7 @@ void LayoutGrid::setPxIfLess(const int& x, const float& px){
     }
 }
 
-void LayoutGrid::setPyIfLess(const int& y, const float& py){
+void sigrid::LayoutGrid::setPyIfLess(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -46,7 +44,7 @@ void LayoutGrid::setPyIfLess(const int& y, const float& py){
     }
 }
 
-void LayoutGrid::setPxIfGreater(const int& x, const float& px){
+void sigrid::LayoutGrid::setPxIfGreater(const int& x, const float& px){
 
     while(x >= m_xCoords.size()){
         m_xCoords.push_back(0.f);
@@ -58,7 +56,7 @@ void LayoutGrid::setPxIfGreater(const int& x, const float& px){
     }
 }
 
-void LayoutGrid::setPyIfGreater(const int& y, const float& py){
+void sigrid::LayoutGrid::setPyIfGreater(const int& y, const float& py){
 
     while(y >= m_yCoords.size()){
         m_yCoords.push_back(0.f);
@@ -70,7 +68,7 @@ void LayoutGrid::setPyIfGreater(const int& y, const float& py){
     }
 }
 
-void LayoutGrid::setFromXCoord(const int& id, const int& x){
+void sigrid::LayoutGrid::setFromXCoord(const int& id, const int& x){
 
     auto object_o = m_objects.at(id);
 
@@ -85,7 +83,7 @@ void LayoutGrid::setFromXCoord(const int& id, const int& x){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setFromYCoord(const int& id, const int& y){
+void sigrid::LayoutGrid::setFromYCoord(const int& id, const int& y){
 
     auto object_o = m_objects.at(id);
 
@@ -100,7 +98,7 @@ void LayoutGrid::setFromYCoord(const int& id, const int& y){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setToXCoord(const int& id, const int& x){
+void sigrid::LayoutGrid::setToXCoord(const int& id, const int& x){
 
     auto object_o = m_objects.at(id);
 
@@ -115,7 +113,7 @@ void LayoutGrid::setToXCoord(const int& id, const int& x){
     m_objects.insert(id, pair);
 }
 
-void LayoutGrid::setToYCoord(const int& id, const int& y){
+void sigrid::LayoutGrid::setToYCoord(const int& id, const int& y){
 
     auto object_o = m_objects.at(id);
 
@@ -130,7 +128,7 @@ void LayoutGrid::setToYCoord(const int& id, const int& y){
     m_objects.insert(id, pair);
 }
 
-std::optional<float> LayoutGrid::getPx(const int& x) const{
+std::optional<float> sigrid::LayoutGrid::getPx(const int& x) const{
 
     auto xCoord_o = m_xCoords.at(x);
     if(xCoord_o == std::nullopt){
@@ -139,7 +137,7 @@ std::optional<float> LayoutGrid::getPx(const int& x) const{
     return xCoord_o.value().get();
 }
 
-std::optional<float> LayoutGrid::getPy(const int& y) const{
+std::optional<float> sigrid::LayoutGrid::getPy(const int& y) const{
 
     auto yCoord_o = m_yCoords.at(y);
     if(yCoord_o == std::nullopt){
@@ -148,7 +146,7 @@ std::optional<float> LayoutGrid::getPy(const int& y) const{
     return yCoord_o.value().get();
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const int& id) const{
+std::optional<sf::Vector2f> sigrid::LayoutGrid::getTopLeftPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -175,7 +173,7 @@ std::optional<sf::Vector2f> LayoutGrid::getTopLeftPosition(const int& id) const{
     return sf::Vector2f{fromPx, fromPy};
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const int& id) const{
+std::optional<sf::Vector2f> sigrid::LayoutGrid::getCenterPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -219,7 +217,7 @@ std::optional<sf::Vector2f> LayoutGrid::getCenterPosition(const int& id) const{
     return sf::Vector2f{px, py};
 }
 
-std::optional<sf::Vector2f> LayoutGrid::getSize(const int& id) const{
+std::optional<sf::Vector2f> sigrid::LayoutGrid::getSize(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -249,7 +247,7 @@ std::optional<sf::Vector2f> LayoutGrid::getSize(const int& id) const{
     return sf::Vector2f{width, height};
 }
 
-std::optional<float> LayoutGrid::getWidth(const int& fromX, const int& toX) const{
+std::optional<float> sigrid::LayoutGrid::getWidth(const int& fromX, const int& toX) const{
 
     auto fromPx_o = m_xCoords.at(fromX);
     if(fromPx_o == std::nullopt){
@@ -273,7 +271,7 @@ std::optional<float> LayoutGrid::getWidth(const int& fromX, const int& toX) cons
     return width;
 }
 
-std::optional<float> LayoutGrid::getHeight(const int& fromY, const int& toY) const{
+std::optional<float> sigrid::LayoutGrid::getHeight(const int& fromY, const int& toY) const{
 
     auto fromPy_o = m_yCoords.at(fromY);
     if(fromPy_o == std::nullopt){
