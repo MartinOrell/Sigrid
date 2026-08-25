@@ -6,9 +6,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-ArrowContainer GraphicArrows::getArrowContainer() const{
+sigrid::ArrowContainer sigrid::GraphicArrows::getArrowContainer() const{
 
     ArrowContainer container;
     container.thickness = m_arrowThickness;
@@ -17,19 +15,19 @@ ArrowContainer GraphicArrows::getArrowContainer() const{
     return container;
 }
 
-void GraphicArrows::setThickness(const float& thickness){
+void sigrid::GraphicArrows::setThickness(const float& thickness){
     m_arrowThickness = thickness;
 }
 
-void GraphicArrows::setHeadSize(const float& headSize){
+void sigrid::GraphicArrows::setHeadSize(const float& headSize){
     m_arrowHeadSize = headSize;
 }
 
-void GraphicArrows::setColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicArrows::setColorManagerPtr(ColorManager* const managerPtr){
     m_colorManagerPtr = managerPtr;
 }
 
-void GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
+void sigrid::GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
 
     if(m_arrowThickness == 0.f){
         std::cerr << "GraphicArrows: Failed to add arrow, arrow thickness is 0" << std::endl;
@@ -64,35 +62,35 @@ void GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sf:
     m_arrows.push_back(coordPair, graphicArrow);
 }
 
-void GraphicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
+void sigrid::GraphicArrows::removeArrow(const sigrid_coord::CoordPair& coordPair){
     m_arrows.erase(coordPair);
 }
 
-float GraphicArrows::getThickness() const{
+float sigrid::GraphicArrows::getThickness() const{
     return m_arrowThickness;
 }
 
-float GraphicArrows::getHeadSize() const{
+float sigrid::GraphicArrows::getHeadSize() const{
     return m_arrowHeadSize;
 }
 
-std::optional<GraphicArrow> GraphicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
+std::optional<sigrid::GraphicArrow> sigrid::GraphicArrows::getArrow(const sigrid_coord::CoordPair& coordPair) const{
     return m_arrows.atKey(coordPair);
 }
 
-const sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& GraphicArrows::getArrows() const{
+const sigrid_list::OrderedMap<sigrid_coord::CoordPair, sigrid::GraphicArrow>& sigrid::GraphicArrows::getArrows() const{
     return m_arrows;
 }
 
-sigrid_list::OrderedMap<sigrid_coord::CoordPair, GraphicArrow>& GraphicArrows::getArrows(){
+sigrid_list::OrderedMap<sigrid_coord::CoordPair, sigrid::GraphicArrow>& sigrid::GraphicArrows::getArrows(){
     return m_arrows;
 }
 
-void GraphicArrows::clear(){
+void sigrid::GraphicArrows::clear(){
     m_arrows.clear();
 }
 
-void GraphicArrows::removeColumn(const int& columnId){
+void sigrid::GraphicArrows::removeColumn(const int& columnId){
 
     for(int i = 0; i < m_arrows.size();){
         auto& coordPair_o = m_arrows.keyAt(i);
@@ -113,7 +111,7 @@ void GraphicArrows::removeColumn(const int& columnId){
     }
 }
 
-void GraphicArrows::removeRow(const int& rowId){
+void sigrid::GraphicArrows::removeRow(const int& rowId){
 
     for(int i = 0; i < m_arrows.size();){
         auto& coordPair_o = m_arrows.keyAt(i);
@@ -134,7 +132,7 @@ void GraphicArrows::removeRow(const int& rowId){
     }
 }
 
-void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftToRight){
+void sigrid::GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftToRight){
     
     int minX = 2147483647;
     int maxX = 0;
@@ -198,7 +196,7 @@ void GraphicArrows::moveArrowsRight(const float& tileWidth, const bool& isLeftTo
     }
 }
 
-void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToRight){
+void sigrid::GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToRight){
 
     int minX = 2147483647;
     int maxX = 0;
@@ -260,7 +258,7 @@ void GraphicArrows::moveArrowsLeft(const float& tileWidth, const bool& isLeftToR
     }
 }
 
-void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBottom){
+void sigrid::GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBottom){
 
     int minX = 2147483647;
     int maxX = 0;
@@ -322,7 +320,7 @@ void GraphicArrows::moveArrowsUp(const float& tileHeight, const bool& isTopToBot
     }
 }
 
-void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToBottom){
+void sigrid::GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToBottom){
 
     int minX = 2147483647;
     int maxX = 0;
@@ -384,7 +382,7 @@ void GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& isTopToB
     }
 }
 
-void GraphicArrows::move(const sf::Vector2f& offset){
+void sigrid::GraphicArrows::move(const sf::Vector2f& offset){
 
     for(int i = 0; i < m_arrows.size(); i++){
         auto arrow_o = m_arrows.atPosition(i);
@@ -396,7 +394,7 @@ void GraphicArrows::move(const sf::Vector2f& offset){
     }
 }
 
-void GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicArrows::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     for(int i = 0; i < m_arrows.size(); i++){
         auto arrow_o = m_arrows.atPosition(i);
