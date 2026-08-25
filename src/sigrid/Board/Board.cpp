@@ -533,37 +533,6 @@ void Board::loadFen(const sigrid::String& fen){
     }
 }
 
-bool createFolderForFile(const sigrid::String filename){
-
-    auto endPos_o = filename.find('/',1);
-
-    while(endPos_o != std::nullopt){
-
-        int endPos = endPos_o.value();
-
-        auto folder_o = filename.substr(0,endPos);
-        if(folder_o == std::nullopt){
-            return false;
-        }
-        sigrid::String folder = folder_o.value();
-
-        if(!sigrid_filesystem::exists(folder)){
-            bool createFolderIsSuccessful;
-            createFolderIsSuccessful = std::filesystem::create_directory(folder.getStdString());
-            if(createFolderIsSuccessful){
-                std::cout << "Created folder: " << folder << std::endl;
-            }
-            else{
-                std::cerr << "Board: Failed to create folder: " << folder << std::endl;
-                return false;
-            }
-        }
-
-        endPos_o = filename.find('/',endPos+1);
-    }
-    return true;
-}
-
 void Board::save(){
 
     if(m_filename.length() == 0){
@@ -573,7 +542,7 @@ void Board::save(){
 
     std::cout << "Saving " << m_filename << std::endl;
 
-    if(!createFolderForFile(m_filename)){
+    if(!sigrid_filesystem::createFolderForFile(m_filename)){
         std::cerr << "Board: Saving failed" << std::endl;
         return;
     }
@@ -597,7 +566,7 @@ void Board::save(){
         return;
     }
 
-    if(!(createFolderForFile(m_imageFilename))){
+    if(!(sigrid_filesystem::createFolderForFile(m_imageFilename))){
         std::cerr << "Board: Saving board image failed" << std::endl;
         return;
     }

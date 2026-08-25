@@ -10,6 +10,37 @@ bool sigrid_filesystem::exists(const sigrid::String& filename){
     return std::filesystem::exists(filename.getStdString());
 }
 
+bool sigrid_filesystem::createFolderForFile(const sigrid::String filename){
+
+    auto endPos_o = filename.find('/',1);
+
+    while(endPos_o != std::nullopt){
+
+        int endPos = endPos_o.value();
+
+        auto folder_o = filename.substr(0,endPos);
+        if(folder_o == std::nullopt){
+            return false;
+        }
+        sigrid::String folder = folder_o.value();
+
+        if(!sigrid_filesystem::exists(folder)){
+            bool createFolderIsSuccessful;
+            createFolderIsSuccessful = std::filesystem::create_directory(folder.getStdString());
+            if(createFolderIsSuccessful){
+                std::cout << "Created folder: " << folder << std::endl;
+            }
+            else{
+                std::cerr << "FileSystem: Failed to create folder: " << folder << std::endl;
+                return false;
+            }
+        }
+
+        endPos_o = filename.find('/',endPos+1);
+    }
+    return true;
+}
+
 std::optional<sigrid::String> sigrid_filesystem::getFilenameFromDialog(){
 
     NFD_Init();
