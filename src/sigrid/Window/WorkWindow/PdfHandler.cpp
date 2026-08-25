@@ -7,9 +7,7 @@
 #include "sigrid/Pdf/Pdf.h"
 #include "sigrid/Pdf/Image.h"
 
-using namespace sigrid;
-
-void PdfHandler::updateLayout(){
+void sigrid::PdfHandler::updateLayout(){
 
     unsigned int i = 0;
     for(int y = 7; y > 0; y-=2){
@@ -43,7 +41,7 @@ void PdfHandler::updateLayout(){
     m_layout.setPy(9, 842.f);
 }
 
-void PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards){
+void sigrid::PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>& boards){
 
     std::cout << "Preparing to save pdf" << std::endl;
     sigrid_pdf::Pdf pdf;
