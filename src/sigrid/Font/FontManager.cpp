@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-std::optional<sf::Font*> FontManager::getFontPtr(const sigrid::String& filename){
+std::optional<sf::Font*> sigrid::FontManager::getFontPtr(const sigrid::String& filename){
 
     auto font_o = m_fonts.at(filename);
     if(font_o != std::nullopt){
