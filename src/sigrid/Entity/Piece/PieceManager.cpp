@@ -6,16 +6,14 @@
 
 #include "sigrid/Entity/Piece/PieceContainer.h"
 
-using namespace sigrid;
-
-void PieceManager::setPieceColors(const sigrid_list::Vector<PieceColor>& pieceColors){
+void sigrid::PieceManager::setPieceColors(const sigrid_list::Vector<PieceColor>& pieceColors){
 
     for(const auto& color: pieceColors){
         addPieceColor(color);
     }
 }
 
-sigrid_list::Vector<PieceColor> PieceManager::getContainer() const{
+sigrid_list::Vector<sigrid::PieceColor> sigrid::PieceManager::getContainer() const{
 
     sigrid_list::Vector<PieceColor> containers;
     for(auto& color: m_colors){
@@ -27,7 +25,7 @@ sigrid_list::Vector<PieceColor> PieceManager::getContainer() const{
     return containers;
 }
 
-void PieceManager::addPieceColor(const PieceColor& newColor){
+void sigrid::PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
     std::map<PieceIdentifier, GraphicPiece> coloredPieces;
     m_graphicPieces.push_back(coloredPieces);
@@ -36,7 +34,7 @@ void PieceManager::addPieceColor(const PieceColor& newColor){
 }
 
 
-void PieceManager::loadImages(const sigrid_list::Vector<PieceContainer>& pieces){
+void sigrid::PieceManager::loadImages(const sigrid_list::Vector<PieceContainer>& pieces){
 
     for(const auto& piece : pieces){
         PieceIdentifier id;
@@ -46,7 +44,7 @@ void PieceManager::loadImages(const sigrid_list::Vector<PieceContainer>& pieces)
     }
 }
 
-sigrid_list::Vector<PieceContainer> PieceManager::getPieceContainer() const{
+sigrid_list::Vector<sigrid::PieceContainer> sigrid::PieceManager::getPieceContainer() const{
 
     sigrid_list::Vector<PieceContainer> containers;
     for(const auto& piece: m_pieceImageFilenames){
@@ -61,7 +59,7 @@ sigrid_list::Vector<PieceContainer> PieceManager::getPieceContainer() const{
 
 // Get the piece matching the value of the logicPiece
 // If the piece does not exist, create it together with its texture
-std::optional<GraphicPiece> PieceManager::getGraphicPiece(const LogicPiece& logicPiece){
+std::optional<sigrid::GraphicPiece> sigrid::PieceManager::getGraphicPiece(const LogicPiece& logicPiece){
 
     int colorId = logicPiece.getColorId();
 
