@@ -2,9 +2,7 @@
 
 #include "sigrid/Pdf/ContentStream.h"
 
-using namespace sigrid_pdf;
-
-std::string ContentStream::getString() const{
+std::string sigrid_pdf::ContentStream::getString() const{
     
     std::string stream;
 
