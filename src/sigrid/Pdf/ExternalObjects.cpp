@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/ExternalObjects.h"
 
-using namespace sigrid_pdf;
-
-std::string ExternalObjects::getString() const{
+std::string sigrid_pdf::ExternalObjects::getString() const{
 
     std::string s;
     s.append("  <<\n");
