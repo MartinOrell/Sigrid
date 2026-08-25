@@ -3,9 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-using namespace sigrid;
-
-void GraphicPiece::setSize(const sf::Vector2f& size){
+void sigrid::GraphicPiece::setSize(const sf::Vector2f& size){
 
     m_size = size;
     if(m_sprite_o == std::nullopt){
@@ -16,7 +14,7 @@ void GraphicPiece::setSize(const sf::Vector2f& size){
     sprite.setPosition({size.x/2.f, size.y/2.f});
 }
 
-void GraphicPiece::setTexturePtr(const sf::Texture* const texturePtr){
+void sigrid::GraphicPiece::setTexturePtr(const sf::Texture* const texturePtr){
     
     m_texturePtr = texturePtr;
 
@@ -45,7 +43,7 @@ void GraphicPiece::setTexturePtr(const sf::Texture* const texturePtr){
     sprite.setPosition({m_size.x/2.f, m_size.y/2.f});
 }
 
-void GraphicPiece::setPosition(sf::Vector2f position){
+void sigrid::GraphicPiece::setPosition(sf::Vector2f position){
     
     if(!m_sprite_o){
         return;
@@ -54,7 +52,7 @@ void GraphicPiece::setPosition(sf::Vector2f position){
     sprite.setPosition(position);
 }
 
-bool GraphicPiece::contains(sf::Vector2i point) const{
+bool sigrid::GraphicPiece::contains(sf::Vector2i point) const{
 
     if(!m_sprite_o){
         return false;
@@ -64,7 +62,7 @@ bool GraphicPiece::contains(sf::Vector2i point) const{
     return rect.contains({(float)point.x, (float)point.y});
 }
 
-void GraphicPiece::resize(sf::Vector2f size){
+void sigrid::GraphicPiece::resize(sf::Vector2f size){
 
     if(!m_sprite_o){
         return;
@@ -77,15 +75,15 @@ void GraphicPiece::resize(sf::Vector2f size){
     sprite.setScale({scaleX, scaleY});
 }
 
-const sf::Texture GraphicPiece::getTexture() const{
+const sf::Texture sigrid::GraphicPiece::getTexture() const{
     return *m_texturePtr;
 }
 
-const sf::Texture* GraphicPiece::getTexturePtr() const{
+const sf::Texture* sigrid::GraphicPiece::getTexturePtr() const{
     return m_texturePtr;
 }
 
-void GraphicPiece::move(const sf::Vector2f& offset){
+void sigrid::GraphicPiece::move(const sf::Vector2f& offset){
 
     if(!m_sprite_o){
         return;
@@ -94,7 +92,7 @@ void GraphicPiece::move(const sf::Vector2f& offset){
     sprite.move(offset);
 }
 
-void GraphicPiece::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicPiece::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_sprite_o){
         return;
