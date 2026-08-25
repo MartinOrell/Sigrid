@@ -12,9 +12,7 @@
 #include "sigrid/Menu/MenuContainer.h"
 #include "sigrid/ToolPicker/ToolPickerContainer.h"
 
-using namespace sigrid;
-
-bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
+bool sigrid::MainWindow::load(const sigrid_config::MainConfigContainer& config){
     
     m_window.create(sf::VideoMode({(unsigned int)config.mainWindow.width, (unsigned int)config.mainWindow.height}), config.mainWindow.name.getStdString());
     m_window.setFramerateLimit(60);
@@ -210,7 +208,7 @@ bool MainWindow::load(const sigrid_config::MainConfigContainer& config){
     return true;
 }
 
-void MainWindow::run(){
+void sigrid::MainWindow::run(){
 
     createGraphic();
 
@@ -221,7 +219,7 @@ void MainWindow::run(){
     }
 }
 
-void MainWindow::createGraphic(){
+void sigrid::MainWindow::createGraphic(){
 
     m_layout.setPx(0, 0.f);
     m_layout.setPx(3, m_size.x);
@@ -306,7 +304,7 @@ void MainWindow::createGraphic(){
     }
 }
 
-void MainWindow::resize(const sf::Vector2i& size){
+void sigrid::MainWindow::resize(const sf::Vector2i& size){
 
     sf::FloatRect visibleArea{{0,0},{(float)size.x, (float)size.y}};
 
@@ -315,7 +313,7 @@ void MainWindow::resize(const sf::Vector2i& size){
     createGraphic();
 }
 
-void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button){
+void sigrid::MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
@@ -327,7 +325,7 @@ void MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse:
     }
 }
 
-void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button){
+void sigrid::MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
@@ -375,7 +373,7 @@ void MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mous
     m_mouse.release(button);
 }
 
-void MainWindow::keyPress(const sf::Event::KeyPressed& keyboardKeyPressed){
+void sigrid::MainWindow::keyPress(const sf::Event::KeyPressed& keyboardKeyPressed){
 
     if(keyboardKeyPressed.control && keyboardKeyPressed.shift){
         auto action_o = m_inputHandler.getCtrlShiftAction(keyboardKeyPressed.code);
@@ -406,7 +404,7 @@ void MainWindow::keyPress(const sf::Event::KeyPressed& keyboardKeyPressed){
     handleAction(action_o.value());
 }
 
-void MainWindow::textEnter(const char32_t& unicode){
+void sigrid::MainWindow::textEnter(const char32_t& unicode){
 
     if(!m_workWindow){
         return;
@@ -442,7 +440,7 @@ void MainWindow::textEnter(const char32_t& unicode){
     m_workWindow->useAddEntityAtSelectionTool(logicPiece);
 }
 
-void MainWindow::mouseMove(const sf::Vector2i& position){
+void sigrid::MainWindow::mouseMove(const sf::Vector2i& position){
 
     sf::Vector2f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
 
@@ -467,7 +465,7 @@ void MainWindow::mouseMove(const sf::Vector2i& position){
     }
 }
 
-void MainWindow::handleEvents(){
+void sigrid::MainWindow::handleEvents(){
     while (const std::optional event = m_window.pollEvent())
     {
         if (event->is<sf::Event::Closed>())
@@ -503,7 +501,7 @@ void MainWindow::handleEvents(){
     }
 }
 
-void MainWindow::handleAction(const sigrid_action::Action action){
+void sigrid::MainWindow::handleAction(const sigrid_action::Action action){
 
     if(std::holds_alternative<sigrid_action::PinMenu>(action)){
         pinMenu();
@@ -774,7 +772,7 @@ void MainWindow::handleAction(const sigrid_action::Action action){
     }
 }
 
-void MainWindow::pinMenu(){
+void sigrid::MainWindow::pinMenu(){
     if(!m_menu){
         std::cerr << "MainWindow: Unable to pin menu, Menu does not exist" << std::endl;
         return;
@@ -790,7 +788,7 @@ void MainWindow::pinMenu(){
     createGraphic();
 }
 
-void MainWindow::unPinMenu(){
+void sigrid::MainWindow::unPinMenu(){
     if(!m_menu){
         std::cerr << "MainWindow: Unable to unpin menu, Menu does not exist" << std::endl;
         return;
@@ -803,7 +801,7 @@ void MainWindow::unPinMenu(){
     createGraphic();
 }
 
-void MainWindow::showMenu(){
+void sigrid::MainWindow::showMenu(){
     if(!m_menu){
         std::cerr << "MainWindow: Unable to show menu, Menu does not exist" << std::endl;
         return;
@@ -815,7 +813,7 @@ void MainWindow::showMenu(){
     createGraphic();
 }
 
-void MainWindow::hideMenu(){
+void sigrid::MainWindow::hideMenu(){
     if(!m_menu){
         std::cerr << "MainWindow: Unable to hide menu, Menu does not exist" << std::endl;
         return;
@@ -827,7 +825,7 @@ void MainWindow::hideMenu(){
     createGraphic();
 }
 
-void MainWindow::toggleHeader(const int headerId){
+void sigrid::MainWindow::toggleHeader(const int headerId){
     if(!m_menu){
         std::cerr << "MainWindow: Unable to toggle header, Menu does not exist" << std::endl;
         return;
@@ -835,7 +833,7 @@ void MainWindow::toggleHeader(const int headerId){
     m_menu->toggleHeader(headerId);
 }
 
-void MainWindow::reset(){
+void sigrid::MainWindow::reset(){
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to reset board, workWindow does not exist" << std::endl;
         return;
@@ -844,7 +842,7 @@ void MainWindow::reset(){
     createGraphic();
 }
 
-void MainWindow::clear(){
+void sigrid::MainWindow::clear(){
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to clear board, workWindow does not exist" << std::endl;
         return;
@@ -852,7 +850,7 @@ void MainWindow::clear(){
     m_workWindow->clear();
 }
 
-void MainWindow::print(){
+void sigrid::MainWindow::print(){
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to print board, workWindow does not exist" << std::endl;
         return;
@@ -860,7 +858,7 @@ void MainWindow::print(){
     m_workWindow->print();
 }
 
-void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
+void sigrid::MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
     if(!m_toolWindow){
         std::cerr << "MainWindow: Unable to pick piece, toolwindow does not exist" << std::endl;
         return;
@@ -882,7 +880,7 @@ void MainWindow::pickEntity(const sigrid::LogicEntity& logicEntity){
     }
 }
 
-void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
+void sigrid::MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
 
     if(!m_toolWindow){
         std::cerr << "MainWindow: Unable to pick piece color, toolwindow does not exist" << std::endl;
@@ -899,7 +897,7 @@ void MainWindow::pickPieceColor(const sigrid::LogicPiece& logicPiece){
     m_toolPickerWindow->setPieceTools(logicPiece.getColorId());
 }
 
-void MainWindow::pickArrow(const int colorId){
+void sigrid::MainWindow::pickArrow(const int colorId){
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to pick arrow, toolwindow does not exist" << std::endl;
         return;
@@ -914,7 +912,7 @@ void MainWindow::pickArrow(const int colorId){
     m_toolPickerWindow->setArrowColors();
 }
 
-void MainWindow::pickArrowColor(const int colorId){
+void sigrid::MainWindow::pickArrowColor(const int colorId){
     if(!m_toolWindow){
         std::cerr << "MainWindow: Unable to pick arrow color, toolWindow does not exist" << std::endl;
         return;
@@ -929,7 +927,7 @@ void MainWindow::pickArrowColor(const int colorId){
     m_toolPickerWindow->setAddArrowTool(colorId);
 }
 
-void MainWindow::pickCircle(const int colorId){
+void sigrid::MainWindow::pickCircle(const int colorId){
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to pick circle, toolwindow does not exist" << std::endl;
         return;
@@ -946,7 +944,7 @@ void MainWindow::pickCircle(const int colorId){
     m_toolPickerWindow->setCircleColors();
 }
 
-void MainWindow::pickCircleColor(const int colorId){
+void sigrid::MainWindow::pickCircleColor(const int colorId){
     if(!m_toolWindow){
         std::cerr << "MainWindow: Unable to pick circle color, toolWindow does not exist" << std::endl;
         return;
@@ -963,7 +961,7 @@ void MainWindow::pickCircleColor(const int colorId){
     m_toolPickerWindow->setAddCircleTool(colorId);
 }
 
-void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse::Button& button){
+void sigrid::MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse::Button& button){
     if(!m_toolWindow){
         std::cerr << "MainWindow: Unable to set tool, toolWindow does not exist" << std::endl;
         return;
@@ -975,7 +973,7 @@ void MainWindow::setTool(const sigrid::ToolSelection& selection, const sf::Mouse
     }
 }
 
-void MainWindow::showColorTools(){
+void sigrid::MainWindow::showColorTools(){
 
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to show color tools, toolpicker window does not exist" << std::endl;
@@ -991,7 +989,7 @@ void MainWindow::showColorTools(){
     createGraphic();
 }
 
-void MainWindow::hideColorTools(){
+void sigrid::MainWindow::hideColorTools(){
 
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to hide color tools, toolpicker window does not exist" << std::endl;
@@ -1006,7 +1004,7 @@ void MainWindow::hideColorTools(){
     createGraphic();
 }
 
-void MainWindow::showTools(){
+void sigrid::MainWindow::showTools(){
 
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to show tools, toolpicker window does not exist" << std::endl;
@@ -1029,7 +1027,7 @@ void MainWindow::showTools(){
     createGraphic();
 }
 
-void MainWindow::hideTools(){
+void sigrid::MainWindow::hideTools(){
     if(!m_toolPickerWindow){
         std::cerr << "MainWindow: Unable to toggle tools, toolpicker window does not exist" << std::endl;
         return;
@@ -1053,7 +1051,7 @@ void MainWindow::hideTools(){
     createGraphic();
 }
 
-void MainWindow::newBoard(){
+void sigrid::MainWindow::newBoard(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add new board, workwindow does not exist" << std::endl;
@@ -1066,7 +1064,7 @@ void MainWindow::newBoard(){
 
 }
 
-void MainWindow::addBoardColumn(){
+void sigrid::MainWindow::addBoardColumn(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add board column, workwindow does not exist" << std::endl;
@@ -1078,7 +1076,7 @@ void MainWindow::addBoardColumn(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::removeBoardColumn(){
+void sigrid::MainWindow::removeBoardColumn(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove board column, workwindow does not exist" << std::endl;
@@ -1090,7 +1088,7 @@ void MainWindow::removeBoardColumn(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::addBoardRow(){
+void sigrid::MainWindow::addBoardRow(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add board row, workwindow does not exist" << std::endl;
@@ -1102,7 +1100,7 @@ void MainWindow::addBoardRow(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::removeBoardRow(){
+void sigrid::MainWindow::removeBoardRow(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove board row, workwindow does not exist" << std::endl;
@@ -1114,7 +1112,7 @@ void MainWindow::removeBoardRow(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::shiftBoardsLeft(){
+void sigrid::MainWindow::shiftBoardsLeft(){
     
     if(!m_workWindow){
         return;
@@ -1125,7 +1123,7 @@ void MainWindow::shiftBoardsLeft(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::shiftBoardsRight(){
+void sigrid::MainWindow::shiftBoardsRight(){
 
     if(!m_workWindow){
         return;
@@ -1136,7 +1134,7 @@ void MainWindow::shiftBoardsRight(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::gotoRightBoard(){
+void sigrid::MainWindow::gotoRightBoard(){
 
     if(!m_workWindow){
         return;
@@ -1147,7 +1145,7 @@ void MainWindow::gotoRightBoard(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::gotoLeftBoard(){
+void sigrid::MainWindow::gotoLeftBoard(){
 
     if(!m_workWindow){
         return;
@@ -1158,7 +1156,7 @@ void MainWindow::gotoLeftBoard(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::gotoUpBoard(){
+void sigrid::MainWindow::gotoUpBoard(){
 
     if(!m_workWindow){
         return;
@@ -1169,7 +1167,7 @@ void MainWindow::gotoUpBoard(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::gotoDownBoard(){
+void sigrid::MainWindow::gotoDownBoard(){
 
     if(!m_workWindow){
         return;
@@ -1180,7 +1178,7 @@ void MainWindow::gotoDownBoard(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::saveAll(){
+void sigrid::MainWindow::saveAll(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to save boards, workwindow does not exist" << std::endl;
@@ -1191,7 +1189,7 @@ void MainWindow::saveAll(){
     saveSettings();
 }
 
-void MainWindow::saveBoard(){
+void sigrid::MainWindow::saveBoard(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to save board, workwindow does not exist" << std::endl;
@@ -1201,7 +1199,7 @@ void MainWindow::saveBoard(){
     m_workWindow->saveBoard();
 }
 
-void MainWindow::loadBoard(){
+void sigrid::MainWindow::loadBoard(){
 
     auto boardFilename_o = sigrid_filesystem::getFilenameFromDialog();
     if(boardFilename_o == std::nullopt){
@@ -1223,7 +1221,7 @@ void MainWindow::loadBoard(){
     m_window.setTitle(title.getStdString());
 }
 
-void MainWindow::saveSettings(){
+void sigrid::MainWindow::saveSettings(){
 
     sigrid::String filename = "saveData/startup.txt";
 
@@ -1316,7 +1314,7 @@ void MainWindow::saveSettings(){
     std::cout << "Saved \"" << filename << "\"" << std::endl;
 }
 
-void MainWindow::savePdf(){
+void sigrid::MainWindow::savePdf(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to save pdf, workwindow does not exist" << std::endl;
@@ -1326,7 +1324,7 @@ void MainWindow::savePdf(){
     m_workWindow->savePdf();
 }
 
-void MainWindow::pasteFen(){
+void sigrid::MainWindow::pasteFen(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to paste FEN string, workwindow does not exist" << std::endl;
@@ -1339,7 +1337,7 @@ void MainWindow::pasteFen(){
     m_workWindow->loadFen(fen);
 }
 
-void MainWindow::copyFen(){
+void sigrid::MainWindow::copyFen(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to copy FEN string, workwindow does not exist" << std::endl;
@@ -1351,7 +1349,7 @@ void MainWindow::copyFen(){
     std::cout << "Copied Fen: \"" << fen << "\"" << std::endl;
 }
 
-void MainWindow::flipBoard(){
+void sigrid::MainWindow::flipBoard(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to flip board, workwindow does not exist" << std::endl;
@@ -1361,7 +1359,7 @@ void MainWindow::flipBoard(){
     m_workWindow->flipBoard();
 }
 
-void MainWindow::addLeftInsideLabels(){
+void sigrid::MainWindow::addLeftInsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add left inside labels, workwindow does not exist" << std::endl;
@@ -1377,7 +1375,7 @@ void MainWindow::addLeftInsideLabels(){
     createGraphic();
 }
 
-void MainWindow::addBottomInsideLabels(){
+void sigrid::MainWindow::addBottomInsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add bottom inside labels, workwindow does not exist" << std::endl;
@@ -1393,7 +1391,7 @@ void MainWindow::addBottomInsideLabels(){
     createGraphic();
 }
 
-void MainWindow::addLeftOutsideLabels(){
+void sigrid::MainWindow::addLeftOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add left outside labels, workwindow does not exist" << std::endl;
@@ -1409,7 +1407,7 @@ void MainWindow::addLeftOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::addRightOutsideLabels(){
+void sigrid::MainWindow::addRightOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add right outside labels, workwindow does not exist" << std::endl;
@@ -1425,7 +1423,7 @@ void MainWindow::addRightOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::addTopOutsideLabels(){
+void sigrid::MainWindow::addTopOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add top outside labels, workwindow does not exist" << std::endl;
@@ -1441,7 +1439,7 @@ void MainWindow::addTopOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::addBottomOutsideLabels(){
+void sigrid::MainWindow::addBottomOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add bottom outside labels, workwindow does not exist" << std::endl;
@@ -1457,7 +1455,7 @@ void MainWindow::addBottomOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeLeftInsideLabels(){
+void sigrid::MainWindow::removeLeftInsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove left inside labels, workwindow does not exist" << std::endl;
@@ -1473,7 +1471,7 @@ void MainWindow::removeLeftInsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeBottomInsideLabels(){
+void sigrid::MainWindow::removeBottomInsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove bottom inside labels, workwindow does not exist" << std::endl;
@@ -1489,7 +1487,7 @@ void MainWindow::removeBottomInsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeLeftOutsideLabels(){
+void sigrid::MainWindow::removeLeftOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove left outside labels, workwindow does not exist" << std::endl;
@@ -1505,7 +1503,7 @@ void MainWindow::removeLeftOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeRightOutsideLabels(){
+void sigrid::MainWindow::removeRightOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove right outside labels, workwindow does not exist" << std::endl;
@@ -1521,7 +1519,7 @@ void MainWindow::removeRightOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeTopOutsideLabels(){
+void sigrid::MainWindow::removeTopOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove top outside labels, workwindow does not exist" << std::endl;
@@ -1537,7 +1535,7 @@ void MainWindow::removeTopOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::removeBottomOutsideLabels(){
+void sigrid::MainWindow::removeBottomOutsideLabels(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove bottom outside labels, workwindow does not exist" << std::endl;
@@ -1553,7 +1551,7 @@ void MainWindow::removeBottomOutsideLabels(){
     createGraphic();
 }
 
-void MainWindow::setCoordinateSize(const float& size){
+void sigrid::MainWindow::setCoordinateSize(const float& size){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to set coordinate size, workWindow does not exist" << std::endl;
@@ -1569,7 +1567,7 @@ void MainWindow::setCoordinateSize(const float& size){
     createGraphic();
 }
 
-void MainWindow::addTileColumnRight(){
+void sigrid::MainWindow::addTileColumnRight(){
     if(!m_workWindow){
         return;
     }
@@ -1578,7 +1576,7 @@ void MainWindow::addTileColumnRight(){
     createGraphic();
 }
 
-void MainWindow::addTileColumnLeft(){
+void sigrid::MainWindow::addTileColumnLeft(){
     if(!m_workWindow){
         return;
     }
@@ -1587,7 +1585,7 @@ void MainWindow::addTileColumnLeft(){
     createGraphic();
 }
 
-void MainWindow::removeRightTileColumn(){
+void sigrid::MainWindow::removeRightTileColumn(){
     if(!m_workWindow){
         return;
     }
@@ -1596,7 +1594,7 @@ void MainWindow::removeRightTileColumn(){
     createGraphic();
 }
 
-void MainWindow::removeLeftTileColumn(){
+void sigrid::MainWindow::removeLeftTileColumn(){
     if(!m_workWindow){
         return;
     }
@@ -1605,7 +1603,7 @@ void MainWindow::removeLeftTileColumn(){
     createGraphic();
 }
 
-void MainWindow::addTileRowUp(){
+void sigrid::MainWindow::addTileRowUp(){
     if(!m_workWindow){
         return;
     }
@@ -1614,7 +1612,7 @@ void MainWindow::addTileRowUp(){
     createGraphic();
 }
 
-void MainWindow::addTileRowDown(){
+void sigrid::MainWindow::addTileRowDown(){
     if(!m_workWindow){
         return;
     }
@@ -1623,7 +1621,7 @@ void MainWindow::addTileRowDown(){
     createGraphic();
 }
 
-void MainWindow::removeTopTileRow(){
+void sigrid::MainWindow::removeTopTileRow(){
     if(!m_workWindow){
         return;
     }
@@ -1632,7 +1630,7 @@ void MainWindow::removeTopTileRow(){
     createGraphic();
 }
 
-void MainWindow::removeBottomTileRow(){
+void sigrid::MainWindow::removeBottomTileRow(){
     if(!m_workWindow){
         return;
     }
@@ -1641,7 +1639,7 @@ void MainWindow::removeBottomTileRow(){
     createGraphic();
 }
 
-void MainWindow::addBoardBorder(){
+void sigrid::MainWindow::addBoardBorder(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add border to board, workWindow does not exist" << std::endl;
@@ -1657,7 +1655,7 @@ void MainWindow::addBoardBorder(){
     createGraphic();
 }
 
-void MainWindow::removeBoardBorder(){
+void sigrid::MainWindow::removeBoardBorder(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove border to board, workWindow does not exist" << std::endl;
@@ -1673,7 +1671,7 @@ void MainWindow::removeBoardBorder(){
     createGraphic();
 }
 
-void MainWindow::addTurnToken(){
+void sigrid::MainWindow::addTurnToken(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to add turn token, workWindow does not exist" << std::endl;
@@ -1689,7 +1687,7 @@ void MainWindow::addTurnToken(){
     createGraphic();
 }
 
-void MainWindow::removeTurnToken(){
+void sigrid::MainWindow::removeTurnToken(){
 
     if(!m_workWindow){
         std::cerr << "MainWindow: Unable to remove turn token, workWindow does not exist" << std::endl;
@@ -1705,7 +1703,7 @@ void MainWindow::removeTurnToken(){
     createGraphic();
 }
 
-void MainWindow::redraw(){
+void sigrid::MainWindow::redraw(){
 
     m_window.clear(m_backgroundColor);
     
