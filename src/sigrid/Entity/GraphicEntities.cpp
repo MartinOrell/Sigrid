@@ -7,29 +7,27 @@
 #include "sigrid/Color/ColorManager.h"
 #include "sigrid/Entity/Icon/IconManager.h"
 
-using namespace sigrid;
-
-void GraphicEntities::setPieceManagerPtr(PieceManager* const managerPtr){
+void sigrid::GraphicEntities::setPieceManagerPtr(PieceManager* const managerPtr){
     m_pieceManagerPtr = managerPtr;
 }
 
-void GraphicEntities::setColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicEntities::setColorManagerPtr(ColorManager* const managerPtr){
     m_arrowColorManagerPtr = managerPtr;
 }
 
-void GraphicEntities::setIconManagerPtr(IconManager* const managerPtr){
+void sigrid::GraphicEntities::setIconManagerPtr(IconManager* const managerPtr){
     m_iconManagerPtr = managerPtr;
 }
 
-void GraphicEntities::setPieceSize(const sf::Vector2f& pieceSize){
+void sigrid::GraphicEntities::setPieceSize(const sf::Vector2f& pieceSize){
     m_pieceSize = pieceSize;
 }
 
-void GraphicEntities::setCircleDiameter(const float& diameter){
+void sigrid::GraphicEntities::setCircleDiameter(const float& diameter){
     m_circleDiameter = diameter;
 }
 
-CircleContainer GraphicEntities::getCircleContainer() const{
+sigrid::CircleContainer sigrid::GraphicEntities::getCircleContainer() const{
 
     CircleContainer container;
     container.diameter = m_circleDiameter;
@@ -37,7 +35,7 @@ CircleContainer GraphicEntities::getCircleContainer() const{
     return container;
 }
 
-void GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
+void sigrid::GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vector2f position, const LogicEntity& entity){
     if(std::holds_alternative<LogicPiece>(entity)){
         if(m_pieceManagerPtr == nullptr){
             std::cerr << "GraphicEntities: Failed to add piece" << std::endl;
@@ -163,7 +161,7 @@ void GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const sf::Vect
     }
 }
 
-void GraphicEntities::removeEntity(const sigrid_coord::Coord& coord){
+void sigrid::GraphicEntities::removeEntity(const sigrid_coord::Coord& coord){
     m_pieces.erase(coord);
     m_circles.erase(coord);
     m_arrows.erase(coord);
@@ -184,7 +182,7 @@ template<typename T> bool moveEntity_h(T& list, const sigrid_coord::Coord& fromC
     return true;
 }
 
-void GraphicEntities::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const sf::Vector2f& newPosition){
+void sigrid::GraphicEntities::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const sf::Vector2f& newPosition){
     
     if(moveEntity_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, fromCoord, toCoord, newPosition)){
         return;
@@ -200,14 +198,14 @@ void GraphicEntities::moveEntity(const sigrid_coord::Coord& fromCoord, const sig
     }
 }
 
-void GraphicEntities::clear(){
+void sigrid::GraphicEntities::clear(){
     m_pieces.clear();
     m_circles.clear();
     m_arrows.clear();
     m_icons.clear();
 }
 
-std::optional<GraphicEntity> GraphicEntities::getEntityAt(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::GraphicEntity> sigrid::GraphicEntities::getEntityAt(const sigrid_coord::Coord& coord) const{
 
     auto piece_o = m_pieces.at(coord);
     if(piece_o != std::nullopt){
@@ -244,7 +242,7 @@ template <typename T> void removeColumn_h(T& list, const int& columnId){
     }
 }
 
-void GraphicEntities::removeColumn(const int& columnId){
+void sigrid::GraphicEntities::removeColumn(const int& columnId){
     removeColumn_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, columnId);
     removeColumn_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, columnId);
     removeColumn_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, columnId);
@@ -263,7 +261,7 @@ template <typename T> void removeRow_h(T& list, const int& rowId){
     }
 }
 
-void GraphicEntities::removeRow(const int& rowId){
+void sigrid::GraphicEntities::removeRow(const int& rowId){
     removeRow_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, rowId);
     removeRow_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, rowId);
     removeRow_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, rowId);
@@ -310,7 +308,7 @@ template <typename T> void moveEntitiesRight_h(T& list, const float& tileWidth, 
     }
 }
 
-void GraphicEntities::moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight){
+void sigrid::GraphicEntities::moveEntitiesRight(const float& tileWidth, const bool& isLeftToRight){
     moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
     moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
     moveEntitiesRight_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, tileWidth, isLeftToRight);
@@ -356,7 +354,7 @@ template<typename T> void moveEntitiesLeft_h(T& list, const float& tileWidth, co
     }
 }
 
-void GraphicEntities::moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight){
+void sigrid::GraphicEntities::moveEntitiesLeft(const float& tileWidth, const bool& isLeftToRight){
     moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, tileWidth, isLeftToRight);
     moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, tileWidth, isLeftToRight);
     moveEntitiesLeft_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, tileWidth, isLeftToRight);
@@ -402,7 +400,7 @@ template <typename T> void moveEntitiesUp_h(T& list, const float& tileHeight, co
     }
 }
 
-void GraphicEntities::moveEntitiesUp(const float& tileHeight, const bool& isTopToBottom){
+void sigrid::GraphicEntities::moveEntitiesUp(const float& tileHeight, const bool& isTopToBottom){
     moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
     moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
     moveEntitiesUp_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, tileHeight, isTopToBottom);
@@ -447,14 +445,14 @@ template <typename T> void moveEntitiesDown_h(T& list, const float& tileHeight, 
     }
 }
 
-void GraphicEntities::moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom){
+void sigrid::GraphicEntities::moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom){
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, GraphicPiece>>(m_pieces, tileHeight, isTopToBottom);
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, GraphicCircle>>(m_circles, tileHeight, isTopToBottom);
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, GraphicArrow>>(m_arrows, tileHeight, isTopToBottom);
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, Icon>>(m_icons, tileHeight, isTopToBottom);
 }
 
-void GraphicEntities::move(const sf::Vector2f& offset){
+void sigrid::GraphicEntities::move(const sf::Vector2f& offset){
 
     for(auto& piece : m_pieces){
         piece.second.move(offset);
@@ -473,7 +471,7 @@ void GraphicEntities::move(const sf::Vector2f& offset){
     }
 }
 
-void GraphicEntities::setEntityPosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
+void sigrid::GraphicEntities::setEntityPosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
     
     auto piece_o = m_pieces.at(coord);
     if(piece_o != std::nullopt){
@@ -504,7 +502,7 @@ void GraphicEntities::setEntityPosition(const sigrid_coord::Coord& coord, const 
     }
 }
 
-void GraphicEntities::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicEntities::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     for(auto& piece : m_pieces){
         target.draw(piece.second);
