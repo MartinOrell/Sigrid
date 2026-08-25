@@ -1,8 +1,6 @@
 #include "sigrid/Entity/Piece/PieceIdentifier.h"
 
-using namespace sigrid;
-
-bool PieceIdentifier::operator<(const PieceIdentifier& rhs) const{
+bool sigrid::PieceIdentifier::operator<(const PieceIdentifier& rhs) const{
     if(name < rhs.name){
         return true;
     }
