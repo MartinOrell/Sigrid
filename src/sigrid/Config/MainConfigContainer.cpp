@@ -9,9 +9,7 @@
 #include "sigrid/utilities/lists/listLoaders/LoadValueContainers.h"
 #include "sigrid/utilities/lists/listSavers/ListSaver.h"
 
-using namespace sigrid_config;
-
-bool MainConfigContainer::load(const sigrid::String& filename){
+bool sigrid_config::MainConfigContainer::load(const sigrid::String& filename){
     
     sigrid::InputStream is;
 
