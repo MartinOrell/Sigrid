@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/PageResources.h"
 
-using namespace sigrid_pdf;
-
-std::string Resources::getString() const{
+std::string sigrid_pdf::Resources::getString() const{
 
     std::string s;
     s.append("  <<\n");
