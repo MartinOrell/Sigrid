@@ -2,17 +2,15 @@
 
 #include <cctype>
 
-using namespace sigrid;
-
-void LogicPiece::setNotation(const sigrid::String& notation){
+void sigrid::LogicPiece::setNotation(const sigrid::String& notation){
     m_notation = notation;
 }
 
-void LogicPiece::setColorId(const int& colorId){
+void sigrid::LogicPiece::setColorId(const int& colorId){
     m_colorId = colorId;
 }
 
-sigrid::String LogicPiece::getNotation() const{
+sigrid::String sigrid::LogicPiece::getNotation() const{
     return m_notation;
 }
 
@@ -24,11 +22,11 @@ sigrid::PieceDataContainer sigrid::LogicPiece::getContainer() const{
     return container;
 }
 
-int LogicPiece::getColorId() const{
+int sigrid::LogicPiece::getColorId() const{
     return m_colorId;
 }
 
-bool LogicPiece::operator==(const LogicPiece& rhs) const{
+bool sigrid::LogicPiece::operator==(const LogicPiece& rhs) const{
 
     if(m_colorId != rhs.m_colorId){
         return false;
@@ -41,6 +39,6 @@ bool LogicPiece::operator==(const LogicPiece& rhs) const{
     return m_notation.getUpper() == rhs.m_notation.getUpper();
 }
 
-bool LogicPiece::operator!=(const LogicPiece& rhs) const{
+bool sigrid::LogicPiece::operator!=(const LogicPiece& rhs) const{
     return !(*this == rhs);
 }
