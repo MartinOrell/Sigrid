@@ -2,28 +2,26 @@
 
 #include <iostream>
 
-using namespace sigrid_coord;
-
-Coord::Coord()
+sigrid_coord::Coord::Coord()
 : x(0)
 , y(0){}
 
-Coord::Coord(const int x, const int y)
+sigrid_coord::Coord::Coord(const int x, const int y)
 : x(x)
 , y(y){}
 
-Coord::Coord(const sigrid::String& notation){
+sigrid_coord::Coord::Coord(const sigrid::String& notation){
     set(notation);
 }
 
-Coord& Coord::operator=(const Coord& rhs){
+sigrid_coord::Coord& sigrid_coord::Coord::operator=(const Coord& rhs){
     x = rhs.x;
     y = rhs.y;
     
     return *this;
 }
 
-bool Coord::operator<(const Coord& rhs) const{
+bool sigrid_coord::Coord::operator<(const Coord& rhs) const{
     if(y < rhs.y){
         return true;
     }
@@ -36,7 +34,7 @@ bool Coord::operator<(const Coord& rhs) const{
     return false;
 }
 
-bool Coord::operator==(const Coord& rhs) const{
+bool sigrid_coord::Coord::operator==(const Coord& rhs) const{
     if(x != rhs.x){
         return false;
     }
@@ -46,7 +44,7 @@ bool Coord::operator==(const Coord& rhs) const{
     return true;
 }
 
-bool Coord::operator!=(const Coord& rhs) const{
+bool sigrid_coord::Coord::operator!=(const Coord& rhs) const{
     if(x != rhs.x){
         return true;
     }
@@ -56,7 +54,7 @@ bool Coord::operator!=(const Coord& rhs) const{
     return false;
 }
 
-bool Coord::set(const sigrid::String& notation){
+bool sigrid_coord::Coord::set(const sigrid::String& notation){
 
     int nx = 0; // character notation where 'a' = 1, 'z' = 26, 'aa' = 27
     int ny = 0;
@@ -118,7 +116,7 @@ bool Coord::set(const sigrid::String& notation){
     return true;
 }
 
-sigrid::String Coord::getNotation() const{
+sigrid::String sigrid_coord::Coord::getNotation() const{
 
     sigrid::String notation;
     notation.append(getColumnNotation(x));
@@ -127,7 +125,7 @@ sigrid::String Coord::getNotation() const{
     return notation;
 }
 
-bool Coord::load(sigrid::InputStream& is){
+bool sigrid_coord::Coord::load(sigrid::InputStream& is){
 
     const auto positionString_o = is.readString();
     if(positionString_o == std::nullopt){
