@@ -1,15 +1,13 @@
 #include "sigrid/Color/ColorManager.h"
 
-using namespace sigrid;
-
-void ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& colors){
+void sigrid::ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& colors){
 
     for(const auto& colorHex : colors){
         m_colors.push_back(sf::Color(colorHex.value));
     }
 }
 
-sigrid_list::Vector<ColorContainer> ColorManager::getContainer(){
+sigrid_list::Vector<sigrid::ColorContainer> sigrid::ColorManager::getContainer(){
 
     sigrid_list::Vector<ColorContainer> containers;
     for(const auto& color: m_colors){
@@ -21,7 +19,7 @@ sigrid_list::Vector<ColorContainer> ColorManager::getContainer(){
     return containers;
 }
 
-std::optional<sf::Color> ColorManager::getSolidColor(const int colorId) const{
+std::optional<sf::Color> sigrid::ColorManager::getSolidColor(const int colorId) const{
 
     auto color_o = m_colors.at(colorId);
     if(color_o == std::nullopt){
@@ -32,7 +30,7 @@ std::optional<sf::Color> ColorManager::getSolidColor(const int colorId) const{
     return color;
 }
 
-std::optional<sf::Color> ColorManager::getTransparentColor(const int colorId) const{
+std::optional<sf::Color> sigrid::ColorManager::getTransparentColor(const int colorId) const{
 
     auto color_o = m_colors.at(colorId);
     if(color_o == std::nullopt){
