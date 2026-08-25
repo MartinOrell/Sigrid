@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-std::optional<sf::Texture*> IconManager::getTexturePtr(const sigrid::String& filename){
+std::optional<sf::Texture*> sigrid::IconManager::getTexturePtr(const sigrid::String& filename){
 
     auto m_texture_o = m_textures.at(filename);
 
