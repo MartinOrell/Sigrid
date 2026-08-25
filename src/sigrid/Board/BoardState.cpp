@@ -4,9 +4,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-bool BoardState::load(const BoardStateContainer& data){
+bool sigrid::BoardState::load(const BoardStateContainer& data){
 
     m_tileLayer.clear();
     m_pieceLayer.clear();
@@ -88,7 +86,7 @@ bool BoardState::load(const BoardStateContainer& data){
     return true;
 }
 
-BoardStateContainer BoardState::getContainer() const{
+sigrid::BoardStateContainer sigrid::BoardState::getContainer() const{
 
     BoardStateContainer container;
     container.columns = m_tileLayer.getNumColumns();
@@ -101,15 +99,15 @@ BoardStateContainer BoardState::getContainer() const{
     return container;
 }
 
-const int BoardState::getNumColumns() const{
+const int sigrid::BoardState::getNumColumns() const{
     return m_tileLayer.getNumColumns();
 }
 
-const int BoardState::getNumRows() const{
+const int sigrid::BoardState::getNumRows() const{
     return m_tileLayer.getNumRows();
 }
 
-bool BoardState::isWithinBoard(const sigrid_coord::Coord& coord) const{
+bool sigrid::BoardState::isWithinBoard(const sigrid_coord::Coord& coord) const{
     if(coord.x >= getNumColumns()){
         return false;
     }
@@ -119,14 +117,14 @@ bool BoardState::isWithinBoard(const sigrid_coord::Coord& coord) const{
     return true;
 }
 
-bool BoardState::isEmptyTile(const sigrid_coord::Coord& coord) const{
+bool sigrid::BoardState::isEmptyTile(const sigrid_coord::Coord& coord) const{
     if(!isWithinBoard(coord)){
         return false;
     }
     return m_pieceLayer.getEntityAt(coord) == std::nullopt;
 }
 
-std::optional<LogicTile> BoardState::getTile(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::LogicTile> sigrid::BoardState::getTile(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tileLayer.getTile(coord);
 
@@ -137,11 +135,11 @@ std::optional<LogicTile> BoardState::getTile(const sigrid_coord::Coord& coord) c
     return tile_o.value();
 }
 
-std::optional<LogicEntity> BoardState::getEntityAt(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::LogicEntity> sigrid::BoardState::getEntityAt(const sigrid_coord::Coord& coord) const{
     return m_pieceLayer.getEntityAt(coord);
 }
 
-std::optional<LogicArrow> BoardState::getArrowAtIndex(const int& index) const{
+std::optional<sigrid::LogicArrow> sigrid::BoardState::getArrowAtIndex(const int& index) const{
 
     auto arrow_o = m_arrowLayer.getArrowAtIndex(index);
 
@@ -151,7 +149,7 @@ std::optional<LogicArrow> BoardState::getArrowAtIndex(const int& index) const{
     return arrow_o.value();
 }
 
-std::optional<sigrid_coord::CoordPair> BoardState::getArrowKeyAtIndex(const int& index) const{
+std::optional<sigrid_coord::CoordPair> sigrid::BoardState::getArrowKeyAtIndex(const int& index) const{
 
     auto coordPair_o = m_arrowLayer.getArrowKeyAtIndex(index);
 
@@ -161,7 +159,7 @@ std::optional<sigrid_coord::CoordPair> BoardState::getArrowKeyAtIndex(const int&
     return coordPair_o.value();
 }
 
-std::optional<LogicArrow> BoardState::getArrowAt(const sigrid_coord::CoordPair& coordPair) const{
+std::optional<sigrid::LogicArrow> sigrid::BoardState::getArrowAt(const sigrid_coord::CoordPair& coordPair) const{
 
     auto arrow_o = m_arrowLayer.getArrow(coordPair);
 
@@ -172,7 +170,7 @@ std::optional<LogicArrow> BoardState::getArrowAt(const sigrid_coord::CoordPair& 
     return arrow_o.value();
 }
 
-sigrid::String BoardState::getFen() const{
+sigrid::String sigrid::BoardState::getFen() const{
 
     sigrid::String fen;
 
@@ -227,23 +225,23 @@ sigrid::String BoardState::getFen() const{
     return fen;
 }
 
-int BoardState::getTurnToMove() const{
+int sigrid::BoardState::getTurnToMove() const{
     return m_turnToMove;
 }
 
-sigrid_list::Vector<int> BoardState::getRepeatColorIds() const{
+sigrid_list::Vector<int> sigrid::BoardState::getRepeatColorIds() const{
     return m_tileLayer.getRepeatColorIds();
 }
 
-int BoardState::getNumArrows() const{
+int sigrid::BoardState::getNumArrows() const{
     return m_arrowLayer.size();
 }
 
-void BoardState::setTurnToMove(const int& turnToMove){
+void sigrid::BoardState::setTurnToMove(const int& turnToMove){
     m_turnToMove = turnToMove;
 }
 
-bool BoardState::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
+bool sigrid::BoardState::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
 
     if(!isWithinBoard(coord)){
         std::cerr << "BoardState: Unable to add entity at " << coord.getNotation() << std::endl;
@@ -261,7 +259,7 @@ bool BoardState::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& 
     return true;
 }
 
-bool BoardState::removeEntity(const sigrid_coord::Coord& coord){
+bool sigrid::BoardState::removeEntity(const sigrid_coord::Coord& coord){
 
     if(!isWithinBoard(coord)){
         std::cerr << "BoardState: Unable to remove entity at " << coord.getNotation() << std::endl;
@@ -279,7 +277,7 @@ bool BoardState::removeEntity(const sigrid_coord::Coord& coord){
     return true;
 }
 
-bool BoardState::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
+bool sigrid::BoardState::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
 
     if(fromCoord.x == toCoord.x && fromCoord.y == toCoord.y){
         std::cerr << "BoardState: Unable to move entity from " << fromCoord.getNotation()
@@ -316,7 +314,7 @@ bool BoardState::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_c
     return true;
 }
 
-bool BoardState::addTileHighlight(const sigrid_coord::Coord& coord, const int& highlightColorId){
+bool sigrid::BoardState::addTileHighlight(const sigrid_coord::Coord& coord, const int& highlightColorId){
 
     if(highlightColorId < 0){
         std::cerr << "BoardState: Unable to add highlight." << std::endl;
@@ -336,7 +334,7 @@ bool BoardState::addTileHighlight(const sigrid_coord::Coord& coord, const int& h
     return true;
 }
 
-bool BoardState::removeTileHighlight(const sigrid_coord::Coord& coord){
+bool sigrid::BoardState::removeTileHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tileLayer.getTile(coord);
 
@@ -350,7 +348,7 @@ bool BoardState::removeTileHighlight(const sigrid_coord::Coord& coord){
     return true;
 }
 
-bool BoardState::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
+bool sigrid::BoardState::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& arrow){
 
     if(!isWithinBoard(coordPair.from)){
         std::cerr << "BoardState: Unable to add arrow from tile: " << coordPair.from.getNotation() << std::endl;
@@ -384,7 +382,7 @@ bool BoardState::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicA
 }
 
 
-bool BoardState::removeArrow(const sigrid_coord::CoordPair& coordPair){
+bool sigrid::BoardState::removeArrow(const sigrid_coord::CoordPair& coordPair){
 
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
@@ -399,11 +397,11 @@ bool BoardState::removeArrow(const sigrid_coord::CoordPair& coordPair){
     return true;
 }
 
-bool BoardState::addTileColumnRight(){
+bool sigrid::BoardState::addTileColumnRight(){
     return m_tileLayer.addColumnRight();
 }
 
-bool BoardState::addTileColumnLeft(){
+bool sigrid::BoardState::addTileColumnLeft(){
     if(!m_tileLayer.addColumnLeft()){
         return false;
     }
@@ -412,7 +410,7 @@ bool BoardState::addTileColumnLeft(){
     return true;
 }
 
-bool BoardState::removeRightTileColumn(){
+bool sigrid::BoardState::removeRightTileColumn(){
     if(!m_tileLayer.removeRightColumn()){
         return false;
     }
@@ -422,7 +420,7 @@ bool BoardState::removeRightTileColumn(){
     return true;
 }
 
-bool BoardState::removeLeftTileColumn(){
+bool sigrid::BoardState::removeLeftTileColumn(){
     if(!m_tileLayer.removeLeftColumn()){
         return false;
     }
@@ -433,7 +431,7 @@ bool BoardState::removeLeftTileColumn(){
     return true;
 }
 
-bool BoardState::addTileRowUp(){
+bool sigrid::BoardState::addTileRowUp(){
     if(!m_tileLayer.addRowUp()){
         return false;
     }
@@ -442,11 +440,11 @@ bool BoardState::addTileRowUp(){
     return true;
 }
 
-bool BoardState::addTileRowDown(){
+bool sigrid::BoardState::addTileRowDown(){
     return m_tileLayer.addRowDown();
 }
 
-bool BoardState::removeTopTileRow(){
+bool sigrid::BoardState::removeTopTileRow(){
     if(!m_tileLayer.removeTopRow()){
         return false;
     }
@@ -457,7 +455,7 @@ bool BoardState::removeTopTileRow(){
     return true;
 }
 
-bool BoardState::removeBottomTileRow(){
+bool sigrid::BoardState::removeBottomTileRow(){
     if(!m_tileLayer.removeBottomRow()){
         return false;
     }
@@ -467,7 +465,7 @@ bool BoardState::removeBottomTileRow(){
     return true;
 }
 
-void BoardState::print(){
+void sigrid::BoardState::print(){
     std::cout << "Printing board" << std::endl;
     std::cout << "Number of columns: " << getNumColumns() << std::endl;
     std::cout << "Number of rows: " << getNumRows() << std::endl;
@@ -487,10 +485,10 @@ void BoardState::print(){
     }
 }
 
-void BoardState::clearEntities(){
+void sigrid::BoardState::clearEntities(){
     m_pieceLayer.clear();
 }
 
-void BoardState::clearArrows(){
+void sigrid::BoardState::clearArrows(){
     m_arrowLayer.clear();
 }
