@@ -1,12 +1,10 @@
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorder.h"
 
-using namespace sigrid;
-
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include <iostream>
 
-RectangleBorderContainer RectangleBorder::getContainer() const{
+sigrid::RectangleBorderContainer sigrid::RectangleBorder::getContainer() const{
 
     RectangleBorderContainer container;
     container.isVisible = this->m_isVisible;
@@ -15,7 +13,7 @@ RectangleBorderContainer RectangleBorder::getContainer() const{
     return container;
 }
 
-void RectangleBorder::setThickness(const float& thickness){
+void sigrid::RectangleBorder::setThickness(const float& thickness){
 
     m_thickness = thickness;
 
@@ -54,7 +52,7 @@ void RectangleBorder::setThickness(const float& thickness){
     }
 }
 
-void RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
 
     m_topLeftPosition = topLeftPosition;
 
@@ -79,7 +77,7 @@ void RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
     }
 }
 
-void RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
+void sigrid::RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
     
     m_enclosedArea = enclosedArea;
 
@@ -118,7 +116,7 @@ void RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
     }
 }
 
-void RectangleBorder::setColor(const sf::Color& color){
+void sigrid::RectangleBorder::setColor(const sf::Color& color){
 
     m_left.setFillColor(color);
     m_right.setFillColor(color);
@@ -126,41 +124,41 @@ void RectangleBorder::setColor(const sf::Color& color){
     m_bottom.setFillColor(color);
 }
 
-bool RectangleBorder::isVisible() const{
+bool sigrid::RectangleBorder::isVisible() const{
     return m_isVisible;
 }
 
-bool RectangleBorder::isHidden() const{
+bool sigrid::RectangleBorder::isHidden() const{
     return !m_isVisible;
 }
 
-float RectangleBorder::getThickness() const{
+float sigrid::RectangleBorder::getThickness() const{
     return (float)m_thickness;
 }
 
-void RectangleBorder::show(){
+void sigrid::RectangleBorder::show(){
     m_isVisible = true;
 }
 
-void RectangleBorder::hide(){
+void sigrid::RectangleBorder::hide(){
     m_isVisible = false;
 }
 
-void RectangleBorder::addWidth(const float& addedWidth){
+void sigrid::RectangleBorder::addWidth(const float& addedWidth){
 
     m_right.move({addedWidth, 0.f});
     m_top.setSize(m_top.getSize()+sf::Vector2f{addedWidth, 0.f});
     m_bottom.setSize(m_bottom.getSize()+sf::Vector2f{addedWidth, 0.f});
 }
 
-void RectangleBorder::addHeight(const float& addedHeight){
+void sigrid::RectangleBorder::addHeight(const float& addedHeight){
 
     m_left.setSize(m_left.getSize()+sf::Vector2f{0,addedHeight});
     m_right.setSize(m_right.getSize()+sf::Vector2f{0,addedHeight});
     m_bottom.move({0.f, addedHeight});
 }
 
-void RectangleBorder::move(const sf::Vector2f& offset){
+void sigrid::RectangleBorder::move(const sf::Vector2f& offset){
 
     m_topLeftPosition.x += offset.x;
     m_topLeftPosition.y += offset.y;
@@ -171,7 +169,7 @@ void RectangleBorder::move(const sf::Vector2f& offset){
     m_bottom.move(offset);
 }
 
-void RectangleBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::RectangleBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_isVisible){
         return;
