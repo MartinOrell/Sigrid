@@ -180,7 +180,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
             printName.set("\"" + std::move(displayName.getStdString()) + "\"");
         }
         else{
-            printName.set(std::move(displayName.getStdString()));
+            printName = std::move(displayName);
         }
 
         sigrid::String printAction;
@@ -188,7 +188,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
             printAction.set("\"" + std::move(actionName.getStdString()) + "\"");
         }
         else{
-            printAction.set(std::move(actionName.getStdString()));
+            printAction = std::move(actionName);
         }
 
         sigrid::String out;
@@ -255,7 +255,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
             printName.set("\"" + std::move(displayName.getStdString()) + "\"");
         }
         else{
-            printName.set(std::move(displayName.getStdString()));
+            printName = std::move(displayName);
         }
 
         sigrid::String printAction;
@@ -263,7 +263,7 @@ sigrid::String sigrid::MenuItemContainer::getString(const int& indentLevel) cons
             printAction.set("\"" + std::move(actionName.getStdString()) + "\"");
         }
         else{
-            printAction.set(std::move(actionName.getStdString()));
+            printAction = std::move(actionName);
         }
 
         out.append("\n");
