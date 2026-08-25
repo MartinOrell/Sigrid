@@ -11,13 +11,11 @@
 #include "sigrid/Pdf/ExternalObjects.h"
 #include "sigrid/Pdf/ContentStreams.h"
 
-using namespace sigrid_pdf;
-
-Pdf::Pdf(){
+sigrid_pdf::Pdf::Pdf(){
     m_images.push_back(std::vector<Image>{});
 }
 
-void Pdf::addImage(const unsigned int pageId, const sigrid_pdf::Image& image){
+void sigrid_pdf::Pdf::addImage(const unsigned int pageId, const sigrid_pdf::Image& image){
     while(m_images.size() <= pageId){
         m_images.push_back(std::vector<Image>{});
     }
@@ -37,7 +35,7 @@ std::string header(const std::string& version){
     return s;
 }
 
-bool Pdf::save(const std::string& filename) const{
+bool sigrid_pdf::Pdf::save(const std::string& filename) const{
 
     std::cout << "Saving pdf " << filename << std::endl;
 
