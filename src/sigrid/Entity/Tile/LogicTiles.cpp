@@ -2,17 +2,15 @@
 
 #include <ostream>
 
-using namespace sigrid;
-
-void LogicTiles::setNumColumns(const int& numColumns){
+void sigrid::LogicTiles::setNumColumns(const int& numColumns){
     m_tiles.setNumColumns(numColumns);
 }
 
-void LogicTiles::setNumRows(const int& numRows){
+void sigrid::LogicTiles::setNumRows(const int& numRows){
     m_tiles.setNumRows(numRows);
 }
 
-void LogicTiles::setInsertPattern(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::LogicTiles::setInsertPattern(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     sigrid_list::Vector<LogicTile> insertPattern;
     for(const auto& color: repeatTileColorIds){
@@ -24,11 +22,11 @@ void LogicTiles::setInsertPattern(const sigrid_list::Vector<int>& repeatTileColo
     m_tiles.setInsertPattern(insertPattern);
 }
 
-void LogicTiles::insertAllTiles(){
+void sigrid::LogicTiles::insertAllTiles(){
     m_tiles.insertAllElements();
 }
 
-void LogicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
+void sigrid::LogicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -39,7 +37,7 @@ void LogicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& 
     tile.setHighlightColor(colorId);
 }
 
-void LogicTiles::removeHighlight(const sigrid_coord::Coord& coord){
+void sigrid::LogicTiles::removeHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -50,15 +48,15 @@ void LogicTiles::removeHighlight(const sigrid_coord::Coord& coord){
     tile.removeHighlight();
 }
 
-int LogicTiles::getNumColumns() const{
+int sigrid::LogicTiles::getNumColumns() const{
     return m_tiles.numColumns();
 }
 
-int LogicTiles::getNumRows() const{
+int sigrid::LogicTiles::getNumRows() const{
     return m_tiles.numRows();
 }
 
-sigrid_list::Vector<int> LogicTiles::getRepeatColorIds() const{
+sigrid_list::Vector<int> sigrid::LogicTiles::getRepeatColorIds() const{
 
     sigrid_list::Vector<int> repeatColorIds;
 
@@ -69,42 +67,42 @@ sigrid_list::Vector<int> LogicTiles::getRepeatColorIds() const{
     return repeatColorIds;
 }
 
-bool LogicTiles::addColumnRight(){
+bool sigrid::LogicTiles::addColumnRight(){
     return m_tiles.addColumnRight();
 }
 
-bool LogicTiles::addColumnLeft(){
+bool sigrid::LogicTiles::addColumnLeft(){
     return m_tiles.addColumnLeft();
 }
 
-bool LogicTiles::removeRightColumn(){
+bool sigrid::LogicTiles::removeRightColumn(){
     return m_tiles.removeRightColumn();
 }
 
-bool LogicTiles::removeLeftColumn(){
+bool sigrid::LogicTiles::removeLeftColumn(){
     return m_tiles.removeLeftColumn();
 }
 
-bool LogicTiles::addRowUp(){
+bool sigrid::LogicTiles::addRowUp(){
     return m_tiles.addRowUp();
 }
 
-bool LogicTiles::addRowDown(){
+bool sigrid::LogicTiles::addRowDown(){
     return m_tiles.addRowDown();
 }
 
-bool LogicTiles::removeTopRow(){
+bool sigrid::LogicTiles::removeTopRow(){
     return m_tiles.removeTopRow();
 }
 
-bool LogicTiles::removeBottomRow(){
+bool sigrid::LogicTiles::removeBottomRow(){
     return m_tiles.removeBottomRow();
 }
 
-void LogicTiles::clear(){
+void sigrid::LogicTiles::clear(){
     m_tiles.clear();
 }
 
-std::optional<LogicTile> LogicTiles::getTile(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::LogicTile> sigrid::LogicTiles::getTile(const sigrid_coord::Coord& coord) const{
     return m_tiles.at(coord);
 }
