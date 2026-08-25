@@ -17,9 +17,11 @@ class Image{
 
     void set(sf::Image&&);
 
-    sf::Image getSfImage() const;
+    int getWidth() const;
+    int getHeight() const;
+    sigrid::String getAsciiHexStream() const;
 
-    bool saveToFile(const sigrid::String& filename);
+    bool saveToFile(const sigrid::String& filename) const;
 
   private:
 

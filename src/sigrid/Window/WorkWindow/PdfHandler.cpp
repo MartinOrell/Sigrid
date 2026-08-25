@@ -1,8 +1,6 @@
 #include "sigrid/Window/WorkWindow/PdfHandler.h"
 
 #include <iostream>
-#include <sstream>
-#include <iomanip>
 
 #include <SFML/Graphics/Image.hpp>
 
@@ -86,30 +84,15 @@ void PdfHandler::savePdf(const sigrid_list::VectorWithDisplayGrid<sigrid::Board>
         auto& board = board_o.value().get();
 
         sigrid::Image sigridImage = board.getImage(entitledWidth*quality, entitledHeight*quality);
-        sf::Image sfImage = sigridImage.getSfImage();
 
-        pdImage.displayWidth = sfImage.getSize().x/quality;
-        pdImage.displayHeight = sfImage.getSize().y/quality;
-        pdImage.dataWidth = sfImage.getSize().x;
-        pdImage.dataHeight = sfImage.getSize().y;
+        pdImage.displayWidth = sigridImage.getWidth()/quality;
+        pdImage.displayHeight = sigridImage.getHeight()/quality;
+        pdImage.dataWidth = sigridImage.getWidth();
+        pdImage.dataHeight = sigridImage.getHeight();
         
         std::cout << "loading data from " << board.getName()
             << " (" << i+1 << "/" << boards.size() << ")" << std::endl;
-        std::stringstream ss;
-        ss << std::hex << std::setfill('0');
-        for(unsigned int y = 0; y < sfImage.getSize().y; y++){
-            for(unsigned int x = 0; x < sfImage.getSize().x; x++){
-                const auto& pixel = sfImage.getPixel({x,y});
-                const auto& red = pixel.r;
-                const auto& green = pixel.g;
-                const auto& blue = pixel.b;
-
-                ss << std::hex << std::setw(2) << static_cast<int>(red);
-                ss << std::hex << std::setw(2) << static_cast<int>(green);
-                ss << std::hex << std::setw(2) << static_cast<int>(blue);
-            }
-        }
-        pdImage.asciiHexStream = ss.str();
+        pdImage.asciiHexStream = sigridImage.getAsciiHexStream().getStdString();
         std::cout << "data loaded" << std::endl;
 
         pdf.addImage(pageId, std::move(pdImage));
