@@ -7,10 +7,8 @@
 // including this file at the end of VectorWithDisplayGrid.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid_list;
-
 template<typename T>
-void VectorWithDisplayGrid<T>::push_back(const T& value){
+void sigrid_list::VectorWithDisplayGrid<T>::push_back(const T& value){
     
     m_vector.push_back(value);
 
@@ -27,19 +25,19 @@ void VectorWithDisplayGrid<T>::push_back(const T& value){
 }
 
 template<typename T>
-void VectorWithDisplayGrid<T>::addColumn(){
+void sigrid_list::VectorWithDisplayGrid<T>::addColumn(){
     m_displayColumns++;
     displayLastElements();
 }
 
 template<typename T>
-void VectorWithDisplayGrid<T>::addRow(){
+void sigrid_list::VectorWithDisplayGrid<T>::addRow(){
     m_displayRows++;
     displayLastElements();
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::removeColumn(){
+bool sigrid_list::VectorWithDisplayGrid<T>::removeColumn(){
 
     if(m_displayColumns < 2){
         return false;
@@ -52,7 +50,7 @@ bool VectorWithDisplayGrid<T>::removeColumn(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::removeRow(){
+bool sigrid_list::VectorWithDisplayGrid<T>::removeRow(){
 
     if(m_displayRows < 2){
         return false;
@@ -65,7 +63,7 @@ bool VectorWithDisplayGrid<T>::removeRow(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::setSize(const int& columns, const int& rows){
+bool sigrid_list::VectorWithDisplayGrid<T>::setSize(const int& columns, const int& rows){
 
     if(columns < 1){
         return false;
@@ -83,7 +81,7 @@ bool VectorWithDisplayGrid<T>::setSize(const int& columns, const int& rows){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::selectLast(){
+bool sigrid_list::VectorWithDisplayGrid<T>::selectLast(){
 
     const int displaySize = m_displayIds.size();
     if(displaySize == 0){
@@ -95,7 +93,7 @@ bool VectorWithDisplayGrid<T>::selectLast(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::select(const int& displayPosition){
+bool sigrid_list::VectorWithDisplayGrid<T>::select(const int& displayPosition){
 
     const int displaySize = m_displayIds.size();
     if(displayPosition >= displaySize){
@@ -107,17 +105,17 @@ bool VectorWithDisplayGrid<T>::select(const int& displayPosition){
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::at(const int& position){
+std::optional<std::reference_wrapper<T>> sigrid_list::VectorWithDisplayGrid<T>::at(const int& position){
     return m_vector.at(position);
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::at(const int& position) const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::VectorWithDisplayGrid<T>::at(const int& position) const{
     return m_vector.at(position);
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition){
+std::optional<std::reference_wrapper<T>> sigrid_list::VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition){
 
     auto id_o = m_displayIds.at(displayPosition);
 
@@ -130,7 +128,7 @@ std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atDisplay(con
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition) const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::VectorWithDisplayGrid<T>::atDisplay(const int& displayPosition) const{
 
     auto id_o = m_displayIds.at(displayPosition);
 
@@ -143,7 +141,7 @@ const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::a
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atSelection(){
+std::optional<std::reference_wrapper<T>> sigrid_list::VectorWithDisplayGrid<T>::atSelection(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -153,7 +151,7 @@ std::optional<std::reference_wrapper<T>> VectorWithDisplayGrid<T>::atSelection()
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::atSelection() const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::VectorWithDisplayGrid<T>::atSelection() const{
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -163,7 +161,7 @@ const std::optional<std::reference_wrapper<const T>> VectorWithDisplayGrid<T>::a
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<int>> VectorWithDisplayGrid<T>::activeDisplayIndex(){
+std::optional<std::reference_wrapper<int>> sigrid_list::VectorWithDisplayGrid<T>::activeDisplayIndex(){
 
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -172,7 +170,7 @@ std::optional<std::reference_wrapper<int>> VectorWithDisplayGrid<T>::activeDispl
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const int>> VectorWithDisplayGrid<T>::activeDisplayIndex() const{
+const std::optional<std::reference_wrapper<const int>> sigrid_list::VectorWithDisplayGrid<T>::activeDisplayIndex() const{
     
     if(!m_selectIndex_o){
         return std::nullopt;
@@ -181,37 +179,37 @@ const std::optional<std::reference_wrapper<const int>> VectorWithDisplayGrid<T>:
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::size() const{
+int sigrid_list::VectorWithDisplayGrid<T>::size() const{
     return m_vector.size();
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::currentDisplaySize() const{
+int sigrid_list::VectorWithDisplayGrid<T>::currentDisplaySize() const{
     return m_displayIds.size();
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::currentDisplayColumns() const{
+int sigrid_list::VectorWithDisplayGrid<T>::currentDisplayColumns() const{
     return (m_displayIds.size() > m_displayColumns) ? m_displayColumns : m_displayIds.size();
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::currentDisplayRows() const{
+int sigrid_list::VectorWithDisplayGrid<T>::currentDisplayRows() const{
     return (m_displayIds.size() + m_displayColumns - 1)/m_displayColumns;
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::maxDisplayColumns() const{
+int sigrid_list::VectorWithDisplayGrid<T>::maxDisplayColumns() const{
     return m_displayColumns;
 }
 
 template<typename T>
-int VectorWithDisplayGrid<T>::maxDisplayRows() const{
+int sigrid_list::VectorWithDisplayGrid<T>::maxDisplayRows() const{
     return m_displayRows;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isDisplayedElementSelected(const int& displayPosition) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isDisplayedElementSelected(const int& displayPosition) const{
     
     if(!m_selectIndex_o){
         return false;
@@ -220,27 +218,27 @@ bool VectorWithDisplayGrid<T>::isDisplayedElementSelected(const int& displayPosi
 }
 
 template<typename T>
-typename std::vector<T>::iterator VectorWithDisplayGrid<T>::begin(){
+typename std::vector<T>::iterator sigrid_list::VectorWithDisplayGrid<T>::begin(){
     return m_vector.begin();
 }
 
 template<typename T>
-typename std::vector<T>::const_iterator VectorWithDisplayGrid<T>::begin() const{
+typename std::vector<T>::const_iterator sigrid_list::VectorWithDisplayGrid<T>::begin() const{
     return m_vector.begin();
 }
 
 template<typename T>
-typename std::vector<T>::iterator VectorWithDisplayGrid<T>::end(){
+typename std::vector<T>::iterator sigrid_list::VectorWithDisplayGrid<T>::end(){
     return m_vector.end();
 }
 
 template<typename T>
-typename std::vector<T>::const_iterator VectorWithDisplayGrid<T>::end() const{
+typename std::vector<T>::const_iterator sigrid_list::VectorWithDisplayGrid<T>::end() const{
     return m_vector.end();
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::shiftLeft(){
+bool sigrid_list::VectorWithDisplayGrid<T>::shiftLeft(){
 
     for(int i = 0; i < m_displayIds.size()-1; i++){
 
@@ -289,7 +287,7 @@ bool VectorWithDisplayGrid<T>::shiftLeft(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::shiftRight(){
+bool sigrid_list::VectorWithDisplayGrid<T>::shiftRight(){
 
     for(int i = m_displayIds.size()-1; i > 0; i--){
 
@@ -339,7 +337,7 @@ bool VectorWithDisplayGrid<T>::shiftRight(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::shiftUp(){
+bool sigrid_list::VectorWithDisplayGrid<T>::shiftUp(){
 
     if(isOneRowDisplayed()){
         return false;
@@ -367,7 +365,7 @@ bool VectorWithDisplayGrid<T>::shiftUp(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::shiftDown(){
+bool sigrid_list::VectorWithDisplayGrid<T>::shiftDown(){
 
     if(isOneRowDisplayed()){
         return false;
@@ -392,7 +390,7 @@ bool VectorWithDisplayGrid<T>::shiftDown(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::selectLeft(){
+bool sigrid_list::VectorWithDisplayGrid<T>::selectLeft(){
 
     if(!m_selectIndex_o){
         return false;
@@ -525,7 +523,7 @@ bool VectorWithDisplayGrid<T>::selectLeft(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::selectRight(){
+bool sigrid_list::VectorWithDisplayGrid<T>::selectRight(){
 
     if(!m_selectIndex_o){
         return false;
@@ -653,7 +651,7 @@ bool VectorWithDisplayGrid<T>::selectRight(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::selectUp(){
+bool sigrid_list::VectorWithDisplayGrid<T>::selectUp(){
 
     if(!m_selectIndex_o){
         return false;
@@ -690,7 +688,7 @@ bool VectorWithDisplayGrid<T>::selectUp(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::selectDown(){
+bool sigrid_list::VectorWithDisplayGrid<T>::selectDown(){
 
     if(!m_selectIndex_o){
         return false;
@@ -724,28 +722,28 @@ bool VectorWithDisplayGrid<T>::selectDown(){
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isOneRowDisplayed() const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isOneRowDisplayed() const{
     return m_displayRows == 1 ||
         m_displayIds.size() <= m_displayColumns;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isLeftDisplayColumn(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isLeftDisplayColumn(const int& displayIndex) const{
     return displayIndex % m_displayColumns == 0;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isRightDisplayColumn(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isRightDisplayColumn(const int& displayIndex) const{
     return displayIndex % m_displayColumns == m_displayColumns-1;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isTopDisplayRow(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isTopDisplayRow(const int& displayIndex) const{
     return displayIndex < m_displayColumns;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isTopRow(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isTopRow(const int& displayIndex) const{
     
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -757,14 +755,14 @@ bool VectorWithDisplayGrid<T>::isTopRow(const int& displayIndex) const{
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isBottomDisplayRow(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isBottomDisplayRow(const int& displayIndex) const{
     int displayRow = displayIndex/m_displayColumns;
     int bottomDisplayRow = (m_displayIds.size()-1)/m_displayColumns;
     return displayRow == bottomDisplayRow;
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isBottomRow(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isBottomRow(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -778,7 +776,7 @@ bool VectorWithDisplayGrid<T>::isBottomRow(const int& displayIndex) const{
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isFirstElement(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isFirstElement(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -789,7 +787,7 @@ bool VectorWithDisplayGrid<T>::isFirstElement(const int& displayIndex) const{
 }
 
 template<typename T>
-bool VectorWithDisplayGrid<T>::isLastElement(const int& displayIndex) const{
+bool sigrid_list::VectorWithDisplayGrid<T>::isLastElement(const int& displayIndex) const{
 
     auto id_o = m_displayIds.at(displayIndex);
     if(id_o == std::nullopt){
@@ -801,7 +799,7 @@ bool VectorWithDisplayGrid<T>::isLastElement(const int& displayIndex) const{
 }
 
 template<typename T>
-void VectorWithDisplayGrid<T>::displayFirstElements(){
+void sigrid_list::VectorWithDisplayGrid<T>::displayFirstElements(){
 
     m_displayIds.clear();
     for(int id = 0; id < m_displayColumns * m_displayRows; id++){
@@ -813,7 +811,7 @@ void VectorWithDisplayGrid<T>::displayFirstElements(){
 }
 
 template<typename T>
-void VectorWithDisplayGrid<T>::displayLastElements(){
+void sigrid_list::VectorWithDisplayGrid<T>::displayLastElements(){
 
     m_displayIds.clear();
 
