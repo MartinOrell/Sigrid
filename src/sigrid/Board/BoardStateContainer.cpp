@@ -9,17 +9,12 @@
 bool sigrid::BoardStateContainer::load(const sigrid::String& filename){
 
     sigrid::InputStream is;
-    {
-        std::ifstream ifs(filename.getStdString());
 
-        if(!ifs.is_open()){
-            std::cerr << "BoardStateContainer: Failed to open file: \""
-                << filename << "\"."
-                << " Failed to load BoardStateContainer" << std::endl;
-            return false;
-        }
-
-        is.set(std::move(ifs));
+    if(!is.open(filename)){
+        std::cerr << "BoardStateContainer: Failed to open file: \""
+            << filename << "\"."
+            << " Failed to load BoardStateContainer" << std::endl;
+        return false;
     }
 
     clear();

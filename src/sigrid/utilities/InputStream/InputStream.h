@@ -17,7 +17,7 @@ class InputStream{
     InputStream& operator=(const InputStream&) = default;
     InputStream& operator=(InputStream&&) = default;
 
-    void set(std::ifstream&& is);
+    bool open(const sigrid::String& filename);
     
     bool isEndOfFile();
 

@@ -1,9 +1,21 @@
 #include "sigrid/utilities/InputStream/InputStream.h"
 
+#include <iostream>
+
 namespace sigrid{
 
-void InputStream::set(std::ifstream&& is){
-    m_is = std::move(is);
+bool InputStream::open(const sigrid::String& filename){
+
+    std::ifstream ifs(filename.getStdString());
+
+    if(!ifs.is_open()){
+        std::cerr << "InputStream: Failed to open file: \""
+            << filename << "\"" << std::endl;
+        return false;
+    }
+
+    m_is = std::move(ifs);
+    return true;
 }
 
 bool InputStream::isEndOfFile(){

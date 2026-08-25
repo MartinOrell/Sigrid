@@ -14,17 +14,12 @@ using namespace sigrid_config;
 bool MainConfigContainer::load(const sigrid::String& filename){
     
     sigrid::InputStream is;
-    {
-        std::ifstream ifs(filename.getStdString());
 
-        if(!ifs.is_open()){
-
-            std::cerr << "MainConfigContainer: Failed to open \"" << filename << "\"."
-                << " Failed to load MainConfigContainer from file: \""
-                << filename << "\"" << std::endl;
-            return false;
-        }
-        is.set(std::move(ifs));
+    if(!is.open(filename)){
+        std::cerr << "MainConfigContainer: Failed to open \"" << filename << "\"."
+            << " Failed to load MainConfigContainer from file: \""
+            << filename << "\"" << std::endl;
+        return false;
     }
 
     while(!is.isEndOfFile()){
