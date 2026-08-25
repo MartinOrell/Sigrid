@@ -1,8 +1,6 @@
 #include "sigrid/Pdf/Catalog.h"
 
-using namespace sigrid_pdf;
-
-std::string Catalog::getString() const{
+std::string sigrid_pdf::Catalog::getString() const{
     std::string s;
     s.append("  <<\n");
     s.append("    /Type /Catalog\n");
