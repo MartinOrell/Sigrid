@@ -5,9 +5,7 @@
 
 #include <iostream>
 
-using namespace sigrid;
-
-TileContainer GraphicTiles::getTileContainer() const{
+sigrid::TileContainer sigrid::GraphicTiles::getTileContainer() const{
 
     TileContainer container;
     container.width = m_tileSize.x;
@@ -16,23 +14,23 @@ TileContainer GraphicTiles::getTileContainer() const{
     return container;
 }
 
-void GraphicTiles::setColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicTiles::setColorManagerPtr(ColorManager* const managerPtr){
     m_tileColorManagerPtr = managerPtr;
 }
 
-void GraphicTiles::setHighlightColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicTiles::setHighlightColorManagerPtr(ColorManager* const managerPtr){
     m_highlightColorManagerPtr = managerPtr;
 }
 
-void GraphicTiles::setNumColumns(const int& columns){
+void sigrid::GraphicTiles::setNumColumns(const int& columns){
     m_tiles.setNumColumns(columns);
 }
 
-void GraphicTiles::setNumRows(const int& rows){
+void sigrid::GraphicTiles::setNumRows(const int& rows){
     m_tiles.setNumRows(rows);
 }
 
-void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
+void sigrid::GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
 
     m_tileSize = tileSize;
 
@@ -43,27 +41,27 @@ void GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
     m_tiles.setInsertPattern(insertTiles);
 }
 
-void GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
     m_topLeftPosition = topLeftPosition;
 }
 
-void GraphicTiles::setLeftToRight(){
+void sigrid::GraphicTiles::setLeftToRight(){
     m_isLeftToRight = true;
 }
 
-void GraphicTiles::setRightToLeft(){
+void sigrid::GraphicTiles::setRightToLeft(){
     m_isLeftToRight = false;
 }
 
-void GraphicTiles::setTopToBottom(){
+void sigrid::GraphicTiles::setTopToBottom(){
     m_isTopToBottom = true;
 }
 
-void GraphicTiles::setBottomToTop(){
+void sigrid::GraphicTiles::setBottomToTop(){
     m_isTopToBottom = false;
 }
 
-void GraphicTiles::insertAllTiles(){
+void sigrid::GraphicTiles::insertAllTiles(){
 
     int columns = m_tiles.numColumns();
     int rows = m_tiles.numRows();
@@ -97,7 +95,7 @@ void GraphicTiles::insertAllTiles(){
     }
 }
 
-void GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
+void sigrid::GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -108,7 +106,7 @@ void GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::V
     tile.setPosition(position);
 }
 
-void GraphicTiles::setTileColor(const sigrid_coord::Coord& coord, const int& colorId){
+void sigrid::GraphicTiles::setTileColor(const sigrid_coord::Coord& coord, const int& colorId){
     
     if(!m_tileColorManagerPtr){
         std::cerr << "GraphicTiles: Unable to set tile color" << std::endl;
@@ -131,7 +129,7 @@ void GraphicTiles::setTileColor(const sigrid_coord::Coord& coord, const int& col
     tile.setTileColor(color_o.value());
 }
 
-void GraphicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
+void sigrid::GraphicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int& colorId){
 
     if(!m_highlightColorManagerPtr){
         std::cerr << "GraphicTiles: Unable to set highlight color" << std::endl;
@@ -154,7 +152,7 @@ void GraphicTiles::setHighlightColor(const sigrid_coord::Coord& coord, const int
     tile.setHighlightColor(color_o.value());
 }
 
-void GraphicTiles::removeHighlight(const sigrid_coord::Coord& coord){
+void sigrid::GraphicTiles::removeHighlight(const sigrid_coord::Coord& coord){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -165,7 +163,7 @@ void GraphicTiles::removeHighlight(const sigrid_coord::Coord& coord){
     tile.removeHighlight();
 }
 
-void GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tiles.addColumnRight();
 
@@ -230,7 +228,7 @@ void GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeatTileColo
     }
 }
 
-void GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tiles.addColumnLeft();
 
@@ -298,7 +296,7 @@ void GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatTileColor
     }
 }
 
-void GraphicTiles::removeRightColumn(){
+void sigrid::GraphicTiles::removeRightColumn(){
 
     m_tiles.removeRightColumn();
 
@@ -316,7 +314,7 @@ void GraphicTiles::removeRightColumn(){
     }
 }
 
-void GraphicTiles::removeLeftColumn(){
+void sigrid::GraphicTiles::removeLeftColumn(){
 
     m_tiles.removeLeftColumn();
 
@@ -334,7 +332,7 @@ void GraphicTiles::removeLeftColumn(){
     }
 }
 
-void GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tiles.addRowUp();
 
@@ -400,7 +398,7 @@ void GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
     }
 }
 
-void GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tiles.addRowDown();
 
@@ -467,7 +465,7 @@ void GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTileColorIds
     }
 }
 
-void GraphicTiles::removeTopRow(){
+void sigrid::GraphicTiles::removeTopRow(){
 
     m_tiles.removeTopRow();
 
@@ -485,7 +483,7 @@ void GraphicTiles::removeTopRow(){
     }
 }
 
-void GraphicTiles::removeBottomRow(){
+void sigrid::GraphicTiles::removeBottomRow(){
 
     m_tiles.removeBottomRow();
 
@@ -503,31 +501,31 @@ void GraphicTiles::removeBottomRow(){
     }
 }
 
-void GraphicTiles::clear(){
+void sigrid::GraphicTiles::clear(){
     m_tiles.clear();
 }
 
-int GraphicTiles::getNumColumns() const{
+int sigrid::GraphicTiles::getNumColumns() const{
     return m_tiles.numColumns();
 }
 
-int GraphicTiles::getNumRows() const{
+int sigrid::GraphicTiles::getNumRows() const{
     return m_tiles.numRows();
 }
 
-float GraphicTiles::getTileWidth() const{
+float sigrid::GraphicTiles::getTileWidth() const{
     return m_tileSize.x;
 }
 
-float GraphicTiles::getTileHeight() const{
+float sigrid::GraphicTiles::getTileHeight() const{
     return m_tileSize.y;
 }
 
-sf::Vector2f GraphicTiles::getTileSize() const{
+sf::Vector2f sigrid::GraphicTiles::getTileSize() const{
     return m_tileSize;
 }
 
-std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const sigrid_coord::Coord& coord) const{
+std::optional<sf::Vector2f> sigrid::GraphicTiles::getTileTopLeftPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -539,7 +537,7 @@ std::optional<sf::Vector2f> GraphicTiles::getTileTopLeftPosition(const sigrid_co
     return tile.getTopLeftPosition();
 }
 
-std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const sigrid_coord::Coord& coord) const{
+std::optional<sf::Vector2f> sigrid::GraphicTiles::getTileCentrePosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -551,7 +549,7 @@ std::optional<sf::Vector2f> GraphicTiles::getTileCentrePosition(const sigrid_coo
     return tile.getCentrePosition();
 }
 
-std::optional<float> GraphicTiles::getTileRightPosition(const sigrid_coord::Coord& coord) const{
+std::optional<float> sigrid::GraphicTiles::getTileRightPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -563,7 +561,7 @@ std::optional<float> GraphicTiles::getTileRightPosition(const sigrid_coord::Coor
     return tile.getRightPosition();
 }
 
-std::optional<float> GraphicTiles::getTileTopPosition(const sigrid_coord::Coord& coord) const{
+std::optional<float> sigrid::GraphicTiles::getTileTopPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -575,7 +573,7 @@ std::optional<float> GraphicTiles::getTileTopPosition(const sigrid_coord::Coord&
     return tile.getTopPosition();
 }
 
-std::optional<sf::Color> GraphicTiles::getTileColor(const sigrid_coord::Coord& coord) const{
+std::optional<sf::Color> sigrid::GraphicTiles::getTileColor(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -587,14 +585,14 @@ std::optional<sf::Color> GraphicTiles::getTileColor(const sigrid_coord::Coord& c
     return tile.getColor();
 }
 
-float GraphicTiles::getRightPosition() const{
+float sigrid::GraphicTiles::getRightPosition() const{
 
     float x = m_topLeftPosition.x;
     x+= m_tileSize.x * (float)m_tiles.numColumns();
     return x;
 }
 
-void GraphicTiles::move(const sf::Vector2f& offset){
+void sigrid::GraphicTiles::move(const sf::Vector2f& offset){
 
     for(int y = 0; y < m_tiles.numRows(); y++){
         for(int x = 0; x < m_tiles.numColumns(); x++){
@@ -608,7 +606,7 @@ void GraphicTiles::move(const sf::Vector2f& offset){
     }
 }
 
-void GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicTiles::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     for(int y = 0; y < m_tiles.numRows(); y++){
         for(int x = 0; x < m_tiles.numColumns(); x++){
