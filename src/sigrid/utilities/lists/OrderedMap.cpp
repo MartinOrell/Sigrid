@@ -9,24 +9,22 @@
 
 #include <iostream>
 
-using namespace sigrid_list;
-
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::push_back(const TKey& key, const TValue& value){
+void sigrid_list::OrderedMap<TKey, TValue>::push_back(const TKey& key, const TValue& value){
 
     m_map.insert(key, value);
     m_order.push_back(key);
 }
 
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::insert(const int& position, const TKey& key, const TValue& value){
+void sigrid_list::OrderedMap<TKey, TValue>::insert(const int& position, const TKey& key, const TValue& value){
 
     m_map.insert(key, value);
     m_order.insert(position, key);
 }
 
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::erase(const int& position){
+void sigrid_list::OrderedMap<TKey, TValue>::erase(const int& position){
 
     auto key_o = m_order.at(position);
 
@@ -40,7 +38,7 @@ void OrderedMap<TKey, TValue>::erase(const int& position){
 }
 
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::erase(const TKey& key){
+void sigrid_list::OrderedMap<TKey, TValue>::erase(const TKey& key){
     
     m_map.erase(key);
 
@@ -53,19 +51,19 @@ void OrderedMap<TKey, TValue>::erase(const TKey& key){
 }
 
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::clear(){
+void sigrid_list::OrderedMap<TKey, TValue>::clear(){
 
     m_map.clear();
     m_order.clear();
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TKey>> OrderedMap<TKey, TValue>::keyAt(const int& position) const{
+const std::optional<std::reference_wrapper<const TKey>> sigrid_list::OrderedMap<TKey, TValue>::keyAt(const int& position) const{
     return m_order.at(position);
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::atPosition(int& position){
+std::optional<std::reference_wrapper<TValue>> sigrid_list::OrderedMap<TKey, TValue>::atPosition(int& position){
     
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -77,7 +75,7 @@ std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::atPositi
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::atPosition(const int& position) const{
+const std::optional<std::reference_wrapper<const TValue>> sigrid_list::OrderedMap<TKey, TValue>::atPosition(const int& position) const{
 
     auto key_o = m_order.at(position);
     if(key_o == std::nullopt){
@@ -89,22 +87,22 @@ const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValu
 }
 
 template<typename TKey, typename TValue>
-std::optional<std::reference_wrapper<TValue>> OrderedMap<TKey, TValue>::atKey(const TKey& key){
+std::optional<std::reference_wrapper<TValue>> sigrid_list::OrderedMap<TKey, TValue>::atKey(const TKey& key){
     return m_map.at(key);
 }
 
 template<typename TKey, typename TValue>
-const std::optional<std::reference_wrapper<const TValue>> OrderedMap<TKey, TValue>::atKey(const TKey& key) const{
+const std::optional<std::reference_wrapper<const TValue>> sigrid_list::OrderedMap<TKey, TValue>::atKey(const TKey& key) const{
     return m_map.at(key);
 }
 
 template<typename TKey, typename TValue>
-int OrderedMap<TKey, TValue>::size() const{
+int sigrid_list::OrderedMap<TKey, TValue>::size() const{
     return m_map.size();
 }
 
 template<typename TKey, typename TValue>
-void OrderedMap<TKey, TValue>::print() const{
+void sigrid_list::OrderedMap<TKey, TValue>::print() const{
 
     std::cout << "Printing ordered map" << std::endl;
     if(m_order.size() != m_map.size()){
