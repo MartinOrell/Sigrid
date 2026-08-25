@@ -7,15 +7,13 @@
 // including this file at the end of Vector.h
 // Both includes above can then be removed from this file
 
-using namespace sigrid_list;
-
 template <typename T> 
-void Vector<T>::push_back(const T& value){
+void sigrid_list::Vector<T>::push_back(const T& value){
     m_vector.push_back(value);
 }
 
 template <typename T> 
-void Vector<T>::insert(const int& position, const T& value){
+void sigrid_list::Vector<T>::insert(const int& position, const T& value){
 
     if(position < 0){
         return;
@@ -24,12 +22,12 @@ void Vector<T>::insert(const int& position, const T& value){
 }
 
 template <typename T> 
-void Vector<T>::pop_back(){
+void sigrid_list::Vector<T>::pop_back(){
     m_vector.pop_back();
 }
 
 template <typename T> 
-void Vector<T>::erase(const int& position){
+void sigrid_list::Vector<T>::erase(const int& position){
 
     if(position < 0){
         return;
@@ -43,7 +41,7 @@ void Vector<T>::erase(const int& position){
 }
 
 template <typename T> 
-void Vector<T>::eraseFrom(const int& position){
+void sigrid_list::Vector<T>::eraseFrom(const int& position){
 
     if(position < 0){
         return;
@@ -57,17 +55,17 @@ void Vector<T>::eraseFrom(const int& position){
 }
 
 template<typename T>
-typename std::vector<T>::iterator Vector<T>::erase(const typename std::vector<T>::iterator& iterator){
+typename std::vector<T>::iterator sigrid_list::Vector<T>::erase(const typename std::vector<T>::iterator& iterator){
     return m_vector.erase(iterator);
 }
 
 template <typename T> 
-void Vector<T>::clear(){
+void sigrid_list::Vector<T>::clear(){
     m_vector.clear();
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Vector<T>::front(){
+std::optional<std::reference_wrapper<T>> sigrid_list::Vector<T>::front(){
 
     if(m_vector.size() == 0){
         return std::nullopt;
@@ -77,7 +75,7 @@ std::optional<std::reference_wrapper<T>> Vector<T>::front(){
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Vector<T>::front() const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::Vector<T>::front() const{
     
     if(m_vector.size() == 0){
         return std::nullopt;
@@ -87,7 +85,7 @@ const std::optional<std::reference_wrapper<const T>> Vector<T>::front() const{
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Vector<T>::back(){
+std::optional<std::reference_wrapper<T>> sigrid_list::Vector<T>::back(){
 
     if(m_vector.size() == 0){
         return std::nullopt;
@@ -97,7 +95,7 @@ std::optional<std::reference_wrapper<T>> Vector<T>::back(){
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Vector<T>::back() const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::Vector<T>::back() const{
     
     if(m_vector.size() == 0){
         return std::nullopt;
@@ -107,7 +105,7 @@ const std::optional<std::reference_wrapper<const T>> Vector<T>::back() const{
 }
 
 template<typename T>
-std::optional<std::reference_wrapper<T>> Vector<T>::at(const int& position){
+std::optional<std::reference_wrapper<T>> sigrid_list::Vector<T>::at(const int& position){
 
     if(position < 0){
         return std::nullopt;
@@ -121,7 +119,7 @@ std::optional<std::reference_wrapper<T>> Vector<T>::at(const int& position){
 }
 
 template<typename T>
-const std::optional<std::reference_wrapper<const T>> Vector<T>::at(const int& position) const{
+const std::optional<std::reference_wrapper<const T>> sigrid_list::Vector<T>::at(const int& position) const{
     
     if(position < 0){
         return std::nullopt;
@@ -135,26 +133,26 @@ const std::optional<std::reference_wrapper<const T>> Vector<T>::at(const int& po
 }
 
 template <typename T> 
-int Vector<T>::size() const{
+int sigrid_list::Vector<T>::size() const{
     return (int)m_vector.size();
 }
 
 template<typename T>
-typename std::vector<T>::iterator Vector<T>::begin(){
+typename std::vector<T>::iterator sigrid_list::Vector<T>::begin(){
     return m_vector.begin();
 }
 
 template<typename T>
-typename std::vector<T>::const_iterator Vector<T>::begin() const{
+typename std::vector<T>::const_iterator sigrid_list::Vector<T>::begin() const{
     return m_vector.cbegin();
 }
 
 template<typename T>
-typename std::vector<T>::iterator Vector<T>::end(){
+typename std::vector<T>::iterator sigrid_list::Vector<T>::end(){
     return m_vector.end();
 }
 
 template<typename T>
-typename std::vector<T>::const_iterator Vector<T>::end() const{
+typename std::vector<T>::const_iterator sigrid_list::Vector<T>::end() const{
     return m_vector.cend();
 }
