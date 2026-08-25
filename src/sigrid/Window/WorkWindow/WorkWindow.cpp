@@ -12,9 +12,7 @@
 #include "sigrid/Board/BoardLabels.h"
 #include "sigrid/Entity/TurnToken/TurnToken.h"
 
-using namespace sigrid;
-
-bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardContainers){
+bool sigrid::WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardContainers){
 
     int id = 0;
     for(const auto& boardContainer: boardContainers){
@@ -55,7 +53,7 @@ bool WorkWindow::loadBoards(const sigrid_list::Vector<BoardContainer> boardConta
     return true;
 }
 
-void WorkWindow::loadBoard(const int& id, const BoardContainer& container){
+void sigrid::WorkWindow::loadBoard(const int& id, const BoardContainer& container){
 
     if(m_boards.size() == 0){
         Board board;
@@ -82,23 +80,23 @@ void WorkWindow::loadBoard(const int& id, const BoardContainer& container){
     board.setImageFilename(container.imageFilename);
 }
 
-void WorkWindow::setResetBoardFilename(const sigrid::String& filename){
+void sigrid::WorkWindow::setResetBoardFilename(const sigrid::String& filename){
     m_resetBoardFilename = filename;
 }
 
-const sigrid::String& WorkWindow::getResetBoardFilename() const{
+const sigrid::String& sigrid::WorkWindow::getResetBoardFilename() const{
     return m_resetBoardFilename;
 }
 
-void WorkWindow::setDefaultBoardImageFilename(const sigrid::String& filename){
+void sigrid::WorkWindow::setDefaultBoardImageFilename(const sigrid::String& filename){
     m_defaultBoardImageFilename = filename;
 }
 
-const sigrid::String& WorkWindow::getDefaultBoardImageFilename() const{
+const sigrid::String& sigrid::WorkWindow::getDefaultBoardImageFilename() const{
     return m_defaultBoardImageFilename;
 }
 
-void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     
     if(m_boards.size() == 0){
         Board board;
@@ -110,7 +108,7 @@ void WorkWindow::setTileColorManagerPtr(ColorManager* const managerPtr){
     }
 }
 
-void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
+void sigrid::WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
 
     if(m_boards.size() == 0){
         Board board;
@@ -122,7 +120,7 @@ void WorkWindow::setPieceManagerPtr(PieceManager* const managerPtr){
     }
 }
 
-void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
 
     if(m_boards.size() == 0){
         Board board;
@@ -134,7 +132,7 @@ void WorkWindow::setArrowColorManagerPtr(ColorManager* const managerPtr){
     }
 }
 
-void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
+void sigrid::WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
 
     if(m_boards.size() == 0){
         Board board;
@@ -146,7 +144,7 @@ void WorkWindow::setFontManagerPtr(FontManager* const managerPtr){
     }
 }
 
-bool WorkWindow::load(const WorkWindowContainer& container){
+bool sigrid::WorkWindow::load(const WorkWindowContainer& container){
 
     if(!m_boards.setSize(container.boardColumns, container.boardRows)){
         return false;
@@ -162,7 +160,7 @@ bool WorkWindow::load(const WorkWindowContainer& container){
     return true;
 }
 
-WorkWindowContainer WorkWindow::getContainer() const{
+sigrid::WorkWindowContainer sigrid::WorkWindow::getContainer() const{
 
     WorkWindowContainer container;
     container.boardColumns = m_boards.currentDisplayColumns();
@@ -171,7 +169,7 @@ WorkWindowContainer WorkWindow::getContainer() const{
     return container;
 }
 
-void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
+void sigrid::WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
 
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
@@ -187,7 +185,7 @@ void WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData){
     }
 }
 
-std::optional<BoardDesignContainer> WorkWindow::getBoardStyleContainer() const{
+std::optional<sigrid::BoardDesignContainer> sigrid::WorkWindow::getBoardStyleContainer() const{
 
     const auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -198,7 +196,7 @@ std::optional<BoardDesignContainer> WorkWindow::getBoardStyleContainer() const{
     return board.getStyleContainer();
 }
 
-void WorkWindow::loadBoardState(const int& id, const BoardStateContainer& boardStateData){
+void sigrid::WorkWindow::loadBoardState(const int& id, const BoardStateContainer& boardStateData){
 
     if(m_boards.size() == 0){
         Board board;
@@ -233,7 +231,7 @@ void WorkWindow::loadBoardState(const int& id, const BoardStateContainer& boardS
     m_pdfHandler.updateLayout();
 }
 
-sigrid_list::Vector<sigrid::BoardContainer> WorkWindow::getBoardContainers() const{
+sigrid_list::Vector<sigrid::BoardContainer> sigrid::WorkWindow::getBoardContainers() const{
 
     sigrid_list::Vector<sigrid::BoardContainer> boardContainers;
     for(auto& board: m_boards){
@@ -242,8 +240,7 @@ sigrid_list::Vector<sigrid::BoardContainer> WorkWindow::getBoardContainers() con
     return boardContainers;
 }
 
-void WorkWindow::createGraphic(const sf::Vector2f& size)
-{
+void sigrid::WorkWindow::createGraphic(const sf::Vector2f& size){
 
     int numBoards = m_boards.currentDisplaySize();
 
@@ -344,7 +341,7 @@ void WorkWindow::createGraphic(const sf::Vector2f& size)
     updateTexture();
 }
 
-void WorkWindow::loadFen(const sigrid::String& fen){
+void sigrid::WorkWindow::loadFen(const sigrid::String& fen){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -355,7 +352,7 @@ void WorkWindow::loadFen(const sigrid::String& fen){
     board.loadFen(fen);
 }
 
-sigrid::String WorkWindow::getName() const{
+sigrid::String sigrid::WorkWindow::getName() const{
 
     if(m_boards.size() == 0){
         return "";
@@ -380,7 +377,7 @@ sigrid::String WorkWindow::getName() const{
         std::to_string(m_boards.size()) + ")";
 }
 
-sigrid::String WorkWindow::getSaveFilename() const{
+sigrid::String sigrid::WorkWindow::getSaveFilename() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -391,7 +388,7 @@ sigrid::String WorkWindow::getSaveFilename() const{
     return board.getFilename();
 }
 
-sigrid::String WorkWindow::getFen() const{
+sigrid::String sigrid::WorkWindow::getFen() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -402,11 +399,11 @@ sigrid::String WorkWindow::getFen() const{
     return board.getFen();
 }
 
-void WorkWindow::setPosition(const sf::Vector2f& position){
+void sigrid::WorkWindow::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
 }
 
-int WorkWindow::getNumColumns() const{
+int sigrid::WorkWindow::getNumColumns() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -420,11 +417,11 @@ int WorkWindow::getNumColumns() const{
     return board.getNumColumns();
 }
 
-bool WorkWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::WorkWindow::contains(const sf::Vector2f& point) const{
     return m_texture.contains(point);
 }
 
-bool WorkWindow::isCoordinatesOutside() const{
+bool sigrid::WorkWindow::isCoordinatesOutside() const{
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -435,7 +432,7 @@ bool WorkWindow::isCoordinatesOutside() const{
     return board.isCoordinatesOutside();
 }
 
-void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
+void sigrid::WorkWindow::mousePress(const sf::Vector2f& windowPosition){
 
     auto activeBoard_o = m_boards.atSelection();
 
@@ -467,7 +464,7 @@ void WorkWindow::mousePress(const sf::Vector2f& windowPosition){
     }
 }
 
-std::optional<sigrid_action::Action> WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
+std::optional<sigrid_action::Action> sigrid::WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
     
     auto activeBoard_o = m_boards.atSelection();
 
@@ -556,7 +553,7 @@ std::optional<sigrid_action::Action> WorkWindow::clicked(const sigrid::Tool& too
     return std::nullopt;
 }
 
-void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
+void sigrid::WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
     
     sf::Vector2f from = pressPosition - m_texture.getPosition();
     sf::Vector2f to = currentPosition - m_texture.getPosition();
@@ -606,7 +603,7 @@ void WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, 
     }
 }
 
-void WorkWindow::reset(){
+void sigrid::WorkWindow::reset(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -619,7 +616,7 @@ void WorkWindow::reset(){
     board.loadBoardState(boardStateData);
 }
 
-void WorkWindow::clear(){
+void sigrid::WorkWindow::clear(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -631,7 +628,7 @@ void WorkWindow::clear(){
     board.clearArrows();
 }
 
-void WorkWindow::print(){
+void sigrid::WorkWindow::print(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -642,7 +639,7 @@ void WorkWindow::print(){
     board.print();
 }
 
-void WorkWindow::newBoard(){
+void sigrid::WorkWindow::newBoard(){
 
     auto activeBoard_o = m_boards.atSelection();
 
@@ -673,7 +670,7 @@ void WorkWindow::newBoard(){
     }
 }
 
-void WorkWindow::addBoard(const sigrid::String& boardFilename){
+void sigrid::WorkWindow::addBoard(const sigrid::String& boardFilename){
 
     auto activeBoard_o = m_boards.atSelection();
 
@@ -706,7 +703,7 @@ void WorkWindow::addBoard(const sigrid::String& boardFilename){
     }
 }
 
-void WorkWindow::addBoardColumn(){
+void sigrid::WorkWindow::addBoardColumn(){
 
     auto activeBoard_o = m_boards.atSelection();
     if(activeBoard_o){
@@ -724,7 +721,7 @@ void WorkWindow::addBoardColumn(){
     }
 }
 
-void WorkWindow::removeBoardColumn(){
+void sigrid::WorkWindow::removeBoardColumn(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -747,7 +744,7 @@ void WorkWindow::removeBoardColumn(){
     }
 }
 
-void WorkWindow::addBoardRow(){
+void sigrid::WorkWindow::addBoardRow(){
 
     auto activeBoard_o = m_boards.atSelection();
     if(activeBoard_o){
@@ -765,7 +762,7 @@ void WorkWindow::addBoardRow(){
     }
 }
 
-void WorkWindow::removeBoardRow(){
+void sigrid::WorkWindow::removeBoardRow(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -788,7 +785,7 @@ void WorkWindow::removeBoardRow(){
     }
 }
 
-void WorkWindow::shiftBoardsLeft(){
+void sigrid::WorkWindow::shiftBoardsLeft(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -807,7 +804,7 @@ void WorkWindow::shiftBoardsLeft(){
     }
 }
 
-void WorkWindow::shiftBoardsRight(){
+void sigrid::WorkWindow::shiftBoardsRight(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -826,7 +823,7 @@ void WorkWindow::shiftBoardsRight(){
     }
 }
 
-void WorkWindow::gotoRightBoard(){
+void sigrid::WorkWindow::gotoRightBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -845,7 +842,7 @@ void WorkWindow::gotoRightBoard(){
     }
 }
 
-void WorkWindow::gotoLeftBoard(){
+void sigrid::WorkWindow::gotoLeftBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -864,7 +861,7 @@ void WorkWindow::gotoLeftBoard(){
     }
 }
 
-void WorkWindow::gotoUpBoard(){
+void sigrid::WorkWindow::gotoUpBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -883,7 +880,7 @@ void WorkWindow::gotoUpBoard(){
     }
 }
 
-void WorkWindow::gotoDownBoard(){
+void sigrid::WorkWindow::gotoDownBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -902,14 +899,14 @@ void WorkWindow::gotoDownBoard(){
     }
 }
 
-void WorkWindow::saveBoards(){
+void sigrid::WorkWindow::saveBoards(){
 
     for(auto& board: m_boards){
         board.save();
     }
 }
 
-void WorkWindow::saveBoard(){
+void sigrid::WorkWindow::saveBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -920,11 +917,11 @@ void WorkWindow::saveBoard(){
     board.save();
 }
 
-void WorkWindow::savePdf(){
+void sigrid::WorkWindow::savePdf(){
     m_pdfHandler.savePdf(m_boards);
 }
 
-void WorkWindow::flipBoard(){
+void sigrid::WorkWindow::flipBoard(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -935,98 +932,98 @@ void WorkWindow::flipBoard(){
     board.flipBoard();
 }
 
-void WorkWindow::addLeftInsideLabels(){
+void sigrid::WorkWindow::addLeftInsideLabels(){
 
     for(auto& board: m_boards){
         board.addLeftInsideLabels();
     }
 }
 
-void WorkWindow::addBottomInsideLabels(){
+void sigrid::WorkWindow::addBottomInsideLabels(){
 
     for(auto& board: m_boards){
         board.addBottomInsideLabels();
     }
 }
 
-void WorkWindow::addLeftOutsideLabels(){
+void sigrid::WorkWindow::addLeftOutsideLabels(){
 
     for(auto& board: m_boards){
         board.addLeftOutsideLabels();
     }
 }
 
-void WorkWindow::addRightOutsideLabels(){
+void sigrid::WorkWindow::addRightOutsideLabels(){
 
     for(auto& board: m_boards){
         board.addRightOutsideLabels();
     }
 }
 
-void WorkWindow::addTopOutsideLabels(){
+void sigrid::WorkWindow::addTopOutsideLabels(){
 
     for(auto& board: m_boards){
         board.addTopOutsideLabels();
     }
 }
 
-void WorkWindow::addBottomOutsideLabels(){
+void sigrid::WorkWindow::addBottomOutsideLabels(){
 
     for(auto& board: m_boards){
         board.addBottomOutsideLabels();
     }
 }
 
-void WorkWindow::removeLeftInsideLabels(){
+void sigrid::WorkWindow::removeLeftInsideLabels(){
 
     for(auto& board: m_boards){
         board.removeLeftInsideLabels();
     }
 }
 
-void WorkWindow::removeBottomInsideLabels(){
+void sigrid::WorkWindow::removeBottomInsideLabels(){
 
     for(auto& board: m_boards){
         board.removeBottomInsideLabels();
     }
 }
 
-void WorkWindow::removeLeftOutsideLabels(){
+void sigrid::WorkWindow::removeLeftOutsideLabels(){
 
     for(auto& board: m_boards){
         board.removeLeftOutsideLabels();
     }
 }
 
-void WorkWindow::removeRightOutsideLabels(){
+void sigrid::WorkWindow::removeRightOutsideLabels(){
 
     for(auto& board: m_boards){
         board.removeRightOutsideLabels();
     }
 }
 
-void WorkWindow::removeTopOutsideLabels(){
+void sigrid::WorkWindow::removeTopOutsideLabels(){
 
     for(auto& board: m_boards){
         board.removeTopOutsideLabels();
     }
 }
 
-void WorkWindow::removeBottomOutsideLabels(){
+void sigrid::WorkWindow::removeBottomOutsideLabels(){
 
     for(auto& board: m_boards){
         board.removeBottomOutsideLabels();
     }
 }
 
-void WorkWindow::setCoordinateSize(const float& size){
+void sigrid::WorkWindow::setCoordinateSize(const float& size){
 
     for(auto& board: m_boards){
         board.setCoordinateSize(size);    
     }
 }
 
-void WorkWindow::addTileColumnRight(){
+void sigrid::WorkWindow::addTileColumnRight(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1037,7 +1034,7 @@ void WorkWindow::addTileColumnRight(){
     board.addTileColumnRight();
 }
 
-void WorkWindow::addTileColumnLeft(){
+void sigrid::WorkWindow::addTileColumnLeft(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1048,7 +1045,7 @@ void WorkWindow::addTileColumnLeft(){
     board.addTileColumnLeft();
 }
 
-void WorkWindow::removeRightTileColumn(){
+void sigrid::WorkWindow::removeRightTileColumn(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1059,7 +1056,7 @@ void WorkWindow::removeRightTileColumn(){
     board.removeRightTileColumn();
 }
 
-void WorkWindow::removeLeftTileColumn(){
+void sigrid::WorkWindow::removeLeftTileColumn(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1070,7 +1067,7 @@ void WorkWindow::removeLeftTileColumn(){
     board.removeLeftTileColumn();
 }
 
-void WorkWindow::addTileRowUp(){
+void sigrid::WorkWindow::addTileRowUp(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1081,7 +1078,7 @@ void WorkWindow::addTileRowUp(){
     board.addTileRowUp();
 }
 
-void WorkWindow::addTileRowDown(){
+void sigrid::WorkWindow::addTileRowDown(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1092,7 +1089,7 @@ void WorkWindow::addTileRowDown(){
     board.addTileRowDown();
 }
 
-void WorkWindow::removeTopTileRow(){
+void sigrid::WorkWindow::removeTopTileRow(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1103,7 +1100,7 @@ void WorkWindow::removeTopTileRow(){
     board.removeTopTileRow();
 }
 
-void WorkWindow::removeBottomTileRow(){
+void sigrid::WorkWindow::removeBottomTileRow(){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1114,35 +1111,35 @@ void WorkWindow::removeBottomTileRow(){
     board.removeBottomTileRow();
 }
 
-void WorkWindow::addBoardBorder(){
+void sigrid::WorkWindow::addBoardBorder(){
 
     for(auto& board: m_boards){
         board.addBorder();
     }
 }
 
-void WorkWindow::removeBoardBorder(){
+void sigrid::WorkWindow::removeBoardBorder(){
 
     for(auto& board: m_boards){
         board.removeBorder();
     }
 }
 
-void WorkWindow::addTurnToken(){
+void sigrid::WorkWindow::addTurnToken(){
 
     for(auto& board: m_boards){
         board.addTurnToken();
     }
 }
 
-void WorkWindow::removeTurnToken(){
+void sigrid::WorkWindow::removeTurnToken(){
 
     for(auto& board: m_boards){
         board.removeTurnToken();
     }
 }
 
-void WorkWindow::useAddEntityTool(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
+void sigrid::WorkWindow::useAddEntityTool(const sigrid_coord::Coord& coord, const LogicEntity& newEntity){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1166,7 +1163,7 @@ void WorkWindow::useAddEntityTool(const sigrid_coord::Coord& coord, const LogicE
     board.addEntity(coord, newEntity);
 }
 
-void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
+void sigrid::WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1177,7 +1174,7 @@ void WorkWindow::useAddEntityAtSelectionTool(const LogicEntity& newEntity){
     board.addEntityAtSelection(newEntity);
 }
 
-void WorkWindow::updateTexture(){
+void sigrid::WorkWindow::updateTexture(){
 
     if(!m_texture.isInitialized()){
         return;
@@ -1200,7 +1197,7 @@ void WorkWindow::updateTexture(){
     m_texture.display();
 }
 
-sigrid::String WorkWindow::getUniqueName(const sigrid::String& name){
+sigrid::String sigrid::WorkWindow::getUniqueName(const sigrid::String& name){
     
     sigrid::String newName(name);
     while(true){
@@ -1263,7 +1260,7 @@ sigrid::String WorkWindow::getUniqueName(const sigrid::String& name){
     return newName;
 }
 
-void WorkWindow::useAddTileHighlightTool(const sigrid_coord::Coord& coord, const int& colorId){
+void sigrid::WorkWindow::useAddTileHighlightTool(const sigrid_coord::Coord& coord, const int& colorId){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1297,7 +1294,7 @@ void WorkWindow::useAddTileHighlightTool(const sigrid_coord::Coord& coord, const
     board.addTileHighlight(coord, colorId);
 }
 
-void WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
+void sigrid::WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
 
     auto board_o = m_boards.atSelection();
     if(board_o == std::nullopt){
@@ -1323,7 +1320,7 @@ void WorkWindow::useAddArrowTool(const sigrid_coord::Coord& fromCoord, const sig
     board.addArrow(fromCoord, toCoord, logicArrow);
 }
 
-void WorkWindow::updateBoardLayout(){
+void sigrid::WorkWindow::updateBoardLayout(){
 
     unsigned int i = 0;
     for(int y = 0; y < m_boards.maxDisplayRows(); y++){
@@ -1337,7 +1334,7 @@ void WorkWindow::updateBoardLayout(){
     }
 }
 
-void WorkWindow::updateSelectionHighlight(){
+void sigrid::WorkWindow::updateSelectionHighlight(){
 
     if(m_boards.currentDisplaySize() < 2){
         m_boardSelectHighlight.hide();
@@ -1358,7 +1355,7 @@ void WorkWindow::updateSelectionHighlight(){
     m_boardSelectHighlight.show();
 }
 
-void WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::WorkWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(!m_texture.isInitialized()){
         return;
