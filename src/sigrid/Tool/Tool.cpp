@@ -5,8 +5,6 @@
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Tool/ToolContainer.h"
 
-using namespace sigrid;
-
 std::optional<sigrid::ToolSelection> getToolSelection(const sigrid::String& toolname){
     
     if(toolname == "Select"){
@@ -40,7 +38,7 @@ bool sigrid::Tool::load(const ToolContainer& data){
     return true;
 }
 
-std::optional<ToolContainer> Tool::getContainer() const{
+std::optional<sigrid::ToolContainer> sigrid::Tool::getContainer() const{
 
     ToolContainer container;
 
@@ -64,26 +62,26 @@ std::optional<ToolContainer> Tool::getContainer() const{
     return container;
 }
 
-const ToolSelection Tool::selection() const{
+const sigrid::ToolSelection sigrid::Tool::selection() const{
     return m_selection;
 }
 
-std::optional<LogicEntity> Tool::getEntity() const{
+std::optional<sigrid::LogicEntity> sigrid::Tool::getEntity() const{
     return m_entity_o;
 }
 
-int Tool::getArrowColorId() const{
+int sigrid::Tool::getArrowColorId() const{
     return m_arrowColorId;
 }
 
-void Tool::setEntity(const LogicEntity& entity){
+void sigrid::Tool::setEntity(const LogicEntity& entity){
     m_entity_o = entity;
 }
 
-void Tool::setSelection(const ToolSelection& selection){
+void sigrid::Tool::setSelection(const ToolSelection& selection){
     m_selection = selection;
 }
 
-void Tool::setArrow(const int colorId){
+void sigrid::Tool::setArrow(const int colorId){
     m_arrowColorId = colorId;
 }
