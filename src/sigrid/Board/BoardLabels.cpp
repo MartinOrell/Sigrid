@@ -7,9 +7,7 @@
 #include "sigrid/Font/FontManager.h"
 #include "sigrid/utilities/Coord/Coord.h"
 
-using namespace sigrid;
-
-sigrid_list::Vector<BoardLabelContainer> BoardLabels::getContainer() const{
+sigrid_list::Vector<sigrid::BoardLabelContainer> sigrid::BoardLabels::getContainer() const{
 
     sigrid_list::Vector<BoardLabelContainer> containers;
 
@@ -58,175 +56,175 @@ sigrid_list::Vector<BoardLabelContainer> BoardLabels::getContainer() const{
     return containers;
 }
 
-void BoardLabels::showLeftInside(){
+void sigrid::BoardLabels::showLeftInside(){
     m_leftInsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::showBottomInside(){
+void sigrid::BoardLabels::showBottomInside(){
     m_bottomInsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::showLeftOutside(){
+void sigrid::BoardLabels::showLeftOutside(){
     m_leftOutsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::showRightOutside(){
+void sigrid::BoardLabels::showRightOutside(){
     m_rightOutsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::showTopOutside(){
+void sigrid::BoardLabels::showTopOutside(){
     m_topOutsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::showBottomOutside(){
+void sigrid::BoardLabels::showBottomOutside(){
     m_bottomOutsideCoordLabels.isVisible = true;
 }
 
-void BoardLabels::hideLeftInside(){
+void sigrid::BoardLabels::hideLeftInside(){
     m_leftInsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::hideBottomInside(){
+void sigrid::BoardLabels::hideBottomInside(){
     m_bottomInsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::hideLeftOutside(){
+void sigrid::BoardLabels::hideLeftOutside(){
     m_leftOutsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::hideRightOutside(){
+void sigrid::BoardLabels::hideRightOutside(){
     m_rightOutsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::hideTopOutside(){
+void sigrid::BoardLabels::hideTopOutside(){
     m_topOutsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::hideBottomOutside(){
+void sigrid::BoardLabels::hideBottomOutside(){
     m_bottomOutsideCoordLabels.isVisible = false;
 }
 
-void BoardLabels::setLeftInsideSize(const float& size){
+void sigrid::BoardLabels::setLeftInsideSize(const float& size){
     m_leftInsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setBottomInsideSize(const float& size){
+void sigrid::BoardLabels::setBottomInsideSize(const float& size){
     m_bottomInsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setLeftOutsideSize(const float& size){
+void sigrid::BoardLabels::setLeftOutsideSize(const float& size){
     m_leftOutsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setRightOutsideSize(const float& size){
+void sigrid::BoardLabels::setRightOutsideSize(const float& size){
     m_rightOutsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setTopOutsideSize(const float& size){
+void sigrid::BoardLabels::setTopOutsideSize(const float& size){
     m_topOutsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setBottomOutsideSize(const float& size){
+void sigrid::BoardLabels::setBottomOutsideSize(const float& size){
     m_bottomOutsideCoordLabels.labelSizeFactor = size;
 }
 
-void BoardLabels::setLeftInsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setLeftInsideFont(const sigrid::String& fontFilename){
     m_leftInsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setBottomInsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setBottomInsideFont(const sigrid::String& fontFilename){
     m_bottomInsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setLeftOutsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setLeftOutsideFont(const sigrid::String& fontFilename){
     m_leftOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setRightOutsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setRightOutsideFont(const sigrid::String& fontFilename){
     m_rightOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setTopOutsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setTopOutsideFont(const sigrid::String& fontFilename){
     m_topOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setBottomOutsideFont(const sigrid::String& fontFilename){
+void sigrid::BoardLabels::setBottomOutsideFont(const sigrid::String& fontFilename){
     m_bottomOutsideCoordLabels.fontFilename = fontFilename;
 }
 
-void BoardLabels::setLeftOutsideWorkWidth(const float& width){
+void sigrid::BoardLabels::setLeftOutsideWorkWidth(const float& width){
     m_leftWorkWidth = width;
 }
 
-void BoardLabels::setRightOutsideWorkWidth(const float& width){
+void sigrid::BoardLabels::setRightOutsideWorkWidth(const float& width){
     m_rightWorkWidth = width;
 }
 
-void BoardLabels::setTopOutsideWorkHeight(const float& height){
+void sigrid::BoardLabels::setTopOutsideWorkHeight(const float& height){
     m_topWorkHeight = height;
 }
 
-void BoardLabels::setBottomOutsideWorkHeight(const float& height){
+void sigrid::BoardLabels::setBottomOutsideWorkHeight(const float& height){
     m_bottomWorkHeight = height;
 }
 
-void BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
+void sigrid::BoardLabels::setFontManagerPtr(FontManager* const managerPtr){
     m_fontManagerPtr = managerPtr;
 }
 
-bool BoardLabels::isLeftInsideVisible() const{
+bool sigrid::BoardLabels::isLeftInsideVisible() const{
     return m_leftInsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isBottomInsideVisible() const{
+bool sigrid::BoardLabels::isBottomInsideVisible() const{
     return m_bottomInsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isLeftOutsideVisible() const{
+bool sigrid::BoardLabels::isLeftOutsideVisible() const{
     return m_leftOutsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isRightOutsideVisible() const{
+bool sigrid::BoardLabels::isRightOutsideVisible() const{
     return m_rightOutsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isTopOutsideVisible() const{
+bool sigrid::BoardLabels::isTopOutsideVisible() const{
     return m_topOutsideCoordLabels.isVisible;
 }
 
-bool BoardLabels::isBottomOutsideVisible() const{
+bool sigrid::BoardLabels::isBottomOutsideVisible() const{
     return m_bottomOutsideCoordLabels.isVisible;
 }
 
-float BoardLabels::getLeftInsideLabelSize() const{
+float sigrid::BoardLabels::getLeftInsideLabelSize() const{
     return m_leftInsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getBottomInsideLabelSize() const{
+float sigrid::BoardLabels::getBottomInsideLabelSize() const{
     return m_bottomInsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getLeftOutsideLabelSize() const{
+float sigrid::BoardLabels::getLeftOutsideLabelSize() const{
     return m_leftOutsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getRightOutsideLabelSize() const{
+float sigrid::BoardLabels::getRightOutsideLabelSize() const{
     return m_rightOutsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getTopOutsideLabelSize() const{
+float sigrid::BoardLabels::getTopOutsideLabelSize() const{
     return m_topOutsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getBottomOutsideLabelSize() const{
+float sigrid::BoardLabels::getBottomOutsideLabelSize() const{
     return m_bottomOutsideCoordLabels.labelSizeFactor;
 }
 
-float BoardLabels::getRightOutsideWorkWidth() const{
+float sigrid::BoardLabels::getRightOutsideWorkWidth() const{
     return m_rightWorkWidth;
 }
 
-bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_leftInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
@@ -277,7 +275,7 @@ bool BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf:
     return true;
 }
 
-bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
 
     if(m_bottomInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
@@ -333,7 +331,7 @@ bool BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_leftOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
@@ -381,7 +379,7 @@ bool BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf
     return true;
 }
 
-bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_rightOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add right outside label" << std::endl;
@@ -429,7 +427,7 @@ bool BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const s
     return true;
 }
 
-bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_topOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add top outside label" << std::endl;
@@ -481,7 +479,7 @@ bool BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf:
     return true;
 }
 
-bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
 
     if(m_bottomOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
@@ -532,31 +530,31 @@ bool BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const 
     return true;
 }
 
-void BoardLabels::removeLeftInsideLabels(){
+void sigrid::BoardLabels::removeLeftInsideLabels(){
     m_leftInsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeBottomInsideLabels(){
+void sigrid::BoardLabels::removeBottomInsideLabels(){
     m_bottomInsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeLeftOutsideLabels(){
+void sigrid::BoardLabels::removeLeftOutsideLabels(){
     m_leftOutsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeRightOutsideLabels(){
+void sigrid::BoardLabels::removeRightOutsideLabels(){
     m_rightOutsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeTopOutsideLabels(){
+void sigrid::BoardLabels::removeTopOutsideLabels(){
     m_topOutsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeBottomOutsideLabels(){
+void sigrid::BoardLabels::removeBottomOutsideLabels(){
     m_bottomOutsideCoordLabels.labels.clear();
 }
 
-void BoardLabels::removeHorizontalLabel(){
+void sigrid::BoardLabels::removeHorizontalLabel(){
     if(m_bottomInsideCoordLabels.labels.size() > 0){
         m_bottomInsideCoordLabels.labels.pop_back();
     }
@@ -568,7 +566,7 @@ void BoardLabels::removeHorizontalLabel(){
     }
 }
 
-void BoardLabels::removeVerticalLabel(){
+void sigrid::BoardLabels::removeVerticalLabel(){
 
     if(m_leftInsideCoordLabels.labels.size() > 0){
         m_leftInsideCoordLabels.labels.pop_back();
@@ -581,43 +579,43 @@ void BoardLabels::removeVerticalLabel(){
     }
 }
 
-void BoardLabels::moveLeftInsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveLeftInsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_leftInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveBottomInsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveBottomInsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_bottomInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveLeftOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveLeftOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_leftOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveRightOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveRightOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_rightOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveTopOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveTopOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_topOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::moveBottomOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveBottomOutsideLabels(const sf::Vector2f& offset){
     for(auto& label : m_bottomOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void BoardLabels::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::BoardLabels::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     if(m_leftInsideCoordLabels.isVisible){
         for(auto& label : m_leftInsideCoordLabels.labels){
