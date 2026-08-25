@@ -12,13 +12,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Image.hpp>
 
-using namespace sigrid;
-
-GraphicBoard::GraphicBoard(const GraphicBoard& src){
+sigrid::GraphicBoard::GraphicBoard(const GraphicBoard& src){
     *this = src;
 }
 
-GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
+sigrid::GraphicBoard& sigrid::GraphicBoard::operator=(const GraphicBoard& rhs){
 
     if(rhs.m_texture.isInitialized()){
         m_texture.setSize(rhs.getTextureSize());
@@ -56,47 +54,47 @@ GraphicBoard& GraphicBoard::operator=(const GraphicBoard& rhs){
     return *this;
 }
 
-void GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
+void sigrid::GraphicBoard::setPieceManagerPtr(PieceManager* const managerPtr){
     m_pieceLayer.setPieceManagerPtr(managerPtr);
 }
 
-void GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicBoard::setTileColorManagerPtr(ColorManager* const managerPtr){
     m_tileLayer.setColorManagerPtr(managerPtr);
 }
 
-void GraphicBoard::setArrowColorManagerPtr(ColorManager* const managerPtr){
+void sigrid::GraphicBoard::setArrowColorManagerPtr(ColorManager* const managerPtr){
     m_arrowColorManagerPtr = managerPtr;
 }
 
-void GraphicBoard::setFontManagerPtr(FontManager* const managerPtr){
+void sigrid::GraphicBoard::setFontManagerPtr(FontManager* const managerPtr){
     m_labels.setFontManagerPtr(managerPtr);
 }
 
-void GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
+void sigrid::GraphicBoard::setIconManagerPtr(IconManager* const managerPtr){
     m_pieceLayer.setIconManagerPtr(managerPtr);
 }
 
-void GraphicBoard::setLeftToRight(){
+void sigrid::GraphicBoard::setLeftToRight(){
     m_isLeftToRight = true;
     m_tileLayer.setLeftToRight();
 }
 
-void GraphicBoard::setRightToLeft(){
+void sigrid::GraphicBoard::setRightToLeft(){
     m_isLeftToRight = false;
     m_tileLayer.setRightToLeft();
 }
 
-void GraphicBoard::setTopToBottom(){
+void sigrid::GraphicBoard::setTopToBottom(){
     m_isTopToBottom = true;
     m_tileLayer.setTopToBottom();
 }
 
-void GraphicBoard::setBottomToTop(){
+void sigrid::GraphicBoard::setBottomToTop(){
     m_isTopToBottom = false;
     m_tileLayer.setBottomToTop();
 }
 
-void GraphicBoard::loadDesign(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::loadDesign(const BoardDesignContainer& config){
     
     m_texture.setBackgroundColor(sf::Color{255,255,255,255});
     initTileLayer(config);
@@ -107,7 +105,7 @@ void GraphicBoard::loadDesign(const BoardDesignContainer& config){
     initBorder(config);
 }
 
-BoardDesignContainer GraphicBoard::getStyleContainer() const{
+sigrid::BoardDesignContainer sigrid::GraphicBoard::getStyleContainer() const{
 
     BoardDesignContainer container;
 
@@ -121,7 +119,7 @@ BoardDesignContainer GraphicBoard::getStyleContainer() const{
     return container;
 }
 
-void GraphicBoard::loadBoardState(const BoardState& boardState){
+void sigrid::GraphicBoard::loadBoardState(const BoardState& boardState){
 
     loadBoardState_tileLayer(boardState);
     loadBoardState_pieceLayer(boardState);
@@ -135,76 +133,76 @@ void GraphicBoard::loadBoardState(const BoardState& boardState){
     redrawTexture();
 }
 
-sf::Vector2f GraphicBoard::getTileSize() const{
+sf::Vector2f sigrid::GraphicBoard::getTileSize() const{
     return m_tileLayer.getTileSize();
 }
 
-void GraphicBoard::setPosition(const sf::Vector2f& position){
+void sigrid::GraphicBoard::setPosition(const sf::Vector2f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-void GraphicBoard::setPositionX(float x){
+void sigrid::GraphicBoard::setPositionX(float x){
     sf::Vector2f position = m_texture.getPosition();
     position.x = x;
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-void GraphicBoard::setScale(const float scale){
+void sigrid::GraphicBoard::setScale(const float scale){
     m_texture.setScale(scale);
     m_texture.display();
 }
 
-float GraphicBoard::getImageWidth() const{
+float sigrid::GraphicBoard::getImageWidth() const{
     return m_texture.getTextureSize().x;
 }
 
-float GraphicBoard::getImageHeight() const{
+float sigrid::GraphicBoard::getImageHeight() const{
     return m_texture.getTextureSize().y;
 }
 
-sigrid::Image GraphicBoard::getImage(const int maxWidth, const int maxHeight) const{
+sigrid::Image sigrid::GraphicBoard::getImage(const int maxWidth, const int maxHeight) const{
     return m_texture.getImage(maxWidth, maxHeight);
 }
 
-const sf::Vector2f& GraphicBoard::getTopLeftPosition() const{
+const sf::Vector2f& sigrid::GraphicBoard::getTopLeftPosition() const{
     return m_texture.getPosition();
 }
 
-sf::Vector2f GraphicBoard::getDisplaySize() const{
+sf::Vector2f sigrid::GraphicBoard::getDisplaySize() const{
     return m_texture.getDisplaySize();
 }
 
-float GraphicBoard::getDisplayWidth() const{
+float sigrid::GraphicBoard::getDisplayWidth() const{
     return m_texture.getDisplaySize().x;
 }
 
-float GraphicBoard::getDisplayHeight() const{
+float sigrid::GraphicBoard::getDisplayHeight() const{
     return m_texture.getDisplaySize().y;
 }
 
-bool GraphicBoard::contains(const sf::Vector2f& point) const{
+bool sigrid::GraphicBoard::contains(const sf::Vector2f& point) const{
     return m_texture.contains(point);
 }
 
-bool GraphicBoard::isLeftToRight() const{
+bool sigrid::GraphicBoard::isLeftToRight() const{
     return m_isLeftToRight;
 }
 
-bool GraphicBoard::isTopToBottom() const{
+bool sigrid::GraphicBoard::isTopToBottom() const{
     return m_isTopToBottom;
 }
 
-bool GraphicBoard::isCoordinatesOutside() const{
+bool sigrid::GraphicBoard::isCoordinatesOutside() const{
     return m_labels.isLeftOutsideVisible();
 }
 
-bool GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
+bool sigrid::GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
     return m_turnToken.isWithin((point-m_texture.getPosition())/m_texture.getScale());
 }
 
-std::optional<sigrid_coord::Coord> GraphicBoard::getTileCoord(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> sigrid::GraphicBoard::getTileCoord(const sf::Vector2f& point){
 
     const float& scale = m_texture.getScale();
     const sf::Vector2f& position = m_texture.getPosition();
@@ -246,7 +244,7 @@ std::optional<sigrid_coord::Coord> GraphicBoard::getTileCoord(const sf::Vector2f
     return std::make_optional<sigrid_coord::Coord>((int)x,(int)y);
 }
 
-void GraphicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
+void sigrid::GraphicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity& entity){
     
     auto position_o = m_tileLayer.getTileCentrePosition(coord);
 
@@ -268,7 +266,7 @@ void GraphicBoard::addEntity(const sigrid_coord::Coord& coord, const LogicEntity
     redrawTexture();
 }
 
-void GraphicBoard::removeEntity(const sigrid_coord::Coord& coord){
+void sigrid::GraphicBoard::removeEntity(const sigrid_coord::Coord& coord){
 
     if(m_pieceLayer.getEntityAt(coord) == std::nullopt){
         std::cerr << "GraphicBoard: Failed to remove entity at "
@@ -281,7 +279,7 @@ void GraphicBoard::removeEntity(const sigrid_coord::Coord& coord){
     redrawTexture();
 }
 
-void GraphicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
+void sigrid::GraphicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord){
     
     if(fromCoord == toCoord){
         std::cerr << "GraphicBoard: Failed to move entity from "
@@ -312,21 +310,21 @@ void GraphicBoard::moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid
     redrawTexture();
 }
 
-void GraphicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId){
+void sigrid::GraphicBoard::addTileHighlight(const sigrid_coord::Coord& coord, const int& colorId){
 
     m_tileLayer.setHighlightColor(coord, colorId);
 
     redrawTexture();
 }
 
-void GraphicBoard::removeTileHighlight(const sigrid_coord::Coord& coord){
+void sigrid::GraphicBoard::removeTileHighlight(const sigrid_coord::Coord& coord){
 
     m_tileLayer.removeHighlight(coord);
 
     redrawTexture();
 }
 
-void GraphicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& logicArrow){
+void sigrid::GraphicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const LogicArrow& logicArrow){
 
     auto fromPosition_o = m_tileLayer.getTileCentrePosition(coordPair.from);
 
@@ -360,7 +358,7 @@ void GraphicBoard::addArrow(const sigrid_coord::CoordPair& coordPair, const Logi
     redrawTexture();
 }
 
-void GraphicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
+void sigrid::GraphicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
 
     auto occupyingArrow_o = m_arrowLayer.getArrow(coordPair);
 
@@ -376,7 +374,7 @@ void GraphicBoard::removeArrow(const sigrid_coord::CoordPair& coordPair){
     redrawTexture();
 }
 
-void GraphicBoard::updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
+void sigrid::GraphicBoard::updateDragArrow(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const int& colorId){
     
     if(!m_arrowColorManagerPtr){
         std::cerr << "GraphicBoard: Failed to update drag arrow" << std::endl;
@@ -423,7 +421,7 @@ void GraphicBoard::updateDragArrow(const sigrid_coord::Coord& fromCoord, const s
     redrawTexture();
 }
 
-void GraphicBoard::removeDragArrow(){
+void sigrid::GraphicBoard::removeDragArrow(){
     if(!m_isDragArrowVisible){
         return;
     }
@@ -431,7 +429,7 @@ void GraphicBoard::removeDragArrow(){
     redrawTexture();
 }
 
-void GraphicBoard::highlightTile(const sigrid_coord::Coord& coord){
+void sigrid::GraphicBoard::highlightTile(const sigrid_coord::Coord& coord){
 
     auto position_o = m_tileLayer.getTileTopLeftPosition(coord);
 
@@ -451,7 +449,7 @@ void GraphicBoard::highlightTile(const sigrid_coord::Coord& coord){
     redrawTexture();
 }
 
-void GraphicBoard::unhighlight(){
+void sigrid::GraphicBoard::unhighlight(){
     
     if(!m_isSelectHighlightVisible){
         return;
@@ -460,7 +458,7 @@ void GraphicBoard::unhighlight(){
     redrawTexture();
 }
 
-void GraphicBoard::saveImage(const sigrid::String& fileName){
+void sigrid::GraphicBoard::saveImage(const sigrid::String& fileName){
 
     std::cout << "Saving board image: " << fileName << std::endl;
     auto success = m_texture.getImage().saveToFile(fileName);
@@ -472,17 +470,17 @@ void GraphicBoard::saveImage(const sigrid::String& fileName){
     }
 }
 
-void GraphicBoard::clearEntities(){
+void sigrid::GraphicBoard::clearEntities(){
     m_pieceLayer.clear();
     redrawTexture();
 }
 
-void GraphicBoard::clearArrows(){
+void sigrid::GraphicBoard::clearArrows(){
     m_arrowLayer.clear();
     redrawTexture();
 }
 
-void GraphicBoard::addTileColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicBoard::addTileColumnRight(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnRight(repeatTileColorIds);
 
@@ -519,7 +517,7 @@ void GraphicBoard::addTileColumnRight(const sigrid_list::Vector<int>& repeatTile
     redrawTexture();
 }
 
-void GraphicBoard::addTileColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicBoard::addTileColumnLeft(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addColumnLeft(repeatTileColorIds);
 
@@ -554,7 +552,7 @@ void GraphicBoard::addTileColumnLeft(const sigrid_list::Vector<int>& repeatTileC
     redrawTexture();
 }
 
-void GraphicBoard::removeRightTileColumn(){
+void sigrid::GraphicBoard::removeRightTileColumn(){
 
     m_tileLayer.removeRightColumn();
     int columnId = m_tileLayer.getNumColumns();
@@ -579,7 +577,7 @@ void GraphicBoard::removeRightTileColumn(){
     redrawTexture();
 }
 
-void GraphicBoard::removeLeftTileColumn(){
+void sigrid::GraphicBoard::removeLeftTileColumn(){
 
     m_tileLayer.removeLeftColumn();
     m_pieceLayer.removeColumn(0);
@@ -602,7 +600,7 @@ void GraphicBoard::removeLeftTileColumn(){
     redrawTexture();
 }
 
-void GraphicBoard::addTileRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicBoard::addTileRowUp(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowUp(repeatTileColorIds);
     m_pieceLayer.moveEntitiesDown(m_tileLayer.getTileSize().y, m_isTopToBottom);
@@ -635,7 +633,7 @@ void GraphicBoard::addTileRowUp(const sigrid_list::Vector<int>& repeatTileColorI
     redrawTexture();
 }
 
-void GraphicBoard::addTileRowDown(const sigrid_list::Vector<int>& repeatTileColorIds){
+void sigrid::GraphicBoard::addTileRowDown(const sigrid_list::Vector<int>& repeatTileColorIds){
 
     m_tileLayer.addRowDown(repeatTileColorIds);
 
@@ -671,7 +669,7 @@ void GraphicBoard::addTileRowDown(const sigrid_list::Vector<int>& repeatTileColo
     redrawTexture();
 }
 
-void GraphicBoard::removeTopTileRow(){
+void sigrid::GraphicBoard::removeTopTileRow(){
 
     m_tileLayer.removeTopRow();
     m_pieceLayer.removeRow(0);
@@ -696,7 +694,7 @@ void GraphicBoard::removeTopTileRow(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBottomTileRow(){
+void sigrid::GraphicBoard::removeBottomTileRow(){
 
     m_tileLayer.removeBottomRow();
     int rowId = m_tileLayer.getNumRows();
@@ -725,7 +723,7 @@ void GraphicBoard::removeBottomTileRow(){
     redrawTexture();
 }
 
-void GraphicBoard::flip(){
+void sigrid::GraphicBoard::flip(){
 
     if(m_isLeftToRight){
         setRightToLeft();
@@ -813,7 +811,7 @@ void GraphicBoard::flip(){
     redrawTexture();//also called by addCoordinates
 }
 
-void GraphicBoard::addLeftInsideLabels(){
+void sigrid::GraphicBoard::addLeftInsideLabels(){
 
     m_labels.showLeftInside();
 
@@ -822,7 +820,7 @@ void GraphicBoard::addLeftInsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::addBottomInsideLabels(){
+void sigrid::GraphicBoard::addBottomInsideLabels(){
 
     m_labels.showBottomInside();
 
@@ -831,7 +829,7 @@ void GraphicBoard::addBottomInsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::addLeftOutsideLabels(){
+void sigrid::GraphicBoard::addLeftOutsideLabels(){
 
     m_labels.showLeftOutside();
     updateLeftEdgeWidth();
@@ -839,7 +837,7 @@ void GraphicBoard::addLeftOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::addRightOutsideLabels(){
+void sigrid::GraphicBoard::addRightOutsideLabels(){
 
     m_labels.showRightOutside();
     updateRightEdgeWidth();
@@ -847,7 +845,7 @@ void GraphicBoard::addRightOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::addTopOutsideLabels(){
+void sigrid::GraphicBoard::addTopOutsideLabels(){
 
     m_labels.showTopOutside();
     updateTopEdgeWidth();
@@ -855,7 +853,7 @@ void GraphicBoard::addTopOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::addBottomOutsideLabels(){
+void sigrid::GraphicBoard::addBottomOutsideLabels(){
 
     m_labels.showBottomOutside();
     updateBottomEdgeWidth();
@@ -863,7 +861,7 @@ void GraphicBoard::addBottomOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeLeftInsideLabels(){
+void sigrid::GraphicBoard::removeLeftInsideLabels(){
 
     if(m_labels.isLeftInsideVisible()){
         m_labels.removeLeftInsideLabels();
@@ -873,7 +871,7 @@ void GraphicBoard::removeLeftInsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBottomInsideLabels(){
+void sigrid::GraphicBoard::removeBottomInsideLabels(){
 
     if(m_labels.isBottomInsideVisible()){
         m_labels.removeBottomInsideLabels();
@@ -883,7 +881,7 @@ void GraphicBoard::removeBottomInsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeLeftOutsideLabels(){
+void sigrid::GraphicBoard::removeLeftOutsideLabels(){
 
     if(m_labels.isLeftOutsideVisible()){
         m_labels.hideLeftOutside();
@@ -894,7 +892,7 @@ void GraphicBoard::removeLeftOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeRightOutsideLabels(){
+void sigrid::GraphicBoard::removeRightOutsideLabels(){
 
     if(m_labels.isRightOutsideVisible()){
         m_labels.hideRightOutside();
@@ -905,7 +903,7 @@ void GraphicBoard::removeRightOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeTopOutsideLabels(){
+void sigrid::GraphicBoard::removeTopOutsideLabels(){
 
     if(m_labels.isTopOutsideVisible()){
         m_labels.hideTopOutside();
@@ -916,7 +914,7 @@ void GraphicBoard::removeTopOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBottomOutsideLabels(){
+void sigrid::GraphicBoard::removeBottomOutsideLabels(){
 
     if(m_labels.isBottomOutsideVisible()){
         m_labels.hideBottomOutside();
@@ -927,7 +925,7 @@ void GraphicBoard::removeBottomOutsideLabels(){
     redrawTexture();
 }
 
-void GraphicBoard::setCoordinateSize(const float& size){
+void sigrid::GraphicBoard::setCoordinateSize(const float& size){
 
     m_labels.setLeftOutsideSize(size);
     m_labels.setRightOutsideSize(size);
@@ -950,7 +948,7 @@ void GraphicBoard::setCoordinateSize(const float& size){
     redrawTexture();
 }
 
-void GraphicBoard::addBorder(){
+void sigrid::GraphicBoard::addBorder(){
 
     if(m_border.isVisible()){
         return;
@@ -979,7 +977,7 @@ void GraphicBoard::addBorder(){
     redrawTexture();
 }
 
-void GraphicBoard::removeBorder(){
+void sigrid::GraphicBoard::removeBorder(){
 
     if(m_border.isHidden()){
         return;
@@ -1000,7 +998,7 @@ void GraphicBoard::removeBorder(){
     redrawTexture();
 }
 
-void GraphicBoard::addTurnToken(const int& turnToMove){
+void sigrid::GraphicBoard::addTurnToken(const int& turnToMove){
 
     if(m_turnToken.isVisible()){
         return;
@@ -1014,7 +1012,7 @@ void GraphicBoard::addTurnToken(const int& turnToMove){
     redrawTexture();
 }
 
-void GraphicBoard::removeTurnToken(){
+void sigrid::GraphicBoard::removeTurnToken(){
 
     if(m_turnToken.isHidden()){
         return;
@@ -1027,7 +1025,7 @@ void GraphicBoard::removeTurnToken(){
     redrawTexture();
 }
 
-void GraphicBoard::setTurnToMove(const int& turnToMove){
+void sigrid::GraphicBoard::setTurnToMove(const int& turnToMove){
     
     if(m_turnToken.isHidden()){
         return;
@@ -1038,7 +1036,7 @@ void GraphicBoard::setTurnToMove(const int& turnToMove){
     redrawTexture();
 }
 
-void GraphicBoard::initTileLayer(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initTileLayer(const BoardDesignContainer& config){
 
     if(m_isLeftToRight){
         m_tileLayer.setLeftToRight();
@@ -1059,7 +1057,7 @@ void GraphicBoard::initTileLayer(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
 
     if(m_arrowColorManagerPtr){
         m_pieceLayer.setColorManagerPtr(m_arrowColorManagerPtr);
@@ -1068,7 +1066,7 @@ void GraphicBoard::initPieceLayer(const BoardDesignContainer& config){
     m_pieceLayer.setCircleDiameter(config.circle.diameter);
 }
 
-void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
 
     m_arrowLayer.setThickness(config.arrow.thickness);
     m_arrowLayer.setHeadSize(config.arrow.headSize);
@@ -1077,7 +1075,7 @@ void GraphicBoard::initArrowLayer(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::initLabels(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initLabels(const BoardDesignContainer& config){
 
     for(auto& label: config.labels){
         if(label.location.isInside){
@@ -1150,7 +1148,7 @@ void GraphicBoard::initLabels(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::initTurnToken(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initTurnToken(const BoardDesignContainer& config){
 
     if(config.turnToken.isVisible){
         initTurnToken(0);
@@ -1162,7 +1160,7 @@ void GraphicBoard::initTurnToken(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::initBorder(const BoardDesignContainer& config){
+void sigrid::GraphicBoard::initBorder(const BoardDesignContainer& config){
 
     m_border.setThickness(config.border.thickness);
     m_border.setColor(sf::Color{0,0,0});
@@ -1182,7 +1180,7 @@ void GraphicBoard::initBorder(const BoardDesignContainer& config){
     }
 }
 
-void GraphicBoard::loadBoardState_tileLayer(const BoardState& boardState){
+void sigrid::GraphicBoard::loadBoardState_tileLayer(const BoardState& boardState){
 
     m_tileLayer.clear();
 
@@ -1207,7 +1205,7 @@ void GraphicBoard::loadBoardState_tileLayer(const BoardState& boardState){
     }
 }
 
-void GraphicBoard::loadBoardState_pieceLayer(const BoardState& boardState){
+void sigrid::GraphicBoard::loadBoardState_pieceLayer(const BoardState& boardState){
 
     m_pieceLayer.clear();
 
@@ -1225,7 +1223,7 @@ void GraphicBoard::loadBoardState_pieceLayer(const BoardState& boardState){
     }
 }
 
-void GraphicBoard::loadBoardState_arrowLayer(const BoardState& boardState){
+void sigrid::GraphicBoard::loadBoardState_arrowLayer(const BoardState& boardState){
 
     m_arrowLayer.clear();
 
@@ -1251,7 +1249,7 @@ void GraphicBoard::loadBoardState_arrowLayer(const BoardState& boardState){
     }
 }
 
-void GraphicBoard::loadBoardState_turnToken(const BoardState& boardState){
+void sigrid::GraphicBoard::loadBoardState_turnToken(const BoardState& boardState){
 
     if(!m_turnToken.isVisible()){
         return;
@@ -1270,7 +1268,7 @@ void GraphicBoard::loadBoardState_turnToken(const BoardState& boardState){
     m_turnToken.setCenterPosition({x,y});
 }
 
-void GraphicBoard::updateBorder(){
+void sigrid::GraphicBoard::updateBorder(){
 
     sf::Vector2f boardArea;
     boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();
@@ -1279,7 +1277,7 @@ void GraphicBoard::updateBorder(){
     m_border.setEnclosedArea(boardArea);
 }
 
-void GraphicBoard::updateLabels(){
+void sigrid::GraphicBoard::updateLabels(){
 
     if(m_labels.isLeftInsideVisible()){
         addLeftInsideLabels_h();
@@ -1305,7 +1303,7 @@ void GraphicBoard::updateLabels(){
     }
 }
 
-void GraphicBoard::initTurnToken(const int& turnToMove){
+void sigrid::GraphicBoard::initTurnToken(const int& turnToMove){
 
     float radius = 0.2* m_tileLayer.getTileHeight();
     
@@ -1331,15 +1329,15 @@ void GraphicBoard::initTurnToken(const int& turnToMove){
     m_turnToken.setTurnToMove(turnToMove);
 }
 
-sf::Vector2f GraphicBoard::getTextureSize() const{
+sf::Vector2f sigrid::GraphicBoard::getTextureSize() const{
     return m_texture.getTextureSize();
 }
 
-const float& GraphicBoard::getScale() const{
+const float& sigrid::GraphicBoard::getScale() const{
     return m_texture.getScale();
 }
 
-float GraphicBoard::calcTextureWidth() const{
+float sigrid::GraphicBoard::calcTextureWidth() const{
 
     float boardWidth = (m_tileLayer.getTileWidth()* (float)m_tileLayer.getNumColumns());
     boardWidth += m_leftEdgeWidth + m_rightEdgeWidth;
@@ -1350,7 +1348,7 @@ float GraphicBoard::calcTextureWidth() const{
     return boardWidth;
 }
 
-float GraphicBoard::calcTextureHeight() const{
+float sigrid::GraphicBoard::calcTextureHeight() const{
 
     float boardHeight = (m_tileLayer.getTileHeight()*(float)m_tileLayer.getNumRows());
     boardHeight += m_topEdgeWidth + m_bottomEdgeWidth;
@@ -1361,15 +1359,15 @@ float GraphicBoard::calcTextureHeight() const{
     return boardHeight;
 }
 
-sf::Vector2f GraphicBoard::calcTextureSize() const{
+sf::Vector2f sigrid::GraphicBoard::calcTextureSize() const{
     return sf::Vector2f{calcTextureWidth(), calcTextureHeight()};
 }
 
-const sf::Color& GraphicBoard::getBackgroundColor() const{
+const sf::Color& sigrid::GraphicBoard::getBackgroundColor() const{
     return m_texture.getBackgroundColor();
 }
 
-void GraphicBoard::resizeTexture(){
+void sigrid::GraphicBoard::resizeTexture(){
 
     bool success;
     success = m_texture.setSize(calcTextureSize());
@@ -1379,7 +1377,7 @@ void GraphicBoard::resizeTexture(){
     }
 }
 
-void GraphicBoard::redrawTexture(){
+void sigrid::GraphicBoard::redrawTexture(){
     if(!m_texture.isInitialized()){
         return;
     }
@@ -1413,7 +1411,7 @@ void GraphicBoard::redrawTexture(){
     m_texture.display();
 }
 
-void GraphicBoard::updateLeftEdgeWidth(){
+void sigrid::GraphicBoard::updateLeftEdgeWidth(){
 
     float newEdgeWidth = 0.f;
     if(m_labels.isLeftOutsideVisible()){
@@ -1445,7 +1443,7 @@ void GraphicBoard::updateLeftEdgeWidth(){
     }
 }
 
-void GraphicBoard::updateRightEdgeWidth(){
+void sigrid::GraphicBoard::updateRightEdgeWidth(){
 
     float newEdgeWidth = 0.f;
 
@@ -1507,7 +1505,7 @@ void GraphicBoard::updateRightEdgeWidth(){
     }
 }
 
-void GraphicBoard::updateTopEdgeWidth(){
+void sigrid::GraphicBoard::updateTopEdgeWidth(){
 
     float newEdgeWidth = 0.f;
 
@@ -1533,7 +1531,7 @@ void GraphicBoard::updateTopEdgeWidth(){
     }
 }
 
-void GraphicBoard::updateBottomEdgeWidth(){
+void sigrid::GraphicBoard::updateBottomEdgeWidth(){
 
     float newEdgeWidth = 0.f;
     if(m_labels.isBottomOutsideVisible()){
@@ -1552,7 +1550,7 @@ void GraphicBoard::updateBottomEdgeWidth(){
     }
 }
 
-void GraphicBoard::addLeftInsideLabel_h(const int& row){
+void sigrid::GraphicBoard::addLeftInsideLabel_h(const int& row){
 
     sigrid_coord::Coord coord;
     if(!m_isLeftToRight){
@@ -1572,7 +1570,7 @@ void GraphicBoard::addLeftInsideLabel_h(const int& row){
     m_labels.addLeftInsideLabel(tilePosition_o.value(), tileSize, tileColor_o.value());
 }
 
-void GraphicBoard::addLeftInsideLabels_h(){
+void sigrid::GraphicBoard::addLeftInsideLabels_h(){
 
     m_labels.removeLeftInsideLabels();
 
@@ -1581,7 +1579,7 @@ void GraphicBoard::addLeftInsideLabels_h(){
     }
 }
 
-void GraphicBoard::addBottomInsideLabel_h(const int& column){
+void sigrid::GraphicBoard::addBottomInsideLabel_h(const int& column){
 
     sigrid_coord::Coord coord;
     coord.x = column;
@@ -1601,7 +1599,7 @@ void GraphicBoard::addBottomInsideLabel_h(const int& column){
     m_labels.addBottomInsideLabel(tilePosition_o.value(), tileSize, tileColor_o.value());
 }
 
-void GraphicBoard::addBottomInsideLabels_h(){
+void sigrid::GraphicBoard::addBottomInsideLabels_h(){
 
     m_labels.removeBottomInsideLabels();
 
@@ -1610,7 +1608,7 @@ void GraphicBoard::addBottomInsideLabels_h(){
     }
 }
 
-void GraphicBoard::addLeftOutsideLabel_h(const int& row){
+void sigrid::GraphicBoard::addLeftOutsideLabel_h(const int& row){
 
     sigrid_coord::Coord coord;
     if(!m_isLeftToRight){
@@ -1627,7 +1625,7 @@ void GraphicBoard::addLeftOutsideLabel_h(const int& row){
     m_labels.addLeftOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
-void GraphicBoard::addLeftOutsideLabels_h(){
+void sigrid::GraphicBoard::addLeftOutsideLabels_h(){
 
     m_labels.removeLeftOutsideLabels();
 
@@ -1636,7 +1634,7 @@ void GraphicBoard::addLeftOutsideLabels_h(){
     }
 }
 
-void GraphicBoard::addRightOutsideLabel_h(const int& row){
+void sigrid::GraphicBoard::addRightOutsideLabel_h(const int& row){
 
     sigrid_coord::Coord coord;
     if(m_isLeftToRight){
@@ -1653,7 +1651,7 @@ void GraphicBoard::addRightOutsideLabel_h(const int& row){
     m_labels.addRightOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
-void GraphicBoard::addRightOutsideLabels_h(){
+void sigrid::GraphicBoard::addRightOutsideLabels_h(){
 
     m_labels.removeRightOutsideLabels();
 
@@ -1662,7 +1660,7 @@ void GraphicBoard::addRightOutsideLabels_h(){
     }
 }
 
-void GraphicBoard::addTopOutsideLabel_h(const int& column){
+void sigrid::GraphicBoard::addTopOutsideLabel_h(const int& column){
 
     sigrid_coord::Coord coord;
     coord.x = column;
@@ -1679,7 +1677,7 @@ void GraphicBoard::addTopOutsideLabel_h(const int& column){
     m_labels.addTopOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
-void GraphicBoard::addTopOutsideLabels_h(){
+void sigrid::GraphicBoard::addTopOutsideLabels_h(){
 
     m_labels.removeTopOutsideLabels();
 
@@ -1688,7 +1686,7 @@ void GraphicBoard::addTopOutsideLabels_h(){
     }
 }
 
-void GraphicBoard::addBottomOutsideLabel_h(const int& column){
+void sigrid::GraphicBoard::addBottomOutsideLabel_h(const int& column){
 
     sigrid_coord::Coord coord;
     coord.x = column;
@@ -1705,7 +1703,7 @@ void GraphicBoard::addBottomOutsideLabel_h(const int& column){
     m_labels.addBottomOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
-void GraphicBoard::addBottomOutsideLabels_h(){
+void sigrid::GraphicBoard::addBottomOutsideLabels_h(){
 
     m_labels.removeBottomOutsideLabels();
 
@@ -1714,7 +1712,7 @@ void GraphicBoard::addBottomOutsideLabels_h(){
     }
 }
 
-void GraphicBoard::moveTiles(const sf::Vector2f& offset){
+void sigrid::GraphicBoard::moveTiles(const sf::Vector2f& offset){
     
     m_tileLayer.move(offset);
     m_pieceLayer.move(offset);
@@ -1728,10 +1726,10 @@ void GraphicBoard::moveTiles(const sf::Vector2f& offset){
     m_labels.moveBottomOutsideLabels(offset);
 }
 
-void GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
+void sigrid::GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
     m_turnToken.move(offset);
 }
 
-void GraphicBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicBoard::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_texture);
 }
