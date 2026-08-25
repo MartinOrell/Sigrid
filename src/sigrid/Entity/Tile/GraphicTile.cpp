@@ -2,9 +2,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-using namespace sigrid;
-
-void GraphicTile::setSize(const sf::Vector2f& size){
+void sigrid::GraphicTile::setSize(const sf::Vector2f& size){
 
     m_shape.setSize(size);
     if(m_isHighlightVisible){
@@ -12,7 +10,7 @@ void GraphicTile::setSize(const sf::Vector2f& size){
     }
 }
 
-void GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
 
     m_shape.setPosition(topLeftPosition);
     if(m_isHighlightVisible){
@@ -20,11 +18,11 @@ void GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
     }
 }
 
-void GraphicTile::setTileColor(const sf::Color& color){
+void sigrid::GraphicTile::setTileColor(const sf::Color& color){
     m_shape.setFillColor(color);
 }
 
-void GraphicTile::setHighlightColor(const sf::Color& color){
+void sigrid::GraphicTile::setHighlightColor(const sf::Color& color){
 
     if(!m_isHighlightVisible){
         m_isHighlightVisible = true;
@@ -35,35 +33,35 @@ void GraphicTile::setHighlightColor(const sf::Color& color){
     m_highlight.setFillColor(color);
 }
 
-void GraphicTile::removeHighlight(){
+void sigrid::GraphicTile::removeHighlight(){
     m_isHighlightVisible = false;
 }
 
-sf::Vector2f GraphicTile::getSize() const{
+sf::Vector2f sigrid::GraphicTile::getSize() const{
     return m_shape.getSize();
 }
 
-sf::Vector2f GraphicTile::getTopLeftPosition() const{
+sf::Vector2f sigrid::GraphicTile::getTopLeftPosition() const{
     return m_shape.getPosition();
 }
 
-sf::Vector2f GraphicTile::getCentrePosition() const{
+sf::Vector2f sigrid::GraphicTile::getCentrePosition() const{
     return m_shape.getPosition() + m_shape.getSize()/2.f;
 }
 
-float GraphicTile::getRightPosition() const{
+float sigrid::GraphicTile::getRightPosition() const{
     return m_shape.getPosition().x + m_shape.getSize().x;
 }
 
-float GraphicTile::getTopPosition() const{
+float sigrid::GraphicTile::getTopPosition() const{
     return m_shape.getPosition().y;
 }
 
-sf::Color GraphicTile::getColor() const{
+sf::Color sigrid::GraphicTile::getColor() const{
     return m_shape.getFillColor();
 }
 
-void GraphicTile::move(const sf::Vector2f& offset){
+void sigrid::GraphicTile::move(const sf::Vector2f& offset){
 
     m_shape.move(offset);
     if(m_isHighlightVisible){
@@ -71,7 +69,7 @@ void GraphicTile::move(const sf::Vector2f& offset){
     }
 }
 
-void GraphicTile::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicTile::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     target.draw(m_shape);
     if(m_isHighlightVisible){
