@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-namespace sigrid{
-
-bool InputStream::open(const sigrid::String& filename){
+bool sigrid::InputStream::open(const sigrid::String& filename){
 
     std::ifstream ifs(filename.getStdString());
 
@@ -18,11 +16,11 @@ bool InputStream::open(const sigrid::String& filename){
     return true;
 }
 
-bool InputStream::isEndOfFile(){
+bool sigrid::InputStream::isEndOfFile(){
     return m_is.peek() == EOF;
 }
 
-std::optional<sigrid::String> InputStream::readString(){
+std::optional<sigrid::String> sigrid::InputStream::readString(){
 
     std::string s;
     try{
@@ -58,7 +56,7 @@ std::optional<sigrid::String> InputStream::readString(){
     return retVal;
 }
 
-std::optional<int> InputStream::readInt(){
+std::optional<int> sigrid::InputStream::readInt(){
 
     int value;
     try{
@@ -70,7 +68,7 @@ std::optional<int> InputStream::readInt(){
     return value;
 }
 
-std::optional<float> InputStream::readFloat(){
+std::optional<float> sigrid::InputStream::readFloat(){
 
     float value;
     try{
@@ -82,7 +80,7 @@ std::optional<float> InputStream::readFloat(){
     return value;
 }
 
-std::optional<float> InputStream::readPercentage(){
+std::optional<float> sigrid::InputStream::readPercentage(){
 
     auto float_o = readFloat();
     if(float_o == std::nullopt){
@@ -94,7 +92,7 @@ std::optional<float> InputStream::readPercentage(){
     return f/100.f;
 }
 
-std::optional<uint32_t> InputStream::readHex(){
+std::optional<uint32_t> sigrid::InputStream::readHex(){
 
     uint32_t value;
     try{
@@ -106,7 +104,7 @@ std::optional<uint32_t> InputStream::readHex(){
     return value;
 }
 
-std::optional<bool> InputStream::readToggle(){
+std::optional<bool> sigrid::InputStream::readToggle(){
 
     auto string_o = readString();
     if(string_o == std::nullopt){
@@ -116,7 +114,7 @@ std::optional<bool> InputStream::readToggle(){
     return s == "ON";
 }
 
-std::optional<bool> InputStream::readVisibility(){
+std::optional<bool> sigrid::InputStream::readVisibility(){
 
     auto string_o = readString();
     if(string_o == std::nullopt){
@@ -125,5 +123,3 @@ std::optional<bool> InputStream::readVisibility(){
     sigrid::String s = string_o.value();
     return s == "Visible";
 }
-
-}  // namespace sigrid
