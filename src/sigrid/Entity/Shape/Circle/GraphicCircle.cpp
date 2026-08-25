@@ -2,17 +2,15 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-using namespace sigrid;
-
-void GraphicCircle::setPosition(const sf::Vector2f& position){
+void sigrid::GraphicCircle::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
 }
 
-void GraphicCircle::setColor(const sf::Color& color){
+void sigrid::GraphicCircle::setColor(const sf::Color& color){
     m_shape.setFillColor(color);
 }
 
-void GraphicCircle::setDiameter(const float& diameter){
+void sigrid::GraphicCircle::setDiameter(const float& diameter){
 
     m_shape.setRadius(diameter/2.f);
     m_shape.setPointCount(100);
@@ -26,10 +24,10 @@ void GraphicCircle::setDiameter(const float& diameter){
     m_shape.setOutlineThickness(-outlineThickness);
 }
 
-void GraphicCircle::move(const sf::Vector2f& offset){
+void sigrid::GraphicCircle::move(const sf::Vector2f& offset){
     m_shape.move(offset);
 }
 
-void GraphicCircle::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+void sigrid::GraphicCircle::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(m_shape);
 }
