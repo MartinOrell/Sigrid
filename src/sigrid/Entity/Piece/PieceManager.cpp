@@ -18,8 +18,8 @@ sigrid_list::Vector<sigrid::PieceColor> sigrid::PieceManager::getContainer() con
     sigrid_list::Vector<PieceColor> containers;
     for(auto& color: m_colors){
         PieceColor container = color;
-        container.darkModifier = color.darkModifier/0x100;
-        container.lightModifier = color.lightModifier/0x100;
+        container.darkModifier = color.darkModifier;
+        container.lightModifier = color.lightModifier;
         containers.push_back(container);
     }
     return containers;
@@ -108,8 +108,8 @@ std::optional<sigrid::GraphicPiece> sigrid::PieceManager::getGraphicPiece(const 
             return std::nullopt;
         }
 
-        sf::Color lightModifier = sf::Color(color.lightModifier);
-        sf::Color darkModifier = sf::Color(color.darkModifier);
+        sf::Color lightModifier = color.lightModifier.getSfColor();
+        sf::Color darkModifier = color.darkModifier.getSfColor();
 
         newImage.modifyColor(lightModifier, darkModifier);
 

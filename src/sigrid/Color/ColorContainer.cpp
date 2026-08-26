@@ -6,23 +6,22 @@
 
 bool sigrid::ColorContainer::load(InputStream& is){
 
-    auto inputHex_o = is.readHex();
-    if(inputHex_o == std::nullopt){
+    auto rgb_o = is.readHex();
+    if(rgb_o == std::nullopt){
 
         std::cerr << "ColorContainer: Failed to read hex value."
             << " Failed to load ColorContainer" << std::endl;
         return false;
     }
-    uint32_t inputHex = inputHex_o.value();
+    this->rgb = rgb_o.value();
     
-    value = inputHex * 0x100 + 0xff;
     return true;
 }
 
 sigrid::String sigrid::ColorContainer::getString(const unsigned int& indentLevel) const{
 
     std::stringstream ss;
-    ss << std::hex << std::setw(6) << std::setfill('0') << this->value;
+    ss << std::hex << std::setw(6) << std::setfill('0') << this->rgb;
 
     sigrid::String out;
     out.set(std::move(ss.str()));
@@ -30,17 +29,19 @@ sigrid::String sigrid::ColorContainer::getString(const unsigned int& indentLevel
     return out;
 }
 
-bool sigrid::ColorContainer::setValue(const sigrid::String& s){
+bool sigrid::ColorContainer::setValue(const sigrid::String& rgbString){
+    return setRGB(rgbString);
+}
 
-    auto inputHex_o = s.toHex();
-    if(inputHex_o == std::nullopt){
+bool sigrid::ColorContainer::setRGB(const sigrid::String& rgbString){
 
-        std::cerr << "ColorContainer: Failed to convert \"" << s << "\"."
+    auto rgb_o = rgbString.toHex();
+    if(rgb_o == std::nullopt){
+
+        std::cerr << "ColorContainer: Failed to convert \"" << rgbString << "\"."
             << " Failed to set ColorContainer from string" << std::endl;
         return false;
     }
-    uint32_t inputHex = inputHex_o.value();
-
-    value = inputHex * 0x100 + 0xff;
+    this->rgb = rgb_o.value();
     return true;
 }

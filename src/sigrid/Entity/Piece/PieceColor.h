@@ -2,6 +2,7 @@
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/InputStream/InputStream.h"
+#include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
 
@@ -12,8 +13,8 @@ struct PieceColor{
 
     sigrid::String name;
     bool isLight;
-    uint32_t lightModifier;
-    uint32_t darkModifier;
+    sigrid::Color lightModifier;
+    sigrid::Color darkModifier;
 };
 
 }  // namespace sigrid

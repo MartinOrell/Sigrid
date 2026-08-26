@@ -5,7 +5,7 @@ void sigrid::ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& 
     for(const auto& colorHex : colors){
 
         sigrid::Color color;
-        color.setRGBA(colorHex.value);
+        color.setRGB(colorHex.rgb);
         m_colors.push_back(color);
     }
 }
@@ -15,7 +15,7 @@ sigrid_list::Vector<sigrid::ColorContainer> sigrid::ColorManager::getContainer()
     sigrid_list::Vector<ColorContainer> containers;
     for(const auto& color: m_colors){
         ColorContainer container;
-        container.value = color.getRGBInteger();
+        container.rgb = color.getRGBInteger();
         containers.push_back(container);
     }
 

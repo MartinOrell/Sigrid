@@ -12,9 +12,10 @@ struct ColorContainer{
     bool load(sigrid::InputStream& is);
     sigrid::String getString(const unsigned int& indentLevel) const;
 
-    bool setValue(const sigrid::String& s);
+    bool setValue(const sigrid::String& rgbString);
+    bool setRGB(const sigrid::String& rgbString);
 
-    uint32_t value;
+    uint32_t rgb;
 };
 
 }  // namespace sigrid

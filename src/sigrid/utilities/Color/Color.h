@@ -4,13 +4,17 @@
 
 #include <SFML/Graphics/Color.hpp>
 
+#include "sigrid/utilities/String/String.h"
+
 namespace sigrid{
 
 struct Color{
 
-    void setRGBA(const std::uint32_t& colorHex);
+    void setRGB(const std::uint32_t& rgb);
+    void setRGBA(const std::uint32_t& rgba);
     
     std::uint32_t getRGBInteger() const;
+    sigrid::String getRGBString() const;
     sf::Color getSfColor() const;
     sf::Color getSolidSfColor() const;
 

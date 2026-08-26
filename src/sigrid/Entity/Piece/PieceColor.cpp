@@ -1,8 +1,6 @@
 #include "sigrid/Entity/Piece/PieceColor.h"
 
 #include <iostream>
-#include <sstream>
-#include <iomanip>
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Color/ColorContainer.h"
@@ -54,7 +52,7 @@ bool sigrid::PieceColor::load(InputStream& is){
                     << " Failed to load PieceColor" << std::endl;
                 return false;
             }
-            lightModifier = color.value;
+            lightModifier.setRGB(color.rgb);
         }
         else if(s == "darkModifier:"){
 
@@ -65,7 +63,7 @@ bool sigrid::PieceColor::load(InputStream& is){
                     << " Failed to load PieceColor" << std::endl;
                 return false;
             }
-            darkModifier = color.value;
+            darkModifier.setRGB(color.rgb);
         }
         else{
             std::cerr << "PieceColor: Unknown key: \"" << s << "\".";
@@ -86,19 +84,8 @@ sigrid::String sigrid::PieceColor::getString(const int& indentLevel) const{
         styleString = "dark";
     }
 
-    sigrid::String lightModifierString;
-    {
-        std::stringstream ss;
-        ss << std::hex << std::setw(6) << std::setfill('0') << this->lightModifier;
-        lightModifierString.set(std::move(ss.str()));
-    }
-
-    sigrid::String darkModifierString;
-    {
-        std::stringstream ss;
-        ss << std::hex << std::setw(6) << std::setfill('0') << this->darkModifier;
-        darkModifierString.set(std::move(ss.str()));
-    }
+    sigrid::String lightModifierString = this->lightModifier.getRGBString();
+    sigrid::String darkModifierString = this->darkModifier.getRGBString();
 
     sigrid::String indent0;
     for(int i = 0; i < indentLevel; ++i){
