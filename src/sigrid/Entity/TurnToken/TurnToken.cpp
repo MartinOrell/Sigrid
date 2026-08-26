@@ -23,7 +23,7 @@ void sigrid::TurnToken::setCenterPosition(const sf::Vector2f& centerPosition){
 
 void sigrid::TurnToken::setTurnToMove(const int& turnToMove){
 
-    m_shape.setFillColor(getColor(turnToMove));
+    m_shape.setFillColor(getColor(turnToMove).getSfColor());
 }
 
 bool sigrid::TurnToken::isVisible() const{
@@ -86,13 +86,17 @@ void sigrid::TurnToken::init(){
     m_isInitialized = true;
 }
 
-sf::Color sigrid::TurnToken::getColor(const int& turnToMove) const{
+sigrid::Color sigrid::TurnToken::getColor(const int& turnToMove) const{
 
     if(turnToMove == 1){
-        return sf::Color{0,0,0,255};
+        sigrid::Color color;
+        color.setRGB(0x000000);
+        return color;
     }
     else{
-        return sf::Color{255,255,255,255};
+        sigrid::Color color;
+        color.setRGB(0xffffff);
+        return color;
     }
 }
 

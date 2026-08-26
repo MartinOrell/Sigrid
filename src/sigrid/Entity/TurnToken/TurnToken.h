@@ -4,6 +4,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "sigrid/Entity/TurnToken/TurnTokenContainer.h"
+#include "sigrid/utilities/Color/Color.h"
 
 namespace sf{
     template <typename T> class Vector2;
@@ -51,7 +52,7 @@ class TurnToken: public sf::Drawable{
     bool m_isInitialized = false;
     void init();
 
-    sf::Color getColor(const int& turnToMove) const;
+    sigrid::Color getColor(const int& turnToMove) const;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
