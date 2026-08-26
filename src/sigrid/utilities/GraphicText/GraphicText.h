@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
 
@@ -25,8 +26,8 @@ class GraphicText: public sf::Drawable{
 
     void setOrigin(const sf::Vector2f& origin); 
     void setPosition(const sf::Vector2f& position);
-    void setFillColor(const sf::Color& color);
-    void setOutlineColor(const sf::Color& color);
+    void setFillColor(const sigrid::Color& color);
+    void setOutlineColor(const sigrid::Color& color);
     void setOutlineThickness(const float& thickness);
 
     bool isInitialized() const;

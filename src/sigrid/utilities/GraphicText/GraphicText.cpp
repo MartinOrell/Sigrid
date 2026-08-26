@@ -69,7 +69,7 @@ void sigrid::GraphicText::setPosition(const sf::Vector2f& position){
     text.setPosition(position);
 }
 
-void sigrid::GraphicText::setFillColor(const sf::Color& color){
+void sigrid::GraphicText::setFillColor(const sigrid::Color& color){
 
     if(m_text_o == std::nullopt){
 
@@ -79,10 +79,10 @@ void sigrid::GraphicText::setFillColor(const sf::Color& color){
     }
     auto& text = m_text_o.value();
 
-    text.setFillColor(color);
+    text.setFillColor(color.getSfColor());
 }
 
-void sigrid::GraphicText::setOutlineColor(const sf::Color& color){
+void sigrid::GraphicText::setOutlineColor(const sigrid::Color& color){
 
     if(m_text_o == std::nullopt){
 
@@ -92,7 +92,7 @@ void sigrid::GraphicText::setOutlineColor(const sf::Color& color){
     }
     auto& text = m_text_o.value();
 
-    text.setOutlineColor(color);
+    text.setOutlineColor(color.getSfColor());
 }
 
 void sigrid::GraphicText::setOutlineThickness(const float& thickness){

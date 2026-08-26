@@ -57,8 +57,11 @@ float sigrid::GraphicTile::getTopPosition() const{
     return m_shape.getPosition().y;
 }
 
-sf::Color sigrid::GraphicTile::getColor() const{
-    return m_shape.getFillColor();
+sigrid::Color sigrid::GraphicTile::getColor() const{
+
+    sigrid::Color color;
+    color.setRGBA(m_shape.getFillColor().toInteger());
+    return color;
 }
 
 void sigrid::GraphicTile::move(const sf::Vector2f& offset){

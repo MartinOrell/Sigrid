@@ -224,7 +224,7 @@ float sigrid::BoardLabels::getRightOutsideWorkWidth() const{
     return m_rightWorkWidth;
 }
 
-bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor){
 
     if(m_leftInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
@@ -270,7 +270,9 @@ bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, c
     
     label.setPosition(position);
 
-    label.setFillColor(sf::Color(100,100,100,255));
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x646464);
+    label.setFillColor(fillColor);
     label.setOutlineColor(tileColor);
     
     label.setOutlineThickness(2);
@@ -279,7 +281,7 @@ bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, c
     return true;
 }
 
-bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor){
+bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor){
 
     if(m_bottomInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
@@ -331,7 +333,9 @@ bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition,
 
     label.setPosition(position);
 
-    label.setFillColor(sf::Color(100,100,100,255));
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x646464);
+    label.setFillColor(fillColor);
     label.setOutlineColor(tileColor);
     label.setOutlineThickness(2);
 
@@ -385,7 +389,10 @@ bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, 
     position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
     label.setPosition(position);
-    label.setFillColor(sf::Color::Black);
+
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x000000);
+    label.setFillColor(fillColor);
 
     m_leftOutsideCoordLabels.labels.push_back(label);
     return true;
@@ -437,7 +444,9 @@ bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition,
     position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
     label.setPosition(position);
-    label.setFillColor(sf::Color::Black);
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x000000);
+    label.setFillColor(fillColor);
 
     m_rightOutsideCoordLabels.labels.push_back(label);
     return true;
@@ -493,7 +502,9 @@ bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, c
         labelSize/4.f;
     
     label.setPosition(position);
-    label.setFillColor(sf::Color::Black);
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x000000);
+    label.setFillColor(fillColor);
 
     m_topOutsideCoordLabels.labels.push_back(label);
     return true;
@@ -548,7 +559,9 @@ bool sigrid::BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition
         5.f;
     
     label.setPosition(position);
-    label.setFillColor(sf::Color::Black);
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x000000);
+    label.setFillColor(fillColor);
 
     m_bottomOutsideCoordLabels.labels.push_back(label);
     return true;

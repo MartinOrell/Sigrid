@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/utilities/Color/Color.h"
+
 namespace sigrid{
 
 class GraphicTile: public sf::Drawable{
@@ -35,7 +37,7 @@ class GraphicTile: public sf::Drawable{
 
     float getTopPosition() const;
 
-    sf::Color getColor() const;
+    sigrid::Color getColor() const;
 
     void move(const sf::Vector2f& offset);
 

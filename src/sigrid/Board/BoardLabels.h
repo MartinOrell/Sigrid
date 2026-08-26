@@ -4,6 +4,7 @@
 
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
+#include "sigrid/utilities/Color/Color.h"
 
 #include "sigrid/Board/BoardLabelContainer.h"
 #include "sigrid/Board/SideLabels.h"
@@ -75,8 +76,8 @@ class BoardLabels: public sf::Drawable{
 
     float getRightOutsideWorkWidth() const;
 
-    bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
-    bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sf::Color& tileColor);
+    bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor);
+    bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor);
     bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
     bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
     bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);

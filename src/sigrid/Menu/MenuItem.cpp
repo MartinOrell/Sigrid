@@ -44,7 +44,10 @@ void sigrid::MenuItem::createGraphic(const int height){
     int characterSize = height-m_textOffset.y*2;
 
     m_text.setCharacterSize(characterSize);
-    m_text.setFillColor(sf::Color(0,0,0));
+
+    sigrid::Color fillColor;
+    fillColor.setRGB(0x000000);
+    m_text.setFillColor(fillColor);
     if(m_isToggled){
         m_text.setString(m_toggledName);
     }

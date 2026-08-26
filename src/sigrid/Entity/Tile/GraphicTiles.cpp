@@ -573,7 +573,7 @@ std::optional<float> sigrid::GraphicTiles::getTileTopPosition(const sigrid_coord
     return tile.getTopPosition();
 }
 
-std::optional<sf::Color> sigrid::GraphicTiles::getTileColor(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::Color> sigrid::GraphicTiles::getTileColor(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
