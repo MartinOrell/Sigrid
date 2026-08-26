@@ -3,10 +3,9 @@
 #include <string>
 #include <optional>
 
-#include <SFML/Graphics/Text.hpp>
-
 #include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/utilities/GraphicText/GraphicText.h"
 #include "sigrid/Action/Action.h"
 
 namespace sf{
@@ -51,7 +50,7 @@ class MenuItem: public sf::Drawable{
     sf::RectangleShape m_shape;
     sigrid_action::Action m_action;
 
-    std::optional<sf::Text> m_text_o;
+    sigrid::GraphicText m_text;
     sf::Vector2f m_textOffset = {15.f,5.f};
 
     bool m_isToggled = false;

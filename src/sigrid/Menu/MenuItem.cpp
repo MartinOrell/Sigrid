@@ -34,27 +34,27 @@ sigrid::MenuItemContainer sigrid::MenuItem::getContainer() const{
 
 void sigrid::MenuItem::createGraphic(const int height){
     
-    if(m_text_o == std::nullopt){
-        std::cerr << "MenuItem " << m_name << ": Failed creating graphic: missing text (most likely font is missing)" << std::endl;
+    if(!m_text.isInitialized()){
+        std::cerr << "MenuItem " << m_name
+            << ": Failed to create graphic."
+            << " text is not initialized (most likely font is missing)" << std::endl;
         return;
     }
-    auto& text = m_text_o.value();
 
     int characterSize = height-m_textOffset.y*2;
 
-    text.setCharacterSize(characterSize);
-    text.setFillColor(sf::Color(0,0,0));
+    m_text.setCharacterSize(characterSize);
+    m_text.setFillColor(sf::Color(0,0,0));
     if(m_isToggled){
-        text.setString(m_toggledName.getStdString());
+        m_text.setString(m_toggledName);
     }
     else{
-        text.setString(m_name.getStdString());
+        m_text.setString(m_name);
     }
 
-    sf::FloatRect rect = text.getLocalBounds();
-    text.setOrigin({0.f, (float)height/2.f+m_textOffset.y});
+    m_text.setOrigin({0.f, (float)height/2.f+m_textOffset.y});
 
-    int shapeWidth = rect.size.x+2*m_textOffset.x;
+    int shapeWidth = m_text.getLocalWidth()+2*m_textOffset.x;
     m_shape.setSize({(float)shapeWidth,(float)height});
 
     m_shape.setOrigin({0.f, (float)height/2.f});
@@ -67,25 +67,16 @@ void sigrid::MenuItem::setName(const sigrid::String& name){
 }
 
 void sigrid::MenuItem::setFont(const sf::Font& font){
-
-    if(m_text_o == std::nullopt){
-        m_text_o = sf::Text{font};
-        return;
-    }
-    auto& text = m_text_o.value();
-
-    text.setFont(font);
+    m_text.setFont(font);
 }
 
 void sigrid::MenuItem::setPosition(const sf::Vector2f& position){
 
     m_shape.setPosition(position);
-    if(m_text_o == std::nullopt){
-        return;
-    }
-    auto& text = m_text_o.value();
 
-    text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
+    if(m_text.isInitialized()){
+        m_text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
+    }
 }
 
 void sigrid::MenuItem::setAction(const sigrid_action::Action& action){
@@ -94,17 +85,15 @@ void sigrid::MenuItem::setAction(const sigrid_action::Action& action){
 
 void sigrid::MenuItem::setText(const sigrid::String& s){
     
-    if(m_text_o == std::nullopt){
+    if(!m_text.isInitialized()){
         return;
     }
-    auto& text = m_text_o.value();
 
     m_name = s;
-    text.setString(s.getStdString());
-    sf::FloatRect rect = text.getLocalBounds();
+    m_text.setString(s);
 
     float newHeight = m_shape.getSize().y;
-    float newWidth = rect.size.x+2.f*m_textOffset.x;
+    float newWidth = m_text.getLocalWidth()+2.f*m_textOffset.x;
     m_shape.setSize({newWidth, newHeight});
 }
 
@@ -164,29 +153,24 @@ void sigrid::MenuItem::toggle(){
 
     m_isToggled = !m_isToggled;
 
-    if(m_text_o == std::nullopt){
+    if(!m_text.isInitialized()){
         return;
     }
-    auto& text = m_text_o.value();
 
     if(m_isToggled){
-        text.setString(m_toggledName.getStdString());
+        m_text.setString(m_toggledName);
     }
     else{
-        text.setString(m_name.getStdString());
+        m_text.setString(m_name);
     }
-    sf::FloatRect rect = text.getLocalBounds();
     
     float newHeight = m_shape.getSize().y;
-    float newWidth = rect.size.x+2.f*m_textOffset.x;
+    float newWidth = m_text.getLocalWidth()+2.f*m_textOffset.x;
     m_shape.setSize({newWidth, newHeight});
 }
 
 void sigrid::MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
     target.draw(m_shape);
-    if(m_text_o != std::nullopt){
-        auto& text = m_text_o.value();
-        target.draw(text);
-    }
+    target.draw(m_text);
 }

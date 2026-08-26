@@ -108,6 +108,10 @@ void sigrid::GraphicText::setOutlineThickness(const float& thickness){
     text.setOutlineThickness(thickness);
 }
 
+bool sigrid::GraphicText::isInitialized() const{
+    return m_text_o != std::nullopt;
+}
+
 float sigrid::GraphicText::getLocalWidth() const{
 
     if(m_text_o == std::nullopt){

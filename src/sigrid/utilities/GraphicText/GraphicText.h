@@ -29,6 +29,7 @@ class GraphicText: public sf::Drawable{
     void setOutlineColor(const sf::Color& color);
     void setOutlineThickness(const float& thickness);
 
+    bool isInitialized() const;
     float getLocalWidth() const;
 
     void move(const sf::Vector2f& offset);
