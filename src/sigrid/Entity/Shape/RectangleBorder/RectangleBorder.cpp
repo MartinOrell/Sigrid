@@ -116,12 +116,12 @@ void sigrid::RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
     }
 }
 
-void sigrid::RectangleBorder::setColor(const sf::Color& color){
+void sigrid::RectangleBorder::setColor(const sigrid::Color& color){
 
-    m_left.setFillColor(color);
-    m_right.setFillColor(color);
-    m_top.setFillColor(color);
-    m_bottom.setFillColor(color);
+    m_left.setFillColor(color.getSfColor());
+    m_right.setFillColor(color.getSfColor());
+    m_top.setFillColor(color.getSfColor());
+    m_bottom.setFillColor(color.getSfColor());
 }
 
 bool sigrid::RectangleBorder::isVisible() const{

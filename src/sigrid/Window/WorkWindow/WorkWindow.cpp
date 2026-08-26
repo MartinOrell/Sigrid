@@ -173,7 +173,9 @@ void sigrid::WorkWindow::loadGraphicData(const BoardDesignContainer& graphicData
 
     m_boardSelectHighlight.hide();
     m_boardSelectHighlight.setThickness(10);
-    m_boardSelectHighlight.setColor(sf::Color{100,100,255});
+    sigrid::Color selectColor;
+    selectColor.setRGB(0x6464ff);
+    m_boardSelectHighlight.setColor(selectColor);
 
     if(m_boards.size() == 0){
         Board board;

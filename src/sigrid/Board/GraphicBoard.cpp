@@ -1166,7 +1166,9 @@ void sigrid::GraphicBoard::initTurnToken(const BoardDesignContainer& config){
 void sigrid::GraphicBoard::initBorder(const BoardDesignContainer& config){
 
     m_border.setThickness(config.border.thickness);
-    m_border.setColor(sf::Color{0,0,0});
+    sigrid::Color borderColor;
+    borderColor.setRGB(0x000000);
+    m_border.setColor(borderColor);
     if(config.border.isVisible){
 
         sf::Vector2f boardArea;

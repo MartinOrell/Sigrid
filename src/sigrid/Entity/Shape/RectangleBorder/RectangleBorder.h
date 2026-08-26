@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/utilities/Color/Color.h"
+
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
 
 namespace sigrid{
@@ -25,7 +27,7 @@ class RectangleBorder: public sf::Drawable{
 
     void setEnclosedArea(const sf::Vector2f& enclosedArea);
 
-    void setColor(const sf::Color& color);
+    void setColor(const sigrid::Color& color);
 
     bool isVisible() const;
     bool isHidden() const;
