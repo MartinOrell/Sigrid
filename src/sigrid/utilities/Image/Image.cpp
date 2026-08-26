@@ -49,7 +49,7 @@ bool sigrid::Image::saveToFile(const sigrid::String& filename) const{
     return m_image.saveToFile(filename.getStdString());
 }
 
-void sigrid::Image::modifyColor(const sf::Color& lightModifier, const sf::Color& darkModifier){
+void sigrid::Image::modifyColor(const sigrid::Color& lightModifier, const sigrid::Color& darkModifier){
 
     for(unsigned int x = 0; x < m_image.getSize().x; x++){
         for(unsigned int y = 0; y < m_image.getSize().y; y++){

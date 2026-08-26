@@ -108,10 +108,7 @@ std::optional<sigrid::GraphicPiece> sigrid::PieceManager::getGraphicPiece(const 
             return std::nullopt;
         }
 
-        sf::Color lightModifier = color.lightModifier.getSfColor();
-        sf::Color darkModifier = color.darkModifier.getSfColor();
-
-        newImage.modifyColor(lightModifier, darkModifier);
+        newImage.modifyColor(color.lightModifier, color.darkModifier);
 
         sf::Texture newTexture{newImage.getSfImage()};
         auto pieceTexture_o = m_pieceTextures.at(colorId);

@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Image.hpp>
 
 #include "sigrid/utilities/String/String.h"
+#include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
 
@@ -26,7 +27,7 @@ class Image{
     bool loadFromFile(const sigrid::String& filename);
     bool saveToFile(const sigrid::String& filename) const;
 
-    void modifyColor(const sf::Color& lightModifier, const sf::Color& darkModifier);
+    void modifyColor(const sigrid::Color& lightModifier, const sigrid::Color& darkModifier);
 
   private:
 
