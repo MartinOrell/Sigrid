@@ -96,7 +96,9 @@ void sigrid::GraphicBoard::setBottomToTop(){
 
 void sigrid::GraphicBoard::loadDesign(const BoardDesignContainer& config){
     
-    m_texture.setBackgroundColor(sf::Color{255,255,255,255});
+    sigrid::Color backgroundColor;
+    backgroundColor.setRGB(0xffffff);
+    m_texture.setBackgroundColor(backgroundColor);
     initTileLayer(config);
     initPieceLayer(config);
     initArrowLayer(config);
@@ -1363,7 +1365,7 @@ sf::Vector2f sigrid::GraphicBoard::calcTextureSize() const{
     return sf::Vector2f{calcTextureWidth(), calcTextureHeight()};
 }
 
-const sf::Color& sigrid::GraphicBoard::getBackgroundColor() const{
+const sigrid::Color& sigrid::GraphicBoard::getBackgroundColor() const{
     return m_texture.getBackgroundColor();
 }
 

@@ -10,6 +10,10 @@ void sigrid::Menu::setFontManagerPtr(FontManager* const managerPtr){
 }
 
 bool sigrid::Menu::load(const MenuContainer& menuData){
+
+    sigrid::Color backgroundColor;
+    backgroundColor.setRGBA(0xffffff00);
+    m_texture.setBackgroundColor(backgroundColor);
     m_isPinned = menuData.isPinned;
     m_showItems = menuData.showItems;
     m_fontFilename = menuData.fontName;

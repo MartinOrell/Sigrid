@@ -1,13 +1,13 @@
 #pragma once
 
 #include <optional>
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
 #include "sigrid/utilities/Image/Image.h"
+#include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
 
@@ -21,14 +21,14 @@ class RenderTexture: public sf::Drawable{
     RenderTexture& operator=(const RenderTexture&) = default;
     RenderTexture& operator=(RenderTexture&&) = default;
 
-    void setBackgroundColor(const sf::Color& color);
+    void setBackgroundColor(const sigrid::Color& color);
     bool setSize(const sf::Vector2f& size);
     void setPosition(const sf::Vector2f& position);
     void setScale(const float& scale);
     void show();
     void hide();
 
-    const sf::Color& getBackgroundColor() const;
+    const sigrid::Color& getBackgroundColor() const;
     const sf::Vector2f& getPosition() const;
     const float& getTopPosition() const;
     float getBottomPosition() const;
@@ -53,7 +53,7 @@ class RenderTexture: public sf::Drawable{
 
     sf::RenderTexture m_texture;
     std::optional<sf::Sprite> m_sprite_o = std::nullopt;
-    sf::Color m_backgroundColor = sf::Color{255,255,255,0};
+    sigrid::Color m_backgroundColor;
     sf::Vector2f m_position;
     float m_scale = 1.f;
     bool m_show = true;

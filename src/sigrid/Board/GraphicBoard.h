@@ -170,7 +170,7 @@ class GraphicBoard: public sf::Drawable{
 
     void initTurnToken(const int& turnToMove);
 
-    const sf::Color& getBackgroundColor() const;
+    const sigrid::Color& getBackgroundColor() const;
     sf::Vector2f getTextureSize() const;
     const float& getScale() const;
 

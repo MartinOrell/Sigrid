@@ -1,6 +1,6 @@
 #include "sigrid/utilities/RenderTexture/RenderTexture.h"
 
-void sigrid::RenderTexture::setBackgroundColor(const sf::Color& color){
+void sigrid::RenderTexture::setBackgroundColor(const sigrid::Color& color){
     m_backgroundColor = color;
 }
 
@@ -26,7 +26,7 @@ void sigrid::RenderTexture::hide(){
     m_show = false;
 }
 
-const sf::Color& sigrid::RenderTexture::getBackgroundColor() const{
+const sigrid::Color& sigrid::RenderTexture::getBackgroundColor() const{
     return m_backgroundColor;
 }
 
@@ -139,7 +139,7 @@ bool sigrid::RenderTexture::contains(const sf::Vector2f& point) const{
 }
 
 void sigrid::RenderTexture::clear(){
-    m_texture.clear(m_backgroundColor);
+    m_texture.clear(m_backgroundColor.getSfColor());
 }
 
 void sigrid::RenderTexture::draw(const sf::Drawable& drawable){
