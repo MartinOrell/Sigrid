@@ -30,9 +30,10 @@ void sigrid::GraphicArrow::setPosition(const sf::Vector2f& fromPosition, const s
     }
 }
 
-void sigrid::GraphicArrow::setColor(const sf::Color& color){
-    m_line.setFillColor(color);
-    m_head.setFillColor(color);
+void sigrid::GraphicArrow::setColor(const sigrid::Color& color){
+
+    m_line.setFillColor(color.getSfColor());
+    m_head.setFillColor(color.getSfColor());
 }
 
 void sigrid::GraphicArrow::setThickness(const float& thickness){

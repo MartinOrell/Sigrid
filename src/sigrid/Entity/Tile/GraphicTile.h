@@ -21,9 +21,9 @@ class GraphicTile: public sf::Drawable{
 
     void setPosition(const sf::Vector2f& topLeftPosition);
 
-    void setTileColor(const sf::Color& color);
+    void setTileColor(const sigrid::Color& color);
 
-    void setHighlightColor(const sf::Color& color);
+    void setHighlightColor(const sigrid::Color& color);
 
     void removeHighlight();
 

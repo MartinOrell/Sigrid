@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics/Color.hpp>
 #include <optional>
 
 #include "sigrid/utilities/Color/Color.h"
@@ -22,8 +21,8 @@ class ColorManager{
     void setColors(const sigrid_list::Vector<ColorContainer>& colors);
     sigrid_list::Vector<ColorContainer> getContainer();
 
-    std::optional<sf::Color> getSolidColor(const int colorId) const;
-    std::optional<sf::Color> getTransparentColor(const int colorId) const;
+    std::optional<sigrid::Color> getSolidColor(const int colorId) const;
+    std::optional<sigrid::Color> getTransparentColor(const int colorId) const;
 
   private:
 

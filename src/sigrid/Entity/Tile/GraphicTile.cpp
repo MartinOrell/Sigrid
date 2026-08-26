@@ -18,11 +18,11 @@ void sigrid::GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
     }
 }
 
-void sigrid::GraphicTile::setTileColor(const sf::Color& color){
-    m_shape.setFillColor(color);
+void sigrid::GraphicTile::setTileColor(const sigrid::Color& color){
+    m_shape.setFillColor(color.getSfColor());
 }
 
-void sigrid::GraphicTile::setHighlightColor(const sf::Color& color){
+void sigrid::GraphicTile::setHighlightColor(const sigrid::Color& color){
 
     if(!m_isHighlightVisible){
         m_isHighlightVisible = true;
@@ -30,7 +30,7 @@ void sigrid::GraphicTile::setHighlightColor(const sf::Color& color){
         m_highlight.setPosition(m_shape.getPosition());
     }
 
-    m_highlight.setFillColor(color);
+    m_highlight.setFillColor(color.getSfColor());
 }
 
 void sigrid::GraphicTile::removeHighlight(){

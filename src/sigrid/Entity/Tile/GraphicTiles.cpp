@@ -189,20 +189,20 @@ void sigrid::GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeat
             position.x += m_tileSize.x;
         }
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-           color = sf::Color::White;
+           color.setRGB(0xffffff);
         }
         else{
             auto colorId_o = repeatTileColorIds.at((x+y)%repeatTileColorIds.size());
             if(colorId_o == std::nullopt){
-                color = sf::Color::White;
+                color.setRGB(0xffffff);
             }
             else{
                 const int& colorId = colorId_o.value().get();
                 auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
                 if(color_o == std::nullopt){
-                    color = sf::Color::White;
+                    color.setRGB(0xffffff);
                 }
                 else{
                     color = color_o.value();
@@ -257,20 +257,20 @@ void sigrid::GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatT
             position.x += m_tileSize.x;
         }
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-           color = sf::Color::White;
+           color.setRGB(0xffffff);
         }
         else{
             auto colorId_o = repeatTileColorIds.at((x+y)%repeatTileColorIds.size());
             if(colorId_o == std::nullopt){
-                color = sf::Color::White;
+                color.setRGB(0xffffff);
             }
             else{
                 const int& colorId = colorId_o.value().get();
                 auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
                 if(color_o == std::nullopt){
-                    color = sf::Color::White;
+                    color.setRGB(0xffffff);
                 }
                 else{
                     color = color_o.value();
@@ -360,20 +360,20 @@ void sigrid::GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileCo
             position.y += m_tileSize.y;
         }
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-           color = sf::Color::White;
+           color.setRGB(0xffffff);
         }
         else{
             auto colorId_o = repeatTileColorIds.at((x+y)%repeatTileColorIds.size());
             if(colorId_o == std::nullopt){
-                color = sf::Color::White;
+                color.setRGB(0xffffff);
             }
             else{
                 const int& colorId = colorId_o.value().get();
                 auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
                 if(color_o == std::nullopt){
-                    color = sf::Color::White;
+                    color.setRGB(0xffffff);
                 }
                 else{
                     color = color_o.value();
@@ -426,20 +426,20 @@ void sigrid::GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTile
             position.y -= m_tileSize.y;
         }
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_tileColorManagerPtr || repeatTileColorIds.size() == 0){
-           color = sf::Color::White;
+           color.setRGB(0xffffff);
         }
         else{
             auto colorId_o = repeatTileColorIds.at((x+y)%repeatTileColorIds.size());
             if(colorId_o == std::nullopt){
-                color = sf::Color::White;
+                color.setRGB(0xffffff);
             }
             else{
                 const int& colorId = colorId_o.value().get();
                 auto color_o = m_tileColorManagerPtr->getSolidColor(colorId);
                 if(color_o == std::nullopt){
-                    color = sf::Color::White;
+                    color.setRGB(0xffffff);
                 }
                 else{
                     color = color_o.value();

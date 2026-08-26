@@ -75,15 +75,15 @@ void sigrid::GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const 
             return;
         }
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_arrowColorManagerPtr){
-            color = sf::Color::White;
+            color.setRGB(0xffffff);
         }
         else{
             int colorId = std::get<LogicCircle>(entity).getColorId();
             auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
             if(color_o == std::nullopt){
-                color = sf::Color::White;
+                color.setRGB(0xffffff);
             }
             else{
                 color = color_o.value();
@@ -98,15 +98,15 @@ void sigrid::GraphicEntities::addEntity(const sigrid_coord::Coord& coord, const 
     }
     else if(std::holds_alternative<LogicArrow>(entity)){
 
-        sf::Color color;
+        sigrid::Color color;
         if(!m_arrowColorManagerPtr){
-            color = sf::Color::Black;
+            color.setRGB(0x000000);
         }
         else{
             int colorId = std::get<LogicArrow>(entity).getColorId();
             auto color_o = m_arrowColorManagerPtr->getSolidColor(colorId);
             if(color_o == std::nullopt){
-                color = sf::Color::Black;
+                color.setRGB(0x000000);
             }
             else{
                 color = color_o.value();

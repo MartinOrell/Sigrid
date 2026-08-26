@@ -4,6 +4,8 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "sigrid/utilities/Color/Color.h"
+
 namespace sf{
     class Color;
 }
@@ -26,7 +28,7 @@ class GraphicArrow: public sf::Drawable{
 
     void setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
 
-    void setColor(const sf::Color& color);
+    void setColor(const sigrid::Color& color);
 
     void setThickness(const float& thickness);
 

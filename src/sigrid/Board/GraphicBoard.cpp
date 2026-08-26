@@ -443,7 +443,8 @@ void sigrid::GraphicBoard::highlightTile(const sigrid_coord::Coord& coord){
     auto& position = position_o.value();
 
     m_isSelectHighlightVisible = true;
-    sf::Color color{255,255,0,100};
+    sigrid::Color color;
+    color.setRGBA(0xffff0064);
     m_selectHighlight.setSize(m_tileLayer.getTileSize());
     m_selectHighlight.setTileColor(color);
     m_selectHighlight.setPosition(position);

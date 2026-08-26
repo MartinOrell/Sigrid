@@ -22,18 +22,19 @@ sigrid_list::Vector<sigrid::ColorContainer> sigrid::ColorManager::getContainer()
     return containers;
 }
 
-std::optional<sf::Color> sigrid::ColorManager::getSolidColor(const int colorId) const{
+std::optional<sigrid::Color> sigrid::ColorManager::getSolidColor(const int colorId) const{
 
     auto color_o = m_colors.at(colorId);
     if(color_o == std::nullopt){
         return std::nullopt;
     }
-    const auto& color = color_o.value().get();
+    sigrid::Color color = color_o.value().get();
 
-    return color.getSolidSfColor();
+    color.a = 0xff;
+    return color;
 }
 
-std::optional<sf::Color> sigrid::ColorManager::getTransparentColor(const int colorId) const{
+std::optional<sigrid::Color> sigrid::ColorManager::getTransparentColor(const int colorId) const{
 
     auto color_o = m_colors.at(colorId);
     if(color_o == std::nullopt){
@@ -42,5 +43,5 @@ std::optional<sf::Color> sigrid::ColorManager::getTransparentColor(const int col
     sigrid::Color color = color_o.value().get();
 
     color.a = 0x80;
-    return color.getSfColor();
+    return color;
 }

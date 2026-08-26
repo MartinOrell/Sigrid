@@ -6,8 +6,8 @@ void sigrid::GraphicCircle::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
 }
 
-void sigrid::GraphicCircle::setColor(const sf::Color& color){
-    m_shape.setFillColor(color);
+void sigrid::GraphicCircle::setColor(const sigrid::Color& color){
+    m_shape.setFillColor(color.getSfColor());
 }
 
 void sigrid::GraphicCircle::setDiameter(const float& diameter){

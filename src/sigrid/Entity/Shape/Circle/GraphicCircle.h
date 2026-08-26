@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "sigrid/utilities/Color/Color.h"
+
 namespace sigrid{
 
 class GraphicCircle: public sf::Drawable{
@@ -16,7 +18,7 @@ class GraphicCircle: public sf::Drawable{
     GraphicCircle& operator =(GraphicCircle&&) = default;
 
     void setPosition(const sf::Vector2f& position);
-    void setColor(const sf::Color& color);
+    void setColor(const sigrid::Color& color);
     void setDiameter(const float& diameter);
 
     void move(const sf::Vector2f& offset);

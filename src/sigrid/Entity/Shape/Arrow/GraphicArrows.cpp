@@ -38,18 +38,18 @@ void sigrid::GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, c
         return;
     }
 
-    sf::Color color;
+    sigrid::Color color;
     if(m_colorManagerPtr){
         auto color_o = m_colorManagerPtr->getSolidColor(logicArrow.getColorId());
         if(color_o != std::nullopt){
             color = color_o.value();
         }
         else{
-            color = sf::Color::Black;
+            color.setRGB(0x000000);
         }
     }
     else{
-        color = sf::Color::Black;
+        color.setRGB(0x000000);
     }
 
     GraphicArrow graphicArrow;
