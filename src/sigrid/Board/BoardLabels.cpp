@@ -254,13 +254,17 @@ bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, c
     int i = m_leftInsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftInsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
 
-    //using labelSize instead of label.getLocalBounds().size.x because localBounds has a weird gap
+    //using labelSize instead of label.getLocalWidth() because localBounds has a weird gap
     position.x += tilePosition.x + (float)labelSize/16.f;
     position.y = tilePosition.y - (float)labelSize/4.f;
     
@@ -305,15 +309,19 @@ bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition,
     int i = m_bottomInsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomInsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     sf::Vector2f position;
     position.x =
         tilePosition.x +
         tileSize.x -
-        label.getLocalBounds().size.x*5/4;
+        label.getLocalWidth()*5/4;
     if(notation == "i" || notation == "l"){
-        position.x -= label.getLocalBounds().size.x*2.f;
+        position.x -= label.getLocalWidth()*2.f;
     }
 
     position.y =
@@ -361,14 +369,18 @@ bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, 
     int i = m_leftOutsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_leftOutsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-    position.x = (m_leftWorkWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f;
+    position.x = (m_leftWorkWidth-label.getLocalWidth()*5.f/4.f)/2.f;
     if(notation == "1"){
-        position.x -= (float)label.getLocalBounds().size.x/2.f;
+        position.x -= (float)label.getLocalWidth()/2.f;
     }
     position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
@@ -409,14 +421,18 @@ bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition,
     int i = m_rightOutsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getRowNotation(i);
     unsigned int labelSize = m_rightOutsideCoordLabels.labelSizeFactor * tileSize.y;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     label.setOrigin({0.f,0.f});
 
     sf::Vector2f position;
-    position.x = tilePosition.x + tileSize.x + (m_rightWorkWidth-(float)label.getLocalBounds().size.x*5.f/4.f)/2.f + 5.f;
+    position.x = tilePosition.x + tileSize.x + (m_rightWorkWidth-(float)label.getLocalWidth()*5.f/4.f)/2.f + 5.f;
     if(notation == "1"){
-        position.x -= (float)label.getLocalBounds().size.x/2.f;
+        position.x -= (float)label.getLocalWidth()/2.f;
     }
     position.y = tilePosition.y + tileSize.y/2.f - (float)labelSize*9.f/14.f;
     
@@ -457,7 +473,11 @@ bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, c
     int i = m_topOutsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_topOutsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     label.setOrigin({0.f,0.f});
 
@@ -465,7 +485,7 @@ bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, c
     position.x =
         tilePosition.x +
         tileSize.x/2.f -
-        label.getLocalBounds().size.x/2.f;
+        label.getLocalWidth()/2.f;
 
     position.y =
         tilePosition.y -
@@ -509,13 +529,17 @@ bool sigrid::BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition
     int i = m_bottomOutsideCoordLabels.labels.size();
     sigrid::String notation = sigrid_coord::getColumnNotation(i);
     unsigned int labelSize = m_bottomOutsideCoordLabels.labelSizeFactor * tileSize.x;
-    sf::Text label{*(fontPtr_o.value()), notation.getStdString(), labelSize};
+
+    sigrid::GraphicText label;
+    label.setFont(*(fontPtr_o.value()));
+    label.setString(notation);
+    label.setCharacterSize(labelSize);
 
     sf::Vector2f position;
     position.x =
         tilePosition.x +
         tileSize.x/2.f -
-        label.getLocalBounds().size.x/2.f;
+        label.getLocalWidth()/2.f;
 
     position.y =
         tilePosition.y +
