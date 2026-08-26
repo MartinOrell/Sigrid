@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <optional>
 
+#include "sigrid/utilities/Color/Color.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/Color/ColorContainer.h"
 
@@ -26,7 +27,7 @@ class ColorManager{
 
   private:
 
-    sigrid_list::Vector<sf::Color> m_colors;
+    sigrid_list::Vector<sigrid::Color> m_colors;
 
 };
 

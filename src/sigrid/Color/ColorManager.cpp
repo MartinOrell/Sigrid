@@ -3,7 +3,10 @@
 void sigrid::ColorManager::setColors(const sigrid_list::Vector<ColorContainer>& colors){
 
     for(const auto& colorHex : colors){
-        m_colors.push_back(sf::Color(colorHex.value));
+
+        sigrid::Color color;
+        color.setRGBA(colorHex.value);
+        m_colors.push_back(color);
     }
 }
 
@@ -12,7 +15,7 @@ sigrid_list::Vector<sigrid::ColorContainer> sigrid::ColorManager::getContainer()
     sigrid_list::Vector<ColorContainer> containers;
     for(const auto& color: m_colors){
         ColorContainer container;
-        container.value = color.toInteger() / 0x100;
+        container.value = color.getRGBInteger();
         containers.push_back(container);
     }
 
@@ -27,7 +30,7 @@ std::optional<sf::Color> sigrid::ColorManager::getSolidColor(const int colorId) 
     }
     const auto& color = color_o.value().get();
 
-    return color;
+    return color.getSolidSfColor();
 }
 
 std::optional<sf::Color> sigrid::ColorManager::getTransparentColor(const int colorId) const{
@@ -36,8 +39,8 @@ std::optional<sf::Color> sigrid::ColorManager::getTransparentColor(const int col
     if(color_o == std::nullopt){
         return std::nullopt;
     }
-    sf::Color color = color_o.value().get();
+    sigrid::Color color = color_o.value().get();
 
     color.a = 0x80;
-    return color;
+    return color.getSfColor();
 }
