@@ -12,7 +12,7 @@
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector2D.h"
 #include "sigrid/utilities/lists/Map.h"
-#include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
+#include "sigrid/utilities/RenderTexture/RenderTexture.h"
 #include "sigrid/Menu/MenuItem.h"
 #include "sigrid/Menu/MenuContainer.h"
 
@@ -93,7 +93,7 @@ class Menu: public sf::Drawable{
 
     FontManager* m_fontManagerPtr = nullptr;
 
-    SigridRenderTexture m_texture;
+    sigrid::RenderTexture m_texture;
 
     MenuItem m_superHeader;
 

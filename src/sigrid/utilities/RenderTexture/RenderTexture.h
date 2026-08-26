@@ -11,15 +11,15 @@
 
 namespace sigrid{
 
-class SigridRenderTexture: public sf::Drawable{
+class RenderTexture: public sf::Drawable{
 
   public:
 
-    SigridRenderTexture() = default;
-    SigridRenderTexture(const SigridRenderTexture&) = default;
-    SigridRenderTexture(SigridRenderTexture&&) = default;
-    SigridRenderTexture& operator=(const SigridRenderTexture&) = default;
-    SigridRenderTexture& operator=(SigridRenderTexture&&) = default;
+    RenderTexture() = default;
+    RenderTexture(const RenderTexture&) = default;
+    RenderTexture(RenderTexture&&) = default;
+    RenderTexture& operator=(const RenderTexture&) = default;
+    RenderTexture& operator=(RenderTexture&&) = default;
 
     void setBackgroundColor(const sf::Color& color);
     bool setSize(const sf::Vector2f& size);

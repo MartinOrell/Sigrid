@@ -14,7 +14,7 @@
 #include "sigrid/Tool/ToolStruct.h"
 #include "sigrid/Board/Board.h"
 
-#include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
+#include "sigrid/utilities/RenderTexture/RenderTexture.h"
 #include "sigrid/ToolPicker/ToolPickerContainer.h"
 
 namespace sigrid{
@@ -111,7 +111,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     ColorDisplay m_colorDisplay{ColorDisplay::Piece};
 
-    SigridRenderTexture m_texture;
+    sigrid::RenderTexture m_texture;
 
     Board m_board;
 

@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "sigrid/utilities/String/String.h"
-#include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
+#include "sigrid/utilities/RenderTexture/RenderTexture.h"
 #include "sigrid/utilities/Layout/LayoutGrid.h"
 #include "sigrid/Board/Board.h"
 #include "sigrid/Action/Action.h"
@@ -170,7 +170,7 @@ class WorkWindow: public sf::Drawable{
 
     typedef unsigned int LayoutItem;
 
-    SigridRenderTexture m_texture;
+    sigrid::RenderTexture m_texture;
     LayoutGrid m_layout;
 
     sigrid_list::VectorWithDisplayGrid<sigrid::Board> m_boards;

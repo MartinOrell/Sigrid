@@ -25,7 +25,7 @@
 
 #include "sigrid/Font/FontManager.h"
 
-#include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
+#include "sigrid/utilities/RenderTexture/RenderTexture.h"
 
 namespace sigrid{
 
@@ -205,7 +205,7 @@ class GraphicBoard: public sf::Drawable{
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    SigridRenderTexture m_texture;
+    sigrid::RenderTexture m_texture;
 
     float m_leftEdgeWidth = 0.f;
     float m_rightEdgeWidth = 0.f;

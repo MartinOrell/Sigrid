@@ -3,7 +3,7 @@ project(sigrid LANGUAGES CXX)
 
 set(SRC_FILES
     src/sigrid/main.cpp
-    src/sigrid/SigridRenderTexture/SigridRenderTexture.cpp
+    src/sigrid/utilities/RenderTexture/RenderTexture.cpp
     src/sigrid/utilities/lists/Vector.cpp
     src/sigrid/utilities/lists/Vector2D.cpp
     src/sigrid/utilities/lists/Map.cpp

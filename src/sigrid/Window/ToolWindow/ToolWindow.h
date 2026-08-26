@@ -14,7 +14,7 @@
 #include "sigrid/Action/Action.h"
 #include "sigrid/Board/Board.h"
 
-#include "sigrid/SigridRenderTexture/SigridRenderTexture.h"
+#include "sigrid/utilities/RenderTexture/RenderTexture.h"
 
 namespace sigrid{
 
@@ -66,7 +66,7 @@ class ToolWindow: public sf::Drawable{
 
     void redrawTexture();
 
-    SigridRenderTexture m_texture;
+    sigrid::RenderTexture m_texture;
 
     Board m_board;
 };
