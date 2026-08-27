@@ -143,7 +143,7 @@ sigrid::ToolPickerContainer sigrid::ToolPickerWindow::getContainer() const{
     return container;
 }
 
-void sigrid::ToolPickerWindow::createGraphic(const sf::Vector2f& size){
+void sigrid::ToolPickerWindow::createGraphic(const sigrid::Size_f& size){
 
     m_texture.setSize(size);
 
@@ -203,7 +203,7 @@ bool sigrid::ToolPickerWindow::isHidden() const{
     return m_texture.isHidden();
 }
 
-sf::Vector2f sigrid::ToolPickerWindow::getSize() const{
+sigrid::Size_f sigrid::ToolPickerWindow::getSize() const{
     return m_texture.getTextureSize();
 }
 

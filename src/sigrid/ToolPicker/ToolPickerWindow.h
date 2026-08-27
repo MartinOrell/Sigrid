@@ -46,7 +46,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     ToolPickerContainer getContainer() const;
 
-    void createGraphic(const sf::Vector2f& size);
+    void createGraphic(const sigrid::Size_f& size);
 
     void addSelectTool();
 
@@ -61,7 +61,7 @@ class ToolPickerWindow: public sf::Drawable{
     bool isVisible() const;
     bool isHidden() const;
 
-    sf::Vector2f getSize() const;
+    sigrid::Size_f getSize() const;
 
     int getNumColumns() const;
 

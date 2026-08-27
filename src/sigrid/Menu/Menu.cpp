@@ -209,7 +209,7 @@ std::optional<sigrid::MenuContainer> sigrid::Menu::getContainer() const{
     return menuContainer;
 }
 
-void sigrid::Menu::createGraphic(const sf::Vector2f& size){
+void sigrid::Menu::createGraphic(const sigrid::Size_f& size){
 
     if(size.x == 0.f){
         std::cerr << "Menu: Unable to create menu graphic with 0 width" << std::endl;
@@ -756,7 +756,7 @@ void sigrid::Menu::redrawTexture(){
         return;
     }
 
-    m_texture.setSize(sf::Vector2f{textureSizeX, textureSizeY});
+    m_texture.setSize(sigrid::Size_f{textureSizeX, textureSizeY});
 
     m_texture.clear();
 

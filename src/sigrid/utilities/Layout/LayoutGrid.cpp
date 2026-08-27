@@ -217,7 +217,7 @@ std::optional<sigrid::Position_f> sigrid::LayoutGrid::getCenterPosition(const in
     return sigrid::Position_f{px, py};
 }
 
-std::optional<sf::Vector2f> sigrid::LayoutGrid::getSize(const int& id) const{
+std::optional<sigrid::Size_f> sigrid::LayoutGrid::getSize(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -244,7 +244,7 @@ std::optional<sf::Vector2f> sigrid::LayoutGrid::getSize(const int& id) const{
     }
     const float height = height_o.value();
 
-    return sf::Vector2f{width, height};
+    return sigrid::Size_f{width, height};
 }
 
 std::optional<float> sigrid::LayoutGrid::getWidth(const int& fromX, const int& toX) const{

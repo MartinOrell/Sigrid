@@ -4,7 +4,7 @@ void sigrid::RenderTexture::setBackgroundColor(const sigrid::Color& color){
     m_backgroundColor = color;
 }
 
-bool sigrid::RenderTexture::setSize(const sf::Vector2f& size){
+bool sigrid::RenderTexture::setSize(const sigrid::Size_f& size){
 
     sf::Vector2u sizeU{(unsigned int)size.x, (unsigned int)size.y};
     return m_texture.resize(sizeU);
@@ -49,19 +49,19 @@ const float& sigrid::RenderTexture::getScale() const{
     return m_scale;
 }
 
-sf::Vector2f sigrid::RenderTexture::getTextureSize() const{
+sigrid::Size_f sigrid::RenderTexture::getTextureSize() const{
 
     if(!m_show){
         return {0.f, 0.f};
     }
 
     const auto size = m_texture.getSize();
-    return sf::Vector2f{(float)size.x, (float)size.y};
+    return sigrid::Size_f{(float)size.x, (float)size.y};
 }
 
-sf::Vector2f sigrid::RenderTexture::getDisplaySize() const{
+sigrid::Size_f sigrid::RenderTexture::getDisplaySize() const{
     
-    return m_scale*getTextureSize();
+    return getTextureSize()*m_scale;
 }
 
 sigrid::Image sigrid::RenderTexture::getImage() const{

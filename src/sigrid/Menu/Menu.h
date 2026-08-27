@@ -35,7 +35,7 @@ class Menu: public sf::Drawable{
     bool load(const MenuContainer& menuData);
     std::optional<MenuContainer> getContainer() const;
 
-    void createGraphic(const sf::Vector2f& size);
+    void createGraphic(const sigrid::Size_f& size);
 
     void setPosition(const sigrid::Position_f& position);
     bool contains(const sigrid::Position_f& point) const;

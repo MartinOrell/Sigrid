@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Image/Image.h"
 #include "sigrid/utilities/Color/Color.h"
@@ -23,7 +24,7 @@ class RenderTexture: public sf::Drawable{
     RenderTexture& operator=(RenderTexture&&) = default;
 
     void setBackgroundColor(const sigrid::Color& color);
-    bool setSize(const sf::Vector2f& size);
+    bool setSize(const sigrid::Size_f& size);
     void setPosition(const sigrid::Position_f& position);
     void setScale(const float& scale);
     void show();
@@ -34,8 +35,8 @@ class RenderTexture: public sf::Drawable{
     const float& getTopPosition() const;
     float getBottomPosition() const;
     const float& getScale() const;
-    sf::Vector2f getTextureSize() const;
-    sf::Vector2f getDisplaySize() const;
+    sigrid::Size_f getTextureSize() const;
+    sigrid::Size_f getDisplaySize() const;
     sigrid::Image getImage() const;
     sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 

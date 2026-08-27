@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
@@ -77,7 +78,7 @@ class GraphicBoard: public sf::Drawable{
 
     const sigrid::Position_f& getTopLeftPosition() const;
 
-    sf::Vector2f getDisplaySize() const;
+    sigrid::Size_f getDisplaySize() const;
     float getDisplayWidth() const;
     float getDisplayHeight() const;
 
@@ -172,12 +173,12 @@ class GraphicBoard: public sf::Drawable{
     void initTurnToken(const int& turnToMove);
 
     const sigrid::Color& getBackgroundColor() const;
-    sf::Vector2f getTextureSize() const;
+    sigrid::Size_f getTextureSize() const;
     const float& getScale() const;
 
     float calcTextureWidth() const;
     float calcTextureHeight() const;
-    sf::Vector2f calcTextureSize() const;
+    sigrid::Size_f calcTextureSize() const;
 
     void resizeTexture();
 

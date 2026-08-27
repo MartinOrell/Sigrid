@@ -172,7 +172,7 @@ const sigrid::Position_f& sigrid::GraphicBoard::getTopLeftPosition() const{
     return m_texture.getPosition();
 }
 
-sf::Vector2f sigrid::GraphicBoard::getDisplaySize() const{
+sigrid::Size_f sigrid::GraphicBoard::getDisplaySize() const{
     return m_texture.getDisplaySize();
 }
 
@@ -209,7 +209,7 @@ std::optional<sigrid_coord::Coord> sigrid::GraphicBoard::getTileCoord(const sigr
     const float& scale = m_texture.getScale();
     const sigrid::Position_f& position = m_texture.getPosition();
 
-    sf::Vector2f rect = m_texture.getTextureSize();
+    sigrid::Size_f rect = m_texture.getTextureSize();
     rect.x = rect.x - m_leftEdgeWidth - m_rightEdgeWidth;
     rect.x *= scale;
 
@@ -958,7 +958,7 @@ void sigrid::GraphicBoard::addBorder(){
     }
 
     sigrid::Position_f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
-    sf::Vector2f boardArea;
+    sigrid::Size_f boardArea;
     boardArea.x = m_tileLayer.getTileWidth()* m_tileLayer.getNumColumns();
     boardArea.y = m_tileLayer.getTileHeight()*m_tileLayer.getNumRows();
 
@@ -1171,7 +1171,7 @@ void sigrid::GraphicBoard::initBorder(const BoardDesignContainer& config){
     m_border.setColor(borderColor);
     if(config.border.isVisible){
 
-        sf::Vector2f boardArea;
+        sigrid::Size_f boardArea;
         boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();
         boardArea.y = m_tileLayer.getTileHeight() * m_tileLayer.getNumRows();
 
@@ -1275,7 +1275,7 @@ void sigrid::GraphicBoard::loadBoardState_turnToken(const BoardState& boardState
 
 void sigrid::GraphicBoard::updateBorder(){
 
-    sf::Vector2f boardArea;
+    sigrid::Size_f boardArea;
     boardArea.x = m_tileLayer.getTileWidth() * m_tileLayer.getNumColumns();
     boardArea.y = m_tileLayer.getTileHeight() * m_tileLayer.getNumRows();
     
@@ -1334,7 +1334,7 @@ void sigrid::GraphicBoard::initTurnToken(const int& turnToMove){
     m_turnToken.setTurnToMove(turnToMove);
 }
 
-sf::Vector2f sigrid::GraphicBoard::getTextureSize() const{
+sigrid::Size_f sigrid::GraphicBoard::getTextureSize() const{
     return m_texture.getTextureSize();
 }
 
@@ -1364,8 +1364,8 @@ float sigrid::GraphicBoard::calcTextureHeight() const{
     return boardHeight;
 }
 
-sf::Vector2f sigrid::GraphicBoard::calcTextureSize() const{
-    return sf::Vector2f{calcTextureWidth(), calcTextureHeight()};
+sigrid::Size_f sigrid::GraphicBoard::calcTextureSize() const{
+    return sigrid::Size_f{calcTextureWidth(), calcTextureHeight()};
 }
 
 const sigrid::Color& sigrid::GraphicBoard::getBackgroundColor() const{

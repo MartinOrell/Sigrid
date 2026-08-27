@@ -39,7 +39,7 @@ class ToolWindow: public sf::Drawable{
     bool load(const ToolWindowContainer& container);
     ToolWindowContainer getContainer() const;
 
-    void createGraphic(const sf::Vector2f& size);
+    void createGraphic(const sigrid::Size_f& size);
 
     virtual void setPosition(const sigrid::Position_f& position);
 

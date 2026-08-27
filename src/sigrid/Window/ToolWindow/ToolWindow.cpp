@@ -81,7 +81,7 @@ sigrid::ToolWindowContainer sigrid::ToolWindow::getContainer() const{
     return container;
 }
 
-void sigrid::ToolWindow::createGraphic(const sf::Vector2f& size){
+void sigrid::ToolWindow::createGraphic(const sigrid::Size_f& size){
 
     m_texture.setSize(size);
 

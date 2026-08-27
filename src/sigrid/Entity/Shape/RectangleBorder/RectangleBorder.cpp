@@ -77,7 +77,7 @@ void sigrid::RectangleBorder::setTopLeftPosition(const sigrid::Position_f& topLe
     }
 }
 
-void sigrid::RectangleBorder::setEnclosedArea(const sf::Vector2f& enclosedArea){
+void sigrid::RectangleBorder::setEnclosedArea(const sigrid::Size_f& enclosedArea){
     
     m_enclosedArea = enclosedArea;
 

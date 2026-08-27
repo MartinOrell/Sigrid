@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Board/GraphicBoard.h"
@@ -62,7 +63,7 @@ class Board: public sf::Drawable{
 
     const sigrid::Position_f& getTopLeftPosition() const;
 
-    sf::Vector2f getDisplaySize() const;
+    sigrid::Size_f getDisplaySize() const;
     float getDisplayWidth() const;
     float getDisplayHeight() const;
 

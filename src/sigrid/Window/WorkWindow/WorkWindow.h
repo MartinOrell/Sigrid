@@ -60,7 +60,7 @@ class WorkWindow: public sf::Drawable{
 
     sigrid_list::Vector<BoardContainer> getBoardContainers() const;
 
-    void createGraphic(const sf::Vector2f& size);
+    void createGraphic(const sigrid::Size_f& size);
 
     void loadFen(const sigrid::String& fen);
 

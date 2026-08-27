@@ -242,7 +242,7 @@ sigrid_list::Vector<sigrid::BoardContainer> sigrid::WorkWindow::getBoardContaine
     return boardContainers;
 }
 
-void sigrid::WorkWindow::createGraphic(const sf::Vector2f& size){
+void sigrid::WorkWindow::createGraphic(const sigrid::Size_f& size){
 
     int numBoards = m_boards.currentDisplaySize();
 

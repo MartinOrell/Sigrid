@@ -120,7 +120,7 @@ const sigrid::Position_f& sigrid::Board::getTopLeftPosition() const{
     return m_graphicBoard.getTopLeftPosition();
 }
 
-sf::Vector2f sigrid::Board::getDisplaySize() const{
+sigrid::Size_f sigrid::Board::getDisplaySize() const{
     return m_graphicBoard.getDisplaySize();
 }
 
