@@ -3,11 +3,11 @@
 #include "sigrid/utilities/lists/Map.h"
 
 #include <optional>
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -29,7 +29,7 @@
 
 // This class is only included by Map.cpp
 // Add more templates below to support more types
-template class sigrid_list::Map<sigrid::String, sf::Texture>;
+template class sigrid_list::Map<sigrid::String, sigrid::Texture>;
 template class sigrid_list::Map<sigrid::String, sf::Font>;
 template class sigrid_list::Map<sigrid::PieceIdentifier, sigrid::String>;
 template class sigrid_list::Map<sigrid_coord::CoordPair, sigrid::LogicArrow>;

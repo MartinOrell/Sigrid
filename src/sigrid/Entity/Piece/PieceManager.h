@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics/Texture.hpp>
-
+#include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/lists/Vector.h"
@@ -39,7 +38,7 @@ class PieceManager{
 
     sigrid_list::Vector<PieceColor> m_colors;
     sigrid_list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
-    sigrid_list::Vector<std::map<PieceIdentifier, sf::Texture>> m_pieceTextures;
+    sigrid_list::Vector<std::map<PieceIdentifier, sigrid::Texture>> m_pieceTextures;
 
     sf::Vector2f m_pieceSize{108.f,108.f};
         

@@ -10,8 +10,8 @@ void sigrid::Icon::setPosition(const sf::Vector2f& position){
     m_shape.setPosition(position);
 }
 
-void sigrid::Icon::setTexture(const sf::Texture* texturePtr){
-    m_shape.setTexture(texturePtr);
+void sigrid::Icon::setTexture(const sigrid::Texture* texturePtr){
+    m_shape.setTexture(&(texturePtr->getSfTexture()));
 }
 
 void sigrid::Icon::move(const sf::Vector2f& offset){

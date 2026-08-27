@@ -29,7 +29,7 @@ void sigrid::PieceManager::addPieceColor(const PieceColor& newColor){
     m_colors.push_back(newColor);
     std::map<PieceIdentifier, GraphicPiece> coloredPieces;
     m_graphicPieces.push_back(coloredPieces);
-    std::map<PieceIdentifier, sf::Texture> pieceColorTextures;
+    std::map<PieceIdentifier, sigrid::Texture> pieceColorTextures;
     m_pieceTextures.push_back(pieceColorTextures);
 }
 
@@ -110,7 +110,8 @@ std::optional<sigrid::GraphicPiece> sigrid::PieceManager::getGraphicPiece(const 
 
         newImage.modifyColor(color.lightModifier, color.darkModifier);
 
-        sf::Texture newTexture{newImage.getSfImage()};
+        sigrid::Texture newTexture;
+        newTexture.loadFromImage(newImage);
         auto pieceTexture_o = m_pieceTextures.at(colorId);
         if(pieceTexture_o == std::nullopt){
             return std::nullopt;

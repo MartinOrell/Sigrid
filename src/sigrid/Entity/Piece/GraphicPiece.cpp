@@ -14,18 +14,18 @@ void sigrid::GraphicPiece::setSize(const sf::Vector2f& size){
     sprite.setPosition({size.x/2.f, size.y/2.f});
 }
 
-void sigrid::GraphicPiece::setTexturePtr(const sf::Texture* const texturePtr){
+void sigrid::GraphicPiece::setTexturePtr(const sigrid::Texture* const texturePtr){
     
     m_texturePtr = texturePtr;
 
     if(m_sprite_o == std::nullopt){
-        m_sprite_o = sf::Sprite(*texturePtr);
+        m_sprite_o = sf::Sprite(texturePtr->getSfTexture());
         float scale = 0.8;
         auto& sprite = m_sprite_o.value();
         sprite.scale({scale,scale});
     }
     else{
-        m_sprite_o = sf::Sprite(*texturePtr);
+        m_sprite_o = sf::Sprite(texturePtr->getSfTexture());
     }
 
     auto& sprite = m_sprite_o.value();
@@ -75,11 +75,11 @@ void sigrid::GraphicPiece::resize(sf::Vector2f size){
     sprite.setScale({scaleX, scaleY});
 }
 
-const sf::Texture sigrid::GraphicPiece::getTexture() const{
+const sigrid::Texture sigrid::GraphicPiece::getTexture() const{
     return *m_texturePtr;
 }
 
-const sf::Texture* sigrid::GraphicPiece::getTexturePtr() const{
+const sigrid::Texture* sigrid::GraphicPiece::getTexturePtr() const{
     return m_texturePtr;
 }
 

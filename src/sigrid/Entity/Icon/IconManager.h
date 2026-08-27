@@ -2,8 +2,7 @@
 
 #include <optional>
 
-#include <SFML/Graphics/Texture.hpp>
-
+#include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Map.h"
 
@@ -19,11 +18,11 @@ class IconManager{
     IconManager& operator=(const IconManager&) = default;
     IconManager& operator=(IconManager&&) = default;
 
-    std::optional<sf::Texture*> getTexturePtr(const sigrid::String& filename);
+    std::optional<sigrid::Texture*> getTexturePtr(const sigrid::String& filename);
     
   private:
 
-    sigrid_list::Map<sigrid::String, sf::Texture> m_textures;
+    sigrid_list::Map<sigrid::String, sigrid::Texture> m_textures;
 };
 
 }  // namespace sigrid

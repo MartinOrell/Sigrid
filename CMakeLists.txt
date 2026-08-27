@@ -3,6 +3,7 @@ project(sigrid LANGUAGES CXX)
 
 set(SRC_FILES
     src/sigrid/main.cpp
+    src/sigrid/utilities/Texture/Texture.cpp
     src/sigrid/utilities/RenderTexture/RenderTexture.cpp
     src/sigrid/utilities/Color/Color.cpp
     src/sigrid/utilities/GraphicText/GraphicText.cpp

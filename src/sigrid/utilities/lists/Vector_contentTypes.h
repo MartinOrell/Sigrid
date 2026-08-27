@@ -2,8 +2,7 @@
 
 #include <map>
 
-#include <SFML/Graphics/Texture.hpp>
-
+#include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -42,7 +41,7 @@ template class sigrid_list::Vector<sigrid::PieceContainer>;
 template class sigrid_list::Vector<sigrid::PieceDataContainer>;
 template class sigrid_list::Vector<sigrid::PieceColor>;
 template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::GraphicPiece>>;
-template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sf::Texture>>;
+template class sigrid_list::Vector<std::map<sigrid::PieceIdentifier, sigrid::Texture>>;
 template class sigrid_list::Vector<sigrid::CircleDataContainer>;
 template class sigrid_list::Vector<sigrid::ArrowDataContainer>;
 template class sigrid_list::Vector<sigrid::LogicTile>;
