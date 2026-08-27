@@ -14,8 +14,13 @@
 
 bool sigrid::MainWindow::load(const sigrid_config::MainConfigContainer& config){
     
-    m_window.create(sf::VideoMode({(unsigned int)config.mainWindow.width, (unsigned int)config.mainWindow.height}), config.mainWindow.name.getStdString());
+    m_window.create(config.mainWindow.width, config.mainWindow.height);
+    m_window.setTitle(config.mainWindow.name);
     m_window.setFramerateLimit(60);
+    
+    sigrid::Color backgroundColor;
+    backgroundColor.setRGB(0x1e1e1e);
+    m_window.setBackgroundColor(backgroundColor);
 
     m_fontManagerPtr = std::make_unique<FontManager>();
 
@@ -150,7 +155,7 @@ bool sigrid::MainWindow::load(const sigrid_config::MainConfigContainer& config){
 
     sigrid::String title = m_workWindow->getName();
     if(title.length() > 0){
-        m_window.setTitle(title.getStdString());
+        m_window.setTitle(title);
     }
 
     m_menu = std::make_unique<sigrid::Menu>();
@@ -308,7 +313,7 @@ void sigrid::MainWindow::resize(const sf::Vector2i& size){
 
     sf::FloatRect visibleArea{{0,0},{(float)size.x, (float)size.y}};
 
-    m_window.setView((sf::View)(visibleArea));
+    m_window.setView(visibleArea);
     m_size = size;
     createGraphic();
 }
@@ -321,7 +326,7 @@ void sigrid::MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf
 
     if(m_workWindow && m_workWindow->contains(scaledPosition)){
         m_workWindow->mousePress(scaledPosition);
-        m_window.setTitle(m_workWindow->getName().getStdString());
+        m_window.setTitle(m_workWindow->getName());
     }
 }
 
@@ -351,7 +356,7 @@ void sigrid::MainWindow::mouseButtonRelease(const sf::Vector2i& position, const 
                     auto& action = action_o.value();
                     handleAction(action);
                 }
-                m_window.setTitle(m_workWindow->getName().getStdString());
+                m_window.setTitle(m_workWindow->getName());
             }
         }
     }
@@ -1060,7 +1065,7 @@ void sigrid::MainWindow::newBoard(){
 
     m_workWindow->newBoard();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 
 }
 
@@ -1073,7 +1078,7 @@ void sigrid::MainWindow::addBoardColumn(){
 
     m_workWindow->addBoardColumn();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::removeBoardColumn(){
@@ -1085,7 +1090,7 @@ void sigrid::MainWindow::removeBoardColumn(){
 
     m_workWindow->removeBoardColumn();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::addBoardRow(){
@@ -1097,7 +1102,7 @@ void sigrid::MainWindow::addBoardRow(){
 
     m_workWindow->addBoardRow();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::removeBoardRow(){
@@ -1109,7 +1114,7 @@ void sigrid::MainWindow::removeBoardRow(){
 
     m_workWindow->removeBoardRow();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::shiftBoardsLeft(){
@@ -1120,7 +1125,7 @@ void sigrid::MainWindow::shiftBoardsLeft(){
 
     m_workWindow->shiftBoardsLeft();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::shiftBoardsRight(){
@@ -1131,7 +1136,7 @@ void sigrid::MainWindow::shiftBoardsRight(){
 
     m_workWindow->shiftBoardsRight();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::gotoRightBoard(){
@@ -1142,7 +1147,7 @@ void sigrid::MainWindow::gotoRightBoard(){
 
     m_workWindow->gotoRightBoard();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::gotoLeftBoard(){
@@ -1153,7 +1158,7 @@ void sigrid::MainWindow::gotoLeftBoard(){
 
     m_workWindow->gotoLeftBoard();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::gotoUpBoard(){
@@ -1164,7 +1169,7 @@ void sigrid::MainWindow::gotoUpBoard(){
 
     m_workWindow->gotoUpBoard();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::gotoDownBoard(){
@@ -1175,7 +1180,7 @@ void sigrid::MainWindow::gotoDownBoard(){
 
     m_workWindow->gotoDownBoard();
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::saveAll(){
@@ -1218,7 +1223,7 @@ void sigrid::MainWindow::loadBoard(){
     createGraphic();
 
     sigrid::String title = m_workWindow->getName();
-    m_window.setTitle(title.getStdString());
+    m_window.setTitle(title);
 }
 
 void sigrid::MainWindow::saveSettings(){
@@ -1705,7 +1710,7 @@ void sigrid::MainWindow::removeTurnToken(){
 
 void sigrid::MainWindow::redraw(){
 
-    m_window.clear(m_backgroundColor);
+    m_window.clear();
     
     if(m_workWindow){
         m_workWindow->updateTexture();

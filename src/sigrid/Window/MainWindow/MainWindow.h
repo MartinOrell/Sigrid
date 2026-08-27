@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Mouse.hpp>
 
+#include "sigrid/utilities/RenderWindow/RenderWindow.h"
 #include "sigrid/Tool/Tool.h"
 #include "sigrid/Input/InputHandler.h"
 #include "sigrid/Input/Mouse/Mouse.h"
@@ -122,8 +122,7 @@ class MainWindow{
         TOOLPICKER,
     };
 
-    sf::RenderWindow m_window;
-    sf::Color m_backgroundColor{sf::Color(30,30,30)};
+    sigrid::RenderWindow m_window;
     sf::Vector2i m_size;
     sf::Vector2f m_scale{1.f,1.f};
     float m_piecePickerToBoardGap{10.f};
