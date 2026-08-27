@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/Board/GraphicBoard.h"
 #include "sigrid/Board/BoardState.h"
@@ -41,7 +42,7 @@ class Board: public sf::Drawable{
 
     void loadBoardState(const BoardStateContainer& boardStateData);
 
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
 
     void setPositionX(const float x);
 
@@ -59,7 +60,7 @@ class Board: public sf::Drawable{
 
     sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 
-    const sf::Vector2f& getTopLeftPosition() const;
+    const sigrid::Position_f& getTopLeftPosition() const;
 
     sf::Vector2f getDisplaySize() const;
     float getDisplayWidth() const;
@@ -71,7 +72,7 @@ class Board: public sf::Drawable{
 
     sigrid::String getImageFilename() const;
 
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
     sigrid_list::Vector<int> getRepeatTileColorIds() const; 
 
@@ -79,11 +80,11 @@ class Board: public sf::Drawable{
 
     bool isCoordinatesOutside() const;
 
-    bool isWithinTurnToken(const sf::Vector2f& point) const;
+    bool isWithinTurnToken(const sigrid::Position_f& point) const;
 
     bool isImageFilenameSet() const;
 
-    std::optional<sigrid_coord::Coord> getTileCoord(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getTileCoord(const sigrid::Position_f& point);
 
     std::optional<LogicTile> getTile(const sigrid_coord::Coord& coord);
 

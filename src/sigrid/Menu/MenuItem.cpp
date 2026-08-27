@@ -112,7 +112,7 @@ float sigrid::MenuItem::getPositionTop() const{
     return m_shape.getPosition().y;
 }
 
-bool sigrid::MenuItem::isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const{
+bool sigrid::MenuItem::isWithin(const sigrid::Position_f& point, const float& maxYPos, const float& minYPos) const{
 
     if(point.x < m_shape.getPosition().x){
         return false;

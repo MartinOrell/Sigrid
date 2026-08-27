@@ -190,7 +190,7 @@ void sigrid::ToolPickerWindow::addPieceTool(const sigrid::String& notation){
     m_pieceNotations.push_back(notation);
 }
 
-void sigrid::ToolPickerWindow::setPosition(const sf::Vector2f& position){
+void sigrid::ToolPickerWindow::setPosition(const sigrid::Position_f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
@@ -215,18 +215,18 @@ int sigrid::ToolPickerWindow::getNumRows() const{
     return m_rows;
 }
 
-bool sigrid::ToolPickerWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::ToolPickerWindow::contains(const sigrid::Position_f& point) const{
     return m_texture.contains(point);
 }
 
 
-std::optional<sigrid_action::Action> sigrid::ToolPickerWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& position){
+std::optional<sigrid_action::Action> sigrid::ToolPickerWindow::clicked(const sigrid::Tool& tool, const sigrid::Position_f& position){
 
     if(m_texture.isHidden()){
         return std::nullopt;
     }
 
-    sf::Vector2f point = position - m_texture.getPosition();
+    sigrid::Position_f point = position - m_texture.getPosition();
 
     auto coord_o = m_board.getTileCoord(point);
 

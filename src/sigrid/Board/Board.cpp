@@ -80,7 +80,7 @@ void sigrid::Board::loadBoardState(const sigrid::BoardStateContainer& boardState
     }
 }
 
-void sigrid::Board::setPosition(const sf::Vector2f& position){
+void sigrid::Board::setPosition(const sigrid::Position_f& position){
     m_graphicBoard.setPosition(position);
 }
 
@@ -116,7 +116,7 @@ sigrid::Image sigrid::Board::getImage(const int maxWidth, const int maxHeight) c
     return m_graphicBoard.getImage(maxWidth, maxHeight);
 }
 
-const sf::Vector2f& sigrid::Board::getTopLeftPosition() const{
+const sigrid::Position_f& sigrid::Board::getTopLeftPosition() const{
     return m_graphicBoard.getTopLeftPosition();
 }
 
@@ -170,7 +170,7 @@ sigrid::String sigrid::Board::getImageFilename() const{
     return m_imageFilename;
 }
 
-bool sigrid::Board::contains(const sf::Vector2f& point) const{
+bool sigrid::Board::contains(const sigrid::Position_f& point) const{
     return m_graphicBoard.contains(point);
 }
 
@@ -186,7 +186,7 @@ bool sigrid::Board::isCoordinatesOutside() const{
     return m_graphicBoard.isCoordinatesOutside();
 }
 
-bool sigrid::Board::isWithinTurnToken(const sf::Vector2f& point) const{
+bool sigrid::Board::isWithinTurnToken(const sigrid::Position_f& point) const{
     return m_graphicBoard.isWithinTurnToken(point);
 }
 
@@ -194,7 +194,7 @@ bool sigrid::Board::isImageFilenameSet() const{
     return m_imageFilename.length() > 0;
 }
 
-std::optional<sigrid_coord::Coord> sigrid::Board::getTileCoord(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> sigrid::Board::getTileCoord(const sigrid::Position_f& point){
     return m_graphicBoard.getTileCoord(point);
 }
 

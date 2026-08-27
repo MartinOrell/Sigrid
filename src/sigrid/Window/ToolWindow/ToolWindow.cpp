@@ -105,7 +105,7 @@ void sigrid::ToolWindow::createGraphic(const sf::Vector2f& size){
     redrawTexture();
 }
 
-void sigrid::ToolWindow::setPosition(const sf::Vector2f& position){
+void sigrid::ToolWindow::setPosition(const sigrid::Position_f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
@@ -118,7 +118,7 @@ bool sigrid::ToolWindow::isHidden() const{
     return m_texture.isHidden();
 }
 
-bool sigrid::ToolWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::ToolWindow::contains(const sigrid::Position_f& point) const{
     return m_texture.contains(point);
 }
 

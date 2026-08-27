@@ -56,7 +56,7 @@ class ToolPickerWindow: public sf::Drawable{
 
     void addPieceTool(const sigrid::String& notation);
 
-    virtual void setPosition(const sf::Vector2f& position);
+    virtual void setPosition(const sigrid::Position_f& position);
 
     bool isVisible() const;
     bool isHidden() const;
@@ -67,9 +67,9 @@ class ToolPickerWindow: public sf::Drawable{
 
     int getNumRows() const;
 
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
-    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& position);
+    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sigrid::Position_f& position);
 
     void setPieceColorTools(const sigrid::String& pieceNotation);
 

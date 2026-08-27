@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -62,7 +63,7 @@ class GraphicBoard: public sf::Drawable{
 
     sf::Vector2f getTileSize() const;
 
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
 
     void setPositionX(float x);
 
@@ -74,13 +75,13 @@ class GraphicBoard: public sf::Drawable{
 
     sigrid::Image getImage(const int maxWidth, const int maxHeight) const;
 
-    const sf::Vector2f& getTopLeftPosition() const;
+    const sigrid::Position_f& getTopLeftPosition() const;
 
     sf::Vector2f getDisplaySize() const;
     float getDisplayWidth() const;
     float getDisplayHeight() const;
 
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
     bool isLeftToRight() const;
 
@@ -88,9 +89,9 @@ class GraphicBoard: public sf::Drawable{
 
     bool isCoordinatesOutside() const;
 
-    bool isWithinTurnToken(const sf::Vector2f& point) const;
+    bool isWithinTurnToken(const sigrid::Position_f& point) const;
 
-    std::optional<sigrid_coord::Coord> getTileCoord(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getTileCoord(const sigrid::Position_f& point);
 
     void addEntity(const sigrid_coord::Coord& coord, const LogicEntity& logicEntity);
     void removeEntity(const sigrid_coord::Coord& coord);

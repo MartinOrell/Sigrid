@@ -139,13 +139,13 @@ sf::Vector2f sigrid::GraphicBoard::getTileSize() const{
     return m_tileLayer.getTileSize();
 }
 
-void sigrid::GraphicBoard::setPosition(const sf::Vector2f& position){
+void sigrid::GraphicBoard::setPosition(const sigrid::Position_f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
 void sigrid::GraphicBoard::setPositionX(float x){
-    sf::Vector2f position = m_texture.getPosition();
+    sigrid::Position_f position = m_texture.getPosition();
     position.x = x;
     m_texture.setPosition(position);
     m_texture.display();
@@ -168,7 +168,7 @@ sigrid::Image sigrid::GraphicBoard::getImage(const int maxWidth, const int maxHe
     return m_texture.getImage(maxWidth, maxHeight);
 }
 
-const sf::Vector2f& sigrid::GraphicBoard::getTopLeftPosition() const{
+const sigrid::Position_f& sigrid::GraphicBoard::getTopLeftPosition() const{
     return m_texture.getPosition();
 }
 
@@ -184,7 +184,7 @@ float sigrid::GraphicBoard::getDisplayHeight() const{
     return m_texture.getDisplaySize().y;
 }
 
-bool sigrid::GraphicBoard::contains(const sf::Vector2f& point) const{
+bool sigrid::GraphicBoard::contains(const sigrid::Position_f& point) const{
     return m_texture.contains(point);
 }
 
@@ -200,14 +200,14 @@ bool sigrid::GraphicBoard::isCoordinatesOutside() const{
     return m_labels.isLeftOutsideVisible();
 }
 
-bool sigrid::GraphicBoard::isWithinTurnToken(const sf::Vector2f& point) const{
+bool sigrid::GraphicBoard::isWithinTurnToken(const sigrid::Position_f& point) const{
     return m_turnToken.isWithin((point-m_texture.getPosition())/m_texture.getScale());
 }
 
-std::optional<sigrid_coord::Coord> sigrid::GraphicBoard::getTileCoord(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> sigrid::GraphicBoard::getTileCoord(const sigrid::Position_f& point){
 
     const float& scale = m_texture.getScale();
-    const sf::Vector2f& position = m_texture.getPosition();
+    const sigrid::Position_f& position = m_texture.getPosition();
 
     sf::Vector2f rect = m_texture.getTextureSize();
     rect.x = rect.x - m_leftEdgeWidth - m_rightEdgeWidth;
@@ -957,7 +957,7 @@ void sigrid::GraphicBoard::addBorder(){
         return;
     }
 
-    sf::Vector2f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
+    sigrid::Position_f topLeftPosition{m_leftEdgeWidth, m_topEdgeWidth};
     sf::Vector2f boardArea;
     boardArea.x = m_tileLayer.getTileWidth()* m_tileLayer.getNumColumns();
     boardArea.y = m_tileLayer.getTileHeight()*m_tileLayer.getNumRows();

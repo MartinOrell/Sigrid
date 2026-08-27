@@ -34,7 +34,7 @@ bool sigrid::TurnToken::isHidden() const{
     return !m_isVisible;
 }
 
-bool sigrid::TurnToken::isWithin(const sf::Vector2f& point) const{
+bool sigrid::TurnToken::isWithin(const sigrid::Position_f& point) const{
 
     if(!m_isVisible){
         return false;

@@ -41,12 +41,12 @@ class ToolWindow: public sf::Drawable{
 
     void createGraphic(const sf::Vector2f& size);
 
-    virtual void setPosition(const sf::Vector2f& position);
+    virtual void setPosition(const sigrid::Position_f& position);
 
     bool isVisible() const;
     bool isHidden() const;
 
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
     void setSetPieceTool(const LogicPiece& logicPiece);
 

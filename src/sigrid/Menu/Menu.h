@@ -37,14 +37,14 @@ class Menu: public sf::Drawable{
 
     void createGraphic(const sf::Vector2f& size);
 
-    void setPosition(const sf::Vector2f& position);
-    bool contains(const sf::Vector2f& point) const;
+    void setPosition(const sigrid::Position_f& position);
+    bool contains(const sigrid::Position_f& point) const;
 
     bool isPinned() const;
 
     bool isCollapsed() const;
 
-    std::optional<sigrid_action::Action> clicked(const sf::Vector2f& position);
+    std::optional<sigrid_action::Action> clicked(const sigrid::Position_f& position);
 
     void pinMenu();
 
@@ -87,7 +87,7 @@ class Menu: public sf::Drawable{
 
     float getTopPos();
     float getBottomPos();
-    std::optional<sigrid_coord::Coord> getMenuItemPosIndex(const sf::Vector2f& point);
+    std::optional<sigrid_coord::Coord> getMenuItemPosIndex(const sigrid::Position_f& point);
 
     void printItemKeys() const;
 

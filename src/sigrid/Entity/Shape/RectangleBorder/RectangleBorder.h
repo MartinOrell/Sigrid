@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
@@ -23,7 +24,7 @@ class RectangleBorder: public sf::Drawable{
 
     void setThickness(const float& thickness);
 
-    void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
+    void setTopLeftPosition(const sigrid::Position_f& topLeftPosition);
 
     void setEnclosedArea(const sf::Vector2f& enclosedArea);
 
@@ -50,7 +51,7 @@ class RectangleBorder: public sf::Drawable{
     bool m_isVisible = true;
     float m_thickness = 0.f;
 
-    sf::Vector2f m_topLeftPosition = {0.f,0.f};
+    sigrid::Position_f m_topLeftPosition = {0.f,0.f};
     sf::Vector2f m_enclosedArea = {0.f,0.f};
 
     sf::RectangleShape m_left;

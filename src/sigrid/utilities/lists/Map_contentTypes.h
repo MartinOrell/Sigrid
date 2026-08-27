@@ -7,6 +7,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
@@ -44,7 +45,7 @@ template class sigrid_list::Map<sigrid_coord::Coord, sigrid::LogicPiece>;
 template class sigrid_list::Map<sigrid_coord::Coord, sigrid::LogicCircle>;
 template class sigrid_list::Map<sigrid_coord::Coord, sigrid::LogicArrow>;
 template class sigrid_list::Map<sigrid_coord::Coord, sigrid::LogicIcon>;
-template class sigrid_list::Map<sf::Mouse::Button, std::optional<sf::Vector2f>>;
+template class sigrid_list::Map<sf::Mouse::Button, std::optional<sigrid::Position_f>>;
 template class sigrid_list::Map<sf::Mouse::Button, sigrid::Tool>;
 template class sigrid_list::Map<sf::Keyboard::Key, sigrid_action::Action>;
 template class sigrid_list::Map<int, sigrid_coord::CoordPair>;

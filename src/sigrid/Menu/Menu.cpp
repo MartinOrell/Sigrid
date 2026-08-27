@@ -236,12 +236,12 @@ void sigrid::Menu::createGraphic(const sf::Vector2f& size){
     redrawTexture();
 }
 
-void sigrid::Menu::setPosition(const sf::Vector2f& position){
+void sigrid::Menu::setPosition(const sigrid::Position_f& position){
     m_texture.setPosition(position);
     m_texture.display();
 }
 
-bool sigrid::Menu::contains(const sf::Vector2f& point) const{
+bool sigrid::Menu::contains(const sigrid::Position_f& point) const{
     return m_texture.contains(point);
 }
 
@@ -253,7 +253,7 @@ bool sigrid::Menu::isCollapsed() const{
     return !m_showItems;
 }
 
-std::optional<sigrid_action::Action> sigrid::Menu::clicked(const sf::Vector2f& position){
+std::optional<sigrid_action::Action> sigrid::Menu::clicked(const sigrid::Position_f& position){
 
     std::optional<sigrid_coord::Coord> itemId_o = getMenuItemPosIndex(position);
     if(itemId_o == std::nullopt){
@@ -827,7 +827,7 @@ float sigrid::Menu::getBottomPos(){
     return m_texture.getBottomPosition();
 }
 
-std::optional<sigrid_coord::Coord> sigrid::Menu::getMenuItemPosIndex(const sf::Vector2f& point){
+std::optional<sigrid_coord::Coord> sigrid::Menu::getMenuItemPosIndex(const sigrid::Position_f& point){
     
     if(!m_isPinned && m_superHeader.isWithin(point, getTopPos(), getBottomPos())){
         sigrid_coord::Coord id{-1,0};

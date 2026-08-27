@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/Entity/TurnToken/TurnTokenContainer.h"
 #include "sigrid/utilities/Color/Color.h"
 
@@ -35,7 +36,7 @@ class TurnToken: public sf::Drawable{
     bool isVisible() const;
     bool isHidden() const;
 
-    bool isWithin(const sf::Vector2f& point) const;
+    bool isWithin(const sigrid::Position_f& point) const;
 
     float getRadius() const;
 

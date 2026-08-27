@@ -52,12 +52,12 @@ void sigrid::RectangleBorder::setThickness(const float& thickness){
     }
 }
 
-void sigrid::RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::RectangleBorder::setTopLeftPosition(const sigrid::Position_f& topLeftPosition){
 
     m_topLeftPosition = topLeftPosition;
 
     //Left
-    m_left.setPosition(topLeftPosition);
+    m_left.setPosition(topLeftPosition.getSfPosition());
 
     //Right
     {
@@ -67,7 +67,7 @@ void sigrid::RectangleBorder::setTopLeftPosition(const sf::Vector2f& topLeftPosi
     }
 
     //Top
-    m_top.setPosition(m_topLeftPosition);
+    m_top.setPosition(m_topLeftPosition.getSfPosition());
 
     //Bottom
     {

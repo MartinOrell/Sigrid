@@ -1,6 +1,6 @@
 #include "sigrid/Input/Mouse/Mouse.h"
 
-const std::optional<std::reference_wrapper<const sf::Vector2f>> sigrid::Mouse::getPressPosition(const sf::Mouse::Button& button) const{
+const std::optional<std::reference_wrapper<const sigrid::Position_f>> sigrid::Mouse::getPressPosition(const sf::Mouse::Button& button) const{
     
     auto position_o = m_pressedPositions.at(button);
 
@@ -14,7 +14,7 @@ bool sigrid::Mouse::isPressed(const sf::Mouse::Button& button) const{
     return m_pressedPositions.at(button) != std::nullopt;
 }
 
-void sigrid::Mouse::press(const sf::Mouse::Button& button, const sf::Vector2f& pressPosition){
+void sigrid::Mouse::press(const sf::Mouse::Button& button, const sigrid::Position_f& pressPosition){
  
     auto mappedPosition_o = m_pressedPositions.at(button);
 

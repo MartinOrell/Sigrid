@@ -10,7 +10,7 @@ bool sigrid::RenderTexture::setSize(const sf::Vector2f& size){
     return m_texture.resize(sizeU);
 }
 
-void sigrid::RenderTexture::setPosition(const sf::Vector2f& position){
+void sigrid::RenderTexture::setPosition(const sigrid::Position_f& position){
     m_position = position;
 }
 
@@ -30,7 +30,7 @@ const sigrid::Color& sigrid::RenderTexture::getBackgroundColor() const{
     return m_backgroundColor;
 }
 
-const sf::Vector2f& sigrid::RenderTexture::getPosition() const{
+const sigrid::Position_f& sigrid::RenderTexture::getPosition() const{
     return m_position;
 }
 
@@ -126,16 +126,16 @@ bool sigrid::RenderTexture::isHidden() const{
     return !m_show;
 }
 
-bool sigrid::RenderTexture::contains(const sf::Vector2f& point) const{
+bool sigrid::RenderTexture::contains(const sigrid::Position_f& point) const{
 
     if(!m_show){
         return false;
     }
 
     sf::Sprite sprite(m_texture.getTexture());
-    sprite.setPosition(m_position/m_scale);
+    sprite.setPosition(m_position.getSfPosition()/m_scale);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point/m_scale);
+    return rect.contains(point.getSfPosition()/m_scale);
 }
 
 void sigrid::RenderTexture::clear(){
@@ -150,7 +150,7 @@ void sigrid::RenderTexture::display(){
 
     m_sprite_o = sf::Sprite{m_texture.getTexture()};
     auto& sprite = m_sprite_o.value();
-    sprite.setPosition(m_position);
+    sprite.setPosition(m_position.getSfPosition());
     sprite.move({0.f, m_scale*(float)m_texture.getTexture().getSize().y});
     sprite.setScale({m_scale, -m_scale});
 }

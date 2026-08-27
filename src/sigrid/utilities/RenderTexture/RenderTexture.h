@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Image/Image.h"
 #include "sigrid/utilities/Color/Color.h"
 
@@ -23,13 +24,13 @@ class RenderTexture: public sf::Drawable{
 
     void setBackgroundColor(const sigrid::Color& color);
     bool setSize(const sf::Vector2f& size);
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
     void setScale(const float& scale);
     void show();
     void hide();
 
     const sigrid::Color& getBackgroundColor() const;
-    const sf::Vector2f& getPosition() const;
+    const sigrid::Position_f& getPosition() const;
     const float& getTopPosition() const;
     float getBottomPosition() const;
     const float& getScale() const;
@@ -41,7 +42,7 @@ class RenderTexture: public sf::Drawable{
     bool isInitialized() const;
     bool isVisible() const;
     bool isHidden() const;
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
     void clear();
     void draw(const sf::Drawable& drawable);
@@ -54,7 +55,7 @@ class RenderTexture: public sf::Drawable{
     sf::RenderTexture m_texture;
     std::optional<sf::Sprite> m_sprite_o = std::nullopt;
     sigrid::Color m_backgroundColor;
-    sf::Vector2f m_position;
+    sigrid::Position_f m_position;
     float m_scale = 1.f;
     bool m_show = true;
 

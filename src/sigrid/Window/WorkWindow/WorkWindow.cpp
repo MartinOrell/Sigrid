@@ -313,7 +313,7 @@ void sigrid::WorkWindow::createGraphic(const sf::Vector2f& size){
             std::cerr << "WorkWindow: createGraphic failed, failed getting boardLayoutPosition" << std::endl;
             return;
         }
-        sf::Vector2f boardTopLeftPosition = boardTopLeftPosition_o.value();
+        sigrid::Position_f boardTopLeftPosition = boardTopLeftPosition_o.value();
 
         auto board_o = m_boards.atDisplay(i);
         if(board_o == std::nullopt){
@@ -401,7 +401,7 @@ sigrid::String sigrid::WorkWindow::getFen() const{
     return board.getFen();
 }
 
-void sigrid::WorkWindow::setPosition(const sf::Vector2f& position){
+void sigrid::WorkWindow::setPosition(const sigrid::Position_f& position){
     m_texture.setPosition(position);
 }
 
@@ -419,7 +419,7 @@ int sigrid::WorkWindow::getNumColumns() const{
     return board.getNumColumns();
 }
 
-bool sigrid::WorkWindow::contains(const sf::Vector2f& point) const{
+bool sigrid::WorkWindow::contains(const sigrid::Position_f& point) const{
     return m_texture.contains(point);
 }
 
@@ -434,7 +434,7 @@ bool sigrid::WorkWindow::isCoordinatesOutside() const{
     return board.isCoordinatesOutside();
 }
 
-void sigrid::WorkWindow::mousePress(const sf::Vector2f& windowPosition){
+void sigrid::WorkWindow::mousePress(const sigrid::Position_f& windowPosition){
 
     auto activeBoard_o = m_boards.atSelection();
 
@@ -442,7 +442,7 @@ void sigrid::WorkWindow::mousePress(const sf::Vector2f& windowPosition){
         activeBoard_o.value().get().removeDragArrow();
     }
 
-    sf::Vector2f position = windowPosition - m_texture.getPosition();
+    sigrid::Position_f position = windowPosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
         
@@ -466,7 +466,7 @@ void sigrid::WorkWindow::mousePress(const sf::Vector2f& windowPosition){
     }
 }
 
-std::optional<sigrid_action::Action> sigrid::WorkWindow::clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition){
+std::optional<sigrid_action::Action> sigrid::WorkWindow::clicked(const sigrid::Tool& tool, const sigrid::Position_f& pressPosition, const sigrid::Position_f& releasePosition){
     
     auto activeBoard_o = m_boards.atSelection();
 
@@ -474,8 +474,8 @@ std::optional<sigrid_action::Action> sigrid::WorkWindow::clicked(const sigrid::T
         activeBoard_o.value().get().removeDragArrow();
     }
 
-    sf::Vector2f from = pressPosition - m_texture.getPosition();
-    sf::Vector2f to = releasePosition - m_texture.getPosition();
+    sigrid::Position_f from = pressPosition - m_texture.getPosition();
+    sigrid::Position_f to = releasePosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
         
@@ -555,10 +555,10 @@ std::optional<sigrid_action::Action> sigrid::WorkWindow::clicked(const sigrid::T
     return std::nullopt;
 }
 
-void sigrid::WorkWindow::dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition){
+void sigrid::WorkWindow::dragMouse(const Tool& tool, const sigrid::Position_f& pressPosition, const sigrid::Position_f& currentPosition){
     
-    sf::Vector2f from = pressPosition - m_texture.getPosition();
-    sf::Vector2f to = currentPosition - m_texture.getPosition();
+    sigrid::Position_f from = pressPosition - m_texture.getPosition();
+    sigrid::Position_f to = currentPosition - m_texture.getPosition();
 
     for(int displayIndex = 0; displayIndex < m_boards.currentDisplaySize(); displayIndex++){
         
@@ -1350,8 +1350,9 @@ void sigrid::WorkWindow::updateSelectionHighlight(){
     auto& board = board_o.value().get();
 
     const float& thickness = m_boardSelectHighlight.getThickness();
-    sf::Vector2f position = board.getTopLeftPosition();
-    position -= sf::Vector2f{thickness, thickness};
+    sigrid::Position_f position = board.getTopLeftPosition();
+    position.x -= thickness;
+    position.y -= thickness;
     m_boardSelectHighlight.setTopLeftPosition(position);
     m_boardSelectHighlight.setEnclosedArea(board.getDisplaySize());
     m_boardSelectHighlight.show();

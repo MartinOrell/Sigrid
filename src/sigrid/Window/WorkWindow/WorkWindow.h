@@ -70,17 +70,17 @@ class WorkWindow: public sf::Drawable{
 
     sigrid::String getFen() const;
     
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
 
     int getNumColumns() const;
 
-    bool contains(const sf::Vector2f& point) const;
+    bool contains(const sigrid::Position_f& point) const;
 
     bool isCoordinatesOutside() const;
 
-    void mousePress(const sf::Vector2f& position);
-    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& releasePosition);
-    void dragMouse(const Tool& tool, const sf::Vector2f& pressPosition, const sf::Vector2f& currentPosition);
+    void mousePress(const sigrid::Position_f& position);
+    std::optional<sigrid_action::Action> clicked(const sigrid::Tool& tool, const sigrid::Position_f& pressPosition, const sigrid::Position_f& releasePosition);
+    void dragMouse(const Tool& tool, const sigrid::Position_f& pressPosition, const sigrid::Position_f& currentPosition);
 
     void reset();
 

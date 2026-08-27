@@ -3,6 +3,7 @@ project(sigrid LANGUAGES CXX)
 
 set(SRC_FILES
     src/sigrid/main.cpp
+    src/sigrid/utilities/Position/Position_f.cpp
     src/sigrid/utilities/Texture/Texture.cpp
     src/sigrid/utilities/RenderWindow/RenderWindow.cpp
     src/sigrid/utilities/RenderTexture/RenderTexture.cpp

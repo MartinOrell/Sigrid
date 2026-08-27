@@ -3,6 +3,7 @@
 #include <string>
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/Menu/MenuItemContainer.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/GraphicText/GraphicText.h"
@@ -36,7 +37,7 @@ class MenuItem: public sf::Drawable{
     float getPositionLeft() const;
     float getPositionRight() const;
     float getPositionTop() const;
-    bool isWithin(const sf::Vector2f& point, const float& maxYPos, const float& minYPos) const;
+    bool isWithin(const sigrid::Position_f& point, const float& maxYPos, const float& minYPos) const;
     sigrid_action::Action getAction() const;
     sigrid::String getName() const;
     void addToggle(const sigrid::String& text, const sigrid_action::Action&);

@@ -146,7 +146,7 @@ std::optional<float> sigrid::LayoutGrid::getPy(const int& y) const{
     return yCoord_o.value().get();
 }
 
-std::optional<sf::Vector2f> sigrid::LayoutGrid::getTopLeftPosition(const int& id) const{
+std::optional<sigrid::Position_f> sigrid::LayoutGrid::getTopLeftPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -170,10 +170,10 @@ std::optional<sf::Vector2f> sigrid::LayoutGrid::getTopLeftPosition(const int& id
     const float& fromPx = fromPx_o.value().get();
     const float& fromPy = fromPy_o.value().get();
 
-    return sf::Vector2f{fromPx, fromPy};
+    return sigrid::Position_f{fromPx, fromPy};
 }
 
-std::optional<sf::Vector2f> sigrid::LayoutGrid::getCenterPosition(const int& id) const{
+std::optional<sigrid::Position_f> sigrid::LayoutGrid::getCenterPosition(const int& id) const{
 
     auto object_o = m_objects.at(id);
 
@@ -214,7 +214,7 @@ std::optional<sf::Vector2f> sigrid::LayoutGrid::getCenterPosition(const int& id)
     float px = fromPx + (toPx - fromPx)/2.f;
     float py = fromPy + (toPy - fromPy)/2.f;
 
-    return sf::Vector2f{px, py};
+    return sigrid::Position_f{px, py};
 }
 
 std::optional<sf::Vector2f> sigrid::LayoutGrid::getSize(const int& id) const{

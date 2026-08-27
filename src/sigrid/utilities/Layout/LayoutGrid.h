@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -35,8 +36,8 @@ class LayoutGrid{
     std::optional<float> getPx(const int& x) const;
     std::optional<float> getPy(const int& y) const;
 
-    std::optional<sf::Vector2f> getTopLeftPosition(const int& id) const;
-    std::optional<sf::Vector2f> getCenterPosition(const int& id) const;
+    std::optional<sigrid::Position_f> getTopLeftPosition(const int& id) const;
+    std::optional<sigrid::Position_f> getCenterPosition(const int& id) const;
     std::optional<sf::Vector2f> getSize(const int& id) const;
 
     std::optional<float> getWidth(const int& fromX, const int& toX) const;
