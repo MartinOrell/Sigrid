@@ -5,6 +5,7 @@
 
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 #include "sigrid/Entity/Shape/RectangleBorder/RectangleBorderContainer.h"
@@ -43,7 +44,7 @@ class RectangleBorder: public sf::Drawable{
     void addWidth(const float& addedWidth);
     void addHeight(const float& addedHeight);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

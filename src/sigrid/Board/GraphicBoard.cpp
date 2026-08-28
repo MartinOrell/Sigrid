@@ -1436,9 +1436,9 @@ void sigrid::GraphicBoard::updateLeftEdgeWidth(){
     float moveX = newEdgeWidth - m_leftEdgeWidth;
     m_leftEdgeWidth = newEdgeWidth;
 
-    moveTiles({moveX, 0.f});
-    m_border.move({moveX, 0.f});
-    moveTurnToken({moveX, 0.f});
+    moveTiles(sigrid::Offset_f{moveX, 0.f});
+    m_border.move(sigrid::Offset_f{moveX, 0.f});
+    moveTurnToken(sigrid::Offset_f{moveX, 0.f});
 
     if(m_labels.isLeftOutsideVisible()){
         m_labels.moveLeftOutsideLabels({-moveX/2.f, 0.f});
@@ -1528,9 +1528,9 @@ void sigrid::GraphicBoard::updateTopEdgeWidth(){
     m_topEdgeWidth = newEdgeWidth;
     
 
-    moveTiles({0.f, moveY});
-    m_border.move({0.f, moveY});
-    moveTurnToken({0.f, moveY});
+    moveTiles(sigrid::Offset_f{0.f, moveY});
+    m_border.move(sigrid::Offset_f{0.f, moveY});
+    moveTurnToken(sigrid::Offset_f{0.f, moveY});
 
     if(m_texture.isInitialized()){
         resizeTexture();

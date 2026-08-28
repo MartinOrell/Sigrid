@@ -158,15 +158,15 @@ void sigrid::RectangleBorder::addHeight(const float& addedHeight){
     m_bottom.move({0.f, addedHeight});
 }
 
-void sigrid::RectangleBorder::move(const sf::Vector2f& offset){
+void sigrid::RectangleBorder::move(const sigrid::Offset_f& offset){
 
     m_topLeftPosition.x += offset.x;
     m_topLeftPosition.y += offset.y;
 
-    m_left.move(offset);
-    m_right.move(offset);
-    m_top.move(offset);
-    m_bottom.move(offset);
+    m_left.move(offset.getSfVector());
+    m_right.move(offset.getSfVector());
+    m_top.move(offset.getSfVector());
+    m_bottom.move(offset.getSfVector());
 }
 
 void sigrid::RectangleBorder::draw(sf::RenderTarget& target, sf::RenderStates states) const{
