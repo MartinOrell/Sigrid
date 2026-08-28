@@ -91,7 +91,8 @@ void sigrid::GraphicArrow::updateShape(){
     m_head.setPointCount(3);
     m_head.setOrigin({m_headSize, m_headSize});
 
-    sf::Vector2f fromPosition = m_line.getPosition();
+    sigrid::Position_f fromPosition;
+    fromPosition.set(m_line.getPosition());
 
     float x = m_toPosition.x - fromPosition.x;
     float y = m_toPosition.y - fromPosition.y;
@@ -124,11 +125,11 @@ void sigrid::GraphicArrow::updateShape(){
     m_line.setRotation(sf::radians(rotation));
     m_head.setRotation(sf::radians(3.14f/2.f + rotation));
     
-    sf::Vector2f headPosition;
+    sigrid::Position_f headPosition;
     headPosition.x = fromPosition.x + (cos(rotation)) * (length - m_headSize);
     headPosition.y = fromPosition.y + (sin(rotation)) * (length - m_headSize);
 
-    m_head.setPosition(headPosition);
+    m_head.setPosition(headPosition.getSfVector());
 }
 
 void sigrid::GraphicArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
