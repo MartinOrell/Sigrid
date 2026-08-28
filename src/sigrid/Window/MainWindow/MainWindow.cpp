@@ -320,19 +320,19 @@ void sigrid::MainWindow::resize(const sf::Vector2i& size){
 
 void sigrid::MainWindow::mouseButtonPress(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
-    sigrid::Position_f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
+    sigrid::Position_f position_f{(float)position.x, (float)position.y};
 
-    m_mouse.press(button, scaledPosition);
+    m_mouse.press(button, position_f);
 
-    if(m_workWindow && m_workWindow->contains(scaledPosition)){
-        m_workWindow->mousePress(scaledPosition);
+    if(m_workWindow && m_workWindow->contains(position_f)){
+        m_workWindow->mousePress(position_f);
         m_window.setTitle(m_workWindow->getName());
     }
 }
 
 void sigrid::MainWindow::mouseButtonRelease(const sf::Vector2i& position, const sf::Mouse::Button& button){
 
-    sigrid::Position_f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
+    sigrid::Position_f scaledPosition{(float)position.x, (float)position.y};
 
     if(m_menu && m_menu->contains(scaledPosition)){
         auto action_o = m_menu->clicked(scaledPosition);
@@ -447,9 +447,9 @@ void sigrid::MainWindow::textEnter(const char32_t& unicode){
 
 void sigrid::MainWindow::mouseMove(const sf::Vector2i& position){
 
-    sigrid::Position_f scaledPosition{(m_scale.x*(float)position.x), (m_scale.y*(float)position.y)};
+    sigrid::Position_f position_f{(float)position.x, (float)position.y};
 
-    if(m_workWindow && m_workWindow->contains(scaledPosition)){
+    if(m_workWindow && m_workWindow->contains(position_f)){
         sf::Mouse::Button buttons[5] = {sf::Mouse::Button::Left, sf::Mouse::Button::Right, sf::Mouse::Button::Middle, sf::Mouse::Button::Extra1, sf::Mouse::Button::Extra2};
         for(int i = 0; i < 5; i++){
 
@@ -463,7 +463,7 @@ void sigrid::MainWindow::mouseMove(const sf::Vector2i& position){
                 auto pressPosition_o = m_mouse.getPressPosition(buttons[i]);
                 if(pressPosition_o != std::nullopt){
                     auto& pressPosition = pressPosition_o.value().get();
-                    m_workWindow->dragMouse(*usedToolPtr, pressPosition, scaledPosition);
+                    m_workWindow->dragMouse(*usedToolPtr, pressPosition, position_f);
                 }
             }
         }

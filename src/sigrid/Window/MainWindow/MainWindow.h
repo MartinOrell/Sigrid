@@ -124,7 +124,6 @@ class MainWindow{
 
     sigrid::RenderWindow m_window;
     sf::Vector2i m_size;
-    sf::Vector2f m_scale{1.f,1.f};
     float m_piecePickerToBoardGap{10.f};
 
     LayoutGrid m_layout;
