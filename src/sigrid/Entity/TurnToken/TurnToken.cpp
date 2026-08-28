@@ -16,9 +16,9 @@ void sigrid::TurnToken::setRadius(const float& radius){
     m_shape.setOrigin({radius, radius});
 }
 
-void sigrid::TurnToken::setCenterPosition(const sf::Vector2f& centerPosition){
+void sigrid::TurnToken::setCenterPosition(const sigrid::Position_f& centerPosition){
 
-    m_shape.setPosition(centerPosition);
+    m_shape.setPosition(centerPosition.getSfVector());
 }
 
 void sigrid::TurnToken::setTurnToMove(const int& turnToMove){
@@ -48,7 +48,7 @@ bool sigrid::TurnToken::isWithin(const sigrid::Position_f& point) const{
     float y = point.y;
 
     float radius = m_shape.getRadius();
-    sf::Vector2f center = getCenterPosition();
+    sigrid::Position_f center = getCenterPosition();
 
     return (x-center.x)*(x-center.x)+(y-center.y)*(y-center.y) < radius*radius;
 }
@@ -57,8 +57,11 @@ float sigrid::TurnToken::getRadius() const{
     return m_shape.getRadius();
 }
 
-sf::Vector2f sigrid::TurnToken::getCenterPosition() const{
-    return m_shape.getPosition();
+sigrid::Position_f sigrid::TurnToken::getCenterPosition() const{
+
+    sigrid::Position_f position;
+    position.set(m_shape.getPosition());
+    return position;
 }
 
 void sigrid::TurnToken::show(){

@@ -30,7 +30,7 @@ class TurnToken: public sf::Drawable{
 
     void setRadius(const float& radius);
 
-    void setCenterPosition(const sf::Vector2f& centerPosition);
+    void setCenterPosition(const sigrid::Position_f& centerPosition);
 
     void setTurnToMove(const int& turnToMove);
 
@@ -41,7 +41,7 @@ class TurnToken: public sf::Drawable{
 
     float getRadius() const;
 
-    sf::Vector2f getCenterPosition() const;
+    sigrid::Position_f getCenterPosition() const;
 
     void show();
 

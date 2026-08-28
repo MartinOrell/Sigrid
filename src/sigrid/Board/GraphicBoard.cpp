@@ -1499,8 +1499,8 @@ void sigrid::GraphicBoard::updateRightEdgeWidth(){
         float y = m_topEdgeWidth;
         y += m_tileLayer.getTileHeight()/2.f;
 
-        sf::Vector2f oldPosition = m_turnToken.getCenterPosition();
-        sf::Vector2f newPosition{x,y};
+        sigrid::Position_f oldPosition = m_turnToken.getCenterPosition();
+        sigrid::Position_f newPosition{x,y};
         if(oldPosition != newPosition){
             m_turnToken.setCenterPosition({x,y});
         }
