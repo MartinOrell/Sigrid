@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 
@@ -25,7 +26,7 @@ class Icon: public sf::Drawable{
 
     void setTexture(const sigrid::Texture* texturePtr);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

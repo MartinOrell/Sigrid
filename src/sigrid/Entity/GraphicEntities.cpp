@@ -300,7 +300,7 @@ template <typename T> void moveEntitiesRight_h(T& list, const float& tileWidth, 
             auto entity = entity_o.value().get();
 
             if(isLeftToRight){
-                entity.move({tileWidth, 0.f});
+                entity.move(sigrid::Offset_f{tileWidth, 0.f});
             }
             list.insert({x+1, y}, entity);
             list.erase({x,y});
@@ -346,7 +346,7 @@ template<typename T> void moveEntitiesLeft_h(T& list, const float& tileWidth, co
             }
             auto entity = entity_o.value().get();
             if(isLeftToRight){
-                entity.move({-tileWidth, 0.f});
+                entity.move(sigrid::Offset_f{-tileWidth, 0.f});
             }
             list.insert({x-1,y}, entity);
             list.erase({x,y});
@@ -392,7 +392,7 @@ template <typename T> void moveEntitiesUp_h(T& list, const float& tileHeight, co
             }
             auto entity = entity_o.value().get();
             if(isTopToBottom){
-                entity.move({0.f, -tileHeight});
+                entity.move(sigrid::Offset_f{0.f, -tileHeight});
             }
             list.insert({x,y-1}, entity);
             list.erase({x,y});
@@ -437,7 +437,7 @@ template <typename T> void moveEntitiesDown_h(T& list, const float& tileHeight, 
             }
             auto entity = entity_o.value().get();
             if(isTopToBottom){
-                entity.move({0.f, tileHeight});
+                entity.move(sigrid::Offset_f{0.f, tileHeight});
             }
             list.insert({x, y+1}, entity);
             list.erase({x,y});

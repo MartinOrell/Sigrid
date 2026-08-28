@@ -14,8 +14,8 @@ void sigrid::Icon::setTexture(const sigrid::Texture* texturePtr){
     m_shape.setTexture(&(texturePtr->getSfTexture()));
 }
 
-void sigrid::Icon::move(const sf::Vector2f& offset){
-    m_shape.move(offset);
+void sigrid::Icon::move(const sigrid::Offset_f& offset){
+    m_shape.move(offset.getSfVector());
 }
 
 void sigrid::Icon::draw(sf::RenderTarget& target, sf::RenderStates states) const{
