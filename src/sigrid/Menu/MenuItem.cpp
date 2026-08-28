@@ -73,12 +73,12 @@ void sigrid::MenuItem::setFont(const sf::Font& font){
     m_text.setFont(font);
 }
 
-void sigrid::MenuItem::setPosition(const sf::Vector2f& position){
+void sigrid::MenuItem::setPosition(const sigrid::Position_f& position){
 
-    m_shape.setPosition(position);
+    m_shape.setPosition(position.getSfVector());
 
     if(m_text.isInitialized()){
-        m_text.setPosition({position.x + m_textOffset.x, position.y + m_textOffset.y});
+        m_text.setPosition(position + m_textOffset);
     }
 }
 
