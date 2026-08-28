@@ -4,6 +4,7 @@
 
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -202,8 +203,8 @@ class GraphicBoard: public sf::Drawable{
     void addBottomOutsideLabel_h(const int& column);
     void addBottomOutsideLabels_h();
 
-    void moveTiles(const sf::Vector2f& offset);
-    void moveTurnToken(const sf::Vector2f& offset);
+    void moveTiles(const sigrid::Offset_f& offset);
+    void moveTurnToken(const sigrid::Offset_f& offset);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

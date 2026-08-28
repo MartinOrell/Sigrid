@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 
@@ -29,7 +30,7 @@ class GraphicPiece: public sf::Drawable{
     const sigrid::Texture getTexture() const;
     const sigrid::Texture* getTexturePtr() const;
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

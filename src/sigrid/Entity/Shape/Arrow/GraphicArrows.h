@@ -3,6 +3,7 @@
 #include <optional>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/lists/OrderedMap.h"
 
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -50,7 +51,7 @@ class GraphicArrows: public sf::Drawable{
     void moveArrowsUp(const float& tileHeight, const bool& isTopToBottom);
     void moveArrowsDown(const float& tileHeight, const bool& isTopToBottom);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

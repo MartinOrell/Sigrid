@@ -222,7 +222,7 @@ void sigrid::GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeat
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{m_tileSize.x, 0.f});
+                tile.move(sigrid::Offset_f{m_tileSize.x, 0.f});
             }
         }
     }
@@ -290,7 +290,7 @@ void sigrid::GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatT
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{m_tileSize.x, 0.f});
+                tile.move(sigrid::Offset_f{m_tileSize.x, 0.f});
             }
         }
     }
@@ -308,7 +308,7 @@ void sigrid::GraphicTiles::removeRightColumn(){
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{-m_tileSize.x, 0.f});
+                tile.move(sigrid::Offset_f{-m_tileSize.x, 0.f});
             }
         }
     }
@@ -326,7 +326,7 @@ void sigrid::GraphicTiles::removeLeftColumn(){
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{-m_tileSize.x, 0.f});
+                tile.move(sigrid::Offset_f{-m_tileSize.x, 0.f});
             }
         }
     }
@@ -392,7 +392,7 @@ void sigrid::GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileCo
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{0.f, m_tileSize.y});
+                tile.move(sigrid::Offset_f{0.f, m_tileSize.y});
             }
         }
     }
@@ -459,7 +459,7 @@ void sigrid::GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTile
                 }
                 auto& tile = currentTile_o.value().get();
 
-                tile.move(sf::Vector2f{0.f, m_tileSize.y});
+                tile.move(sigrid::Offset_f{0.f, m_tileSize.y});
             }
         }
     }
@@ -477,7 +477,7 @@ void sigrid::GraphicTiles::removeTopRow(){
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{0.f, -m_tileSize.y});
+                tile.move(sigrid::Offset_f{0.f, -m_tileSize.y});
             }
         }
     }
@@ -495,7 +495,7 @@ void sigrid::GraphicTiles::removeBottomRow(){
                     continue;
                 }
                 auto& tile = currentTile_o.value().get();
-                tile.move(sf::Vector2f{0.f, -m_tileSize.y});
+                tile.move(sigrid::Offset_f{0.f, -m_tileSize.y});
             }
         }
     }
@@ -592,7 +592,7 @@ float sigrid::GraphicTiles::getRightPosition() const{
     return x;
 }
 
-void sigrid::GraphicTiles::move(const sf::Vector2f& offset){
+void sigrid::GraphicTiles::move(const sigrid::Offset_f& offset){
 
     for(int y = 0; y < m_tiles.numRows(); y++){
         for(int x = 0; x < m_tiles.numColumns(); x++){

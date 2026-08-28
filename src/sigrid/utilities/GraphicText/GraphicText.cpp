@@ -122,14 +122,14 @@ float sigrid::GraphicText::getLocalWidth() const{
     return text.getLocalBounds().size.x;
 }
 
-void sigrid::GraphicText::move(const sf::Vector2f& offset){
+void sigrid::GraphicText::move(const sigrid::Offset_f& offset){
 
     if(m_text_o == std::nullopt){
         return;
     }
     auto& text = m_text_o.value();
 
-    text.move(offset);
+    text.move(offset.getSfVector());
 }
 
 void sigrid::GraphicText::draw(sf::RenderTarget& target, sf::RenderStates states) const{

@@ -74,8 +74,8 @@ void sigrid::TurnToken::hide(){
     m_isVisible = false;
 }
 
-void sigrid::TurnToken::move(const sf::Vector2f& offset){
-    m_shape.move(offset);
+void sigrid::TurnToken::move(const sigrid::Offset_f& offset){
+    m_shape.move(offset.getSfVector());
 }
 
 void sigrid::TurnToken::init(){

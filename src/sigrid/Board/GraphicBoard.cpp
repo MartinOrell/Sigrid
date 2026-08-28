@@ -487,7 +487,7 @@ void sigrid::GraphicBoard::addTileColumnRight(const sigrid_list::Vector<int>& re
 
     m_tileLayer.addColumnRight(repeatTileColorIds);
 
-    sf::Vector2f offset{m_tileLayer.getTileSize().x,0.f};
+    sigrid::Offset_f offset{m_tileLayer.getTileSize().x,0.f};
 
     if(!m_isLeftToRight){
         m_pieceLayer.move(offset);
@@ -529,7 +529,7 @@ void sigrid::GraphicBoard::addTileColumnLeft(const sigrid_list::Vector<int>& rep
 
     m_border.addWidth(m_tileLayer.getTileSize().x);
 
-    sf::Vector2f offset{m_tileLayer.getTileSize().x, 0.f};
+    sigrid::Offset_f offset{m_tileLayer.getTileSize().x, 0.f};
     
     m_turnToken.move(offset);
 
@@ -562,8 +562,8 @@ void sigrid::GraphicBoard::removeRightTileColumn(){
     m_pieceLayer.removeColumn(columnId);
     m_arrowLayer.removeColumn(columnId);
     if(!m_isLeftToRight){
-        m_pieceLayer.move(sf::Vector2f{-m_tileLayer.getTileSize().x, 0.f});
-        m_arrowLayer.move(sf::Vector2f{-m_tileLayer.getTileSize().x, 0.f});
+        m_pieceLayer.move(sigrid::Offset_f{-m_tileLayer.getTileSize().x, 0.f});
+        m_arrowLayer.move(sigrid::Offset_f{-m_tileLayer.getTileSize().x, 0.f});
     }
     m_turnToken.move({-m_tileLayer.getTileSize().x, 0.f});
 
@@ -571,10 +571,10 @@ void sigrid::GraphicBoard::removeRightTileColumn(){
 
     m_labels.removeHorizontalLabel();
     if(!m_isLeftToRight){
-        m_labels.moveBottomInsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
-        m_labels.moveBottomOutsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveBottomInsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveBottomOutsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
     }
-    m_labels.moveRightOutsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
+    m_labels.moveRightOutsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
 
     resizeTexture();
     redrawTexture();
@@ -594,10 +594,10 @@ void sigrid::GraphicBoard::removeLeftTileColumn(){
 
     m_labels.removeHorizontalLabel();
     if(!m_isLeftToRight){
-        m_labels.moveBottomInsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
-        m_labels.moveBottomOutsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveBottomInsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
+        m_labels.moveBottomOutsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
     }
-    m_labels.moveRightOutsideLabels(sf::Vector2f{-m_tileLayer.getTileSize().x,0.f});
+    m_labels.moveRightOutsideLabels(sigrid::Offset_f{-m_tileLayer.getTileSize().x,0.f});
 
     resizeTexture();
     redrawTexture();
@@ -612,12 +612,12 @@ void sigrid::GraphicBoard::addTileRowUp(const sigrid_list::Vector<int>& repeatTi
     m_border.addHeight(m_tileLayer.getTileSize().y);
 
     if(!m_isTopToBottom){
-        m_labels.moveLeftInsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        m_labels.moveLeftOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        m_labels.moveRightOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveLeftInsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveLeftOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveRightOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
     }
-    m_labels.moveBottomInsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-    m_labels.moveBottomOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
+    m_labels.moveBottomInsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+    m_labels.moveBottomOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
     
     int row = m_tileLayer.getNumRows()-1;
     if(m_labels.isLeftInsideVisible()){
@@ -641,19 +641,19 @@ void sigrid::GraphicBoard::addTileRowDown(const sigrid_list::Vector<int>& repeat
     m_tileLayer.addRowDown(repeatTileColorIds);
 
     if(!m_isTopToBottom){
-        m_pieceLayer.move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        m_arrowLayer.move(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
+        m_pieceLayer.move(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+        m_arrowLayer.move(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
     }
 
     m_border.addHeight(m_tileLayer.getTileSize().y);
 
     if(!m_isTopToBottom){
-        m_labels.moveLeftInsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        m_labels.moveLeftOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-        m_labels.moveRightOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveLeftInsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveLeftOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+        m_labels.moveRightOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
     }
-    m_labels.moveBottomInsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
-    m_labels.moveBottomOutsideLabels(sf::Vector2f{0.f, m_tileLayer.getTileSize().y});
+    m_labels.moveBottomInsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
+    m_labels.moveBottomOutsideLabels(sigrid::Offset_f{0.f, m_tileLayer.getTileSize().y});
     
     int row = m_tileLayer.getNumRows()-1;
     if(m_labels.isLeftInsideVisible()){
@@ -684,12 +684,12 @@ void sigrid::GraphicBoard::removeTopTileRow(){
 
     m_labels.removeVerticalLabel();
     if(!m_isTopToBottom){
-        m_labels.moveLeftInsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        m_labels.moveLeftOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        m_labels.moveRightOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveLeftInsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveLeftOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveRightOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
     }
-    m_labels.moveBottomInsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-    m_labels.moveBottomOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
+    m_labels.moveBottomInsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+    m_labels.moveBottomOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
 
     updateLeftEdgeWidth();
     updateRightEdgeWidth();
@@ -705,20 +705,20 @@ void sigrid::GraphicBoard::removeBottomTileRow(){
     m_pieceLayer.removeRow(rowId);
     m_arrowLayer.removeRow(rowId);
     if(!m_isTopToBottom){
-        m_pieceLayer.move(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        m_arrowLayer.move(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
+        m_pieceLayer.move(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+        m_arrowLayer.move(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
     }
 
     m_border.addHeight(-m_tileLayer.getTileSize().y);
 
     m_labels.removeVerticalLabel();
     if(!m_isTopToBottom){
-        m_labels.moveLeftInsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        m_labels.moveLeftOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-        m_labels.moveRightOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveLeftInsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveLeftOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+        m_labels.moveRightOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
     }
-    m_labels.moveBottomInsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
-    m_labels.moveBottomOutsideLabels(sf::Vector2f{0.f, -m_tileLayer.getTileSize().y});
+    m_labels.moveBottomInsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
+    m_labels.moveBottomOutsideLabels(sigrid::Offset_f{0.f, -m_tileLayer.getTileSize().y});
 
     updateLeftEdgeWidth();
     updateRightEdgeWidth();
@@ -1718,7 +1718,7 @@ void sigrid::GraphicBoard::addBottomOutsideLabels_h(){
     }
 }
 
-void sigrid::GraphicBoard::moveTiles(const sf::Vector2f& offset){
+void sigrid::GraphicBoard::moveTiles(const sigrid::Offset_f& offset){
     
     m_tileLayer.move(offset);
     m_pieceLayer.move(offset);
@@ -1732,7 +1732,7 @@ void sigrid::GraphicBoard::moveTiles(const sf::Vector2f& offset){
     m_labels.moveBottomOutsideLabels(offset);
 }
 
-void sigrid::GraphicBoard::moveTurnToken(const sf::Vector2f& offset){
+void sigrid::GraphicBoard::moveTurnToken(const sigrid::Offset_f& offset){
     m_turnToken.move(offset);
 }
 

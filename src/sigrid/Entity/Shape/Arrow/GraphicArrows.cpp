@@ -382,7 +382,7 @@ void sigrid::GraphicArrows::moveArrowsDown(const float& tileHeight, const bool& 
     }
 }
 
-void sigrid::GraphicArrows::move(const sf::Vector2f& offset){
+void sigrid::GraphicArrows::move(const sigrid::Offset_f& offset){
 
     for(int i = 0; i < m_arrows.size(); i++){
         auto arrow_o = m_arrows.atPosition(i);

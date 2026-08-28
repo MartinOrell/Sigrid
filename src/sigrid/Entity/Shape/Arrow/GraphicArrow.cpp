@@ -65,14 +65,15 @@ void sigrid::GraphicArrow::setHeadSize(const float& size){
 
 void sigrid::GraphicArrow::setPosition(const sigrid::Position_f& position){
     
-    sf::Vector2f offset = position.getSfVector() - m_line.getPosition();
-    move(offset);
+    sigrid::Position_f oldPosition;
+    oldPosition.set(m_line.getPosition());
+    move(position - oldPosition);
 }
 
-void sigrid::GraphicArrow::move(const sf::Vector2f& offset){
+void sigrid::GraphicArrow::move(const sigrid::Offset_f& offset){
     
-    m_line.move(offset);
-    m_head.move(offset);
+    m_line.move(offset.getSfVector());
+    m_head.move(offset.getSfVector());
 }
 
 bool sigrid::GraphicArrow::IsSet::isAllSet(){

@@ -83,13 +83,13 @@ const sigrid::Texture* sigrid::GraphicPiece::getTexturePtr() const{
     return m_texturePtr;
 }
 
-void sigrid::GraphicPiece::move(const sf::Vector2f& offset){
+void sigrid::GraphicPiece::move(const sigrid::Offset_f& offset){
 
     if(!m_sprite_o){
         return;
     }
     auto& sprite = m_sprite_o.value();
-    sprite.move(offset);
+    sprite.move(offset.getSfVector());
 }
 
 void sigrid::GraphicPiece::draw(sf::RenderTarget& target, sf::RenderStates states) const{

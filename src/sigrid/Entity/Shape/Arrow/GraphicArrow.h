@@ -5,6 +5,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 namespace sf{
@@ -37,7 +38,7 @@ class GraphicArrow: public sf::Drawable{
 
     void setPosition(const sigrid::Position_f& position);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

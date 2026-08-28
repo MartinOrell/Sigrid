@@ -3,6 +3,7 @@
 #include <optional>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/GraphicTile.h"
@@ -73,7 +74,7 @@ class GraphicTiles: public sf::Drawable{
 
     float getRightPosition() const;
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

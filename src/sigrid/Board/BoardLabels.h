@@ -4,6 +4,7 @@
 
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Color/Color.h"
@@ -95,12 +96,12 @@ class BoardLabels: public sf::Drawable{
     void removeHorizontalLabel();
     void removeVerticalLabel();
 
-    void moveLeftInsideLabels(const sf::Vector2f& offset);
-    void moveBottomInsideLabels(const sf::Vector2f& offset);
-    void moveLeftOutsideLabels(const sf::Vector2f& offset);
-    void moveRightOutsideLabels(const sf::Vector2f& offset);
-    void moveTopOutsideLabels(const sf::Vector2f& offset);
-    void moveBottomOutsideLabels(const sf::Vector2f& offset);
+    void moveLeftInsideLabels(const sigrid::Offset_f& offset);
+    void moveBottomInsideLabels(const sigrid::Offset_f& offset);
+    void moveLeftOutsideLabels(const sigrid::Offset_f& offset);
+    void moveRightOutsideLabels(const sigrid::Offset_f& offset);
+    void moveTopOutsideLabels(const sigrid::Offset_f& offset);
+    void moveBottomOutsideLabels(const sigrid::Offset_f& offset);
 
   private:
 

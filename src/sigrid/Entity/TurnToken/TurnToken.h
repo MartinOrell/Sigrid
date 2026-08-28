@@ -4,6 +4,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/Entity/TurnToken/TurnTokenContainer.h"
 #include "sigrid/utilities/Color/Color.h"
 
@@ -46,7 +47,7 @@ class TurnToken: public sf::Drawable{
 
     void hide();
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

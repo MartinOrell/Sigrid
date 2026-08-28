@@ -616,37 +616,37 @@ void sigrid::BoardLabels::removeVerticalLabel(){
     }
 }
 
-void sigrid::BoardLabels::moveLeftInsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveLeftInsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_leftInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void sigrid::BoardLabels::moveBottomInsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveBottomInsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_bottomInsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void sigrid::BoardLabels::moveLeftOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveLeftOutsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_leftOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void sigrid::BoardLabels::moveRightOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveRightOutsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_rightOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void sigrid::BoardLabels::moveTopOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveTopOutsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_topOutsideCoordLabels.labels){
         label.move(offset);
     }
 }
 
-void sigrid::BoardLabels::moveBottomOutsideLabels(const sf::Vector2f& offset){
+void sigrid::BoardLabels::moveBottomOutsideLabels(const sigrid::Offset_f& offset){
     for(auto& label : m_bottomOutsideCoordLabels.labels){
         label.move(offset);
     }

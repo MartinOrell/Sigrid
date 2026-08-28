@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Color/Color.h"
 
@@ -34,7 +35,7 @@ class GraphicText: public sf::Drawable{
     bool isInitialized() const;
     float getLocalWidth() const;
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

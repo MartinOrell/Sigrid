@@ -452,7 +452,7 @@ void sigrid::GraphicEntities::moveEntitiesDown(const float& tileHeight, const bo
     moveEntitiesDown_h<sigrid_list::Map<sigrid_coord::Coord, Icon>>(m_icons, tileHeight, isTopToBottom);
 }
 
-void sigrid::GraphicEntities::move(const sf::Vector2f& offset){
+void sigrid::GraphicEntities::move(const sigrid::Offset_f& offset){
 
     for(auto& piece : m_pieces){
         piece.second.move(offset);

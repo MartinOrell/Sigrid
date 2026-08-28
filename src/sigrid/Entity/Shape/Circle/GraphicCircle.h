@@ -4,6 +4,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
@@ -22,7 +23,7 @@ class GraphicCircle: public sf::Drawable{
     void setColor(const sigrid::Color& color);
     void setDiameter(const float& diameter);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
 
   private:
 

@@ -24,8 +24,8 @@ void sigrid::GraphicCircle::setDiameter(const float& diameter){
     m_shape.setOutlineThickness(-outlineThickness);
 }
 
-void sigrid::GraphicCircle::move(const sf::Vector2f& offset){
-    m_shape.move(offset);
+void sigrid::GraphicCircle::move(const sigrid::Offset_f& offset){
+    m_shape.move(offset.getSfVector());
 }
 
 void sigrid::GraphicCircle::draw(sf::RenderTarget& target, sf::RenderStates states) const{

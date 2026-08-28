@@ -5,6 +5,7 @@
 
 #include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Offset/Offset_f.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/Entity/LogicEntity.h"
@@ -53,7 +54,7 @@ class GraphicEntities: public sf::Drawable{
     void moveEntitiesUp(const float& tileHeight, const bool& isTopToBottom);
     void moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom);
 
-    void move(const sf::Vector2f& offset);
+    void move(const sigrid::Offset_f& offset);
     void setEntityPosition(const sigrid_coord::Coord& coord, const sigrid::Position_f& position);
 
   private:

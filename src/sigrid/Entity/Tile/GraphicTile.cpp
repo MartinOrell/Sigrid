@@ -70,11 +70,11 @@ sigrid::Color sigrid::GraphicTile::getColor() const{
     return color;
 }
 
-void sigrid::GraphicTile::move(const sf::Vector2f& offset){
+void sigrid::GraphicTile::move(const sigrid::Offset_f& offset){
 
-    m_shape.move(offset);
+    m_shape.move(offset.getSfVector());
     if(m_isHighlightVisible){
-        m_highlight.move(offset);
+        m_highlight.move(offset.getSfVector());
     }
 }
 
