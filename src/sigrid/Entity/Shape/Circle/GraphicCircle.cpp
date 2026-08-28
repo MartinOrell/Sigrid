@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 void sigrid::GraphicCircle::setPosition(const sigrid::Position_f& position){
-    m_shape.setPosition(position.getSfPosition());
+    m_shape.setPosition(position.getSfVector());
 }
 
 void sigrid::GraphicCircle::setColor(const sigrid::Color& color){

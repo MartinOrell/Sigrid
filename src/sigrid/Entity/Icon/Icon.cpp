@@ -3,11 +3,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 void sigrid::Icon::setSize(const sigrid::Size_f& size){
-    m_shape.setSize(size.getSfPosition());
+    m_shape.setSize(size.getSfVector());
 }
 
 void sigrid::Icon::setPosition(const sigrid::Position_f& position){
-    m_shape.setPosition(position.getSfPosition());
+    m_shape.setPosition(position.getSfVector());
 }
 
 void sigrid::Icon::setTexture(const sigrid::Texture* texturePtr){

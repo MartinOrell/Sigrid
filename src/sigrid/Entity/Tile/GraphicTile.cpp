@@ -4,17 +4,17 @@
 
 void sigrid::GraphicTile::setSize(const sigrid::Size_f& size){
 
-    m_shape.setSize(size.getSfPosition());
+    m_shape.setSize(size.getSfVector());
     if(m_isHighlightVisible){
-        m_highlight.setSize(size.getSfPosition());
+        m_highlight.setSize(size.getSfVector());
     }
 }
 
 void sigrid::GraphicTile::setPosition(const sigrid::Position_f& topLeftPosition){
 
-    m_shape.setPosition(topLeftPosition.getSfPosition());
+    m_shape.setPosition(topLeftPosition.getSfVector());
     if(m_isHighlightVisible){
-        m_highlight.setPosition(topLeftPosition.getSfPosition());
+        m_highlight.setPosition(topLeftPosition.getSfVector());
     }
 }
 

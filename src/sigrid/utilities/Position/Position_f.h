@@ -6,7 +6,7 @@ namespace sigrid{
 
 struct Position_f{
 
-    sf::Vector2<float> getSfPosition() const;
+    sf::Vector2<float> getSfVector() const;
 
     Position_f operator+(const Position_f& rhs) const;
     Position_f operator-(const Position_f& rhs) const;

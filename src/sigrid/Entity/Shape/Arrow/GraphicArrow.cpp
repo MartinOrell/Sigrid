@@ -6,7 +6,7 @@
 
 void sigrid::GraphicArrow::setFromPosition(const sigrid::Position_f& fromPosition){
     
-    m_line.setPosition(fromPosition.getSfPosition());
+    m_line.setPosition(fromPosition.getSfVector());
     m_isSet.fromPosition = true;
     if(m_isSet.isAllSet()){
         updateShape();
@@ -24,7 +24,7 @@ void sigrid::GraphicArrow::setToPosition(const sigrid::Position_f& toPosition){
 
 void sigrid::GraphicArrow::setPosition(const sigrid::Position_f& fromPosition, const sigrid::Position_f& toPosition){
     
-    m_line.setPosition(fromPosition.getSfPosition());
+    m_line.setPosition(fromPosition.getSfVector());
     m_toPosition = toPosition;
     m_isSet.fromPosition = true;
     m_isSet.toPosition = true;
@@ -65,7 +65,7 @@ void sigrid::GraphicArrow::setHeadSize(const float& size){
 
 void sigrid::GraphicArrow::setPosition(const sigrid::Position_f& position){
     
-    sf::Vector2f offset = position.getSfPosition() - m_line.getPosition();
+    sf::Vector2f offset = position.getSfVector() - m_line.getPosition();
     move(offset);
 }
 

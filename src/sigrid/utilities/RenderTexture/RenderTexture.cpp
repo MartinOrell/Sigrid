@@ -133,9 +133,9 @@ bool sigrid::RenderTexture::contains(const sigrid::Position_f& point) const{
     }
 
     sf::Sprite sprite(m_texture.getTexture());
-    sprite.setPosition(m_position.getSfPosition()/m_scale);
+    sprite.setPosition(m_position.getSfVector()/m_scale);
     sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains(point.getSfPosition()/m_scale);
+    return rect.contains(point.getSfVector()/m_scale);
 }
 
 void sigrid::RenderTexture::clear(){
@@ -150,7 +150,7 @@ void sigrid::RenderTexture::display(){
 
     m_sprite_o = sf::Sprite{m_texture.getTexture()};
     auto& sprite = m_sprite_o.value();
-    sprite.setPosition(m_position.getSfPosition());
+    sprite.setPosition(m_position.getSfVector());
     sprite.move({0.f, m_scale*(float)m_texture.getTexture().getSize().y});
     sprite.setScale({m_scale, -m_scale});
 }

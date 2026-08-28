@@ -1,6 +1,6 @@
 #include "sigrid/utilities/Position/Position_f.h"
 
-sf::Vector2<float> sigrid::Position_f::getSfPosition() const{
+sf::Vector2<float> sigrid::Position_f::getSfVector() const{
     return sf::Vector2<float>{this->x, this->y};
 }
 

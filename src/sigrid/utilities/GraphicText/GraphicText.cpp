@@ -66,7 +66,7 @@ void sigrid::GraphicText::setPosition(const sigrid::Position_f& position){
     }
     auto& text = m_text_o.value();
 
-    text.setPosition(position.getSfPosition());
+    text.setPosition(position.getSfVector());
 }
 
 void sigrid::GraphicText::setFillColor(const sigrid::Color& color){

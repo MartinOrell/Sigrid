@@ -57,7 +57,7 @@ void sigrid::RectangleBorder::setTopLeftPosition(const sigrid::Position_f& topLe
     m_topLeftPosition = topLeftPosition;
 
     //Left
-    m_left.setPosition(topLeftPosition.getSfPosition());
+    m_left.setPosition(topLeftPosition.getSfVector());
 
     //Right
     {
@@ -67,7 +67,7 @@ void sigrid::RectangleBorder::setTopLeftPosition(const sigrid::Position_f& topLe
     }
 
     //Top
-    m_top.setPosition(m_topLeftPosition.getSfPosition());
+    m_top.setPosition(m_topLeftPosition.getSfVector());
 
     //Bottom
     {

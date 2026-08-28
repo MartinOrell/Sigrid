@@ -49,7 +49,7 @@ void sigrid::GraphicPiece::setPosition(const sigrid::Position_f& position){
         return;
     }
     auto& sprite = m_sprite_o.value();
-    sprite.setPosition(position.getSfPosition());
+    sprite.setPosition(position.getSfVector());
 }
 
 bool sigrid::GraphicPiece::contains(const sf::Vector2i& point) const{
