@@ -24,7 +24,6 @@ class GraphicPiece: public sf::Drawable{
     void setTexturePtr(const sigrid::Texture* const texturePtr);
 
     void setPosition(const sigrid::Position_f& position);
-    bool contains(const sf::Vector2i& point) const;
     void resize(const sigrid::Size_f& size);
 
     const sigrid::Texture getTexture() const;

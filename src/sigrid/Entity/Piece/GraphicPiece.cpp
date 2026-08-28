@@ -52,16 +52,6 @@ void sigrid::GraphicPiece::setPosition(const sigrid::Position_f& position){
     sprite.setPosition(position.getSfVector());
 }
 
-bool sigrid::GraphicPiece::contains(const sf::Vector2i& point) const{
-
-    if(!m_sprite_o){
-        return false;
-    }
-    auto& sprite = m_sprite_o.value();
-    sf::FloatRect rect = sprite.getGlobalBounds();
-    return rect.contains({(float)point.x, (float)point.y});
-}
-
 void sigrid::GraphicPiece::resize(const sigrid::Size_f& size){
 
     if(!m_sprite_o){
