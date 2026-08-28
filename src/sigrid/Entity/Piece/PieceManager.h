@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Map.h"
@@ -40,8 +41,7 @@ class PieceManager{
     sigrid_list::Vector<std::map<PieceIdentifier, GraphicPiece>> m_graphicPieces;
     sigrid_list::Vector<std::map<PieceIdentifier, sigrid::Texture>> m_pieceTextures;
 
-    sf::Vector2f m_pieceSize{108.f,108.f};
-        
+    sigrid::Size_f m_pieceSize{108.f,108.f};
 };
 
 }  // namespace sigrid

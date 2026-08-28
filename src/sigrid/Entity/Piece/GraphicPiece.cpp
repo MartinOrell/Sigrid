@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-void sigrid::GraphicPiece::setSize(const sf::Vector2f& size){
+void sigrid::GraphicPiece::setSize(const sigrid::Size_f& size){
 
     m_size = size;
     if(m_sprite_o == std::nullopt){

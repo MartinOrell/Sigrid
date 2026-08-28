@@ -20,7 +20,7 @@ class GraphicPiece: public sf::Drawable{
     GraphicPiece& operator=(const GraphicPiece&) = default;
     GraphicPiece& operator=(GraphicPiece&&) = default;
 
-    void setSize(const sf::Vector2f& size);
+    void setSize(const sigrid::Size_f& size);
     void setTexturePtr(const sigrid::Texture* const texturePtr);
 
     void setPosition(const sigrid::Position_f& position);
@@ -36,7 +36,7 @@ class GraphicPiece: public sf::Drawable{
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    sf::Vector2f m_size = {0.f,0.f};
+    sigrid::Size_f m_size = {0.f,0.f};
     std::optional<sf::Sprite> m_sprite_o = std::nullopt;
     const sigrid::Texture* m_texturePtr;
 };
