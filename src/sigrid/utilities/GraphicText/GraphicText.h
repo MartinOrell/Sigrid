@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/Color/Color.h"
 
@@ -25,7 +26,7 @@ class GraphicText: public sf::Drawable{
     bool setCharacterSize(const int& size);
 
     void setOrigin(const sf::Vector2f& origin); 
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
     void setFillColor(const sigrid::Color& color);
     void setOutlineColor(const sigrid::Color& color);
     void setOutlineThickness(const float& thickness);

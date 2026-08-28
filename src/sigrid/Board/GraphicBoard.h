@@ -62,7 +62,7 @@ class GraphicBoard: public sf::Drawable{
 
     void loadBoardState(const BoardState& boardState);
 
-    sf::Vector2f getTileSize() const;
+    sigrid::Size_f getTileSize() const;
 
     void setPosition(const sigrid::Position_f& position);
 

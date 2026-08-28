@@ -13,6 +13,8 @@ struct Position_f{
     Position_f operator*(const float& rhs) const;
     Position_f operator/(const float& rhs) const;
 
+    void set(const sf::Vector2f& sfVector);
+
     float x;
     float y;
 };

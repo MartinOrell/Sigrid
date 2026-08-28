@@ -30,7 +30,7 @@ void sigrid::GraphicTiles::setNumRows(const int& rows){
     m_tiles.setNumRows(rows);
 }
 
-void sigrid::GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
+void sigrid::GraphicTiles::setTileSize(const sigrid::Size_f& tileSize){
 
     m_tileSize = tileSize;
 
@@ -41,7 +41,7 @@ void sigrid::GraphicTiles::setTileSize(const sf::Vector2f& tileSize){
     m_tiles.setInsertPattern(insertTiles);
 }
 
-void sigrid::GraphicTiles::setTopLeftPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::GraphicTiles::setTopLeftPosition(const sigrid::Position_f& topLeftPosition){
     m_topLeftPosition = topLeftPosition;
 }
 
@@ -76,7 +76,7 @@ void sigrid::GraphicTiles::insertAllTiles(){
             }
             auto& tile = tile_o.value().get();
 
-            sf::Vector2f position = m_topLeftPosition;
+            sigrid::Position_f position = m_topLeftPosition;
             if(m_isLeftToRight){
                 position.x += (float)(x*m_tileSize.x);
             }
@@ -95,7 +95,7 @@ void sigrid::GraphicTiles::insertAllTiles(){
     }
 }
 
-void sigrid::GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position){
+void sigrid::GraphicTiles::setTilePosition(const sigrid_coord::Coord& coord, const sigrid::Position_f& position){
 
     auto tile_o = m_tiles.at(coord);
     if(tile_o == std::nullopt){
@@ -184,7 +184,7 @@ void sigrid::GraphicTiles::addColumnRight(const sigrid_list::Vector<int>& repeat
         auto& currentTile = currentTile_o.value().get();
         auto& leftTile = leftTile_o.value().get();
 
-        sf::Vector2f position = leftTile.getTopLeftPosition();
+        sigrid::Position_f position = leftTile.getTopLeftPosition();
         if(m_isLeftToRight){
             position.x += m_tileSize.x;
         }
@@ -249,7 +249,7 @@ void sigrid::GraphicTiles::addColumnLeft(const sigrid_list::Vector<int>& repeatT
         auto& currentTile = currentTile_o.value().get();
         auto& rightTile = rightTile_o.value().get();
 
-        sf::Vector2f position = rightTile.getTopLeftPosition();
+        sigrid::Position_f position = rightTile.getTopLeftPosition();
         if(m_isLeftToRight){
             position.x -= m_tileSize.x;
         }
@@ -352,7 +352,7 @@ void sigrid::GraphicTiles::addRowUp(const sigrid_list::Vector<int>& repeatTileCo
         auto& currentTile = currentTile_o.value().get();
         auto& topTile = topTile_o.value().get();
 
-        sf::Vector2f position = topTile.getTopLeftPosition();
+        sigrid::Position_f position = topTile.getTopLeftPosition();
         if(m_isTopToBottom){
             position.y -= m_tileSize.y;
         }
@@ -418,7 +418,7 @@ void sigrid::GraphicTiles::addRowDown(const sigrid_list::Vector<int>& repeatTile
         auto& currentTile = currentTile_o.value().get();
         auto& downTile = downTile_o.value().get();
 
-        sf::Vector2f position = downTile.getTopLeftPosition();
+        sigrid::Position_f position = downTile.getTopLeftPosition();
         if(m_isTopToBottom){
             position.y += m_tileSize.y;
         }
@@ -521,11 +521,11 @@ float sigrid::GraphicTiles::getTileHeight() const{
     return m_tileSize.y;
 }
 
-sf::Vector2f sigrid::GraphicTiles::getTileSize() const{
+sigrid::Position_f sigrid::GraphicTiles::getTileSize() const{
     return m_tileSize;
 }
 
-std::optional<sf::Vector2f> sigrid::GraphicTiles::getTileTopLeftPosition(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::Position_f> sigrid::GraphicTiles::getTileTopLeftPosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 
@@ -537,7 +537,7 @@ std::optional<sf::Vector2f> sigrid::GraphicTiles::getTileTopLeftPosition(const s
     return tile.getTopLeftPosition();
 }
 
-std::optional<sf::Vector2f> sigrid::GraphicTiles::getTileCentrePosition(const sigrid_coord::Coord& coord) const{
+std::optional<sigrid::Position_f> sigrid::GraphicTiles::getTileCentrePosition(const sigrid_coord::Coord& coord) const{
 
     auto tile_o = m_tiles.at(coord);
 

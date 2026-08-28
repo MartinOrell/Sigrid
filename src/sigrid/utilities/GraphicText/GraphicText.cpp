@@ -56,7 +56,7 @@ void sigrid::GraphicText::setOrigin(const sf::Vector2f& origin){
     text.setOrigin(origin);
 }
 
-void sigrid::GraphicText::setPosition(const sf::Vector2f& position){
+void sigrid::GraphicText::setPosition(const sigrid::Position_f& position){
 
     if(m_text_o == std::nullopt){
 
@@ -66,7 +66,7 @@ void sigrid::GraphicText::setPosition(const sf::Vector2f& position){
     }
     auto& text = m_text_o.value();
 
-    text.setPosition(position);
+    text.setPosition(position.getSfPosition());
 }
 
 void sigrid::GraphicText::setFillColor(const sigrid::Color& color){

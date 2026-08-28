@@ -2,12 +2,12 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-void sigrid::Icon::setSize(const sf::Vector2f& size){
-    m_shape.setSize(size);
+void sigrid::Icon::setSize(const sigrid::Size_f& size){
+    m_shape.setSize(size.getSfPosition());
 }
 
-void sigrid::Icon::setPosition(const sf::Vector2f& position){
-    m_shape.setPosition(position);
+void sigrid::Icon::setPosition(const sigrid::Position_f& position){
+    m_shape.setPosition(position.getSfPosition());
 }
 
 void sigrid::Icon::setTexture(const sigrid::Texture* texturePtr){

@@ -135,7 +135,7 @@ void sigrid::GraphicBoard::loadBoardState(const BoardState& boardState){
     redrawTexture();
 }
 
-sf::Vector2f sigrid::GraphicBoard::getTileSize() const{
+sigrid::Size_f sigrid::GraphicBoard::getTileSize() const{
     return m_tileLayer.getTileSize();
 }
 
@@ -747,7 +747,8 @@ void sigrid::GraphicBoard::flip(){
 
     for(int y = 0; y < m_tileLayer.getNumRows(); y++){
         for(int x = 0; x < m_tileLayer.getNumColumns(); x++){
-            sf::Vector2f position;
+            
+            sigrid::Position_f position;
             if(m_isLeftToRight){
                 position.x = (float)(x*tileWidth);
             }
@@ -787,8 +788,8 @@ void sigrid::GraphicBoard::flip(){
         }
         auto& arrow = arrow_o.value().get();
 
-        sf::Vector2f fromPos = m_tileLayer.getTileCentrePosition(coordPair.from).value();
-        sf::Vector2f toPos = m_tileLayer.getTileCentrePosition(coordPair.to).value();
+        sigrid::Position_f fromPos = m_tileLayer.getTileCentrePosition(coordPair.from).value();
+        sigrid::Position_f toPos = m_tileLayer.getTileCentrePosition(coordPair.to).value();
         arrow.setPosition(fromPos,toPos);
     }
     
@@ -1567,7 +1568,7 @@ void sigrid::GraphicBoard::addLeftInsideLabel_h(const int& row){
     if(tilePosition_o == std::nullopt){
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     auto tileColor_o = m_tileLayer.getTileColor(coord);
     if(tileColor_o == std::nullopt){
         return;
@@ -1596,7 +1597,7 @@ void sigrid::GraphicBoard::addBottomInsideLabel_h(const int& column){
     if(tilePosition_o == std::nullopt){
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     auto tileColor_o = m_tileLayer.getTileColor(coord);
     if(tileColor_o == std::nullopt){
         return;
@@ -1626,7 +1627,7 @@ void sigrid::GraphicBoard::addLeftOutsideLabel_h(const int& row){
             << coord.getNotation() << " not found for label" << std::endl;
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     m_labels.addLeftOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
@@ -1652,7 +1653,7 @@ void sigrid::GraphicBoard::addRightOutsideLabel_h(const int& row){
             << coord.getNotation() << " not found for label" << std::endl;
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     m_labels.addRightOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
@@ -1678,7 +1679,7 @@ void sigrid::GraphicBoard::addTopOutsideLabel_h(const int& column){
             << coord.getNotation() << " not found for label" << std::endl;
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     m_labels.addTopOutsideLabel(tilePosition_o.value(), tileSize);
 }
 
@@ -1704,7 +1705,7 @@ void sigrid::GraphicBoard::addBottomOutsideLabel_h(const int& column){
             << coord.getNotation() << " not found for label" << std::endl;
         return;
     }
-    sf::Vector2f tileSize = m_tileLayer.getTileSize();
+    sigrid::Size_f tileSize = m_tileLayer.getTileSize();
     m_labels.addBottomOutsideLabel(tilePosition_o.value(), tileSize);
 }
 

@@ -4,15 +4,17 @@
 
 #include <iostream>
 
-void sigrid::GraphicArrow::setFromPosition(const sf::Vector2f& fromPosition){
-    m_line.setPosition(fromPosition);
+void sigrid::GraphicArrow::setFromPosition(const sigrid::Position_f& fromPosition){
+    
+    m_line.setPosition(fromPosition.getSfPosition());
     m_isSet.fromPosition = true;
     if(m_isSet.isAllSet()){
         updateShape();
     }
 }
 
-void sigrid::GraphicArrow::setToPosition(const sf::Vector2f& toPosition){
+void sigrid::GraphicArrow::setToPosition(const sigrid::Position_f& toPosition){
+    
     m_toPosition = toPosition;
     m_isSet.toPosition = true;
     if(m_isSet.isAllSet()){
@@ -20,8 +22,9 @@ void sigrid::GraphicArrow::setToPosition(const sf::Vector2f& toPosition){
     }
 }
 
-void sigrid::GraphicArrow::setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition){
-    m_line.setPosition(fromPosition);
+void sigrid::GraphicArrow::setPosition(const sigrid::Position_f& fromPosition, const sigrid::Position_f& toPosition){
+    
+    m_line.setPosition(fromPosition.getSfPosition());
     m_toPosition = toPosition;
     m_isSet.fromPosition = true;
     m_isSet.toPosition = true;
@@ -37,6 +40,7 @@ void sigrid::GraphicArrow::setColor(const sigrid::Color& color){
 }
 
 void sigrid::GraphicArrow::setThickness(const float& thickness){
+    
     m_thickness = thickness;
     if(m_thickness <= 0.f){
         return;
@@ -48,6 +52,7 @@ void sigrid::GraphicArrow::setThickness(const float& thickness){
 }
 
 void sigrid::GraphicArrow::setHeadSize(const float& size){
+    
     m_headSize = size;
     if(m_headSize <= 0.f){
         return;
@@ -58,17 +63,20 @@ void sigrid::GraphicArrow::setHeadSize(const float& size){
     }
 }
 
-void sigrid::GraphicArrow::setPosition(const sf::Vector2f& position){
-    sf::Vector2f offset = position - m_line.getPosition();
+void sigrid::GraphicArrow::setPosition(const sigrid::Position_f& position){
+    
+    sf::Vector2f offset = position.getSfPosition() - m_line.getPosition();
     move(offset);
 }
 
 void sigrid::GraphicArrow::move(const sf::Vector2f& offset){
+    
     m_line.move(offset);
     m_head.move(offset);
 }
 
 bool sigrid::GraphicArrow::IsSet::isAllSet(){
+    
     return fromPosition &&
         toPosition &&
         thickness &&
@@ -123,6 +131,7 @@ void sigrid::GraphicArrow::updateShape(){
 }
 
 void sigrid::GraphicArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+    
     target.draw(m_line);
     target.draw(m_head);
 }

@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/utilities/Size/Size_f.h"
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 namespace sigrid{
@@ -17,9 +19,9 @@ class GraphicTile: public sf::Drawable{
     GraphicTile& operator=(const GraphicTile& rhs) = default;
     GraphicTile& operator=(GraphicTile&& rhs) = default;
 
-    void setSize(const sf::Vector2f& size);
+    void setSize(const sigrid::Size_f& size);
 
-    void setPosition(const sf::Vector2f& topLeftPosition);
+    void setPosition(const sigrid::Position_f& topLeftPosition);
 
     void setTileColor(const sigrid::Color& color);
 
@@ -27,11 +29,11 @@ class GraphicTile: public sf::Drawable{
 
     void removeHighlight();
 
-    sf::Vector2f getSize() const;
+    sigrid::Size_f getSize() const;
 
-    sf::Vector2f getTopLeftPosition() const;
+    sigrid::Position_f getTopLeftPosition() const;
 
-    sf::Vector2f getCentrePosition() const;
+    sigrid::Position_f getCentrePosition() const;
 
     float getRightPosition() const;
 

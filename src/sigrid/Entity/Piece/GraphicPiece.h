@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 
 namespace sigrid{
@@ -20,9 +22,9 @@ class GraphicPiece: public sf::Drawable{
     void setSize(const sf::Vector2f& size);
     void setTexturePtr(const sigrid::Texture* const texturePtr);
 
-    void setPosition(sf::Vector2f);
-    bool contains(sf::Vector2i point) const;
-    void resize(sf::Vector2f size);
+    void setPosition(const sigrid::Position_f& position);
+    bool contains(const sf::Vector2i& point) const;
+    void resize(const sigrid::Size_f& size);
 
     const sigrid::Texture getTexture() const;
     const sigrid::Texture* getTexturePtr() const;

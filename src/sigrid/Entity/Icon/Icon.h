@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
+#include "sigrid/utilities/Size/Size_f.h"
 #include "sigrid/utilities/Texture/Texture.h"
 
 namespace sigrid{
@@ -17,9 +19,9 @@ class Icon: public sf::Drawable{
     Icon& operator=(const Icon&) = default;
     Icon& operator=(Icon&&) = default;
     
-    void setSize(const sf::Vector2f& size);
+    void setSize(const sigrid::Size_f& size);
 
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
 
     void setTexture(const sigrid::Texture* texturePtr);
 

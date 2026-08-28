@@ -2,19 +2,19 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-void sigrid::GraphicTile::setSize(const sf::Vector2f& size){
+void sigrid::GraphicTile::setSize(const sigrid::Size_f& size){
 
-    m_shape.setSize(size);
+    m_shape.setSize(size.getSfPosition());
     if(m_isHighlightVisible){
-        m_highlight.setSize(size);
+        m_highlight.setSize(size.getSfPosition());
     }
 }
 
-void sigrid::GraphicTile::setPosition(const sf::Vector2f& topLeftPosition){
+void sigrid::GraphicTile::setPosition(const sigrid::Position_f& topLeftPosition){
 
-    m_shape.setPosition(topLeftPosition);
+    m_shape.setPosition(topLeftPosition.getSfPosition());
     if(m_isHighlightVisible){
-        m_highlight.setPosition(topLeftPosition);
+        m_highlight.setPosition(topLeftPosition.getSfPosition());
     }
 }
 
@@ -37,16 +37,22 @@ void sigrid::GraphicTile::removeHighlight(){
     m_isHighlightVisible = false;
 }
 
-sf::Vector2f sigrid::GraphicTile::getSize() const{
-    return m_shape.getSize();
+sigrid::Size_f sigrid::GraphicTile::getSize() const{
+
+    sigrid::Size_f size;
+    size.set(m_shape.getSize());
+    return size;
 }
 
-sf::Vector2f sigrid::GraphicTile::getTopLeftPosition() const{
-    return m_shape.getPosition();
+sigrid::Position_f sigrid::GraphicTile::getTopLeftPosition() const{
+    
+    sigrid::Position_f position;
+    position.set(m_shape.getPosition());
+    return position;
 }
 
-sf::Vector2f sigrid::GraphicTile::getCentrePosition() const{
-    return m_shape.getPosition() + m_shape.getSize()/2.f;
+sigrid::Position_f sigrid::GraphicTile::getCentrePosition() const{
+    return getTopLeftPosition() + getSize()/2.f;
 }
 
 float sigrid::GraphicTile::getRightPosition() const{

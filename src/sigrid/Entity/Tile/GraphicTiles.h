@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/utilities/lists/AutoInsertMappedGrid.h"
 #include "sigrid/Entity/Tile/GraphicTile.h"
@@ -28,8 +29,8 @@ class GraphicTiles: public sf::Drawable{
 
     void setNumColumns(const int& columns);
     void setNumRows(const int& rows);
-    void setTileSize(const sf::Vector2f& tileSize);
-    void setTopLeftPosition(const sf::Vector2f& topLeftPosition);
+    void setTileSize(const sigrid::Size_f& tileSize);
+    void setTopLeftPosition(const sigrid::Position_f& topLeftPosition);
 
     void setLeftToRight();
     void setRightToLeft();
@@ -38,7 +39,7 @@ class GraphicTiles: public sf::Drawable{
 
     void insertAllTiles();
 
-    void setTilePosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position);
+    void setTilePosition(const sigrid_coord::Coord& coord, const sigrid::Position_f& position);
 
     void setTileColor(const sigrid_coord::Coord& coord, const int& colorId);
 
@@ -61,10 +62,10 @@ class GraphicTiles: public sf::Drawable{
 
     float getTileWidth() const;
     float getTileHeight() const;
-    sf::Vector2f getTileSize() const;
+    sigrid::Size_f getTileSize() const;
     
-    std::optional<sf::Vector2f> getTileTopLeftPosition(const sigrid_coord::Coord& coord) const;
-    std::optional<sf::Vector2f> getTileCentrePosition(const sigrid_coord::Coord& coord) const;
+    std::optional<sigrid::Position_f> getTileTopLeftPosition(const sigrid_coord::Coord& coord) const;
+    std::optional<sigrid::Position_f> getTileCentrePosition(const sigrid_coord::Coord& coord) const;
     std::optional<float> getTileRightPosition(const sigrid_coord::Coord& coord) const;
     std::optional<float> getTileTopPosition(const sigrid_coord::Coord& coord) const;
 
@@ -83,8 +84,8 @@ class GraphicTiles: public sf::Drawable{
 
     sigrid_list::AutoInsertMappedGrid<GraphicTile> m_tiles;
 
-    sf::Vector2f m_tileSize = {0.f, 0.f};
-    sf::Vector2f m_topLeftPosition = {0.f, 0.f};
+    sigrid::Size_f m_tileSize = {0.f, 0.f};
+    sigrid::Position_f m_topLeftPosition = {0.f, 0.f};
 
     bool m_isLeftToRight = true;
     bool m_isTopToBottom = true;

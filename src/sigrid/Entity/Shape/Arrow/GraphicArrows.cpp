@@ -27,7 +27,7 @@ void sigrid::GraphicArrows::setColorManagerPtr(ColorManager* const managerPtr){
     m_colorManagerPtr = managerPtr;
 }
 
-void sigrid::GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow){
+void sigrid::GraphicArrows::addArrow(const sigrid_coord::CoordPair& coordPair, const sigrid::Position_f& fromPosition, const sigrid::Position_f& toPosition, const LogicArrow& logicArrow){
 
     if(m_arrowThickness == 0.f){
         std::cerr << "GraphicArrows: Failed to add arrow, arrow thickness is 0" << std::endl;

@@ -3,6 +3,8 @@
 #include <optional>
 #include <memory>
 
+#include "sigrid/utilities/Size/Size_f.h"
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/lists/Map.h"
 #include "sigrid/utilities/Coord/Coord.h"
 #include "sigrid/Entity/LogicEntity.h"
@@ -30,14 +32,14 @@ class GraphicEntities: public sf::Drawable{
     void setPieceManagerPtr(PieceManager* const managerPtr);
     void setColorManagerPtr(ColorManager* const managerPtr);
     void setIconManagerPtr(IconManager* const managerPtr);
-    void setPieceSize(const sf::Vector2f& pieceSize);
+    void setPieceSize(const sigrid::Size_f& pieceSize);
     void setCircleDiameter(const float& diameter);
 
     CircleContainer getCircleContainer() const;
 
-    void addEntity(const sigrid_coord::Coord& coord, const sf::Vector2f position, const LogicEntity& entity);
+    void addEntity(const sigrid_coord::Coord& coord, const sigrid::Position_f position, const LogicEntity& entity);
     void removeEntity(const sigrid_coord::Coord& coord);
-    void moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const sf::Vector2f& newPosition);
+    void moveEntity(const sigrid_coord::Coord& fromCoord, const sigrid_coord::Coord& toCoord, const sigrid::Position_f& newPosition);
 
     void clear();
 
@@ -52,7 +54,7 @@ class GraphicEntities: public sf::Drawable{
     void moveEntitiesDown(const float& tileHeight, const bool& isTopToBottom);
 
     void move(const sf::Vector2f& offset);
-    void setEntityPosition(const sigrid_coord::Coord& coord, const sf::Vector2f& position);
+    void setEntityPosition(const sigrid_coord::Coord& coord, const sigrid::Position_f& position);
 
   private:
 
@@ -63,7 +65,7 @@ class GraphicEntities: public sf::Drawable{
     sigrid_list::Map<sigrid_coord::Coord, GraphicArrow> m_arrows;
     sigrid_list::Map<sigrid_coord::Coord, Icon> m_icons;
 
-    sf::Vector2f m_pieceSize = {0.f, 0.f};
+    sigrid::Size_f m_pieceSize = {0.f, 0.f};
     float m_circleDiameter = 0.f;
     
     PieceManager* m_pieceManagerPtr = nullptr;

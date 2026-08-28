@@ -35,3 +35,9 @@ sigrid::Position_f sigrid::Position_f::operator/(const float& rhs) const{
     out.y = this->y / rhs;
     return out;
 }
+
+void sigrid::Position_f::set(const sf::Vector2f& sfVector){
+
+    this->x = sfVector.x;
+    this->y = sfVector.y;
+}

@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics/Text.hpp>
 
+#include "sigrid/utilities/Size/Size_f.h"
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/String/String.h"
 #include "sigrid/utilities/lists/Vector.h"
 #include "sigrid/utilities/Color/Color.h"
@@ -76,12 +78,12 @@ class BoardLabels: public sf::Drawable{
 
     float getRightOutsideWorkWidth() const;
 
-    bool addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor);
-    bool addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor);
-    bool addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-    bool addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-    bool addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
-    bool addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize);
+    bool addLeftInsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize, const sigrid::Color& tileColor);
+    bool addBottomInsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize, const sigrid::Color& tileColor);
+    bool addLeftOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize);
+    bool addRightOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize);
+    bool addTopOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize);
+    bool addBottomOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize);
 
     void removeLeftInsideLabels();
     void removeBottomInsideLabels();

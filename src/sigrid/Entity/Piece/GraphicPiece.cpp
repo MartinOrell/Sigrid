@@ -43,16 +43,16 @@ void sigrid::GraphicPiece::setTexturePtr(const sigrid::Texture* const texturePtr
     sprite.setPosition({m_size.x/2.f, m_size.y/2.f});
 }
 
-void sigrid::GraphicPiece::setPosition(sf::Vector2f position){
+void sigrid::GraphicPiece::setPosition(const sigrid::Position_f& position){
     
     if(!m_sprite_o){
         return;
     }
     auto& sprite = m_sprite_o.value();
-    sprite.setPosition(position);
+    sprite.setPosition(position.getSfPosition());
 }
 
-bool sigrid::GraphicPiece::contains(sf::Vector2i point) const{
+bool sigrid::GraphicPiece::contains(const sf::Vector2i& point) const{
 
     if(!m_sprite_o){
         return false;
@@ -62,7 +62,7 @@ bool sigrid::GraphicPiece::contains(sf::Vector2i point) const{
     return rect.contains({(float)point.x, (float)point.y});
 }
 
-void sigrid::GraphicPiece::resize(sf::Vector2f size){
+void sigrid::GraphicPiece::resize(const sigrid::Size_f& size){
 
     if(!m_sprite_o){
         return;

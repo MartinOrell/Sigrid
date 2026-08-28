@@ -4,6 +4,7 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/Color/Color.h"
 
 namespace sf{
@@ -22,11 +23,11 @@ class GraphicArrow: public sf::Drawable{
     GraphicArrow& operator=(const GraphicArrow&) = default;
     GraphicArrow& operator=(GraphicArrow&&) = default;
 
-    void setFromPosition(const sf::Vector2f& fromPosition);
+    void setFromPosition(const sigrid::Position_f& fromPosition);
 
-    void setToPosition(const sf::Vector2f& toPosition);
+    void setToPosition(const sigrid::Position_f& toPosition);
 
-    void setPosition(const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition);
+    void setPosition(const sigrid::Position_f& fromPosition, const sigrid::Position_f& toPosition);
 
     void setColor(const sigrid::Color& color);
 
@@ -34,7 +35,7 @@ class GraphicArrow: public sf::Drawable{
 
     void setHeadSize(const float& size);
 
-    void setPosition(const sf::Vector2f& position);
+    void setPosition(const sigrid::Position_f& position);
 
     void move(const sf::Vector2f& offset);
 
@@ -59,7 +60,7 @@ class GraphicArrow: public sf::Drawable{
     float m_thickness = 0.f;
     float m_headSize = 0.f;
 
-    sf::Vector2f m_toPosition = {0.f, 0.f};
+    sigrid::Position_f m_toPosition = {0.f, 0.f};
 };
 
 }  // namespace sigrid

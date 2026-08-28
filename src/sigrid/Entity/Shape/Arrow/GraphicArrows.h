@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "sigrid/utilities/Position/Position_f.h"
 #include "sigrid/utilities/lists/OrderedMap.h"
 
 #include "sigrid/utilities/Coord/CoordPair.h"
@@ -29,7 +30,7 @@ class GraphicArrows: public sf::Drawable{
     void setHeadSize(const float& headSize);
     void setColorManagerPtr(ColorManager* const managerPtr);
 
-    void addArrow(const sigrid_coord::CoordPair& coordPair, const sf::Vector2f& fromPosition, const sf::Vector2f& toPosition, const LogicArrow& logicArrow);
+    void addArrow(const sigrid_coord::CoordPair& coordPair, const sigrid::Position_f& fromPosition, const sigrid::Position_f& toPosition, const LogicArrow& logicArrow);
     void removeArrow(const sigrid_coord::CoordPair& coordPair);
 
     float getThickness() const;

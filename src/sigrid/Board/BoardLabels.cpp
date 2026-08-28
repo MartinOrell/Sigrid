@@ -224,7 +224,7 @@ float sigrid::BoardLabels::getRightOutsideWorkWidth() const{
     return m_rightWorkWidth;
 }
 
-bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor){
+bool sigrid::BoardLabels::addLeftInsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize, const sigrid::Color& tileColor){
 
     if(m_leftInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside left label" << std::endl;
@@ -262,10 +262,10 @@ bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, c
 
     label.setOrigin({0.f,0.f});
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
 
     //using labelSize instead of label.getLocalWidth() because localBounds has a weird gap
-    position.x += tilePosition.x + (float)labelSize/16.f;
+    position.x = tilePosition.x + (float)labelSize/16.f;
     position.y = tilePosition.y - (float)labelSize/4.f;
     
     label.setPosition(position);
@@ -281,7 +281,7 @@ bool sigrid::BoardLabels::addLeftInsideLabel(const sf::Vector2f& tilePosition, c
     return true;
 }
 
-bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize, const sigrid::Color& tileColor){
+bool sigrid::BoardLabels::addBottomInsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize, const sigrid::Color& tileColor){
 
     if(m_bottomInsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add inside bottom label" << std::endl;
@@ -317,7 +317,7 @@ bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition,
     label.setString(notation);
     label.setCharacterSize(labelSize);
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
     position.x =
         tilePosition.x +
         tileSize.x -
@@ -343,7 +343,7 @@ bool sigrid::BoardLabels::addBottomInsideLabel(const sf::Vector2f& tilePosition,
     return true;
 }
 
-bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addLeftOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize){
 
     if(m_leftOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add outside left label" << std::endl;
@@ -381,7 +381,7 @@ bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, 
 
     label.setOrigin({0.f,0.f});
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
     position.x = (m_leftWorkWidth-label.getLocalWidth()*5.f/4.f)/2.f;
     if(notation == "1"){
         position.x -= (float)label.getLocalWidth()/2.f;
@@ -398,7 +398,7 @@ bool sigrid::BoardLabels::addLeftOutsideLabel(const sf::Vector2f& tilePosition, 
     return true;
 }
 
-bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addRightOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize){
 
     if(m_rightOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add right outside label" << std::endl;
@@ -436,7 +436,7 @@ bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition,
 
     label.setOrigin({0.f,0.f});
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
     position.x = tilePosition.x + tileSize.x + (m_rightWorkWidth-(float)label.getLocalWidth()*5.f/4.f)/2.f + 5.f;
     if(notation == "1"){
         position.x -= (float)label.getLocalWidth()/2.f;
@@ -452,7 +452,7 @@ bool sigrid::BoardLabels::addRightOutsideLabel(const sf::Vector2f& tilePosition,
     return true;
 }
 
-bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addTopOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Size_f& tileSize){
 
     if(m_topOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add top outside label" << std::endl;
@@ -490,7 +490,7 @@ bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, c
 
     label.setOrigin({0.f,0.f});
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
     position.x =
         tilePosition.x +
         tileSize.x/2.f -
@@ -510,7 +510,7 @@ bool sigrid::BoardLabels::addTopOutsideLabel(const sf::Vector2f& tilePosition, c
     return true;
 }
 
-bool sigrid::BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition, const sf::Vector2f& tileSize){
+bool sigrid::BoardLabels::addBottomOutsideLabel(const sigrid::Position_f& tilePosition, const sigrid::Position_f& tileSize){
 
     if(m_bottomOutsideCoordLabels.labelSizeFactor == 0.f){
         std::cerr << "BoardLabels: Failed to add outside bottom label" << std::endl;
@@ -546,7 +546,7 @@ bool sigrid::BoardLabels::addBottomOutsideLabel(const sf::Vector2f& tilePosition
     label.setString(notation);
     label.setCharacterSize(labelSize);
 
-    sf::Vector2f position;
+    sigrid::Position_f position;
     position.x =
         tilePosition.x +
         tileSize.x/2.f -
